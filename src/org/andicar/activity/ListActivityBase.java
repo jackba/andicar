@@ -81,7 +81,10 @@ public class ListActivityBase extends ListActivity {
 
         mRes = getResources();
         mPreferences = getSharedPreferences(Constants.GLOBAL_PREFERENCE_NAME, 0);
-        mMainDbHelper = new MainDbAdapter(this);
+
+        if(mMainDbHelper == null)
+            mMainDbHelper = new MainDbAdapter(this);
+
         if(extras == null)
             extras = getIntent().getExtras();
 

@@ -65,8 +65,9 @@ public abstract class EditActivityBase extends Activity {
     protected int mDay;
     protected int mHour;
     protected int mMinute;
-    protected Timestamp mDateTime;
+    protected long mDateTime;
     protected TextView mDateTimeLabel;
+    protected final Calendar mDateTimeCalendar = Calendar.getInstance();
 
     private AlertDialog.Builder exceptionAlertBuilder;
     private AlertDialog exceptionAlert;
@@ -192,18 +193,17 @@ public abstract class EditActivityBase extends Activity {
        return null;
    }
 
-   protected void initDateTime(Timestamp dateTime){
-        final Calendar c = Calendar.getInstance();
+   protected void initDateTime(long dateTime){
         mDateTime = dateTime;
-        c.setTimeInMillis(mDateTime.getTime());
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
+        mDateTimeCalendar.setTimeInMillis(mDateTime);
+        mYear = mDateTimeCalendar.get(Calendar.YEAR);
+        mMonth = mDateTimeCalendar.get(Calendar.MONTH);
+        mDay = mDateTimeCalendar.get(Calendar.DAY_OF_MONTH);
+        mHour = mDateTimeCalendar.get(Calendar.HOUR_OF_DAY);
+        mMinute = mDateTimeCalendar.get(Calendar.MINUTE);
 
         mDateTimeLabel = (TextView) findViewById(R.id.genDateTimeText);
-        updateDateTimeLbl();
+        updateDateTime();
 
         Button pickDate = (Button) findViewById(R.id.genPickDateButton);
         pickDate.setOnClickListener(new View.OnClickListener() {
@@ -251,10 +251,7 @@ public abstract class EditActivityBase extends Activity {
                     mYear = year;
                     mMonth = monthOfYear;
                     mDay = dayOfMonth;
-                    updateDateTimeLbl();
-                    mDateTime.setYear(mYear);
-                    mDateTime.setMonth(mMonth);
-                    mDateTime.setDate(mDay);
+                    updateDateTime();
                 }
             };
             
@@ -263,13 +260,13 @@ public abstract class EditActivityBase extends Activity {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     mHour = hourOfDay;
                     mMinute = minute;
-                    updateDateTimeLbl();
-                    mDateTime.setHours(mHour);
-                    mDateTime.setMinutes(mMinute);
+                    updateDateTime();
                 }
             };
 
-    private void updateDateTimeLbl() {
+    private void updateDateTime() {
+        mDateTimeCalendar.set(mYear, mMonth, mDay, mHour, mMinute, 0);
+        mDateTime = mDateTimeCalendar.getTimeInMillis();
         mDateTimeLabel.setText(
                 new StringBuilder() // Month is 0 based so add 1
                 .append(pad(mMonth + 1)).append("-").append(pad(mDay)).append("-").append(mYear).append(" ").append(pad(mHour)).append(":").append(pad(mMinute)));

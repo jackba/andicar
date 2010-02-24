@@ -89,8 +89,8 @@
         </activity>
 
         <activity 
-            android:name="org.andicar.activity.MileageInsertActivity"
-            android:label="@string/APP_ACTIVITY_MILEAGEINSERT">
+            android:name="org.andicar.activity.MileageEditActivity"
+            android:label="@string/APP_ACTIVITY_MILEAGEEDIT">
         </activity>
 
         <activity 
@@ -108,5 +108,9 @@
             android:label="@string/APP_ACTIVITY_REFUEL">
         </activity>
 
+        <activity
+            android:name="org.andicar.activity.MileageListReportActivity"
+            android:label="@string/APP_ACTIVITY_MILEAGE_LIST">
+        </activity>
     </application>
 </manifest>

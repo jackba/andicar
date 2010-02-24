@@ -43,7 +43,7 @@
                 android:id="@+id/mileageEditStartIndexLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/MILEAGE_INSERT_ACTIVITY_STARTINDEX"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_STARTINDEX"
                 />
             <EditText
                 android:id="@+id/mileageEditStartIndexEntry"
@@ -52,7 +52,7 @@
                 android:numeric="decimal"
                 android:layout_marginLeft="10dip"
                 android:background="@color/mandatory_bg"
-                android:tag="@string/MILEAGE_INSERT_ACTIVITY_STARTINDEX"
+                android:tag="@string/MILEAGE_EDIT_ACTIVITY_STARTINDEX"
                 />
         </LinearLayout>
 
@@ -117,7 +117,7 @@
                 android:id="@+id/mileageEditExpenseTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/MILEAGE_INSERT_ACTIVITY_EXPENSETYPE"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_EXPENSETYPE"
                 />
             <Spinner android:id="@+id/mileageEditExpenseTypeSpinner"
                 android:layout_width="fill_parent"
@@ -131,7 +131,9 @@
 
         <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
             <Button
                 android:id="@android:id/button1"
                 android:layout_width="wrap_content"
@@ -139,7 +141,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="20dip"
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/MILEAGE_INSERT_ACTIVITY_BTNDONE_CAPTION"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION"
                 />
 
             <Button
@@ -188,7 +190,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textStyle="bold"
-                  android:text="@string/MILEAGE_INSERT_ACTIVITY_HDRINSERTMODE_CAPTION"/>
+                  android:text="@string/MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION"/>
 
         <RadioGroup
             android:layout_width="wrap_content"
@@ -198,11 +200,11 @@
             android:id="@+id/rgMileageInsertMode">
             <RadioButton
                 android:id="@id/mileageEditInsertModeIndexRb"
-                android:text="@string/MILEAGE_INSERT_ACTIVITY_OPTION_INDEX"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_INDEX"
                 />
             <RadioButton
                 android:id="@+id/mileageEditInsertModeMileageRb"
-                android:text="@string/MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE"
                 />
         </RadioGroup>
 
@@ -215,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/MILEAGE_INSERT_ACTIVITY_BTNDONE_CAPTION"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION"
                 />
         </RelativeLayout>
     -->

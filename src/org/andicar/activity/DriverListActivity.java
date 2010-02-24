@@ -41,7 +41,8 @@ public class DriverListActivity extends ListActivityBase
     {
         super.onCreate( icicle, mItemClickListener, DriverEditActivity.class,
                 MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                android.R.layout.simple_list_item_2, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1});
+                android.R.layout.simple_list_item_2,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1});
 
         inactiveDriverSelectedAlertBuilder = new AlertDialog.Builder( this );
         inactiveDriverSelectedAlertBuilder.setCancelable( false );

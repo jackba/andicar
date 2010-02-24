@@ -27,7 +27,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import java.math.BigDecimal;
-import java.sql.Timestamp;
+//import java.sql.Timestamp;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.MileageDbAdapter;
 import org.andicar.utils.Constants;
@@ -36,7 +36,7 @@ import org.andicar.utils.Constants;
  *
  * @author miki
  */
-public class MileageInsertActivity extends EditActivityBase {
+public class MileageEditActivity extends EditActivityBase {
     //mileage insert mode: 0 = new index; 1 = mileage
     private int mInsertMode = 0;
     private long mCarId = -1;
@@ -62,7 +62,7 @@ public class MileageInsertActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle, R.layout.mileage_insert_activity, btnOkClickListener);
+        super.onCreate(icicle, R.layout.mileage_edit_activity, btnOkClickListener);
 
         mMileageDbHelper = new MileageDbAdapter(this);
 
@@ -72,7 +72,7 @@ public class MileageInsertActivity extends EditActivityBase {
         mUOMLengthId = mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                             .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
         
-        initDateTime(new Timestamp(System.currentTimeMillis()));
+        initDateTime(System.currentTimeMillis());
 
         mileageInsertErrorAlertBuilder = new AlertDialog.Builder( this );
         mileageInsertErrorAlertBuilder.setCancelable( false );
@@ -110,18 +110,18 @@ public class MileageInsertActivity extends EditActivityBase {
         if(mInsertMode == Constants.mileageInsertModeNewIndex) {
             mileageEditInsertModeIndexRb.setChecked(true);
             mileageEditInputLabel.setText(
-                    mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_INDEX) + ":");
+                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX) + ":");
             mileageEditCalculatedTextLabel.setText(
-                    mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE) + ":");
-            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_INDEX));
+                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE) + ":");
+            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
         }
         else {
             mileageEditInsertModeMileageRb.setChecked(true);
             mileageEditInputLabel.setText(
-                    mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE) + ":");
+                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE) + ":");
             mileageEditCalculatedTextLabel.setText(
-                    mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_INDEX) + ":");
-            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE));
+                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX) + ":");
+            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
         }
 
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgMileageInsertMode);
@@ -203,7 +203,7 @@ public class MileageInsertActivity extends EditActivityBase {
 
                 String insertResult = mMileageDbHelper.createMileage(
                         "", "Y", userComment.getText().toString(),
-                        mDateTime, mCarId, mDriverId, mStartIndex, mNewIndex, mUOMLengthId, 
+                        mDateTime / 1000, mCarId, mDriverId, mStartIndex, mNewIndex, mUOMLengthId,
                         mPreferences.getLong("MileageInsertExpenseType_ID", -1), null);
                 if( insertResult != null) //error
                 {
@@ -227,7 +227,7 @@ public class MileageInsertActivity extends EditActivityBase {
                 }
                 else{
                     Toast toast = Toast.makeText( getApplicationContext(),
-                            mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_INSERTOK_MESSAGE) , Toast.LENGTH_SHORT );
+                            mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE) , Toast.LENGTH_SHORT );
                     toast.show();
                 }
 
@@ -262,18 +262,18 @@ public class MileageInsertActivity extends EditActivityBase {
                         if(checkedId == mileageEditInsertModeIndexRb.getId()) {
                             mInsertMode = Constants.mileageInsertModeNewIndex; //new index
                             mileageEditInputLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_INDEX) + ":");
+                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX) + ":");
                             mileageEditCalculatedTextLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE) + ":");
-                            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_INDEX));
+                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE) + ":");
+                            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
                         }
                         else {
                             mInsertMode = Constants.mileageEditInsertModeMileage;
                             mileageEditInputLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE) + ":");
+                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE) + ":");
                             mileageEditCalculatedTextLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_INDEX) + ":");
-                            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE));
+                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX) + ":");
+                            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
                         }
                         SharedPreferences.Editor editor = mPreferences.edit();
                         editor.putInt("MileageInsertMode", mInsertMode);

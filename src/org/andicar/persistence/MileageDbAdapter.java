@@ -57,7 +57,7 @@ public class MileageDbAdapter extends MainDbAdapter
      */
 
     public String createMileage( String mName, String mIsActive, String mUserComment ,
-            Timestamp mDateTime, long mCarId, long mDriverId,
+            long mDateTime, long mCarId, long mDriverId,
             float mStartIndex, float mStopIndex, long mUOMLengthId,
             long mExpTypeId, String mGpsTrackLog)
     {
@@ -71,7 +71,7 @@ public class MileageDbAdapter extends MainDbAdapter
         data.put( GEN_COL_NAME_NAME, mName );
         data.put( GEN_COL_ISACTIVE_NAME, mIsActive );
         data.put( GEN_COL_USER_COMMENT_NAME, mUserComment );
-        data.put(MILEAGE_COL_DATE_NAME, mDateTime.getTime());
+        data.put(MILEAGE_COL_DATE_NAME, mDateTime);
         data.put(MILEAGE_COL_CAR_ID_NAME, mCarId);
         data.put(MILEAGE_COL_DRIVER_ID_NAME, mDriverId);
         data.put(MILEAGE_COL_INDEXSTART_NAME, mStartIndex);
@@ -156,52 +156,6 @@ public class MileageDbAdapter extends MainDbAdapter
         return null;
     }
 
-
-    /**
-     * Delete the Mileage with the given rowId
-     * 
-     * @param rowId id of Mileage to delete
-     * @return true if deleted, false otherwise
-     */
-    public boolean deleteMileage( long rowId )
-    {
-        //TODO check if the mileage can be deleted!!!
-        return mDb.delete( MILEAGE_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + rowId, null ) > 0;
-    }
-
-    /**
-     * Return a Cursor over the list of all Mileages
-     * 
-     * @return Cursor over all Mileages
-     */
-    public Cursor fetchAll( boolean withInactive )
-    {
-        if( withInactive ) {
-            return mDb.query( MILEAGE_TABLE_NAME, mileageTableColNames, null, null, null, null, GEN_COL_NAME_NAME );
-        }
-        else {
-            return mDb.query( MILEAGE_TABLE_NAME, mileageTableColNames, GEN_COL_ISACTIVE_NAME + "='Y'", null, null, null, GEN_COL_NAME_NAME );
-        }
-    }
-
-    /**
-     * Return a Cursor positioned at the Mileage that matches the given rowId
-     * 
-     * @param rowId id of Mileage to retrieve
-     * @return Cursor positioned to matching Mileage, if found
-     * @throws SQLException if Mileage could not be found/retrieved
-     */
-    public Cursor fetchMileage( long rowId ) throws SQLException
-    {
-        Cursor mCursor =
-                mDb.query( true, MILEAGE_TABLE_NAME, mileageTableColNames,
-                            GEN_COL_ROWID_NAME + "=" + rowId, null, null, null, null, null );
-        if( mCursor != null ) {
-            mCursor.moveToFirst();
-        }
-        return mCursor;
-
-    }
 
     private String checkIndex(long carId, float startIndex, float stopIndex){
 

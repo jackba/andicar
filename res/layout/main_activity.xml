@@ -51,5 +51,19 @@
                 android:layout_marginLeft="20dip"
                 />
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <Button android:id="@+id/btnMainMileageList"
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

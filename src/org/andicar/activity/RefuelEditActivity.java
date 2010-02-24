@@ -24,11 +24,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import java.sql.Timestamp;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.persistence.RefuelDbAdapter;
 import org.andicar.utils.Constants;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 /**
  *
@@ -53,7 +51,7 @@ public class RefuelEditActivity extends EditActivityBase {
             ((CheckBox) findViewById(R.id.genIsActiveCheck)).setChecked(true);
         }
 
-        initDateTime(new Timestamp(System.currentTimeMillis()));
+        initDateTime(System.currentTimeMillis());
 
         initSpinner(findViewById(R.id.refuelEditCarSpinner), MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
@@ -159,7 +157,7 @@ public class RefuelEditActivity extends EditActivityBase {
 
                         data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME,
                                 ((Spinner) findViewById( R.id.refuelEditCurrencySpinner )).getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_DATE_NAME, mDateTime.getTime());
+                        data.put( MainDbAdapter.REFUEL_COL_DATE_NAME, mDateTime);
                         data.put( MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME,
                                 ((EditText) findViewById( R.id.refuelEditDocumentNoEntry )).getText().toString());
 

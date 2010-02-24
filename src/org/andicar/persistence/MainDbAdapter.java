@@ -244,7 +244,7 @@ public class MainDbAdapter
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
             + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
             + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + MILEAGE_COL_DATE_NAME + " INTEGER NOT NULL, "
+            + MILEAGE_COL_DATE_NAME + " DATE NOT NULL, "
             + MILEAGE_COL_CAR_ID_NAME + " INTEGER NOT NULL, "
             + MILEAGE_COL_DRIVER_ID_NAME + " INTEGER NOT NULL, "
             + MILEAGE_COL_INDEXSTART_NAME + " NUMERIC NOT NULL, "

@@ -27,10 +27,11 @@
     <string name="APP_ACTIVITY_UOMEDIT">"Edit UOM"</string>
     <string name="APP_ACTIVITY_UOMCONVERSIONLIST">"UOM Conversions"</string>
     <string name="APP_ACTIVITY_UOMCONVERSIONEDIT">"Edit UOM Conversions"</string>
-    <string name="APP_ACTIVITY_MILEAGEINSERT">"Insert mileage"</string>
+    <string name="APP_ACTIVITY_MILEAGEEDIT">"Add or edit mileage"</string>
     <string name="APP_ACTIVITY_CURRENCYLIST">"Currencies"</string>
     <string name="APP_ACTIVITY_CURRENCYEDIT">"Edit currencies"</string>
     <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
+    <string name="APP_ACTIVITY_MILEAGE_LIST">"Mileges"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -54,6 +55,7 @@
 
     <string name="MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION">"Add mileage"</string>
     <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"Add refuel"</string>
+    <string name="MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION">"Mileages"</string>
 
     <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No."</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>
@@ -86,15 +88,15 @@
 
     <string name="CURRENCY_EDIT_ACTIVITY_CODE">"Code"</string>
 
-    <string name="MILEAGE_INSERT_ACTIVITY_STARTINDEX">"Start index:"</string>
-    <string name="MILEAGE_INSERT_ACTIVITY_HDRINSERTMODE_CAPTION">"<b><i>Insert mode:</i></b>"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_STARTINDEX">"Start index:"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION">"<b><i>Insert mode:</i></b>"</string>
     <!--Stop index OR mileage-->
-    <string name="MILEAGE_INSERT_ACTIVITY_OPTION_INDEX">"New index"</string>
-    <string name="MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE">"Mileage"</string>
-    <string name="MILEAGE_INSERT_ACTIVITY_COMMENT">"Comment"</string>
-    <string name="MILEAGE_INSERT_ACTIVITY_EXPENSETYPE">"Expense type:"</string>
-    <string name="MILEAGE_INSERT_ACTIVITY_BTNDONE_CAPTION">"Done"</string>
-    <string name="MILEAGE_INSERT_ACTIVITY_INSERTOK_MESSAGE">"Mileage added.\nYou can continue with adding new milege(s)."</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_INDEX">"New index"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE">"Mileage"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_COMMENT">"Comment"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_EXPENSETYPE">"Expense type:"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION">"Done"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE">"Mileage added.\nYou can continue with adding new milege(s)."</string>
 
     <string name="REFUEL_EDIT_ACTIVITY_CAR_LABEL">"Car:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_DRIVER_LABEL">"Driver:"</string>
@@ -104,6 +106,8 @@
     <string name="REFUEL_EDIT_ACTIVITY_PRICE_LABEL">"Price:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_DOCUMENTNO_LABEL">"Document no.:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_BTNDONE_LABEL">"Done"</string>
+
+
 
     <string name="CURR_UOMS">"\nMeasurement units used:"</string>
 
