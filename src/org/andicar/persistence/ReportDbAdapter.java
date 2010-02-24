@@ -49,7 +49,7 @@ public class ReportDbAdapter extends MainDbAdapter{
 
     public static String[] reportMileageListViewSelectCols = {
         GEN_COL_ROWID_NAME,
-        GEN_COL_NAME_NAME,
+        FIRST_LINE_LIST_NAME,
         GEN_COL_USER_COMMENT_NAME,
         SECOND_LINE_LIST_NAME
     };
