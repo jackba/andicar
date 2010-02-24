@@ -1,1 +1,4 @@
 ^buildRelease\.sh$
+^andicar-release-key\.keystore$
+^AndiCar\.apk$
+^AndiCarUnsigned\.apk$
