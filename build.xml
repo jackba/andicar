@@ -66,4 +66,21 @@
     nbproject/build-impl.xml file. 
 
     -->
+
+    <!--
+        Build a release version.
+        For detail see: http://developer.android.com/guide/publishing/app-signing.html
+    -->
+    <target depends="test,releasejar,javadoc" description="Build and test whole project." name="release"/>
+    <target depends="init,compile,-pre-jar,-dex,-package-res-and-assets,-package-res-no-assets,-package-dex,-unsign,-post-jar" description="Build JAR." name="releasejar"/>
+    <target depends="init,-package-res-and-assets,-package-res-no-assets,-package-dex" name="-unsign">
+        <exec executable="${apkbuilder}" failonerror="true">
+            <arg value="${basedir}/${dist.apk}"/>
+            <arg value="-u"/>
+            <arg value="-z"/>
+            <arg value="${basedir}/${dist.apk}_"/>
+        </exec>
+        <delete file="${dist.apk}_"/>
+    </target>
+
 </project>
