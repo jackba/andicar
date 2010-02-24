@@ -1,0 +1,178 @@
+/*
+Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program;
+if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ */
+package org.andicar.activity;
+
+import android.app.Activity;
+import android.content.Context;
+import android.view.View;
+import org.andicar.utils.Constants;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+import android.app.ListActivity;
+
+/**
+ *
+ * @author miki
+ */
+public class MainActivity extends Activity
+{
+    private Resources mRes = null;
+
+    private long currentDriverID = -1;
+    private String currentDriverName = "";
+    private long currentCarID = -1;
+    private String currentCarName = "";
+    private String infoStr = "";
+    private Context mainContext;
+    private int ACTIVITY_MILEAGEINSERT_REQUEST_CODE = 0;
+    private int ACTIVITY_REFUELINSERT_REQUEST_CODE = 1;
+
+    private SharedPreferences mPreferences;
+    private Button mileageInsertBtn;
+    private Button refuelInsertBtn;
+    private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 0;
+
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate( Bundle icicle )
+    {
+        super.onCreate( icicle );
+
+        mRes = getResources();
+        mPreferences = getSharedPreferences( Constants.GLOBAL_PREFERENCE_NAME, 0 );
+        setContentView( R.layout.main_activity );
+        mainContext = this;
+        
+        mileageInsertBtn = (Button) findViewById(R.id.btnMainInsertMileage);
+        mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
+        refuelInsertBtn = (Button) findViewById(R.id.btnMainInsertRefuel);
+        refuelInsertBtn.setOnClickListener(btnInsertRefuelClickListener);
+
+        fillDriverCar();
+}
+
+    private OnClickListener btnInsertMileageClickListener =  new OnClickListener() {
+        public void onClick(View arg0) {
+            Intent mileageInsertIntent = new Intent(mainContext, MileageInsertActivity.class);
+            mileageInsertIntent.putExtra("CurrentDriver_ID", currentDriverID);
+            mileageInsertIntent.putExtra("CurrentCar_ID", currentCarID);
+            mileageInsertIntent.putExtra("currentDriverName", currentDriverName);
+            mileageInsertIntent.putExtra("currentCarName", currentCarName);
+            startActivityForResult( mileageInsertIntent, ACTIVITY_MILEAGEINSERT_REQUEST_CODE );
+        }
+    };
+
+    private OnClickListener btnInsertRefuelClickListener =  new OnClickListener() {
+        public void onClick(View arg0) {
+            Intent refuelInsertIntent = new Intent(mainContext, RefuelEditActivity.class);
+            refuelInsertIntent.putExtra("CurrentDriver_ID", currentDriverID);
+            refuelInsertIntent.putExtra("CurrentCar_ID", currentCarID);
+            refuelInsertIntent.putExtra("currentDriverName", currentDriverName);
+            refuelInsertIntent.putExtra("currentCarName", currentCarName);
+            startActivityForResult( refuelInsertIntent, ACTIVITY_REFUELINSERT_REQUEST_CODE );
+        }
+    };
+
+    private void fillDriverCar()
+    {
+        if( mPreferences != null ) {
+            infoStr = mRes.getString( R.string.CURRENT_DRIVER_NAME );
+
+            //get the current driver id and name
+            if( mPreferences.getLong( "CurrentDriver_ID", -1 ) != -1 ) {
+                currentDriverID = mPreferences.getLong( "CurrentDriver_ID", -1 );
+            }
+            else { //no saved driver. start driver list activity in order to select one.
+//                Intent i = new Intent( this, DriverListActivity.class );
+//                startActivityForResult( i, ACTIVITY_DRIVER_LIST );
+//                return;
+            }
+
+            if( mPreferences.getString( "CurrentDriver_Name", "" ).length() > 0 ) {
+                currentDriverName = mPreferences.getString( "CurrentDriver_Name", "" );
+            }
+            infoStr = infoStr + " " + currentDriverName;
+            ((TextView) findViewById( R.id.info )).setText( infoStr );
+
+            //get the current car id and name
+            if( mPreferences.getLong( "CurrentCar_ID", -1 ) != -1 ) {
+                currentCarID = mPreferences.getLong( "CurrentCar_ID", -1 );
+            }
+            else { //no saved car. start car list activity in order to select one.
+//                Intent i = new Intent( this, CarListActivity.class );
+//                startActivityForResult( i, ACTIVITY_CAR_LIST );
+//                return;
+            }
+
+            if( mPreferences.getString( "CurrentCar_Name", "" ).length() > 0 ) {
+                currentCarName = mPreferences.getString( "CurrentCar_Name", "" );
+            }
+            infoStr = infoStr + "; " + mRes.getString( R.string.CURRENT_CAR_NAME ) + " " + currentCarName;
+            ((TextView) findViewById( R.id.info )).setText( infoStr );
+
+            if(currentCarID < 0 || currentDriverID < 0)
+                mileageInsertBtn.setEnabled(false);
+            else
+                mileageInsertBtn.setEnabled(true);
+            if(currentCarID < 0 || currentDriverID < 0)
+                refuelInsertBtn.setEnabled(false);
+            else
+                refuelInsertBtn.setEnabled(true);
+        }
+        else { //no saved mPreferences. start driver list activity in order to create one.
+//            Intent i = new Intent( this, DriverListActivity.class );
+//            startActivityForResult( i, ACTIVITY_DRIVER_LIST );
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu( Menu menu )
+    {
+        menu.add( 0, Constants.MENU_PREFERENCES_ID, 0,
+                mRes.getText( R.string.MENU_PREFERENCES_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_preferences ) );
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item )
+    {
+        if( item.getItemId() == Constants.MENU_PREFERENCES_ID ) {
+                Intent i = new Intent( this, PreferencesActivity.class );
+                startActivityForResult( i, SETTINGS_ACTIVITY_REQUEST_CODE );
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected void onActivityResult( int requestCode, int resultCode, Intent intent )
+    {
+        super.onActivityResult( requestCode, resultCode, intent );
+//		Bundle extras = intent.getExtras();
+
+        switch( requestCode ) {
+            case SETTINGS_ACTIVITY_REQUEST_CODE:
+                fillDriverCar();
+                break;
+        }
+    }
+}

@@ -1,0 +1,1 @@
+Use Gimp image editor (http://www.gimp.org) in order to open/edit these files.

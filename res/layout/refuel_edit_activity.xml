@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with this program;
+    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:id="@+id/genRootViewGroup"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/refuelEditCarLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_CAR_LABEL"
+                />
+            <Spinner android:id="@+id/refuelEditCarSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                />
+
+            <TextView
+                android:id="@+id/refuelEditDriverLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_DRIVER_LABEL"
+                />
+            <Spinner android:id="@+id/refuelEditDriverSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/refuelEditExpenseTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_EXPENSETYPE_LABEL"
+                />
+            <Spinner android:id="@+id/refuelEditExpenseTypeSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="10dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/refuelEditIndexLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_INDEX_LABEL"
+                />
+            <EditText
+                android:id="@+id/refuelEditIndexEntry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="10dip"
+                android:background="@color/mandatory_bg"
+                android:tag="@string/REFUEL_EDIT_ACTIVITY_INDEX_LABEL"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/refuelEditQuantityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_QUANTITY_LABEL"
+                />
+            <Spinner android:id="@+id/refuelEditUOMVolumeSpinner"
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                />
+            <EditText
+                android:id="@+id/refuelEditQuantityEntry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:tag="@string/REFUEL_EDIT_ACTIVITY_QUANTITY_LABEL"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/refuelEditPriceLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_PRICE_LABEL"
+                />
+            <Spinner android:id="@+id/refuelEditCurrencySpinner"
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                />
+            <EditText
+                android:id="@+id/refuelEditPriceEntry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:tag="@string/REFUEL_EDIT_ACTIVITY_PRICE_LABEL"
+                />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/refuelEditDocumentNoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_DOCUMENTNO_LABEL"
+                />
+            <EditText
+                android:id="@+id/refuelEditDocumentNoEntry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@android:drawable/editbox_background"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="10dip"
+            >
+            <TextView android:id="@+id/genDateTimeText"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      />
+            <Button android:id="@+id/genPickDateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/GEN_PICK_DATE_BUTTON_CAPTION"/>
+            <Button android:id="@+id/genPickTimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/GEN_PICK_TIME_BUTTON_CAPTION"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/genUserCommentLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/GEN_USER_COMMENT_LABEL"
+            />
+        <EditText
+            android:id="@+id/genUserCommentEntry"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <Button
+                android:id="@android:id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_BTNDONE_LABEL"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

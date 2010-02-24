@@ -1,12 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with this program;
+    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-     package="org.managecar.activity">
-    <application>
-         <activity android:name=".MainActivity" android:label="MainActivity">
+          package="org.andicar.activity"
+          android:versionCode="1"
+          android:versionName="0.1">
+    <application
+        android:label="@string/APP_NAME"
+        android:description="@string/APP_DESCRIPTION"
+        android:icon="@drawable/car2"
+        >
+
+        <activity android:name="org.andicar.activity.MainActivity"
+                  android:label="@string/APP_NAME"
+                  android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity android:name="org.andicar.activity.DriverEditActivity" android:label="@string/APP_ACTIVITY_DRIVEREDIT">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.DriverListActivity" android:label="@string/APP_ACTIVITY_DRIVERLIST">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+
+        <activity android:name="org.andicar.activity.CarEditActivity" android:label="@string/APP_ACTIVITY_CAREDIT">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.CarListActivity" android:label="@string/APP_ACTIVITY_CARLIST">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.PreferencesActivity" android:label="@string/APP_ACTIVITY_PREFERENCES">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+
+        <activity android:name="org.andicar.activity.ExpenseTypeListActivity" android:label="@string/APP_ACTIVITY_EXPTYPELIST">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.ExpenseTypeEditActivity" android:label="@string/APP_ACTIVITY_EXPTYPEEDIT">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.UOMListActivity" android:label="@string/APP_ACTIVITY_UOMLIST">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.UOMEditActivity" android:label="@string/APP_ACTIVITY_UOMEDIT">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.UOMConversionListActivity" android:label="@string/APP_ACTIVITY_UOMCONVERSIONLIST">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.UOMConversionEditActivity" android:label="@string/APP_ACTIVITY_UOMCONVERSIONEDIT">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.MileageInsertActivity" android:label="@string/APP_ACTIVITY_MILEAGEINSERT">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.CurrencyListActivity" android:label="@string/APP_ACTIVITY_CURRENCYLIST">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.CurrencyEditActivity" android:label="@string/APP_ACTIVITY_CURRENCYEDIT">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+        <activity android:name="org.andicar.activity.RefuelEditActivity" android:label="@string/APP_ACTIVITY_REFUEL">
+            <!--            <intent-filter>
+                                <action android:name="android.intent.action.MAIN"/>
+                                <category android:name="android.intent.category.LAUNCHER"/>
+                        </intent-filter>
+        -->        </activity>
+
     </application>
 </manifest>

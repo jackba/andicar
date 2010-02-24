@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License.
+
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along with this program;
+    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <TextView android:id="@+id/threeLineListText1"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"/>
+
+    <TextView android:id="@+id/threeLineListText2"
+              android:textSize="16sp"
+              android:textStyle="italic"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"/>
+
+    <TextView android:id="@+id/threeLineListText3"
+              android:textSize="14sp"
+              android:textStyle="italic"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"/>
+</LinearLayout>

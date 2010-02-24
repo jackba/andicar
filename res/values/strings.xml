@@ -1,4 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
+
+  This program is free software; you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by the
+    Free Software Foundation; either version 2 of the License.
+
+  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License along with this program;
+    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+-->
 <resources>
-    <string name="app_name">AndiCar</string>
+    <string name="APP_NAME">"AndiCar"</string>
+    <string name="APP_DESCRIPTION">"Manage Your Car"</string>
+    <string name="APP_ACTIVITY_DRIVEREDIT">"Edit Driver Details"</string>
+    <string name="APP_ACTIVITY_DRIVERLIST">"Drivers"</string>
+    <string name="APP_ACTIVITY_CAREDIT">"Edit Car Details"</string>
+    <string name="APP_ACTIVITY_CARLIST">"Cars"</string>
+    <string name="APP_ACTIVITY_PREFERENCES">"Preferences"</string>
+    <string name="APP_ACTIVITY_EXPTYPELIST">"Expense types"</string>
+    <string name="APP_ACTIVITY_EXPTYPEEDIT">"Edit expense types"</string>
+    <string name="APP_ACTIVITY_UOMLIST">"Measurement units"</string>
+    <string name="APP_ACTIVITY_UOMEDIT">"Edit UOM"</string>
+    <string name="APP_ACTIVITY_UOMCONVERSIONLIST">"UOM Conversions"</string>
+    <string name="APP_ACTIVITY_UOMCONVERSIONEDIT">"Edit UOM Conversions"</string>
+    <string name="APP_ACTIVITY_MILEAGEINSERT">"Insert mileage"</string>
+    <string name="APP_ACTIVITY_CURRENCYLIST">"Currencies"</string>
+    <string name="APP_ACTIVITY_CURRENCYEDIT">"Edit currencies"</string>
+    <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
+
+    <string name="GEN_OK">"OK"</string>
+    <string name="GEN_CANCEL">"Cancel"</string>
+    <string name="GEN_FILL_MANDATORY">"Fill mandatory field"</string>
+    <string name="GEN_NUMBER_FORMAT_EXCEPTION">"Invalid number"</string>
+    <string name="GEN_CHOSEONE_DIALOGTITLE">"Chose one"</string>
+    <string name="GEN_ISACTIVE_LABEL">"Active"</string>
+    <string name="GEN_USER_COMMENT_LABEL">"Comment"</string>
+    <string name="GEN_NAME_LABEL">"Name"</string>
+    <string name="GEN_LBLDATETIME_CAPTION">"<b><i>Date and time:</i></b>"</string>
+    <string name="GEN_PICK_DATE_BUTTON_CAPTION">"Change date"</string>
+    <string name="GEN_PICK_TIME_BUTTON_CAPTION">"Change time"</string>
+
+    <string name="MENU_PREFERENCES_CAPTION">"Preferences"</string>
+    <string name="MENU_DELETE_CAPTION">"Delete"</string>
+    <string name="MENU_ADD_NEW_CAPTION">"Add new"</string>
+    <string name="MENU_EDIT_CAPTION">"Edit"</string>
+    <string name="MENU_SHOWINACTIVE_CAPTION">"Show inactive"</string>
+    <string name="MENU_HIDEINACTIVE_CAPTION">"Hide inactive"</string>
+
+
+    <string name="MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION">"Add mileage"</string>
+    <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"Add refuel"</string>
+
+    <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No."</string>
+    <string name="NO_DRIVERS">"No drivers defined yet"</string>
+    <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Cannot be selected."</string>
+    <string name="CURRENT_DRIVER_DELETE_ERROR_MESSAGE">"The current driver cannot be deleted."</string>
+    <string name="CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE">"The current driver cannot be inactivated."</string>
+    <string name="CURRENT_DRIVER_NAME">"Driver: "</string>
+
+    <string name="CAR_EDIT_ACTIVITY_MODEL">"Car model"</string>
+    <string name="CAR_EDIT_ACTIVITY_REG_NO">"License plate"</string>
+    <string name="CAR_EDIT_ACTIVITY_UOMLENGTH">"UOM for distance"</string>
+    <string name="CAR_EDIT_ACTIVITY_UOMVOLUME">"UOM for volume"</string>
+    <string name="CAR_EDIT_ACTIVITY_STARTINDEX">"Current index"</string>
+    <string name="CAR_EDIT_ACTIVITY_CURRENCY">"Default currency"</string>
+    <string name="NO_CARS">"No cars defined yet"</string>
+    <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Cannot be selected."</string>
+    <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car cannot be deleted."</string>
+    <string name="CURRENT_CAR_INACTIVATE_ERROR_MESSAGE">"The current car cannot be inactivated."</string>
+    <string name="CURRENT_CAR_NAME">"Car: "</string>
+
+    <string name="UOM_EDIT_ACTIVITY_CODE">"Code"</string>
+    <string name="UOM_EDIT_ACTIVITY_TITLE_LENGTH">"distance"</string>
+    <string name="UOM_EDIT_ACTIVITY_TITLE_VOLUME">"volume"</string>
+    <string name="UOM_CANNOT_DELETE_ERROR_MESSAGE">"This UOM cannot be deleted.\nIt is used in cars definition."</string>
+
+    <string name="UOMCONVERSION_EDIT_ACTIVITY_CODE">"Code"</string>
+    <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMFROM">"From uom"</string>
+    <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMTO">"To uom"</string>
+    <string name="UOMCONVERSION_EDIT_ACTIVITY_RATE">"Conversion rate"</string>
+
+    <string name="CURRENCY_EDIT_ACTIVITY_CODE">"Code"</string>
+
+    <string name="MILEAGE_INSERT_ACTIVITY_STARTINDEX">"Start index:"</string>
+    <string name="MILEAGE_INSERT_ACTIVITY_HDRINSERTMODE_CAPTION">"<b><i>Insert mode:</i></b>"</string>
+    <!--Stop index OR mileage-->
+    <string name="MILEAGE_INSERT_ACTIVITY_OPTION_INDEX">"New index"</string>
+    <string name="MILEAGE_INSERT_ACTIVITY_OPTION_MILEAGE">"Mileage"</string>
+    <string name="MILEAGE_INSERT_ACTIVITY_COMMENT">"Comment"</string>
+    <string name="MILEAGE_INSERT_ACTIVITY_EXPENSETYPE">"Expense type:"</string>
+    <string name="MILEAGE_INSERT_ACTIVITY_BTNDONE_CAPTION">"Done"</string>
+    <string name="MILEAGE_INSERT_ACTIVITY_INSERTOK_MESSAGE">"Mileage added.\nYou can continue with adding new milege(s)."</string>
+
+    <string name="REFUEL_EDIT_ACTIVITY_CAR_LABEL">"Car:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_DRIVER_LABEL">"Driver:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_EXPENSETYPE_LABEL">"Expense type:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_INDEX_LABEL">"Car index:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_QUANTITY_LABEL">"Quantity:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_PRICE_LABEL">"Price:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_DOCUMENTNO_LABEL">"Document no.:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_BTNDONE_LABEL">"Done"</string>
+
+    <string name="CURR_UOMS">"\nMeasurement units used:"</string>
+
+    <string name="PREF_UOMS_CATEGORY_TITLE">"Measurement units"</string>
+    <string name="PREF_MISC_CATEGORY_TITLE">"Miscellaneous"</string>
+    <string name="PREF_CAT_EXPTYPE_TITLE">"Expense types"</string>
+    <string name="PREF_CAT_EXPTYPE_SUMMARY">"Add, delete, modify expense types"</string>
+    <string name="PREF_CARSDRIVER_CATEGORY_TITLE">"Cars and drivers"</string>
+    <string name="PREF_CARS_TITLE">"Cars"</string>
+    <string name="PREF_CARS_SUMMARY">"Add, delete, modify cars.\nSelect current car."</string>
+    <string name="PREF_DRIVERS_TITLE">"Drivers"</string>
+    <string name="PREF_DRIVERS_SUMMARY">"Add, delete, modify drivers.\nSelect current driver."</string>
+    <string name="PREF_UOMLENGTH_TITLE">"UOM for distance"</string>
+    <string name="PREF_UOMLENGTH_SUMMARY">"Add, delete, modify measurement units for distance"</string>
+    <string name="PREF_UOMVOLUME_TITLE">"UOM for volume"</string>
+    <string name="PREF_UOMVOLUME_SUMMARY">"Add, delete, modify measurement units for volume"</string>
+    <string name="PREF_UOMCONVERSION_TITLE">"UOM conversion"</string>
+    <string name="PREF_UOMCONVERSION_SUMMARY">"Add, delete, modify conversions between measurement units"</string>
+
+    <string name="PREF_CAT_CURRENCYLIST_TITLE">"Currencies"</string>
+    <string name="PREF_CAT_CURRENCYLIST_SUMMARY">"Add, delete, modify currencies"</string>
+
+    <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
+
 </resources>
