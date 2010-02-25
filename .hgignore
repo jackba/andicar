@@ -2,3 +2,8 @@
 ^andicar-release-key\.keystore$
 ^AndiCar\.apk$
 ^AndiCarUnsigned\.apk$
+\.orig\..*$
+\.orig$
+\.chg\..*$
+\.rej$
+\.conflict\~$
