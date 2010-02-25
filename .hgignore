@@ -7,3 +7,4 @@
 \.chg\..*$
 \.rej$
 \.conflict\~$
+^AndiCar\.ap_$

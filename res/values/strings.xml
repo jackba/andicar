@@ -52,6 +52,7 @@
     <string name="MENU_EDIT_CAPTION">"Edit"</string>
     <string name="MENU_SHOWINACTIVE_CAPTION">"Show inactive"</string>
     <string name="MENU_HIDEINACTIVE_CAPTION">"Hide inactive"</string>
+    <string name="MENU_SEARCH_CAPTION">"Search/filter"</string>
 
 
     <string name="MAIN_ACTIVITY_MILEAGE_HDR_CAPTION">"Add or view mileages"</string>
@@ -60,6 +61,7 @@
     <string name="MAIN_ACTIVITY_REFUEL_HDR_CAPTION">"Add or view refuels"</string>
     <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"Add refuel"</string>
     <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"View refuels"</string>
+    <string name="MAIN_ACTIVITY_SHORTABOUT">"Copyrigh (c) 2010 Miklos Keresztes\nAll right reserved."</string>
 
     <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>

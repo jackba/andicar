@@ -129,12 +129,10 @@ public class ListActivityBase extends ListActivity {
     {
         optionsMenu = menu;
         optionsMenu.add( 0, Constants.OPTION_MENU_ADD_ID, 0, mRes.getText( R.string.MENU_ADD_NEW_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_add ) );
-        if(!(this instanceof ReportListActivityBase)){
-            if(!showInactiveRecords)
-                optionsMenu.add( 0, Constants.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText( R.string.MENU_SHOWINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_inactive ) );
-            else
-                optionsMenu.add( 0, Constants.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText( R.string.MENU_HIDEINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_active ) );
-        }
+        if(!showInactiveRecords)
+            optionsMenu.add( 0, Constants.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText( R.string.MENU_SHOWINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_inactive ) );
+        else
+            optionsMenu.add( 0, Constants.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText( R.string.MENU_HIDEINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_active ) );
         return true;
     }
 

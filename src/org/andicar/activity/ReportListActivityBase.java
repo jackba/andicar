@@ -18,11 +18,14 @@
 
 package org.andicar.activity;
 
+import android.app.Dialog;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleCursorAdapter;
-import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.utils.Constants;
 
 /**
  *
@@ -61,6 +64,29 @@ public class ReportListActivityBase extends ListActivityBase{
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu( Menu menu )
+    {
+        optionsMenu = menu;
+        optionsMenu.add( 0, Constants.OPTION_MENU_ADD_ID, 0,
+                mRes.getText( R.string.MENU_ADD_NEW_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_add ) );
+        optionsMenu.add( 0, Constants.OPTION_MENU_SEARCH_ID, 0,
+                mRes.getText( R.string.MENU_SEARCH_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_search ) );
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected( MenuItem item )
+    {
+        if(item.getItemId() == Constants.OPTION_MENU_ADD_ID)
+            return super.onOptionsItemSelected( item );
+        else if(item.getItemId() == Constants.OPTION_MENU_SEARCH_ID){
+            Dialog searchDialog = new Dialog(this);
+            searchDialog.setContentView(R.layout.mileage_search_dialog);
+            searchDialog.show();
+
+        }
+        return true;
+    }
 
 }

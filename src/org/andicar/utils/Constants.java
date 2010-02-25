@@ -29,6 +29,7 @@ public class Constants
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
     public static final int OPTION_MENU_HIDEINACTIVE_ID = 23;
+    public static final int OPTION_MENU_SEARCH_ID = 24;
     
     public  static final int CONTEXT_MENU_EDIT_ID = 1;
     public  static final int CONTEXT_MENU_INSERT_ID = 2;
