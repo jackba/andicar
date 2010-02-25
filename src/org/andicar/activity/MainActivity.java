@@ -65,13 +65,13 @@ public class MainActivity extends Activity
         setContentView( R.layout.main_activity );
         mainContext = this;
         
-        mileageInsertBtn = (Button) findViewById(R.id.btnMainInsertMileage);
+        mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
         mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
-        refuelInsertBtn = (Button) findViewById(R.id.btnMainInsertRefuel);
+        refuelInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
         refuelInsertBtn.setOnClickListener(btnInsertRefuelClickListener);
-        mileageListBtn = (Button) findViewById(R.id.btnMainMileageList);
+        mileageListBtn = (Button) findViewById(R.id.mainActivityBtnMileageList);
         mileageListBtn.setOnClickListener(btnMileageListClickListener);
-        refuelListBtn = (Button) findViewById(R.id.btnMainRefuelList);
+        refuelListBtn = (Button) findViewById(R.id.mainActivityBtnRefuelList);
         refuelListBtn.setOnClickListener(btnRefuelListClickListener);
 
         fillDriverCar();

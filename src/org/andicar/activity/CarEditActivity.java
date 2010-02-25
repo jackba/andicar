@@ -52,7 +52,7 @@ public class CarEditActivity extends EditActivityBase
             String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
             String model = recordCursor.getString( MainDbAdapter.CAR_COL_MODEL_POS );
             String registrationNo = recordCursor.getString( MainDbAdapter.CAR_COL_REGISTRATIONNO_POS );
-            BigDecimal startIndex = new BigDecimal(recordCursor.getFloat( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
+            BigDecimal startIndex = new BigDecimal(recordCursor.getString( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
             Long uomLengthId = recordCursor.getLong( MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS );
             Long uomVolumeId = recordCursor.getLong( MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS );
             Long currencyId = recordCursor.getLong( MainDbAdapter.CAR_COL_CURRENCY_ID_POS );
@@ -138,11 +138,11 @@ public class CarEditActivity extends EditActivityBase
                             return;
                         }
 
-                        Float startIndex = null;
+                        BigDecimal startIndex = null;
                         String startIndexStr = ((EditText) findViewById( R.id.carEditCarStartIndexEntry )).getText().toString();
                         if( startIndexStr != null && startIndexStr.length() > 0 ) {
                             try {
-                                startIndex = Float.parseFloat( startIndexStr );
+                                startIndex = new BigDecimal( startIndexStr );
                             }
                             catch( NumberFormatException e ) {
                                 Toast toast = Toast.makeText( getApplicationContext(),
@@ -163,9 +163,9 @@ public class CarEditActivity extends EditActivityBase
                                 ((EditText) findViewById( R.id.carEditCarModelEntry )).getText().toString() );
                         data.put( MainDbAdapter.CAR_COL_REGISTRATIONNO_NAME,
                                 ((EditText) findViewById( R.id.carEditCarRegNoEntry )).getText().toString());
-                        data.put( MainDbAdapter.CAR_COL_INDEXSTART_NAME, startIndex );
+                        data.put( MainDbAdapter.CAR_COL_INDEXSTART_NAME, startIndex.toString() );
                         //when a new car defined the current index is same with the start index
-                        data.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, startIndex );
+                        data.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, startIndex.toString() );
                         data.put( MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME,
                                 ((Spinner) findViewById( R.id.carEditUomLengthSpinner )).getSelectedItemId() );
                         data.put( MainDbAdapter.CAR_COL_UOMVOLUME_ID_NAME,

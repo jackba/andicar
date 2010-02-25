@@ -20,7 +20,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
@@ -30,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
+//import java.math.BigDecimal;
 
 /**
  *
@@ -93,21 +93,9 @@ public class RefuelEditActivity extends EditActivityBase {
             mQtyUmId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_POS);
             mCurrencyId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CURRENCY_ID_POS);
             initDateTime(recordCursor.getLong(MainDbAdapter.REFUEL_COL_DATE_POS) * 1000);
-            Float floatVal = recordCursor.getFloat(MainDbAdapter.REFUEL_COL_INDEX_POS);
-            if(floatVal == floatVal.intValue())
-                carIndexEntry.setText(Integer.toString(floatVal.intValue()));
-            else
-                carIndexEntry.setText(Float.toString(floatVal));
-            floatVal = recordCursor.getFloat(MainDbAdapter.REFUEL_COL_QUANTITY_POS);
-            if(floatVal == floatVal.intValue())
-                qtyEntry.setText(Integer.toString(floatVal.intValue()));
-            else
-                qtyEntry.setText(Float.toString(floatVal));
-            floatVal = recordCursor.getFloat(MainDbAdapter.REFUEL_COL_PRICE_POS);
-            if(floatVal == floatVal.intValue())
-                priceEntry.setText(Integer.toString(floatVal.intValue()));
-            else
-                priceEntry.setText(Float.toString(floatVal));
+            carIndexEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
+            qtyEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS));
+            priceEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_PRICE_POS));
             docNo.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_POS));
             refuelEditUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
 
@@ -153,9 +141,6 @@ public class RefuelEditActivity extends EditActivityBase {
                 {
                     public void onClick( View v )
                     {
-                        Float floatVal = null;
-                        String floatValStr = null;
-
                         String retVal = checkMandatory((ViewGroup) findViewById(R.id.genRootViewGroup));
                         if( retVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
@@ -176,57 +161,11 @@ public class RefuelEditActivity extends EditActivityBase {
                                 refuelEditDriverSpinner.getSelectedItemId() );
                         data.put( MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME,
                                 ((Spinner) findViewById( R.id.refuelEditExpenseTypeSpinner )).getSelectedItemId() );
-
-                        floatValStr = carIndexEntry.getText().toString();
-                        if( floatValStr != null && floatValStr.length() > 0 ) {
-                            try {
-                                floatVal = Float.parseFloat( floatValStr );
-                            }
-                            catch( NumberFormatException e ) {
-                                Toast toast = Toast.makeText( getApplicationContext(),
-                                        mRes.getString( R.string.GEN_NUMBER_FORMAT_EXCEPTION ) + ": "
-                                        + mRes.getString( R.string.REFUEL_EDIT_ACTIVITY_INDEX_LABEL ), Toast.LENGTH_SHORT );
-                                toast.show();
-                                return;
-                            }
-                        }
-                        data.put( MainDbAdapter.REFUEL_COL_INDEX_NAME, floatVal);
-
-                        floatVal = null;
-                        floatValStr = qtyEntry.getText().toString();
-                        if( floatValStr != null && floatValStr.length() > 0 ) {
-                            try {
-                                floatVal = Float.parseFloat( floatValStr );
-                            }
-                            catch( NumberFormatException e ) {
-                                Toast toast = Toast.makeText( getApplicationContext(),
-                                        mRes.getString( R.string.GEN_NUMBER_FORMAT_EXCEPTION ) + ": "
-                                        + mRes.getString( R.string.REFUEL_EDIT_ACTIVITY_QUANTITY_LABEL ), Toast.LENGTH_SHORT );
-                                toast.show();
-                                return;
-                            }
-                        }
-                        data.put( MainDbAdapter.REFUEL_COL_QUANTITY_NAME, floatVal);
-
+                        data.put( MainDbAdapter.REFUEL_COL_INDEX_NAME, carIndexEntry.getText().toString());
+                        data.put( MainDbAdapter.REFUEL_COL_QUANTITY_NAME, qtyEntry.getText().toString());
                         data.put( MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_NAME,
                                 ((Spinner) findViewById( R.id.refuelEditUOMVolumeSpinner )).getSelectedItemId() );
-
-                        floatVal = null;
-                        floatValStr = priceEntry.getText().toString();
-                        if( floatValStr != null && floatValStr.length() > 0 ) {
-                            try {
-                                floatVal = Float.parseFloat( floatValStr );
-                            }
-                            catch( NumberFormatException e ) {
-                                Toast toast = Toast.makeText( getApplicationContext(),
-                                        mRes.getString( R.string.GEN_NUMBER_FORMAT_EXCEPTION ) + ": "
-                                        + mRes.getString( R.string.REFUEL_EDIT_ACTIVITY_PRICE_LABEL ), Toast.LENGTH_SHORT );
-                                toast.show();
-                                return;
-                            }
-                        }
-                        data.put( MainDbAdapter.REFUEL_COL_PRICE_NAME, floatVal);
-
+                        data.put( MainDbAdapter.REFUEL_COL_PRICE_NAME, priceEntry.getText().toString());
                         data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME,
                                 ((Spinner) findViewById( R.id.refuelEditCurrencySpinner )).getSelectedItemId() );
                         data.put( MainDbAdapter.REFUEL_COL_DATE_NAME, mDateTimeInSeconds);

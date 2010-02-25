@@ -27,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import java.math.BigDecimal;
 import org.andicar.persistence.MainDbAdapter;
 
 /**
@@ -60,7 +61,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
             String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            Float conversionRate = recordCursor.getFloat( MainDbAdapter.UOM_CONVERSION_COL_RATE_POS );
+            String conversionRate = recordCursor.getString( MainDbAdapter.UOM_CONVERSION_COL_RATE_POS );
             uomFromId = recordCursor.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMFROM_ID_POS );
             uomToId = recordCursor.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_POS );
 
@@ -124,19 +125,6 @@ public class UOMConversionEditActivity extends EditActivityBase {
                             uomConversionCannotSaveAlert.show();
                             return;
                         }
-                        Float convRate = null;
-                        if( convRateStr != null && convRateStr.length() > 0 ) {
-                            try {
-                                convRate = Float.parseFloat( convRateStr );
-                            }
-                            catch( NumberFormatException e ) {
-                                Toast toast = Toast.makeText( getApplicationContext(),
-                                        mRes.getString( R.string.GEN_NUMBER_FORMAT_EXCEPTION ) + ": "
-                                        + mRes.getString( R.string.UOMCONVERSION_EDIT_ACTIVITY_RATE ), Toast.LENGTH_SHORT );
-                                toast.show();
-                                return;
-                            }
-                        }
 
                         ContentValues data = new ContentValues();
                         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -147,7 +135,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
                                 ((EditText) findViewById( R.id.genUserCommentEntry )).getText().toString() );
                         data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMFROM_ID_NAME, fromId);
                         data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_NAME, toId);
-                        data.put( MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME, convRate);
+                        data.put( MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME, convRateStr);
 
                         if( mRowId == null ) {
                             mMainDbHelper.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);

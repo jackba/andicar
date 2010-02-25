@@ -31,7 +31,7 @@
     <string name="APP_ACTIVITY_CURRENCYLIST">"Currencies"</string>
     <string name="APP_ACTIVITY_CURRENCYEDIT">"Edit currencies"</string>
     <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
-    <string name="APP_ACTIVITY_MILEAGE_LIST">"Mileges"</string>
+    <string name="APP_ACTIVITY_MILEAGE_LIST">"Mileages"</string>
     <string name="APP_ACTIVITY_REFUEL_LIST">"Refuels"</string>
 
     <string name="GEN_OK">"OK"</string>
@@ -54,10 +54,12 @@
     <string name="MENU_HIDEINACTIVE_CAPTION">"Hide inactive"</string>
 
 
+    <string name="MAIN_ACTIVITY_MILEAGE_HDR_CAPTION">"Add or view mileages"</string>
     <string name="MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION">"Add mileage"</string>
+    <string name="MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION">"View mileages"</string>
+    <string name="MAIN_ACTIVITY_REFUEL_HDR_CAPTION">"Add or view refuels"</string>
     <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"Add refuel"</string>
-    <string name="MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION">"Mileages"</string>
-    <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"Refuels"</string>
+    <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"View refuels"</string>
 
     <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>

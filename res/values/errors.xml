@@ -19,6 +19,6 @@
     <string name="ERR_003">"New mileage overlap with existing mileage"</string>
     <string name="ERR_004">"Stop/New index must be greater than start index"</string>
     <string name="ERR_005">"Conversion rate already exist"</string>
-    <string name="ERR_006">"Error on creating refuel!"</string>
-    <string name="ERR_007">"Error on modifying refuel!"</string>
+    <string name="ERR_006">"Error on creating record!"</string>
+    <string name="ERR_007">"Error on modifying record!"</string>
 </resources>

@@ -15,6 +15,7 @@ if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330,
 package org.andicar.activity;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -28,6 +29,7 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.Toast;
 import java.math.BigDecimal;
 //import java.sql.Timestamp;
@@ -44,9 +46,9 @@ public class MileageEditActivity extends EditActivityBase {
     private long mCarId = -1;
     private long mDriverId = -1;
     private long mUOMLengthId = -1;
-    private Float mNewIndex = Float.valueOf(0);
-    private Float mStartIndex = Float.valueOf(0);
-    private Float mEntryMileageValue = Float.valueOf(0);
+    private BigDecimal mNewIndex = new BigDecimal("0");
+    private BigDecimal mStartIndex = new BigDecimal("0");
+    private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
     private RadioButton mileageEditInsertModeIndexRb;
     private RadioButton mileageEditInsertModeMileageRb;
     private TextView mileageEditInputLabel;
@@ -56,18 +58,23 @@ public class MileageEditActivity extends EditActivityBase {
     private TextView mileageEditCalculatedTextContent;
     private AutoCompleteTextView mileageEditUserCommentEntry;
     private String operationType;
+    Spinner mExpTypeSpinner;
 
-    AlertDialog.Builder mileageInsertErrorAlertBuilder;
-    AlertDialog mileageInsertErrorAlert;
+    AlertDialog.Builder insertUpdateErrorAlertBuilder;
+    AlertDialog insertUpdateErrorAlert;
+    ArrayAdapter<String> userCommentAdapter;
+    MileageEditActivity me;
+
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.mileage_edit_activity, btnOkClickListener);
+        me = this;
+        insertUpdateErrorAlertBuilder = new AlertDialog.Builder( this );
+        insertUpdateErrorAlertBuilder.setCancelable( false );
+        insertUpdateErrorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
 
-        mileageInsertErrorAlertBuilder = new AlertDialog.Builder( this );
-        mileageInsertErrorAlertBuilder.setCancelable( false );
-        mileageInsertErrorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
         mileageEditCalculatedTextContent = (TextView) findViewById(R.id.mileageEditCalculatedTextContent);
         mileageEditInputEntry = (EditText) findViewById(R.id.mileageEditInputEntry);
         mileageEditInputEntry.setOnKeyListener(mileageEditInputEntryOnKeyListener);
@@ -77,6 +84,8 @@ public class MileageEditActivity extends EditActivityBase {
         mileageEditInsertModeMileageRb = (RadioButton) findViewById(R.id.mileageEditInsertModeMileageRb);
         mileageEditInputLabel = ((TextView) findViewById(R.id.mileageEditInputLabel));
         mileageEditCalculatedTextLabel = ((TextView) findViewById(R.id.mileageEditCalculatedTextLabel));
+        mExpTypeSpinner = (Spinner)findViewById(R.id.mileageEditExpenseTypeSpinner);
+        mileageEditUserCommentEntry = (AutoCompleteTextView)findViewById(R.id.genUserCommentEntry);
 
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgMileageInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
@@ -99,17 +108,14 @@ public class MileageEditActivity extends EditActivityBase {
                                 .getString(MainDbAdapter.GEN_COL_NAME_POS);
 
             Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
-            mStartIndex = recordCursor.getFloat(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS);
-            Float stopIndex = recordCursor.getFloat(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS);
-            if(stopIndex == stopIndex.intValue())
-                mileageEditInputEntry.setText(Integer.toString(stopIndex.intValue()));
-            else
-                mileageEditInputEntry.setText(Float.toString(stopIndex));
+            mStartIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
+            BigDecimal stopIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
+            mileageEditInputEntry.setText(stopIndex.toString());
             mileageEditInsertModeIndexRb.setChecked(true);
             mInsertMode = Constants.mileageInsertModeNewIndex;
             initDateTime(recordCursor.getLong(MainDbAdapter.MILEAGE_COL_DATE_POS) * 1000);
             mileageEditUserCommentEntry.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
-            initSpinner(findViewById(R.id.mileageEditExpenseTypeSpinner), MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+            initSpinner(mExpTypeSpinner, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                     recordCursor.getLong(MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_POS), true);
         }
@@ -129,11 +135,9 @@ public class MileageEditActivity extends EditActivityBase {
             ((EditText) findViewById(R.id.mileageEditInputEntry)).requestFocus();
 
         }
-        
-        mileageEditUserCommentEntry = (AutoCompleteTextView)findViewById(R.id.genUserCommentEntry);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        userCommentAdapter = new ArrayAdapter<String>(me,
                 android.R.layout.simple_dropdown_item_1line, mMainDbHelper.getAutoCompleteMileageUserComments(mCarId,mDriverId));
-        mileageEditUserCommentEntry.setAdapter(adapter);
+        mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
         
         if(mInsertMode == Constants.mileageInsertModeNewIndex) {
             mileageEditInsertModeIndexRb.setChecked(true);
@@ -174,27 +178,24 @@ public class MileageEditActivity extends EditActivityBase {
 
     private void calculateMileageOrNewIndex() throws NumberFormatException {
         try{
-            BigDecimal pNewIndex = BigDecimal.ZERO;
+            BigDecimal pNewIndex = new BigDecimal("0");
 
             if(mileageEditStartIndexEntry.getText() == null
                     || mileageEditStartIndexEntry.getText().toString().length() == 0)
-                mStartIndex = Float.valueOf(0);
+                mStartIndex = new BigDecimal("0");
             else
-                mStartIndex = Float.valueOf(mileageEditStartIndexEntry.getText().toString());
+                mStartIndex = new BigDecimal(mileageEditStartIndexEntry.getText().toString());
 
             if(mileageEditInputEntry.getText().toString().length() == 0)
-                mEntryMileageValue = Float.valueOf(0);
+                mEntryMileageValue = new BigDecimal("0");
             else
-                mEntryMileageValue = Float.valueOf(mileageEditInputEntry.getText().toString());
+                mEntryMileageValue = new BigDecimal(mileageEditInputEntry.getText().toString());
 
-            BigDecimal pEntryMileageValue = new BigDecimal(mEntryMileageValue);
-            BigDecimal pStartIndex = new BigDecimal(mStartIndex);
+            BigDecimal pEntryMileageValue = mEntryMileageValue;
+            BigDecimal pStartIndex = mStartIndex;
 
             if(mInsertMode == Constants.mileageInsertModeNewIndex) { //new index
                 pNewIndex = pEntryMileageValue;
-//                Toast dbgToast = Toast.makeText( getApplicationContext(),
-//                        "pNewIndex=" + pNewIndex.toString() + "; pStartIndex=" + pStartIndex.toString(), Toast.LENGTH_SHORT );
-//                dbgToast.show();
                 if(pNewIndex.compareTo(pStartIndex) < 0) {
                     mileageEditCalculatedTextContent.setText("N/A");
                 }
@@ -204,25 +205,20 @@ public class MileageEditActivity extends EditActivityBase {
                 }
             }
             else { //mileage
-                pNewIndex = (new BigDecimal(mStartIndex)).add(pEntryMileageValue);
+                pNewIndex = mStartIndex.add(pEntryMileageValue);
                 mileageEditCalculatedTextContent.setText(pNewIndex.toString());
             }
-            mNewIndex = pNewIndex.floatValue();
+            mNewIndex = pNewIndex;
         }
         catch(NumberFormatException e){};
     }
 
-    private Float fillGetCurrentIndex() throws SQLException {
-        if(mStartIndex == 0)
-            mStartIndex = mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
-                    .getFloat(MainDbAdapter.CAR_COL_INDEXCURRENT_POS);
+    private BigDecimal fillGetCurrentIndex() throws SQLException {
+        if(mStartIndex.equals(new BigDecimal("0")))
+            mStartIndex = new BigDecimal(mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
+                    .getString(MainDbAdapter.CAR_COL_INDEXCURRENT_POS));
         
-        if(mStartIndex == mStartIndex.intValue()) {
-            mileageEditStartIndexEntry.setText(Integer.toString(mStartIndex.intValue()));
-        }
-        else {
-            mileageEditStartIndexEntry.setText(mStartIndex.toString());
-        }
+        mileageEditStartIndexEntry.setText(mStartIndex.toString());
         return mStartIndex;
     }
 
@@ -239,37 +235,60 @@ public class MileageEditActivity extends EditActivityBase {
                     return;
                 }
                 String operationResult = null;
+                ContentValues data = new ContentValues();
+                data.put( MainDbAdapter.GEN_COL_NAME_NAME, "");
+                data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
+                data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                        mileageEditUserCommentEntry.getText().toString());
+                data.put( MainDbAdapter.MILEAGE_COL_DATE_NAME, mDateTimeInSeconds);
+                data.put( MainDbAdapter.MILEAGE_COL_CAR_ID_NAME, mCarId);
+                data.put( MainDbAdapter.MILEAGE_COL_DRIVER_ID_NAME, mDriverId);
+                data.put( MainDbAdapter.MILEAGE_COL_INDEXSTART_NAME, mStartIndex.toString());
+                data.put( MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME, mNewIndex.toString());
+                data.put( MainDbAdapter.MILEAGE_COL_UOMLENGTH_ID_NAME, mUOMLengthId);
+                data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, mExpTypeSpinner.getSelectedItemId());
+                data.put( MainDbAdapter.MILEAGE_COL_GPSTRACKLOG_NAME, "");
                 if(operationType.equals("N")){
-                    operationResult = mMainDbHelper.createMileage(
-                            "", "Y", (mileageEditUserCommentEntry.getText().toString().length() > 0 ? mileageEditUserCommentEntry.getText().toString() : null),
-                            mDateTimeInSeconds, mCarId, mDriverId, mStartIndex, mNewIndex, mUOMLengthId,
-                            mPreferences.getLong("MileageInsertExpenseType_ID", -1), null);
+                    operationResult = mMainDbHelper.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
+                    if(operationResult == null){
+                        if(mMainDbHelper.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data) < 0){
+                            insertUpdateErrorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
+                            insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
+                            insertUpdateErrorAlert.show();
+                            return;
+                        }
+                    }
                 }
                 else{
-                    operationResult = mMainDbHelper.updateMileage(mRowId,
-                            "", "Y", (mileageEditUserCommentEntry.getText().toString().length() > 0 ? mileageEditUserCommentEntry.getText().toString() : null),
-                            mDateTimeInSeconds, mCarId, mDriverId, mStartIndex, mNewIndex, mUOMLengthId,
-                            mPreferences.getLong("MileageInsertExpenseType_ID", -1), null);
+                    operationResult = mMainDbHelper.checkIndex(mRowId, mCarId, mStartIndex, mNewIndex);
+                    if(operationResult == null){
+                        if(!mMainDbHelper.updateRecord(MainDbAdapter.MILEAGE_TABLE_NAME, mRowId, data)){
+                            insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_007));
+                            insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
+                            insertUpdateErrorAlert.show();
+                            return;
+                        }
+                    }
                 }
                 if( operationResult != null) //error
                 {
                     if(operationResult.equals(Constants.errStartIndexOverlap)){
-                        mileageInsertErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_001));
+                        insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_001));
                     }
                     else if(operationResult.equals(Constants.errNewIndexOverlap)){
-                        mileageInsertErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_002));
+                        insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_002));
                     }
                     else if(operationResult.equals(Constants.errMileageOverlap)){
-                        mileageInsertErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_003));
+                        insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_003));
                     }
                     else if(operationResult.equals(Constants.errStopBeforeStartIndex)){
-                        mileageInsertErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_004));
+                        insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_004));
                     }
                     else
-                        mileageInsertErrorAlertBuilder.setMessage(operationResult);
+                        insertUpdateErrorAlertBuilder.setMessage(operationResult);
                     
-                    mileageInsertErrorAlert = mileageInsertErrorAlertBuilder.create();
-                    mileageInsertErrorAlert.show();
+                    insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
+                    insertUpdateErrorAlert.show();
                 }
                 else{
                     Toast toast = Toast.makeText( getApplicationContext(),
@@ -278,17 +297,21 @@ public class MileageEditActivity extends EditActivityBase {
                                 : mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE)) ,
                             Toast.LENGTH_SHORT );
                     toast.show();
+                    userCommentAdapter = null;
+                    userCommentAdapter = new ArrayAdapter<String>(me,
+                            android.R.layout.simple_dropdown_item_1line, mMainDbHelper.getAutoCompleteMileageUserComments(mCarId,mDriverId));
+                    mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
                 }
 
                 //mileage inserted. reinit the activity for new mileage
 
                 if(operationType.equals("N")){
-                    mStartIndex = Float.valueOf(0);
+                    mStartIndex = BigDecimal.valueOf(0);
                     fillGetCurrentIndex();
 
                     mileageEditInputEntry.setText("");
-                    mNewIndex = Float.valueOf(0);
-                    mEntryMileageValue = Float.valueOf(0);
+                    mNewIndex = BigDecimal.valueOf(0);
+                    mEntryMileageValue = BigDecimal.valueOf(0);
                     mileageEditUserCommentEntry.setText("");
                     calculateMileageOrNewIndex();
                 }
