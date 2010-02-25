@@ -28,87 +28,141 @@
         android:layout_marginRight="5dip"
         >
 
-        <TextView
-            android:id="@+id/genNameLabel"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_NAME_LABEL"
-            />
-        <EditText
-            android:id="@+id/genNameEntry"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:tag="@string/GEN_NAME_LABEL"
-            android:background="@color/mandatory_bg"
-            />
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/genNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_NAME_LABEL"
+                />
+            <EditText
+                android:id="@+id/genNameEntry"
+                android:layout_marginLeft="10dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:tag="@string/GEN_NAME_LABEL"
+                android:background="@color/mandatory_bg"
+                />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/carEditCarRegNoLabel"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/CAR_EDIT_ACTIVITY_REG_NO"
-            />
-        <EditText
-            android:id="@+id/carEditCarRegNoEntry"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:tag="@string/CAR_EDIT_ACTIVITY_REG_NO"
-            android:background="@color/mandatory_bg"
-            />
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/carEditCarRegNoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CAR_EDIT_ACTIVITY_REG_NO"
+                />
+            <EditText
+                android:id="@+id/carEditCarRegNoEntry"
+                android:layout_marginLeft="10dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:tag="@string/CAR_EDIT_ACTIVITY_REG_NO"
+                android:background="@color/mandatory_bg"
+                />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/carEditCarStartIndexLabel"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/CAR_EDIT_ACTIVITY_STARTINDEX"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/carEditCarStartIndexLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CAR_EDIT_ACTIVITY_STARTINDEX"
+                />
+            <EditText
+                android:id="@+id/carEditCarStartIndexEntry"
+                android:layout_marginLeft="10dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:tag="@string/CAR_EDIT_ACTIVITY_STARTINDEX"
+                android:background="@color/mandatory_bg"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CAR_EDIT_ACTIVITY_UOMLENGTH"
             />
-        <EditText
-            android:id="@+id/carEditCarStartIndexEntry"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:numeric="decimal"
-            android:tag="@string/CAR_EDIT_ACTIVITY_STARTINDEX"
-            android:background="@color/mandatory_bg"
+            <Spinner android:id="@+id/carEditUomLengthSpinner"
+                android:layout_marginLeft="10dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
             />
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/CAR_EDIT_ACTIVITY_UOMLENGTH"
-        />
-        <Spinner android:id="@+id/carEditUomLengthSpinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:drawSelectorOnTop="true"
-            android:background="@color/mandatory_bg"
-            android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
-        />
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CAR_EDIT_ACTIVITY_UOMVOLUME"
+            />
+            <Spinner android:id="@+id/carEditUomVolumeSpinner"
+                android:layout_marginLeft="10dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+            />
+        </LinearLayout>
 
-        <TextView
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/CAR_EDIT_ACTIVITY_UOMVOLUME"
-        />
-        <Spinner android:id="@+id/carEditUomVolumeSpinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:drawSelectorOnTop="true"
-            android:background="@color/mandatory_bg"
-            android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
-        />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/CAR_EDIT_ACTIVITY_CURRENCY"
-        />
-        <Spinner android:id="@+id/carEditCurrencySpinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:drawSelectorOnTop="true"
-            android:background="@color/mandatory_bg"
-            android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
-        />
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CAR_EDIT_ACTIVITY_CURRENCY"
+            />
+            <Spinner android:id="@+id/carEditCurrencySpinner"
+                android:layout_marginLeft="10dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+            />
+        </LinearLayout>
 
         <CheckBox
             android:id="@+id/genIsActiveCheck"
@@ -117,18 +171,27 @@
             android:text="@string/GEN_ISACTIVE_LABEL"
             />
 
-        <TextView
-            android:id="@+id/carEditCarModelLabel"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/CAR_EDIT_ACTIVITY_MODEL"
-            />
-        <EditText
-            android:id="@+id/carEditCarModelEntry"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
-            />
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/carEditCarModelLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CAR_EDIT_ACTIVITY_MODEL"
+                />
+            <EditText
+                android:id="@+id/carEditCarModelEntry"
+                android:layout_marginLeft="10dip"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/genUserCommentLabel"

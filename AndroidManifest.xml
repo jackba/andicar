@@ -112,5 +112,10 @@
             android:name="org.andicar.activity.MileageListReportActivity"
             android:label="@string/APP_ACTIVITY_MILEAGE_LIST">
         </activity>
+
+        <activity
+            android:name="org.andicar.activity.RefuelListReportActivity"
+            android:label="@string/APP_ACTIVITY_REFUEL_LIST">
+        </activity>
     </application>
 </manifest>

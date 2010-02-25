@@ -27,20 +27,20 @@ import org.andicar.utils.Constants;
  *
  * @author miki
  */
-public class MileageListReportActivity extends ReportListActivityBase{
+public class RefuelListReportActivity extends ReportListActivityBase{
 
     @Override
     public void onCreate( Bundle icicle )
     {
         Long mCarId = getSharedPreferences( Constants.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
 
-        super.onCreate( icicle, null, MileageEditActivity.class,
-                MainDbAdapter.MILEAGE_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
+        super.onCreate( icicle, null, RefuelEditActivity.class,
+                MainDbAdapter.REFUEL_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null,
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.threeLineListReportText1, R.id.threeLineListReportText2, R.id.threeLineListReportText3},
-                "reportMileageListViewSelect",  new String[] {mCarId.toString()});
+                "reportRefuelListViewSelect",  new String[] {mCarId.toString()});
 
     }
 }

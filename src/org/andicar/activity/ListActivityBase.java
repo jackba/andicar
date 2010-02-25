@@ -97,7 +97,8 @@ public class ListActivityBase extends ListActivity {
 
         fillData( );
         
-        if( getListAdapter() == null || getListAdapter().getCount() == 0 ) {
+        if( !(this instanceof ReportListActivityBase) &&
+                (getListAdapter() == null || getListAdapter().getCount() == 0) ) {
             Intent i = new Intent( this, editClass );
             startActivityForResult( i, Constants.ACTIVITY_NEW_REQUEST_CODE );
         }
@@ -128,32 +129,39 @@ public class ListActivityBase extends ListActivity {
     {
         optionsMenu = menu;
         optionsMenu.add( 0, Constants.OPTION_MENU_ADD_ID, 0, mRes.getText( R.string.MENU_ADD_NEW_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_add ) );
-        if(!showInactiveRecords)
-            optionsMenu.add( 0, Constants.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText( R.string.MENU_SHOWINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_inactive ) );
-        else
-            optionsMenu.add( 0, Constants.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText( R.string.MENU_HIDEINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_active ) );
+        if(!(this instanceof ReportListActivityBase)){
+            if(!showInactiveRecords)
+                optionsMenu.add( 0, Constants.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText( R.string.MENU_SHOWINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_inactive ) );
+            else
+                optionsMenu.add( 0, Constants.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText( R.string.MENU_HIDEINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_active ) );
+        }
         return true;
     }
 
     @Override
     public boolean onContextItemSelected( MenuItem item )
     {
-        SharedPreferences settings = getSharedPreferences( Constants.GLOBAL_PREFERENCE_NAME, 0 );
-
         switch( item.getItemId() ) {
             case Constants.CONTEXT_MENU_EDIT_ID:
                 Intent i = new Intent( this, mEditClass );
                 i.putExtra( MainDbAdapter.GEN_COL_ROWID_NAME, mLongClickId );
                 if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)){
-                    i.putExtra( "CurrentCar_ID", settings.getLong( "CurrentCar_ID", -1 ) );
+                    i.putExtra( "CurrentCar_ID", mPreferences.getLong( "CurrentCar_ID", -1 ) );
                 }
                 else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)){
-                    i.putExtra( "CurrentDriver_ID", settings.getLong( "CurrentDriver_ID", -1 ) );
+                    i.putExtra( "CurrentDriver_ID", mPreferences.getLong( "CurrentDriver_ID", -1 ) );
                 }
                 else if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)){
                     i.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
                     i.putExtra( "Operation", "E" );
                 }
+                else if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)){
+                    i.putExtra( "Operation", "E" );
+                }
+                else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)){
+                    i.putExtra( "Operation", "E" );
+                }
+
                 startActivityForResult( i, Constants.ACTIVITY_EDIT_REQUEST_CODE );
                 return true;
             case Constants.CONTEXT_MENU_DELETE_ID:
@@ -194,6 +202,21 @@ public class ListActivityBase extends ListActivity {
                     insertIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
                     insertIntent.putExtra( "Operation", "N");
                 }
+                else if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)){
+                    insertIntent.putExtra( "CurrentCar_ID", mPreferences.getLong( "CurrentCar_ID", -1 ) );
+                    insertIntent.putExtra( "CurrentDriver_ID", mPreferences.getLong( "CurrentDriver_ID", -1 ) );
+                    insertIntent.putExtra( "CurrentDriver_Name", mPreferences.getString( "CurrentDriver_Name", "" ));
+                    insertIntent.putExtra( "CurrentCar_Name", mPreferences.getString( "CurrentCar_Name", "" ));
+                    insertIntent.putExtra( "Operation", "N" );
+                }
+                else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)){
+                    insertIntent.putExtra( "CurrentCar_ID", mPreferences.getLong( "CurrentCar_ID", -1 ) );
+                    insertIntent.putExtra( "CurrentDriver_ID", mPreferences.getLong( "CurrentDriver_ID", -1 ) );
+                    insertIntent.putExtra( "CurrentDriver_Name", mPreferences.getString( "CurrentDriver_Name", "" ));
+                    insertIntent.putExtra( "CurrentCar_Name", mPreferences.getString( "CurrentCar_Name", "" ));
+                    insertIntent.putExtra( "Operation", "N" );
+                }
+
                 startActivityForResult( insertIntent, Constants.ACTIVITY_NEW_REQUEST_CODE );
         }
         return super.onContextItemSelected( item );
@@ -203,7 +226,6 @@ public class ListActivityBase extends ListActivity {
     protected void onActivityResult( int requestCode, int resultCode, Intent intent )
     {
         super.onActivityResult( requestCode, resultCode, intent );
-//		Bundle extras = intent.getExtras();
 
         switch( requestCode ) {
             case Constants.ACTIVITY_NEW_REQUEST_CODE:
@@ -269,12 +291,26 @@ public class ListActivityBase extends ListActivity {
     {
         switch( item.getItemId() ) {
             case Constants.OPTION_MENU_ADD_ID:
-                Intent i = new Intent( this, mEditClass );
+                Intent insertIntent = new Intent( this, mEditClass );
                 if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)){
-                    i.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
-                    i.putExtra( "Operation", "N");
+                    insertIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
+                    insertIntent.putExtra( "Operation", "N");
                 }
-                startActivityForResult( i, Constants.ACTIVITY_NEW_REQUEST_CODE );
+                else if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)){
+                    insertIntent.putExtra( "CurrentCar_ID", mPreferences.getLong( "CurrentCar_ID", -1 ) );
+                    insertIntent.putExtra( "CurrentDriver_ID", mPreferences.getLong( "CurrentDriver_ID", -1 ) );
+                    insertIntent.putExtra( "CurrentDriver_Name", mPreferences.getString( "CurrentDriver_Name", "" ));
+                    insertIntent.putExtra( "CurrentCar_Name", mPreferences.getString( "CurrentCar_Name", "" ));
+                    insertIntent.putExtra( "Operation", "N" );
+                }
+                else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)){
+                    insertIntent.putExtra( "CurrentCar_ID", mPreferences.getLong( "CurrentCar_ID", -1 ) );
+                    insertIntent.putExtra( "CurrentDriver_ID", mPreferences.getLong( "CurrentDriver_ID", -1 ) );
+                    insertIntent.putExtra( "CurrentDriver_Name", mPreferences.getString( "CurrentDriver_Name", "" ));
+                    insertIntent.putExtra( "CurrentCar_Name", mPreferences.getString( "CurrentCar_Name", "" ));
+                    insertIntent.putExtra( "Operation", "N" );
+                }
+                startActivityForResult( insertIntent, Constants.ACTIVITY_NEW_REQUEST_CODE );
                 return true;
             case Constants.OPTION_MENU_SHOWINACTIVE_ID:
                 showInactiveRecords = true;

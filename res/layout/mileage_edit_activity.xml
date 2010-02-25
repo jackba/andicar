@@ -60,7 +60,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="10dip"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/mileageEditInputLabel"
@@ -82,6 +82,7 @@
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
+            android:layout_marginTop="10dip"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/mileageEditCalculatedTextLabel"
@@ -101,15 +102,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/GEN_USER_COMMENT_LABEL"
+            android:layout_marginTop="10dip"
             />
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/genUserCommentEntry"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:background="@android:drawable/editbox_background"
             />
 
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_marginTop="10dip"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">

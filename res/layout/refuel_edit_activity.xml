@@ -223,7 +223,7 @@
             android:layout_height="wrap_content"
             android:text="@string/GEN_USER_COMMENT_LABEL"
             />
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/genUserCommentEntry"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

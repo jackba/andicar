@@ -32,6 +32,7 @@
     <string name="APP_ACTIVITY_CURRENCYEDIT">"Edit currencies"</string>
     <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
     <string name="APP_ACTIVITY_MILEAGE_LIST">"Mileges"</string>
+    <string name="APP_ACTIVITY_REFUEL_LIST">"Refuels"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -40,7 +41,7 @@
     <string name="GEN_CHOSEONE_DIALOGTITLE">"Chose one"</string>
     <string name="GEN_ISACTIVE_LABEL">"Active"</string>
     <string name="GEN_USER_COMMENT_LABEL">"Comment"</string>
-    <string name="GEN_NAME_LABEL">"Name"</string>
+    <string name="GEN_NAME_LABEL">"Name:"</string>
     <string name="GEN_LBLDATETIME_CAPTION">"<b><i>Date and time:</i></b>"</string>
     <string name="GEN_PICK_DATE_BUTTON_CAPTION">"Change date"</string>
     <string name="GEN_PICK_TIME_BUTTON_CAPTION">"Change time"</string>
@@ -56,37 +57,38 @@
     <string name="MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION">"Add mileage"</string>
     <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"Add refuel"</string>
     <string name="MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION">"Mileages"</string>
+    <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"Refuels"</string>
 
-    <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No."</string>
+    <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>
     <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Cannot be selected."</string>
     <string name="CURRENT_DRIVER_DELETE_ERROR_MESSAGE">"The current driver cannot be deleted."</string>
     <string name="CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE">"The current driver cannot be inactivated."</string>
     <string name="CURRENT_DRIVER_NAME">"Driver: "</string>
 
-    <string name="CAR_EDIT_ACTIVITY_MODEL">"Car model"</string>
-    <string name="CAR_EDIT_ACTIVITY_REG_NO">"License plate"</string>
-    <string name="CAR_EDIT_ACTIVITY_UOMLENGTH">"UOM for distance"</string>
-    <string name="CAR_EDIT_ACTIVITY_UOMVOLUME">"UOM for volume"</string>
-    <string name="CAR_EDIT_ACTIVITY_STARTINDEX">"Current index"</string>
-    <string name="CAR_EDIT_ACTIVITY_CURRENCY">"Default currency"</string>
+    <string name="CAR_EDIT_ACTIVITY_MODEL">"Model:"</string>
+    <string name="CAR_EDIT_ACTIVITY_REG_NO">"License plate:"</string>
+    <string name="CAR_EDIT_ACTIVITY_UOMLENGTH">"UOM for distance:"</string>
+    <string name="CAR_EDIT_ACTIVITY_UOMVOLUME">"UOM for volume:"</string>
+    <string name="CAR_EDIT_ACTIVITY_STARTINDEX">"Start index:"</string>
+    <string name="CAR_EDIT_ACTIVITY_CURRENCY">"Default currency:"</string>
     <string name="NO_CARS">"No cars defined yet"</string>
     <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Cannot be selected."</string>
     <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car cannot be deleted."</string>
     <string name="CURRENT_CAR_INACTIVATE_ERROR_MESSAGE">"The current car cannot be inactivated."</string>
     <string name="CURRENT_CAR_NAME">"Car: "</string>
 
-    <string name="UOM_EDIT_ACTIVITY_CODE">"Code"</string>
+    <string name="UOM_EDIT_ACTIVITY_CODE">"Code:"</string>
     <string name="UOM_EDIT_ACTIVITY_TITLE_LENGTH">"distance"</string>
     <string name="UOM_EDIT_ACTIVITY_TITLE_VOLUME">"volume"</string>
     <string name="UOM_CANNOT_DELETE_ERROR_MESSAGE">"This UOM cannot be deleted.\nIt is used in cars definition."</string>
 
-    <string name="UOMCONVERSION_EDIT_ACTIVITY_CODE">"Code"</string>
-    <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMFROM">"From uom"</string>
-    <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMTO">"To uom"</string>
-    <string name="UOMCONVERSION_EDIT_ACTIVITY_RATE">"Conversion rate"</string>
+    <string name="UOMCONVERSION_EDIT_ACTIVITY_CODE">"Code:"</string>
+    <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMFROM">"From uom:"</string>
+    <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMTO">"To uom:"</string>
+    <string name="UOMCONVERSION_EDIT_ACTIVITY_RATE">"Conversion rate:"</string>
 
-    <string name="CURRENCY_EDIT_ACTIVITY_CODE">"Code"</string>
+    <string name="CURRENCY_EDIT_ACTIVITY_CODE">"Code:"</string>
 
     <string name="MILEAGE_EDIT_ACTIVITY_STARTINDEX">"Start index:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION">"<b><i>Insert mode:</i></b>"</string>
@@ -97,6 +99,9 @@
     <string name="MILEAGE_EDIT_ACTIVITY_EXPENSETYPE">"Expense type:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION">"Done"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE">"Mileage added.\nYou can continue with adding new milege(s)."</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE">"Mileage updated."</string>
+    <string name="MILEAGE_LISTREPORT_ACTIVITY_NOCOMMENT_TEXT">"Without user comment"</string>
+
 
     <string name="REFUEL_EDIT_ACTIVITY_CAR_LABEL">"Car:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_DRIVER_LABEL">"Driver:"</string>

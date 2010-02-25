@@ -50,6 +50,8 @@ public class MainActivity extends Activity
     private Button mileageInsertBtn;
     private Button refuelInsertBtn;
     private Button mileageListBtn;
+    private Button refuelListBtn;
+
     private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 0;
 
     /** Called when the activity is first created. */
@@ -69,6 +71,8 @@ public class MainActivity extends Activity
         refuelInsertBtn.setOnClickListener(btnInsertRefuelClickListener);
         mileageListBtn = (Button) findViewById(R.id.btnMainMileageList);
         mileageListBtn.setOnClickListener(btnMileageListClickListener);
+        refuelListBtn = (Button) findViewById(R.id.btnMainRefuelList);
+        refuelListBtn.setOnClickListener(btnRefuelListClickListener);
 
         fillDriverCar();
 }
@@ -78,8 +82,9 @@ public class MainActivity extends Activity
             Intent mileageInsertIntent = new Intent(mainContext, MileageEditActivity.class);
             mileageInsertIntent.putExtra("CurrentDriver_ID", currentDriverID);
             mileageInsertIntent.putExtra("CurrentCar_ID", currentCarID);
-            mileageInsertIntent.putExtra("currentDriverName", currentDriverName);
-            mileageInsertIntent.putExtra("currentCarName", currentCarName);
+            mileageInsertIntent.putExtra("CurrentDriver_Name", currentDriverName);
+            mileageInsertIntent.putExtra("CurrentCar_Name", currentCarName);
+            mileageInsertIntent.putExtra( "Operation", "N" );
             startActivityForResult( mileageInsertIntent, ACTIVITY_MILEAGEINSERT_REQUEST_CODE );
         }
     };
@@ -89,8 +94,9 @@ public class MainActivity extends Activity
             Intent refuelInsertIntent = new Intent(mainContext, RefuelEditActivity.class);
             refuelInsertIntent.putExtra("CurrentDriver_ID", currentDriverID);
             refuelInsertIntent.putExtra("CurrentCar_ID", currentCarID);
-            refuelInsertIntent.putExtra("currentDriverName", currentDriverName);
-            refuelInsertIntent.putExtra("currentCarName", currentCarName);
+            refuelInsertIntent.putExtra("CurrentDriver_Name", currentDriverName);
+            refuelInsertIntent.putExtra("CurrentCar_Name", currentCarName);
+            refuelInsertIntent.putExtra( "Operation", "N" );
             startActivityForResult( refuelInsertIntent, ACTIVITY_REFUELINSERT_REQUEST_CODE );
         }
     };
@@ -98,6 +104,13 @@ public class MainActivity extends Activity
     private OnClickListener btnMileageListClickListener =  new OnClickListener() {
         public void onClick(View arg0) {
             Intent mileageReportIntent = new Intent(mainContext, MileageListReportActivity.class);
+            startActivity( mileageReportIntent );
+        }
+    };
+
+    private OnClickListener btnRefuelListClickListener =  new OnClickListener() {
+        public void onClick(View arg0) {
+            Intent mileageReportIntent = new Intent(mainContext, RefuelListReportActivity.class);
             startActivity( mileageReportIntent );
         }
     };

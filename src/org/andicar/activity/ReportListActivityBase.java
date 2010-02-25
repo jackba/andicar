@@ -30,6 +30,7 @@ import org.andicar.persistence.ReportDbAdapter;
  */
 public class ReportListActivityBase extends ListActivityBase{
     protected ReportDbAdapter mReportDbHelper = null;
+    
 
     protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
             String editTableName, String[] editTableColumns, String whereCondition, String orderByColumn,

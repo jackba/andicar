@@ -32,7 +32,6 @@ import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import java.sql.Timestamp;
 import java.util.Calendar;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.Constants;
@@ -65,7 +64,7 @@ public abstract class EditActivityBase extends Activity {
     protected int mDay;
     protected int mHour;
     protected int mMinute;
-    protected long mDateTime;
+    protected long mDateTimeInSeconds;
     protected TextView mDateTimeLabel;
     protected final Calendar mDateTimeCalendar = Calendar.getInstance();
 
@@ -193,9 +192,9 @@ public abstract class EditActivityBase extends Activity {
        return null;
    }
 
-   protected void initDateTime(long dateTime){
-        mDateTime = dateTime;
-        mDateTimeCalendar.setTimeInMillis(mDateTime);
+   protected void initDateTime(long dateTimeInMiliseconds){
+        mDateTimeInSeconds = dateTimeInMiliseconds / 1000;
+        mDateTimeCalendar.setTimeInMillis(dateTimeInMiliseconds);
         mYear = mDateTimeCalendar.get(Calendar.YEAR);
         mMonth = mDateTimeCalendar.get(Calendar.MONTH);
         mDay = mDateTimeCalendar.get(Calendar.DAY_OF_MONTH);
@@ -266,7 +265,7 @@ public abstract class EditActivityBase extends Activity {
 
     private void updateDateTime() {
         mDateTimeCalendar.set(mYear, mMonth, mDay, mHour, mMinute, 0);
-        mDateTime = mDateTimeCalendar.getTimeInMillis();
+        mDateTimeInSeconds = mDateTimeCalendar.getTimeInMillis() / 1000;
         mDateTimeLabel.setText(
                 new StringBuilder() // Month is 0 based so add 1
                 .append(pad(mMonth + 1)).append("-").append(pad(mDay)).append("-").append(mYear).append(" ").append(pad(mHour)).append(":").append(pad(mMinute)));

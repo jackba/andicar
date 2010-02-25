@@ -23,6 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.UrlQuerySanitizer.ValueSanitizer;
 import android.util.Log;
+import java.util.ArrayList;
 import org.andicar.utils.Constants;
 
 public class MainDbAdapter
@@ -279,7 +280,7 @@ public class MainDbAdapter
             + REFUEL_COL_UOMVOLUME_ID_NAME + " INTEGER, "
             + REFUEL_COL_PRICE_NAME + " NUMERIC, "
             + REFUEL_COL_CURRENCY_ID_NAME + " INTEGER, "
-            + REFUEL_COL_DATE_NAME  + " INTEGER NULL, "
+            + REFUEL_COL_DATE_NAME  + " DATE NULL, "
             + REFUEL_COL_DOCUMENTNO_NAME + " TEXT NULL "
             + ");";
 
@@ -408,13 +409,22 @@ public class MainDbAdapter
                 db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX2 " +
                                 "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DRIVER_ID_NAME + ")");
                 db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX3 " +
-                                "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + ")");
+                                "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
+                db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX4 " +
+                                "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_INDEXSTOP_NAME + " DESC )");
+                db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX5 " +
+                                "ON " + MILEAGE_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
 
                 //create & init currencies
                 createCurrencyTable( db );
 
                 //refuel table
                 db.execSQL(REFUEL_TABLE_CREATE_SQL);
+                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX1 " +
+                                "ON " + REFUEL_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
+                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX2 " +
+                                "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
+
             }
             catch(SQLException ex){
                 Log.e(TAG, ex.getMessage());
@@ -523,4 +533,221 @@ public class MainDbAdapter
         return null;
     }
 
+    //mileage specific
+    /**
+     * Create a new car.
+     * If the record is successfully created return the new rowId for that record, otherwise return
+     * a -1 to indicate failure.
+     *
+     * @param mName (not used)
+     * @param mIsActive the user is active or not
+     * @param mUserComment an arbitrary comment/helper text
+     * @param mDateTime the date of the stop index
+     * @param mCarId the id of the car
+     * @param mDriverId the id of the driver
+     * @param mStartIndex start index
+     * @param mStopIndex stop index
+     * @param mUOMLengthId uom for length (used for uom conversion in reports)
+     * @param mExpTypeId expense type id
+     * @param mGpsTrackLog gps track log data (not used yet)
+     * @return null or the error message
+     */
+    public String createMileage( String mName, String mIsActive, String mUserComment ,
+            long mDateTime, long mCarId, long mDriverId,
+            float mStartIndex, float mStopIndex, long mUOMLengthId,
+            long mExpTypeId, String mGpsTrackLog)
+    {
+        String retVal = null;
+        retVal = checkIndex(-1, mCarId, mStartIndex, mStopIndex);
+        if(retVal != null)
+            return retVal;
+
+        Long mileageId = new Long(-1);
+        ContentValues data = new ContentValues();
+        data.put( GEN_COL_NAME_NAME, mName );
+        data.put( GEN_COL_ISACTIVE_NAME, mIsActive );
+        data.put( GEN_COL_USER_COMMENT_NAME, mUserComment );
+        data.put(MILEAGE_COL_DATE_NAME, mDateTime);
+        data.put(MILEAGE_COL_CAR_ID_NAME, mCarId);
+        data.put(MILEAGE_COL_DRIVER_ID_NAME, mDriverId);
+        data.put(MILEAGE_COL_INDEXSTART_NAME, mStartIndex);
+        data.put(MILEAGE_COL_INDEXSTOP_NAME, mStopIndex);
+        data.put(MILEAGE_COL_UOMLENGTH_ID_NAME, mUOMLengthId);
+        data.put(MILEAGE_COL_EXPENSETYPE_ID_NAME, mExpTypeId);
+        data.put(MILEAGE_COL_GPSTRACKLOG_NAME, mGpsTrackLog);
+        try{
+            Float carCurrentIndex = fetchRecord(CAR_TABLE_NAME, carTableColNames, mCarId)
+                .getFloat(CAR_COL_INDEXCURRENT_POS);
+
+            mDb.beginTransaction();
+            mileageId = mDb.insert( MILEAGE_TABLE_NAME, null, data );
+            if(mileageId < 0)
+                throw new SQLException("Mileage insert error");
+            //update car curent index
+
+            if(mStopIndex > carCurrentIndex)
+            {
+                data.clear();
+                data.put(CAR_COL_INDEXCURRENT_NAME, mStopIndex);
+                if(mDb.update( CAR_TABLE_NAME, data, GEN_COL_ROWID_NAME + "=" + mCarId, null ) == 0)
+                    throw new SQLException("Car Update error");
+            }
+            mDb.setTransactionSuccessful();
+        }catch(SQLException e){
+            retVal = e.getMessage();
+        }
+        finally{
+            mDb.endTransaction();
+        }
+
+        return retVal;
+
+    }
+
+    /**
+     * Update the Mileage using the details provided. The Mileage to be updated is
+     * specified using the rowId, and it is altered to use the values passed in
+     *
+     * @param rowId id of note to update
+     * @param mName the name of the Mileage
+     * @param mIsActive the Mileage is active or not
+     * @param mUserComment user comment/help
+     * @param mDateTime the date of the stop index
+     * @param mCarId the id of the car
+     * @param mDriverId the id of the driver
+     * @param mStartIndex start index
+     * @param mStopIndex stop index
+     * @param mUOMLengthId uom for length (used for uom conversion in reports)
+     * @param mExpTypeId expense type id
+     * @param mGpsTrackLog gps track log data (not used yet)
+     * @return true if the Mileage was successfully updated, false otherwise
+     */
+    public String updateMileage( long rowId, String mName, String mIsActive, String mUserComment ,
+                    long mDateTime, long mCarId, long mDriverId,
+                    float mStartIndex, float mStopIndex, long mUOMLengthId,
+                    long mExpTypeId, String mGpsTrackLog)
+    {
+        String retVal = checkIndex(rowId, mCarId, mStartIndex, mStopIndex);
+        if(retVal != null)
+            return retVal;
+
+        ContentValues data = new ContentValues();
+        data.put( GEN_COL_NAME_NAME, mName );
+        data.put( GEN_COL_ISACTIVE_NAME, mIsActive );
+        data.put( GEN_COL_USER_COMMENT_NAME, mUserComment );
+        data.put(MILEAGE_COL_DATE_NAME, mDateTime);
+        data.put(MILEAGE_COL_CAR_ID_NAME, mCarId);
+        data.put(MILEAGE_COL_DRIVER_ID_NAME, mDriverId);
+        data.put(MILEAGE_COL_INDEXSTART_NAME, mStartIndex);
+        data.put(MILEAGE_COL_INDEXSTOP_NAME, mStopIndex);
+        data.put(MILEAGE_COL_UOMLENGTH_ID_NAME, mUOMLengthId);
+        data.put(MILEAGE_COL_EXPENSETYPE_ID_NAME, mExpTypeId);
+        data.put(MILEAGE_COL_GPSTRACKLOG_NAME, mGpsTrackLog);
+
+        try{
+            Float carCurrentIndex = fetchRecord(CAR_TABLE_NAME, carTableColNames, mCarId)
+                .getFloat(CAR_COL_INDEXCURRENT_POS);
+            mDb.beginTransaction();
+            if(mDb.update( MILEAGE_TABLE_NAME, data, GEN_COL_ROWID_NAME + "=" + rowId, null ) == 0)
+                throw new SQLException("Mileage insert error");
+            //update the car curent index
+            if(mStopIndex > carCurrentIndex)
+            {
+                data.clear();
+                data.put(CAR_COL_INDEXCURRENT_NAME, mStopIndex);
+                if(mDb.update( CAR_TABLE_NAME, data, GEN_COL_ROWID_NAME + "=" + mCarId, null ) == 0)
+                    throw new SQLException("Car Update error");
+            }
+            mDb.setTransactionSuccessful();
+        }catch(SQLException e){
+            retVal = e.getMessage();
+        }
+        finally{
+            mDb.endTransaction();
+        }
+        return retVal;
+    }
+
+
+    private String checkIndex(long rowId,long carId, float startIndex, float stopIndex){
+
+        if(stopIndex <= startIndex)
+            return Constants.errStopBeforeStartIndex;
+
+        String checkSql = "";
+        checkSql = "SELECT * " +
+                    " FROM " + MILEAGE_TABLE_NAME +
+                    " WHERE " + MILEAGE_COL_CAR_ID_NAME + "=" + carId +
+                            " AND " + MILEAGE_COL_INDEXSTART_NAME + " <= " + startIndex +
+                                " AND " + MILEAGE_COL_INDEXSTOP_NAME + " > " + startIndex;
+        if (rowId >= 0)
+            checkSql = checkSql + " AND " + GEN_COL_ROWID_NAME + "<>" + rowId;
+
+        if(mDb.rawQuery(checkSql, null).getCount() > 0)
+            return Constants.errStartIndexOverlap;
+        checkSql = "SELECT * " +
+                    " FROM " + MILEAGE_TABLE_NAME +
+                    " WHERE " + MILEAGE_COL_CAR_ID_NAME + "=" + carId +
+                            " AND " + MILEAGE_COL_INDEXSTART_NAME + " < " + stopIndex +
+                                " AND " + MILEAGE_COL_INDEXSTOP_NAME + " >= " + stopIndex;
+        if (rowId >= 0)
+            checkSql = checkSql + " AND " + GEN_COL_ROWID_NAME + "<>" + rowId;
+        if(mDb.rawQuery(checkSql, null).getCount() > 0)
+            return Constants.errNewIndexOverlap;
+
+        checkSql = "SELECT * " +
+                    " FROM " + MILEAGE_TABLE_NAME +
+                    " WHERE " + MILEAGE_COL_CAR_ID_NAME + "=" + carId +
+                            " AND " + MILEAGE_COL_INDEXSTART_NAME + " >= " + startIndex +
+                                " AND " + MILEAGE_COL_INDEXSTOP_NAME + " <= " + stopIndex;
+        if (rowId >= 0)
+            checkSql = checkSql + " AND " + GEN_COL_ROWID_NAME + "<>" + rowId;
+
+        if(mDb.rawQuery(checkSql, null).getCount() > 0)
+            return Constants.errMileageOverlap;
+
+        return null;
+    }
+
+    public String[] getAutoCompleteMileageUserComments(long carId, long driverId){
+        String[] retVal = null;
+        ArrayList<String> commentList = new ArrayList<String>();
+        String selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
+                            " FROM " + MILEAGE_TABLE_NAME +
+                            " WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + carId +
+                                " AND " + MILEAGE_COL_DRIVER_ID_NAME  + " = " + driverId +
+                                " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
+                                " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
+                            " ORDER BY " + MILEAGE_COL_INDEXSTOP_NAME + " DESC " +
+                            " LIMIT 100";
+        Cursor commentCursor = mDb.rawQuery(selectSql, null);
+        while(commentCursor.moveToNext()){
+            commentList.add(commentCursor.getString(0));
+        }
+        commentCursor.close();
+        retVal = new String[commentList.size()];
+        commentList.toArray(retVal);
+        return retVal;
+    }
+
+    public String[] getAutoCompleteRefuelUserComments(long carId, long driverId){
+        String[] retVal = null;
+        ArrayList<String> commentList = new ArrayList<String>();
+        String selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
+                            " FROM " + REFUEL_TABLE_NAME +
+                            " WHERE " + REFUEL_COL_CAR_ID_NAME + " = " + carId +
+                                " AND " + REFUEL_COL_DRIVER_ID_NAME  + " = " + driverId +
+                                " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
+                                " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
+                            " ORDER BY " + REFUEL_COL_DATE_NAME + " DESC " +
+                            " LIMIT 100";
+        Cursor commentCursor = mDb.rawQuery(selectSql, null);
+        while(commentCursor.moveToNext()){
+            commentList.add(commentCursor.getString(0));
+        }
+        commentCursor.close();
+        retVal = new String[commentList.size()];
+        commentList.toArray(retVal);
+        return retVal;
+    }
 }
