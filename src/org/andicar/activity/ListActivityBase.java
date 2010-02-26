@@ -57,6 +57,9 @@ public class ListActivityBase extends ListActivity {
     protected MainDbAdapter mMainDbHelper = null;
     protected Bundle extras = null;
 
+    AlertDialog.Builder errorAlertBuilder;
+    AlertDialog errorAlert;
+
     /** Use instead  */
     @Override
     @Deprecated
@@ -69,6 +72,19 @@ public class ListActivityBase extends ListActivity {
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo) {
 
         super.onCreate(icicle);
+        mRes = getResources();
+        mPreferences = getSharedPreferences(Constants.GLOBAL_PREFERENCE_NAME, 0);
+
+        if(mMainDbHelper == null)
+            mMainDbHelper = new MainDbAdapter(this);
+
+        if(extras == null)
+            extras = getIntent().getExtras();
+
+
+        errorAlertBuilder = new AlertDialog.Builder( this );
+        errorAlertBuilder.setCancelable( false );
+        errorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
 
         mEditClass = editClass;
         mTableName = tableName;
@@ -78,15 +94,6 @@ public class ListActivityBase extends ListActivity {
         mLayoutId = pLayoutId;
         mDbMapFrom = pDbMapFrom;
         mLayoutIdTo = pLayoutIdTo;
-
-        mRes = getResources();
-        mPreferences = getSharedPreferences(Constants.GLOBAL_PREFERENCE_NAME, 0);
-
-        if(mMainDbHelper == null)
-            mMainDbHelper = new MainDbAdapter(this);
-
-        if(extras == null)
-            extras = getIntent().getExtras();
 
         ListView lv = getListView();
         lv.setTextFilterEnabled( true );

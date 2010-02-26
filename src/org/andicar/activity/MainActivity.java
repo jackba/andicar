@@ -94,12 +94,13 @@ public class MainActivity extends Activity
         threeLineListRefuelText2 = (TextView)findViewById(R.id.mainActivityThreeLineListRefuelText2);
         threeLineListRefuelText3 = (TextView)findViewById(R.id.mainActivityThreeLineListRefuelText3);
 
-        fillDriverCar();
+//        fillDriverCar();
 }
 
     @Override
     protected void onResume() {
         super.onResume();
+        fillDriverCar();
         Bundle whereConditions = new Bundle();
         whereConditions.putString(
                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
@@ -110,6 +111,11 @@ public class MainActivity extends Activity
             threeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             threeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             threeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+        }
+        else{
+            threeLineListMileageText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOMILEAGETEXT));
+            threeLineListMileageText2.setText("");
+            threeLineListMileageText3.setText("");
         }
         listCursor = null;
         whereConditions.clear();
@@ -122,6 +128,11 @@ public class MainActivity extends Activity
             threeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             threeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             threeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+        }
+        else{
+            threeLineListRefuelText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOREFUELTEXT));
+            threeLineListRefuelText2.setText("");
+            threeLineListRefuelText3.setText("");
         }
         listCursor = null;
     }
@@ -242,10 +253,10 @@ public class MainActivity extends Activity
         super.onActivityResult( requestCode, resultCode, intent );
 //		Bundle extras = intent.getExtras();
 
-        switch( requestCode ) {
-            case SETTINGS_ACTIVITY_REQUEST_CODE:
-                fillDriverCar();
-                break;
-        }
+//        switch( requestCode ) {
+//            case SETTINGS_ACTIVITY_REQUEST_CODE:
+//                fillDriverCar();
+//                break;
+//        }
     }
 }

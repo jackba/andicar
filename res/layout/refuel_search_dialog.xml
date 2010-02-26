@@ -124,50 +124,5 @@
                 />
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                android:id="@+id/searchDriverLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/CURRENT_DRIVER_NAME"
-                />
-            <Spinner android:id="@+id/searchDriverSpinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="2dip"
-                android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dip"
-            >
-            <TextView
-                android:id="@+id/searchCarLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/CURRENT_CAR_NAME"
-                />
-            <Spinner android:id="@+id/searchCarSpinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="2dip"
-                android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
-                />
-        </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

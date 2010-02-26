@@ -21,4 +21,5 @@
     <string name="ERR_005">"Conversion rate already exist"</string>
     <string name="ERR_006">"Error on creating record!"</string>
     <string name="ERR_007">"Error on modifying record!"</string>
+    <string name="ERR_008">"Invalid date/time format!"</string>
 </resources>

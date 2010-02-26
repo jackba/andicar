@@ -142,17 +142,17 @@ public class MileageEditActivity extends EditActivityBase {
         if(mInsertMode == Constants.mileageInsertModeNewIndex) {
             mileageEditInsertModeIndexRb.setChecked(true);
             mileageEditInputLabel.setText(
-                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX) + ":");
+                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
             mileageEditCalculatedTextLabel.setText(
-                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE) + ":");
+                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
             mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
         }
         else {
             mileageEditInsertModeMileageRb.setChecked(true);
             mileageEditInputLabel.setText(
-                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE) + ":");
+                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
             mileageEditCalculatedTextLabel.setText(
-                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX) + ":");
+                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
             mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
         }
         mUOMLengthId = mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
@@ -336,17 +336,17 @@ public class MileageEditActivity extends EditActivityBase {
                         if(checkedId == mileageEditInsertModeIndexRb.getId()) {
                             mInsertMode = Constants.mileageInsertModeNewIndex; //new index
                             mileageEditInputLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX) + ":");
+                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
                             mileageEditCalculatedTextLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE) + ":");
+                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
                             mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
                         }
                         else {
                             mInsertMode = Constants.mileageEditInsertModeMileage;
                             mileageEditInputLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE) + ":");
+                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
                             mileageEditCalculatedTextLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX) + ":");
+                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
                             mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
                         }
                         SharedPreferences.Editor editor = mPreferences.edit();

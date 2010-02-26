@@ -64,4 +64,17 @@ public class Constants
     public static final int TIME_DIALOG_ID = 0;
     public static final int DATE_DIALOG_ID = 1;
 
+    /**
+     * 
+     */
+    public static String dateDecodeTypeTo0Hour = "0";
+    /**
+     * upper the hour to 23:59.999
+     */
+    public static String dateDecodeTypeTo24Hour = "24";
+    /**
+     * leave the hour unchanged
+     */
+    public static String dateDecodeTypeNoChange = "12";
+
 }

@@ -46,8 +46,9 @@ public class ReportDbAdapter extends MainDbAdapter{
     public static String reportMileageListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
-                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || ' - ' || " +
-                    sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME)  + " || ' - ' || " +
+                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                    sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME)  + " || '; ' || " +
                     " SUBSTR(DATETIME(" + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + " || ' to ' || " +
@@ -68,13 +69,17 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + UOM_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_UOMLENGTH_ID_NAME) + "=" +
                                             sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CAR_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     public static String reportRefuelListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
-                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || ' - ' || " +
-                    sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME)  + " || ' - ' || " +
+                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                    sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME)  + " || '; ' || " +
                     " SUBSTR(DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + " || ' ' || " +

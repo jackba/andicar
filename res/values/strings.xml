@@ -64,13 +64,15 @@
     <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"  Add new  "</string>
     <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"  View more  "</string>
     <string name="MAIN_ACTIVITY_SHORTABOUT">"Copyrigh (c) 2010 Miklos Keresztes\nAll right reserved."</string>
+    <string name="MAIN_ACTIVITY_NOMILEAGETEXT">"No mileage exist for this car"</string>
+    <string name="MAIN_ACTIVITY_NOREFUELTEXT">"No refuel exist for this car"</string>
 
     <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>
     <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Cannot be selected."</string>
     <string name="CURRENT_DRIVER_DELETE_ERROR_MESSAGE">"The current driver cannot be deleted."</string>
     <string name="CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE">"The current driver cannot be inactivated."</string>
-    <string name="CURRENT_DRIVER_NAME">"Driver: "</string>
+    <string name="CURRENT_DRIVER_NAME">"Driver:"</string>
 
     <string name="CAR_EDIT_ACTIVITY_MODEL">"Model:"</string>
     <string name="CAR_EDIT_ACTIVITY_REG_NO">"License plate:"</string>
@@ -82,7 +84,7 @@
     <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Cannot be selected."</string>
     <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car cannot be deleted."</string>
     <string name="CURRENT_CAR_INACTIVATE_ERROR_MESSAGE">"The current car cannot be inactivated."</string>
-    <string name="CURRENT_CAR_NAME">"Car: "</string>
+    <string name="CURRENT_CAR_NAME">"Car:"</string>
 
     <string name="UOM_EDIT_ACTIVITY_CODE">"Code:"</string>
     <string name="UOM_EDIT_ACTIVITY_TITLE_LENGTH">"distance"</string>
@@ -99,8 +101,8 @@
     <string name="MILEAGE_EDIT_ACTIVITY_STARTINDEX">"Start index:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION">"<b><i>Insert mode:</i></b>"</string>
     <!--Stop index OR mileage-->
-    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_INDEX">"New index"</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE">"Mileage"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_INDEX">"New index:"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE">"Mileage:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_COMMENT">"Comment"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_EXPENSETYPE">"Expense type:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION">"Done"</string>

@@ -90,14 +90,21 @@ public class ReportListActivityBase extends ListActivityBase{
     protected void initSpinner(View pSpinner, String spinnerType){
         try{
             String selectSql = "";
+            String tableName = "";
             if(spinnerType.equals("ExpenseType"))
-                selectSql = "SELECT '<All>' AS " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
-                                     "-1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME +
-                            " UNION " +
-                            " SELECT " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
-                                        MainDbAdapter.GEN_COL_ROWID_NAME +
-                            " FROM " + MainDbAdapter.EXPENSETYPE_TABLE_NAME +
-                            " ORDER BY " + MainDbAdapter.GEN_COL_ROWID_NAME;
+                tableName = MainDbAdapter.EXPENSETYPE_TABLE_NAME;
+            else if(spinnerType.equals("Car"))
+                tableName = MainDbAdapter.CAR_TABLE_NAME;
+            else if(spinnerType.equals("Driver"))
+                tableName = MainDbAdapter.DRIVER_TABLE_NAME;
+
+            selectSql = "SELECT '<All>' AS " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
+                                 "-1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME +
+                        " UNION " +
+                        " SELECT " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
+                                    MainDbAdapter.GEN_COL_ROWID_NAME +
+                        " FROM " + tableName +
+                        " ORDER BY " + MainDbAdapter.GEN_COL_ROWID_NAME;
 
             Spinner spinner = (Spinner) pSpinner;
             Cursor mCursor = mReportDbHelper.query(selectSql, null);
@@ -113,4 +120,5 @@ public class ReportListActivityBase extends ListActivityBase{
         catch(Exception e){}
 
     }
+
 }
