@@ -622,7 +622,7 @@ public class MainDbAdapter
         return null;
     }
 
-    public String[] getAutoCompleteMileageUserComments(long carId, long driverId){
+    public String[] getAutoCompleteMileageUserComments(long carId, long driverId, int limitCount){
         String[] retVal = null;
         ArrayList<String> commentList = new ArrayList<String>();
         String selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
@@ -632,7 +632,7 @@ public class MainDbAdapter
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + MILEAGE_COL_INDEXSTOP_NAME + " DESC " +
-                            " LIMIT 100";
+                            " LIMIT " + limitCount;
         Cursor commentCursor = mDb.rawQuery(selectSql, null);
         while(commentCursor.moveToNext()){
             commentList.add(commentCursor.getString(0));
@@ -643,7 +643,7 @@ public class MainDbAdapter
         return retVal;
     }
 
-    public String[] getAutoCompleteRefuelUserComments(long carId, long driverId){
+    public String[] getAutoCompleteRefuelUserComments(long carId, long driverId, int limitCount){
         String[] retVal = null;
         ArrayList<String> commentList = new ArrayList<String>();
         String selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
@@ -653,7 +653,7 @@ public class MainDbAdapter
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + REFUEL_COL_DATE_NAME + " DESC " +
-                            " LIMIT 100";
+                            " LIMIT " + limitCount;
         Cursor commentCursor = mDb.rawQuery(selectSql, null);
         while(commentCursor.moveToNext()){
             commentList.add(commentCursor.getString(0));

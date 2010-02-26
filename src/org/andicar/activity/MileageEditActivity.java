@@ -136,7 +136,7 @@ public class MileageEditActivity extends EditActivityBase {
 
         }
         userCommentAdapter = new ArrayAdapter<String>(me,
-                android.R.layout.simple_dropdown_item_1line, mMainDbHelper.getAutoCompleteMileageUserComments(mCarId,mDriverId));
+                android.R.layout.simple_dropdown_item_1line, mMainDbHelper.getAutoCompleteMileageUserComments(mCarId,mDriverId, 30));
         mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
         
         if(mInsertMode == Constants.mileageInsertModeNewIndex) {
@@ -299,7 +299,7 @@ public class MileageEditActivity extends EditActivityBase {
                     toast.show();
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(me,
-                            android.R.layout.simple_dropdown_item_1line, mMainDbHelper.getAutoCompleteMileageUserComments(mCarId,mDriverId));
+                            android.R.layout.simple_dropdown_item_1line, mMainDbHelper.getAutoCompleteMileageUserComments(mCarId,mDriverId, 30));
                     mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
                 }
 
@@ -315,6 +315,7 @@ public class MileageEditActivity extends EditActivityBase {
                     mileageEditUserCommentEntry.setText("");
                     calculateMileageOrNewIndex();
                 }
+                finish();
             }
     };
 

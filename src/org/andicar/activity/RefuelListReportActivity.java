@@ -33,6 +33,10 @@ public class RefuelListReportActivity extends ReportListActivityBase{
     public void onCreate( Bundle icicle )
     {
         Long mCarId = getSharedPreferences( Constants.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
+        Bundle whereConditions = new Bundle();
+        whereConditions.putString(
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=",
+                mCarId.toString() );
 
         super.onCreate( icicle, null, RefuelEditActivity.class,
                 MainDbAdapter.REFUEL_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
@@ -40,7 +44,7 @@ public class RefuelListReportActivity extends ReportListActivityBase{
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.threeLineListReportText1, R.id.threeLineListReportText2, R.id.threeLineListReportText3},
-                "reportRefuelListViewSelect",  new String[] {mCarId.toString()});
+                "reportRefuelListViewSelect",  whereConditions);
 
     }
 }

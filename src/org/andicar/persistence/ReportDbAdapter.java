@@ -20,6 +20,9 @@ package org.andicar.persistence;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Bundle;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  *
@@ -31,7 +34,7 @@ public class ReportDbAdapter extends MainDbAdapter{
     public static String SECOND_LINE_LIST_NAME = "SECONDLINE";
     public static String THIRD_LINE_LIST_NAME = "THIRDLINE";
     protected String mReportSqlName;
-    protected String[] mReportParams;
+    protected Bundle mSearchCondition;
 
     public static String[] genericReportListViewSelectCols = {
         GEN_COL_ROWID_NAME,
@@ -65,8 +68,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + UOM_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_UOMLENGTH_ID_NAME) + "=" +
                                             sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
-            " WHERE " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + "=? " +
-            " ORDER BY " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " DESC";
+            " WHERE 1=1 ";
 
     public static String reportRefuelListViewSelect =
             "SELECT " +
@@ -98,28 +100,68 @@ public class ReportDbAdapter extends MainDbAdapter{
                             " JOIN " + UOM_TABLE_NAME + " AS CarVUOM " +
                                 " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
                                                     sqlConcatTableColumn("CarVUOM", GEN_COL_ROWID_NAME) +
-            " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + "=? " +
-            " ORDER BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " DESC";
+            " WHERE 1=1 ";
 
 
-    public ReportDbAdapter( Context ctx, String reportSqlName, String[] reportParams )
+    public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )
     {
         super(ctx);
         mReportSqlName = reportSqlName;
-        mReportParams = reportParams;
+        mSearchCondition = searchCondition;
     }
 
-    public Cursor fetchReport(){
-        if(mReportSqlName.equals("reportMileageListViewSelect"))
-            return mDb.rawQuery(reportMileageListViewSelect, mReportParams);
-        else if(mReportSqlName.equals("reportRefuelListViewSelect"))
-            return mDb.rawQuery(reportRefuelListViewSelect, mReportParams);
-
-        return null;
+    public void setReportSql(String reportSqlName, Bundle searchCondition){
+        mReportSqlName = reportSqlName;
+        mSearchCondition = searchCondition;
     }
 
-    private static String sqlConcatTableColumn(String tableName, String columnName){
+    public Cursor fetchReport(int limitCount){
+        if(mReportSqlName == null)
+            return null;
+        Set<String> whereColumns = null;
+        String whereColumn;
+        String reportSql = "";
+        String whereCondition = "";
+        if(mSearchCondition != null)
+            whereColumns = mSearchCondition.keySet();
+
+        if(whereColumns != null && whereColumns.size() > 0){
+            for(Iterator<String> it = whereColumns.iterator(); it.hasNext();) {
+                whereColumn = it.next();
+                whereCondition = whereCondition +
+                                " AND " + whereColumn + " '" + mSearchCondition.getString(whereColumn) + "'";
+            }
+        }
+
+        if(mReportSqlName.equals("reportMileageListViewSelect")){
+            reportSql = reportMileageListViewSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +
+                                    " ORDER BY " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " DESC";
+        }
+        else if(mReportSqlName.equals("reportRefuelListViewSelect")){
+            reportSql = reportRefuelListViewSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +
+                                    " ORDER BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " DESC";
+        }
+        if(limitCount != -1)
+            reportSql = reportSql + " LIMIT " + limitCount;
+
+        return mDb.rawQuery(reportSql, null);
+
+    }
+
+    public static String sqlConcatTableColumn(String tableName, String columnName){
         return tableName + "." + columnName;
+    }
+
+    public Cursor query(String sql, String[] args){
+        return mDb.rawQuery(sql, args);
     }
 
 }

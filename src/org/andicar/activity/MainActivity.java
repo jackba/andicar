@@ -28,6 +28,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.app.ListActivity;
+import android.database.Cursor;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.ReportDbAdapter;
 
 /**
  *
@@ -51,6 +54,15 @@ public class MainActivity extends Activity
     private Button refuelInsertBtn;
     private Button mileageListBtn;
     private Button refuelListBtn;
+    private ReportDbAdapter reportDb;
+    private Cursor listCursor;
+
+    private TextView threeLineListMileageText1;
+    private TextView threeLineListMileageText2;
+    private TextView threeLineListMileageText3;
+    private TextView threeLineListRefuelText1;
+    private TextView threeLineListRefuelText2;
+    private TextView threeLineListRefuelText3;
 
     private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 0;
 
@@ -64,6 +76,7 @@ public class MainActivity extends Activity
         mPreferences = getSharedPreferences( Constants.GLOBAL_PREFERENCE_NAME, 0 );
         setContentView( R.layout.main_activity );
         mainContext = this;
+        reportDb = new ReportDbAdapter(mainContext, null, null);
         
         mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
         mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
@@ -74,8 +87,45 @@ public class MainActivity extends Activity
         refuelListBtn = (Button) findViewById(R.id.mainActivityBtnRefuelList);
         refuelListBtn.setOnClickListener(btnRefuelListClickListener);
 
+        threeLineListMileageText1 = (TextView)findViewById(R.id.mainActivityThreeLineListMileageText1);
+        threeLineListMileageText2 = (TextView)findViewById(R.id.mainActivityThreeLineListMileageText2);
+        threeLineListMileageText3 = (TextView)findViewById(R.id.mainActivityThreeLineListMileageText3);
+        threeLineListRefuelText1 = (TextView)findViewById(R.id.mainActivityThreeLineListRefuelText1);
+        threeLineListRefuelText2 = (TextView)findViewById(R.id.mainActivityThreeLineListRefuelText2);
+        threeLineListRefuelText3 = (TextView)findViewById(R.id.mainActivityThreeLineListRefuelText3);
+
         fillDriverCar();
 }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Bundle whereConditions = new Bundle();
+        whereConditions.putString(
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
+                String.valueOf(currentCarID) );
+        reportDb.setReportSql("reportMileageListViewSelect", whereConditions);
+        listCursor = reportDb.fetchReport(1);
+        if(listCursor.moveToFirst()){
+            threeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+            threeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+            threeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+        }
+        listCursor = null;
+        whereConditions.clear();
+        whereConditions.putString(
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=",
+                String.valueOf(currentCarID) );
+        reportDb.setReportSql("reportRefuelListViewSelect", whereConditions);
+        listCursor = reportDb.fetchReport(1);
+        if(listCursor.moveToFirst()){
+            threeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+            threeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+            threeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+        }
+        listCursor = null;
+    }
+
 
     private OnClickListener btnInsertMileageClickListener =  new OnClickListener() {
         public void onClick(View arg0) {

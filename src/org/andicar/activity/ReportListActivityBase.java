@@ -18,12 +18,15 @@
 
 package org.andicar.activity;
 
-import android.app.Dialog;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
+import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.utils.Constants;
 
@@ -33,12 +36,13 @@ import org.andicar.utils.Constants;
  */
 public class ReportListActivityBase extends ListActivityBase{
     protected ReportDbAdapter mReportDbHelper = null;
+    protected Bundle searchConditions;
     
 
     protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
             String editTableName, String[] editTableColumns, String whereCondition, String orderByColumn,
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo, 
-            String reportSqlName, String[] reportParams) {
+            String reportSqlName, Bundle reportParams) {
 
         mReportDbHelper = new ReportDbAdapter(this, reportSqlName, reportParams);
 
@@ -48,7 +52,7 @@ public class ReportListActivityBase extends ListActivityBase{
 
     @Override
     protected void fillData() {
-        recordCursor = mReportDbHelper.fetchReport();
+        recordCursor = mReportDbHelper.fetchReport(-1);
         startManagingCursor( recordCursor );
 
         setListAdapter( null );
@@ -80,13 +84,33 @@ public class ReportListActivityBase extends ListActivityBase{
     {
         if(item.getItemId() == Constants.OPTION_MENU_ADD_ID)
             return super.onOptionsItemSelected( item );
-        else if(item.getItemId() == Constants.OPTION_MENU_SEARCH_ID){
-            Dialog searchDialog = new Dialog(this);
-            searchDialog.setContentView(R.layout.mileage_search_dialog);
-            searchDialog.show();
-
-        }
         return true;
     }
 
+    protected void initSpinner(View pSpinner, String spinnerType){
+        try{
+            String selectSql = "";
+            if(spinnerType.equals("ExpenseType"))
+                selectSql = "SELECT '<All>' AS " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
+                                     "-1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME +
+                            " UNION " +
+                            " SELECT " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
+                                        MainDbAdapter.GEN_COL_ROWID_NAME +
+                            " FROM " + MainDbAdapter.EXPENSETYPE_TABLE_NAME +
+                            " ORDER BY " + MainDbAdapter.GEN_COL_ROWID_NAME;
+
+            Spinner spinner = (Spinner) pSpinner;
+            Cursor mCursor = mReportDbHelper.query(selectSql, null);
+            startManagingCursor( mCursor );
+            int[] to = new int[]{android.R.id.text1};
+            SimpleCursorAdapter mCursorAdapter =
+                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, mCursor,
+            new String[] {MainDbAdapter.GEN_COL_NAME_NAME}, to);
+            mCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(mCursorAdapter);
+
+        }
+        catch(Exception e){}
+
+    }
 }
