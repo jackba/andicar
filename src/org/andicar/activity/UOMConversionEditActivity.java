@@ -27,7 +27,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-import java.math.BigDecimal;
 import org.andicar.persistence.MainDbAdapter;
 
 /**
@@ -118,9 +117,9 @@ public class UOMConversionEditActivity extends EditActivityBase {
                         long fromId = ((Spinner) findViewById( R.id.uomConversionEditUomFromSpinner )).getSelectedItemId();
                         long toId = ((Spinner) findViewById( R.id.uomConversionEditUomToSpinner )).getSelectedItemId();
                         retVal = null;
-                        retVal = mMainDbHelper.canInsertUpdateUOMConversion(mRowId, fromId, toId);
-                        if(retVal != null){
-                            uomConversionCannotSaveAlertBuilder.setMessage(mRes.getString(R.string.ERR_005));
+                        int retVal2 = mMainDbHelper.canInsertUpdateUOMConversion(mRowId, fromId, toId);
+                        if(retVal2 != -1){
+                            uomConversionCannotSaveAlertBuilder.setMessage(mRes.getString(retVal2));
                             uomConversionCannotSaveAlert = uomConversionCannotSaveAlertBuilder.create();
                             uomConversionCannotSaveAlert.show();
                             return;

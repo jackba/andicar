@@ -69,7 +69,7 @@ public class RefuelEditActivity extends EditActivityBase {
         ea = this;
         userCommentAdapter = new ArrayAdapter<String>(ea,
                 android.R.layout.simple_dropdown_item_1line,
-                mMainDbHelper.getAutoCompleteRefuelUserComments(mPreferences.getLong("CurrentCar_ID", -1), mPreferences.getLong("CurrentDriver_ID", -1), 30));
+                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, mPreferences.getLong("CurrentCar_ID", -1), mPreferences.getLong("CurrentDriver_ID", -1), 30));
         refuelEditUserComment.setAdapter(userCommentAdapter);
 
         carIndexEntry = (EditText)findViewById(R.id.refuelEditIndexEntry);
@@ -199,7 +199,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(ea,
                             android.R.layout.simple_dropdown_item_1line,
-                            mMainDbHelper.getAutoCompleteRefuelUserComments(refuelEditCarSpinner.getSelectedItemId(),
+                            mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, refuelEditCarSpinner.getSelectedItemId(),
                                 refuelEditDriverSpinner.getSelectedItemId(), 30));
                     refuelEditUserComment.setAdapter(userCommentAdapter);
                 }

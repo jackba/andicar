@@ -106,7 +106,7 @@
     <string name="MILEAGE_EDIT_ACTIVITY_COMMENT">"Comment"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_EXPENSETYPE">"Expense type:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION">"Done"</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE">"Mileage added.\nYou can continue with adding new milege(s)."</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE">"Mileage added."</string>
     <string name="MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE">"Mileage updated."</string>
     <string name="MILEAGE_LISTREPORT_ACTIVITY_NOCOMMENT_TEXT">"Without user comment"</string>
 

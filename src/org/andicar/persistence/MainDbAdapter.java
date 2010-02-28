@@ -19,452 +19,27 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import org.andicar.utils.Constants;
-
-public class MainDbAdapter
+import org.andicar.activity.R;
+public class MainDbAdapter extends DB
 {
-    public String lastErrorMessage = null;
-    public Exception lasteException;
-    private static final String TAG = "MainDbAdapter";
-    //drivers
-    public static final String DRIVER_TABLE_NAME = "DEF_DRIVER";
-    //cars
-    public static final String CAR_TABLE_NAME = "DEF_CAR";
-    //uoms
-    public static final String UOM_TABLE_NAME = "DEF_UOM";
-    //expense types
-    public static final String EXPENSETYPE_TABLE_NAME = "DEF_EXPENSETYPE";
-    //uom conversion rates
-    public static final String UOM_CONVERSION_TABLE_NAME = "DEF_UOMCONVERTIONRATE";
-    //currencies
-    public static final String CURRENCY_TABLE_NAME = "DEF_CURRENCY";
-    //mileages
-    public static final String MILEAGE_TABLE_NAME = "CAR_MILEAGE";
-    //refuel
-    public static final String REFUEL_TABLE_NAME = "CAR_REFUEL";
-
-    //column names. Some is general (GEN_) some is particular
-    //generic columns must be first and must be created for ALL TABLES
-    public static final String GEN_COL_ROWID_NAME = "_id";
-    public static final String GEN_COL_NAME_NAME = "Name";
-    public static final String GEN_COL_ISACTIVE_NAME = "IsActive";
-    public static final String GEN_COL_USER_COMMENT_NAME = "UserComment";
-
-    //driver specific column names
-    public static final String DRIVER_COL_LICENSE_NO_NAME = "LicenseNo";
-    //car specific column names
-    public static final String CAR_COL_MODEL_NAME = "Model";
-    public static final String CAR_COL_REGISTRATIONNO_NAME = "RegistrationNo";
-    public static final String CAR_COL_INDEXSTART_NAME = "IndexStart";
-    public static final String CAR_COL_INDEXCURRENT_NAME = "IndexCurrent";
-    public static final String CAR_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME + "_Length_ID";
-    public static final String CAR_COL_UOMVOLUME_ID_NAME = UOM_TABLE_NAME + "_Volume_ID";
-    public static final String CAR_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
-    //uom specific column names
-    public static final String UOM_COL_CODE_NAME = "Code";
-    public static final String UOM_COL_UOMTYPE_NAME = "UOMType"; //V - Volume or L - Length
-    //uom conversion specific column names
-    public static final String UOM_CONVERSION_COL_UOMFROM_ID_NAME = UOM_TABLE_NAME + "_From_ID";
-    public static final String UOM_CONVERSION_COL_UOMTO_ID_NAME = UOM_TABLE_NAME + "_To_ID";
-    public static final String UOM_CONVERSION_COL_RATE_NAME = "ConvertionRate";
-    //mileage specific columns
-    public static final String MILEAGE_COL_DATE_NAME = "Date";
-    public static final String MILEAGE_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-    public static final String MILEAGE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
-    public static final String MILEAGE_COL_INDEXSTART_NAME = "IndexStart";
-    public static final String MILEAGE_COL_INDEXSTOP_NAME = "IndexStop";
-    public static final String MILEAGE_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME + "_Length_ID";
-    public static final String MILEAGE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
-    public static final String MILEAGE_COL_GPSTRACKLOG_NAME = "GPSTrackLog";
-    //currencies
-    public static final String CURRENCY_COL_CODE_NAME = "Code";
-    //refuel
-    public static final String REFUEL_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-    public static final String REFUEL_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
-    public static final String REFUEL_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
-    public static final String REFUEL_COL_INDEX_NAME = "CarIndex";
-    public static final String REFUEL_COL_QUANTITY_NAME = "Quantity";
-    public static final String REFUEL_COL_UOMVOLUME_ID_NAME = UOM_TABLE_NAME + "_Volume_ID";
-    public static final String REFUEL_COL_PRICE_NAME = "Price";
-    public static final String REFUEL_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
-    public static final String REFUEL_COL_DATE_NAME = "Date";
-    public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
-
-
-    //column positions. Some is general (GEN_) some is particular
-    //generic columns must be first and must be created for ALL TABLES
-    public static final int GEN_COL_ROWID_POS = 0;
-    public static final int GEN_COL_NAME_POS = 1;
-    public static final int GEN_COL_ISACTIVE_POS = 2;
-    public static final int GEN_COL_USER_COMMENT_POS = 3;
-    //driver specidfic column positions
-    public static final int DRIVER_COL_LICENSE_NO_POS = 4;
-    //car specific column positions
-    public static final int CAR_COL_MODEL_POS = 4;
-    public static final int CAR_COL_REGISTRATIONNO_POS = 5;
-    public static final int CAR_COL_INDEXSTART_POS = 6;
-    public static final int CAR_COL_INDEXCURRENT_POS = 7;
-    public static final int CAR_COL_UOMLENGTH_ID_POS = 8;
-    public static final int CAR_COL_UOMVOLUME_ID_POS = 9;
-    public static final int CAR_COL_CURRENCY_ID_POS = 10;
-
-
-    //uom specific column positions
-    public static final int UOM_COL_CODE_POS = 4;
-    public static final int UOM_COL_UOMTYPE_POS = 5;
-    //uom convertion specific column positions
-    public static final int UOM_CONVERSION_COL_UOMFROM_ID_POS = 4;
-    public static final int UOM_CONVERSION_COL_UOMTO_ID_POS = 5;
-    public static final int UOM_CONVERSION_COL_RATE_POS = 6;
-    //mileage specific column positions
-    public static final int MILEAGE_COL_DATE_POS = 4;
-    public static final int MILEAGE_COL_CAR_ID_POS = 5;
-    public static final int MILEAGE_COL_DRIVER_ID_POS = 6;
-    public static final int MILEAGE_COL_INDEXSTART_POS = 7;
-    public static final int MILEAGE_COL_INDEXSTOP_POS = 8;
-    public static final int MILEAGE_COL_UOMLENGTH_ID_POS = 9;
-    public static final int MILEAGE_COL_EXPENSETYPE_ID_POS = 10;
-    public static final int MILEAGE_COL_GPSTRACKLOG_POS = 11;
-    //currencies
-    public static int CURRENCY_COL_CODE_POS = 4;
-    //refuel
-    public static final int REFUEL_COL_CAR_ID_POS = 4;
-    public static final int REFUEL_COL_DRIVER_ID_POS = 5;
-    public static final int REFUEL_COL_EXPENSETYPE_ID_POS =6;
-    public static final int REFUEL_COL_INDEX_POS = 7;
-    public static final int REFUEL_COL_QUANTITY_POS = 8;
-    public static final int REFUEL_COL_UOMVOLUME_ID_POS = 9;
-    public static final int REFUEL_COL_PRICE_POS = 10;
-    public static final int REFUEL_COL_CURRENCY_ID_POS = 11;
-    public static final int REFUEL_COL_DATE_POS = 12;
-    public static final int REFUEL_COL_DOCUMENTNO_POS = 13;
-
-    public static final String[] driverTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-            DRIVER_COL_LICENSE_NO_NAME};
-    public static final String[] carTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-            CAR_COL_MODEL_NAME, CAR_COL_REGISTRATIONNO_NAME, CAR_COL_INDEXSTART_NAME, CAR_COL_INDEXCURRENT_NAME,
-            CAR_COL_UOMLENGTH_ID_NAME, CAR_COL_UOMVOLUME_ID_NAME, CAR_COL_CURRENCY_ID_NAME};
-    public static final String[] uomTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-            UOM_COL_CODE_NAME, UOM_COL_UOMTYPE_NAME};
-    public static final String[] uomConversionTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-            UOM_CONVERSION_COL_UOMFROM_ID_NAME, UOM_CONVERSION_COL_UOMTO_ID_NAME, UOM_CONVERSION_COL_RATE_NAME};
-    public static final String[] expenseTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME};
-    public static final String[] mileageTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-            MILEAGE_COL_DATE_NAME, MILEAGE_COL_CAR_ID_NAME, MILEAGE_COL_DRIVER_ID_NAME,
-            MILEAGE_COL_INDEXSTART_NAME, MILEAGE_COL_INDEXSTOP_NAME, MILEAGE_COL_UOMLENGTH_ID_NAME,
-            MILEAGE_COL_EXPENSETYPE_ID_NAME, MILEAGE_COL_GPSTRACKLOG_NAME};
-    public static final String[] currencyTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-            CURRENCY_COL_CODE_NAME};
-    public static final String[] refuelTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-            REFUEL_COL_CAR_ID_NAME, REFUEL_COL_DRIVER_ID_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME, REFUEL_COL_INDEX_NAME,
-            REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME, REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME};
-
-    public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
-    public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
-    public static final String isActiveCondition = " " + GEN_COL_ISACTIVE_NAME + "='Y' ";
-    public static final String isActiveWithAndCondition = " AND" + isActiveCondition + " ";
-
-    private DatabaseHelper mDbHelper = null;
-    protected SQLiteDatabase mDb = null;
-
-    protected final Context mCtx;
-
-    /**
-     * Database creation sql statements
-     */
-    private static final String DRIVERS_TABLE_CREATE_SQL =
-            "CREATE TABLE " + DRIVER_TABLE_NAME
-            + " ( "
-            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + DRIVER_COL_LICENSE_NO_NAME + " TEXT NULL "
-            + ");";
-    private static final String CAR_TABLE_CREATE_SQL =
-            "CREATE TABLE " + CAR_TABLE_NAME
-            + " ( "
-            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + CAR_COL_MODEL_NAME + " TEXT NULL, "
-            + CAR_COL_REGISTRATIONNO_NAME + " TEXT NULL, "
-            + CAR_COL_INDEXSTART_NAME + " NUMERIC, "
-            + CAR_COL_INDEXCURRENT_NAME + " NUMERIC, "
-            + CAR_COL_UOMLENGTH_ID_NAME + " INTEGER, "
-            + CAR_COL_UOMVOLUME_ID_NAME + " INTEGER, "
-            + CAR_COL_CURRENCY_ID_NAME + " INTEGER "
-            + ");";
-    private static final String UOM_TABLE_CREATE_SQL =
-            "CREATE TABLE " + UOM_TABLE_NAME
-            + " ( "
-            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + UOM_COL_CODE_NAME + " TEXT NOT NULL, "
-            + UOM_COL_UOMTYPE_NAME + " TEXT NOT NULL "
-            + ");";
-    private static final String UOM_CONVERSION_TABLE_CREATE_SQL =
-            "CREATE TABLE " + UOM_CONVERSION_TABLE_NAME
-            + " ( "
-            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " INTEGER NOT NULL, "
-            + UOM_CONVERSION_COL_UOMTO_ID_NAME + " INTEGER NOT NULL, "
-            + UOM_CONVERSION_COL_RATE_NAME + " NUMERIC NOT NULL "
-            + ");";
-    private static final String EXPENSE_TABLE_CREATE_SQL =
-            "CREATE TABLE " + EXPENSETYPE_TABLE_NAME
-            + " ( "
-            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
-            + ");";
-    private static final String MILEAGE_TABLE_CREATE_SQL =
-            "CREATE TABLE " + MILEAGE_TABLE_NAME
-            + " ( "
-            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GEN_COL_NAME_NAME + " TEXT NULL, "
-            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + MILEAGE_COL_DATE_NAME + " DATE NOT NULL, "
-            + MILEAGE_COL_CAR_ID_NAME + " INTEGER NOT NULL, "
-            + MILEAGE_COL_DRIVER_ID_NAME + " INTEGER NOT NULL, "
-            + MILEAGE_COL_INDEXSTART_NAME + " NUMERIC NOT NULL, "
-            + MILEAGE_COL_INDEXSTOP_NAME + " NUMERIC NOT NULL, "
-            + MILEAGE_COL_UOMLENGTH_ID_NAME + " INTEGER NOT NULL, "
-            + MILEAGE_COL_EXPENSETYPE_ID_NAME + " INTEGER NOT NULL, "
-            + MILEAGE_COL_GPSTRACKLOG_NAME + " TEXT NULL "
-            + ");";
-
-    private static final String CURRENCY_TABLE_CREATE_SQL =
-            "CREATE TABLE " + CURRENCY_TABLE_NAME
-            + " ( "
-            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + CURRENCY_COL_CODE_NAME + " TEXT NOT NULL "
-            + ");";
-
-    private static final String REFUEL_TABLE_CREATE_SQL =
-            "CREATE TABLE " + REFUEL_TABLE_NAME
-            + " ( "
-            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + GEN_COL_NAME_NAME + " TEXT NULL, "
-            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + REFUEL_COL_CAR_ID_NAME + " INTEGER, "
-            + REFUEL_COL_DRIVER_ID_NAME + " INTEGER, "
-            + REFUEL_COL_EXPENSETYPE_ID_NAME + " INTEGER, "
-            + REFUEL_COL_INDEX_NAME + " NUMERIC, "
-            + REFUEL_COL_QUANTITY_NAME + " NUMERIC, "
-            + REFUEL_COL_UOMVOLUME_ID_NAME + " INTEGER, "
-            + REFUEL_COL_PRICE_NAME + " NUMERIC, "
-            + REFUEL_COL_CURRENCY_ID_NAME + " INTEGER, "
-            + REFUEL_COL_DATE_NAME  + " DATE NULL, "
-            + REFUEL_COL_DOCUMENTNO_NAME + " TEXT NULL "
-            + ");";
-
-    /**
-     * Constructor - takes the context to allow the database to be
-     * opened/created
-     *
-     * @param ctx the Context within which to work
-     */
     public MainDbAdapter( Context ctx )
     {
-        this.mCtx = ctx;
-        if(mDb == null)
-            open();
+        super(ctx);
     }
-
 
     /**
-     * Open the notes database. If it cannot be opened, try to create a new
-     * instance of the database. If it cannot be created, throw an exception to
-     * signal the failure
-     *
-     * @return this (self reference, allowing this to be chained in an
-     *         initialization call)
-     * @throws SQLException if the database could be neither opened or created
+     * Fetch a cursor containing all rows from the given table than match the given where condition.
+     * The creturned cursor are NOT positioned anywhere. You most use the corsor movement methods in order to
+     * read the containing rows.
+     * @param tableName
+     * @param columns
+     * @param whereCondition
+     * @param orderByColumn
+     * @return
      */
-    public MainDbAdapter open() throws SQLException
-    {
-        mDbHelper = new DatabaseHelper( mCtx );
-        mDb = mDbHelper.getWritableDatabase();
-        return this;
-    }
-
-    public void close()
-    {
-        mDbHelper.close();
-    }
-
-
-    private static class DatabaseHelper extends SQLiteOpenHelper
-    {
-        DatabaseHelper( Context context )
-        {
-            super( context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION );
-        }
-
-        @Override
-        public void onCreate( SQLiteDatabase db )
-        {
-           //used for insert (columns part)
-            String colPart = "";
-            try{
-                //create drivers table
-                db.execSQL( DRIVERS_TABLE_CREATE_SQL );
-                //create cars table
-                db.execSQL( CAR_TABLE_CREATE_SQL );
-                //create uom table
-                db.execSQL( UOM_TABLE_CREATE_SQL );
-                //init uom's
-                colPart = "INSERT INTO " + UOM_TABLE_NAME +
-                            " ( " +
-                                GEN_COL_NAME_NAME + ", " +
-                                GEN_COL_ISACTIVE_NAME + ", " +
-                                GEN_COL_USER_COMMENT_NAME + ", " +
-                                UOM_COL_CODE_NAME + ", " +
-                                UOM_COL_UOMTYPE_NAME +
-                             ") ";
-                db.execSQL( colPart +
-                        "VALUES ( 'Kilometer', 'Y', 'Kilometer', 'km', 'L' )" ); //_id = 1
-                db.execSQL( colPart +
-                        "VALUES ( 'Mile', 'Y', 'Mile', 'mi', 'L' )" ); //_id = 2 1609,344 m
-                db.execSQL( colPart +
-                        "VALUES ( 'Liter', 'Y', 'Liter', 'l', 'V' )" ); //_id = 3
-                db.execSQL( colPart +
-                        "VALUES ( 'US gallon', 'Y', 'U.S. liquid gallon', 'gal US', 'V' )" ); //_id = 4 3,785 411 784 l
-                db.execSQL( colPart +
-                        "VALUES ( 'Imperial gallon', 'Y', 'Imperial (UK) gallon', 'gal GB', 'V' )" ); //_id = 5 4,546 09 l
-                //create uom conversions table
-                db.execSQL( UOM_CONVERSION_TABLE_CREATE_SQL);
-                //init default uom conversions
-                colPart = "INSERT INTO " + UOM_CONVERSION_TABLE_NAME +
-                            " ( " +
-                                GEN_COL_NAME_NAME + ", " +
-                                GEN_COL_ISACTIVE_NAME + ", " +
-                                GEN_COL_USER_COMMENT_NAME + ", " +
-                                UOM_CONVERSION_COL_UOMFROM_ID_NAME + ", " +
-                                UOM_CONVERSION_COL_UOMTO_ID_NAME + ", " +
-                                UOM_CONVERSION_COL_RATE_NAME + " " +
-                             ") ";
-                db.execSQL( colPart +
-                        "VALUES ( 'mi to km', 'Y', 'Mile to Kilometer', 2, 1, 1.609344 )" );
-                db.execSQL( colPart +
-                        "VALUES ( 'km to mi', 'Y', 'Kilometer to Mile', 1, 2, 0.621371 )" );
-                db.execSQL( colPart +
-                        "VALUES ( 'US gal to l', 'Y', 'US gallon to Liter', 4, 3, 3.785412 )" );
-                db.execSQL( colPart +
-                        "VALUES ( 'l to US gal', 'Y', 'Liter to US gallon', 3, 4, 0.264172 )" );
-                db.execSQL( colPart +
-                        "VALUES ( 'GB gal to l', 'Y', 'Imperial gallon to Liter', 5, 3, 4.54609 )" );
-                db.execSQL( colPart +
-                        "VALUES ( 'l to GB gal', 'Y', 'Liter to Imperial gallon', 3, 5, 0.219969 )" );
-                db.execSQL( colPart +
-                        "VALUES ( 'GB gal to US gal', 'Y', 'Imperial gallon to US gallon', 5, 4, 1.200950 )" );
-                db.execSQL( colPart +
-                        "VALUES ( 'US gal to GB gal', 'Y', 'US gallon to Imperial gallon', 4, 5, 0.832674 )" );
-
-                //create expense types table
-                db.execSQL( EXPENSE_TABLE_CREATE_SQL );
-                //init some standard expenses
-                colPart = "INSERT INTO " + EXPENSETYPE_TABLE_NAME +
-                            " ( " +
-                                GEN_COL_NAME_NAME + ", " +
-                                GEN_COL_ISACTIVE_NAME + ", " +
-                                GEN_COL_USER_COMMENT_NAME + " " +
-                             ") ";
-                db.execSQL( colPart +
-                        "VALUES ( 'Personal', 'Y', 'Expenses suported by you' )" );
-                db.execSQL( colPart +
-                        "VALUES ( 'Employer', 'Y', 'Expenses suported by your employer' )" );
-
-                //create mileage table
-                db.execSQL( MILEAGE_TABLE_CREATE_SQL );
-                //create indexes on mileage table
-                db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX1 " +
-                                "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_CAR_ID_NAME + ")");
-                db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX2 " +
-                                "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DRIVER_ID_NAME + ")");
-                db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX3 " +
-                                "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
-                db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX4 " +
-                                "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_INDEXSTOP_NAME + " DESC )");
-                db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX5 " +
-                                "ON " + MILEAGE_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
-
-                //create & init currencies
-                createCurrencyTable( db );
-
-                //refuel table
-                db.execSQL(REFUEL_TABLE_CREATE_SQL);
-                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX1 " +
-                                "ON " + REFUEL_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
-                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX2 " +
-                                "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
-
-            }
-            catch(SQLException ex){
-                Log.e(TAG, ex.getMessage());
-            }
-
-        }
-
-        @Override
-        public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion )
-        {
-//            db.execSQL("ALTER TABLE " + CAR_TABLE_NAME + " ADD " + CAR_COL_CURRENCY_ID_NAME + " INTEGER NULL ");
-//            db.execSQL(REFUEL_TABLE_CREATE_SQL);
-        }
-
-        private void createCurrencyTable(SQLiteDatabase db) throws SQLException {
-            //currency table name
-            db.execSQL(CURRENCY_TABLE_CREATE_SQL);
-            //insert some currencies
-            String colPart = "INSERT INTO " + CURRENCY_TABLE_NAME +
-                        " ( " +
-                            GEN_COL_NAME_NAME + ", " +
-                            GEN_COL_ISACTIVE_NAME + ", " +
-                            GEN_COL_USER_COMMENT_NAME + ", " +
-                            CURRENCY_COL_CODE_NAME +
-                         ") ";
-            db.execSQL(colPart + "VALUES ( 'Euro', 'Y', 'Euro', 'EUR' )");
-            db.execSQL(colPart + "VALUES ( 'US Dollar', 'Y', 'US Dollar', 'USD' )");
-            db.execSQL(colPart + "VALUES ( 'Hungary Forint', 'Y', 'Hungary Forint', 'HUF' )");
-            db.execSQL(colPart + "VALUES ( 'Romania (new) Lei', 'Y', 'Romania (new) Lei', 'RON' )");
-            db.execSQL(colPart + "VALUES ( 'Australia Dollar', 'Y', 'Australia Dollar', 'AUD' )");
-            db.execSQL(colPart + "VALUES ( 'Canada Dollar', 'Y', 'Canada Dollar', 'CAD' )");
-            db.execSQL(colPart + "VALUES ( 'Switzerland Francs', 'Y', 'Switzerland Francs', 'CHF' )");
-            db.execSQL(colPart + "VALUES ( 'China Yuan', 'Y', 'China Yuan', 'CNY' )");
-            db.execSQL(colPart + "VALUES ( 'United Kingdom Pounds', 'Y', 'United Kingdom Pounds', 'GBP' )");
-            db.execSQL(colPart + "VALUES ( 'Japan Yen', 'Y', 'Japan Yen', 'JPY' )");
-            db.execSQL(colPart + "VALUES ( 'Russia Ruble', 'Y', 'Russia Ruble', 'RUB' )");
-        }
-
-    }
-
     public Cursor fetchForTable(String tableName, String[] columns, String whereCondition, String orderByColumn){
         return mDb.query( tableName, columns, whereCondition, null, null, null, orderByColumn );
     }
@@ -488,6 +63,12 @@ public class MainDbAdapter
 
     }
 
+    /**
+     * Create a new record in the given table
+     * @param tableName
+     * @param content
+     * @return -1 in case of error, the id of the record in case of success
+     */
     public long createRecord(String tableName, ContentValues content){
         long retVal = -1;
         try{
@@ -517,21 +98,13 @@ public class MainDbAdapter
         return retVal;
     }
 
-    private void updateCarCurrentIndex(ContentValues content) throws SQLException {
-        //update car curent index
-        BigDecimal mStopIndex = new BigDecimal(content.getAsString(MILEAGE_COL_INDEXSTOP_NAME));
-        long mCarId = content.getAsLong(MILEAGE_COL_CAR_ID_NAME);
-        BigDecimal carCurrentIndex = new BigDecimal(fetchRecord(CAR_TABLE_NAME, carTableColNames, mCarId)
-                                                    .getString(CAR_COL_INDEXCURRENT_POS));
-        if (mStopIndex.compareTo(carCurrentIndex) > 0) {
-            content.clear();
-            content.put(CAR_COL_INDEXCURRENT_NAME, mStopIndex.toString());
-            if (mDb.update(CAR_TABLE_NAME, content, GEN_COL_ROWID_NAME + "=" + mCarId, null) == 0) {
-                throw new SQLException("Car Update error");
-            }
-        }
-    }
-
+    /**
+     * update the record with recordId = rowId in the given table with the given content
+     * @param tableName
+     * @param rowId
+     * @param content
+     * @return true if the update succeded, false otherwise
+     */
     public boolean updateRecord( String tableName, long rowId, ContentValues content)
     {
         boolean retVal = false;
@@ -555,16 +128,47 @@ public class MainDbAdapter
         return retVal;
     }
 
-    public String deleteRecord( String tableName, long rowId )
-    {
-        //todo check deletion prerequests (data validations)
-        if(mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ) > 0)
-            return null;
-
-        return "";
+    /**
+     * Update the car curren index
+     * @param content
+     * @throws SQLException
+     * @deprecated use instead updateRecord
+     */
+    private void updateCarCurrentIndex(ContentValues content) throws SQLException {
+        //update car curent index
+        BigDecimal mStopIndex = new BigDecimal(content.getAsString(MILEAGE_COL_INDEXSTOP_NAME));
+        long mCarId = content.getAsLong(MILEAGE_COL_CAR_ID_NAME);
+        BigDecimal carCurrentIndex = new BigDecimal(fetchRecord(CAR_TABLE_NAME, carTableColNames, mCarId)
+                                                    .getString(CAR_COL_INDEXCURRENT_POS));
+        if (mStopIndex.compareTo(carCurrentIndex) > 0) {
+            content.clear();
+            content.put(CAR_COL_INDEXCURRENT_NAME, mStopIndex.toString());
+            if (mDb.update(CAR_TABLE_NAME, content, GEN_COL_ROWID_NAME + "=" + mCarId, null) == 0) {
+                throw new SQLException("Car Update error");
+            }
+        }
     }
 
-    public String canInsertUpdateUOMConversion( Long rowId, long fromId, long toId )
+    /**
+     * Delete the record with rowId from tableName
+     * @param tableName
+     * @param rowId
+     * @return 1 if the row deleted, 0 otherwise
+     */
+    public int deleteRecord( String tableName, long rowId )
+    {
+        //todo check deletion prerequests (data validations)
+        return mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null );
+    }
+
+    /**
+     * check some preconditions for inserting/updating UOM conversions in order to prevent duplicates
+     * @param rowId
+     * @param fromId
+     * @param toId
+     * @return -1 if uom conversion can be added/updated. An error code otherwise. For error codes see errors.xml
+     */
+    public int canInsertUpdateUOMConversion( Long rowId, long fromId, long toId )
     {
         //chek for duplicates
         String sql = "SELECT * " +
@@ -576,12 +180,20 @@ public class MainDbAdapter
         Cursor resultCursor = mDb.rawQuery( sql, null );
         if(resultCursor.getCount() > 0)
         {
-            return "ERR_005";
+            return R.string.ERR_005;
         }
 
-        return null;
+        return -1;
     }
 
+    /**
+     * check some preconditions for inserting/updating the car start/stop index
+     * @param rowId
+     * @param carId
+     * @param startIndex
+     * @param stopIndex
+     * @return null if uom conversion can be added/updated. An error code otherwise. For error codes see errors.xml
+     */
     public String checkIndex(long rowId,long carId, BigDecimal startIndex, BigDecimal stopIndex){
 
         if(stopIndex.compareTo(startIndex) <= 0)
@@ -622,10 +234,19 @@ public class MainDbAdapter
         return null;
     }
 
-    public String[] getAutoCompleteMileageUserComments(long carId, long driverId, int limitCount){
+    /**
+     * Get a list of the recent user comments used in the fromTable
+     * @param carId
+     * @param driverId
+     * @param limitCount limit the size of the returned comments
+     * @return a string array containig the last limitCount user comment from fromTable for the carId and DriverId
+     */
+    public String[] getAutoCompleteUserComments(String fromTable, long carId, long driverId, int limitCount){
         String[] retVal = null;
         ArrayList<String> commentList = new ArrayList<String>();
-        String selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
+        String selectSql;
+        if(fromTable.equals(MILEAGE_TABLE_NAME))
+            selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + MILEAGE_TABLE_NAME +
                             " WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + carId +
                                 " AND " + MILEAGE_COL_DRIVER_ID_NAME  + " = " + driverId +
@@ -633,20 +254,8 @@ public class MainDbAdapter
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + MILEAGE_COL_INDEXSTOP_NAME + " DESC " +
                             " LIMIT " + limitCount;
-        Cursor commentCursor = mDb.rawQuery(selectSql, null);
-        while(commentCursor.moveToNext()){
-            commentList.add(commentCursor.getString(0));
-        }
-        commentCursor.close();
-        retVal = new String[commentList.size()];
-        commentList.toArray(retVal);
-        return retVal;
-    }
-
-    public String[] getAutoCompleteRefuelUserComments(long carId, long driverId, int limitCount){
-        String[] retVal = null;
-        ArrayList<String> commentList = new ArrayList<String>();
-        String selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
+        else if(fromTable.equals(REFUEL_TABLE_NAME))
+            selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + REFUEL_TABLE_NAME +
                             " WHERE " + REFUEL_COL_CAR_ID_NAME + " = " + carId +
                                 " AND " + REFUEL_COL_DRIVER_ID_NAME  + " = " + driverId +
@@ -654,6 +263,8 @@ public class MainDbAdapter
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + REFUEL_COL_DATE_NAME + " DESC " +
                             " LIMIT " + limitCount;
+        else
+            return null;
         Cursor commentCursor = mDb.rawQuery(selectSql, null);
         while(commentCursor.moveToNext()){
             commentList.add(commentCursor.getString(0));
