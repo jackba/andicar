@@ -23,7 +23,7 @@
         android:description="@string/APP_DESCRIPTION"
         android:icon="@drawable/car2"
         >
-
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <activity android:name="org.andicar.activity.MainActivity"
                   android:label="@string/APP_NAME"
                   android:theme="@android:style/Theme.NoTitleBar">

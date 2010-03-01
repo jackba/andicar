@@ -198,16 +198,16 @@ public class MileageEditActivity extends EditActivityBase {
             if(mInsertMode == Constants.mileageInsertModeNewIndex) { //new index
                 pNewIndex = pEntryMileageValue;
                 if(pNewIndex.compareTo(pStartIndex) < 0) {
-                    mileageEditCalculatedTextContent.setText("N/A");
+                    mileageEditCalculatedTextContent.setText("N/A;");
                 }
                 else {
                     BigDecimal mileage = pNewIndex.subtract(pStartIndex);
-                    mileageEditCalculatedTextContent.setText(mileage.toString());
+                    mileageEditCalculatedTextContent.setText(mileage.toString() + ";");
                 }
             }
             else { //mileage
                 pNewIndex = mStartIndex.add(pEntryMileageValue);
-                mileageEditCalculatedTextContent.setText(pNewIndex.toString());
+                mileageEditCalculatedTextContent.setText(pNewIndex.toString() + ";");
             }
             mNewIndex = pNewIndex;
         }
@@ -235,7 +235,7 @@ public class MileageEditActivity extends EditActivityBase {
                     toast.show();
                     return;
                 }
-                String operationResult = null;
+                int operationResult = -1;
                 ContentValues data = new ContentValues();
                 data.put( MainDbAdapter.GEN_COL_NAME_NAME, "");
                 data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
@@ -251,7 +251,7 @@ public class MileageEditActivity extends EditActivityBase {
                 data.put( MainDbAdapter.MILEAGE_COL_GPSTRACKLOG_NAME, "");
                 if(operationType.equals("N")){
                     operationResult = mMainDbHelper.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
-                    if(operationResult == null){
+                    if(operationResult == -1){
                         if(mMainDbHelper.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data) < 0){
                             insertUpdateErrorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
                             insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
@@ -262,7 +262,7 @@ public class MileageEditActivity extends EditActivityBase {
                 }
                 else{
                     operationResult = mMainDbHelper.checkIndex(mRowId, mCarId, mStartIndex, mNewIndex);
-                    if(operationResult == null){
+                    if(operationResult == -1){
                         if(!mMainDbHelper.updateRecord(MainDbAdapter.MILEAGE_TABLE_NAME, mRowId, data)){
                             insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_007));
                             insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
@@ -271,25 +271,12 @@ public class MileageEditActivity extends EditActivityBase {
                         }
                     }
                 }
-                if( operationResult != null) //error
+                if( operationResult != -1) //error
                 {
-                    if(operationResult.equals(Constants.errStartIndexOverlap)){
-                        insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_001));
-                    }
-                    else if(operationResult.equals(Constants.errNewIndexOverlap)){
-                        insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_002));
-                    }
-                    else if(operationResult.equals(Constants.errMileageOverlap)){
-                        insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_003));
-                    }
-                    else if(operationResult.equals(Constants.errStopBeforeStartIndex)){
-                        insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_004));
-                    }
-                    else
-                        insertUpdateErrorAlertBuilder.setMessage(operationResult);
-                    
+                    insertUpdateErrorAlertBuilder.setMessage(mRes.getString(operationResult));
                     insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
                     insertUpdateErrorAlert.show();
+                    return;
                 }
                 else{
                     Toast toast = Toast.makeText( getApplicationContext(),

@@ -32,12 +32,18 @@
                   android:layout_height="wrap_content"
                   android:textStyle="bold"
                   />
+        <TextView
+            android:id="@+id/mileageEditStartStopIndexHdr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/MILEAGE_EDIT_ACTIVITY_INDEXHEADER"
+            android:layout_marginTop="5dip"
+            />
         <LinearLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
             >
             <TextView
                 android:id="@+id/mileageEditStartIndexLabel"
@@ -47,32 +53,26 @@
                 />
             <EditText
                 android:id="@+id/mileageEditStartIndexEntry"
-                android:layout_width="fill_parent"
+                android:layout_width="90dip"
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
-                android:layout_marginLeft="10dip"
+                android:layout_marginLeft="2dip"
                 android:background="@color/mandatory_bg"
                 android:tag="@string/MILEAGE_EDIT_ACTIVITY_STARTINDEX"
                 />
-        </LinearLayout>
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_marginTop="10dip"
-            android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/mileageEditInputLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
                 />
             <EditText
                 android:id="@+id/mileageEditInputEntry"
-                android:layout_width="fill_parent"
+                android:layout_width="90dip"
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
-                android:layout_marginLeft="10dip"
+                android:layout_marginLeft="2dip"
                 android:background="@color/mandatory_bg"
                 android:tag=""
                 />
@@ -91,11 +91,26 @@
                 />
             <TextView
                 android:id="@+id/mileageEditCalculatedTextContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                />
+            <TextView
+                android:id="@+id/mileageEditExpenseTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_EXPENSETYPE"
+                />
+            <Spinner android:id="@+id/mileageEditExpenseTypeSpinner"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="2dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
                 />
-        </LinearLayout>
+     </LinearLayout>
 
         <TextView
             android:id="@+id/genUserCommentLabel"
@@ -110,28 +125,6 @@
             android:layout_height="fill_parent"
             android:background="@android:drawable/editbox_background"
             />
-
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_marginTop="10dip"
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/mileageEditExpenseTypeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/MILEAGE_EDIT_ACTIVITY_EXPENSETYPE"
-                />
-            <Spinner android:id="@+id/mileageEditExpenseTypeSpinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="10dip"
-                android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
-                />
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -165,7 +158,6 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textStyle="bold"
-                  android:layout_marginTop="10dip"
                   android:text="@string/GEN_LBLDATETIME_CAPTION"
                   />
 

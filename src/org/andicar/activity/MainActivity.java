@@ -27,7 +27,6 @@ import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.app.ListActivity;
 import android.database.Cursor;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
@@ -111,11 +110,13 @@ public class MainActivity extends Activity
             threeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             threeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             threeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+            mileageListBtn.setEnabled(true);
         }
         else{
             threeLineListMileageText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOMILEAGETEXT));
             threeLineListMileageText2.setText("");
             threeLineListMileageText3.setText("");
+            mileageListBtn.setEnabled(false);
         }
         listCursor = null;
         whereConditions.clear();
@@ -128,11 +129,13 @@ public class MainActivity extends Activity
             threeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             threeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             threeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+            refuelListBtn.setEnabled(true);
         }
         else{
             threeLineListRefuelText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOREFUELTEXT));
             threeLineListRefuelText2.setText("");
             threeLineListRefuelText3.setText("");
+            refuelListBtn.setEnabled(false);
         }
         listCursor = null;
     }
@@ -213,14 +216,18 @@ public class MainActivity extends Activity
             infoStr = infoStr + "; " + mRes.getString( R.string.CURRENT_CAR_NAME ) + " " + currentCarName;
             ((TextView) findViewById( R.id.info )).setText( infoStr );
 
-            if(currentCarID < 0 || currentDriverID < 0)
+            if(currentCarID < 0 || currentDriverID < 0){
                 mileageInsertBtn.setEnabled(false);
-            else
-                mileageInsertBtn.setEnabled(true);
-            if(currentCarID < 0 || currentDriverID < 0)
+                mileageListBtn.setEnabled(false);
                 refuelInsertBtn.setEnabled(false);
-            else
+                refuelListBtn.setEnabled(false);
+            }
+            else{
+                mileageInsertBtn.setEnabled(true);
+                mileageListBtn.setEnabled(true);
                 refuelInsertBtn.setEnabled(true);
+                refuelListBtn.setEnabled(true);
+            }
         }
         else { //no saved mPreferences. start driver list activity in order to create one.
 //            Intent i = new Intent( this, DriverListActivity.class );

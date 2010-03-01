@@ -170,36 +170,29 @@ public class ListActivityBase extends ListActivity {
                 startActivityForResult( i, Constants.ACTIVITY_EDIT_REQUEST_CODE );
                 return true;
             case Constants.CONTEXT_MENU_DELETE_ID:
-                if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)){
-                    //check if the car is the selected car. If yes it cannot be deleted.
-                    if( mPreferences.getLong( "CurrentCar_ID", -1 ) == mLongClickId ) {
-                        AlertDialog.Builder currentCarDeleteAlertBuilder;
-                        AlertDialog currentCarDeleteAlert;
-                        currentCarDeleteAlertBuilder = new AlertDialog.Builder( this );
-                        currentCarDeleteAlertBuilder.setCancelable( false );
-                        currentCarDeleteAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
-                        currentCarDeleteAlertBuilder.setMessage( mRes.getString(R.string.CURRENT_CAR_DELETE_ERROR_MESSAGE) );
-                        currentCarDeleteAlert = currentCarDeleteAlertBuilder.create();
-                        currentCarDeleteAlert.show();
-                        return true;
-                    }
+                //check if the car is the selected car. If yes it cannot be deleted.
+                if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)
+                        && mPreferences.getLong( "CurrentCar_ID", -1 ) == mLongClickId ){
+                    errorAlertBuilder.setMessage(mRes.getString(R.string.CURRENT_CAR_DELETE_ERROR_MESSAGE));
+                    errorAlert = errorAlertBuilder.create();
+                    errorAlert.show();
+                    return true;
                 }
-                if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)){
-                    if( mPreferences.getLong( "CurrentDriver_ID", -1 ) == mLongClickId ) {
-                        AlertDialog.Builder currentDriverDeleteAlertBuilder;
-                        AlertDialog currentDriverDeleteAlert;
-                        currentDriverDeleteAlertBuilder = new AlertDialog.Builder( this );
-                        currentDriverDeleteAlertBuilder.setCancelable( false );
-                        currentDriverDeleteAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
-                        currentDriverDeleteAlertBuilder.setMessage( mRes.getString(R.string.CURRENT_DRIVER_DELETE_ERROR_MESSAGE) );
-                        currentDriverDeleteAlert = currentDriverDeleteAlertBuilder.create();
-                        currentDriverDeleteAlert.show();
-                        return true;
-                    }
-
+                else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)
+                        && mPreferences.getLong( "CurrentDriver_ID", -1 ) == mLongClickId){
+                    errorAlertBuilder.setMessage(mRes.getString(R.string.CURRENT_DRIVER_DELETE_ERROR_MESSAGE));
+                    errorAlert = errorAlertBuilder.create();
+                    errorAlert.show();
+                    return true;
                 }
-                mMainDbHelper.deleteRecord(mTableName, mLongClickId);
-                fillData();
+                int deleteResult = mMainDbHelper.deleteRecord(mTableName, mLongClickId);
+                if(deleteResult != -1){
+                    errorAlertBuilder.setMessage(mRes.getString(deleteResult));
+                    errorAlert = errorAlertBuilder.create();
+                    errorAlert.show();
+                }
+                else
+                    fillData();
                 return true;
             case Constants.CONTEXT_MENU_INSERT_ID:
                 Intent insertIntent = new Intent( this, mEditClass );

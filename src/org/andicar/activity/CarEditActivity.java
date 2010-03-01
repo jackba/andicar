@@ -110,16 +110,16 @@ public class CarEditActivity extends EditActivityBase
             initSpinner((Spinner) findViewById( R.id.carEditUomLengthSpinner ), MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + Constants.UOM_LENGTH_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, -1, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 1, false);
             //uom for volume
             initSpinner((Spinner) findViewById( R.id.carEditUomVolumeSpinner ), MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + Constants.UOM_VOLUME_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, -1, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 3, false);
              //default currency
             initSpinner((Spinner) findViewById( R.id.carEditCurrencySpinner ), MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, -1, false);
+                    MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, 1, false);
 
             ((CheckBox) findViewById( R.id.genIsActiveCheck )).setChecked( true );
         }

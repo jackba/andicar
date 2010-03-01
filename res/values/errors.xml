@@ -22,4 +22,19 @@
     <string name="ERR_006">"Error on creating record!"</string>
     <string name="ERR_007">"Error on modifying record!"</string>
     <string name="ERR_008">"Invalid date/time format!"</string>
+    <string name="ERR_009">"This driver cannot be deleted because mileage(s) exists with him."</string>
+    <string name="ERR_010">"This driver cannot be deleted because refuel(s) exists with him."</string>
+    <string name="ERR_011">"This car cannot be deleted because mileage(s) exists with him."</string>
+    <string name="ERR_012">"This car cannot be deleted because refuel(s) exists with him."</string>
+    <string name="ERR_013">"This UOM cannot be deleted because mileage(s) exists with him."</string>
+    <string name="ERR_014">"This UOM cannot be deleted because refuel(s) exists with him."</string>
+    <string name="ERR_015">"This UOM cannot be deleted because UOM conversion(s) exists with him."</string>
+    <string name="ERR_016">"This currency cannot be deleted because it is used in car definition(s)."</string>
+    <string name="ERR_017">"This currency cannot be deleted because refuel(s) exists with him."</string>
+    <string name="ERR_018">"This expense type cannot be deleted because mileage(s) exists with him."</string>
+    <string name="ERR_019">"This expense type cannot be deleted because refuel(s) exists with him."</string>
+    <string name="ERR_020">"SDCARD not found. You can not save the reports localy. Hovever you will be able to send it as emial attachments"</string>
+    <string name="ERR_021">"Report folder (SDCARD/andicar) cannot be created. You can not save the reports localy. Hovever you will be able to send it as emial attachments"</string>
+    <string name="ERR_022">"Cannot create report file!"</string>
+    <string name="ERR_023">"Write error!"</string>
 </resources>

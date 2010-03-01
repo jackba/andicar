@@ -38,7 +38,6 @@ import org.andicar.utils.Utils;
  */
 public class MileageListReportActivity extends ReportListActivityBase {
 
-    private Bundle whereConditions;
     private View searchView;
     private EditText genUserCommentEntry;
     private Spinner searchExpTypeSpinner;
@@ -67,10 +66,11 @@ public class MileageListReportActivity extends ReportListActivityBase {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == Constants.OPTION_MENU_ADD_ID) {
-            return super.onOptionsItemSelected(item);
-        } else if (item.getItemId() == Constants.OPTION_MENU_SEARCH_ID) {
+        if (item.getItemId() == Constants.OPTION_MENU_SEARCH_ID){
             showDialog(0);
+        }
+        else{
+            return super.onOptionsItemSelected(item);
         }
         return true;
     }
@@ -140,7 +140,7 @@ public class MileageListReportActivity extends ReportListActivityBase {
                                 MainDbAdapter.MILEAGE_COL_DRIVER_ID_NAME) + "=",
                                 String.valueOf(searchDriverSpinner.getSelectedItemId()));
                     }
-                    mReportDbHelper.setReportSql("reportMileageListViewSelect", whereConditions);
+                    mListDbHelper.setReportSql("reportMileageListViewSelect", whereConditions);
                     fillData();
                 } catch (IndexOutOfBoundsException e) {
                     errorAlertBuilder.setMessage(mRes.getString(R.string.ERR_008));

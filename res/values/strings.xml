@@ -53,6 +53,7 @@
     <string name="MENU_SHOWINACTIVE_CAPTION">"Show inactive"</string>
     <string name="MENU_HIDEINACTIVE_CAPTION">"Hide inactive"</string>
     <string name="MENU_SEARCH_CAPTION">"Search/filter"</string>
+    <string name="MENU_REPORT_CAPTION">"Create report"</string>
 
 
     <string name="MAIN_ACTIVITY_MILEAGE_HDR_CAPTION">"Mileages"</string>
@@ -98,11 +99,12 @@
 
     <string name="CURRENCY_EDIT_ACTIVITY_CODE">"Code:"</string>
 
-    <string name="MILEAGE_EDIT_ACTIVITY_STARTINDEX">"Start index:"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_INDEXHEADER">"Index start/stop or mileage"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_STARTINDEX">"Start:"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_INDEX">"Stop:"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE">"Mileage:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION">"<b><i>Insert mode:</i></b>"</string>
     <!--Stop index OR mileage-->
-    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_INDEX">"New index:"</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE">"Mileage:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_COMMENT">"Comment"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_EXPENSETYPE">"Expense type:"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION">"Done"</string>

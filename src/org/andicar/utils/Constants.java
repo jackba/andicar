@@ -30,6 +30,7 @@ public class Constants
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
     public static final int OPTION_MENU_HIDEINACTIVE_ID = 23;
     public static final int OPTION_MENU_SEARCH_ID = 24;
+    public static final int OPTION_MENU_REPORT_ID = 25;
     
     public  static final int CONTEXT_MENU_EDIT_ID = 1;
     public  static final int CONTEXT_MENU_INSERT_ID = 2;
@@ -55,11 +56,6 @@ public class Constants
     //mileage insert mode: 0 = new index; 1 = mileage
     public static int mileageInsertModeNewIndex = 0;
     public static int mileageEditInsertModeMileage = 1;
-
-    public static String errStartIndexOverlap = "ERR_001";
-    public static String errNewIndexOverlap = "ERR_002";
-    public static String errMileageOverlap = "ERR_003";
-    public static String errStopBeforeStartIndex = "ERR_004";
 
     public static final int TIME_DIALOG_ID = 0;
     public static final int DATE_DIALOG_ID = 1;

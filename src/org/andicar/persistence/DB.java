@@ -172,7 +172,8 @@ public class DB {
     public static final String[] refuelTableColNames =
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
             REFUEL_COL_CAR_ID_NAME, REFUEL_COL_DRIVER_ID_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME, REFUEL_COL_INDEX_NAME,
-            REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME, REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME};
+            REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
+            REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME};
 
     public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
@@ -426,6 +427,12 @@ public class DB {
                                 "ON " + REFUEL_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
                 db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX2 " +
                                 "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
+
+                //create the report folder on SDCARD
+                FileUtils fu = new FileUtils();
+                if(fu.onCreate() != -1){
+                    Log.e(TAG, fu.lastError);
+                }
 
             }
             catch(SQLException ex){

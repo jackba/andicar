@@ -153,12 +153,179 @@ public class MainDbAdapter extends DB
      * Delete the record with rowId from tableName
      * @param tableName
      * @param rowId
-     * @return 1 if the row deleted, 0 otherwise
+     * @return -1 if the row deleted, an error code otherwise. For error codes see errors.xml
      */
     public int deleteRecord( String tableName, long rowId )
     {
-        //todo check deletion prerequests (data validations)
-        return mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null );
+        int checkVal = canDeleteRow(tableName, rowId);
+        if(checkVal == -1){
+            if(tableName.equals(MILEAGE_TABLE_NAME)){ //if the last mileage -> update the car curent index
+                long carId = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId)
+                                .getLong(MILEAGE_COL_CAR_ID_POS);
+                // 1 -> -1
+                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                String updSql = "UPDATE " + CAR_TABLE_NAME + " " +
+                                "SET " + CAR_COL_INDEXCURRENT_NAME + " = " +
+                                    "COALESCE( (SELECT MAX(" + MILEAGE_COL_INDEXSTOP_NAME + ") " +
+                                        "FROM " + MILEAGE_TABLE_NAME + " " +
+                                        "WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + carId + "),  " + CAR_COL_INDEXSTART_NAME + ") " +
+                                 "WHERE " + GEN_COL_ROWID_NAME  + " = " + carId;
+                mDb.execSQL(updSql);
+            }
+            else
+                // 1 -> -1
+                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+        }
+        else
+            return checkVal;
+
+        return checkVal;
+    }
+
+    /**
+     * chck deleteion preconditions (referencial integrity, etc.)
+     * @param tableName
+     * @param rowId
+     * @return -1 if the row can be deleted, an error code otherwise. For error codes see errors.xml
+     */
+    public int canDeleteRow( String tableName, long rowId ){
+
+        String checkSql = "";
+        Cursor checkCursor = null;
+//        int retVal = -1;
+        if(tableName.equals(DRIVER_TABLE_NAME)){
+            //check if exists mileage for this driver
+            checkSql = "SELECT * " +
+                        "FROM " + MILEAGE_TABLE_NAME + " " +
+                        "WHERE " + MILEAGE_COL_DRIVER_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_009;
+            }
+            checkCursor.close();
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_DRIVER_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_010;
+            }
+            checkCursor.close();
+        }
+        else if(tableName.equals(CAR_TABLE_NAME)){
+            //check if exists mileage for this driver
+            checkSql = "SELECT * " +
+                        "FROM " + MILEAGE_TABLE_NAME + " " +
+                        "WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_011;
+            }
+            checkCursor.close();
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_CAR_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_012;
+            }
+            checkCursor.close();
+        }
+        else if(tableName.equals(UOM_TABLE_NAME)){
+            //check if exists mileage for this driver
+            checkSql = "SELECT * " +
+                        "FROM " + MILEAGE_TABLE_NAME + " " +
+                        "WHERE " + MILEAGE_COL_UOMLENGTH_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_013;
+            }
+            checkCursor.close();
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_014;
+            }
+            checkCursor.close();
+            //check uom conversions
+            checkSql = "SELECT * " +
+                        "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
+                        "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " + rowId + " " +
+                                "OR " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_015;
+            }
+            checkCursor.close();
+        }
+        else if(tableName.equals(CURRENCY_TABLE_NAME)){
+            //check cars
+            checkSql = "SELECT * " +
+                        "FROM " + CAR_TABLE_NAME + " " +
+                        "WHERE " + CAR_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_016;
+            }
+            checkCursor.close();
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_017;
+            }
+            checkCursor.close();
+        }
+        else if(tableName.equals(EXPENSETYPE_TABLE_NAME)){
+            //check if exists mileage for this driver
+            checkSql = "SELECT * " +
+                        "FROM " + MILEAGE_TABLE_NAME + " " +
+                        "WHERE " + MILEAGE_COL_EXPENSETYPE_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_018;
+            }
+            checkCursor.close();
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_EXPENSETYPE_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_019;
+            }
+            checkCursor.close();
+        }
+        return -1;
     }
 
     /**
@@ -192,12 +359,12 @@ public class MainDbAdapter extends DB
      * @param carId
      * @param startIndex
      * @param stopIndex
-     * @return null if uom conversion can be added/updated. An error code otherwise. For error codes see errors.xml
+     * @return -1 if index OK. An error code otherwise. For error codes see errors.xml
      */
-    public String checkIndex(long rowId,long carId, BigDecimal startIndex, BigDecimal stopIndex){
+    public int checkIndex(long rowId,long carId, BigDecimal startIndex, BigDecimal stopIndex){
 
         if(stopIndex.compareTo(startIndex) <= 0)
-            return Constants.errStopBeforeStartIndex;
+            return R.string.ERR_004;
 
         String checkSql = "";
         checkSql = "SELECT * " +
@@ -209,7 +376,7 @@ public class MainDbAdapter extends DB
             checkSql = checkSql + " AND " + GEN_COL_ROWID_NAME + "<>" + rowId;
 
         if(mDb.rawQuery(checkSql, null).getCount() > 0)
-            return Constants.errStartIndexOverlap;
+            return R.string.ERR_001;
         checkSql = "SELECT * " +
                     " FROM " + MILEAGE_TABLE_NAME +
                     " WHERE " + MILEAGE_COL_CAR_ID_NAME + "=" + carId +
@@ -218,7 +385,7 @@ public class MainDbAdapter extends DB
         if (rowId >= 0)
             checkSql = checkSql + " AND " + GEN_COL_ROWID_NAME + "<>" + rowId;
         if(mDb.rawQuery(checkSql, null).getCount() > 0)
-            return Constants.errNewIndexOverlap;
+            return R.string.ERR_002;
 
         checkSql = "SELECT * " +
                     " FROM " + MILEAGE_TABLE_NAME +
@@ -229,9 +396,9 @@ public class MainDbAdapter extends DB
             checkSql = checkSql + " AND " + GEN_COL_ROWID_NAME + "<>" + rowId;
 
         if(mDb.rawQuery(checkSql, null).getCount() > 0)
-            return Constants.errMileageOverlap;
+            return R.string.ERR_003;
 
-        return null;
+        return -1;
     }
 
     /**

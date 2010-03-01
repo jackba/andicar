@@ -43,8 +43,9 @@ public class ReportDbAdapter extends MainDbAdapter{
         THIRD_LINE_LIST_NAME
     };
 
-    public static String reportMileageListViewSelect =
+    public static String mileageListViewSelect =
             "SELECT " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ", " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
@@ -74,7 +75,34 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
-    public static String reportRefuelListViewSelect =
+    public static String mileageListReportSelect =
+            "SELECT " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS MileageId, " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + ", " +
+                "DATETIME(" + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) +
+                    ", 'unixepoch', 'localtime') AS " + MILEAGE_COL_DATE_NAME + ", " +
+                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
+                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + ", " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ", " +
+                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UomName, " +
+                sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName " +
+            " FROM " + MILEAGE_TABLE_NAME +
+                    " JOIN " + EXPENSETYPE_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_EXPENSETYPE_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + DRIVER_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DRIVER_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + UOM_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_UOMLENGTH_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CAR_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+            " WHERE 1=1 ";
+
+    public static String refuelListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
@@ -107,6 +135,37 @@ public class ReportDbAdapter extends MainDbAdapter{
                                                     sqlConcatTableColumn("CarVUOM", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
+    public static String refuelListReportSelect =
+            "SELECT " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS RefuelId, " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + ", " +
+                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
+                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
+                sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + ", " +
+                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " +
+                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS Currency, " +
+                "DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + " " +
+            " FROM " + REFUEL_TABLE_NAME +
+                    " JOIN " + EXPENSETYPE_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + DRIVER_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DRIVER_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + UOM_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CAR_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CURRENCY_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+            " WHERE 1=1 ";
 
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )
     {
@@ -139,21 +198,38 @@ public class ReportDbAdapter extends MainDbAdapter{
         }
 
         if(mReportSqlName.equals("reportMileageListViewSelect")){
-            reportSql = reportMileageListViewSelect;
+            reportSql = mileageListViewSelect;
             if(whereCondition.length() > 0)
                 reportSql = reportSql + whereCondition;
 
-            reportSql = reportSql +
+            reportSql = reportSql + 
                                     " ORDER BY " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " DESC";
         }
         else if(mReportSqlName.equals("reportRefuelListViewSelect")){
-            reportSql = reportRefuelListViewSelect;
+            reportSql = refuelListViewSelect;
             if(whereCondition.length() > 0)
                 reportSql = reportSql + whereCondition;
 
             reportSql = reportSql +
                                     " ORDER BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " DESC";
         }
+        else if(mReportSqlName.equals("reportMileageListReportSelect")){
+            reportSql = mileageListReportSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +
+                                    " ORDER BY " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " DESC";
+        }
+        else if(mReportSqlName.equals("reportRefuelListReportSelect")){
+            reportSql = refuelListReportSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +
+                                    " ORDER BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " DESC";
+        }
+
         if(limitCount != -1)
             reportSql = reportSql + " LIMIT " + limitCount;
 
