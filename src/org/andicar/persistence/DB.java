@@ -323,7 +323,7 @@ public class DB {
     }
 
 
-    private static class DatabaseHelper extends SQLiteOpenHelper
+    private class DatabaseHelper extends SQLiteOpenHelper
     {
         DatabaseHelper( Context context )
         {
@@ -430,7 +430,7 @@ public class DB {
 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils();
-                if(fu.onCreate() != -1){
+                if(fu.onCreate(mCtx) != -1){
                     Log.e(TAG, fu.lastError);
                 }
 

@@ -37,6 +37,7 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.Constants;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
+import org.andicar.utils.Utils;
 
 /**
  * Base class for all edit activities. Implement common functionalities:
@@ -268,15 +269,10 @@ public abstract class EditActivityBase extends Activity {
         mDateTimeInSeconds = mDateTimeCalendar.getTimeInMillis() / 1000;
         mDateTimeLabel.setText(
                 new StringBuilder() // Month is 0 based so add 1
-                .append(pad(mMonth + 1)).append("-").append(pad(mDay)).append("-").append(mYear).append(" ").append(pad(mHour)).append(":").append(pad(mMinute)));
+                .append(Utils.pad(mMonth + 1)).append("-")
+                .append(Utils.pad(mDay)).append("-")
+                .append(mYear).append(" ")
+                .append(Utils.pad(mHour)).append(":").append(Utils.pad(mMinute)));
     }
 
-    private static String pad(int c) {
-        if(c >= 10) {
-            return String.valueOf(c);
-        }
-        else {
-            return "0" + String.valueOf(c);
-        }
-    }
 }

@@ -85,7 +85,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + ", " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ", " +
-                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UomName, " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " - " +
+                    sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + " AS Mileage, " +
+                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UomCode, " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName " +
             " FROM " + MILEAGE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
@@ -144,11 +146,10 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + ", " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + ", " +
-                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ", " +
+                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UOMCode, " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " +
-                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS Currency, " +
-                "DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + " " +
+                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS CurrencyCode, " +
+                "DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date " +
             " FROM " + REFUEL_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -165,6 +166,33 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CURRENCY_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+            " WHERE 1=1 ";
+
+    public static String dailyMileageReportSelect =
+            "SELECT " +
+                "DATE(" + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) + ") " +
+                                                        "AS " + MILEAGE_COL_DATE_NAME + ", " +
+                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
+                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + ", " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ", " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + " - " +
+                    sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " AS Mileage, " +
+                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UomCode, " +
+                sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName " +
+            " FROM " + MILEAGE_TABLE_NAME +
+                    " JOIN " + EXPENSETYPE_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_EXPENSETYPE_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + DRIVER_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DRIVER_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + UOM_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_UOMLENGTH_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CAR_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )

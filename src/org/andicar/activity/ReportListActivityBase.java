@@ -18,12 +18,20 @@
 
 package org.andicar.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import java.util.Calendar;
@@ -34,6 +42,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import org.andicar.persistence.FileUtils;
+import org.andicar.utils.Utils;
 
 /**
  *
@@ -43,6 +52,10 @@ public class ReportListActivityBase extends ListActivityBase{
     protected ReportDbAdapter mListDbHelper = null;
     protected ReportDbAdapter mReportDbHelper = null;
     protected Bundle whereConditions;
+    private View reportDialogView;
+//    private CheckBox ckSaveLocally;
+    private CheckBox ckSendEmail;
+    private Spinner formatSpinner;
     
 
     protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
@@ -96,7 +109,10 @@ public class ReportListActivityBase extends ListActivityBase{
         if(item.getItemId() == Constants.OPTION_MENU_ADD_ID)
             return super.onOptionsItemSelected( item );
         else if(item.getItemId() == Constants.OPTION_MENU_REPORT_ID)
-            return createReport(false, "CSV");
+        {
+            showDialog(Constants.reportOptionsDialog);
+//            return createReport(false, "html");
+        }
         return true;
     }
 
@@ -134,31 +150,99 @@ public class ReportListActivityBase extends ListActivityBase{
 
     }
 
-    protected boolean createReport(boolean sendToMail, String reportFormat){
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        LayoutInflater factory = LayoutInflater.from(this);
+        reportDialogView = factory.inflate(R.layout.report_options_dialog, null);
+        formatSpinner = (Spinner)reportDialogView.findViewById(R.id.reportOptionsFormatSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, R.array.report_formats, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        formatSpinner.setAdapter(adapter);
+
+//        ckSaveLocally = (CheckBox)reportDialogView.findViewById(R.id.reportOptionsCkSaveLocal);
+        ckSendEmail = (CheckBox)reportDialogView.findViewById(R.id.reportOptionsCkSendEmail);
+
+        AlertDialog.Builder reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
+        reportOptionsDialog.setTitle(R.string.REPORTOPTIONS_DIALOG_TITLE);
+        reportOptionsDialog.setView(reportDialogView);
+        reportOptionsDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
+        reportOptionsDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
+        return reportOptionsDialog.create();
+    }
+    private DialogInterface.OnClickListener searchDialogButtonlistener = new DialogInterface.OnClickListener() {
+
+        public void onClick(DialogInterface dialog, int whichButton) {
+            if (whichButton == DialogInterface.BUTTON_POSITIVE) {
+                    createReport(true, ckSendEmail.isChecked(),
+                            formatSpinner.getSelectedItemId());
+            }
+        };
+    };
+
+    protected boolean createReport(boolean saveLocally, boolean sendToMail, long reportFormatId){
         Cursor reportCursor = null;
         String reportContent = "";
+        String reportTitle = "";
         String reportName = "";
         Calendar reportCal = Calendar.getInstance();
         int i;
         if( this instanceof MileageListReportActivity){
-            reportName = "MileageReport_";
+            reportTitle = "MileageReport_";
             mReportDbHelper = new ReportDbAdapter(this, "reportMileageListReportSelect", whereConditions);
             reportCursor = mReportDbHelper.fetchReport(-1);
         }
         else if(this instanceof RefuelListReportActivity){
-            reportName = "RefuelReport_";
+            reportTitle = "RefuelReport_";
             mReportDbHelper = new ReportDbAdapter(this, "reportRefuelListReportSelect", whereConditions);
             reportCursor = mReportDbHelper.fetchReport(-1);
         }
-        reportName = reportName +
+        reportTitle = reportTitle +
                     reportCal.get(Calendar.YEAR) + "" +
-                    (reportCal.get(Calendar.MONTH) + 1) + "" +
-                    reportCal.get(Calendar.DAY_OF_MONTH) + "" +
-                    reportCal.get(Calendar.HOUR_OF_DAY) + "" +
-                    reportCal.get(Calendar.MINUTE) + "" +
-                    reportCal.get(Calendar.SECOND) +
-                    reportCal.get(Calendar.MILLISECOND) +".csv";
+                    Utils.pad(reportCal.get(Calendar.MONTH) + 1) +
+                    Utils.pad(reportCal.get(Calendar.DAY_OF_MONTH)) +
+                    Utils.pad(reportCal.get(Calendar.HOUR_OF_DAY));
+        reportName = reportTitle +
+                    Utils.pad(reportCal.get(Calendar.MINUTE)) +
+                    Utils.pad(reportCal.get(Calendar.SECOND)) +
+                    reportCal.get(Calendar.MILLISECOND);
 
+        if(reportFormatId == 0){
+            reportName = reportName +".csv";
+            reportContent = createCSVContent(reportCursor);
+        }
+        else if(reportFormatId == 1){
+            reportName = reportName +".html";
+            reportContent = createHTMLContent(reportCursor, reportTitle);
+        }
+        reportCursor.close();
+
+        FileUtils fu = new FileUtils();
+        i = fu.writeToFile(reportContent, reportName);
+        if(i != -1){ //error
+            if(fu.lastError != null)
+                errorAlertBuilder.setMessage(mRes.getString(i) + "\n" + fu.lastError);
+            else
+                errorAlertBuilder.setMessage(mRes.getString(i));
+           errorAlert = errorAlertBuilder.create();
+           errorAlert.show();
+        }
+        
+        if(sendToMail){
+            Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+            emailIntent.setType("text/html");
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar report " + reportTitle);
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "This email was sent by AndiCar (https://code.google.com/p/andicar/wiki/Welcome)");
+            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + Constants.reportFolder + reportName));
+            emailIntent.setType("text/plain");
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        }
+        return true;
+    }
+
+    public String createCSVContent(Cursor reportCursor){
+        String reportContent = "";
+        int i;
         for(i = 0; i< reportCursor.getColumnCount(); i++){
             if(i > 0)
                 reportContent = reportContent + ", ";
@@ -173,18 +257,44 @@ public class ReportListActivityBase extends ListActivityBase{
             }
             reportContent = reportContent + "\n";
         }
-        reportCursor.close();
-        FileUtils fu = new FileUtils();
-        i = fu.writeToFile(reportContent, reportName);
-        if(i != -1){ //error
-            if(fu.lastError != null)
-                errorAlertBuilder.setMessage(mRes.getString(i) + "\n" + fu.lastError);
-            else
-                errorAlertBuilder.setMessage(mRes.getString(i));
-           errorAlert = errorAlertBuilder.create();
-           errorAlert.show();
+        return reportContent;
+    }
+    public String createHTMLContent(Cursor reportCursor, String title){
+        String reportContent = 
+                "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n" +
+                "<html>\n" +
+                    "<head>\n" +
+                        "<title>" + title + "</title>\n" +
+                        "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                        "<table  WIDTH=100% BORDER=1 BORDERCOLOR=\"#000000\" CELLPADDING=4 CELLSPACING=0>\n" +
+                            "<TR VALIGN=TOP>\n"; //table header
+        int i;
+        for(i = 0; i< reportCursor.getColumnCount(); i++){
+            reportContent = reportContent +
+                                "<TH>" + reportCursor.getColumnName(i) + "</TH>\n";
         }
-        return true;
+        reportContent = reportContent +
+                            "</TR>\n"; //end table header
+
+        while(reportCursor != null && reportCursor.moveToNext()){
+            reportContent = reportContent +
+                            "<TR VALIGN=TOP>\n";
+            for(i = 0; i< reportCursor.getColumnCount(); i++){
+                reportContent = reportContent +
+                                "<TD>" + reportCursor.getString(i) + "</TD>\n";
+            }
+            reportContent = reportContent +
+                            "</TR\n";
+        }
+        reportContent = reportContent +
+                        "</table>\n" +
+                        "<br><br><p align=\"center\"> Created with <a href=\"https://code.google.com/p/andicar/wiki/Welcome\" target=\"new\">AndiCar</a>\n" +
+                    "</body>\n" +
+                "</html>";
+
+        return reportContent;
     }
 
 }

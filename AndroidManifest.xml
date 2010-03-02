@@ -24,6 +24,7 @@
         android:icon="@drawable/car2"
         >
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.INTERNET" />
         <activity android:name="org.andicar.activity.MainActivity"
                   android:label="@string/APP_NAME"
                   android:theme="@android:style/Theme.NoTitleBar">
@@ -115,6 +116,11 @@
 
         <activity
             android:name="org.andicar.activity.RefuelListReportActivity"
+            android:label="@string/APP_ACTIVITY_REFUEL_LIST">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.dialogs.AboutActivity"
             android:label="@string/APP_ACTIVITY_REFUEL_LIST">
         </activity>
     </application>

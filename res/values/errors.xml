@@ -33,8 +33,9 @@
     <string name="ERR_017">"This currency cannot be deleted because refuel(s) exists with him."</string>
     <string name="ERR_018">"This expense type cannot be deleted because mileage(s) exists with him."</string>
     <string name="ERR_019">"This expense type cannot be deleted because refuel(s) exists with him."</string>
-    <string name="ERR_020">"SDCARD not found. You can not save the reports localy. Hovever you will be able to send it as emial attachments"</string>
-    <string name="ERR_021">"Report folder (SDCARD/andicar) cannot be created. You can not save the reports localy. Hovever you will be able to send it as emial attachments"</string>
+    <string name="ERR_020">"SDCARD not found. You can not save the reports localy and you can not backup the database!"</string>
+    <string name="ERR_021">"Report folder (SDCARD/andicar/reports) cannot be created. You can not save the reports localy. Hovever you will be able to send it as emial attachments"</string>
     <string name="ERR_022">"Cannot create report file!"</string>
     <string name="ERR_023">"Write error!"</string>
+    <string name="ERR_024">"Backup folder (SDCARD/andicar/backup) cannot be created. You can not backup your database until you create this folder on your device!"</string>
 </resources>

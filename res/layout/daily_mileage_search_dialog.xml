@@ -123,6 +123,7 @@
                 android:background="@android:drawable/editbox_background"
                 />
         </LinearLayout>
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"

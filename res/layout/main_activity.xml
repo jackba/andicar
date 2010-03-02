@@ -137,7 +137,7 @@
                       android:textStyle="bold|italic"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                        android:text="@string/MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION"
+                      android:text="@string/MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION"
                       />
             <TextView android:id="@+id/mainActivityThreeLineListRefuelText1"
                       android:textSize="14sp"
@@ -189,6 +189,13 @@
             android:layout_height="2dip"
             android:layout_width="fill_parent"
             android:background="@color/separator_bg"
+            />
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginTop="15dip"
+            android:text="@string/LM_MAIN_ACTIVITY_SHORTABOUT"
             />
     </LinearLayout>
 </ScrollView>

@@ -67,7 +67,7 @@ public class MileageListReportActivity extends ReportListActivityBase {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == Constants.OPTION_MENU_SEARCH_ID){
-            showDialog(0);
+            showDialog(Constants.localSearchDialog);
         }
         else{
             return super.onOptionsItemSelected(item);
@@ -77,6 +77,9 @@ public class MileageListReportActivity extends ReportListActivityBase {
 
     @Override
     protected Dialog onCreateDialog(int id) {
+        if(id != Constants.localSearchDialog)
+            return super.onCreateDialog(id);
+        
         LayoutInflater factory = LayoutInflater.from(this);
         searchView = factory.inflate(R.layout.mileage_search_dialog, null);
         AlertDialog.Builder searchDialog = new AlertDialog.Builder(MileageListReportActivity.this);
@@ -152,8 +155,6 @@ public class MileageListReportActivity extends ReportListActivityBase {
                     errorAlert.show();
                 }
             }
-        }
-
-        ;
+        };
     };
 }

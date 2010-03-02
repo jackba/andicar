@@ -28,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.database.Cursor;
+import org.andicar.activity.dialogs.AboutActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 
@@ -239,7 +240,17 @@ public class MainActivity extends Activity
     public boolean onCreateOptionsMenu( Menu menu )
     {
         menu.add( 0, Constants.MENU_PREFERENCES_ID, 0,
-                mRes.getText( R.string.MENU_PREFERENCES_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_preferences ) );
+                mRes.getText( R.string.MENU_PREFERENCES_CAPTION ) )
+                    .setIcon( mRes.getDrawable( R.drawable.ic_menu_preferences ) );
+//        menu.add( 0, Constants.MENU_REPORTS_ID, 0,
+//                mRes.getText( R.string.MENU_REPORTS_CAPTION ) )
+//                    .setIcon( mRes.getDrawable( R.drawable.ic_menu_report ) );
+        menu.add( 0, Constants.MENU_ABOUT_ID, 0,
+                mRes.getText( R.string.MENU_ABOUT_CAPTION ) )
+                    .setIcon( mRes.getDrawable( R.drawable.ic_menu_info_details ) );
+//        menu.add( 0, Constants.MENU_HELP_ID, 0,
+//                mRes.getText( R.string.MENU_HELP_CAPTION ) )
+//                    .setIcon( mRes.getDrawable( R.drawable.ic_menu_help ) );
         return true;
     }
 
@@ -250,6 +261,9 @@ public class MainActivity extends Activity
                 Intent i = new Intent( this, PreferencesActivity.class );
                 startActivityForResult( i, SETTINGS_ACTIVITY_REQUEST_CODE );
                 return true;
+        }
+        else if(item.getItemId() == Constants.MENU_ABOUT_ID){
+            startActivity(new Intent( this, AboutActivity.class ));
         }
         return false;
     }

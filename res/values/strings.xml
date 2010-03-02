@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
     Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
 
@@ -47,6 +48,9 @@
     <string name="GEN_PICK_TIME_BUTTON_CAPTION">"Change time"</string>
 
     <string name="MENU_PREFERENCES_CAPTION">"Preferences"</string>
+    <string name="MENU_REPORTS_CAPTION">"Reports"</string>
+    <string name="MENU_ABOUT_CAPTION">"About"</string>
+    <string name="MENU_HELP_CAPTION">"Help"</string>
     <string name="MENU_DELETE_CAPTION">"Delete"</string>
     <string name="MENU_ADD_NEW_CAPTION">"Add new"</string>
     <string name="MENU_EDIT_CAPTION">"Edit"</string>
@@ -64,7 +68,6 @@
     <string name="MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION">"Last refuel:"</string>
     <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"  Add new  "</string>
     <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"  View more  "</string>
-    <string name="MAIN_ACTIVITY_SHORTABOUT">"Copyrigh (c) 2010 Miklos Keresztes\nAll right reserved."</string>
     <string name="MAIN_ACTIVITY_NOMILEAGETEXT">"No mileage exist for this car"</string>
     <string name="MAIN_ACTIVITY_NOREFUELTEXT">"No refuel exist for this car"</string>
 
@@ -149,5 +152,10 @@
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>
     <string name="SEARCH_FROM_DATE_LBL">"From (YYYY-MM-DD)"</string>
     <string name="SEARCH_TO_DATE_LBL">"To (YYYY-MM-DD)"</string>
+
+    <string name="REPORTOPTIONS_DIALOG_TITLE">"Report options"</string>
+    <string name="REPORTOPTIONS_DIALOG_SAVELOCAL_CAPTION">"  save locally"</string>
+    <string name="REPORTOPTIONS_DIALOG_SENDEMAIL_CAPTION">"  send as email attachment"</string>
+    <string name="REPORTOPTIONS_DIALOG_FORMAT_LABEL">"Report format:"</string>
 
 </resources>

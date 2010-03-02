@@ -25,6 +25,9 @@ import java.math.RoundingMode;
 public class Constants
 {
     public static final int MENU_PREFERENCES_ID = 10;
+    public static final int MENU_REPORTS_ID = 11;
+    public static final int MENU_ABOUT_ID = 12;
+    public static final int MENU_HELP_ID = 13;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
@@ -73,4 +76,9 @@ public class Constants
      */
     public static String dateDecodeTypeNoChange = "12";
 
+    public static int localSearchDialog = 0;
+    public static int reportOptionsDialog = 1;
+
+    public static final String reportFolder = "/sdcard/andicar/reports/";
+    public static final String backupFolder = "/sdcard/andicar/backups/";
 }
