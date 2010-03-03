@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-    Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
+ AndiCar - a car management software for Android powered devices.
 
-  This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License.
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
 
-  This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
 
-  You should have received a copy of the GNU General Public License along with this program;
-    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
     <string name="APP_NAME">"AndiCar"</string>
@@ -34,9 +38,13 @@
     <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
     <string name="APP_ACTIVITY_MILEAGE_LIST">"Mileages"</string>
     <string name="APP_ACTIVITY_REFUEL_LIST">"Refuels"</string>
+    <string name="APP_ACTIVITY_ABOUT">"About AndiCar"</string>
+    <string name="APP_ACTIVITY_BKRESTORE">"Backup / restore"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
+    <string name="GEN_YES">"Yes"</string>
+    <string name="GEN_NO">"No"</string>
     <string name="GEN_FILL_MANDATORY">"Fill mandatory field"</string>
     <string name="GEN_NUMBER_FORMAT_EXCEPTION">"Invalid number"</string>
     <string name="GEN_CHOSEONE_DIALOGTITLE">"Chose one"</string>
@@ -70,6 +78,17 @@
     <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"  View more  "</string>
     <string name="MAIN_ACTIVITY_NOMILEAGETEXT">"No mileage exist for this car"</string>
     <string name="MAIN_ACTIVITY_NOREFUELTEXT">"No refuel exist for this car"</string>
+    <string name="MAIN_ACTIVITY_NO_CURRENT_CAR">"No current car selected. In the following page you can select one or define on."</string>
+    <string name="MAIN_ACTIVITY_NO_CURRENT_DRIVER">"No current driver selected. In the following page you can select one or define on."</string>
+    <string name="MAIN_ACTIVITY_BACKUPEXISTS">"Welcome back!\n\nBackup files exists.\nDo you want to restore one?"</string>
+    <string name="MAIN_ACTIVITY_WELLCOME_MESSAGE">"Wellcome to AndiCar."</string>
+    <string name="MAIN_ACTIVITY_WELLCOME_MESSAGE2">
+        AndiCar is a free and open source car management
+        software for Android powered devices.\n
+        It is licensed under the terms of the GNU General Public License, version 3.\n
+        For more details see the About page.\n
+        Thank you for using AndiCar!
+    </string>
 
     <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>
@@ -84,7 +103,6 @@
     <string name="CAR_EDIT_ACTIVITY_UOMVOLUME">"UOM for volume:"</string>
     <string name="CAR_EDIT_ACTIVITY_STARTINDEX">"Start index:"</string>
     <string name="CAR_EDIT_ACTIVITY_CURRENCY">"Default currency:"</string>
-    <string name="NO_CARS">"No cars defined yet"</string>
     <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Cannot be selected."</string>
     <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car cannot be deleted."</string>
     <string name="CURRENT_CAR_INACTIVATE_ERROR_MESSAGE">"The current car cannot be inactivated."</string>
@@ -144,9 +162,11 @@
     <string name="PREF_UOMVOLUME_SUMMARY">"Add, delete, modify measurement units for volume"</string>
     <string name="PREF_UOMCONVERSION_TITLE">"UOM conversion"</string>
     <string name="PREF_UOMCONVERSION_SUMMARY">"Add, delete, modify conversions between measurement units"</string>
-
     <string name="PREF_CAT_CURRENCYLIST_TITLE">"Currencies"</string>
     <string name="PREF_CAT_CURRENCYLIST_SUMMARY">"Add, delete, modify currencies"</string>
+    <string name="PREF_BKRESTORE_CATEGORY_TITLE">"Backup / restore"</string>
+    <string name="PREF_BKRESTORE_TITLE">"Backup or restore your database"</string>
+    <string name="PREF_BKRESTORE_SUMMARY">"Create a new backup about your database or restore it from an existing backup."</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>
@@ -157,5 +177,16 @@
     <string name="REPORTOPTIONS_DIALOG_SAVELOCAL_CAPTION">"  save locally"</string>
     <string name="REPORTOPTIONS_DIALOG_SENDEMAIL_CAPTION">"  send as email attachment"</string>
     <string name="REPORTOPTIONS_DIALOG_FORMAT_LABEL">"Report format:"</string>
+    <string name="REPORTLIST_REPORT_CREATED">"Your report was created successfully to"</string>
+
+    <string name="BKRESTORE_ACTIVITY_BACKUPBTN_CAPTION">"Backup"</string>
+    <string name="BKRESTORE_ACTIVITY_RESTOREBTN_CAPTION">"Restore"</string>
+    <string name="BKRESTORE_ACTIVITY_DELETEBK_CAPTION">"Delete backup"</string>
+    <string name="BKRESTORE_ACTIVITY_EXISTINGBKS_LABEL">"Existing backups:"</string>
+    <string name="BKRESTORE_ACTIVITY_BKOK_MESSAGE">"Backup created."</string>
+    <string name="BKRESTORE_ACTIVITY_BKFAILED_MESSAGE">"Backup creation failed!"</string>
+    <string name="BKRESTORE_ACTIVITY_DELETE_CONFIRM">"Are you sure you want to delete the selected backup?"</string>
+    <string name="BKRESTORE_ACTIVITY_RESTORE_CONFIRM">"Are you sure you want to restore the selected backup? This action will overwrite your existing data!"</string>
+    <string name="BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE">"Your database was restored succesfully. The application will be closed."</string>
 
 </resources>

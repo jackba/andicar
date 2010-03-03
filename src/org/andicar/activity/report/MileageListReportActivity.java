@@ -1,21 +1,23 @@
 /*
+ *  AndiCar - a car management software for Android powered devices.
+ *
  *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
- * 
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version 2
- *  of the License, or (at your option) any later version.
- * 
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.andicar.activity;
+
+package org.andicar.activity.report;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -27,16 +29,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import org.andicar.activity.MileageEditActivity;
+import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.Constants;
+import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
 /**
  *
  * @author miki
  */
-public class DailyMileageReportActivity extends ReportListActivityBase {
+public class MileageListReportActivity extends ReportListActivityBase {
 
     private View searchView;
     private EditText genUserCommentEntry;
@@ -48,7 +52,7 @@ public class DailyMileageReportActivity extends ReportListActivityBase {
 
     @Override
     public void onCreate(Bundle icicle) {
-        Long mCarId = getSharedPreferences(Constants.GLOBAL_PREFERENCE_NAME, 0).getLong("CurrentCar_ID", 0);
+        Long mCarId = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getLong("CurrentCar_ID", 0);
         whereConditions = new Bundle();
         whereConditions.putString(
                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
@@ -66,8 +70,8 @@ public class DailyMileageReportActivity extends ReportListActivityBase {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == Constants.OPTION_MENU_SEARCH_ID){
-            showDialog(Constants.localSearchDialog);
+        if (item.getItemId() == StaticValues.OPTION_MENU_SEARCH_ID){
+            showDialog(StaticValues.localSearchDialog);
         }
         else{
             return super.onOptionsItemSelected(item);
@@ -77,12 +81,12 @@ public class DailyMileageReportActivity extends ReportListActivityBase {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        if(id != Constants.localSearchDialog)
+        if(id != StaticValues.localSearchDialog)
             return super.onCreateDialog(id);
         
         LayoutInflater factory = LayoutInflater.from(this);
-        searchView = factory.inflate(R.layout.daily_mileage_search_dialog, null);
-        AlertDialog.Builder searchDialog = new AlertDialog.Builder(DailyMileageReportActivity.this);
+        searchView = factory.inflate(R.layout.mileage_search_dialog, null);
+        AlertDialog.Builder searchDialog = new AlertDialog.Builder(MileageListReportActivity.this);
         searchDialog.setTitle(R.string.SEARCH_DIALOG_TITLE);
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
@@ -122,14 +126,14 @@ public class DailyMileageReportActivity extends ReportListActivityBase {
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
                                 MainDbAdapter.MILEAGE_COL_DATE_NAME) + " >= ",
                                 Long.toString(Utils.decodeDateStr(searchDateFromEntry.getText().toString(),
-                                Constants.dateDecodeTypeTo0Hour) / 1000));
+                                StaticValues.dateDecodeTypeTo0Hour) / 1000));
                     }
                     if (searchDateToEntry.getText().toString().length() > 0) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
                                 MainDbAdapter.MILEAGE_COL_DATE_NAME) + " <= ",
                                 Long.toString(Utils.decodeDateStr(searchDateToEntry.getText().toString(),
-                                Constants.dateDecodeTypeTo24Hour) / 1000));
+                                StaticValues.dateDecodeTypeTo24Hour) / 1000));
                     }
                     if (searchCarSpinner.getSelectedItemId() != -1) {
                         whereConditions.putString(

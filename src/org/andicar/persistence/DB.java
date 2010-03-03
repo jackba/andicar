@@ -1,19 +1,20 @@
 /*
+ *  AndiCar - a car management software for Android powered devices.
+ *
  *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
- * 
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version 2
- *  of the License, or (at your option) any later version.
- * 
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.andicar.persistence;
@@ -23,7 +24,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import org.andicar.utils.Constants;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
 
 /**
  * Database object names and database creation/update
@@ -282,7 +284,7 @@ public class DB {
             + REFUEL_COL_DOCUMENTNO_NAME + " TEXT NULL "
             + ");";
 
-    private DatabaseHelper mDbHelper = null;
+    protected DatabaseHelper mDbHelper = null;
     protected SQLiteDatabase mDb = null;
     protected final Context mCtx;
 
@@ -312,7 +314,8 @@ public class DB {
      */
     public DB open() throws SQLException
     {
-        mDbHelper = new DatabaseHelper( mCtx );
+        if(mDbHelper == null)
+            mDbHelper = new DatabaseHelper( mCtx );
         mDb = mDbHelper.getWritableDatabase();
         return this;
     }
@@ -323,11 +326,11 @@ public class DB {
     }
 
 
-    private class DatabaseHelper extends SQLiteOpenHelper
+    protected class DatabaseHelper extends SQLiteOpenHelper
     {
         DatabaseHelper( Context context )
         {
-            super( context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION );
+            super( context, StaticValues.DATABASE_NAME, null, StaticValues.DATABASE_VERSION );
         }
 
         @Override
@@ -474,5 +477,28 @@ public class DB {
 
     }
 
+    public boolean backupDb(){
+        boolean retVal;
+        String fromFile = mDb.getPath();
+        String toFile = StaticValues.backupFolder + Utils.appendDateTime("backup_", true, true, true) + ".db";
+        mDb.close();
+        FileUtils fu = new FileUtils();
+        retVal = fu.copyFile(mCtx, fromFile, toFile, false);
+        if(retVal == false)
+            lastErrorMessage = fu.lastError;
+        open();
+        return retVal;
+    }
 
+    public boolean restoreDb(String restoreFile){
+        boolean retVal;
+        String toFile = mDb.getPath();
+        mDb.close();
+        FileUtils fu = new FileUtils();
+        retVal = fu.copyFile(mCtx, StaticValues.backupFolder + restoreFile, toFile, true);
+        if(retVal == false)
+            lastErrorMessage = fu.lastError;
+        open();
+        return retVal;
+    }
 }

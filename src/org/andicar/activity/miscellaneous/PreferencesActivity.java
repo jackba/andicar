@@ -1,27 +1,40 @@
 /*
-    Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License.
-
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along with this program;
-    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *  AndiCar - a car management software for Android powered devices.
+ *
+ *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.andicar.activity;
+package org.andicar.activity.miscellaneous;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
-import org.andicar.utils.Constants;
+import org.andicar.activity.CarListActivity;
+import org.andicar.activity.CurrencyListActivity;
+import org.andicar.activity.DriverListActivity;
+import org.andicar.activity.ExpenseTypeListActivity;
+import org.andicar.activity.R;
+import org.andicar.activity.UOMConversionListActivity;
+import org.andicar.activity.UOMListActivity;
+import org.andicar.utils.StaticValues;
 import org.andicar.persistence.MainDbAdapter;
 
 /**
@@ -31,12 +44,13 @@ import org.andicar.persistence.MainDbAdapter;
 public class PreferencesActivity extends PreferenceActivity {
 
     private Resources mRes = null;
+    protected SharedPreferences mPreferences;
     
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mRes = getResources();
 
         setPreferenceScreen(createPreferenceHierarchy());
@@ -71,7 +85,7 @@ public class PreferencesActivity extends PreferenceActivity {
         //preference for length (distance) uom
         PreferenceScreen uomLengthPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         Intent uomLengthIntent = new Intent(this, UOMListActivity.class);
-        uomLengthIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, Constants.UOM_LENGTH_TYPE_CODE);
+        uomLengthIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_LENGTH_TYPE_CODE);
         uomLengthPrefScreen.setIntent(uomLengthIntent);
         uomLengthPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMLENGTH_TITLE));
         uomLengthPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMLENGTH_SUMMARY));
@@ -79,7 +93,7 @@ public class PreferencesActivity extends PreferenceActivity {
         //preference for volumne uom
         PreferenceScreen uomVolumePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         Intent uomVolumeIntent = new Intent(this, UOMListActivity.class);
-        uomVolumeIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, Constants.UOM_VOLUME_TYPE_CODE);
+        uomVolumeIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_VOLUME_TYPE_CODE);
         uomVolumePrefScreen.setIntent(uomVolumeIntent);
         uomVolumePrefScreen.setTitle(mRes.getString(R.string.PREF_UOMVOLUME_TITLE));
         uomVolumePrefScreen.setSummary(mRes.getString(R.string.PREF_UOMVOLUME_SUMMARY));
@@ -90,6 +104,16 @@ public class PreferencesActivity extends PreferenceActivity {
         uomConversionPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMCONVERSION_TITLE));
         uomConversionPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMCONVERSION_SUMMARY));
         uomPrefCategory.addPreference(uomConversionPrefScreen);
+
+        //Backup/Restore
+        PreferenceCategory bkRestoreCategory = new PreferenceCategory(this);
+        bkRestoreCategory.setTitle(mRes.getString(R.string.PREF_BKRESTORE_CATEGORY_TITLE));
+        prefScreenRoot.addPreference(bkRestoreCategory);
+        PreferenceScreen bkRestorePrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        bkRestorePrefScreen.setIntent(new Intent(this, BackupRestoreActivity.class));
+        bkRestorePrefScreen.setTitle(mRes.getString(R.string.PREF_BKRESTORE_TITLE));
+        bkRestorePrefScreen.setSummary(mRes.getString(R.string.PREF_BKRESTORE_SUMMARY));
+        bkRestoreCategory.addPreference(bkRestorePrefScreen);
 
         //Miscellaneous settings
         PreferenceCategory miscCategory = new PreferenceCategory(this);
@@ -113,4 +137,11 @@ public class PreferencesActivity extends PreferenceActivity {
         return prefScreenRoot;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mPreferences.getBoolean("MustClose", false)){
+            finish();
+        }
+    }
 }

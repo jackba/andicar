@@ -1,22 +1,25 @@
 /*
+ *  AndiCar - a car management software for Android powered devices.
+ *
  *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
- * 
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version 2
- *  of the License, or (at your option) any later version.
- * 
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.andicar.activity;
 
+package org.andicar.activity.report;
+
+import org.andicar.activity.report.ReportListActivityBase;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -26,18 +29,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
+import org.andicar.activity.R;
+import org.andicar.activity.RefuelEditActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.Constants;
+import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
 /**
  *
  * @author miki
  */
-public class MileageListReportActivity extends ReportListActivityBase {
-
+public class RefuelListReportActivity extends ReportListActivityBase{
     private View searchView;
     private EditText genUserCommentEntry;
     private Spinner searchExpTypeSpinner;
@@ -47,27 +50,28 @@ public class MileageListReportActivity extends ReportListActivityBase {
     private Spinner searchCarSpinner;
 
     @Override
-    public void onCreate(Bundle icicle) {
-        Long mCarId = getSharedPreferences(Constants.GLOBAL_PREFERENCE_NAME, 0).getLong("CurrentCar_ID", 0);
+    public void onCreate( Bundle icicle )
+    {
+        Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
         whereConditions = new Bundle();
         whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
-                mCarId.toString());
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=",
+                mCarId.toString() );
 
-        super.onCreate(icicle, null, MileageEditActivity.class,
-                MainDbAdapter.MILEAGE_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
+        super.onCreate( icicle, null, RefuelEditActivity.class,
+                MainDbAdapter.REFUEL_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null,
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.threeLineListReportText1, R.id.threeLineListReportText2, R.id.threeLineListReportText3},
-                "reportMileageListViewSelect", whereConditions);
+                "reportRefuelListViewSelect",  whereConditions);
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == Constants.OPTION_MENU_SEARCH_ID){
-            showDialog(Constants.localSearchDialog);
+        if (item.getItemId() == StaticValues.OPTION_MENU_SEARCH_ID){
+            showDialog(StaticValues.localSearchDialog);
         }
         else{
             return super.onOptionsItemSelected(item);
@@ -77,12 +81,12 @@ public class MileageListReportActivity extends ReportListActivityBase {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        if(id != Constants.localSearchDialog)
+        if(id != StaticValues.localSearchDialog)
             return super.onCreateDialog(id);
-        
+
         LayoutInflater factory = LayoutInflater.from(this);
-        searchView = factory.inflate(R.layout.mileage_search_dialog, null);
-        AlertDialog.Builder searchDialog = new AlertDialog.Builder(MileageListReportActivity.this);
+        searchView = factory.inflate(R.layout.refuel_search_dialog, null);
+        AlertDialog.Builder searchDialog = new AlertDialog.Builder(RefuelListReportActivity.this);
         searchDialog.setTitle(R.string.SEARCH_DIALOG_TITLE);
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
@@ -107,43 +111,43 @@ public class MileageListReportActivity extends ReportListActivityBase {
                     whereConditions.clear();
                     if (searchExpTypeSpinner.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
-                                MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
+                                MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME) + "=",
                                 String.valueOf(searchExpTypeSpinner.getSelectedItemId()));
                     }
                     if (genUserCommentEntry.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
                                 MainDbAdapter.GEN_COL_USER_COMMENT_NAME) + " LIKE ",
                                 genUserCommentEntry.getText().toString());
                     }
                     if (searchDateFromEntry.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
-                                MainDbAdapter.MILEAGE_COL_DATE_NAME) + " >= ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
+                                MainDbAdapter.REFUEL_COL_DATE_NAME) + " >= ",
                                 Long.toString(Utils.decodeDateStr(searchDateFromEntry.getText().toString(),
-                                Constants.dateDecodeTypeTo0Hour) / 1000));
+                                StaticValues.dateDecodeTypeTo0Hour) / 1000));
                     }
                     if (searchDateToEntry.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
-                                MainDbAdapter.MILEAGE_COL_DATE_NAME) + " <= ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
+                                MainDbAdapter.REFUEL_COL_DATE_NAME) + " <= ",
                                 Long.toString(Utils.decodeDateStr(searchDateToEntry.getText().toString(),
-                                Constants.dateDecodeTypeTo24Hour) / 1000));
+                                StaticValues.dateDecodeTypeTo24Hour) / 1000));
                     }
                     if (searchCarSpinner.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
-                                MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
+                                MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=",
                                 String.valueOf(searchCarSpinner.getSelectedItemId()));
                     }
                     if (searchDriverSpinner.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
-                                MainDbAdapter.MILEAGE_COL_DRIVER_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
+                                MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME) + "=",
                                 String.valueOf(searchDriverSpinner.getSelectedItemId()));
                     }
-                    mListDbHelper.setReportSql("reportMileageListViewSelect", whereConditions);
+                    mListDbHelper.setReportSql("reportRefuelListViewSelect", whereConditions);
                     fillData();
                 } catch (IndexOutOfBoundsException e) {
                     errorAlertBuilder.setMessage(mRes.getString(R.string.ERR_008));
@@ -157,4 +161,5 @@ public class MileageListReportActivity extends ReportListActivityBase {
             }
         };
     };
+
 }

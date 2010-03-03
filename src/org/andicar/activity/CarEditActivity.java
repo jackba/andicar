@@ -1,18 +1,22 @@
 /*
-Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program;
-if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
+ *  AndiCar - a car management software for Android powered devices.
+ *
+ *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.andicar.activity;
 
 import android.content.ContentValues;
@@ -27,7 +31,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import java.math.BigDecimal;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.Constants;
+import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -59,12 +63,12 @@ public class CarEditActivity extends EditActivityBase
             //uom for length
             initSpinner((Spinner) findViewById( R.id.carEditUomLengthSpinner ), MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + Constants.UOM_LENGTH_TYPE_CODE + "'" +
+                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
                         MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, uomLengthId, false);
             //uom for volume
             initSpinner((Spinner) findViewById( R.id.carEditUomVolumeSpinner ), MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + Constants.UOM_VOLUME_TYPE_CODE + "'" +
+                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
                         MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, uomVolumeId, false);
              //default currency
             initSpinner((Spinner) findViewById( R.id.carEditCurrencySpinner ), MainDbAdapter.CURRENCY_TABLE_NAME,
@@ -109,12 +113,12 @@ public class CarEditActivity extends EditActivityBase
         else {
             initSpinner((Spinner) findViewById( R.id.carEditUomLengthSpinner ), MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + Constants.UOM_LENGTH_TYPE_CODE + "'" +
+                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
                         MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 1, false);
             //uom for volume
             initSpinner((Spinner) findViewById( R.id.carEditUomVolumeSpinner ), MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + Constants.UOM_VOLUME_TYPE_CODE + "'" +
+                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
                         MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 3, false);
              //default currency
             initSpinner((Spinner) findViewById( R.id.carEditCurrencySpinner ), MainDbAdapter.CURRENCY_TABLE_NAME,

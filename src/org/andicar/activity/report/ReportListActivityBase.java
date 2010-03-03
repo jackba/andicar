@@ -1,22 +1,23 @@
 /*
+ *  AndiCar - a car management software for Android powered devices.
+ *
  *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
- * 
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version 2
- *  of the License, or (at your option) any later version.
- * 
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.andicar.activity;
+package org.andicar.activity.report;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -34,13 +35,12 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import java.util.Calendar;
+import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.Constants;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import org.andicar.utils.StaticValues;
+import org.andicar.activity.ListActivityBase;
+import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.utils.Utils;
 
@@ -91,13 +91,13 @@ public class ReportListActivityBase extends ListActivityBase{
     public boolean onCreateOptionsMenu( Menu menu )
     {
         optionsMenu = menu;
-        optionsMenu.add( 0, Constants.OPTION_MENU_ADD_ID, 0,
+        optionsMenu.add( 0, StaticValues.OPTION_MENU_ADD_ID, 0,
                 mRes.getText( R.string.MENU_ADD_NEW_CAPTION ) ).
                 setIcon( mRes.getDrawable( R.drawable.ic_menu_add ) );
-        optionsMenu.add( 0, Constants.OPTION_MENU_SEARCH_ID, 0,
+        optionsMenu.add( 0, StaticValues.OPTION_MENU_SEARCH_ID, 0,
                 mRes.getText( R.string.MENU_SEARCH_CAPTION ) ).
                 setIcon( mRes.getDrawable( R.drawable.ic_menu_search ) );
-        optionsMenu.add( 0, Constants.OPTION_MENU_REPORT_ID, 0,
+        optionsMenu.add( 0, StaticValues.OPTION_MENU_REPORT_ID, 0,
                 mRes.getText( R.string.MENU_REPORT_CAPTION ) ).
                 setIcon( mRes.getDrawable( R.drawable.ic_menu_report ) );
         return true;
@@ -106,11 +106,11 @@ public class ReportListActivityBase extends ListActivityBase{
     @Override
     public boolean onOptionsItemSelected( MenuItem item )
     {
-        if(item.getItemId() == Constants.OPTION_MENU_ADD_ID)
+        if(item.getItemId() == StaticValues.OPTION_MENU_ADD_ID)
             return super.onOptionsItemSelected( item );
-        else if(item.getItemId() == Constants.OPTION_MENU_REPORT_ID)
+        else if(item.getItemId() == StaticValues.OPTION_MENU_REPORT_ID)
         {
-            showDialog(Constants.reportOptionsDialog);
+            showDialog(StaticValues.reportOptionsDialog);
 //            return createReport(false, "html");
         }
         return true;
@@ -166,12 +166,12 @@ public class ReportListActivityBase extends ListActivityBase{
         AlertDialog.Builder reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
         reportOptionsDialog.setTitle(R.string.REPORTOPTIONS_DIALOG_TITLE);
         reportOptionsDialog.setView(reportDialogView);
-        reportOptionsDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
-        reportOptionsDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
+        reportOptionsDialog.setPositiveButton(R.string.GEN_OK, reportDialogButtonlistener);
+        reportOptionsDialog.setNegativeButton(R.string.GEN_CANCEL, reportDialogButtonlistener);
         return reportOptionsDialog.create();
     }
-    private DialogInterface.OnClickListener searchDialogButtonlistener = new DialogInterface.OnClickListener() {
-
+    private DialogInterface.OnClickListener reportDialogButtonlistener =
+            new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int whichButton) {
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
                     createReport(true, ckSendEmail.isChecked(),
@@ -185,7 +185,6 @@ public class ReportListActivityBase extends ListActivityBase{
         String reportContent = "";
         String reportTitle = "";
         String reportName = "";
-        Calendar reportCal = Calendar.getInstance();
         int i;
         if( this instanceof MileageListReportActivity){
             reportTitle = "MileageReport_";
@@ -197,15 +196,9 @@ public class ReportListActivityBase extends ListActivityBase{
             mReportDbHelper = new ReportDbAdapter(this, "reportRefuelListReportSelect", whereConditions);
             reportCursor = mReportDbHelper.fetchReport(-1);
         }
-        reportTitle = reportTitle +
-                    reportCal.get(Calendar.YEAR) + "" +
-                    Utils.pad(reportCal.get(Calendar.MONTH) + 1) +
-                    Utils.pad(reportCal.get(Calendar.DAY_OF_MONTH)) +
-                    Utils.pad(reportCal.get(Calendar.HOUR_OF_DAY));
-        reportName = reportTitle +
-                    Utils.pad(reportCal.get(Calendar.MINUTE)) +
-                    Utils.pad(reportCal.get(Calendar.SECOND)) +
-                    reportCal.get(Calendar.MILLISECOND);
+        reportName = reportTitle;
+        reportTitle = reportTitle + Utils.appendDateTime(reportTitle, true, false, false);
+        reportName = reportName + Utils.appendDateTime(reportTitle, true, true, true);
 
         if(reportFormatId == 0){
             reportName = reportName +".csv";
@@ -226,6 +219,7 @@ public class ReportListActivityBase extends ListActivityBase{
                 errorAlertBuilder.setMessage(mRes.getString(i));
            errorAlert = errorAlertBuilder.create();
            errorAlert.show();
+           return false;
         }
         
         if(sendToMail){
@@ -233,10 +227,15 @@ public class ReportListActivityBase extends ListActivityBase{
             emailIntent.setType("text/html");
             emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar report " + reportTitle);
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "This email was sent by AndiCar (https://code.google.com/p/andicar/wiki/Welcome)");
-            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + Constants.reportFolder + reportName));
+            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + StaticValues.reportFolder + reportName));
             emailIntent.setType("text/plain");
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
+        Toast toast = Toast.makeText( getApplicationContext(),
+                    mRes.getString(R.string.REPORTLIST_REPORT_CREATED) + " " +
+                        StaticValues.reportFolder, Toast.LENGTH_LONG );
+        toast.show();
+
         return true;
     }
 

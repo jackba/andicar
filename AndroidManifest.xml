@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
+ AndiCar - a car management software for Android powered devices.
 
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License.
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
 
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
 
-    You should have received a copy of the GNU General Public License along with this program;
-    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
@@ -55,7 +59,7 @@
         </activity>
 
         <activity 
-            android:name="org.andicar.activity.PreferencesActivity"
+            android:name="org.andicar.activity.miscellaneous.PreferencesActivity"
             android:label="@string/APP_ACTIVITY_PREFERENCES">
         </activity>
 
@@ -110,18 +114,23 @@
         </activity>
 
         <activity
-            android:name="org.andicar.activity.MileageListReportActivity"
+            android:name="org.andicar.activity.report.MileageListReportActivity"
             android:label="@string/APP_ACTIVITY_MILEAGE_LIST">
         </activity>
 
         <activity
-            android:name="org.andicar.activity.RefuelListReportActivity"
+            android:name="org.andicar.activity.report.RefuelListReportActivity"
             android:label="@string/APP_ACTIVITY_REFUEL_LIST">
         </activity>
 
         <activity
-            android:name="org.andicar.activity.dialogs.AboutActivity"
-            android:label="@string/APP_ACTIVITY_REFUEL_LIST">
+            android:name="org.andicar.activity.miscellaneous.AboutActivity"
+            android:label="@string/APP_ACTIVITY_ABOUT">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.miscellaneous.BackupRestoreActivity"
+            android:label="@string/APP_ACTIVITY_BKRESTORE">
         </activity>
     </application>
 </manifest>

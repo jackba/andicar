@@ -1,17 +1,22 @@
 /*
-Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program;
-if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *  AndiCar - a car management software for Android powered devices.
+ *
+ *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package org.andicar.activity;
 
 import android.app.AlertDialog;
@@ -34,7 +39,7 @@ import android.widget.Toast;
 import java.math.BigDecimal;
 //import java.sql.Timestamp;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.Constants;
+import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -112,7 +117,7 @@ public class MileageEditActivity extends EditActivityBase {
             BigDecimal stopIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
             mileageEditInputEntry.setText(stopIndex.toString());
             mileageEditInsertModeIndexRb.setChecked(true);
-            mInsertMode = Constants.mileageInsertModeNewIndex;
+            mInsertMode = StaticValues.mileageInsertModeNewIndex;
             initDateTime(recordCursor.getLong(MainDbAdapter.MILEAGE_COL_DATE_POS) * 1000);
             mileageEditUserCommentEntry.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
             initSpinner(mExpTypeSpinner, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
@@ -140,7 +145,7 @@ public class MileageEditActivity extends EditActivityBase {
                 mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId,mDriverId, 30));
         mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
         
-        if(mInsertMode == Constants.mileageInsertModeNewIndex) {
+        if(mInsertMode == StaticValues.mileageInsertModeNewIndex) {
             mileageEditInsertModeIndexRb.setChecked(true);
             mileageEditInputLabel.setText(
                     mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
@@ -195,7 +200,7 @@ public class MileageEditActivity extends EditActivityBase {
             BigDecimal pEntryMileageValue = mEntryMileageValue;
             BigDecimal pStartIndex = mStartIndex;
 
-            if(mInsertMode == Constants.mileageInsertModeNewIndex) { //new index
+            if(mInsertMode == StaticValues.mileageInsertModeNewIndex) { //new index
                 pNewIndex = pEntryMileageValue;
                 if(pNewIndex.compareTo(pStartIndex) < 0) {
                     mileageEditCalculatedTextContent.setText("N/A;");
@@ -323,7 +328,7 @@ public class MileageEditActivity extends EditActivityBase {
             new RadioGroup.OnCheckedChangeListener() {
                     public void onCheckedChanged(RadioGroup arg0, int checkedId) {
                         if(checkedId == mileageEditInsertModeIndexRb.getId()) {
-                            mInsertMode = Constants.mileageInsertModeNewIndex; //new index
+                            mInsertMode = StaticValues.mileageInsertModeNewIndex; //new index
                             mileageEditInputLabel.setText(
                                     mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
                             mileageEditCalculatedTextLabel.setText(
@@ -331,7 +336,7 @@ public class MileageEditActivity extends EditActivityBase {
                             mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
                         }
                         else {
-                            mInsertMode = Constants.mileageEditInsertModeMileage;
+                            mInsertMode = StaticValues.mileageEditInsertModeMileage;
                             mileageEditInputLabel.setText(
                                     mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
                             mileageEditCalculatedTextLabel.setText(

@@ -1,16 +1,20 @@
 /*
-    Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
-
-    This program is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License as published by the
-    Free Software Foundation; either version 2 of the License.
-
-    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-    See the GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License along with this program;
-    if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+ *  AndiCar - a car management software for Android powered devices.
+ *
+ *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package org.andicar.activity;
@@ -34,7 +38,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.Calendar;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.Constants;
+import org.andicar.utils.StaticValues;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
 import org.andicar.utils.Utils;
@@ -69,8 +73,8 @@ public abstract class EditActivityBase extends Activity {
     protected TextView mDateTimeLabel;
     protected final Calendar mDateTimeCalendar = Calendar.getInstance();
 
-    private AlertDialog.Builder exceptionAlertBuilder;
-    private AlertDialog exceptionAlert;
+    protected AlertDialog.Builder exceptionAlertBuilder;
+    protected AlertDialog exceptionAlert;
 
     protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
         super.onCreate(icicle);
@@ -78,7 +82,7 @@ public abstract class EditActivityBase extends Activity {
         setContentView(layoutResID);
         extras = getIntent().getExtras();
         mRes = getResources();
-        mPreferences = getSharedPreferences(Constants.GLOBAL_PREFERENCE_NAME, 0);
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mMainDbHelper = new MainDbAdapter(this);
 
         exceptionAlertBuilder = new AlertDialog.Builder( this );
@@ -97,9 +101,16 @@ public abstract class EditActivityBase extends Activity {
     
     /** Use instead onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener) */
     @Override
-    @Deprecated
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        extras = getIntent().getExtras();
+        mRes = getResources();
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mMainDbHelper = new MainDbAdapter(this);
+
+        exceptionAlertBuilder = new AlertDialog.Builder( this );
+        exceptionAlertBuilder.setCancelable( false );
+        exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
     }
 
     protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition, String orderBy,
@@ -208,24 +219,24 @@ public abstract class EditActivityBase extends Activity {
         Button pickDate = (Button) findViewById(R.id.genPickDateButton);
         pickDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                showDialog(Constants.DATE_DIALOG_ID);
+                showDialog(StaticValues.DATE_DIALOG_ID);
             }
         });
 
         Button pickTime = (Button) findViewById(R.id.genPickTimeButton);
         pickTime.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
-                showDialog(Constants.TIME_DIALOG_ID);
+                showDialog(StaticValues.TIME_DIALOG_ID);
             }
         });
    }
     @Override
     protected Dialog onCreateDialog(int id) {
         switch(id) {
-            case Constants.TIME_DIALOG_ID:
+            case StaticValues.TIME_DIALOG_ID:
                 return new TimePickerDialog(this,
                         mTimeSetListener, mHour, mMinute, false);
-            case Constants.DATE_DIALOG_ID:
+            case StaticValues.DATE_DIALOG_ID:
                 return new DatePickerDialog(this,
                         mDateSetListener,
                         mYear, mMonth, mDay);
@@ -236,10 +247,10 @@ public abstract class EditActivityBase extends Activity {
     @Override
     protected void onPrepareDialog(int id, Dialog dialog) {
         switch(id) {
-            case Constants.TIME_DIALOG_ID:
+            case StaticValues.TIME_DIALOG_ID:
                 ((TimePickerDialog) dialog).updateTime(mHour, mMinute);
                 break;
-            case Constants.DATE_DIALOG_ID:
+            case StaticValues.DATE_DIALOG_ID:
                 ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
                 break;
         }

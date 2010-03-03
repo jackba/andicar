@@ -1,20 +1,25 @@
 /*
-Copyright (C) 2009-2010 Miklos Keresztes - miklos.keresztes@gmail.com
-
-This program is free software; you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the
-Free Software Foundation; either version 2 of the License.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program;
-if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
-*/
+ *  AndiCar - a car management software for Android powered devices.
+ *
+ *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 package org.andicar.activity;
 
+import org.andicar.activity.report.ReportListActivityBase;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -31,7 +36,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.Constants;
+import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -57,8 +62,8 @@ public class ListActivityBase extends ListActivity {
     protected MainDbAdapter mMainDbHelper = null;
     protected Bundle extras = null;
 
-    AlertDialog.Builder errorAlertBuilder;
-    AlertDialog errorAlert;
+    protected AlertDialog.Builder errorAlertBuilder;
+    protected AlertDialog errorAlert;
 
     /** Use instead  */
     @Override
@@ -73,7 +78,7 @@ public class ListActivityBase extends ListActivity {
 
         super.onCreate(icicle);
         mRes = getResources();
-        mPreferences = getSharedPreferences(Constants.GLOBAL_PREFERENCE_NAME, 0);
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 
         if(mMainDbHelper == null)
             mMainDbHelper = new MainDbAdapter(this);
@@ -107,7 +112,7 @@ public class ListActivityBase extends ListActivity {
         if( !(this instanceof ReportListActivityBase) &&
                 (getListAdapter() == null || getListAdapter().getCount() == 0) ) {
             Intent i = new Intent( this, editClass );
-            startActivityForResult( i, Constants.ACTIVITY_NEW_REQUEST_CODE );
+            startActivityForResult( i, StaticValues.ACTIVITY_NEW_REQUEST_CODE );
         }
 
     }
@@ -126,20 +131,20 @@ public class ListActivityBase extends ListActivity {
             ContextMenu.ContextMenuInfo menuInfo )
     {
         super.onCreateContextMenu( menu, v, menuInfo );
-        menu.add( 0, Constants.CONTEXT_MENU_EDIT_ID, 0, mRes.getString(R.string.MENU_EDIT_CAPTION) );
-        menu.add( 0, Constants.CONTEXT_MENU_INSERT_ID, 0, mRes.getString(R.string.MENU_ADD_NEW_CAPTION) );
-        menu.add( 0, Constants.CONTEXT_MENU_DELETE_ID, 0, mRes.getString(R.string.MENU_DELETE_CAPTION) );
+        menu.add( 0, StaticValues.CONTEXT_MENU_EDIT_ID, 0, mRes.getString(R.string.MENU_EDIT_CAPTION) );
+        menu.add( 0, StaticValues.CONTEXT_MENU_INSERT_ID, 0, mRes.getString(R.string.MENU_ADD_NEW_CAPTION) );
+        menu.add( 0, StaticValues.CONTEXT_MENU_DELETE_ID, 0, mRes.getString(R.string.MENU_DELETE_CAPTION) );
     }
     
     @Override
     public boolean onCreateOptionsMenu( Menu menu )
     {
         optionsMenu = menu;
-        optionsMenu.add( 0, Constants.OPTION_MENU_ADD_ID, 0, mRes.getText( R.string.MENU_ADD_NEW_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_add ) );
+        optionsMenu.add( 0, StaticValues.OPTION_MENU_ADD_ID, 0, mRes.getText( R.string.MENU_ADD_NEW_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_add ) );
         if(!showInactiveRecords)
-            optionsMenu.add( 0, Constants.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText( R.string.MENU_SHOWINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_inactive ) );
+            optionsMenu.add( 0, StaticValues.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText( R.string.MENU_SHOWINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_inactive ) );
         else
-            optionsMenu.add( 0, Constants.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText( R.string.MENU_HIDEINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_active ) );
+            optionsMenu.add( 0, StaticValues.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText( R.string.MENU_HIDEINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_active ) );
         return true;
     }
 
@@ -147,7 +152,7 @@ public class ListActivityBase extends ListActivity {
     public boolean onContextItemSelected( MenuItem item )
     {
         switch( item.getItemId() ) {
-            case Constants.CONTEXT_MENU_EDIT_ID:
+            case StaticValues.CONTEXT_MENU_EDIT_ID:
                 Intent i = new Intent( this, mEditClass );
                 i.putExtra( MainDbAdapter.GEN_COL_ROWID_NAME, mLongClickId );
                 if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)){
@@ -167,9 +172,9 @@ public class ListActivityBase extends ListActivity {
                     i.putExtra( "Operation", "E" );
                 }
 
-                startActivityForResult( i, Constants.ACTIVITY_EDIT_REQUEST_CODE );
+                startActivityForResult( i, StaticValues.ACTIVITY_EDIT_REQUEST_CODE );
                 return true;
-            case Constants.CONTEXT_MENU_DELETE_ID:
+            case StaticValues.CONTEXT_MENU_DELETE_ID:
                 //check if the car is the selected car. If yes it cannot be deleted.
                 if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)
                         && mPreferences.getLong( "CurrentCar_ID", -1 ) == mLongClickId ){
@@ -194,7 +199,7 @@ public class ListActivityBase extends ListActivity {
                 else
                     fillData();
                 return true;
-            case Constants.CONTEXT_MENU_INSERT_ID:
+            case StaticValues.CONTEXT_MENU_INSERT_ID:
                 Intent insertIntent = new Intent( this, mEditClass );
                 if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)){
                     insertIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
@@ -215,7 +220,7 @@ public class ListActivityBase extends ListActivity {
                     insertIntent.putExtra( "Operation", "N" );
                 }
 
-                startActivityForResult( insertIntent, Constants.ACTIVITY_NEW_REQUEST_CODE );
+                startActivityForResult( insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE );
         }
         return super.onContextItemSelected( item );
     }
@@ -226,7 +231,7 @@ public class ListActivityBase extends ListActivity {
         super.onActivityResult( requestCode, resultCode, intent );
 
         switch( requestCode ) {
-            case Constants.ACTIVITY_NEW_REQUEST_CODE:
+            case StaticValues.ACTIVITY_NEW_REQUEST_CODE:
                 fillData();
                 break;
         }
@@ -288,7 +293,7 @@ public class ListActivityBase extends ListActivity {
     public boolean onOptionsItemSelected( MenuItem item )
     {
         switch( item.getItemId() ) {
-            case Constants.OPTION_MENU_ADD_ID:
+            case StaticValues.OPTION_MENU_ADD_ID:
                 Intent insertIntent = new Intent( this, mEditClass );
                 if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)){
                     insertIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
@@ -308,21 +313,21 @@ public class ListActivityBase extends ListActivity {
                     insertIntent.putExtra( "CurrentCar_Name", mPreferences.getString( "CurrentCar_Name", "" ));
                     insertIntent.putExtra( "Operation", "N" );
                 }
-                startActivityForResult( insertIntent, Constants.ACTIVITY_NEW_REQUEST_CODE );
+                startActivityForResult( insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE );
                 return true;
-            case Constants.OPTION_MENU_SHOWINACTIVE_ID:
+            case StaticValues.OPTION_MENU_SHOWINACTIVE_ID:
                 showInactiveRecords = true;
                 fillData( );
-                optionsMenu.removeItem( Constants.OPTION_MENU_SHOWINACTIVE_ID );
-                optionsMenu.removeItem( Constants.OPTION_MENU_HIDEINACTIVE_ID );
-                optionsMenu.add( 0, Constants.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText( R.string.MENU_HIDEINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_active ) );
+                optionsMenu.removeItem( StaticValues.OPTION_MENU_SHOWINACTIVE_ID );
+                optionsMenu.removeItem( StaticValues.OPTION_MENU_HIDEINACTIVE_ID );
+                optionsMenu.add( 0, StaticValues.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText( R.string.MENU_HIDEINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_active ) );
                 return true;
-            case Constants.OPTION_MENU_HIDEINACTIVE_ID:
+            case StaticValues.OPTION_MENU_HIDEINACTIVE_ID:
                 showInactiveRecords = false;
                 fillData( );
-                optionsMenu.removeItem( Constants.OPTION_MENU_SHOWINACTIVE_ID );
-                optionsMenu.removeItem( Constants.OPTION_MENU_HIDEINACTIVE_ID );
-                optionsMenu.add( 0, Constants.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText( R.string.MENU_SHOWINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_inactive ) );
+                optionsMenu.removeItem( StaticValues.OPTION_MENU_SHOWINACTIVE_ID );
+                optionsMenu.removeItem( StaticValues.OPTION_MENU_HIDEINACTIVE_ID );
+                optionsMenu.add( 0, StaticValues.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText( R.string.MENU_SHOWINACTIVE_CAPTION ) ).setIcon( mRes.getDrawable( R.drawable.ic_menu_show_inactive ) );
                 return true;
         }
         return true;
