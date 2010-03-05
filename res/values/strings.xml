@@ -20,7 +20,7 @@
 -->
 <resources>
     <string name="APP_NAME">"AndiCar"</string>
-    <string name="APP_DESCRIPTION">"Manage Your Car"</string>
+    <string name="APP_DESCRIPTION">"Free and open source car management software."</string>
     <string name="APP_ACTIVITY_DRIVEREDIT">"Edit Driver Details"</string>
     <string name="APP_ACTIVITY_DRIVERLIST">"Drivers"</string>
     <string name="APP_ACTIVITY_CAREDIT">"Edit Car Details"</string>
