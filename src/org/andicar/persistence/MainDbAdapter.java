@@ -110,23 +110,26 @@ public class MainDbAdapter extends DB
      * @param tableName
      * @param rowId
      * @param content
-     * @return true if the update succeded, false otherwise
+     * @return -1 if the row updated, an error code otherwise. For error codes see errors.xml
      */
-    public boolean updateRecord( String tableName, long rowId, ContentValues content)
+    public int updateRecord( String tableName, long rowId, ContentValues content)
     {
-        boolean retVal = false;
+        int retVal = canUpdate(tableName, content, rowId);
+        if(retVal != -1)
+            return retVal;
+        
         if(!tableName.equals(MILEAGE_TABLE_NAME)){
-            return mDb.update( tableName, content, GEN_COL_ROWID_NAME + "=" + rowId, null ) > 0;
+            mDb.update( tableName, content, GEN_COL_ROWID_NAME + "=" + rowId, null );
         }
         else{
            try{
                 mDb.beginTransaction();
-                retVal = mDb.update( tableName, content, GEN_COL_ROWID_NAME + "=" + rowId, null) > 0;
+                mDb.update( tableName, content, GEN_COL_ROWID_NAME + "=" + rowId, null);
                 updateCarCurrentIndex(content);
                 mDb.setTransactionSuccessful();
             }catch(SQLException e){
                 lastErrorMessage = e.getMessage();
-                retVal = false;
+                retVal = R.string.ERR_000;
             }
             finally{
                 mDb.endTransaction();
@@ -164,7 +167,7 @@ public class MainDbAdapter extends DB
      */
     public int deleteRecord( String tableName, long rowId )
     {
-        int checkVal = canDeleteRow(tableName, rowId);
+        int checkVal = canDelete(tableName, rowId);
         if(checkVal == -1){
             if(tableName.equals(MILEAGE_TABLE_NAME)){ //if the last mileage -> update the car curent index
                 long carId = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId)
@@ -190,12 +193,12 @@ public class MainDbAdapter extends DB
     }
 
     /**
-     * chck deleteion preconditions (referencial integrity, etc.)
+     * check deletion preconditions (referencial integrity, etc.)
      * @param tableName
      * @param rowId
      * @return -1 if the row can be deleted, an error code otherwise. For error codes see errors.xml
      */
-    public int canDeleteRow( String tableName, long rowId ){
+    public int canDelete( String tableName, long rowId ){
 
         String checkSql = "";
         Cursor checkCursor = null;
@@ -331,6 +334,59 @@ public class MainDbAdapter extends DB
                 return R.string.ERR_019;
             }
             checkCursor.close();
+        }
+        return -1;
+    }
+
+    /**
+     * check update preconditions 
+     * @param tableName
+     * @param rowId
+     * @return -1 if the row can be deleted, an error code otherwise. For error codes see errors.xml
+     */
+    public int canUpdate( String tableName, ContentValues content, long rowId ){
+
+        String checkSql = "";
+        Cursor checkCursor = null;
+//        int retVal = -1;
+        if(tableName.equals(UOM_TABLE_NAME)){
+            if(content.containsKey(MainDbAdapter.GEN_COL_ISACTIVE_NAME)
+                    && content.getAsString(MainDbAdapter.GEN_COL_ISACTIVE_NAME).equals("N"))
+            {
+                //check if the uom are used in an active car definition
+                checkSql = "SELECT * " +
+                            "FROM " + CAR_TABLE_NAME + " " +
+                            "WHERE " + GEN_COL_ISACTIVE_NAME + " = 'Y' " +
+                                    "AND (" + CAR_COL_UOMLENGTH_ID_NAME + " = " + rowId + " OR " +
+                                            CAR_COL_UOMVOLUME_ID_NAME + " = " + rowId + ") " +
+                            "LIMIT 1";
+                checkCursor = mDb.rawQuery(checkSql, null);
+                if(checkCursor.moveToFirst()){ //record exists
+                    checkCursor.close();
+                    return R.string.ERR_025;
+                }
+                if(!checkCursor.isClosed())
+                    checkCursor.close();
+            }
+        }
+        else if(tableName.equals(CURRENCY_TABLE_NAME)){
+            if(content.containsKey(MainDbAdapter.GEN_COL_ISACTIVE_NAME)
+                    && content.getAsString(MainDbAdapter.GEN_COL_ISACTIVE_NAME).equals("N"))
+            {
+                //check if the currency are used in an active car definition
+                checkSql = "SELECT * " +
+                            "FROM " + CAR_TABLE_NAME + " " +
+                            "WHERE " + GEN_COL_ISACTIVE_NAME + " = 'Y' " +
+                                    "AND " + CAR_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
+                            "LIMIT 1";
+                checkCursor = mDb.rawQuery(checkSql, null);
+                if(checkCursor.moveToFirst()){ //record exists
+                    checkCursor.close();
+                    return R.string.ERR_026;
+                }
+                if(!checkCursor.isClosed())
+                    checkCursor.close();
+            }
         }
         return -1;
     }

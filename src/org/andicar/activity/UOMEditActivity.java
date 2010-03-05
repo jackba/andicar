@@ -103,12 +103,22 @@ public class UOMEditActivity extends EditActivityBase {
 
                         if( mRowId == null ) {
                             mMainDbHelper.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
+                            finish();
                         }
                         else {
-                            mMainDbHelper.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
+                            if(updResult != -1){
+                                String errMsg = "";
+                                errMsg = mRes.getString(updResult);
+                                if(updResult == R.string.ERR_000)
+                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                errorAlertBuilder.setMessage(errMsg);
+                                errorAlert = errorAlertBuilder.create();
+                                errorAlert.show();
+                            }
+                            else
+                                finish();
                         }
-
-                        finish();
                     }
                 };
 

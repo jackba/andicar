@@ -19,7 +19,6 @@
 
 package org.andicar.activity;
 
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -40,8 +39,6 @@ import org.andicar.persistence.MainDbAdapter;
 public class UOMConversionEditActivity extends EditActivityBase {
 
     private String uomFromType = "";
-    private AlertDialog.Builder uomConversionCannotSaveAlertBuilder;
-    private AlertDialog uomConversionCannotSaveAlert;
     private long uomFromId = -1;
     private long uomToId = -1;
 
@@ -50,10 +47,6 @@ public class UOMConversionEditActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.uomconversion_edit_activity, mOkClickListener);
         
-        uomConversionCannotSaveAlertBuilder = new AlertDialog.Builder( this );
-        uomConversionCannotSaveAlertBuilder.setCancelable( false );
-        uomConversionCannotSaveAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
-
         Spinner mUOMFromSpinner = (Spinner) findViewById( R.id.uomConversionEditUomFromSpinner );
         mUOMFromSpinner.setOnItemSelectedListener(uomFromSelectedListener);
 
@@ -123,9 +116,9 @@ public class UOMConversionEditActivity extends EditActivityBase {
                         retVal = null;
                         int retVal2 = mMainDbHelper.canInsertUpdateUOMConversion(mRowId, fromId, toId);
                         if(retVal2 != -1){
-                            uomConversionCannotSaveAlertBuilder.setMessage(mRes.getString(retVal2));
-                            uomConversionCannotSaveAlert = uomConversionCannotSaveAlertBuilder.create();
-                            uomConversionCannotSaveAlert.show();
+                            errorAlertBuilder.setMessage(mRes.getString(retVal2));
+                            errorAlert = errorAlertBuilder.create();
+                            errorAlert.show();
                             return;
                         }
 
@@ -142,11 +135,22 @@ public class UOMConversionEditActivity extends EditActivityBase {
 
                         if( mRowId == null ) {
                             mMainDbHelper.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
+                            finish();
                         }
                         else {
-                            mMainDbHelper.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
+                            if(updResult != -1){
+                                String errMsg = "";
+                                errMsg = mRes.getString(updResult);
+                                if(updResult == R.string.ERR_000)
+                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                errorAlertBuilder.setMessage(errMsg);
+                                errorAlert = errorAlertBuilder.create();
+                                errorAlert.show();
+                            }
+                            else
+                                finish();
                         }
-                        finish();
                     }
                 };
 

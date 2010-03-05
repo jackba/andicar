@@ -19,7 +19,6 @@
 
 package org.andicar.activity;
 
-import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -28,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -37,9 +35,6 @@ import org.andicar.utils.StaticValues;
 public class CarListActivity extends ListActivityBase
 {
 
-    AlertDialog.Builder inactiveCarSelectedAlertBuilder;
-    AlertDialog inactiveCarSelectedAlert;
-    
     /** Called when the activity is first created. */
     @Override
     public void onCreate( Bundle icicle )
@@ -47,13 +42,6 @@ public class CarListActivity extends ListActivityBase
         super.onCreate( icicle, mItemClickListener, CarEditActivity.class,
                 MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
                 android.R.layout.simple_list_item_2, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1});
-
-        inactiveCarSelectedAlertBuilder = new AlertDialog.Builder( this );
-        inactiveCarSelectedAlertBuilder.setCancelable( false );
-        inactiveCarSelectedAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
-        inactiveCarSelectedAlertBuilder.setMessage( mRes.getString(R.string.INACTIVE_CAR_SELECTED_ERROR_MESSAGE) );
-        inactiveCarSelectedAlert = inactiveCarSelectedAlertBuilder.create();
-
     }
 
     private OnItemClickListener mItemClickListener = new OnItemClickListener()
@@ -78,7 +66,9 @@ public class CarListActivity extends ListActivityBase
             }
             else //inactive car selected
             {
-                inactiveCarSelectedAlert.show();
+                errorAlertBuilder.setMessage(mRes.getString(R.string.INACTIVE_CAR_SELECTED_ERROR_MESSAGE));
+                errorAlert = errorAlertBuilder.create();
+                errorAlert.show();
             }
         }
     };

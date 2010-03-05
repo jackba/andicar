@@ -90,10 +90,21 @@ public class CurrencyEditActivity extends EditActivityBase {
 
                         if (mRowId == null) {
                             mMainDbHelper.createRecord(MainDbAdapter.CURRENCY_TABLE_NAME, data);
+                            finish();
                         } else {
-                            mMainDbHelper.updateRecord(MainDbAdapter.CURRENCY_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.CURRENCY_TABLE_NAME, mRowId, data);
+                            if(updResult != -1){
+                                String errMsg = "";
+                                errMsg = mRes.getString(updResult);
+                                if(updResult == R.string.ERR_000)
+                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                errorAlertBuilder.setMessage(errMsg);
+                                errorAlert = errorAlertBuilder.create();
+                                errorAlert.show();
+                            }
+                            else
+                                finish();
                         }
-                        finish();
                     }
                 };
 

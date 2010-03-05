@@ -19,7 +19,6 @@
 
 package org.andicar.activity;
 
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -40,9 +39,6 @@ import android.widget.AutoCompleteTextView;
  * @author miki
  */
 public class RefuelEditActivity extends EditActivityBase {
-
-    AlertDialog.Builder insertUpdateErrorAlertBuilder;
-    AlertDialog insertUpdateErrorAlert;
     AutoCompleteTextView refuelEditUserComment;
     Spinner refuelEditCarSpinner;
     Spinner refuelEditDriverSpinner;
@@ -58,9 +54,6 @@ public class RefuelEditActivity extends EditActivityBase {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.refuel_edit_activity, mOkClickListener);
-        insertUpdateErrorAlertBuilder = new AlertDialog.Builder( this );
-        insertUpdateErrorAlertBuilder.setCancelable( false );
-        insertUpdateErrorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
 
         operationType = extras.getString("Operation");
         refuelEditUserComment = ((AutoCompleteTextView) findViewById( R.id.genUserCommentEntry ));
@@ -178,18 +171,23 @@ public class RefuelEditActivity extends EditActivityBase {
 
                         if( operationType.equals("N") ) {
                             if(mMainDbHelper.createRecord(MainDbAdapter.REFUEL_TABLE_NAME, data) < 0){
-                                insertUpdateErrorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
-                                insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
-                                insertUpdateErrorAlert.show();
+                                errorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
+                                errorAlert = errorAlertBuilder.create();
+                                errorAlert.show();
                             }
                             else
                                 finish();
                         }
                         else {
-                            if(!mMainDbHelper.updateRecord(MainDbAdapter.REFUEL_TABLE_NAME, mRowId, data)){
-                                insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_007));
-                                insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
-                                insertUpdateErrorAlert.show();
+                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.REFUEL_TABLE_NAME, mRowId, data);
+                            if(updResult != -1){
+                                String errMsg = "";
+                                errMsg = mRes.getString(updResult);
+                                if(updResult == R.string.ERR_000)
+                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                errorAlertBuilder.setMessage(errMsg);
+                                errorAlert = errorAlertBuilder.create();
+                                errorAlert.show();
                             }
                             else
                                 finish();

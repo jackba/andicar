@@ -109,10 +109,10 @@ public class BackupRestoreActivity extends EditActivityBase {
                     fillBkList();
                 }
                 else{
-                    exceptionAlertBuilder.setMessage(mRes.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
+                    errorAlertBuilder.setMessage(mRes.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
                             mMainDbHelper.lastErrorMessage);
-                    exceptionAlert = exceptionAlertBuilder.create();
-                    exceptionAlert.show();
+                    errorAlert = errorAlertBuilder.create();
+                    errorAlert.show();
                 }
                 btnRestore.setEnabled(false);
                 btnDeleteBk.setEnabled(false);
@@ -146,10 +146,10 @@ public class BackupRestoreActivity extends EditActivityBase {
                                     alert.show();
                                 }
                                 else{
-                                    exceptionAlertBuilder.setMessage(mRes.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
+                                    errorAlertBuilder.setMessage(mRes.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
                                             mMainDbHelper.lastErrorMessage);
-                                    exceptionAlert = exceptionAlertBuilder.create();
-                                    exceptionAlert.show();
+                                    errorAlert = errorAlertBuilder.create();
+                                    errorAlert.show();
                                 }
                            }
                        });

@@ -19,7 +19,6 @@
 
 package org.andicar.activity;
 
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -64,8 +63,6 @@ public class MileageEditActivity extends EditActivityBase {
     private String operationType;
     Spinner mExpTypeSpinner;
 
-    AlertDialog.Builder insertUpdateErrorAlertBuilder;
-    AlertDialog insertUpdateErrorAlert;
     ArrayAdapter<String> userCommentAdapter;
 
 
@@ -73,9 +70,6 @@ public class MileageEditActivity extends EditActivityBase {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.mileage_edit_activity, btnOkClickListener);
-        insertUpdateErrorAlertBuilder = new AlertDialog.Builder( this );
-        insertUpdateErrorAlertBuilder.setCancelable( false );
-        insertUpdateErrorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
 
         mileageEditCalculatedTextContent = (TextView) findViewById(R.id.mileageEditCalculatedTextContent);
         mileageEditInputEntry = (EditText) findViewById(R.id.mileageEditInputEntry);
@@ -213,7 +207,10 @@ public class MileageEditActivity extends EditActivityBase {
             }
             mNewIndex = pNewIndex;
         }
-        catch(NumberFormatException e){};
+        catch(NumberFormatException e){
+            Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+            toast.show();
+        }
     }
 
     private BigDecimal fillGetCurrentIndex() throws SQLException {
@@ -255,9 +252,9 @@ public class MileageEditActivity extends EditActivityBase {
                     operationResult = mMainDbHelper.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
                     if(operationResult == -1){
                         if(mMainDbHelper.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data) < 0){
-                            insertUpdateErrorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
-                            insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
-                            insertUpdateErrorAlert.show();
+                            errorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
+                            errorAlert = errorAlertBuilder.create();
+                            errorAlert.show();
                             return;
                         }
                     }
@@ -265,19 +262,24 @@ public class MileageEditActivity extends EditActivityBase {
                 else{
                     operationResult = mMainDbHelper.checkIndex(mRowId, mCarId, mStartIndex, mNewIndex);
                     if(operationResult == -1){
-                        if(!mMainDbHelper.updateRecord(MainDbAdapter.MILEAGE_TABLE_NAME, mRowId, data)){
-                            insertUpdateErrorAlertBuilder.setMessage(mRes.getString(R.string.ERR_007));
-                            insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
-                            insertUpdateErrorAlert.show();
+                        int updResult = mMainDbHelper.updateRecord(MainDbAdapter.MILEAGE_TABLE_NAME, mRowId, data);
+                        if(updResult != -1){
+                            String errMsg = "";
+                            errMsg = mRes.getString(updResult);
+                            if(updResult == R.string.ERR_000)
+                                errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                            errorAlertBuilder.setMessage(errMsg);
+                            errorAlert = errorAlertBuilder.create();
+                            errorAlert.show();
                             return;
                         }
                     }
                 }
                 if( operationResult != -1) //error
                 {
-                    insertUpdateErrorAlertBuilder.setMessage(mRes.getString(operationResult));
-                    insertUpdateErrorAlert = insertUpdateErrorAlertBuilder.create();
-                    insertUpdateErrorAlert.show();
+                    errorAlertBuilder.setMessage(mRes.getString(operationResult));
+                    errorAlert = errorAlertBuilder.create();
+                    errorAlert.show();
                     return;
                 }
                 else{

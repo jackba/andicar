@@ -179,11 +179,22 @@ public class CarEditActivity extends EditActivityBase
 
                         if( mRowId == null ) {
                             mMainDbHelper.createRecord(MainDbAdapter.CAR_TABLE_NAME, data);
+                            finish();
                         }
                         else {
-                            mMainDbHelper.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, data);
+                            if(updResult != -1){
+                                String errMsg = "";
+                                errMsg = mRes.getString(updResult);
+                                if(updResult == R.string.ERR_000)
+                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                errorAlertBuilder.setMessage(errMsg);
+                                errorAlert = errorAlertBuilder.create();
+                                errorAlert.show();
+                            }
+                            else
+                                finish();
                         }
-                        finish();
                     }
                 };
 

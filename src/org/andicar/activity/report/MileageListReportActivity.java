@@ -28,7 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 import org.andicar.activity.MileageEditActivity;
 import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;

@@ -73,8 +73,8 @@ public abstract class EditActivityBase extends Activity {
     protected TextView mDateTimeLabel;
     protected final Calendar mDateTimeCalendar = Calendar.getInstance();
 
-    protected AlertDialog.Builder exceptionAlertBuilder;
-    protected AlertDialog exceptionAlert;
+    protected AlertDialog.Builder errorAlertBuilder;
+    protected AlertDialog errorAlert;
 
     protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
         super.onCreate(icicle);
@@ -85,9 +85,9 @@ public abstract class EditActivityBase extends Activity {
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mMainDbHelper = new MainDbAdapter(this);
 
-        exceptionAlertBuilder = new AlertDialog.Builder( this );
-        exceptionAlertBuilder.setCancelable( false );
-        exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
+        errorAlertBuilder = new AlertDialog.Builder( this );
+        errorAlertBuilder.setCancelable( false );
+        errorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
 
         btnCancel = (Button) findViewById( android.R.id.closeButton);
         if(btnCancel != null)
@@ -108,9 +108,9 @@ public abstract class EditActivityBase extends Activity {
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mMainDbHelper = new MainDbAdapter(this);
 
-        exceptionAlertBuilder = new AlertDialog.Builder( this );
-        exceptionAlertBuilder.setCancelable( false );
-        exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
+        errorAlertBuilder = new AlertDialog.Builder( this );
+        errorAlertBuilder.setCancelable( false );
+        errorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
     }
 
     protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition, String orderBy,
@@ -143,9 +143,9 @@ public abstract class EditActivityBase extends Activity {
                 spinner.setOnItemSelectedListener(spinnerOnItemSelectedListener);
         }
         catch(Exception e){
-            exceptionAlertBuilder.setMessage(e.getMessage());
-            exceptionAlert = exceptionAlertBuilder.create();
-            exceptionAlert.show();
+            errorAlertBuilder.setMessage(e.getMessage());
+            errorAlert = errorAlertBuilder.create();
+            errorAlert.show();
         }
 
     }

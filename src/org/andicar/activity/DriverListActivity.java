@@ -19,7 +19,6 @@
 
 package org.andicar.activity;
 
-import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -36,9 +35,6 @@ import org.andicar.utils.StaticValues;
  */
 public class DriverListActivity extends ListActivityBase
 {
-    AlertDialog.Builder inactiveDriverSelectedAlertBuilder;
-    AlertDialog inactiveDriverSelectedAlert;
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate( Bundle icicle )
@@ -47,13 +43,6 @@ public class DriverListActivity extends ListActivityBase
                 MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
                 android.R.layout.simple_list_item_2,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1});
-
-        inactiveDriverSelectedAlertBuilder = new AlertDialog.Builder( this );
-        inactiveDriverSelectedAlertBuilder.setCancelable( false );
-        inactiveDriverSelectedAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
-        inactiveDriverSelectedAlertBuilder.setMessage( mRes.getString(R.string.INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE) );
-        inactiveDriverSelectedAlert = inactiveDriverSelectedAlertBuilder.create();
-
     }
 
 
@@ -77,7 +66,9 @@ public class DriverListActivity extends ListActivityBase
             }
             else //inactive driver selected
             {
-                inactiveDriverSelectedAlert.show();
+                errorAlertBuilder.setMessage(mRes.getString(R.string.INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE));
+                errorAlert = errorAlertBuilder.create();
+                errorAlert.show();
             }
         }
     };

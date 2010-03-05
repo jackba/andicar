@@ -114,7 +114,12 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " SUBSTR(DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + " || ' ' || " +
-                        sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || ' at ' || " +
+                        sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || ' x ' || " +
+                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + " || ' ' || " +
+                        sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || ' = ' || ROUND(" +
+                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + " * " +
+                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", 2) || ' ' ||" +
+                            sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + "|| ' at ' || " +
                         sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + " || ' ' || " +
                             sqlConcatTableColumn("CarVUOM", UOM_COL_CODE_NAME) +
                             " AS " + SECOND_LINE_LIST_NAME + ", " +
@@ -136,6 +141,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                             " JOIN " + UOM_TABLE_NAME + " AS CarVUOM " +
                                 " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
                                                     sqlConcatTableColumn("CarVUOM", GEN_COL_ROWID_NAME) +
+                    " JOIN " + CURRENCY_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     public static String refuelListReportSelect =

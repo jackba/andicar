@@ -19,7 +19,6 @@
 
 package org.andicar.activity.report;
 
-import org.andicar.activity.report.ReportListActivityBase;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
