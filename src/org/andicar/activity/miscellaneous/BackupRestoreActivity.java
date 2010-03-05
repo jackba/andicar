@@ -49,7 +49,6 @@ public class BackupRestoreActivity extends EditActivityBase {
     private Button btnBackup;
     private Button btnDeleteBk;
     private ListView backupSetList;
-    private BackupRestoreActivity me;
 
     /** Called when the activity is first created. */
     @Override
@@ -65,7 +64,6 @@ public class BackupRestoreActivity extends EditActivityBase {
         btnDeleteBk.setOnClickListener(btnDeleteBkClickListener);
         btnDeleteBk.setEnabled(false);
         backupSetList = (ListView) findViewById(android.R.id.list);
-        me = this;
         fillBkList();
     }
 
@@ -123,7 +121,7 @@ public class BackupRestoreActivity extends EditActivityBase {
 
     private View.OnClickListener btnRestoreClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(me);
+            AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
             builder.setMessage(mRes.getString(R.string.BKRESTORE_ACTIVITY_RESTORE_CONFIRM));
             builder.setCancelable(false);
             builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
@@ -135,7 +133,7 @@ public class BackupRestoreActivity extends EditActivityBase {
                                     editor.putLong( "CurrentCar_ID", -1);
                                     editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(me);
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
                                     builder.setMessage(mRes.getString(R.string.BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE));
                                     builder.setCancelable(false);
                                     builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
@@ -168,7 +166,7 @@ public class BackupRestoreActivity extends EditActivityBase {
 
     private View.OnClickListener btnDeleteBkClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(me);
+            AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
             builder.setMessage(mRes.getString(R.string.BKRESTORE_ACTIVITY_DELETE_CONFIRM));
             builder.setCancelable(false);
             builder.setPositiveButton(mRes.getString(R.string.GEN_YES),

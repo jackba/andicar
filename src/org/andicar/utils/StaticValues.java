@@ -85,4 +85,6 @@ public class StaticValues
 
     public static final String reportFolder = "/sdcard/andicar/reports/";
     public static final String backupFolder = "/sdcard/andicar/backups/";
+    public static final String backupPrefix = "bk";
+    public static final String backupSufix = ".db";
 }

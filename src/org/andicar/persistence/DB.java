@@ -480,7 +480,8 @@ public class DB {
     public boolean backupDb(){
         boolean retVal;
         String fromFile = mDb.getPath();
-        String toFile = StaticValues.backupFolder + Utils.appendDateTime("backup_", true, true, true) + ".db";
+        String toFile = StaticValues.backupFolder + Utils.appendDateTime(StaticValues.backupPrefix, true, true, true) +
+                StaticValues.backupSufix;
         mDb.close();
         FileUtils fu = new FileUtils();
         retVal = fu.copyFile(mCtx, fromFile, toFile, false);

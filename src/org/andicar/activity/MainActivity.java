@@ -18,6 +18,9 @@
  */
 package org.andicar.activity;
 
+import android.content.pm.PackageManager.NameNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.activity.miscellaneous.PreferencesActivity;
@@ -37,6 +40,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.database.Cursor;
+import android.text.Html;
 import org.andicar.activity.miscellaneous.AboutActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.persistence.FileUtils;
@@ -72,20 +76,24 @@ public class MainActivity extends Activity {
     private TextView threeLineListRefuelText2;
     private TextView threeLineListRefuelText3;
     private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 0;
-    private MainActivity me;
     private boolean exitResume = false;
+    private String appVersion;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        me = this;
         mRes = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         setContentView(R.layout.main_activity);
         mainContext = this;
         reportDb = new ReportDbAdapter(mainContext, null, null);
-
+        try {
+            appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        }
+        catch(NameNotFoundException ex) {
+            appVersion = "N/A";
+        }
         mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
         mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
         refuelInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
@@ -105,14 +113,14 @@ public class MainActivity extends Activity {
             exitResume = true;
             //test if backups exists
             if (FileUtils.getBkFileNames() != null && !FileUtils.getBkFileNames().isEmpty()) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(me);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_BACKUPEXISTS));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent i = new Intent(me, BackupRestoreActivity.class);
+                                Intent i = new Intent(MainActivity.this, BackupRestoreActivity.class);
                                 startActivity(i);
                                 exitResume = false;
                             }
@@ -131,9 +139,9 @@ public class MainActivity extends Activity {
 
             } else {
                 exitResume = true;
-                AlertDialog.Builder builder = new AlertDialog.Builder(me);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_WELLCOME_MESSAGE) + "\n"
-                        + mRes.getString(R.string.MAIN_ACTIVITY_WELLCOME_MESSAGE2));
+                        + mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
                         new DialogInterface.OnClickListener() {
@@ -160,7 +168,12 @@ public class MainActivity extends Activity {
             editor.commit();
             finish();
         }
-
+        ((TextView)findViewById(R.id.mainActivityShortAboutLbl)).setText(Html.fromHtml(
+                "<b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices. " +
+                "It is licensed under the terms of the GNU General Public License, version 3.<br>" +
+                "For more details see the About page.<br>Copyright © 2010 Miklos Keresztes.<br> " +
+                "Thank you for using <b><i>AndiCar</i></b>!<br>" +
+                "Application version: " + appVersion));
         fillDriverCar();
         Bundle whereConditions = new Bundle();
         whereConditions.putString(
@@ -246,14 +259,14 @@ public class MainActivity extends Activity {
             if (mPreferences.getLong("CurrentDriver_ID", -1) != -1 && !mPreferences.getAll().isEmpty()) {
                 currentDriverID = mPreferences.getLong("CurrentDriver_ID", -1);
             } else { //no saved driver. start driver list activity in order to select one.
-                AlertDialog.Builder builder = new AlertDialog.Builder(me);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_NO_CURRENT_DRIVER));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent i = new Intent(me, DriverListActivity.class);
+                                Intent i = new Intent(MainActivity.this, DriverListActivity.class);
                                 startActivity(i);
                             }
                         });
@@ -276,14 +289,14 @@ public class MainActivity extends Activity {
             if (mPreferences.getLong("CurrentCar_ID", -1) != -1 && !mPreferences.getAll().isEmpty()) {
                 currentCarID = mPreferences.getLong("CurrentCar_ID", -1);
             } else { //no saved car. start car list activity in order to select one.
-                AlertDialog.Builder builder = new AlertDialog.Builder(me);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_NO_CURRENT_CAR));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
                         new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int id) {
-                                Intent i = new Intent(me, CarListActivity.class);
+                                Intent i = new Intent(MainActivity.this, CarListActivity.class);
                                 startActivity(i);
                             }
                         });

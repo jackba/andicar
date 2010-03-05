@@ -244,14 +244,14 @@ public class ReportListActivityBase extends ListActivityBase{
         int i;
         for(i = 0; i< reportCursor.getColumnCount(); i++){
             if(i > 0)
-                reportContent = reportContent + ", ";
+                reportContent = reportContent + ",";
             reportContent = reportContent + reportCursor.getColumnName(i);
         }
         reportContent = reportContent + "\n";
         while(reportCursor != null && reportCursor.moveToNext()){
             for(i = 0; i< reportCursor.getColumnCount(); i++){
                 if(i > 0)
-                    reportContent = reportContent + ", ";
+                    reportContent = reportContent + ",";
                 reportContent = reportContent  + reportCursor.getString(i).replaceAll(",", " ");
             }
             reportContent = reportContent + "\n";

@@ -37,7 +37,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.math.BigDecimal;
-//import java.sql.Timestamp;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
 
@@ -68,14 +67,12 @@ public class MileageEditActivity extends EditActivityBase {
     AlertDialog.Builder insertUpdateErrorAlertBuilder;
     AlertDialog insertUpdateErrorAlert;
     ArrayAdapter<String> userCommentAdapter;
-    MileageEditActivity me;
 
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.mileage_edit_activity, btnOkClickListener);
-        me = this;
         insertUpdateErrorAlertBuilder = new AlertDialog.Builder( this );
         insertUpdateErrorAlertBuilder.setCancelable( false );
         insertUpdateErrorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
@@ -140,7 +137,7 @@ public class MileageEditActivity extends EditActivityBase {
             ((EditText) findViewById(R.id.mileageEditInputEntry)).requestFocus();
 
         }
-        userCommentAdapter = new ArrayAdapter<String>(me,
+        userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line, 
                 mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId,mDriverId, 30));
         mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
@@ -291,7 +288,7 @@ public class MileageEditActivity extends EditActivityBase {
                             Toast.LENGTH_SHORT );
                     toast.show();
                     userCommentAdapter = null;
-                    userCommentAdapter = new ArrayAdapter<String>(me,
+                    userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line, 
                             mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId,mDriverId, 30));
                     mileageEditUserCommentEntry.setAdapter(userCommentAdapter);

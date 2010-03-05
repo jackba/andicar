@@ -195,12 +195,12 @@
             android:background="@color/separator_bg"
             />
         <TextView
+            android:id="@+id/mainActivityShortAboutLbl"
             android:layout_height="fill_parent"
             android:layout_width="fill_parent"
             android:gravity="center_horizontal|bottom"
             android:layout_marginTop="15dip"
             android:textSize="12sp"
-            android:text="@string/LM_MAIN_ACTIVITY_SHORTABOUT"
             />
     </LinearLayout>
 </ScrollView>
