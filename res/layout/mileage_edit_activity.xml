@@ -130,6 +130,11 @@
             android:background="@android:drawable/editbox_background"
             />
 
+        <TextView android:id="@+id/mileageEditInsertModeHdrLabel"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textStyle="bold"
+                  android:text="@string/MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION"/>
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -154,6 +159,27 @@
                 style="?android:attr/buttonStyleSmall"
                 android:text="@string/GEN_CANCEL"
                 />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@android:id/closeButton"
+                android:layout_alignTop="@android:id/closeButton"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:checkedButton="@+id/mileageEditInsertModeIndexRb"
+                android:id="@+id/rgMileageInsertMode">
+                <RadioButton
+                    android:id="@id/mileageEditInsertModeIndexRb"
+                    android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_INDEX"
+                    style="?android:attr/textAppearanceSmall"
+                    />
+                <RadioButton
+                    android:id="@+id/mileageEditInsertModeMileageRb"
+                    android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE"
+                    style="?android:attr/textAppearanceSmall"
+                    />
+            </RadioGroup>
         </RelativeLayout>
 
 
@@ -186,28 +212,6 @@
                     style="?android:attr/buttonStyleSmall"
                     android:text="@string/GEN_PICK_TIME_BUTTON_CAPTION"/>
         </LinearLayout>
-        <TextView android:id="@+id/mileageEditInsertModeHdrLabel"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:text="@string/MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION"/>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:checkedButton="@+id/mileageEditInsertModeIndexRb"
-            android:id="@+id/rgMileageInsertMode">
-            <RadioButton
-                android:id="@id/mileageEditInsertModeIndexRb"
-                android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_INDEX"
-                />
-            <RadioButton
-                android:id="@+id/mileageEditInsertModeMileageRb"
-                android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE"
-                />
-        </RadioGroup>
-
     <!--    <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
