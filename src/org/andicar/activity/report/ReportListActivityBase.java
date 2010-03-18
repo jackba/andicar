@@ -184,7 +184,7 @@ public class ReportListActivityBase extends ListActivityBase{
         Cursor reportCursor = null;
         String reportContent = "";
         String reportTitle = "";
-        String reportName = "";
+        String reportFileName = "";
         int i;
         if( this instanceof MileageListReportActivity){
             reportTitle = "MileageReport_";
@@ -196,22 +196,21 @@ public class ReportListActivityBase extends ListActivityBase{
             mReportDbHelper = new ReportDbAdapter(this, "reportRefuelListReportSelect", whereConditions);
             reportCursor = mReportDbHelper.fetchReport(-1);
         }
-        reportName = reportTitle;
-        reportTitle = reportTitle + Utils.appendDateTime(reportTitle, true, false, false);
-        reportName = reportName + Utils.appendDateTime(reportTitle, true, true, true);
+        reportTitle = Utils.appendDateTime(reportTitle, true, false, false);
+        reportFileName = Utils.appendDateTime(reportTitle, true, true, true);
 
         if(reportFormatId == 0){
-            reportName = reportName +".csv";
+            reportFileName = reportFileName +".csv";
             reportContent = createCSVContent(reportCursor);
         }
         else if(reportFormatId == 1){
-            reportName = reportName +".html";
+            reportFileName = reportFileName +".html";
             reportContent = createHTMLContent(reportCursor, reportTitle);
         }
         reportCursor.close();
 
         FileUtils fu = new FileUtils();
-        i = fu.writeToFile(reportContent, reportName);
+        i = fu.writeToFile(reportContent, reportFileName);
         if(i != -1){ //error
             if(fu.lastError != null)
                 errorAlertBuilder.setMessage(mRes.getString(i) + "\n" + fu.lastError);
@@ -227,7 +226,7 @@ public class ReportListActivityBase extends ListActivityBase{
             emailIntent.setType("text/html");
             emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar report " + reportTitle);
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "This email was sent by AndiCar (https://code.google.com/p/andicar/wiki/Welcome)");
-            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + StaticValues.reportFolder + reportName));
+            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + StaticValues.reportFolder + reportFileName));
             emailIntent.setType("text/plain");
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
