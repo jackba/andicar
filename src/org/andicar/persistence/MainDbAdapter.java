@@ -125,6 +125,7 @@ public class MainDbAdapter extends DB
            try{
                 mDb.beginTransaction();
                 mDb.update( tableName, content, GEN_COL_ROWID_NAME + "=" + rowId, null);
+                content.put(GEN_COL_ROWID_NAME, rowId);
                 updateCarCurrentIndex(content);
                 mDb.setTransactionSuccessful();
             }catch(SQLException e){
@@ -155,6 +156,16 @@ public class MainDbAdapter extends DB
             content.put(CAR_COL_INDEXCURRENT_NAME, mStopIndex.toString());
             if (mDb.update(CAR_TABLE_NAME, content, GEN_COL_ROWID_NAME + "=" + mCarId, null) == 0) {
                 throw new SQLException("Car Update error");
+            }
+        }
+        else{ //check if the mileage is the last mileage (issue ID: 1 - https://code.google.com/p/andicar/issues/detail?id=1)
+            if(content.containsKey(GEN_COL_ROWID_NAME) &&
+                    getLastMileageId(mCarId) == content.getAsLong(GEN_COL_ROWID_NAME).longValue()){
+                content.clear();
+                content.put(CAR_COL_INDEXCURRENT_NAME, mStopIndex.toString());
+                if (mDb.update(CAR_TABLE_NAME, content, GEN_COL_ROWID_NAME + "=" + mCarId, null) == 0) {
+                    throw new SQLException("Car Update error");
+                }
             }
         }
     }
@@ -503,6 +514,23 @@ public class MainDbAdapter extends DB
         retVal = new String[commentList.size()];
         commentList.toArray(retVal);
         return retVal;
+    }
+
+    public long getLastMileageId(long carId){
+        String checkSql = "";
+        long lastId = -1;
+        checkSql = "SELECT " + GEN_COL_ROWID_NAME +
+                    " FROM " + MILEAGE_TABLE_NAME +
+                    " WHERE " + MILEAGE_COL_CAR_ID_NAME + "=" + carId +
+                    " ORDER BY " + MILEAGE_COL_INDEXSTOP_NAME + " DESC " +
+                    " LIMIT " + 1;
+
+        Cursor checkCursor = mDb.rawQuery(checkSql, null);
+        if(checkCursor.moveToFirst())
+            lastId = checkCursor.getLong(GEN_COL_ROWID_POS);
+        checkCursor.close();
+        
+        return lastId;
     }
 
 }
