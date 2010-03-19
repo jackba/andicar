@@ -27,17 +27,10 @@
     >
     <LinearLayout
         android:orientation="vertical"
+        android:id="@+id/aboutLinearLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginRight="5dip"
         >
-        <TextView
-            android:id="@+id/aboutText"
-            android:layout_height="wrap_content"
-            android:layout_width="fill_parent"
-            android:gravity="fill_horizontal"
-            android:layout_marginTop="15dip"
-            android:text="@string/LM_COPYRIGHT"
-            />
     </LinearLayout>
 </ScrollView>

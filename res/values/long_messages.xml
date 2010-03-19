@@ -26,29 +26,4 @@
         Thank you for using AndiCar!
     </string>
 
-    <string name="LM_COPYRIGHT">
-        <b><i>AndiCar</i></b> is a free and open source car management
-        software for Android powered devices. It is licensed under the terms of the GNU General Public License.\n\n
-        For more informations please visit the project home page at <a href="http://sites.google.com/site/andicarfree/home/">http://sites.google.com/site/andicarfree/home/</a>.\n\n
-        For questions you are welcome to the <b><i>AndiCar</i></b> discussion list at
-        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>\n\n
-        For bug reports or enhancement request don\'t hesitate to use the
-        <b><i>AndiCar</i></b> issue system at
-        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n\n
-        For other things you can send an email to andicar.support@gmail.com.\n\n
-        Thank you for using <b><i>AndiCar</i></b>.\n\n
-        <b><i>Copyright notice</i></b>:\n\n
-         Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
-         This program is free software: you can redistribute it and/or modify
-         it under the terms of the GNU General Public License as published by
-         the Free Software Foundation, either version 3 of the License, or
-         (at your option) any later version.\n\n
-         This program is distributed in the hope that it will be useful,
-         but WITHOUT ANY WARRANTY; without even the implied warranty of
-         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-         GNU General Public License for more details.\n\n
-         You should have received a copy of the GNU General Public License
-         along with this program.  If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n\n
-         The whole license can be found <a href="http://www.gnu.org/licenses/gpl.html">here</a>.\n\n
-    </string>
 </resources>

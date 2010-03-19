@@ -19,25 +19,68 @@
 
 package org.andicar.activity.miscellaneous;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Gallery;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import com.andicar.paypal.GetPayPalActivity;
+import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
+import org.andicar.utils.StaticValues;
+
 
 /**
  *
  * @author miki
  */
-public class AboutActivity extends Activity {
+public class AboutActivity extends EditActivityBase {
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        setContentView( R.layout.about_activity );
-        TextView tw = (TextView)findViewById(R.id.aboutText);
-        tw.setMovementMethod(LinkMovementMethod.getInstance());
+        setContentView(R.layout.about_activity);
+        LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.aboutLinearLayout);
+        mLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        mLinearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        TextView tw1 = new TextView(this);
+        tw1.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML1));
+        tw1.setMovementMethod(LinkMovementMethod.getInstance());
+        tw1.setGravity(Gravity.FILL);
+        mLinearLayout.addView(tw1);
+
+        ImageView i = new ImageView(this);
+        i.setImageResource(R.drawable.btn_donate);
+        i.setAdjustViewBounds(true); // set the ImageView bounds to match the Drawable's dimensions
+        i.setLayoutParams(new Gallery.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        mLinearLayout.addView(i);
+        i.setOnTouchListener(new OnTouchListener() {
+
+                public boolean onTouch(View arg0, MotionEvent arg1) {
+                    GetPayPalActivity ppa = new GetPayPalActivity();
+                    Intent i = ppa.getPayPalIntent();
+                    startActivity(i);
+                    return true;
+                }
+            });
+        TextView tw2 = new TextView(this);
+        tw2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
+        tw2.setMovementMethod(LinkMovementMethod.getInstance());
+        tw2.setGravity(Gravity.FILL);
+        mLinearLayout.addView(tw2);
+
     }
 
 }

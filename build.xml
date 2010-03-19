@@ -83,4 +83,7 @@
         <delete file="${dist.apk}_"/>
     </target>
 
+    <target name="-pre-jar">
+        <unjar src="lib/PayPalLib.jar" dest="${build.dir}/classes"/>
+    </target>
 </project>
