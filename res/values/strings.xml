@@ -94,7 +94,7 @@
     <string name="CAR_EDIT_ACTIVITY_REG_NO">"License plate:"</string>
     <string name="CAR_EDIT_ACTIVITY_UOMLENGTH">"UOM for distance:"</string>
     <string name="CAR_EDIT_ACTIVITY_UOMVOLUME">"UOM for volume:"</string>
-    <string name="CAR_EDIT_ACTIVITY_STARTINDEX">"Start index:"</string>
+    <string name="CAR_EDIT_ACTIVITY_STARTINDEX">"Initial odometer:"</string>
     <string name="CAR_EDIT_ACTIVITY_CURRENCY">"Default currency:"</string>
     <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Cannot be selected."</string>
     <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car cannot be deleted."</string>
@@ -113,7 +113,7 @@
 
     <string name="CURRENCY_EDIT_ACTIVITY_CODE">"Code:"</string>
 
-    <string name="MILEAGE_EDIT_ACTIVITY_INDEXHEADER">"Index start/stop or mileage"</string>
+    <string name="MILEAGE_EDIT_ACTIVITY_INDEXHEADER">"Odometer start/stop or mileage"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_STARTINDEX">"Start "</string>
     <string name="MILEAGE_EDIT_ACTIVITY_OPTION_INDEX">"Stop "</string>
     <string name="MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE">"Mileage "</string>
@@ -130,7 +130,7 @@
     <string name="REFUEL_EDIT_ACTIVITY_CAR_LABEL">"Car:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_DRIVER_LABEL">"Driver:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_EXPENSETYPE_LABEL">"Expense type:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_INDEX_LABEL">"Car index:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_INDEX_LABEL">"Odometer:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_QUANTITY_LABEL">"Quantity:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_PRICE_LABEL">"Price:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_DOCUMENTNO_LABEL">"Document no.:"</string>

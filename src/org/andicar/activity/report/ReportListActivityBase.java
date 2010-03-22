@@ -225,7 +225,7 @@ public class ReportListActivityBase extends ListActivityBase{
             Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
             emailIntent.setType("text/html");
             emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar report " + reportTitle);
-            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "This email was sent by AndiCar (https://code.google.com/p/andicar/wiki/Welcome)");
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Sent by AndiCar (http://sites.google.com/site/andicarfree/)");
             emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + StaticValues.reportFolder + reportFileName));
             emailIntent.setType("text/plain");
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
@@ -288,7 +288,7 @@ public class ReportListActivityBase extends ListActivityBase{
         }
         reportContent = reportContent +
                         "</table>\n" +
-                        "<br><br><p align=\"center\"> Created with <a href=\"https://code.google.com/p/andicar/wiki/Welcome\" target=\"new\">AndiCar</a>\n" +
+                        "<br><br><p align=\"center\"> Created with <a href=\"http://sites.google.com/site/andicarfree/\" target=\"new\">AndiCar</a>\n" +
                     "</body>\n" +
                 "</html>";
 

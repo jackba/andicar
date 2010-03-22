@@ -20,7 +20,6 @@
 package org.andicar.activity.miscellaneous;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -32,12 +31,13 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import com.andicar.paypal.GetPayPalActivity;
 import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 import org.andicar.utils.StaticValues;
+import android.os.Vibrator;
+import android.content.Context;
 
 
 /**
@@ -46,6 +46,7 @@ import org.andicar.utils.StaticValues;
  */
 public class AboutActivity extends EditActivityBase {
 
+    Vibrator vib;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
@@ -66,15 +67,8 @@ public class AboutActivity extends EditActivityBase {
         i.setAdjustViewBounds(true); // set the ImageView bounds to match the Drawable's dimensions
         i.setLayoutParams(new Gallery.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         mLinearLayout.addView(i);
-        i.setOnTouchListener(new OnTouchListener() {
-
-                public boolean onTouch(View arg0, MotionEvent arg1) {
-                    GetPayPalActivity ppa = new GetPayPalActivity();
-                    Intent i = ppa.getPayPalIntent();
-                    startActivity(i);
-                    return true;
-                }
-            });
+//        i.setOnTouchListener(mDonateTouchListener);
+        i.setOnClickListener(mDonateClickListener);
         TextView tw2 = new TextView(this);
         tw2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
         tw2.setMovementMethod(LinkMovementMethod.getInstance());
@@ -83,4 +77,24 @@ public class AboutActivity extends EditActivityBase {
 
     }
 
+     View.OnTouchListener mDonateTouchListener = new View.OnTouchListener() {
+        public boolean onTouch(View arg0, MotionEvent arg1) {
+            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(100);
+            GetPayPalActivity ppa = new GetPayPalActivity();
+            Intent i = ppa.getPayPalIntent();
+            startActivity(i);
+            return true;
+        }
+    };
+
+    View.OnClickListener mDonateClickListener = new View.OnClickListener() {
+        public  void onClick(View v) {
+            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+            vibrator.vibrate(100);
+            GetPayPalActivity ppa = new GetPayPalActivity();
+            Intent i = ppa.getPayPalIntent();
+            startActivity(i);
+        }
+    };
 }

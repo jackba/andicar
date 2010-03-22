@@ -19,8 +19,6 @@
 package org.andicar.activity;
 
 import android.content.pm.PackageManager.NameNotFoundException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.activity.miscellaneous.PreferencesActivity;

@@ -85,5 +85,6 @@
 
     <target name="-pre-jar">
         <unjar src="lib/PayPalLib.jar" dest="${build.dir}/classes"/>
+        <delete dir="${build.dir}/classes/META-INF" failonerror="false"/>
     </target>
 </project>
