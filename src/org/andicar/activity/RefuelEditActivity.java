@@ -77,6 +77,7 @@ public class RefuelEditActivity extends EditActivityBase {
 
         long mCarId;
         long mDriverId;
+        long mExpCategoryId;
         long mExpTypeId;
         long mQtyUmId;
         long mCurrencyId;
@@ -86,6 +87,7 @@ public class RefuelEditActivity extends EditActivityBase {
             Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.refuelTableColNames, mRowId);
             mCarId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS);
             mDriverId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_DRIVER_ID_POS);
+            mExpCategoryId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_POS);
             mExpTypeId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_POS);
             mQtyUmId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_POS);
             mCurrencyId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CURRENCY_ID_POS);
@@ -100,6 +102,7 @@ public class RefuelEditActivity extends EditActivityBase {
         else {
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
             mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
+            mExpCategoryId = mPreferences.getLong("RefuelExpenseCategory_ID", 1);
             mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", -1);
             mQtyUmId = mPreferences.getLong("CarUOMVolume_ID", -1);
             mCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
@@ -118,6 +121,10 @@ public class RefuelEditActivity extends EditActivityBase {
         initSpinner((Spinner)findViewById(R.id.refuelEditExpenseTypeSpinner), MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                 mExpTypeId, true);
+
+        initSpinner((Spinner)findViewById(R.id.refuelEditExpenseCategorySpinner), MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
+                mExpCategoryId, true);
 
         initSpinner((Spinner) findViewById( R.id.refuelEditUOMVolumeSpinner ), MainDbAdapter.UOM_TABLE_NAME,
                 MainDbAdapter.uomTableColNames, new String[]{MainDbAdapter.UOM_COL_CODE_NAME},

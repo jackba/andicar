@@ -159,6 +159,11 @@ public abstract class EditActivityBase extends Activity {
                         editor.putLong("RefuelExpenseType_ID", arg3);
                         editor.commit();
                     }
+                    else if( ((Spinner)arg0).equals(findViewById(R.id.refuelEditExpenseCategorySpinner))){
+                        SharedPreferences.Editor editor = mPreferences.edit();
+                        editor.putLong("RefuelExpenseCategory_ID", arg3);
+                        editor.commit();
+                    }
                     else if( ((Spinner)arg0).equals(findViewById(R.id.mileageEditExpenseTypeSpinner))){
                         SharedPreferences.Editor editor = mPreferences.edit();
                         editor.putLong("MileageInsertExpenseType_ID", arg3);

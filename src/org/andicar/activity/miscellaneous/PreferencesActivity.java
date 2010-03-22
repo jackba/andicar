@@ -29,6 +29,7 @@ import android.preference.PreferenceScreen;
 import org.andicar.activity.CarListActivity;
 import org.andicar.activity.CurrencyListActivity;
 import org.andicar.activity.DriverListActivity;
+import org.andicar.activity.ExpenseCategoryListActivity;
 import org.andicar.activity.ExpenseTypeListActivity;
 import org.andicar.activity.R;
 import org.andicar.activity.UOMConversionListActivity;
@@ -114,24 +115,31 @@ public class PreferencesActivity extends PreferenceActivity {
         bkRestorePrefScreen.setSummary(mRes.getString(R.string.PREF_BKRESTORE_SUMMARY));
         bkRestoreCategory.addPreference(bkRestorePrefScreen);
 
-        //Miscellaneous settings
-        PreferenceCategory miscCategory = new PreferenceCategory(this);
-        miscCategory.setTitle(mRes.getString(R.string.PREF_MISC_CATEGORY_TITLE));
-        prefScreenRoot.addPreference(miscCategory);
+        //Expenses settings
+        PreferenceCategory expenseCategory = new PreferenceCategory(this);
+        expenseCategory.setTitle(mRes.getString(R.string.PREF_EXPENSE_CATEGORY_TITLE));
+        prefScreenRoot.addPreference(expenseCategory);
+
+        //expense categories
+        PreferenceScreen expCategoryPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        expCategoryPrefScreen.setIntent(new Intent(this, ExpenseCategoryListActivity.class));
+        expCategoryPrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_EXPCATEGORY_TITLE));
+        expCategoryPrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_EXPCATEGORY_SUMMARY));
+        expenseCategory.addPreference(expCategoryPrefScreen);
 
         //expense types
         PreferenceScreen expTypePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         expTypePrefScreen.setIntent(new Intent(this, ExpenseTypeListActivity.class));
         expTypePrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_EXPTYPE_TITLE));
         expTypePrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_EXPTYPE_SUMMARY));
-        miscCategory.addPreference(expTypePrefScreen);
+        expenseCategory.addPreference(expTypePrefScreen);
 
         //currencies
         PreferenceScreen currencyPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         currencyPrefScreen.setIntent(new Intent(this, CurrencyListActivity.class));
         currencyPrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_CURRENCYLIST_TITLE));
         currencyPrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_CURRENCYLIST_SUMMARY));
-        miscCategory.addPreference(currencyPrefScreen);
+        expenseCategory.addPreference(currencyPrefScreen);
 
         return prefScreenRoot;
     }

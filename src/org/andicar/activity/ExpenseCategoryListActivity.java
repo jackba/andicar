@@ -26,14 +26,15 @@ import org.andicar.persistence.MainDbAdapter;
  *
  * @author miki
  */
-public class ExpenseTypeListActivity extends ListActivityBase
+public class ExpenseCategoryListActivity extends ListActivityBase
 {
     /** Called when the activity is first created. */
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, null, ExpenseTypeEditActivity.class,
-                MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.expenseTypeTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+        super.onCreate( icicle, null, ExpenseCategoryEditActivity.class,
+                MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.expenseCategoryTableColNames, null,
+                MainDbAdapter.GEN_COL_NAME_NAME,
                 R.layout.twoline_list_activity,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
                 new int[]{R.id.twoLineListText1, R.id.twoLineListText2});

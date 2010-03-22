@@ -138,5 +138,16 @@
         <activity
             android:name="com.andicar.paypall.GetPayPallActivity">
         </activity>
+
+        <activity
+            android:name="org.andicar.activity.ExpenseCategoryListActivity"
+            android:label="@string/APP_ACTIVITY_EXPTYPELIST">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.ExpenseCategoryEditActivity"
+            android:label="@string/APP_ACTIVITY_EXPTYPEEDIT">
+        </activity>
+
     </application>
 </manifest>

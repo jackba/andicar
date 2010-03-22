@@ -76,6 +76,28 @@
             android:layout_marginTop="10dip"
             >
             <TextView
+                android:id="@+id/refuelEditExpenseCategoryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REFUEL_EDIT_ACTIVITY_EXPENSECATEGORY_LABEL"
+                />
+            <Spinner android:id="@+id/refuelEditExpenseCategorySpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="10dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
                 android:id="@+id/refuelEditExpenseTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -129,6 +129,7 @@
 
     <string name="REFUEL_EDIT_ACTIVITY_CAR_LABEL">"Car:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_DRIVER_LABEL">"Driver:"</string>
+    <string name="REFUEL_EDIT_ACTIVITY_EXPENSECATEGORY_LABEL">"Expense category:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_EXPENSETYPE_LABEL">"Expense type:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_INDEX_LABEL">"Odometer:"</string>
     <string name="REFUEL_EDIT_ACTIVITY_QUANTITY_LABEL">"Quantity:"</string>
@@ -141,7 +142,7 @@
     <string name="CURR_UOMS">"\nMeasurement units used:"</string>
 
     <string name="PREF_UOMS_CATEGORY_TITLE">"Measurement units"</string>
-    <string name="PREF_MISC_CATEGORY_TITLE">"Miscellaneous"</string>
+    <string name="PREF_EXPENSE_CATEGORY_TITLE">"Expenses"</string>
     <string name="PREF_CAT_EXPTYPE_TITLE">"Expense types"</string>
     <string name="PREF_CAT_EXPTYPE_SUMMARY">"Add, delete, modify expense types"</string>
     <string name="PREF_CARSDRIVER_CATEGORY_TITLE">"Cars and drivers"</string>
@@ -160,6 +161,8 @@
     <string name="PREF_BKRESTORE_CATEGORY_TITLE">"Backup / restore"</string>
     <string name="PREF_BKRESTORE_TITLE">"Backup or restore your database"</string>
     <string name="PREF_BKRESTORE_SUMMARY">"Create a new backup about your database or restore it from an existing backup."</string>
+    <string name="PREF_CAT_EXPCATEGORY_TITLE">"Expense categories"</string>
+    <string name="PREF_CAT_EXPCATEGORY_SUMMARY">"Add, delete, modify expense categories"</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>

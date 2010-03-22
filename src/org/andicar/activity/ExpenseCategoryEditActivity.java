@@ -33,19 +33,19 @@ import org.andicar.persistence.MainDbAdapter;
  *
  * @author miki
  */
-public class ExpenseTypeEditActivity extends EditActivityBase
+public class ExpenseCategoryEditActivity extends EditActivityBase
 {
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, R.layout.expensetype_edit_activity, mOkClickListener );
+        super.onCreate( icicle, R.layout.expensecategory_edit_activity, mOkClickListener );
 
         if( extras != null ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME,
-                    MainDbAdapter.expenseTypeTableColNames, mRowId);
+            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME,
+                    MainDbAdapter.expenseCategoryTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
             String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
@@ -88,11 +88,11 @@ public class ExpenseTypeEditActivity extends EditActivityBase
                                 ((EditText) findViewById( R.id.genUserCommentEntry )).getText().toString() );
 
                         if( mRowId == null ) {
-                            mMainDbHelper.createRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, data);
+                            mMainDbHelper.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, data);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
                                 errMsg = mRes.getString(updResult);

@@ -51,6 +51,8 @@ public class DB {
     public static final String MILEAGE_TABLE_NAME = "CAR_MILEAGE";
     //refuel
     public static final String REFUEL_TABLE_NAME = "CAR_REFUEL";
+    //expense categories (eg. Refuel, Service, Insurance, etc.
+    public static final String EXPENSECATEGORY_TABLE_NAME = "DEF_EXPENSECATEGORY";
 
     //column names. Some is general (GEN_) some is particular
     //generic columns must be first and must be created for ALL TABLES
@@ -98,6 +100,7 @@ public class DB {
     public static final String REFUEL_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
     public static final String REFUEL_COL_DATE_NAME = "Date";
     public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
+    public static final String REFUEL_COL_EXPENSECATEGORY_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
 
 
     //column positions. Some is general (GEN_) some is particular
@@ -147,6 +150,7 @@ public class DB {
     public static final int REFUEL_COL_CURRENCY_ID_POS = 11;
     public static final int REFUEL_COL_DATE_POS = 12;
     public static final int REFUEL_COL_DOCUMENTNO_POS = 13;
+    public static final int REFUEL_COL_EXPENSECATEGORY_ID_POS =14;
 
     public static final String[] driverTableColNames =
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
@@ -161,7 +165,7 @@ public class DB {
     public static final String[] uomConversionTableColNames =
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
             UOM_CONVERSION_COL_UOMFROM_ID_NAME, UOM_CONVERSION_COL_UOMTO_ID_NAME, UOM_CONVERSION_COL_RATE_NAME};
-    public static final String[] expenseTableColNames =
+    public static final String[] expenseTypeTableColNames =
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME};
     public static final String[] mileageTableColNames =
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
@@ -175,7 +179,9 @@ public class DB {
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
             REFUEL_COL_CAR_ID_NAME, REFUEL_COL_DRIVER_ID_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME, REFUEL_COL_INDEX_NAME,
             REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
-            REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME};
+            REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME};
+    public static final String[] expenseCategoryTableColNames =
+        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME};
 
     public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
@@ -230,7 +236,7 @@ public class DB {
             + UOM_CONVERSION_COL_UOMTO_ID_NAME + " INTEGER NOT NULL, "
             + UOM_CONVERSION_COL_RATE_NAME + " NUMERIC NOT NULL "
             + ");";
-    protected static final String EXPENSE_TABLE_CREATE_SQL =
+    protected static final String EXPENSETYPE_TABLE_CREATE_SQL =
             "CREATE TABLE " + EXPENSETYPE_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -281,7 +287,17 @@ public class DB {
             + REFUEL_COL_PRICE_NAME + " NUMERIC, "
             + REFUEL_COL_CURRENCY_ID_NAME + " INTEGER, "
             + REFUEL_COL_DATE_NAME  + " DATE NULL, "
-            + REFUEL_COL_DOCUMENTNO_NAME + " TEXT NULL "
+            + REFUEL_COL_DOCUMENTNO_NAME + " TEXT NULL, "
+            + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER "
+            + ");";
+
+    protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL =
+            "CREATE TABLE " + EXPENSECATEGORY_TABLE_NAME
+            + " ( "
+            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
+            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
+            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
             + ");";
 
     protected DatabaseHelper mDbHelper = null;
@@ -394,7 +410,7 @@ public class DB {
                         "VALUES ( 'US gal to GB gal', 'Y', 'US gallon to Imperial gallon', 4, 5, 0.832674 )" );
 
                 //create expense types table
-                db.execSQL( EXPENSE_TABLE_CREATE_SQL );
+                db.execSQL( EXPENSETYPE_TABLE_CREATE_SQL );
                 //init some standard expenses
                 colPart = "INSERT INTO " + EXPENSETYPE_TABLE_NAME +
                             " ( " +
@@ -430,6 +446,7 @@ public class DB {
                                 "ON " + REFUEL_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
                 db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX2 " +
                                 "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
+                createExpenseCategory( db );
 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils();
@@ -444,11 +461,33 @@ public class DB {
 
         }
 
+        private void createExpenseCategory(SQLiteDatabase db) throws SQLException {
+            //expense category
+            db.execSQL(EXPENSECATEGORY_TABLE_CREATE_SQL);
+            String colPart = "INSERT INTO " + EXPENSECATEGORY_TABLE_NAME +
+                    " ( " +
+                            GEN_COL_NAME_NAME + ", " +
+                            GEN_COL_ISACTIVE_NAME + ", " +
+                            GEN_COL_USER_COMMENT_NAME + " " +
+                       ") ";
+            db.execSQL(colPart + "VALUES ( 'Fuel', 'Y', 'Expenses with refuels' )");
+            db.execSQL(colPart + "VALUES ( 'Service', 'Y', 'Expenses with services' )");
+            db.execSQL(colPart + "VALUES ( 'Insurance', 'Y', 'Expenses with insurance' )");
+        }
+
         @Override
         public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion )
         {
-//            db.execSQL("ALTER TABLE " + CAR_TABLE_NAME + " ADD " + CAR_COL_CURRENCY_ID_NAME + " INTEGER NULL ");
-//            db.execSQL(REFUEL_TABLE_CREATE_SQL);
+            String updateSql = "";
+            if(oldVersion == 1){
+                createExpenseCategory(db);
+                updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                                " ADD " + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
+                db.execSQL(updateSql);
+                updateSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
+                db.execSQL(updateSql);
+            }
         }
 
         private void createCurrencyTable(SQLiteDatabase db) throws SQLException {
@@ -474,7 +513,6 @@ public class DB {
             db.execSQL(colPart + "VALUES ( 'Japan Yen', 'Y', 'Japan Yen', 'JPY' )");
             db.execSQL(colPart + "VALUES ( 'Russia Ruble', 'Y', 'Russia Ruble', 'RUB' )");
         }
-
     }
 
     public boolean backupDb(){

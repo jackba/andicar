@@ -47,7 +47,7 @@ public class StaticValues
     public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;
 
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
 
