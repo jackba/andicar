@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
-                android:text="@string/MILEAGE_EDIT_ACTIVITY_EXPENSETYPE"
+                android:text="@string/GEN_EXPENSETYPE"
                 />
             <Spinner android:id="@+id/mileageEditExpenseTypeSpinner"
                 android:layout_width="fill_parent"
@@ -147,7 +147,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="20dip"
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION"
+                android:text="@string/GEN_BTNDONE_LABEL"
                 />
 
             <Button

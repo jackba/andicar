@@ -91,15 +91,15 @@ public class DailyMileageReportActivity extends ReportListActivityBase {
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
         searchExpTypeSpinner = (Spinner) searchView.findViewById(R.id.searchExpenseTypeSpinner);
-        initSpinner(searchExpTypeSpinner, "ExpenseType");
+        initSpinner(searchExpTypeSpinner, MainDbAdapter.EXPENSETYPE_TABLE_NAME);
         genUserCommentEntry = (EditText) searchView.findViewById(R.id.genUserCommentEntry);
         genUserCommentEntry.setText("%");
         searchDateFromEntry = (EditText) searchView.findViewById(R.id.searchDateFromEntry);
         searchDateToEntry = (EditText) searchView.findViewById(R.id.searchDateToEntry);
         searchCarSpinner = (Spinner) searchView.findViewById(R.id.searchCarSpinner);
-        initSpinner(searchCarSpinner, "Car");
+        initSpinner(searchCarSpinner, MainDbAdapter.CAR_TABLE_NAME);
         searchDriverSpinner = (Spinner) searchView.findViewById(R.id.searchDriverSpinner);
-        initSpinner(searchDriverSpinner, "Driver");
+        initSpinner(searchDriverSpinner, MainDbAdapter.DRIVER_TABLE_NAME);
         return searchDialog.create();
     }
     private DialogInterface.OnClickListener searchDialogButtonlistener = new DialogInterface.OnClickListener() {

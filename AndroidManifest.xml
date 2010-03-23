@@ -141,12 +141,12 @@
 
         <activity
             android:name="org.andicar.activity.ExpenseCategoryListActivity"
-            android:label="@string/APP_ACTIVITY_EXPTYPELIST">
+            android:label="@string/APP_ACTIVITY_EXPCATEGORYLIST">
         </activity>
 
         <activity
             android:name="org.andicar.activity.ExpenseCategoryEditActivity"
-            android:label="@string/APP_ACTIVITY_EXPTYPEEDIT">
+            android:label="@string/APP_ACTIVITY_EXPCATEGORYEDIT">
         </activity>
 
     </application>

@@ -49,6 +49,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
             String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String expCategoryIsExcludeFromMileageCostCheck = recordCursor.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS );
 
             if( name != null ) {
                 ((EditText) findViewById( R.id.genNameEntry )).setText( name );
@@ -58,6 +59,9 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             }
             if( userComment != null ) {
                 ((EditText) findViewById( R.id.genUserCommentEntry )).setText( userComment );
+            }
+            if( expCategoryIsExcludeFromMileageCostCheck != null ) {
+                ((CheckBox) findViewById( R.id.expCategoryIsExcludeFromMileageCostCheck )).setChecked( expCategoryIsExcludeFromMileageCostCheck.equals( "Y" ) );
             }
         }
         else {
@@ -86,6 +90,8 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
                                 (((CheckBox) findViewById( R.id.genIsActiveCheck )).isChecked() ? "Y" : "N") );
                         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                                 ((EditText) findViewById( R.id.genUserCommentEntry )).getText().toString() );
+                        data.put( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME,
+                                (((CheckBox) findViewById( R.id.expCategoryIsExcludeFromMileageCostCheck )).isChecked() ? "Y" : "N") );
 
                         if( mRowId == null ) {
                             mMainDbHelper.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, data);

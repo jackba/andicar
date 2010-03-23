@@ -38,16 +38,16 @@ import android.widget.AutoCompleteTextView;
  *
  * @author miki
  */
-public class RefuelEditActivity extends EditActivityBase {
+public class ExpenseEditActivity extends EditActivityBase {
     AutoCompleteTextView userComment;
     Spinner carSpinner;
     Spinner driverSpinner;
     EditText carIndexEntry;
-    EditText qtyEntry;
-    EditText priceEntry;
+    EditText amountEntry;
     EditText docNo;
 
     ArrayAdapter<String> userCommentAdapter;
+//    ExpenseEditActivity ea;
     private String operationType;
     /** Called when the activity is first created. */
     @Override
@@ -62,47 +62,44 @@ public class RefuelEditActivity extends EditActivityBase {
         carSpinner.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
         driverSpinner.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
 
-        userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
+//        ea = this;
+        userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line,
-                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, mPreferences.getLong("CurrentCar_ID", -1), 30));
+                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME,
+                mPreferences.getLong("CurrentCar_ID", -1), 30));
         userComment.setAdapter(userCommentAdapter);
 
         carIndexEntry = (EditText)findViewById(R.id.indexEntry);
-        qtyEntry = (EditText)findViewById(R.id.quantityEntry);
-        priceEntry = (EditText)findViewById(R.id.priceEntry);
+        amountEntry = (EditText)findViewById(R.id.amountEntry);
         docNo = (EditText)findViewById(R.id.documentNoEntry);
 
 
         long mCarId;
         long mDriverId;
-        long mExpCategoryId;
-        long mExpTypeId;
+        long mExpCategoryId = 0;
+        long mExpTypeId = 0;
         long mQtyUmId;
         long mCurrencyId;
 
         if (operationType.equals("E")) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.refuelTableColNames, mRowId);
-            mCarId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS);
-            mDriverId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_DRIVER_ID_POS);
-            mExpCategoryId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_POS);
-            mExpTypeId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_POS);
-            mQtyUmId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_POS);
-            mCurrencyId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CURRENCY_ID_POS);
-            initDateTime(recordCursor.getLong(MainDbAdapter.REFUEL_COL_DATE_POS) * 1000);
-            carIndexEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
-            qtyEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS));
-            priceEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_PRICE_POS));
-            docNo.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_POS));
+            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.EXPENSES_TABLE_NAME, 
+                    MainDbAdapter.expensesTableColNames, mRowId);
+            mCarId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_CAR_ID_POS);
+            mDriverId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_DRIVER_ID_POS);
+            mExpCategoryId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_POS);
+            mExpTypeId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_POS);
+            mCurrencyId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_POS);
+            initDateTime(recordCursor.getLong(MainDbAdapter.EXPENSES_COL_DATE_POS) * 1000);
+            carIndexEntry.setText(recordCursor.getString(MainDbAdapter.EXPENSES_COL_INDEX_POS));
+            amountEntry.setText(recordCursor.getString(MainDbAdapter.EXPENSES_COL_AMOUNT_POS));
+            docNo.setText(recordCursor.getString(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_POS));
             userComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
 
         }
         else {
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
             mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
-            mExpCategoryId = mPreferences.getLong("RefuelExpenseCategory_ID", 1);
-            mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", -1);
-            mQtyUmId = mPreferences.getLong("CarUOMVolume_ID", -1);
             mCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
             initDateTime(System.currentTimeMillis());
 
@@ -118,17 +115,12 @@ public class RefuelEditActivity extends EditActivityBase {
 
         initSpinner((Spinner)findViewById(R.id.expenseTypeSpinner), MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
-                mExpTypeId, true);
+                mExpTypeId, false);
 
         initSpinner((Spinner)findViewById(R.id.expenseCategorySpinner), MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
-                mExpCategoryId, true);
+                mExpCategoryId, false);
 
-        initSpinner((Spinner) findViewById( R.id.UOMVolumeSpinner ), MainDbAdapter.UOM_TABLE_NAME,
-                MainDbAdapter.uomTableColNames, new String[]{MainDbAdapter.UOM_COL_CODE_NAME},
-                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
-                    MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME,
-                    mQtyUmId, false);
         initSpinner((Spinner) findViewById( R.id.currencySpinner ), MainDbAdapter.CURRENCY_TABLE_NAME,
                 MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
                     MainDbAdapter.isActiveCondition,
@@ -157,27 +149,24 @@ public class RefuelEditActivity extends EditActivityBase {
                         data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
                         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                                 userComment.getText().toString() );
-                        data.put( MainDbAdapter.REFUEL_COL_CAR_ID_NAME,
+                        data.put( MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
                                 carSpinner.getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME,
+                        data.put( MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME,
                                 driverSpinner.getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME,
+                        data.put( MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
                                 ((Spinner) findViewById( R.id.expenseCategorySpinner )).getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME,
+                        data.put( MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME,
                                 ((Spinner) findViewById( R.id.expenseTypeSpinner )).getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_INDEX_NAME, carIndexEntry.getText().toString());
-                        data.put( MainDbAdapter.REFUEL_COL_QUANTITY_NAME, qtyEntry.getText().toString());
-                        data.put( MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_NAME,
-                                ((Spinner) findViewById( R.id.UOMVolumeSpinner )).getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_PRICE_NAME, priceEntry.getText().toString());
-                        data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME,
+                        data.put( MainDbAdapter.EXPENSES_COL_INDEX_NAME, carIndexEntry.getText().toString());
+                        data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amountEntry.getText().toString());
+                        data.put( MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
                                 ((Spinner) findViewById( R.id.currencySpinner )).getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_DATE_NAME, mDateTimeInSeconds);
-                        data.put( MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME,
+                        data.put( MainDbAdapter.EXPENSES_COL_DATE_NAME, mDateTimeInSeconds);
+                        data.put( MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
                                 docNo.getText().toString());
 
                         if( operationType.equals("N") ) {
-                            if(mMainDbHelper.createRecord(MainDbAdapter.REFUEL_TABLE_NAME, data) < 0){
+                            if(mMainDbHelper.createRecord(MainDbAdapter.EXPENSES_TABLE_NAME, data) < 0){
                                 errorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();
@@ -186,7 +175,7 @@ public class RefuelEditActivity extends EditActivityBase {
                                 finish();
                         }
                         else {
-                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.REFUEL_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.EXPENSES_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
                                 errMsg = mRes.getString(updResult);
@@ -206,9 +195,9 @@ public class RefuelEditActivity extends EditActivityBase {
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     userCommentAdapter = null;
-                    userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
+                    userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, carSpinner.getSelectedItemId(), 30));
+                            mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME, carSpinner.getSelectedItemId(), 30));
                     userComment.setAdapter(userCommentAdapter);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {

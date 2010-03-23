@@ -251,7 +251,7 @@ public class MainActivity extends Activity {
 
     private void fillDriverCar() {
         if (mPreferences != null) {
-            infoStr = mRes.getString(R.string.CURRENT_DRIVER_NAME);
+            infoStr = mRes.getString(R.string.GEN_DRIVER_LABEL);
 
             //get the current driver id and name
             if (mPreferences.getLong("CurrentDriver_ID", -1) != -1 && !mPreferences.getAll().isEmpty()) {
@@ -310,7 +310,7 @@ public class MainActivity extends Activity {
             if (mPreferences.getString("CurrentCar_Name", "").length() > 0) {
                 currentCarName = mPreferences.getString("CurrentCar_Name", "");
             }
-            infoStr = infoStr + "; " + mRes.getString(R.string.CURRENT_CAR_NAME) + " " + currentCarName;
+            infoStr = infoStr + "; " + mRes.getString(R.string.GEN_CAR_LABEL) + " " + currentCarName;
             ((TextView) findViewById(R.id.info)).setText(infoStr);
 
             if (currentCarID < 0 || currentDriverID < 0) {

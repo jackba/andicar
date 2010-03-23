@@ -154,12 +154,12 @@ public abstract class EditActivityBase extends Activity {
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-                    if( ((Spinner)arg0).equals(findViewById(R.id.refuelEditExpenseTypeSpinner))){
+                    if( ((Spinner)arg0).equals(findViewById(R.id.expenseTypeSpinner))){
                         SharedPreferences.Editor editor = mPreferences.edit();
                         editor.putLong("RefuelExpenseType_ID", arg3);
                         editor.commit();
                     }
-                    else if( ((Spinner)arg0).equals(findViewById(R.id.refuelEditExpenseCategorySpinner))){
+                    else if( ((Spinner)arg0).equals(findViewById(R.id.expenseCategorySpinner))){
                         SharedPreferences.Editor editor = mPreferences.edit();
                         editor.putLong("RefuelExpenseCategory_ID", arg3);
                         editor.commit();

@@ -21,20 +21,22 @@
 <resources>
     <string name="APP_NAME">"AndiCar"</string>
     <string name="APP_DESCRIPTION">"Free and open source car management software."</string>
-    <string name="APP_ACTIVITY_DRIVEREDIT">"Edit Driver Details"</string>
+    <string name="APP_ACTIVITY_DRIVEREDIT">"Edit driver"</string>
     <string name="APP_ACTIVITY_DRIVERLIST">"Drivers"</string>
-    <string name="APP_ACTIVITY_CAREDIT">"Edit Car Details"</string>
+    <string name="APP_ACTIVITY_CAREDIT">"Edit car"</string>
     <string name="APP_ACTIVITY_CARLIST">"Cars"</string>
     <string name="APP_ACTIVITY_PREFERENCES">"Preferences"</string>
+    <string name="APP_ACTIVITY_EXPCATEGORYLIST">"Expense categories"</string>
+    <string name="APP_ACTIVITY_EXPCATEGORYEDIT">"Edit expense category"</string>
     <string name="APP_ACTIVITY_EXPTYPELIST">"Expense types"</string>
-    <string name="APP_ACTIVITY_EXPTYPEEDIT">"Edit expense types"</string>
+    <string name="APP_ACTIVITY_EXPTYPEEDIT">"Edit expense type"</string>
     <string name="APP_ACTIVITY_UOMLIST">"Measurement units"</string>
     <string name="APP_ACTIVITY_UOMEDIT">"Edit UOM"</string>
     <string name="APP_ACTIVITY_UOMCONVERSIONLIST">"UOM Conversions"</string>
-    <string name="APP_ACTIVITY_UOMCONVERSIONEDIT">"Edit UOM Conversions"</string>
+    <string name="APP_ACTIVITY_UOMCONVERSIONEDIT">"Edit UOM Conversion"</string>
     <string name="APP_ACTIVITY_MILEAGEEDIT">"Add or edit mileage"</string>
     <string name="APP_ACTIVITY_CURRENCYLIST">"Currencies"</string>
-    <string name="APP_ACTIVITY_CURRENCYEDIT">"Edit currencies"</string>
+    <string name="APP_ACTIVITY_CURRENCYEDIT">"Edit currency"</string>
     <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
     <string name="APP_ACTIVITY_MILEAGE_LIST">"Mileages"</string>
     <string name="APP_ACTIVITY_REFUEL_LIST">"Refuels"</string>
@@ -55,6 +57,18 @@
     <string name="GEN_PICK_DATE_BUTTON_CAPTION">"Change date"</string>
     <string name="GEN_PICK_TIME_BUTTON_CAPTION">"Change time"</string>
     <string name="GEN_DELETE_CONFIRM">"Are you sure you want to delete the selected record?"</string>
+    <string name="GEN_EXPENSETYPE">"Expense type:"</string>
+    <string name="GEN_CAR_LABEL">"Car:"</string>
+    <string name="GEN_DRIVER_LABEL">"Driver:"</string>
+    <string name="GEN_EXPENSECATEGORY_LABEL">"Expense category:"</string>
+    <string name="GEN_EXPENSETYPE_LABEL">"Expense type:"</string>
+    <string name="GEN_DOCUMENTNO_LABEL">"Document no.:"</string>
+    <string name="GEN_INDEX_LABEL">"Odometer:"</string>
+    <string name="GEN_QUANTITY_LABEL">"Quantity:"</string>
+    <string name="GEN_PRICE_LABEL">"Price:"</string>
+    <string name="GEN_BTNDONE_LABEL">"Done"</string>
+    <string name="GEN_AMOUNT_LABEL">"Price:"</string>
+
 
     <string name="MENU_PREFERENCES_CAPTION">"Preferences"</string>
     <string name="MENU_REPORTS_CAPTION">"Reports"</string>
@@ -88,7 +102,6 @@
     <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Cannot be selected."</string>
     <string name="CURRENT_DRIVER_DELETE_ERROR_MESSAGE">"The current driver cannot be deleted."</string>
     <string name="CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE">"The current driver cannot be inactivated."</string>
-    <string name="CURRENT_DRIVER_NAME">"Driver:"</string>
 
     <string name="CAR_EDIT_ACTIVITY_MODEL">"Model:"</string>
     <string name="CAR_EDIT_ACTIVITY_REG_NO">"License plate:"</string>
@@ -99,7 +112,6 @@
     <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Cannot be selected."</string>
     <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car cannot be deleted."</string>
     <string name="CURRENT_CAR_INACTIVATE_ERROR_MESSAGE">"The current car cannot be inactivated."</string>
-    <string name="CURRENT_CAR_NAME">"Car:"</string>
 
     <string name="UOM_EDIT_ACTIVITY_CODE">"Code:"</string>
     <string name="UOM_EDIT_ACTIVITY_TITLE_LENGTH">"distance"</string>
@@ -120,23 +132,9 @@
     <string name="MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION">"<b><i>Insert mode:</i></b>"</string>
     <!--Stop index OR mileage-->
     <string name="MILEAGE_EDIT_ACTIVITY_COMMENT">"Comment"</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_EXPENSETYPE">"Expense type:"</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION">"Done"</string>
     <string name="MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE">"Mileage added."</string>
     <string name="MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE">"Mileage updated."</string>
     <string name="MILEAGE_LISTREPORT_ACTIVITY_NOCOMMENT_TEXT">"Without user comment"</string>
-
-
-    <string name="REFUEL_EDIT_ACTIVITY_CAR_LABEL">"Car:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_DRIVER_LABEL">"Driver:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_EXPENSECATEGORY_LABEL">"Expense category:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_EXPENSETYPE_LABEL">"Expense type:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_INDEX_LABEL">"Odometer:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_QUANTITY_LABEL">"Quantity:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_PRICE_LABEL">"Price:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_DOCUMENTNO_LABEL">"Document no.:"</string>
-    <string name="REFUEL_EDIT_ACTIVITY_BTNDONE_LABEL">"Done"</string>
-
 
 
     <string name="CURR_UOMS">"\nMeasurement units used:"</string>
@@ -184,5 +182,6 @@
     <string name="BKRESTORE_ACTIVITY_DELETE_CONFIRM">"Are you sure you want to delete the selected backup?"</string>
     <string name="BKRESTORE_ACTIVITY_RESTORE_CONFIRM">"Are you sure you want to restore the selected backup? This action will overwrite your existing data!"</string>
     <string name="BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE">"Your database was restored succesfully. The application will be closed."</string>
+    <string name="EXPCATEGORY_EDIT_ISEXCLUDEFROMMILEAGECOST_LABEL">"Exclude from mileage cost calculation"</string>
 
 </resources>

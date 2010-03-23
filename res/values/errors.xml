@@ -27,17 +27,17 @@
     <string name="ERR_006">"Error on creating record!"</string>
     <!--<string name="ERR_007">"Error on modifying record!"</string>-->
     <string name="ERR_008">"Invalid date/time format!"</string>
-    <string name="ERR_009">"This driver cannot be deleted because mileage(s) exists with him."</string>
-    <string name="ERR_010">"This driver cannot be deleted because refuel(s) exists with him."</string>
-    <string name="ERR_011">"This car cannot be deleted because mileage(s) exists with him."</string>
-    <string name="ERR_012">"This car cannot be deleted because refuel(s) exists with him."</string>
-    <string name="ERR_013">"This UOM cannot be deleted because mileage(s) exists with him."</string>
-    <string name="ERR_014">"This UOM cannot be deleted because refuel(s) exists with him."</string>
-    <string name="ERR_015">"This UOM cannot be deleted because UOM conversion(s) exists with him."</string>
+    <string name="ERR_009">"This driver cannot be deleted because it was used in mileage(s)."</string>
+    <string name="ERR_010">"This driver cannot be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_011">"This car cannot be deleted because it was used in mileage(s)."</string>
+    <string name="ERR_012">"This car cannot be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_013">"This UOM cannot be deleted because it was used in mileage(s)."</string>
+    <string name="ERR_014">"This UOM cannot be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_015">"This UOM cannot be deleted because it was used in UOM conversion(s)."</string>
     <string name="ERR_016">"This currency cannot be deleted because it is used in car definition(s)."</string>
-    <string name="ERR_017">"This currency cannot be deleted because refuel(s) exists with him."</string>
-    <string name="ERR_018">"This expense type cannot be deleted because mileage(s) exists with him."</string>
-    <string name="ERR_019">"This expense type cannot be deleted because refuel(s) exists with him."</string>
+    <string name="ERR_017">"This currency cannot be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_018">"This expense type cannot be deleted because it was used in mileage(s)."</string>
+    <string name="ERR_019">"This expense type cannot be deleted because it was used in refuel(s)."</string>
     <string name="ERR_020">"SDCARD not found. You can not save the reports locally and you can not backup the database!"</string>
     <string name="ERR_021">"Report folder (SDCARD/andicar/reports) cannot be created. You can not save the reports locally until you create this folder on your device."</string>
     <string name="ERR_022">"Cannot create report file!"</string>
@@ -45,4 +45,5 @@
     <string name="ERR_024">"Backup folder (SDCARD/andicar/backup) cannot be created. You can not backup your database until you create this folder on your device."</string>
     <string name="ERR_025">"The UOM cannot be inactivated because it is used in an active car definition."</string>
     <string name="ERR_026">"The currency cannot be inactivated because it is used in an active car definition."</string>
+    <string name="ERR_027">"Tis category cannot be deleted because it was used in refuel record(s)."</string>
 </resources>

@@ -53,6 +53,8 @@ public class DB {
     public static final String REFUEL_TABLE_NAME = "CAR_REFUEL";
     //expense categories (eg. Refuel, Service, Insurance, etc.
     public static final String EXPENSECATEGORY_TABLE_NAME = "DEF_EXPENSECATEGORY";
+    //car expenses
+    public static final String EXPENSES_TABLE_NAME = "CAR_EXPENSE";
 
     //column names. Some is general (GEN_) some is particular
     //generic columns must be first and must be created for ALL TABLES
@@ -101,6 +103,21 @@ public class DB {
     public static final String REFUEL_COL_DATE_NAME = "Date";
     public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
     public static final String REFUEL_COL_EXPENSECATEGORY_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
+    //expense category
+    public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
+    //car expenses
+    public static final String EXPENSES_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
+    public static final String EXPENSES_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
+    public static final String EXPENSES_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
+    public static final String EXPENSES_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
+    public static final String EXPENSES_COL_AMOUNT_NAME = "Amount";
+    public static final String EXPENSES_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
+    public static final String EXPENSES_COL_DATE_NAME = "Date";
+    public static final String EXPENSES_COL_DOCUMENTNO_NAME = "DocumentNo";
+    public static final String EXPENSES_COL_INDEX_NAME = "CarIndex";
+    public static final String EXPENSES_COL_FROMTABLE_NAME = "FromTable";
+    public static final String EXPENSES_COL_FROMRECORD_ID_NAME = "FromRecordId";
+
 
 
     //column positions. Some is general (GEN_) some is particular
@@ -151,6 +168,20 @@ public class DB {
     public static final int REFUEL_COL_DATE_POS = 12;
     public static final int REFUEL_COL_DOCUMENTNO_POS = 13;
     public static final int REFUEL_COL_EXPENSECATEGORY_ID_POS =14;
+    //expense category
+    public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
+    //car expenses
+    public static final int EXPENSES_COL_CAR_ID_POS = 4;
+    public static final int EXPENSES_COL_DRIVER_ID_POS = 5;
+    public static final int EXPENSES_COL_EXPENSECATEGORY_POS = 6;
+    public static final int EXPENSES_COL_EXPENSETYPE_ID_POS = 7;
+    public static final int EXPENSES_COL_AMOUNT_POS = 8;
+    public static final int EXPENSES_COL_CURRENCY_ID_POS = 9;
+    public static final int EXPENSES_COL_DATE_POS = 10;
+    public static final int EXPENSES_COL_DOCUMENTNO_POS = 11;
+    public static final int EXPENSES_COL_INDEX_POS = 12;
+    public static final int EXPENSES_COL_FROMTABLE_POS = 13;
+    public static final int EXPENSES_COL_FROMRECORD_POS = 14;
 
     public static final String[] driverTableColNames =
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
@@ -181,7 +212,15 @@ public class DB {
             REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
             REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME};
     public static final String[] expenseCategoryTableColNames =
-        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME};
+        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
+        EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
+
+    public static final String[] expensesTableColNames =
+        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
+         EXPENSES_COL_CAR_ID_NAME, EXPENSES_COL_DRIVER_ID_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
+         EXPENSES_COL_EXPENSETYPE_ID_NAME, EXPENSES_COL_AMOUNT_NAME, EXPENSES_COL_CURRENCY_ID_NAME,
+         EXPENSES_COL_DATE_NAME, EXPENSES_COL_DOCUMENTNO_NAME, EXPENSES_COL_INDEX_NAME,
+         EXPENSES_COL_FROMTABLE_NAME, EXPENSES_COL_FROMRECORD_ID_NAME};
 
     public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
@@ -297,7 +336,28 @@ public class DB {
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
             + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
+            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
+            + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " TEXT DEFAULT 'N' "
+            + ");";
+
+    protected static final String EXPENSES_TABLE_CREATE_SQL =
+            "CREATE TABLE " + EXPENSES_TABLE_NAME
+            + " ( "
+            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
+            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
+            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
+            + EXPENSES_COL_CAR_ID_NAME + " INTEGER, "
+            + EXPENSES_COL_DRIVER_ID_NAME + " INTEGER, "
+            + EXPENSES_COL_EXPENSECATEGORY_ID_NAME + " INTEGER, "
+            + EXPENSES_COL_EXPENSETYPE_ID_NAME + " INTEGER, "
+            + EXPENSES_COL_AMOUNT_NAME + " NUMERIC, "
+            + EXPENSES_COL_CURRENCY_ID_NAME + " INTEGER, "
+            + EXPENSES_COL_DATE_NAME  + " DATE NULL, "
+            + EXPENSES_COL_DOCUMENTNO_NAME + " TEXT NULL, "
+            + EXPENSES_COL_INDEX_NAME + " NUMERIC, "
+            + EXPENSES_COL_FROMTABLE_NAME + " TEXT NULL, "
+            + EXPENSES_COL_FROMRECORD_ID_NAME + " INTEGER "
             + ");";
 
     protected DatabaseHelper mDbHelper = null;
@@ -447,6 +507,8 @@ public class DB {
                 db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX2 " +
                                 "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
                 createExpenseCategory( db );
+                //expenses table
+                db.execSQL(EXPENSES_TABLE_CREATE_SQL);
 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils();
@@ -468,11 +530,12 @@ public class DB {
                     " ( " +
                             GEN_COL_NAME_NAME + ", " +
                             GEN_COL_ISACTIVE_NAME + ", " +
-                            GEN_COL_USER_COMMENT_NAME + " " +
+                            GEN_COL_USER_COMMENT_NAME + ", " +
+                            EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " " +
                        ") ";
-            db.execSQL(colPart + "VALUES ( 'Fuel', 'Y', 'Expenses with refuels' )");
-            db.execSQL(colPart + "VALUES ( 'Service', 'Y', 'Expenses with services' )");
-            db.execSQL(colPart + "VALUES ( 'Insurance', 'Y', 'Expenses with insurance' )");
+            db.execSQL(colPart + "VALUES ( 'Fuel', 'Y', 'Expenses with refuels', 'N' )");
+            db.execSQL(colPart + "VALUES ( 'Service', 'Y', 'Expenses with services', 'N' )");
+            db.execSQL(colPart + "VALUES ( 'Insurance', 'Y', 'Expenses with insurance', 'N' )");
         }
 
         @Override
@@ -487,6 +550,8 @@ public class DB {
                 updateSql = "UPDATE " + REFUEL_TABLE_NAME +
                             " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
                 db.execSQL(updateSql);
+                //expenses table
+                db.execSQL(EXPENSES_TABLE_CREATE_SQL);
             }
         }
 

@@ -62,6 +62,13 @@
             android:text="@string/GEN_ISACTIVE_LABEL"
             />
 
+        <CheckBox
+            android:id="@+id/expCategoryIsExcludeFromMileageCostCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/EXPCATEGORY_EDIT_ISEXCLUDEFROMMILEAGECOST_LABEL"
+            />
+            
         <TextView
             android:id="@+id/genUserCommentLabel"
             android:layout_width="fill_parent"

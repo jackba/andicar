@@ -346,6 +346,30 @@ public class MainDbAdapter extends DB
             }
             checkCursor.close();
         }
+        else if(tableName.equals(EXPENSECATEGORY_TABLE_NAME)){
+            //check if exists mileage for this driver
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_EXPENSECATEGORY_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_027;
+            }
+            checkCursor.close();
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_EXPENSETYPE_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_019;
+            }
+            checkCursor.close();
+        }
         return -1;
     }
 
@@ -482,7 +506,7 @@ public class MainDbAdapter extends DB
      * @param limitCount limit the size of the returned comments
      * @return a string array containig the last limitCount user comment from fromTable for the carId and DriverId
      */
-    public String[] getAutoCompleteUserComments(String fromTable, long carId, long driverId, int limitCount){
+    public String[] getAutoCompleteUserComments(String fromTable, long carId /*, long driverId*/, int limitCount){
         String[] retVal = null;
         ArrayList<String> commentList = new ArrayList<String>();
         String selectSql;
@@ -490,7 +514,7 @@ public class MainDbAdapter extends DB
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + MILEAGE_TABLE_NAME +
                             " WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + carId +
-                                " AND " + MILEAGE_COL_DRIVER_ID_NAME  + " = " + driverId +
+//                                " AND " + MILEAGE_COL_DRIVER_ID_NAME  + " = " + driverId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + MILEAGE_COL_INDEXSTOP_NAME + " DESC " +
@@ -499,10 +523,19 @@ public class MainDbAdapter extends DB
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + REFUEL_TABLE_NAME +
                             " WHERE " + REFUEL_COL_CAR_ID_NAME + " = " + carId +
-                                " AND " + REFUEL_COL_DRIVER_ID_NAME  + " = " + driverId +
+//                                " AND " + REFUEL_COL_DRIVER_ID_NAME  + " = " + driverId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + REFUEL_COL_DATE_NAME + " DESC " +
+                            " LIMIT " + limitCount;
+        else if(fromTable.equals(EXPENSES_TABLE_NAME))
+            selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
+                            " FROM " + EXPENSES_TABLE_NAME +
+                            " WHERE " + EXPENSES_COL_CAR_ID_NAME + " = " + carId +
+//                                " AND " + REFUEL_COL_DRIVER_ID_NAME  + " = " + driverId +
+                                " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
+                                " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
+                            " ORDER BY " + EXPENSES_COL_DATE_NAME + " DESC " +
                             " LIMIT " + limitCount;
         else
             return null;

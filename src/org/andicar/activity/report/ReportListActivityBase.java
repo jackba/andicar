@@ -116,16 +116,9 @@ public class ReportListActivityBase extends ListActivityBase{
         return true;
     }
 
-    protected void initSpinner(View pSpinner, String spinnerType){
+    protected void initSpinner(View pSpinner, String tableName){
         try{
             String selectSql = "";
-            String tableName = "";
-            if(spinnerType.equals("ExpenseType"))
-                tableName = MainDbAdapter.EXPENSETYPE_TABLE_NAME;
-            else if(spinnerType.equals("Car"))
-                tableName = MainDbAdapter.CAR_TABLE_NAME;
-            else if(spinnerType.equals("Driver"))
-                tableName = MainDbAdapter.DRIVER_TABLE_NAME;
 
             selectSql = "SELECT '<All>' AS " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
                                  "-1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME +

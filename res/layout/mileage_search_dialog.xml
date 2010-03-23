@@ -66,7 +66,7 @@
                 android:id="@+id/searchExpTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/MILEAGE_EDIT_ACTIVITY_EXPENSETYPE"
+                android:text="@string/GEN_EXPENSETYPE"
                 />
             <Spinner android:id="@+id/searchExpenseTypeSpinner"
                 android:layout_width="fill_parent"
@@ -137,7 +137,7 @@
                 android:id="@+id/searchDriverLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CURRENT_DRIVER_NAME"
+                android:text="@string/GEN_DRIVER_LABEL"
                 />
             <Spinner android:id="@+id/searchDriverSpinner"
                 android:layout_width="fill_parent"
@@ -160,7 +160,7 @@
                 android:id="@+id/searchCarLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CURRENT_CAR_NAME"
+                android:text="@string/GEN_CAR_LABEL"
                 />
             <Spinner android:id="@+id/searchCarSpinner"
                 android:layout_width="fill_parent"

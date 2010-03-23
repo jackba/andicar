@@ -133,7 +133,7 @@ public class MileageEditActivity extends EditActivityBase {
         }
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line, 
-                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId,mDriverId, 30));
+                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
         mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
         
         if(mInsertMode == StaticValues.mileageInsertModeNewIndex) {
@@ -155,11 +155,11 @@ public class MileageEditActivity extends EditActivityBase {
         mUOMLengthId = mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                 .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
         if(currentDriverName != null) {
-            driverCarLbl = mRes.getString(R.string.CURRENT_DRIVER_NAME) + currentDriverName;
+            driverCarLbl = mRes.getString(R.string.GEN_DRIVER_LABEL) + currentDriverName;
         }
         if(currentCarName != null) {
             driverCarLbl = driverCarLbl + "; "
-                    + mRes.getString(R.string.CURRENT_CAR_NAME) + " " + currentCarName;
+                    + mRes.getString(R.string.GEN_CAR_LABEL) + " " + currentCarName;
         }
         ((TextView) findViewById(R.id.mileageEditCarDriverLabel)).setText(driverCarLbl);
 
@@ -292,7 +292,7 @@ public class MileageEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line, 
-                            mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId,mDriverId, 30));
+                            mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
                     mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
                 }
 

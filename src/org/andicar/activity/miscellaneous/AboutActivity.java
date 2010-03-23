@@ -52,48 +52,50 @@ public class AboutActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.about_activity);
-        LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.aboutLinearLayout);
-        mLinearLayout.setOrientation(LinearLayout.VERTICAL);
-        mLinearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
+//        LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.aboutLinearLayout);
+//        mLinearLayout.setOrientation(LinearLayout.VERTICAL);
+//        mLinearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
 
-        TextView tw1 = new TextView(this);
+        TextView tw1 = (TextView)findViewById(R.id.aboutText1);
         tw1.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML1));
         tw1.setMovementMethod(LinkMovementMethod.getInstance());
-        tw1.setGravity(Gravity.FILL);
-        mLinearLayout.addView(tw1);
 
-        ImageView i = new ImageView(this);
-        i.setImageResource(R.drawable.btn_donate);
-        i.setAdjustViewBounds(true); // set the ImageView bounds to match the Drawable's dimensions
-        i.setLayoutParams(new Gallery.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-        mLinearLayout.addView(i);
-//        i.setOnTouchListener(mDonateTouchListener);
-        i.setOnClickListener(mDonateClickListener);
-        TextView tw2 = new TextView(this);
+//        ImageView i = new ImageView(this);
+//        i.setImageResource(R.drawable.btn_donate);
+//        i.setAdjustViewBounds(true); // set the ImageView bounds to match the Drawable's dimensions
+//        i.setLayoutParams(new Gallery.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+//        mLinearLayout.addView(i);
+
+        ImageView imgEUR = (ImageView)findViewById(R.id.aboutDonateEUR);
+        imgEUR.setImageResource(R.drawable.btn_donate);
+        imgEUR.setOnClickListener(mDonateClickListener);
+
+        ImageView imgUSD = (ImageView)findViewById(R.id.aboutDonateUSD);
+        imgUSD.setImageResource(R.drawable.btn_donate);
+        imgUSD.setOnClickListener(mDonateClickListener);
+
+//        TextView tw2 = new TextView(this);
+//        tw2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
+//        tw2.setMovementMethod(LinkMovementMethod.getInstance());
+//        tw2.setGravity(Gravity.FILL);
+//        mLinearLayout.addView(tw2);
+        TextView tw2 = (TextView)findViewById(R.id.aboutText2);
         tw2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
         tw2.setMovementMethod(LinkMovementMethod.getInstance());
-        tw2.setGravity(Gravity.FILL);
-        mLinearLayout.addView(tw2);
-
     }
-
-     View.OnTouchListener mDonateTouchListener = new View.OnTouchListener() {
-        public boolean onTouch(View arg0, MotionEvent arg1) {
-            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(100);
-            GetPayPalActivity ppa = new GetPayPalActivity();
-            Intent i = ppa.getPayPalIntent();
-            startActivity(i);
-            return true;
-        }
-    };
 
     View.OnClickListener mDonateClickListener = new View.OnClickListener() {
         public  void onClick(View v) {
+            ImageView srcImg = (ImageView)v;
+            String payPalCurrency = "";
+            if(srcImg.getId() == R.id.aboutDonateEUR)
+                payPalCurrency = "EUR";
+            else if(srcImg.getId() == R.id.aboutDonateUSD)
+                payPalCurrency = "USD";
             Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(100);
             GetPayPalActivity ppa = new GetPayPalActivity();
-            Intent i = ppa.getPayPalIntent();
+            Intent i = ppa.getPayPalIntent(payPalCurrency);
             startActivity(i);
         }
     };
