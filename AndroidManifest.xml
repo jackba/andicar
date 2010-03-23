@@ -42,23 +42,21 @@
         </activity>
 
         <activity
+            android:name="org.andicar.activity.DriverListActivity"
+            android:label="@string/APP_ACTIVITY_DRIVERLIST">
+        </activity>
+        <activity
             android:name="org.andicar.activity.DriverEditActivity"
             android:label="@string/APP_ACTIVITY_DRIVEREDIT">
         </activity>
 
         <activity
-            android:name="org.andicar.activity.DriverListActivity"
-            android:label="@string/APP_ACTIVITY_DRIVERLIST">
-        </activity>
-
-        <activity 
-            android:name="org.andicar.activity.CarEditActivity"
-            android:label="@string/APP_ACTIVITY_CAREDIT">
-        </activity>
-
-        <activity
             android:name="org.andicar.activity.CarListActivity"
             android:label="@string/APP_ACTIVITY_CARLIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.CarEditActivity"
+            android:label="@string/APP_ACTIVITY_CAREDIT">
         </activity>
 
         <activity 
@@ -70,7 +68,6 @@
             android:name="org.andicar.activity.ExpenseTypeListActivity"
             android:label="@string/APP_ACTIVITY_EXPTYPELIST">
         </activity>
-
         <activity 
             android:name="org.andicar.activity.ExpenseTypeEditActivity"
             android:label="@string/APP_ACTIVITY_EXPTYPEEDIT">
@@ -80,7 +77,6 @@
             android:name="org.andicar.activity.UOMListActivity"
             android:label="@string/APP_ACTIVITY_UOMLIST">
         </activity>
-
         <activity 
             android:name="org.andicar.activity.UOMEditActivity"
             android:label="@string/APP_ACTIVITY_UOMEDIT">
@@ -90,40 +86,36 @@
             android:name="org.andicar.activity.UOMConversionListActivity"
             android:label="@string/APP_ACTIVITY_UOMCONVERSIONLIST">
         </activity>
-
         <activity 
             android:name="org.andicar.activity.UOMConversionEditActivity"
             android:label="@string/APP_ACTIVITY_UOMCONVERSIONEDIT">
         </activity>
 
         <activity 
-            android:name="org.andicar.activity.MileageEditActivity"
-            android:label="@string/APP_ACTIVITY_MILEAGEEDIT">
-        </activity>
-
-        <activity 
             android:name="org.andicar.activity.CurrencyListActivity"
             android:label="@string/APP_ACTIVITY_CURRENCYLIST">
         </activity>
-
         <activity 
             android:name="org.andicar.activity.CurrencyEditActivity"
             android:label="@string/APP_ACTIVITY_CURRENCYEDIT">
-        </activity>
-
-        <activity 
-            android:name="org.andicar.activity.RefuelEditActivity"
-            android:label="@string/APP_ACTIVITY_REFUEL">
         </activity>
 
         <activity
             android:name="org.andicar.activity.report.MileageListReportActivity"
             android:label="@string/APP_ACTIVITY_MILEAGE_LIST">
         </activity>
+        <activity
+            android:name="org.andicar.activity.MileageEditActivity"
+            android:label="@string/APP_ACTIVITY_MILEAGEEDIT">
+        </activity>
 
         <activity
             android:name="org.andicar.activity.report.RefuelListReportActivity"
             android:label="@string/APP_ACTIVITY_REFUEL_LIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.RefuelEditActivity"
+            android:label="@string/APP_ACTIVITY_REFUEL">
         </activity>
 
         <activity
@@ -135,6 +127,7 @@
             android:name="org.andicar.activity.miscellaneous.BackupRestoreActivity"
             android:label="@string/APP_ACTIVITY_BKRESTORE">
         </activity>
+
         <activity
             android:name="com.andicar.paypall.GetPayPallActivity">
         </activity>
@@ -143,10 +136,18 @@
             android:name="org.andicar.activity.ExpenseCategoryListActivity"
             android:label="@string/APP_ACTIVITY_EXPCATEGORYLIST">
         </activity>
-
         <activity
             android:name="org.andicar.activity.ExpenseCategoryEditActivity"
             android:label="@string/APP_ACTIVITY_EXPCATEGORYEDIT">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.report.ExpensesListReportActivity"
+            android:label="@string/APP_ACTIVITY_EXPENSELIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.ExpenseEditActivity"
+            android:label="@string/APP_ACTIVITY_EXPENSEEDIT">
         </activity>
 
     </application>

@@ -153,27 +153,13 @@ public class ListActivityBase extends ListActivity {
                 if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
                     i.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                 }
-                else {
-                    if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-                        i.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                    }
-                    else {
-                        if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
-                            i.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
-                            i.putExtra("Operation", "E");
-                        }
-                        else {
-                            if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
-                                i.putExtra("Operation", "E");
-                            }
-                            else {
-                                if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
-                                    i.putExtra("Operation", "E");
-                                }
-                            }
-                        }
-                    }
+                else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
+                    i.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
                 }
+                else if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
+                    i.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
+                }
+                i.putExtra("Operation", "E");
 
                 startActivityForResult(i, StaticValues.ACTIVITY_EDIT_REQUEST_CODE);
                 return true;
@@ -225,26 +211,20 @@ public class ListActivityBase extends ListActivity {
                 Intent insertIntent = new Intent(this, mEditClass);
                 if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
                     insertIntent.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
-                    insertIntent.putExtra("Operation", "N");
                 }
-                else {
-                    if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
-                        insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                        insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                        insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
-                        insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
-                        insertIntent.putExtra("Operation", "N");
-                    }
-                    else {
-                        if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
-                            insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                            insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                            insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
-                            insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
-                            insertIntent.putExtra("Operation", "N");
-                        }
-                    }
+                else if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
+                    insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
+                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
                 }
+                else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
+                    insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
+                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
+                }
+                insertIntent.putExtra("Operation", "N");
 
                 startActivityForResult(insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
         }
@@ -326,23 +306,24 @@ public class ListActivityBase extends ListActivity {
                     insertIntent.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
                     insertIntent.putExtra("Operation", "N");
                 }
-                else {
-                    if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
-                        insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                        insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                        insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
-                        insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
-                        insertIntent.putExtra("Operation", "N");
-                    }
-                    else {
-                        if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
-                            insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                            insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                            insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
-                            insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
-                            insertIntent.putExtra("Operation", "N");
-                        }
-                    }
+                else if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
+                    insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
+                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
+                    insertIntent.putExtra("Operation", "N");
+                }
+                else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
+                    insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
+                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
+                    insertIntent.putExtra("Operation", "N");
+                }
+                else if(mTableName.equals(MainDbAdapter.EXPENSES_TABLE_NAME)) {
+                    insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
+                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+                    insertIntent.putExtra("Operation", "N");
                 }
                 startActivityForResult(insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
                 return true;

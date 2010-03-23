@@ -61,10 +61,10 @@ public class RefuelEditActivity extends EditActivityBase {
         driverSpinner = (Spinner)findViewById(R.id.driverSpinner);
         carSpinner.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
         driverSpinner.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
-
-        userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
+        userCommentAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line,
-                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, mPreferences.getLong("CurrentCar_ID", -1), 30));
+                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, 
+                    mPreferences.getLong("CurrentCar_ID", -1), 30));
         userComment.setAdapter(userCommentAdapter);
 
         carIndexEntry = (EditText)findViewById(R.id.indexEntry);

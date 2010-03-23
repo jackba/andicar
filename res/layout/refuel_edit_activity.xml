@@ -226,17 +226,17 @@
             android:layout_height="fill_parent"
             android:layout_marginTop="10dip"
             >
-            <TextView android:id="@+id/dateTimeText"
+            <TextView android:id="@+id/genDateTimeText"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       />
-            <Button android:id="@+id/dateButton"
+            <Button android:id="@+id/genPickDateButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonStyleSmall"
                     android:layout_marginLeft="10dip"
                     android:text="@string/GEN_PICK_DATE_BUTTON_CAPTION"/>
-            <Button android:id="@+id/timeButton"
+            <Button android:id="@+id/genPickTimeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonStyleSmall"
@@ -244,13 +244,13 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/userCommentLabel"
+            android:id="@+id/genUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/GEN_USER_COMMENT_LABEL"
             />
         <AutoCompleteTextView
-            android:id="@+id/userCommentEntry"
+            android:id="@+id/genUserCommentEntry"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"

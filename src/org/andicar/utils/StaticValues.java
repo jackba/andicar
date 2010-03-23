@@ -32,6 +32,7 @@ public class StaticValues
     public static final int MENU_REPORTS_ID = 11;
     public static final int MENU_ABOUT_ID = 12;
     public static final int MENU_HELP_ID = 13;
+    public static final int MENU_EXPENSES_ID = 1;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;

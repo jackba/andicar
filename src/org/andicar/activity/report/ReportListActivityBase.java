@@ -189,6 +189,11 @@ public class ReportListActivityBase extends ListActivityBase{
             mReportDbHelper = new ReportDbAdapter(this, "reportRefuelListReportSelect", whereConditions);
             reportCursor = mReportDbHelper.fetchReport(-1);
         }
+        else if(this instanceof ExpensesListReportActivity){
+            reportTitle = "ExpenseReport_";
+            mReportDbHelper = new ReportDbAdapter(this, "reportExpensesListReportSelect", whereConditions);
+            reportCursor = mReportDbHelper.fetchReport(-1);
+        }
         reportTitle = Utils.appendDateTime(reportTitle, true, false, false);
         reportFileName = Utils.appendDateTime(reportTitle, true, true, true);
 
@@ -244,7 +249,10 @@ public class ReportListActivityBase extends ListActivityBase{
             for(i = 0; i< reportCursor.getColumnCount(); i++){
                 if(i > 0)
                     reportContent = reportContent + ",";
-                reportContent = reportContent  + reportCursor.getString(i).replaceAll(",", " ");
+                String colVal = reportCursor.getString(i);
+                if(colVal == null)
+                    colVal = "";
+                reportContent = reportContent  + colVal.replaceAll(",", " ");
             }
             reportContent = reportContent + "\n";
         }

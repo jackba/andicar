@@ -41,6 +41,7 @@ import android.database.Cursor;
 import android.text.Html;
 import org.andicar.activity.miscellaneous.AboutActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
+import org.andicar.activity.report.ExpensesListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
@@ -324,9 +325,6 @@ public class MainActivity extends Activity {
                 refuelInsertBtn.setEnabled(true);
                 refuelListBtn.setEnabled(true);
             }
-        } else { //no saved mPreferences. start driver list activity in order to create one.
-//            Intent i = new Intent( this, DriverListActivity.class );
-//            startActivityForResult( i, ACTIVITY_DRIVER_LIST );
         }
     }
 
@@ -334,25 +332,24 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
                 mRes.getText(R.string.MENU_PREFERENCES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_preferences));
-//        menu.add( 0, StaticValues.MENU_REPORTS_ID, 0,
-//                mRes.getText( R.string.MENU_REPORTS_CAPTION ) )
-//                    .setIcon( mRes.getDrawable( R.drawable.ic_menu_report ) );
         menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
                 mRes.getText(R.string.MENU_ABOUT_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
-//        menu.add( 0, StaticValues.MENU_HELP_ID, 0,
-//                mRes.getText( R.string.MENU_HELP_CAPTION ) )
-//                    .setIcon( mRes.getDrawable( R.drawable.ic_menu_help ) );
+        menu.add(0, StaticValues.MENU_EXPENSES_ID, 0,
+                mRes.getText(R.string.MENU_EXPENSES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_expenses));
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == StaticValues.MENU_PREFERENCES_ID) {
-            Intent i = new Intent(this, PreferencesActivity.class);
-            startActivityForResult(i, SETTINGS_ACTIVITY_REQUEST_CODE);
-            return true;
+            startActivity(new Intent(this, PreferencesActivity.class));
+//            Intent i = new Intent(this, PreferencesActivity.class);
+//            startActivityForResult(i, SETTINGS_ACTIVITY_REQUEST_CODE);
+//            return true;
         } else if (item.getItemId() == StaticValues.MENU_ABOUT_ID) {
             startActivity(new Intent(this, AboutActivity.class));
+        } else if (item.getItemId() == StaticValues.MENU_EXPENSES_ID) {
+            startActivity(new Intent(this, ExpensesListReportActivity.class));
         }
         return false;
     }

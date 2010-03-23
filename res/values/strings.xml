@@ -34,14 +34,16 @@
     <string name="APP_ACTIVITY_UOMEDIT">"Edit UOM"</string>
     <string name="APP_ACTIVITY_UOMCONVERSIONLIST">"UOM Conversions"</string>
     <string name="APP_ACTIVITY_UOMCONVERSIONEDIT">"Edit UOM Conversion"</string>
-    <string name="APP_ACTIVITY_MILEAGEEDIT">"Add or edit mileage"</string>
     <string name="APP_ACTIVITY_CURRENCYLIST">"Currencies"</string>
     <string name="APP_ACTIVITY_CURRENCYEDIT">"Edit currency"</string>
-    <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
     <string name="APP_ACTIVITY_MILEAGE_LIST">"Mileages"</string>
+    <string name="APP_ACTIVITY_MILEAGEEDIT">"Add or edit mileage"</string>
     <string name="APP_ACTIVITY_REFUEL_LIST">"Refuels"</string>
+    <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
     <string name="APP_ACTIVITY_ABOUT">"About AndiCar"</string>
     <string name="APP_ACTIVITY_BKRESTORE">"Backup / restore"</string>
+    <string name="APP_ACTIVITY_EXPENSELIST">"Expenses"</string>
+    <string name="APP_ACTIVITY_EXPENSEEDIT">"Add or edit expense"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -67,7 +69,7 @@
     <string name="GEN_QUANTITY_LABEL">"Quantity:"</string>
     <string name="GEN_PRICE_LABEL">"Price:"</string>
     <string name="GEN_BTNDONE_LABEL">"Done"</string>
-    <string name="GEN_AMOUNT_LABEL">"Price:"</string>
+    <string name="GEN_AMOUNT_LABEL">"Amount:"</string>
 
 
     <string name="MENU_PREFERENCES_CAPTION">"Preferences"</string>
@@ -81,6 +83,7 @@
     <string name="MENU_HIDEINACTIVE_CAPTION">"Hide inactive"</string>
     <string name="MENU_SEARCH_CAPTION">"Search/filter"</string>
     <string name="MENU_REPORT_CAPTION">"Create report"</string>
+    <string name="MENU_EXPENSES_CAPTION">"Expenses"</string>
 
 
     <string name="MAIN_ACTIVITY_MILEAGE_HDR_CAPTION">"Mileages"</string>

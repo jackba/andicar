@@ -52,7 +52,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle, R.layout.refuel_edit_activity, mOkClickListener);
+        super.onCreate(icicle, R.layout.expense_edit_activity, mOkClickListener);
 
         operationType = extras.getString("Operation");
         userComment = ((AutoCompleteTextView) findViewById( R.id.genUserCommentEntry ));
@@ -78,7 +78,6 @@ public class ExpenseEditActivity extends EditActivityBase {
         long mDriverId;
         long mExpCategoryId = 0;
         long mExpTypeId = 0;
-        long mQtyUmId;
         long mCurrencyId;
 
         if (operationType.equals("E")) {
@@ -145,7 +144,7 @@ public class ExpenseEditActivity extends EditActivityBase {
 
                         ContentValues data = new ContentValues();
                         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                "Refuel");
+                                "Expense");
                         data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
                         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                                 userComment.getText().toString() );

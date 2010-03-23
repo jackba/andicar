@@ -112,6 +112,12 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
                 try {
                     whereConditions.clear();
+                    if (searchExpCategorySpinner.getSelectedItemId() != -1) {
+                        whereConditions.putString(
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
+                                MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME) + "=",
+                                String.valueOf(searchExpCategorySpinner.getSelectedItemId()));
+                    }
                     if (searchExpTypeSpinner.getSelectedItemId() != -1) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
@@ -150,7 +156,7 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
                                 MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME) + "=",
                                 String.valueOf(searchDriverSpinner.getSelectedItemId()));
                     }
-                    mListDbHelper.setReportSql("reportRefuelListViewSelect", whereConditions);
+                    mListDbHelper.setReportSql("reportExpensesListViewSelect", whereConditions);
                     fillData();
                 } catch (IndexOutOfBoundsException e) {
                     errorAlertBuilder.setMessage(mRes.getString(R.string.ERR_008));
