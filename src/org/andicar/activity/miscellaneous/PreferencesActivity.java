@@ -141,6 +141,18 @@ public class PreferencesActivity extends PreferenceActivity {
         currencyPrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_CURRENCYLIST_SUMMARY));
         expenseCategory.addPreference(currencyPrefScreen);
 
+        //Misc settings
+        PreferenceCategory miscCategory = new PreferenceCategory(this);
+        expenseCategory.setTitle(mRes.getString(R.string.PREF_MISC_CATEGORY_TITLE));
+        prefScreenRoot.addPreference(miscCategory);
+
+        //main screen pref
+        PreferenceScreen mainScreenPref = getPreferenceManager().createPreferenceScreen(this);
+        mainScreenPref.setIntent(new Intent(this, MainScreenPreferenceActivity.class));
+        mainScreenPref.setTitle(mRes.getString(R.string.PREF_CAT_MAINSCREENCATEGORY_TITLE));
+        mainScreenPref.setSummary(mRes.getString(R.string.PREF_CAT_MAINSCREENCATEGORY_SUMMARY));
+        miscCategory.addPreference(mainScreenPref);
+
         return prefScreenRoot;
     }
 

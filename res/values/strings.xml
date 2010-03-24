@@ -175,6 +175,9 @@
     <string name="PREF_BKRESTORE_SUMMARY">"Create a new backup about your database or restore it from an existing backup."</string>
     <string name="PREF_CAT_EXPCATEGORY_TITLE">"Expense categories"</string>
     <string name="PREF_CAT_EXPCATEGORY_SUMMARY">"Add, delete, modify expense categories"</string>
+    <string name="PREF_MISC_CATEGORY_TITLE">"Miscellaneous"</string>
+    <string name="PREF_CAT_MAINSCREENCATEGORY_TITLE">"Main screen prferences"</string>
+    <string name="PREF_CAT_MAINSCREENCATEGORY_SUMMARY">"Customize your main sceen"</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>
