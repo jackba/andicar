@@ -39,6 +39,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.database.Cursor;
 import android.text.Html;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import org.andicar.activity.miscellaneous.AboutActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.activity.report.ExpensesListReportActivity;
@@ -61,11 +63,16 @@ public class MainActivity extends Activity {
     private Context mainContext;
     private int ACTIVITY_MILEAGEINSERT_REQUEST_CODE = 0;
     private int ACTIVITY_REFUELINSERT_REQUEST_CODE = 1;
+    private int ACTIVITY_EXPENSEINSERT_REQUEST_CODE = 2;
     private SharedPreferences mPreferences;
-    private Button mileageInsertBtn;
-    private Button refuelInsertBtn;
+
     private Button mileageListBtn;
+    private Button mileageInsertBtn;
     private Button refuelListBtn;
+    private Button refuelInsertBtn;
+    private Button expenseListBtn;
+    private Button expenseInsertBtn;
+
     private ReportDbAdapter reportDb;
     private Cursor listCursor;
     private TextView threeLineListMileageText1;
@@ -74,9 +81,15 @@ public class MainActivity extends Activity {
     private TextView threeLineListRefuelText1;
     private TextView threeLineListRefuelText2;
     private TextView threeLineListRefuelText3;
-    private static final int SETTINGS_ACTIVITY_REQUEST_CODE = 0;
+    private TextView threeLineListExpenseText1;
+    private TextView threeLineListExpenseText2;
+    private TextView threeLineListExpenseText3;
+
     private boolean exitResume = false;
     private String appVersion;
+    private boolean showMileageZone = true;
+    private boolean showRefuelZone = true;
+    private boolean showExpenseZone = true;
 
     /** Called when the activity is first created. */
     @Override
@@ -84,6 +97,27 @@ public class MainActivity extends Activity {
         super.onCreate(icicle);
         mRes = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+
+        SharedPreferences.Editor editor = mPreferences.edit();
+        if(!mPreferences.contains("MainActivityShowMileage")){
+            editor.putBoolean("MainActivityShowMileage", true);
+            editor.commit();
+        }
+        else
+            showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
+        if(!mPreferences.contains("MainActivityShowRefuel")){
+            editor.putBoolean("MainActivityShowRefuel", true);
+            editor.commit();
+        }
+        else
+            showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
+        if(!mPreferences.contains("MainActivityShowExpense")){
+            editor.putBoolean("MainActivityShowExpense", true);
+            editor.commit();
+        }
+        else
+            showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
+        
         setContentView(R.layout.main_activity);
         mainContext = this;
         reportDb = new ReportDbAdapter(mainContext, null, null);
@@ -93,14 +127,19 @@ public class MainActivity extends Activity {
         catch(NameNotFoundException ex) {
             appVersion = "N/A";
         }
-        mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
-        mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
-        refuelInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
-        refuelInsertBtn.setOnClickListener(btnInsertRefuelClickListener);
+
         mileageListBtn = (Button) findViewById(R.id.mainActivityBtnMileageList);
         mileageListBtn.setOnClickListener(btnMileageListClickListener);
+        mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
+        mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
         refuelListBtn = (Button) findViewById(R.id.mainActivityBtnRefuelList);
         refuelListBtn.setOnClickListener(btnRefuelListClickListener);
+        refuelInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
+        refuelInsertBtn.setOnClickListener(btnInsertRefuelClickListener);
+        expenseListBtn = (Button) findViewById(R.id.mainActivityBtnExpenseList);
+        expenseListBtn.setOnClickListener(btnExpenseListClickListener);
+        expenseInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertExpense);
+        expenseInsertBtn.setOnClickListener(btnInsertExpenseClickListener);
 
         threeLineListMileageText1 = (TextView) findViewById(R.id.mainActivityThreeLineListMileageText1);
         threeLineListMileageText2 = (TextView) findViewById(R.id.mainActivityThreeLineListMileageText2);
@@ -108,6 +147,10 @@ public class MainActivity extends Activity {
         threeLineListRefuelText1 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText1);
         threeLineListRefuelText2 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText2);
         threeLineListRefuelText3 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText3);
+        threeLineListExpenseText1 = (TextView) findViewById(R.id.mainActivityThreeLineListExpenseText1);
+        threeLineListExpenseText2 = (TextView) findViewById(R.id.mainActivityThreeLineListExpenseText2);
+        threeLineListExpenseText3 = (TextView) findViewById(R.id.mainActivityThreeLineListExpenseText3);
+
         if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
             exitResume = true;
             //test if backups exists
@@ -210,7 +253,53 @@ public class MainActivity extends Activity {
             refuelListBtn.setEnabled(false);
         }
         listCursor = null;
+        whereConditions.clear();
+        whereConditions.putString(
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
+                    MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
+                String.valueOf(currentCarID));
+        reportDb.setReportSql("reportExpensesListMainViewSelect", whereConditions);
+        listCursor = reportDb.fetchReport(1);
+        if (listCursor.moveToFirst()) {
+            threeLineListExpenseText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+            threeLineListExpenseText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+            threeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+            expenseListBtn.setEnabled(true);
+        } else {
+            threeLineListExpenseText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSETEXT));
+            threeLineListExpenseText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT));
+            threeLineListExpenseText3.setText("");
+        }
+        listCursor = null;
+
+        if(!showMileageZone)
+            findViewById(R.id.mainActivityMileageZone).setVisibility(View.GONE);
+        else
+            findViewById(R.id.mainActivityMileageZone).setVisibility(View.VISIBLE);
+        if(!showRefuelZone)
+            findViewById(R.id.mainActivityRefuelZone).setVisibility(View.GONE);
+        else
+            findViewById(R.id.mainActivityRefuelZone).setVisibility(View.VISIBLE);
+        if(!showExpenseZone)
+            findViewById(R.id.mainActivityExpenseZone).setVisibility(View.GONE);
+        else
+            findViewById(R.id.mainActivityExpenseZone).setVisibility(View.VISIBLE);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        reportDb.close();
+    }
+
+    private OnClickListener btnMileageListClickListener = new OnClickListener() {
+
+        public void onClick(View arg0) {
+            Intent mileageReportIntent = new Intent(mainContext, MileageListReportActivity.class);
+            startActivity(mileageReportIntent);
+        }
+    };
+
     private OnClickListener btnInsertMileageClickListener = new OnClickListener() {
 
         public void onClick(View arg0) {
@@ -223,6 +312,15 @@ public class MainActivity extends Activity {
             startActivityForResult(mileageInsertIntent, ACTIVITY_MILEAGEINSERT_REQUEST_CODE);
         }
     };
+
+    private OnClickListener btnRefuelListClickListener = new OnClickListener() {
+
+        public void onClick(View arg0) {
+            Intent mileageReportIntent = new Intent(mainContext, RefuelListReportActivity.class);
+            startActivity(mileageReportIntent);
+        }
+    };
+
     private OnClickListener btnInsertRefuelClickListener = new OnClickListener() {
 
         public void onClick(View arg0) {
@@ -235,18 +333,23 @@ public class MainActivity extends Activity {
             startActivityForResult(refuelInsertIntent, ACTIVITY_REFUELINSERT_REQUEST_CODE);
         }
     };
-    private OnClickListener btnMileageListClickListener = new OnClickListener() {
+
+    private OnClickListener btnExpenseListClickListener = new OnClickListener() {
 
         public void onClick(View arg0) {
-            Intent mileageReportIntent = new Intent(mainContext, MileageListReportActivity.class);
+            Intent mileageReportIntent = new Intent(mainContext, ExpensesListReportActivity.class);
             startActivity(mileageReportIntent);
         }
     };
-    private OnClickListener btnRefuelListClickListener = new OnClickListener() {
+
+    private OnClickListener btnInsertExpenseClickListener = new OnClickListener() {
 
         public void onClick(View arg0) {
-            Intent mileageReportIntent = new Intent(mainContext, RefuelListReportActivity.class);
-            startActivity(mileageReportIntent);
+            Intent refuelInsertIntent = new Intent(mainContext, ExpenseEditActivity.class);
+            refuelInsertIntent.putExtra("CurrentDriver_ID", currentDriverID);
+            refuelInsertIntent.putExtra("CurrentCar_ID", currentCarID);
+            refuelInsertIntent.putExtra("Operation", "N");
+            startActivityForResult(refuelInsertIntent, ACTIVITY_EXPENSEINSERT_REQUEST_CODE);
         }
     };
 
@@ -275,6 +378,8 @@ public class MainActivity extends Activity {
                 mileageInsertBtn.setEnabled(false);
                 refuelListBtn.setEnabled(false);
                 refuelInsertBtn.setEnabled(false);
+                expenseListBtn.setEnabled(false);
+                expenseInsertBtn.setEnabled(false);
                 return;
             }
 
@@ -305,6 +410,8 @@ public class MainActivity extends Activity {
                 mileageInsertBtn.setEnabled(false);
                 refuelListBtn.setEnabled(false);
                 refuelInsertBtn.setEnabled(false);
+                expenseListBtn.setEnabled(false);
+                expenseInsertBtn.setEnabled(false);
                 return;
             }
 
@@ -319,11 +426,15 @@ public class MainActivity extends Activity {
                 mileageListBtn.setEnabled(false);
                 refuelInsertBtn.setEnabled(false);
                 refuelListBtn.setEnabled(false);
+                expenseListBtn.setEnabled(false);
+                expenseInsertBtn.setEnabled(false);
             } else {
                 mileageInsertBtn.setEnabled(true);
                 mileageListBtn.setEnabled(true);
                 refuelInsertBtn.setEnabled(true);
                 refuelListBtn.setEnabled(true);
+                expenseListBtn.setEnabled(true);
+                expenseInsertBtn.setEnabled(true);
             }
         }
     }
@@ -334,6 +445,10 @@ public class MainActivity extends Activity {
                 mRes.getText(R.string.MENU_PREFERENCES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_preferences));
         menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
                 mRes.getText(R.string.MENU_ABOUT_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
+        menu.add(0, StaticValues.MENU_MILEAGE_ID, 0,
+                mRes.getText(R.string.MENU_MILEAGE_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_mileage));
+        menu.add(0, StaticValues.MENU_REFUEL_ID, 0,
+                mRes.getText(R.string.MENU_REFUEL_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_refuel));
         menu.add(0, StaticValues.MENU_EXPENSES_ID, 0,
                 mRes.getText(R.string.MENU_EXPENSES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_expenses));
         return true;
@@ -348,6 +463,10 @@ public class MainActivity extends Activity {
 //            return true;
         } else if (item.getItemId() == StaticValues.MENU_ABOUT_ID) {
             startActivity(new Intent(this, AboutActivity.class));
+        } else if (item.getItemId() == StaticValues.MENU_MILEAGE_ID) {
+            startActivity(new Intent(this, MileageListReportActivity.class));
+        } else if (item.getItemId() == StaticValues.MENU_REFUEL_ID) {
+            startActivity(new Intent(this, RefuelListReportActivity.class));
         } else if (item.getItemId() == StaticValues.MENU_EXPENSES_ID) {
             startActivity(new Intent(this, ExpensesListReportActivity.class));
         }

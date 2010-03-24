@@ -29,6 +29,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginRight="5dip"
+        android:id="@+id/genRootViewGroup"
         >
         <TextView
             android:id="@+id/info"
@@ -44,156 +45,251 @@
             android:background="@color/separator_bg"
             />
 
-        <TextView
-            android:id="@+id/mainActivityMileageHdr"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dip"
-            android:background="@color/header_bg"
-            android:gravity="center_vertical"
-            android:text="@string/MAIN_ACTIVITY_MILEAGE_HDR_CAPTION"
-            />
+
         <LinearLayout
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical">
-
-            <TextView android:id="@+id/mainActivityThreeLineListMileageHdr"
-                      android:textSize="14sp"
-                      android:textStyle="bold|italic"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                        android:text="@string/MAIN_ACTIVITY_MILEAGE_LISTHDR_CAPTION"
-                      />
-            <TextView android:id="@+id/mainActivityThreeLineListMileageText1"
-                      android:textSize="14sp"
-                      android:textStyle="bold"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"/>
-
-            <TextView android:id="@+id/mainActivityThreeLineListMileageText2"
-                      android:textSize="14sp"
-                      android:textStyle="italic"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"/>
-
-            <TextView android:id="@+id/mainActivityThreeLineListMileageText3"
-                      android:textSize="14sp"
-                      android:textStyle="italic"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <TextView
-            android:layout_height="1dip"
-            android:layout_width="fill_parent"
-            android:background="@color/separator_bg"
-            />
-        <RelativeLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
+            android:id="@+id/mainActivityMileageZone"
             >
-            <Button android:id="@+id/mainActivityBtnMileageList"
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/mainActivityMileageHdr"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MAIN_ACTIVITY_MILEAGE_HDR_CAPTION"
                 />
-            <Button android:id="@+id/mainActivityBtnInsertMileage"
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/mainActivityThreeLineListMileageHdr"
+                          android:textSize="14sp"
+                          android:textStyle="bold|italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                            android:text="@string/MAIN_ACTIVITY_MILEAGE_LISTHDR_CAPTION"
+                          />
+                <TextView android:id="@+id/mainActivityThreeLineListMileageText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/mainActivityThreeLineListMileageText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/mainActivityThreeLineListMileageText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+            <RelativeLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_toLeftOf="@id/mainActivityBtnMileageList"
-                android:layout_alignTop="@id/mainActivityBtnMileageList"
+                android:layout_marginTop="5dip"
+                >
+                <Button android:id="@+id/mainActivityBtnMileageList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button android:id="@+id/mainActivityBtnInsertMileage"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toLeftOf="@id/mainActivityBtnMileageList"
+                    android:layout_alignTop="@id/mainActivityBtnMileageList"
+                    />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
                 />
-        </RelativeLayout>
-
-        <TextView
-            android:layout_height="2dip"
-            android:layout_width="fill_parent"
-            android:background="@color/separator_bg"
-            />
-
-
-        <TextView
-            android:id="@+id/mainActivityRefuelHdr"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_marginTop="10dip"
-            android:background="@color/header_bg"
-            android:gravity="center_vertical"
-            android:text="@string/MAIN_ACTIVITY_REFUEL_HDR_CAPTION"
-            />
+        </LinearLayout>
         <LinearLayout
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="vertical">
-
-            <TextView android:id="@+id/mainActivityThreeLineListRefuelHdr"
-                      android:textSize="14sp"
-                      android:textStyle="bold|italic"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:text="@string/MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION"
-                      />
-            <TextView android:id="@+id/mainActivityThreeLineListRefuelText1"
-                      android:textSize="14sp"
-                      android:textStyle="bold"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"/>
-
-            <TextView android:id="@+id/mainActivityThreeLineListRefuelText2"
-                      android:textSize="14sp"
-                      android:textStyle="italic"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"/>
-
-            <TextView android:id="@+id/mainActivityThreeLineListRefuelText3"
-                      android:textSize="14sp"
-                      android:textStyle="italic"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <TextView
-            android:layout_height="1dip"
-            android:layout_width="fill_parent"
-            android:background="@color/separator_bg"
-            />
-
-        <RelativeLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
+            android:id="@+id/mainActivityRefuelZone"
             >
-            <Button android:id="@+id/mainActivityBtnRefuelList"
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/mainActivityRefuelHdr"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MAIN_ACTIVITY_REFUEL_HDR_CAPTION"
                 />
-            <Button android:id="@+id/mainActivityBtnInsertRefuel"
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/mainActivityThreeLineListRefuelHdr"
+                          android:textSize="14sp"
+                          android:textStyle="bold|italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION"
+                          />
+                <TextView android:id="@+id/mainActivityThreeLineListRefuelText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/mainActivityThreeLineListRefuelText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/mainActivityThreeLineListRefuelText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_toLeftOf="@id/mainActivityBtnRefuelList"
-                android:layout_alignTop="@id/mainActivityBtnRefuelList"
+                android:layout_marginTop="5dip"
+                >
+                <Button android:id="@+id/mainActivityBtnRefuelList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button android:id="@+id/mainActivityBtnInsertRefuel"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toLeftOf="@id/mainActivityBtnRefuelList"
+                    android:layout_alignTop="@id/mainActivityBtnRefuelList"
+                    />
+            </RelativeLayout>
+    <!-- -->
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
                 />
-        </RelativeLayout>
-        <TextView
-            android:layout_height="2dip"
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:background="@color/separator_bg"
-            />
+            android:layout_height="wrap_content"
+            android:id="@+id/mainActivityExpenseZone"
+            >
+            <TextView
+                android:id="@+id/mainActivityExpenseHdr"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MAIN_ACTIVITY_EXPENSE_HDR_CAPTION"
+                />
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/mainActivityThreeLineListRefuelHdr"
+                          android:textSize="14sp"
+                          android:textStyle="bold|italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/MAIN_ACTIVITY_EXPENSE_LISTHDR_CAPTION"
+                          />
+                <TextView android:id="@+id/mainActivityThreeLineListExpenseText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/mainActivityThreeLineListExpenseText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/mainActivityThreeLineListExpenseText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <Button android:id="@+id/mainActivityBtnExpenseList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MAIN_ACTIVITY_EXPENSELIST_BTN_CAPTION"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button android:id="@+id/mainActivityBtnInsertExpense"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MAIN_ACTIVITY_INSERT_EXPENSE_BTN_CAPTION"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toLeftOf="@id/mainActivityBtnExpenseList"
+                    android:layout_alignTop="@id/mainActivityBtnExpenseList"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+        </LinearLayout>
         <TextView
             android:id="@+id/mainActivityShortAboutLbl"
             android:layout_height="fill_parent"

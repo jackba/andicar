@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 //import java.math.BigDecimal;
 
 /**
@@ -45,6 +46,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     EditText carIndexEntry;
     EditText amountEntry;
     EditText docNo;
+    TextView warningLabel;
 
     ArrayAdapter<String> userCommentAdapter;
 //    ExpenseEditActivity ea;
@@ -65,13 +67,15 @@ public class ExpenseEditActivity extends EditActivityBase {
 //        ea = this;
         userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line,
-                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME,
+                mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME,
                 mPreferences.getLong("CurrentCar_ID", -1), 30));
         userComment.setAdapter(userCommentAdapter);
 
         carIndexEntry = (EditText)findViewById(R.id.indexEntry);
         amountEntry = (EditText)findViewById(R.id.amountEntry);
         docNo = (EditText)findViewById(R.id.documentNoEntry);
+
+        warningLabel = (TextView)findViewById(R.id.warningLabel);
 
 
         long mCarId;
@@ -82,7 +86,7 @@ public class ExpenseEditActivity extends EditActivityBase {
 
         if (operationType.equals("E")) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.EXPENSES_TABLE_NAME, 
+            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.EXPENSES_TABLE_NAME,
                     MainDbAdapter.expensesTableColNames, mRowId);
             mCarId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_CAR_ID_POS);
             mDriverId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_DRIVER_ID_POS);
@@ -95,13 +99,27 @@ public class ExpenseEditActivity extends EditActivityBase {
             docNo.setText(recordCursor.getString(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_POS));
             userComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
 
+            String fromTable = recordCursor.getString(MainDbAdapter.EXPENSES_COL_FROMTABLE_POS);
+            if(fromTable == null){
+                warningLabel.setText("");
+                setEditable((ViewGroup) findViewById(R.id.genRootViewGroup), true);
+            }
+            else{
+                if(fromTable.equals("Refuel")){
+                    warningLabel.setText(mRes.getString(R.string.EXPENSEEDIT_ACTIVITY_WARNING_LABEL).replaceAll("%",
+                            mRes.getString(R.string.APP_ACTIVITY_REFUEL).toLowerCase()) + "\n");
+                }
+                setEditable((ViewGroup) findViewById(R.id.genRootViewGroup), false);
+            }
+
         }
         else {
+            warningLabel.setText("");
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
             mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
             mCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
             initDateTime(System.currentTimeMillis());
-
+            setEditable((ViewGroup) findViewById(R.id.genRootViewGroup), true);
         }
         
         initSpinner(carSpinner, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
@@ -165,8 +183,8 @@ public class ExpenseEditActivity extends EditActivityBase {
                                 docNo.getText().toString());
 
                         if( operationType.equals("N") ) {
-                            if(mMainDbHelper.createRecord(MainDbAdapter.EXPENSES_TABLE_NAME, data) < 0){
-                                errorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
+                            if(mMainDbAdapter.createRecord(MainDbAdapter.EXPENSES_TABLE_NAME, data) < 0){
+                                errorAlertBuilder.setMessage(mMainDbAdapter.lastErrorMessage);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();
                             }
@@ -174,12 +192,12 @@ public class ExpenseEditActivity extends EditActivityBase {
                                 finish();
                         }
                         else {
-                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.EXPENSES_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.EXPENSES_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
                                 errMsg = mRes.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
                                 errorAlertBuilder.setMessage(errMsg);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();
@@ -196,7 +214,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME, carSpinner.getSelectedItemId(), 30));
+                            mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME, carSpinner.getSelectedItemId(), 30));
                     userComment.setAdapter(userCommentAdapter);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {

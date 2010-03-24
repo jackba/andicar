@@ -63,7 +63,7 @@ public abstract class EditActivityBase extends Activity {
     protected SharedPreferences mPreferences;
     protected Button btnOk = null;
     protected Button btnCancel = null;
-    protected MainDbAdapter mMainDbHelper = null;
+    protected MainDbAdapter mMainDbAdapter = null;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
@@ -83,7 +83,7 @@ public abstract class EditActivityBase extends Activity {
         extras = getIntent().getExtras();
         mRes = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        mMainDbHelper = new MainDbAdapter(this);
+        mMainDbAdapter = new MainDbAdapter(this);
 
         errorAlertBuilder = new AlertDialog.Builder( this );
         errorAlertBuilder.setCancelable( false );
@@ -106,7 +106,7 @@ public abstract class EditActivityBase extends Activity {
         extras = getIntent().getExtras();
         mRes = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        mMainDbHelper = new MainDbAdapter(this);
+        mMainDbAdapter = new MainDbAdapter(this);
 
         errorAlertBuilder = new AlertDialog.Builder( this );
         errorAlertBuilder.setCancelable( false );
@@ -207,6 +207,19 @@ public abstract class EditActivityBase extends Activity {
            }
        }
        return null;
+   }
+
+   protected void setEditable(ViewGroup wg, boolean editable){
+       View child;
+       for(int i = 0; i < wg.getChildCount(); i++)
+       {
+           child = wg.getChildAt(i);
+           if(child instanceof ViewGroup){
+               setEditable((ViewGroup)child, editable);
+           }
+           if(child.getId() != R.id.warningLabel)
+               child.setEnabled(editable);
+       }
    }
 
    protected void initDateTime(long dateTimeInMiliseconds){

@@ -101,7 +101,7 @@ public class BackupRestoreActivity extends EditActivityBase {
 
     private View.OnClickListener btnBkClickListener =  new View.OnClickListener() {
             public void onClick(View arg0) {
-                if(mMainDbHelper.backupDb()){
+                if(mMainDbAdapter.backupDb()){
                     Toast toast = Toast.
                             makeText( getApplicationContext(),
                             mRes.getString( R.string.BKRESTORE_ACTIVITY_BKOK_MESSAGE ), Toast.LENGTH_SHORT);
@@ -110,7 +110,7 @@ public class BackupRestoreActivity extends EditActivityBase {
                 }
                 else{
                     errorAlertBuilder.setMessage(mRes.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
-                            mMainDbHelper.lastErrorMessage);
+                            mMainDbAdapter.lastErrorMessage);
                     errorAlert = errorAlertBuilder.create();
                     errorAlert.show();
                 }
@@ -127,7 +127,7 @@ public class BackupRestoreActivity extends EditActivityBase {
             builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
                        new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
-                                if(mMainDbHelper.restoreDb(selectedFile)){
+                                if(mMainDbAdapter.restoreDb(selectedFile)){
                                     SharedPreferences.Editor editor = mPreferences.edit();
                                     editor.putBoolean("MustClose", true);
                                     editor.putLong( "CurrentCar_ID", -1);
@@ -147,7 +147,7 @@ public class BackupRestoreActivity extends EditActivityBase {
                                 }
                                 else{
                                     errorAlertBuilder.setMessage(mRes.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
-                                            mMainDbHelper.lastErrorMessage);
+                                            mMainDbAdapter.lastErrorMessage);
                                     errorAlert = errorAlertBuilder.create();
                                     errorAlert.show();
                                 }

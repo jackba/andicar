@@ -44,7 +44,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
 
         if( extras != null ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME,
+            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME,
                     MainDbAdapter.expenseCategoryTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
@@ -94,16 +94,16 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
                                 (((CheckBox) findViewById( R.id.expCategoryIsExcludeFromMileageCostCheck )).isChecked() ? "Y" : "N") );
 
                         if( mRowId == null ) {
-                            mMainDbHelper.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, data);
+                            mMainDbAdapter.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, data);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
                                 errMsg = mRes.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
                                 errorAlertBuilder.setMessage(errMsg);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();

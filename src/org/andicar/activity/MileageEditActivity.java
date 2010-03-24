@@ -93,17 +93,17 @@ public class MileageEditActivity extends EditActivityBase {
         if( operationType.equals("E") ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
 
-            mCarId = mMainDbHelper.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
+            mCarId = mMainDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
                                 .getLong(MainDbAdapter.MILEAGE_COL_CAR_ID_POS);
-            mDriverId = mMainDbHelper.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
+            mDriverId = mMainDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
                                 .getLong(MainDbAdapter.MILEAGE_COL_DRIVER_ID_POS);
 
-            currentDriverName = mMainDbHelper.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mDriverId)
+            currentDriverName = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mDriverId)
                                 .getString(MainDbAdapter.GEN_COL_NAME_POS);
-            currentCarName = mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
+            currentCarName = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                 .getString(MainDbAdapter.GEN_COL_NAME_POS);
 
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
+            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
             mStartIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
             BigDecimal stopIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
             mileageEditInputEntry.setText(stopIndex.toString());
@@ -133,7 +133,7 @@ public class MileageEditActivity extends EditActivityBase {
         }
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line, 
-                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
+                mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
         mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
         
         if(mInsertMode == StaticValues.mileageInsertModeNewIndex) {
@@ -152,7 +152,7 @@ public class MileageEditActivity extends EditActivityBase {
                     mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
             mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
         }
-        mUOMLengthId = mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
+        mUOMLengthId = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                 .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
         if(currentDriverName != null) {
             driverCarLbl = mRes.getString(R.string.GEN_DRIVER_LABEL) + currentDriverName;
@@ -214,10 +214,21 @@ public class MileageEditActivity extends EditActivityBase {
     }
 
     private BigDecimal fillGetCurrentIndex() throws SQLException {
-        if(mStartIndex.equals(new BigDecimal("0")))
-            mStartIndex = new BigDecimal(mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
-                    .getString(MainDbAdapter.CAR_COL_INDEXCURRENT_POS));
-        
+        if(mStartIndex.equals(new BigDecimal("0"))){
+            String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
+                            "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
+                            "WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y' " +
+                                "AND " + MainDbAdapter.MILEAGE_COL_CAR_ID_NAME + " = " + mCarId + " " +
+                          "UNION " +
+                          "SELECT " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + ", 2 As Pos " +
+                          "FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
+                          "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + mCarId + " " +
+                          "ORDER BY Pos ASC";
+            Cursor c = mMainDbAdapter.execSql(sql);
+            if(c.moveToFirst())
+                mStartIndex = new BigDecimal( c.getString(0));
+            c.close();
+        }
         mileageEditStartIndexEntry.setText(mStartIndex.toString());
         return mStartIndex;
     }
@@ -249,10 +260,10 @@ public class MileageEditActivity extends EditActivityBase {
                 data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, mExpTypeSpinner.getSelectedItemId());
                 data.put( MainDbAdapter.MILEAGE_COL_GPSTRACKLOG_NAME, "");
                 if(operationType.equals("N")){
-                    operationResult = mMainDbHelper.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
+                    operationResult = mMainDbAdapter.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
                     if(operationResult == -1){
-                        if(mMainDbHelper.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data) < 0){
-                            errorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
+                        if(mMainDbAdapter.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data) < 0){
+                            errorAlertBuilder.setMessage(mMainDbAdapter.lastErrorMessage);
                             errorAlert = errorAlertBuilder.create();
                             errorAlert.show();
                             return;
@@ -260,14 +271,14 @@ public class MileageEditActivity extends EditActivityBase {
                     }
                 }
                 else{
-                    operationResult = mMainDbHelper.checkIndex(mRowId, mCarId, mStartIndex, mNewIndex);
+                    operationResult = mMainDbAdapter.checkIndex(mRowId, mCarId, mStartIndex, mNewIndex);
                     if(operationResult == -1){
-                        int updResult = mMainDbHelper.updateRecord(MainDbAdapter.MILEAGE_TABLE_NAME, mRowId, data);
+                        int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.MILEAGE_TABLE_NAME, mRowId, data);
                         if(updResult != -1){
                             String errMsg = "";
                             errMsg = mRes.getString(updResult);
                             if(updResult == R.string.ERR_000)
-                                errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
                             errorAlertBuilder.setMessage(errMsg);
                             errorAlert = errorAlertBuilder.create();
                             errorAlert.show();
@@ -292,7 +303,7 @@ public class MileageEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line, 
-                            mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
+                            mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
                     mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
                 }
 

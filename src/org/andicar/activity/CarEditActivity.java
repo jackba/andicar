@@ -50,7 +50,7 @@ public class CarEditActivity extends EditActivityBase
 
         if( extras != null ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
+            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
             String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
@@ -178,16 +178,16 @@ public class CarEditActivity extends EditActivityBase
                                 ((Spinner) findViewById( R.id.carEditCurrencySpinner )).getSelectedItemId());
 
                         if( mRowId == null ) {
-                            mMainDbHelper.createRecord(MainDbAdapter.CAR_TABLE_NAME, data);
+                            mMainDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, data);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
                                 errMsg = mRes.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
                                 errorAlertBuilder.setMessage(errMsg);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();

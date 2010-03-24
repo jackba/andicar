@@ -63,7 +63,7 @@ public class RefuelEditActivity extends EditActivityBase {
         driverSpinner.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
         userCommentAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line,
-                mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, 
+                mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
                     mPreferences.getLong("CurrentCar_ID", -1), 30));
         userComment.setAdapter(userCommentAdapter);
 
@@ -82,7 +82,7 @@ public class RefuelEditActivity extends EditActivityBase {
 
         if (operationType.equals("E")) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.refuelTableColNames, mRowId);
+            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.refuelTableColNames, mRowId);
             mCarId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS);
             mDriverId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_DRIVER_ID_POS);
             mExpCategoryId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_POS);
@@ -177,8 +177,8 @@ public class RefuelEditActivity extends EditActivityBase {
                                 docNo.getText().toString());
 
                         if( operationType.equals("N") ) {
-                            if(mMainDbHelper.createRecord(MainDbAdapter.REFUEL_TABLE_NAME, data) < 0){
-                                errorAlertBuilder.setMessage(mMainDbHelper.lastErrorMessage);
+                            if(mMainDbAdapter.createRecord(MainDbAdapter.REFUEL_TABLE_NAME, data) < 0){
+                                errorAlertBuilder.setMessage(mMainDbAdapter.lastErrorMessage);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();
                             }
@@ -186,12 +186,12 @@ public class RefuelEditActivity extends EditActivityBase {
                                 finish();
                         }
                         else {
-                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.REFUEL_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.REFUEL_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
                                 errMsg = mRes.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
                                 errorAlertBuilder.setMessage(errMsg);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();
@@ -208,7 +208,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mMainDbHelper.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, carSpinner.getSelectedItemId(), 30));
+                            mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, carSpinner.getSelectedItemId(), 30));
                     userComment.setAdapter(userCommentAdapter);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {

@@ -52,7 +52,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
 
         if (extras != null) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME,
+            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME,
                     MainDbAdapter.uomConversionTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
@@ -76,7 +76,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
                         MainDbAdapter.isActiveCondition,
                         MainDbAdapter.UOM_COL_CODE_NAME, uomFromId, false);
 
-            uomFromType = mMainDbHelper.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomFromId)
+            uomFromType = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomFromId)
                             .getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
 
             initSpinner((Spinner) findViewById( R.id.uomConversionEditUomToSpinner ), MainDbAdapter.UOM_TABLE_NAME,
@@ -114,7 +114,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
                         long fromId = ((Spinner) findViewById( R.id.uomConversionEditUomFromSpinner )).getSelectedItemId();
                         long toId = ((Spinner) findViewById( R.id.uomConversionEditUomToSpinner )).getSelectedItemId();
                         retVal = null;
-                        int retVal2 = mMainDbHelper.canInsertUpdateUOMConversion(mRowId, fromId, toId);
+                        int retVal2 = mMainDbAdapter.canInsertUpdateUOMConversion(mRowId, fromId, toId);
                         if(retVal2 != -1){
                             errorAlertBuilder.setMessage(mRes.getString(retVal2));
                             errorAlert = errorAlertBuilder.create();
@@ -134,16 +134,16 @@ public class UOMConversionEditActivity extends EditActivityBase {
                         data.put( MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME, convRateStr);
 
                         if( mRowId == null ) {
-                            mMainDbHelper.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
+                            mMainDbAdapter.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
                                 errMsg = mRes.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
                                 errorAlertBuilder.setMessage(errMsg);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();
@@ -157,7 +157,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
     private OnItemSelectedListener uomFromSelectedListener =
                 new OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        uomFromType = mMainDbHelper.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, arg3)
+                        uomFromType = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, arg3)
                             .getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
 
                         initSpinner((Spinner) findViewById( R.id.uomConversionEditUomToSpinner ), MainDbAdapter.UOM_TABLE_NAME,

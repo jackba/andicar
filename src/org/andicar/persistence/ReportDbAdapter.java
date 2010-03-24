@@ -181,6 +181,43 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
+    public static String expensesListMainViewSelect =
+            "SELECT " +
+                sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
+                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                "DATE(" + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + ", 'unixepoch', 'localtime') " +
+                        "AS " + FIRST_LINE_LIST_NAME + ", " +
+                sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + " || ' ' || " +
+                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || ' at ' || " +
+                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + " || ' ' || " +
+                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
+                        "AS " + SECOND_LINE_LIST_NAME + ", " +
+                sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
+                        "AS " + THIRD_LINE_LIST_NAME +
+            " FROM " + EXPENSES_TABLE_NAME +
+                    " JOIN " + EXPENSETYPE_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSETYPE_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + EXPENSECATEGORY_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + DRIVER_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DRIVER_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CAR_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                        " JOIN " + UOM_TABLE_NAME +
+                            " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
+                                                sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CURRENCY_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCY_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+            " WHERE COALESCE(" + EXPENSES_COL_FROMTABLE_NAME + ", '') = '' ";
+
     public static String expensesListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
@@ -191,7 +228,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + " || ' ' || " +
-                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || '; ' || " +
+                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || ' at ' || " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + " || ' ' || " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
                         "AS " + SECOND_LINE_LIST_NAME + ", " +
@@ -312,6 +349,14 @@ public class ReportDbAdapter extends MainDbAdapter{
 
             reportSql = reportSql +
                                     " ORDER BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " DESC";
+        }
+        else if(mReportSqlName.equals("reportExpensesListMainViewSelect")){
+            reportSql = expensesListMainViewSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +
+                                    " ORDER BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + " DESC";
         }
         else if(mReportSqlName.equals("reportExpensesListViewSelect")){
             reportSql = expensesListViewSelect;

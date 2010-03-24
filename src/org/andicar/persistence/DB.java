@@ -508,7 +508,7 @@ public class DB {
                                 "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
                 createExpenseCategory( db );
                 //expenses table
-                db.execSQL(EXPENSES_TABLE_CREATE_SQL);
+                createExpenses(db, false);
 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils();
@@ -521,6 +521,23 @@ public class DB {
                 Log.e(TAG, ex.getMessage());
             }
 
+        }
+
+        @Override
+        public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion )
+        {
+            String updateSql = "";
+            //AndiCar 1.0.0
+            if(oldVersion == 1){
+                createExpenseCategory(db);
+                updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                                " ADD " + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
+                db.execSQL(updateSql);
+                updateSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
+                db.execSQL(updateSql);
+                createExpenses(db, true);
+            }
         }
 
         private void createExpenseCategory(SQLiteDatabase db) throws SQLException {
@@ -538,21 +555,46 @@ public class DB {
             db.execSQL(colPart + "VALUES ( 'Insurance', 'Y', 'Expenses with insurance', 'N' )");
         }
 
-        @Override
-        public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion )
-        {
-            String updateSql = "";
-            if(oldVersion == 1){
-                createExpenseCategory(db);
-                updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
-                                " ADD " + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
-                db.execSQL(updateSql);
-                updateSql = "UPDATE " + REFUEL_TABLE_NAME +
-                            " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
-                db.execSQL(updateSql);
-                //expenses table
-                db.execSQL(EXPENSES_TABLE_CREATE_SQL);
-            }
+        private void createExpenses(SQLiteDatabase db, boolean isUpdate) throws SQLException {
+            //expenses table
+            db.execSQL(EXPENSES_TABLE_CREATE_SQL);
+            if(!isUpdate)
+                return;
+            //initialize refuel expenses
+            String sql = "INSERT INTO " + EXPENSES_TABLE_NAME +
+                            "( " +
+                                    GEN_COL_NAME_NAME + ", " +
+                                    GEN_COL_USER_COMMENT_NAME + ", " +
+                                    GEN_COL_ISACTIVE_NAME + ", " +
+                                    EXPENSES_COL_CAR_ID_NAME + ", " +
+                                    EXPENSES_COL_DRIVER_ID_NAME + ", " +
+                                    EXPENSES_COL_EXPENSECATEGORY_ID_NAME + ", " +
+                                    EXPENSES_COL_EXPENSETYPE_ID_NAME + ", " +
+                                    EXPENSES_COL_AMOUNT_NAME + ", " +
+                                    EXPENSES_COL_CURRENCY_ID_NAME + ", " +
+                                    EXPENSES_COL_DATE_NAME + ", " +
+                                    EXPENSES_COL_DOCUMENTNO_NAME + ", " +
+                                    EXPENSES_COL_INDEX_NAME + ", " +
+                                    EXPENSES_COL_FROMTABLE_NAME + ", " +
+                                    EXPENSES_COL_FROMRECORD_ID_NAME + " " +
+                            ") " +
+                        "SELECT " +
+                                    GEN_COL_NAME_NAME + ", " +
+                                    GEN_COL_USER_COMMENT_NAME + ", " +
+                                    GEN_COL_ISACTIVE_NAME + ", " +
+                                    REFUEL_COL_CAR_ID_NAME + ", " +
+                                    REFUEL_COL_DRIVER_ID_NAME + ", " +
+                                    REFUEL_COL_EXPENSECATEGORY_NAME + ", " +
+                                    REFUEL_COL_EXPENSETYPE_ID_NAME + ", " +
+                                    REFUEL_COL_QUANTITY_NAME + " * " + REFUEL_COL_PRICE_NAME + ", " +
+                                    REFUEL_COL_CURRENCY_ID_NAME + ", " +
+                                    REFUEL_COL_DATE_NAME + ", " +
+                                    REFUEL_COL_DOCUMENTNO_NAME + ", " +
+                                    REFUEL_COL_INDEX_NAME + ", " +
+                                    "'Refuel' " + ", " +
+                                    GEN_COL_ROWID_NAME+ " " +
+                        "FROM " + REFUEL_TABLE_NAME;
+            db.execSQL(sql);
         }
 
         private void createCurrencyTable(SQLiteDatabase db) throws SQLException {
@@ -602,7 +644,6 @@ public class DB {
         retVal = fu.copyFile(mCtx, StaticValues.backupFolder + restoreFile, toFile, true);
         if(retVal == false)
             lastErrorMessage = fu.lastError;
-        open();
         return retVal;
     }
 }

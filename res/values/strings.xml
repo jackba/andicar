@@ -83,6 +83,8 @@
     <string name="MENU_HIDEINACTIVE_CAPTION">"Hide inactive"</string>
     <string name="MENU_SEARCH_CAPTION">"Search/filter"</string>
     <string name="MENU_REPORT_CAPTION">"Create report"</string>
+    <string name="MENU_MILEAGE_CAPTION">"Mileages"</string>
+    <string name="MENU_REFUEL_CAPTION">"Refuels"</string>
     <string name="MENU_EXPENSES_CAPTION">"Expenses"</string>
 
 
@@ -94,8 +96,17 @@
     <string name="MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION">"Last refuel:"</string>
     <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"  Add new  "</string>
     <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"  View more  "</string>
+
+    <string name="MAIN_ACTIVITY_EXPENSE_HDR_CAPTION">"Expenses"</string>
+    <string name="MAIN_ACTIVITY_EXPENSE_LISTHDR_CAPTION">"Last expense:"</string>
+    <string name="MAIN_ACTIVITY_INSERT_EXPENSE_BTN_CAPTION">"  Add new  "</string>
+    <string name="MAIN_ACTIVITY_EXPENSELIST_BTN_CAPTION">"  View more  "</string>
+
     <string name="MAIN_ACTIVITY_NOMILEAGETEXT">"No mileage exist for this car"</string>
     <string name="MAIN_ACTIVITY_NOREFUELTEXT">"No refuel exist for this car"</string>
+    <string name="MAIN_ACTIVITY_NOEXPENSETEXT">"No expense exist for this car"</string>
+    <string name="MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT">"This zone does not show the expenses created conjunctively with other records (refuels, etc.)"</string>
+
     <string name="MAIN_ACTIVITY_NO_CURRENT_CAR">"No current car selected. In the following page you can select one or define on."</string>
     <string name="MAIN_ACTIVITY_NO_CURRENT_DRIVER">"No current driver selected. In the following page you can select one or define on."</string>
     <string name="MAIN_ACTIVITY_BACKUPEXISTS">"Welcome back!\n\nBackup files exists.\nDo you want to restore one?"</string>
@@ -185,6 +196,8 @@
     <string name="BKRESTORE_ACTIVITY_DELETE_CONFIRM">"Are you sure you want to delete the selected backup?"</string>
     <string name="BKRESTORE_ACTIVITY_RESTORE_CONFIRM">"Are you sure you want to restore the selected backup? This action will overwrite your existing data!"</string>
     <string name="BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE">"Your database was restored succesfully. The application will be closed."</string>
+
     <string name="EXPCATEGORY_EDIT_ISEXCLUDEFROMMILEAGECOST_LABEL">"Exclude from mileage cost calculation"</string>
+    <string name="EXPENSEEDIT_ACTIVITY_WARNING_LABEL">"This expense was created from %.\nTo modify it please edit the coresponding %."</string>
 
 </resources>

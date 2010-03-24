@@ -52,7 +52,7 @@ public class UOMEditActivity extends EditActivityBase {
 
         if (operation.equals( "E")) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbHelper.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
+            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.uomTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
@@ -102,16 +102,16 @@ public class UOMEditActivity extends EditActivityBase {
                         data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, uomType);
 
                         if( mRowId == null ) {
-                            mMainDbHelper.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
+                            mMainDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbHelper.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
+                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
                                 errMsg = mRes.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbHelper.lastErrorMessage;
+                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
                                 errorAlertBuilder.setMessage(errMsg);
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();

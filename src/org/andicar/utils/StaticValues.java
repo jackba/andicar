@@ -19,7 +19,6 @@
 
 package org.andicar.utils;
 
-import java.math.MathContext;
 import java.math.RoundingMode;
 
 /**
@@ -32,7 +31,9 @@ public class StaticValues
     public static final int MENU_REPORTS_ID = 11;
     public static final int MENU_ABOUT_ID = 12;
     public static final int MENU_HELP_ID = 13;
-    public static final int MENU_EXPENSES_ID = 1;
+    public static final int MENU_MILEAGE_ID = 14;
+    public static final int MENU_REFUEL_ID = 15;
+    public static final int MENU_EXPENSES_ID = 16;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
@@ -48,15 +49,18 @@ public class StaticValues
     public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;
 
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
 
     //no. of decimals when converting uom's to/from base uom
     public static final int volumeDecimals = 2;
+    public static final RoundingMode volumeRoundingMode = RoundingMode.HALF_UP;
     public static final int lengthDecimals = 2;
-    public static final MathContext mcVolume = new MathContext( volumeDecimals, RoundingMode.HALF_UP);
-    public static final MathContext mcLength = new MathContext( lengthDecimals, RoundingMode.HALF_UP);
+    public static final RoundingMode lengthRoundingMode = RoundingMode.HALF_UP;
+    public static final int amtDecimals = 2;
+    public static final RoundingMode amountRoundingMode = RoundingMode.HALF_UP;
+
 
     public static final String UOM_LENGTH_TYPE_CODE = "L";
     public static final String UOM_VOLUME_TYPE_CODE = "V";
