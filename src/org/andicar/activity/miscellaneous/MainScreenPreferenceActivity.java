@@ -19,12 +19,16 @@
 
 package org.andicar.activity.miscellaneous;
 
+import android.app.LauncherActivity.ListItem;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.Iterator;
 import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 
@@ -35,37 +39,53 @@ import org.andicar.activity.R;
  */
 public class MainScreenPreferenceActivity extends EditActivityBase {
 
-    private ArrayList<String> mainScreenZones;
-    private ListView zonesList;
-
+    SharedPreferences.Editor editor;
+    ListView zonesList;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        editor = mPreferences.edit();
         setContentView( R.layout.main_screen_preference_activity );
-        zonesList = (ListView) findViewById(android.R.id.list);
-        fillBkList();
+        fillZonesList();
     }
 
-    private void fillBkList() {
-        mainScreenZones = getZones();
-        ArrayAdapter listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, mainScreenZones);
+    private void fillZonesList() {
+        ArrayList<String> mainScreenZones = new ArrayList<String>();
+
+        mainScreenZones.add("Show mileage zone");
+        mainScreenZones.add("Show refuel zone");
+        mainScreenZones.add("Show expense zone");
+        ArrayAdapter listAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, mainScreenZones);
+
+        zonesList = (ListView) findViewById(android.R.id.list);
         zonesList.setAdapter(listAdapter);
         zonesList.setItemsCanFocus(false);
         zonesList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         zonesList.setOnItemClickListener(zonesSelectedListener);
-    }
-
-    protected ArrayList<String> getZones() {
-        ArrayList<String> myData = new ArrayList<String>();
-        myData.add("Mileage zone");
-        myData.add("Refuel zone");
-        myData.add("Expense zone");
-        return myData;
+        zonesList.setItemChecked(0, mPreferences.getBoolean("MainActivityShowMileage", true));
+        zonesList.setItemChecked(1, mPreferences.getBoolean("MainActivityShowRefuel", true));
+        zonesList.setItemChecked(2, mPreferences.getBoolean("MainActivityShowExpense", true));
     }
 
     protected AdapterView.OnItemClickListener zonesSelectedListener = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                SparseBooleanArray checkedItems = zonesList.getCheckedItemPositions();
+                if(checkedItems.valueAt(0))
+                    editor.putBoolean("MainActivityShowMileage", true);
+                else
+                    editor.putBoolean("MainActivityShowMileage", false);
+                if(checkedItems.valueAt(1))
+                    editor.putBoolean("MainActivityShowRefuel", true);
+                else
+                    editor.putBoolean("MainActivityShowRefuel", false);
+                if(checkedItems.valueAt(2))
+                    editor.putBoolean("MainActivityShowExpense", true);
+                else
+                    editor.putBoolean("MainActivityShowExpense", false);
+                
+                editor.commit();
             }
         };
 

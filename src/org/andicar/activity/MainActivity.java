@@ -98,26 +98,6 @@ public class MainActivity extends Activity {
         mRes = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 
-        SharedPreferences.Editor editor = mPreferences.edit();
-        if(!mPreferences.contains("MainActivityShowMileage")){
-            editor.putBoolean("MainActivityShowMileage", true);
-            editor.commit();
-        }
-        else
-            showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
-        if(!mPreferences.contains("MainActivityShowRefuel")){
-            editor.putBoolean("MainActivityShowRefuel", true);
-            editor.commit();
-        }
-        else
-            showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
-        if(!mPreferences.contains("MainActivityShowExpense")){
-            editor.putBoolean("MainActivityShowExpense", true);
-            editor.commit();
-        }
-        else
-            showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
-        
         setContentView(R.layout.main_activity);
         mainContext = this;
         reportDb = new ReportDbAdapter(mainContext, null, null);
@@ -197,6 +177,20 @@ public class MainActivity extends Activity {
                 alert.show();
             }
         }
+        
+        SharedPreferences.Editor editor = mPreferences.edit();
+        if(!mPreferences.contains("MainActivityShowMileage")){
+            editor.putBoolean("MainActivityShowMileage", true);
+            editor.commit();
+        }
+        if(!mPreferences.contains("MainActivityShowRefuel")){
+            editor.putBoolean("MainActivityShowRefuel", true);
+            editor.commit();
+        }
+        if(!mPreferences.contains("MainActivityShowExpense")){
+            editor.putBoolean("MainActivityShowExpense", false);
+            editor.commit();
+        }
     }
 
     @Override
@@ -210,6 +204,10 @@ public class MainActivity extends Activity {
             editor.commit();
             finish();
         }
+        showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
+        showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
+        showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
+
         ((TextView)findViewById(R.id.mainActivityShortAboutLbl)).setText(Html.fromHtml(
                 "<b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices. " +
                 "It is licensed under the terms of the GNU General Public License, version 3.<br>" +

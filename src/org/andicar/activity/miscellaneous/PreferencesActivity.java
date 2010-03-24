@@ -143,7 +143,7 @@ public class PreferencesActivity extends PreferenceActivity {
 
         //Misc settings
         PreferenceCategory miscCategory = new PreferenceCategory(this);
-        expenseCategory.setTitle(mRes.getString(R.string.PREF_MISC_CATEGORY_TITLE));
+        miscCategory.setTitle(mRes.getString(R.string.PREF_MISC_CATEGORY_TITLE));
         prefScreenRoot.addPreference(miscCategory);
 
         //main screen pref

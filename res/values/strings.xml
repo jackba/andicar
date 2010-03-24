@@ -44,6 +44,7 @@
     <string name="APP_ACTIVITY_BKRESTORE">"Backup / restore"</string>
     <string name="APP_ACTIVITY_EXPENSELIST">"Expenses"</string>
     <string name="APP_ACTIVITY_EXPENSEEDIT">"Add or edit expense"</string>
+    <string name="APP_ACTIVITY_MAINSCREENPREF">"Customize your main screen"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -176,7 +177,7 @@
     <string name="PREF_CAT_EXPCATEGORY_TITLE">"Expense categories"</string>
     <string name="PREF_CAT_EXPCATEGORY_SUMMARY">"Add, delete, modify expense categories"</string>
     <string name="PREF_MISC_CATEGORY_TITLE">"Miscellaneous"</string>
-    <string name="PREF_CAT_MAINSCREENCATEGORY_TITLE">"Main screen prferences"</string>
+    <string name="PREF_CAT_MAINSCREENCATEGORY_TITLE">"Main screen preferences"</string>
     <string name="PREF_CAT_MAINSCREENCATEGORY_SUMMARY">"Customize your main sceen"</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
@@ -202,5 +203,7 @@
 
     <string name="EXPCATEGORY_EDIT_ISEXCLUDEFROMMILEAGECOST_LABEL">"Exclude from mileage cost calculation"</string>
     <string name="EXPENSEEDIT_ACTIVITY_WARNING_LABEL">"This expense was created from %.\nTo modify it please edit the coresponding %."</string>
+
+    <string name="MAINSCREENPREF_ACTIVITY_LABEL">"Existing zones:"</string>
 
 </resources>
