@@ -103,6 +103,15 @@
     <string name="MAIN_ACTIVITY_INSERT_EXPENSE_BTN_CAPTION">"  Add new  "</string>
     <string name="MAIN_ACTIVITY_EXPENSELIST_BTN_CAPTION">"  View more  "</string>
 
+    <string name="MAIN_ACTIVITY_CARREPORT_HDR_CAPTION">"Statistics"</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION">"Actual odometer: "</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_BTN_CAPTION">"  More details  "</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_AVGCONS_LABEL">"Average fuel consumption: "</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_NOSTAT">"Statistics not available yet."</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_TOTALEXP">"Total expenses:"</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_MILEAGEEXP">"Mileage expense:"</string>
+
+
     <string name="MAIN_ACTIVITY_NOMILEAGETEXT">"No mileage exist for this car"</string>
     <string name="MAIN_ACTIVITY_NOREFUELTEXT">"No refuel exist for this car"</string>
     <string name="MAIN_ACTIVITY_NOEXPENSETEXT">"No expense exist for this car"</string>

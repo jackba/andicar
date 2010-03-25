@@ -96,7 +96,7 @@ public class StaticValues
     public static String LM_COPYRIGHT_HTML1 =
             "&nbsp;&nbsp;&nbsp;&nbsp;<b><i>AndiCar</i></b> is a free and open source car management " +
             "software for Android powered devices. It is licensed under the terms of the GNU General Public License.<br>" +
-            "&nbsp;&nbsp;&nbsp;&nbsp;For more informations please visit the project home page at <a href=\"http://sites.google.com/site/andicarfree/\"> " +
+            "&nbsp;&nbsp;&nbsp;&nbsp;For more information (how to's, latest news, etc.) please visit the project home page at <a href=\"http://sites.google.com/site/andicarfree/\"> " +
             "http://sites.google.com/site/andicarfree/</a><br>" +
             "<small>If you get a \"Web page not available\" message, refresh the page in your browser.</small><br>" +
             "&nbsp;&nbsp;&nbsp;&nbsp;For questions you are welcome to the <b><i>AndiCar</i></b> discussion list at " +

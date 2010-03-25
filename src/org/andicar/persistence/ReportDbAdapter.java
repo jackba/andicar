@@ -288,6 +288,57 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
+
+    public static String carReportMainViewSelect =
+            "SELECT " +
+                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " + //#0
+                sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " || ' ' || " +
+                    sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
+                        "AS ActualIndex, " + //#1
+                sqlConcatTableColumn("Refuel", "FuelQty") + ", " + //#2
+                sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " AS IndexCurrent, " + //#3
+                sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXSTART_NAME) + " AS IndexStart, " + //#4
+                sqlConcatTableColumn("UomVolume", UOM_COL_CODE_NAME) + " AS UomVolume, " + //#5
+                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UomLength, " + //#6
+                sqlConcatTableColumn("Refuel", "RefuelCount") + ", " + //#7
+                sqlConcatTableColumn("Expenses", "TotalExpenses") + ", " + //#8
+                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " " + //#9
+                
+            " FROM " + CAR_TABLE_NAME +
+                        " JOIN " + UOM_TABLE_NAME +
+                            " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
+                                                sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                        " JOIN " + UOM_TABLE_NAME + " AS UomVolume " +
+                            " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMVOLUME_ID_NAME) + "=" +
+                                                sqlConcatTableColumn("UomVolume", GEN_COL_ROWID_NAME) +
+                        " JOIN " + CURRENCY_TABLE_NAME +
+                            " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_CURRENCY_ID_NAME) + "=" +
+                                                sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                        " LEFT OUTER JOIN ( " +
+                                " SELECT " +
+                                    " SUM( " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + ") AS FuelQty, " +
+                                    " COUNT(*) AS RefuelCount, " +
+                                    REFUEL_COL_CAR_ID_NAME + " " +
+                                " FROM " + REFUEL_TABLE_NAME + " " +
+                                " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+                                " GROUP BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " ) AS Refuel " +
+                                " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + "=" +
+                                                sqlConcatTableColumn("Refuel", REFUEL_COL_CAR_ID_NAME) +
+                        " LEFT OUTER JOIN ( " +
+                                " SELECT " +
+                                    " SUM( " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + ") AS TotalExpenses, " +
+                                    EXPENSES_COL_CAR_ID_NAME + " " +
+                                " FROM " + EXPENSES_TABLE_NAME + " " +
+                                            " JOIN " + EXPENSECATEGORY_TABLE_NAME + " ON " +
+                                                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME) + " = " +
+                                                    sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                                " WHERE " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+                                    " AND " + sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME) + " = 'N' " +
+                                " GROUP BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + " ) AS Expenses " +
+                                " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + "=" +
+                                                sqlConcatTableColumn("Expenses", REFUEL_COL_CAR_ID_NAME) +
+            " WHERE 1=1 ";
+
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )
     {
         super(ctx);
@@ -373,6 +424,12 @@ public class ReportDbAdapter extends MainDbAdapter{
 
             reportSql = reportSql +
                                     " ORDER BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + " DESC";
+        }
+
+        else if(mReportSqlName.equals("carReportSelect")){
+            reportSql = carReportMainViewSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
         }
 
         if(limitCount != -1)

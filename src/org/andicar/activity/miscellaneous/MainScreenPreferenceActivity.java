@@ -57,7 +57,7 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
         mainScreenZones.add("Show refuel zone");
         mainScreenZones.add("Show expense zone");
         ArrayAdapter listAdapter =
-                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, mainScreenZones);
+                new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, mainScreenZones);
 
         zonesList = (ListView) findViewById(android.R.id.list);
         zonesList.setAdapter(listAdapter);
