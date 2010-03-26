@@ -103,6 +103,7 @@ public class DB {
     public static final String REFUEL_COL_DATE_NAME = "Date";
     public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
     public static final String REFUEL_COL_EXPENSECATEGORY_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
+    public static final String REFUEL_COL_ISFULLREFUEL_NAME = "IsFullRefuel";
     //expense category
     public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
     //car expenses
@@ -168,6 +169,7 @@ public class DB {
     public static final int REFUEL_COL_DATE_POS = 12;
     public static final int REFUEL_COL_DOCUMENTNO_POS = 13;
     public static final int REFUEL_COL_EXPENSECATEGORY_ID_POS =14;
+    public static final int REFUEL_COL_ISFULLREFUEL_POS =15;
     //expense category
     public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
     //car expenses
@@ -210,7 +212,8 @@ public class DB {
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
             REFUEL_COL_CAR_ID_NAME, REFUEL_COL_DRIVER_ID_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME, REFUEL_COL_INDEX_NAME,
             REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
-            REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME};
+            REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME,
+            REFUEL_COL_ISFULLREFUEL_NAME};
     public static final String[] expenseCategoryTableColNames =
         {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
@@ -327,7 +330,8 @@ public class DB {
             + REFUEL_COL_CURRENCY_ID_NAME + " INTEGER, "
             + REFUEL_COL_DATE_NAME  + " DATE NULL, "
             + REFUEL_COL_DOCUMENTNO_NAME + " TEXT NULL, "
-            + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER "
+            + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER, "
+            + REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N' "
             + ");";
 
     protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL =
@@ -506,6 +510,10 @@ public class DB {
                                 "ON " + REFUEL_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
                 db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX2 " +
                                 "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
+                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX3 " +
+                                "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
+                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " +
+                                "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
                 createExpenseCategory( db );
                 //expenses table
                 createExpenses(db, false);
@@ -536,6 +544,16 @@ public class DB {
                 updateSql = "UPDATE " + REFUEL_TABLE_NAME +
                             " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
                 db.execSQL(updateSql);
+
+                updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                                " ADD " + REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N' ";
+                db.execSQL(updateSql);
+
+                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX3 " +
+                                "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
+                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " +
+                                "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
+
                 createExpenses(db, true);
             }
         }

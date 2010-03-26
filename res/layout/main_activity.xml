@@ -315,14 +315,14 @@
 
                 <TextView android:id="@+id/mainActivityThreeLineListCarReportHdr"
                           android:textSize="14sp"
-                          android:textStyle="bold|italic"
+                          android:textStyle="italic"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           android:text="@string/MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION"
                           />
                 <TextView android:id="@+id/mainActivityThreeLineListCarReportText1"
                           android:textSize="14sp"
-                          android:textStyle="bold"
+                          android:textStyle="italic"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
 
@@ -370,7 +370,7 @@
             android:layout_height="fill_parent"
             android:layout_width="fill_parent"
             android:gravity="center_horizontal|bottom"
-            android:layout_marginTop="15dip"
+            android:layout_marginTop="5dip"
             android:textSize="12sp"
             />
     </LinearLayout>

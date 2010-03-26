@@ -56,6 +56,7 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
         mainScreenZones.add("Show mileage zone");
         mainScreenZones.add("Show refuel zone");
         mainScreenZones.add("Show expense zone");
+        mainScreenZones.add("Show statistics");
         ArrayAdapter listAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, mainScreenZones);
 
@@ -67,6 +68,7 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
         zonesList.setItemChecked(0, mPreferences.getBoolean("MainActivityShowMileage", true));
         zonesList.setItemChecked(1, mPreferences.getBoolean("MainActivityShowRefuel", true));
         zonesList.setItemChecked(2, mPreferences.getBoolean("MainActivityShowExpense", true));
+        zonesList.setItemChecked(3, mPreferences.getBoolean("MainActivityShowCarReport", true));
     }
 
     protected AdapterView.OnItemClickListener zonesSelectedListener = new AdapterView.OnItemClickListener() {
@@ -84,6 +86,10 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
                     editor.putBoolean("MainActivityShowExpense", true);
                 else
                     editor.putBoolean("MainActivityShowExpense", false);
+                if(checkedItems.valueAt(3))
+                    editor.putBoolean("MainActivityShowCarReport", true);
+                else
+                    editor.putBoolean("MainActivityShowCarReport", false);
                 
                 editor.commit();
             }

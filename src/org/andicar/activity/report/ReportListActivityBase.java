@@ -21,11 +21,14 @@ package org.andicar.activity.report;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,21 +45,23 @@ import org.andicar.utils.StaticValues;
 import org.andicar.activity.ListActivityBase;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
+import org.andicar.service.ReportService;
 import org.andicar.utils.Utils;
 
 /**
  *
  * @author miki
  */
-public class ReportListActivityBase extends ListActivityBase{
+public class ReportListActivityBase extends ListActivityBase implements Runnable{
     protected ReportDbAdapter mListDbHelper = null;
     protected ReportDbAdapter mReportDbHelper = null;
     protected Bundle whereConditions;
     private View reportDialogView;
-//    private CheckBox ckSaveLocally;
     private CheckBox ckSendEmail;
     private Spinner formatSpinner;
     
+    AlertDialog.Builder reportOptionsDialog;
+    ProgressDialog progressDialog;
 
     protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
             String editTableName, String[] editTableColumns, String whereCondition, String orderByColumn,
@@ -111,7 +116,6 @@ public class ReportListActivityBase extends ListActivityBase{
         else if(item.getItemId() == StaticValues.OPTION_MENU_REPORT_ID)
         {
             showDialog(StaticValues.reportOptionsDialog);
-//            return createReport(false, "html");
         }
         return true;
     }
@@ -156,21 +160,41 @@ public class ReportListActivityBase extends ListActivityBase{
 //        ckSaveLocally = (CheckBox)reportDialogView.findViewById(R.id.reportOptionsCkSaveLocal);
         ckSendEmail = (CheckBox)reportDialogView.findViewById(R.id.reportOptionsCkSendEmail);
 
-        AlertDialog.Builder reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
+        reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
         reportOptionsDialog.setTitle(R.string.REPORTOPTIONS_DIALOG_TITLE);
         reportOptionsDialog.setView(reportDialogView);
         reportOptionsDialog.setPositiveButton(R.string.GEN_OK, reportDialogButtonlistener);
         reportOptionsDialog.setNegativeButton(R.string.GEN_CANCEL, reportDialogButtonlistener);
         return reportOptionsDialog.create();
     }
+
     private DialogInterface.OnClickListener reportDialogButtonlistener =
             new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int whichButton) {
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
-                    createReport(true, ckSendEmail.isChecked(),
-                            formatSpinner.getSelectedItemId());
+                progressDialog = ProgressDialog.show(ReportListActivityBase.this, "",
+                    mRes.getString(R.string.REPORT_PROGRESS_DIALOG_TEXT), true);
+//                createReport(true, ckSendEmail.isChecked(), formatSpinner.getSelectedItemId());
+                Thread thread = new Thread(ReportListActivityBase.this);
+                thread.start();
+
             }
         };
+    };
+
+    public void run() {
+        createReport(true, ckSendEmail.isChecked(), formatSpinner.getSelectedItemId());
+    }
+
+    private Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                progressDialog.dismiss();
+                Toast toast = Toast.makeText( getApplicationContext(),
+                            mRes.getString(R.string.REPORTLIST_REPORT_CREATED) + " " +
+                                StaticValues.reportFolder, Toast.LENGTH_LONG );
+                toast.show();
+            }
     };
 
     protected boolean createReport(boolean saveLocally, boolean sendToMail, long reportFormatId){
@@ -218,7 +242,7 @@ public class ReportListActivityBase extends ListActivityBase{
            errorAlert.show();
            return false;
         }
-        
+
         if(sendToMail){
             Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
             emailIntent.setType("text/html");
@@ -228,11 +252,7 @@ public class ReportListActivityBase extends ListActivityBase{
             emailIntent.setType("text/plain");
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
-        Toast toast = Toast.makeText( getApplicationContext(),
-                    mRes.getString(R.string.REPORTLIST_REPORT_CREATED) + " " +
-                        StaticValues.reportFolder, Toast.LENGTH_LONG );
-        toast.show();
-
+        handler.sendEmptyMessage(0);
         return true;
     }
 

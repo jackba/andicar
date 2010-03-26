@@ -295,14 +295,43 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " || ' ' || " +
                     sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
                         "AS ActualIndex, " + //#1
-                sqlConcatTableColumn("Refuel", "FuelQty") + ", " + //#2
+                " (SELECT " +
+                    " SUM( " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + ") AS FuelQty " +
+                " FROM " + REFUEL_TABLE_NAME + " " +
+                " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " > " +
+                            " COALESCE( " + sqlConcatTableColumn("FullRefuels", "FirstFullRefuel") + ", 0) " +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " <= " +
+                                    " COALESCE( " + sqlConcatTableColumn("FullRefuels", "LastFullRefuel") + ", 0) " +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " = " +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                "  ) AS FuelQty, " + //#2
                 sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " AS IndexCurrent, " + //#3
                 sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXSTART_NAME) + " AS IndexStart, " + //#4
                 sqlConcatTableColumn("UomVolume", UOM_COL_CODE_NAME) + " AS UomVolume, " + //#5
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UomLength, " + //#6
-                sqlConcatTableColumn("Refuel", "RefuelCount") + ", " + //#7
-                sqlConcatTableColumn("Expenses", "TotalExpenses") + ", " + //#8
-                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " " + //#9
+                sqlConcatTableColumn("Expenses", "TotalExpenses") + ", " + //#7
+                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + ", " + //#8
+                " (SELECT " +
+                    " MIN( " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + ") " +
+                " FROM " + REFUEL_TABLE_NAME + " " +
+                " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " = " +
+                            " COALESCE( " + sqlConcatTableColumn("FullRefuels", "FirstFullRefuel") + ", 0) "  +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " = " +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                "  ) AS FirstFullRefuelIndex, " + //#9
+                " (SELECT " +
+                    " MAX( " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + ") " +
+                " FROM " + REFUEL_TABLE_NAME + " " +
+                " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + " = " +
+                            " COALESCE( " + sqlConcatTableColumn("FullRefuels", "LastFullRefuel") + ", 0) "  +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
+                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " = " +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                "  ) AS LastFullRefuelIndex " + //#10
                 
             " FROM " + CAR_TABLE_NAME +
                         " JOIN " + UOM_TABLE_NAME +
@@ -314,16 +343,18 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " JOIN " + CURRENCY_TABLE_NAME +
                             " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_CURRENCY_ID_NAME) + "=" +
                                                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                        //full refuels
                         " LEFT OUTER JOIN ( " +
                                 " SELECT " +
-                                    " SUM( " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + ") AS FuelQty, " +
-                                    " COUNT(*) AS RefuelCount, " +
+                                    " MIN( " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ") AS FirstFullRefuel, " +
+                                    " MAX( " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ") AS LastFullRefuel, " +
                                     REFUEL_COL_CAR_ID_NAME + " " +
                                 " FROM " + REFUEL_TABLE_NAME + " " +
                                 " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
-                                " GROUP BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " ) AS Refuel " +
+                                        " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
+                                " GROUP BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " ) AS FullRefuels " +
                                 " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + "=" +
-                                                sqlConcatTableColumn("Refuel", REFUEL_COL_CAR_ID_NAME) +
+                                                sqlConcatTableColumn("FullRefuels", REFUEL_COL_CAR_ID_NAME) +
                         " LEFT OUTER JOIN ( " +
                                 " SELECT " +
                                     " SUM( " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + ") AS TotalExpenses, " +

@@ -32,6 +32,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 //import java.math.BigDecimal;
 
 /**
@@ -46,6 +47,7 @@ public class RefuelEditActivity extends EditActivityBase {
     EditText qtyEntry;
     EditText priceEntry;
     EditText docNo;
+    CheckBox refuelIsFullRefuel;
 
     ArrayAdapter<String> userCommentAdapter;
     private String operationType;
@@ -71,6 +73,7 @@ public class RefuelEditActivity extends EditActivityBase {
         qtyEntry = (EditText)findViewById(R.id.quantityEntry);
         priceEntry = (EditText)findViewById(R.id.priceEntry);
         docNo = (EditText)findViewById(R.id.documentNoEntry);
+        refuelIsFullRefuel = (CheckBox) findViewById(R.id.refuelIsFullRefuel);
 
 
         long mCarId;
@@ -95,6 +98,7 @@ public class RefuelEditActivity extends EditActivityBase {
             priceEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_PRICE_POS));
             docNo.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_POS));
             userComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+            refuelIsFullRefuel.setChecked(recordCursor.getString(MainDbAdapter.REFUEL_COL_ISFULLREFUEL_POS).equals("Y"));
 
         }
         else {
@@ -105,7 +109,7 @@ public class RefuelEditActivity extends EditActivityBase {
             mQtyUmId = mPreferences.getLong("CarUOMVolume_ID", -1);
             mCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
             initDateTime(System.currentTimeMillis());
-
+            refuelIsFullRefuel.setChecked(false);
         }
         
         initSpinner(carSpinner, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
@@ -175,6 +179,8 @@ public class RefuelEditActivity extends EditActivityBase {
                         data.put( MainDbAdapter.REFUEL_COL_DATE_NAME, mDateTimeInSeconds);
                         data.put( MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME,
                                 docNo.getText().toString());
+                        data.put( MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME,
+                                (refuelIsFullRefuel.isChecked() ? "Y" : "N"));
 
                         if( operationType.equals("N") ) {
                             if(mMainDbAdapter.createRecord(MainDbAdapter.REFUEL_TABLE_NAME, data) < 0){

@@ -104,9 +104,10 @@
     <string name="MAIN_ACTIVITY_EXPENSELIST_BTN_CAPTION">"  View more  "</string>
 
     <string name="MAIN_ACTIVITY_CARREPORT_HDR_CAPTION">"Statistics"</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION">"Actual odometer: "</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION">"Last know odometer: "</string>
     <string name="MAIN_ACTIVITY_CARREPORT_BTN_CAPTION">"  More details  "</string>
     <string name="MAIN_ACTIVITY_CARREPORT_AVGCONS_LABEL">"Average fuel consumption: "</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_AVGCONS_NODATA">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuels."</string>
     <string name="MAIN_ACTIVITY_CARREPORT_NOSTAT">"Statistics not available yet."</string>
     <string name="MAIN_ACTIVITY_CARREPORT_TOTALEXP">"Total expenses:"</string>
     <string name="MAIN_ACTIVITY_CARREPORT_MILEAGEEXP">"Mileage expense:"</string>
@@ -160,6 +161,7 @@
     <string name="MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE">"Mileage updated."</string>
     <string name="MILEAGE_LISTREPORT_ACTIVITY_NOCOMMENT_TEXT">"Without user comment"</string>
 
+    <string name="REFUEL_ISFULLREFUEL_LABEL">"Is full refuel"</string>
 
     <string name="CURR_UOMS">"\nMeasurement units used:"</string>
 
@@ -214,5 +216,10 @@
     <string name="EXPENSEEDIT_ACTIVITY_WARNING_LABEL">"This expense was created from %.\nTo modify it please edit the coresponding %."</string>
 
     <string name="MAINSCREENPREF_ACTIVITY_LABEL">"Existing zones:"</string>
+
+    <string name="REPORT_SERVICE_STARTED">"Report creation started"</string>
+    <string name="REPORT_SERVICE_STOPPED">"Report creation stopped"</string>
+    <string name="REPORT_SERVICE_LABEL">"AndiCar Report Service"</string>
+    <string name="REPORT_PROGRESS_DIALOG_TEXT">"Report creation started. Please wait..."</string>
 
 </resources>
