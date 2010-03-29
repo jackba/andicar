@@ -107,7 +107,7 @@
     <string name="MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION">"Last know odometer: "</string>
     <string name="MAIN_ACTIVITY_CARREPORT_BTN_CAPTION">"  More details  "</string>
     <string name="MAIN_ACTIVITY_CARREPORT_AVGCONS_LABEL">"Average fuel consumption: "</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_AVGCONS_NODATA">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuels."</string>
+    <string name="MAIN_ACTIVITY_CARREPORT_AVGCONS_NODATA">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuel."</string>
     <string name="MAIN_ACTIVITY_CARREPORT_NOSTAT">"Statistics not available yet."</string>
     <string name="MAIN_ACTIVITY_CARREPORT_TOTALEXP">"Total expenses:"</string>
     <string name="MAIN_ACTIVITY_CARREPORT_MILEAGEEXP">"Mileage expense:"</string>

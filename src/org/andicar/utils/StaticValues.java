@@ -101,13 +101,14 @@ public class StaticValues
             "<small>If you get a \"Web page not available\" message, refresh the page in your browser.</small><br>" +
             "&nbsp;&nbsp;&nbsp;&nbsp;For questions you are welcome to the <b><i>AndiCar</i></b> discussion list at " +
             "<a href=\"http://groups.google.com/group/andicar\">http://groups.google.com/group/andicar</a><br>" +
-            "&nbsp;&nbsp;&nbsp;&nbsp;For bug reports or enhancement request don\'t hesitate to use the <b><i>AndiCar</i></b> issue system at " +
+            "&nbsp;&nbsp;&nbsp;&nbsp;For bug reports or enhancement requests don\'t hesitate to use the <b><i>AndiCar</i></b> issue system at " +
             "<a href=\"https://code.google.com/p/andicar/issues/list\">https://code.google.com/p/andicar/issues/list</a>.<br>" +
+            "&nbsp;&nbsp;&nbsp;&nbsp;You can subscribe for the project news at <a href=\"http://sites.google.com/site/andicarfree/News/\">http://sites.google.com/site/andicarfree/News/</a>.<br>" +
             "&nbsp;&nbsp;&nbsp;&nbsp;For other things you can send an email to andicar.support@gmail.com.<br><br>" +
-            "&nbsp;&nbsp;&nbsp;&nbsp;Thank you for using <b><i>AndiCar</i></b>.<br><br>" +
             "&nbsp;&nbsp;&nbsp;&nbsp;You can help the <a href=\"http://sites.google.com/site/andicarfree/development-directions\">future development</a> of <b><i>AndiCar</b></i> by making a donation. " +
             "All donations can be made using a credit card or PayPal account.";
     public static String LM_COPYRIGHT_HTML2 =
+            "<br><br>&nbsp;&nbsp;&nbsp;&nbsp;Thank you for using <b><i>AndiCar</i></b>.<br><br>" +
             "<br><b><i>Copyright notice</i></b>:<br> " +
             "&nbsp;&nbsp;&nbsp;&nbsp;Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)<br> " +
             "&nbsp;&nbsp;&nbsp;&nbsp;This program is free software: you can redistribute it and/or modify " +

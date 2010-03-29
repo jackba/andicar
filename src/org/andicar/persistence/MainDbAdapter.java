@@ -82,28 +82,34 @@ public class MainDbAdapter extends DB
     public long createRecord(String tableName, ContentValues content){
         long retVal = -1;
         long mCarId = -1;
-        BigDecimal newIndex = null;
+        BigDecimal stopIndex = null;
+        BigDecimal startIndex = null;
         try{
             if(tableName.equals(MILEAGE_TABLE_NAME)){
                 mCarId = content.getAsLong(MILEAGE_COL_CAR_ID_NAME);
-                newIndex = new BigDecimal(content.getAsString(MILEAGE_COL_INDEXSTOP_NAME));
+                stopIndex = new BigDecimal(content.getAsString(MILEAGE_COL_INDEXSTOP_NAME));
+                startIndex = new BigDecimal(content.getAsString(MILEAGE_COL_INDEXSTART_NAME));
             }
             else if(tableName.equals(REFUEL_TABLE_NAME)){
                 mCarId = content.getAsLong(REFUEL_COL_CAR_ID_NAME);
-                newIndex = new BigDecimal(content.getAsString(REFUEL_COL_INDEX_NAME));
+                stopIndex = new BigDecimal(content.getAsString(REFUEL_COL_INDEX_NAME));
             }
             else if(tableName.equals(EXPENSES_TABLE_NAME)){
                 mCarId = content.getAsLong(EXPENSES_COL_CAR_ID_NAME);
                 String newIndexStr = content.getAsString(EXPENSES_COL_INDEX_NAME);
                 if(newIndexStr != null && newIndexStr.length() > 0)
-                    newIndex = new BigDecimal(newIndexStr);
+                    stopIndex = new BigDecimal(newIndexStr);
             }
 
-            if(mCarId != -1 && newIndex != null){
+            if(mCarId != -1 && stopIndex != null){
                try{
                     mDb.beginTransaction();
                     retVal = mDb.insertOrThrow( tableName, null, content );
-                    updateCarCurrentIndex(mCarId, newIndex);
+                    updateCarCurrentIndex(mCarId, stopIndex);
+                    if(startIndex != null)
+                        updateCarInitIndex(mCarId, startIndex);
+                    else
+                        updateCarInitIndex(mCarId, stopIndex);
                     mDb.setTransactionSuccessful();
                 }catch(SQLException e){
                     lastErrorMessage = e.getMessage();
@@ -171,28 +177,34 @@ public class MainDbAdapter extends DB
             return retVal;
 
         long mCarId = -1;
-        BigDecimal newIndex = null;
+        BigDecimal stopIndex = null;
+        BigDecimal startIndex = null;
         try{
             if(tableName.equals(MILEAGE_TABLE_NAME)){
                 mCarId = content.getAsLong(MILEAGE_COL_CAR_ID_NAME);
-                newIndex = new BigDecimal(content.getAsString(MILEAGE_COL_INDEXSTOP_NAME));
+                stopIndex = new BigDecimal(content.getAsString(MILEAGE_COL_INDEXSTOP_NAME));
+                startIndex = new BigDecimal(content.getAsString(MILEAGE_COL_INDEXSTART_NAME));
             }
             else if(tableName.equals(REFUEL_TABLE_NAME)){
                 mCarId = content.getAsLong(REFUEL_COL_CAR_ID_NAME);
-                newIndex = new BigDecimal(content.getAsString(REFUEL_COL_INDEX_NAME));
+                stopIndex = new BigDecimal(content.getAsString(REFUEL_COL_INDEX_NAME));
             }
             else if(tableName.equals(EXPENSES_TABLE_NAME)){
                 mCarId = content.getAsLong(EXPENSES_COL_CAR_ID_NAME);
                 String newIndexStr = content.getAsString(EXPENSES_COL_INDEX_NAME);
                 if(newIndexStr != null && newIndexStr.length() > 0)
-                    newIndex = new BigDecimal(newIndexStr);
+                    stopIndex = new BigDecimal(newIndexStr);
             }
 
-            if(mCarId != -1 && newIndex != null){
+            if(mCarId != -1 && stopIndex != null){
                try{
                     mDb.beginTransaction();
                     mDb.update( tableName, content, GEN_COL_ROWID_NAME + "=" + rowId, null);
-                    updateCarCurrentIndex(mCarId, newIndex);
+                    updateCarCurrentIndex(mCarId, stopIndex);
+                    if(startIndex != null)
+                        updateCarInitIndex(mCarId, startIndex);
+                    else
+                        updateCarInitIndex(mCarId, stopIndex);
                     mDb.setTransactionSuccessful();
                 }catch(SQLException e){
                     lastErrorMessage = e.getMessage();
@@ -271,17 +283,24 @@ public class MainDbAdapter extends DB
                 throw new SQLException("Car Update error");
             }
         }
-        //removed bacause not only mileages update the car curent index. It is also updated by refuels, expenses, etc.
-//        else{ //check if the mileage is the last mileage (issue ID: 1 - https://code.google.com/p/andicar/issues/detail?id=1)
-//            if(content.containsKey(GEN_COL_ROWID_NAME) &&
-//                    getLastMileageId(mCarId) == content.getAsLong(GEN_COL_ROWID_NAME).longValue()){
-//                content.clear();
-//                content.put(CAR_COL_INDEXCURRENT_NAME, newIndex.toString());
-//                if (mDb.update(CAR_TABLE_NAME, content, GEN_COL_ROWID_NAME + "=" + mCarId, null) == 0) {
-//                    throw new SQLException("Car Update error");
-//                }
-//            }
-//        }
+    }
+
+    /**
+     * Update the car init index
+     * @param content
+     * @throws SQLException
+     */
+    private void updateCarInitIndex(long mCarId, BigDecimal newIndex) throws SQLException {
+        //update car curent index
+        BigDecimal carInitIndex = new BigDecimal(fetchRecord(CAR_TABLE_NAME, carTableColNames, mCarId)
+                                                    .getString(CAR_COL_INDEXSTART_POS));
+        ContentValues content = new ContentValues();
+        if (newIndex.compareTo(carInitIndex) < 0) {
+            content.put(CAR_COL_INDEXSTART_NAME, newIndex.toString());
+            if (mDb.update(CAR_TABLE_NAME, content, GEN_COL_ROWID_NAME + "=" + mCarId, null) == 0) {
+                throw new SQLException("Car Update error");
+            }
+        }
     }
 
     /**

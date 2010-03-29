@@ -354,13 +354,18 @@ public class MainActivity extends Activity {
             String totalExpensesStr = listCursor.getString(7);
             String mileageExpenseStr = "N/A";
             String carCurrency = "";
+            BigDecimal totalExpenses;
+            BigDecimal mileageExpense;
             if(totalExpensesStr == null || totalExpensesStr.length() == 0 || mileage == null){
                 mileageExpenseStr = "N/A";
                 totalExpensesStr = "N/A";
             }
             else{
-                BigDecimal totalExpenses = new BigDecimal(totalExpensesStr);
-                BigDecimal mileageExpense = totalExpenses.multiply(new BigDecimal("100"));
+                totalExpenses = new BigDecimal(totalExpensesStr);
+                if(totalExpenses != null)
+                    totalExpensesStr = totalExpenses
+                            .setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode).toString();
+                mileageExpense = totalExpenses.multiply(new BigDecimal("100"));
                 mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP)
                         .setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode);
                 if(mileageExpense != null){
