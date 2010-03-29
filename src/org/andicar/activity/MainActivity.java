@@ -356,7 +356,7 @@ public class MainActivity extends Activity {
             String carCurrency = "";
             BigDecimal totalExpenses;
             BigDecimal mileageExpense;
-            if(totalExpensesStr == null || totalExpensesStr.length() == 0 || mileage == null){
+            if(totalExpensesStr == null || totalExpensesStr.length() == 0 || mileage == null || mileage.equals(BigDecimal.ZERO)){
                 mileageExpenseStr = "N/A";
                 totalExpensesStr = "N/A";
             }
@@ -369,7 +369,7 @@ public class MainActivity extends Activity {
                 mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP)
                         .setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode);
                 if(mileageExpense != null){
-                    mileageExpenseStr = mileageExpense.toString();
+                    mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + " / 100 " + listCursor.getString(6);
                     carCurrency = listCursor.getString(8);
                 }
             }
@@ -377,7 +377,7 @@ public class MainActivity extends Activity {
                     " " + totalExpensesStr + " " + carCurrency);
                     
             threeLineListCarReportText3.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_MILEAGEEXP) + " " +
-                    mileageExpenseStr + " " + carCurrency + " / 100 " + listCursor.getString(6));
+                    mileageExpenseStr);
         } else {
             threeLineListCarReportText2.setText("");
             threeLineListCarReportText2.setText("");

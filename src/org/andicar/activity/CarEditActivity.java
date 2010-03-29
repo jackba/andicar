@@ -168,8 +168,6 @@ public class CarEditActivity extends EditActivityBase
                         data.put( MainDbAdapter.CAR_COL_REGISTRATIONNO_NAME,
                                 ((EditText) findViewById( R.id.carEditCarRegNoEntry )).getText().toString());
                         data.put( MainDbAdapter.CAR_COL_INDEXSTART_NAME, startIndex.toString() );
-                        //when a new car defined the current index is same with the start index
-                        data.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, startIndex.toString() );
                         data.put( MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME,
                                 ((Spinner) findViewById( R.id.carEditUomLengthSpinner )).getSelectedItemId() );
                         data.put( MainDbAdapter.CAR_COL_UOMVOLUME_ID_NAME,
@@ -178,6 +176,8 @@ public class CarEditActivity extends EditActivityBase
                                 ((Spinner) findViewById( R.id.carEditCurrencySpinner )).getSelectedItemId());
 
                         if( mRowId == null ) {
+                            //when a new car defined the current index is same with the start index
+                            data.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, startIndex.toString() );
                             mMainDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, data);
                             finish();
                         }

@@ -255,7 +255,7 @@ public class MileageEditActivity extends EditActivityBase {
                 data.put( MainDbAdapter.MILEAGE_COL_CAR_ID_NAME, mCarId);
                 data.put( MainDbAdapter.MILEAGE_COL_DRIVER_ID_NAME, mDriverId);
                 data.put( MainDbAdapter.MILEAGE_COL_INDEXSTART_NAME, mStartIndex.toString());
-                data.put( MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME, mNewIndex.toString());
+                    data.put( MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME, mNewIndex.toString());
                 data.put( MainDbAdapter.MILEAGE_COL_UOMLENGTH_ID_NAME, mUOMLengthId);
                 data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, mExpTypeSpinner.getSelectedItemId());
                 data.put( MainDbAdapter.MILEAGE_COL_GPSTRACKLOG_NAME, "");
