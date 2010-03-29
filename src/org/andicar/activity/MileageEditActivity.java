@@ -215,6 +215,7 @@ public class MileageEditActivity extends EditActivityBase {
 
     private BigDecimal fillGetCurrentIndex() throws SQLException {
         if(mStartIndex.equals(new BigDecimal("0"))){
+            String mStartIndexStr = null;
             String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
                             "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
                             "WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y' " +
@@ -225,8 +226,15 @@ public class MileageEditActivity extends EditActivityBase {
                           "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + mCarId + " " +
                           "ORDER BY Pos ASC";
             Cursor c = mMainDbAdapter.execSql(sql);
-            if(c.moveToFirst())
-                mStartIndex = new BigDecimal( c.getString(0));
+            if(c.moveToFirst()){
+                mStartIndexStr = c.getString(0);
+            }
+            if((mStartIndexStr == null || mStartIndexStr.length() == 0)
+                    && c.moveToNext())
+                mStartIndexStr = c.getString(0);
+            if(mStartIndexStr == null)
+                mStartIndexStr = "0";
+            mStartIndex = new BigDecimal(mStartIndexStr);
             c.close();
         }
         mileageEditStartIndexEntry.setText(mStartIndex.toString());
