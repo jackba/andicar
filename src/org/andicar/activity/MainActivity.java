@@ -312,7 +312,9 @@ public class MainActivity extends Activity {
             String totalFuelStr = listCursor.getString(2);
             String indexCurrentStr = listCursor.getString(3);
             String indexStartStr = listCursor.getString(4);
-            BigDecimal mileage = (new BigDecimal(indexCurrentStr)).subtract(new BigDecimal(indexStartStr));
+            BigDecimal mileage = null;
+            if(indexCurrentStr != null && indexStartStr != null)
+                mileage = (new BigDecimal(indexCurrentStr)).subtract(new BigDecimal(indexStartStr));
 
             String firstFullRefuelIndexStr = listCursor.getString(9);
             String lastFullRefuelIndexStr = listCursor.getString(10);
