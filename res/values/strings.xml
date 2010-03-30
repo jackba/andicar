@@ -120,8 +120,9 @@
 
     <string name="MAIN_ACTIVITY_NO_CURRENT_CAR">"No current car selected. In the following page you can select one or define on."</string>
     <string name="MAIN_ACTIVITY_NO_CURRENT_DRIVER">"No current driver selected. In the following page you can select one or define on."</string>
-    <string name="MAIN_ACTIVITY_BACKUPEXISTS">"Welcome back!\n\nBackup files exists.\nDo you want to restore one?"</string>
-    <string name="MAIN_ACTIVITY_WELLCOME_MESSAGE">"Wellcome to AndiCar."</string>
+    <string name="MAIN_ACTIVITY_WELCOMEBACK">"Welcome back!"</string>
+    <string name="MAIN_ACTIVITY_BACKUPEXISTS">"Backup files exists.\nDo you want to restore one?"</string>
+    <string name="MAIN_ACTIVITY_WELLCOME_MESSAGE_TITLE">"Wellcome to AndiCar."</string>
     <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>
     <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Cannot be selected."</string>

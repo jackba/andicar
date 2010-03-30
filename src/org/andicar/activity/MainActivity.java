@@ -146,6 +146,7 @@ public class MainActivity extends Activity {
             //test if backups exists
             if (FileUtils.getBkFileNames() != null && !FileUtils.getBkFileNames().isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(mRes.getString(R.string.MAIN_ACTIVITY_WELCOMEBACK));
                 builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_BACKUPEXISTS));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
@@ -172,8 +173,8 @@ public class MainActivity extends Activity {
             } else {
                 exitResume = true;
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_WELLCOME_MESSAGE) + "\n"
-                        + mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
+                builder.setTitle(mRes.getString(R.string.MAIN_ACTIVITY_WELLCOME_MESSAGE_TITLE));
+                builder.setMessage(mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
                         new DialogInterface.OnClickListener() {
@@ -371,8 +372,8 @@ public class MainActivity extends Activity {
                 mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP)
                         .setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode);
                 if(mileageExpense != null){
-                    mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + " / 100 " + listCursor.getString(6);
                     carCurrency = listCursor.getString(8);
+                    mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + " / 100 " + listCursor.getString(6);
                 }
             }
             threeLineListCarReportText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_TOTALEXP) +
