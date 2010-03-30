@@ -75,7 +75,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
         </LinearLayout>
 
@@ -145,7 +145,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
         </LinearLayout>
 
@@ -168,7 +168,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
         </LinearLayout>
 

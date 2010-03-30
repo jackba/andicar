@@ -49,7 +49,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
 
             <TextView
@@ -65,7 +65,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
         </LinearLayout>
 
@@ -87,7 +87,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="10dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
         </LinearLayout>
 
@@ -109,7 +109,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="10dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
         </LinearLayout>
 
@@ -154,7 +154,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
             <EditText
                 android:id="@+id/quantityEntry"
@@ -195,7 +195,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
             <EditText
                 android:id="@+id/priceEntry"

@@ -282,7 +282,7 @@ public final class R {
         public static final int GEN_BTNDONE_LABEL=0x7f06004e;
         public static final int GEN_CANCEL=0x7f060038;
         public static final int GEN_CAR_LABEL=0x7f060046;
-        public static final int GEN_CHOSEONE_DIALOGTITLE=0x7f06003d;
+        public static final int GEN_CHOOSEONE_DIALOGTITLE=0x7f06003d;
         public static final int GEN_DELETE_CONFIRM=0x7f060044;
         public static final int GEN_DOCUMENTNO_LABEL=0x7f06004a;
         public static final int GEN_DRIVER_LABEL=0x7f060047;

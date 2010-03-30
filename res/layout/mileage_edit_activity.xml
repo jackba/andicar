@@ -112,7 +112,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="2dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
      </LinearLayout>
 
