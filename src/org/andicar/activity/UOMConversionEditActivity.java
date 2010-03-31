@@ -50,7 +50,9 @@ public class UOMConversionEditActivity extends EditActivityBase {
         Spinner mUOMFromSpinner = (Spinner) findViewById( R.id.uomConversionEditUomFromSpinner );
         mUOMFromSpinner.setOnItemSelectedListener(uomFromSelectedListener);
 
-        if (extras != null) {
+        String operation = extras.getString("Operation"); //E = edit, N = new
+
+        if( operation.equals( "E") ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME,
                     MainDbAdapter.uomConversionTableColNames, mRowId);

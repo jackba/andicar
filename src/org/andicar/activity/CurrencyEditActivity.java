@@ -40,8 +40,9 @@ public class CurrencyEditActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.currency_edit_activity, mOkClickListener);
 
+        String operation = extras.getString("Operation"); //E = edit, N = new
 
-        if(extras != null){
+        if( operation.equals( "E") ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.currencyTableColNames, mRowId);

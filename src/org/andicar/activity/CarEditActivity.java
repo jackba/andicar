@@ -47,8 +47,9 @@ public class CarEditActivity extends EditActivityBase
     {
         super.onCreate( icicle, R.layout.car_edit_activity, mOkClickListener );
 
+        String operation = extras.getString("Operation"); //E = edit, N = new
 
-        if( extras != null ) {
+        if( operation.equals( "E") ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );

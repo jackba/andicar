@@ -41,7 +41,9 @@ public class DriverEditActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.driver_edit_activity, mOkClickListener);
 
-        if (extras != null) {
+        String operation = extras.getString("Operation"); //E = edit, N = new
+
+        if( operation.equals( "E") ) {
             mRowId = extras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
             Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mRowId);
 

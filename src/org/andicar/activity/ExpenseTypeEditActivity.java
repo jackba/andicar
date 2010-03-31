@@ -42,7 +42,9 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     {
         super.onCreate( icicle, R.layout.expensetype_edit_activity, mOkClickListener );
 
-        if( extras != null ) {
+        String operation = extras.getString("Operation"); //E = edit, N = new
+
+        if( operation.equals( "E") ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.expenseTypeTableColNames, mRowId);
