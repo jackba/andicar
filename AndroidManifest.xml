@@ -20,8 +20,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
-          android:versionCode="201"
-          android:versionName="2.0.1">
+          android:versionCode="210"
+          android:versionName="2.1.0 Beta">
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -155,6 +155,11 @@
         <activity
             android:name="org.andicar.activity.miscellaneous.MainScreenPreferenceActivity"
             android:label="@string/APP_ACTIVITY_MAINSCREENPREF">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.CurrencyRateListActivity"
+            android:label="@string/APP_ACTIVITY_CURRENCYRATELIST">
         </activity>
     </application>
 </manifest>

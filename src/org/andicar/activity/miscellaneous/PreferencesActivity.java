@@ -28,6 +28,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceScreen;
 import org.andicar.activity.CarListActivity;
 import org.andicar.activity.CurrencyListActivity;
+import org.andicar.activity.CurrencyRateListActivity;
 import org.andicar.activity.DriverListActivity;
 import org.andicar.activity.ExpenseCategoryListActivity;
 import org.andicar.activity.ExpenseTypeListActivity;
@@ -140,6 +141,12 @@ public class PreferencesActivity extends PreferenceActivity {
         currencyPrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_CURRENCYLIST_TITLE));
         currencyPrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_CURRENCYLIST_SUMMARY));
         expenseCategory.addPreference(currencyPrefScreen);
+        //currency rates
+        PreferenceScreen currencyRatePrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        currencyRatePrefScreen.setIntent(new Intent(this, CurrencyRateListActivity.class));
+        currencyRatePrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_CURRENCYRATELIST_TITLE));
+        currencyRatePrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_CURRENCYRATELIS_SUMMARY));
+        expenseCategory.addPreference(currencyRatePrefScreen);
 
         //Misc settings
         PreferenceCategory miscCategory = new PreferenceCategory(this);
