@@ -23,16 +23,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import org.andicar.utils.StaticValues;
 import org.andicar.activity.R;
-import org.andicar.utils.Utils;
 public class MainDbAdapter extends DB
 {
     public MainDbAdapter( Context ctx )
@@ -743,5 +739,46 @@ public class MainDbAdapter extends DB
 //    }
     public Cursor execSql(String sql){
         return mDb.rawQuery(sql, null);
+    }
+
+    public BigDecimal getCurrencyRate(long fromCurrencyId, long toCurrencyId){
+        BigDecimal retVal = null;
+        String retValStr = null;
+        if(fromCurrencyId == toCurrencyId)
+            return BigDecimal.ONE;
+        String selectSql = "";
+        Cursor selectCursor;
+
+        selectSql = " SELECT * " +
+                    " FROM " + CURRENCYRATE_TABLE_NAME +
+                    " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
+                        " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + fromCurrencyId +
+                        " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + toCurrencyId;
+        selectCursor = execSql(selectSql);
+        if(selectCursor.moveToFirst())
+            retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
+        selectCursor.close();
+        if(retValStr != null && retValStr.length() > 0)
+            return new BigDecimal(retValStr);
+
+        selectSql = " SELECT * " +
+                    " FROM " + CURRENCYRATE_TABLE_NAME +
+                    " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
+                        " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + fromCurrencyId +
+                        " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + toCurrencyId;
+        selectCursor = execSql(selectSql);
+        if(selectCursor.moveToFirst())
+            retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
+        selectCursor.close();
+        if(retValStr != null && retValStr.length() > 0){
+            retVal = new BigDecimal(retValStr);
+            if(retVal.compareTo(BigDecimal.ZERO) != 0)
+                return BigDecimal.ONE.divide(retVal, 10, RoundingMode.HALF_UP)
+                        .setScale(StaticValues.conversionDecimals, StaticValues.conversionRoundingMode);
+            else
+                return BigDecimal.ZERO;
+        }
+
+        return retVal;
     }
 }

@@ -22,6 +22,7 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -33,6 +34,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
+import android.widget.TextView;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 //import java.math.BigDecimal;
 
 /**
@@ -43,11 +47,22 @@ public class RefuelEditActivity extends EditActivityBase {
     AutoCompleteTextView userComment;
     Spinner carSpinner;
     Spinner driverSpinner;
+    Spinner currencySpinner;
     EditText carIndexEntry;
     EditText qtyEntry;
     EditText priceEntry;
     EditText docNo;
+    EditText conversionRateEntry;
     CheckBox refuelIsFullRefuel;
+    BigDecimal fuelQuantity = null;
+    BigDecimal fuelPrice = null;
+    TextView amountValue;
+    TextView conversionRateLabel;
+    long mCurrencyId;
+    long carDefaultCurrencyId;
+    String carDefaultCurrencyCode;
+    String currencyCode;
+    BigDecimal conversionRate;
 
     ArrayAdapter<String> userCommentAdapter;
     private String operationType;
@@ -63,6 +78,9 @@ public class RefuelEditActivity extends EditActivityBase {
         driverSpinner = (Spinner)findViewById(R.id.driverSpinner);
         carSpinner.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
         driverSpinner.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        currencySpinner = (Spinner) findViewById( R.id.currencySpinner );
+        currencySpinner.setOnItemSelectedListener(spinnerCurrencyOnItemSelectedListener);
+        
         userCommentAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_dropdown_item_1line,
                 mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
@@ -71,9 +89,18 @@ public class RefuelEditActivity extends EditActivityBase {
 
         carIndexEntry = (EditText)findViewById(R.id.indexEntry);
         qtyEntry = (EditText)findViewById(R.id.quantityEntry);
+        qtyEntry.setOnKeyListener(refuelEditOnKeyListener);
+        
         priceEntry = (EditText)findViewById(R.id.priceEntry);
+        priceEntry.setOnKeyListener(refuelEditOnKeyListener);
         docNo = (EditText)findViewById(R.id.documentNoEntry);
         refuelIsFullRefuel = (CheckBox) findViewById(R.id.refuelIsFullRefuel);
+        conversionRateLabel = (TextView)findViewById(R.id.conversionRateLabel);
+        conversionRateEntry = (EditText)findViewById(R.id.conversionRateEntry);
+        conversionRateLabel.setVisibility(View.INVISIBLE);
+        conversionRateEntry.setVisibility(View.INVISIBLE);
+
+        amountValue = (TextView)findViewById(R.id.amountValue);
 
 
         long mCarId;
@@ -81,7 +108,12 @@ public class RefuelEditActivity extends EditActivityBase {
         long mExpCategoryId;
         long mExpTypeId;
         long mQtyUmId;
-        long mCurrencyId;
+
+        carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
+        carDefaultCurrencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+                carDefaultCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        currencyCode = carDefaultCurrencyCode;
+        conversionRate = BigDecimal.ONE;
 
         if (operationType.equals("E")) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
@@ -133,7 +165,7 @@ public class RefuelEditActivity extends EditActivityBase {
                 MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
                     MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME,
                     mQtyUmId, false);
-        initSpinner((Spinner) findViewById( R.id.currencySpinner ), MainDbAdapter.CURRENCY_TABLE_NAME,
+        initSpinner(currencySpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
                 MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
                     MainDbAdapter.isActiveCondition,
                     MainDbAdapter.CURRENCY_COL_CODE_NAME,
@@ -141,6 +173,13 @@ public class RefuelEditActivity extends EditActivityBase {
         
 //        android.R.color.white
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        calculateAmount();
+    }
+
 
     private View.OnClickListener mOkClickListener =
             new View.OnClickListener()
@@ -175,7 +214,7 @@ public class RefuelEditActivity extends EditActivityBase {
                                 ((Spinner) findViewById( R.id.UOMVolumeSpinner )).getSelectedItemId() );
                         data.put( MainDbAdapter.REFUEL_COL_PRICE_NAME, priceEntry.getText().toString());
                         data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME,
-                                ((Spinner) findViewById( R.id.currencySpinner )).getSelectedItemId() );
+                                currencySpinner.getSelectedItemId() );
                         data.put( MainDbAdapter.REFUEL_COL_DATE_NAME, mDateTimeInSeconds);
                         data.put( MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME,
                                 docNo.getText().toString());
@@ -218,10 +257,90 @@ public class RefuelEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME, carSpinner.getSelectedItemId(), 30));
+                            mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
+                            carSpinner.getSelectedItemId(), 30));
                     userComment.setAdapter(userCommentAdapter);
+                    //change the currency
+                    Long newCarCurrencyId = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames,
+                            carSpinner.getSelectedItemId()).getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS);
+                    if(newCarCurrencyId != mCurrencyId){
+                        initSpinner(currencySpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
+                                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
+                                    MainDbAdapter.isActiveCondition,
+                                    MainDbAdapter.CURRENCY_COL_CODE_NAME,
+                                    newCarCurrencyId, false);
+                        mCurrencyId = newCarCurrencyId;
+                        carDefaultCurrencyId = mCurrencyId;
+                        carDefaultCurrencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+                                carDefaultCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+                        conversionRate = BigDecimal.ONE;
+
+                        conversionRateLabel.setVisibility(View.INVISIBLE);
+                        conversionRateEntry.setVisibility(View.INVISIBLE);
+                        conversionRateEntry.setTag(null);
+                        calculateAmount();
+                    }
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
+
+    private AdapterView.OnItemSelectedListener spinnerCurrencyOnItemSelectedListener =
+            new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    mCurrencyId = currencySpinner.getSelectedItemId();
+                    if(mCurrencyId != carDefaultCurrencyId){
+                        conversionRateLabel.setVisibility(View.VISIBLE);
+                        conversionRateEntry.setVisibility(View.VISIBLE);
+                        conversionRateEntry.setTag(mRes.getString(R.string.REFUELEDIT_CONVRATE_LABEL));
+                    }
+                    else{
+                        conversionRateLabel.setVisibility(View.INVISIBLE);
+                        conversionRateEntry.setVisibility(View.INVISIBLE);
+                        conversionRateEntry.setTag(null);
+                    }
+                    currencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+                            mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+                    conversionRate = mMainDbAdapter.getCurrencyRate(carDefaultCurrencyId, mCurrencyId);
+                    conversionRateEntry.setText("");
+                    if(conversionRate != null){
+                        conversionRateEntry.append(conversionRate.toString());
+                    }
+
+                    calculateAmount();
+                }
+                public void onNothingSelected(AdapterView<?> arg0) {
+                }
+            };
+
+    private View.OnKeyListener refuelEditOnKeyListener =
+            new View.OnKeyListener() {
+                    public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
+                        if(arg2.getAction() != KeyEvent.ACTION_UP) {
+                            return false;
+                        }
+                        calculateAmount();
+                        return false;
+                    }
+                };
+
+    private void calculateAmount() {
+        String qtyStr = qtyEntry.getText().toString();
+        String priceStr = priceEntry.getText().toString();
+        String amountStr = "";
+        BigDecimal convertedAmount = null;
+        if(qtyStr != null && qtyStr.length() > 0
+                && priceStr != null && priceStr.length() > 0) {
+            BigDecimal amount = (new BigDecimal(qtyStr)).multiply(new BigDecimal(priceStr))
+                    .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+            amountStr = amount.toString() + " " + currencyCode;
+            if(carDefaultCurrencyId != mCurrencyId){
+                convertedAmount = amount.multiply(conversionRate).
+                        setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                amountStr = amountStr + " ( " + convertedAmount.toString() + " " + carDefaultCurrencyCode + " )";
+            }
+
+            amountValue.setText(amountStr);
+        }
+    }
 }

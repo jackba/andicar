@@ -164,7 +164,8 @@
     <string name="MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE">"Mileage updated."</string>
     <string name="MILEAGE_LISTREPORT_ACTIVITY_NOCOMMENT_TEXT">"Without user comment"</string>
 
-    <string name="REFUEL_ISFULLREFUEL_LABEL">"Is full refuel"</string>
+    <string name="REFUEL_ISFULLREFUEL_LABEL">"Is full"</string>
+    <string name="REFUELEDIT_CONVRATE_LABEL">"Conv. rate:"</string>
 
     <string name="CURR_UOMS">"\nMeasurement units used:"</string>
 
