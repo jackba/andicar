@@ -270,8 +270,12 @@ public class MileageEditActivity extends EditActivityBase {
                 if(operationType.equals("N")){
                     operationResult = mMainDbAdapter.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
                     if(operationResult == -1){
-                        if(mMainDbAdapter.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data) < 0){
-                            errorAlertBuilder.setMessage(mMainDbAdapter.lastErrorMessage);
+                        Long createResult = mMainDbAdapter.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data);
+                        if( createResult.intValue() < 0){
+                            if(createResult.intValue() == -1) //DB Error
+                                errorAlertBuilder.setMessage(mMainDbAdapter.lastErrorMessage);
+                            else //precondition error
+                                errorAlertBuilder.setMessage(mRes.getString(-1 * createResult.intValue()));
                             errorAlert = errorAlertBuilder.create();
                             errorAlert.show();
                             return;

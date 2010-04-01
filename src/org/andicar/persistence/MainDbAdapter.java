@@ -77,10 +77,13 @@ public class MainDbAdapter extends DB
      * Create a new record in the given table
      * @param tableName
      * @param content
-     * @return -1 in case of error, the id of the record in case of success
+     * @return (-1 * Error code) in case of error, the id of the record in case of success. For error codes see errors.xml
      */
     public long createRecord(String tableName, ContentValues content){
-        long retVal = -1;
+        long retVal = canCreate(tableName, content);
+        if(retVal != -1)
+            return -1 * retVal;
+        
         long mCarId = -1;
         BigDecimal stopIndex = null;
         BigDecimal startIndex = null;
@@ -161,6 +164,46 @@ public class MainDbAdapter extends DB
             return -1;
         }
         return retVal;
+    }
+
+    /**
+     * check create preconditions
+     * @param tableName
+     * @param content content of the record
+     * @return -1 if the row can be inserted, an error code otherwise. For error codes see errors.xml
+     */
+    public int canCreate( String tableName, ContentValues content){
+
+        String checkSql = "";
+        Cursor checkCursor = null;
+//        int retVal = -1;
+        if(tableName.equals(CURRENCYRATE_TABLE_NAME)){
+            long currencyFromId = content.getAsLong(CURRENCYRATE_COL_FROMCURRENCY_ID_NAME);
+            long currencyToId = content.getAsLong(CURRENCYRATE_COL_TOCURRENCY_ID_NAME);
+            //check duplicates
+            checkSql = "SELECT * " +
+                        "FROM " + CURRENCYRATE_TABLE_NAME + " " +
+                        "WHERE (" +
+                                    CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " =  " + currencyFromId +
+                                    " AND " +
+                                    CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " =  " + currencyToId + " " +
+                                ") " +
+                                " OR " +
+                                "(" +
+                                    CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " =  " + currencyFromId +
+                                    " AND " +
+                                    CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " =  " + currencyToId + " " +
+                                ") " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_029;
+            }
+            if(!checkCursor.isClosed())
+                checkCursor.close();
+        }
+        return -1;
     }
 
     /**

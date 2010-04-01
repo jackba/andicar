@@ -111,6 +111,7 @@ public class ListActivityBase extends ListActivity {
                 && (getListAdapter() == null || getListAdapter().getCount() == 0)
                 && editClass != null) {
             Intent i = new Intent(this, editClass);
+            i.putExtra("Operation", "N");
             startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
         }
 

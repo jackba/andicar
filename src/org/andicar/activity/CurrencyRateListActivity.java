@@ -32,12 +32,12 @@ public class CurrencyRateListActivity extends ListActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, null, null, //ExpenseTypeEditActivity.class,
+        super.onCreate( icicle, null, CurrencyRateEditActivity.class,
                 MainDbAdapter.CURRENCYRATE_TABLE_NAME, MainDbAdapter.currencyRateTableColNames, null,
                 MainDbAdapter.GEN_COL_NAME_NAME,
-                R.layout.twoline_list_activity,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
-                new int[]{R.id.twoLineListText1, R.id.twoLineListText2});
+                R.layout.threeline_list_activity,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.CURRENCYRATE_COL_RATE_NAME, MainDbAdapter.CURRENCYRATE_COL_INVERSERATE_NAME},
+                new int[]{R.id.threeLineListText1, R.id.threeLineListText2, R.id.threeLineListText3});
     }
 
 }

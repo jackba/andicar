@@ -183,8 +183,12 @@ public class ExpenseEditActivity extends EditActivityBase {
                                 docNo.getText().toString());
 
                         if( operationType.equals("N") ) {
-                            if(mMainDbAdapter.createRecord(MainDbAdapter.EXPENSES_TABLE_NAME, data) < 0){
-                                errorAlertBuilder.setMessage(mMainDbAdapter.lastErrorMessage);
+                            Long createResult = mMainDbAdapter.createRecord(MainDbAdapter.EXPENSES_TABLE_NAME, data);
+                            if( createResult.intValue() < 0){
+                                if(createResult.intValue() == -1) //DB Error
+                                    errorAlertBuilder.setMessage(mMainDbAdapter.lastErrorMessage);
+                                else //precondition error
+                                    errorAlertBuilder.setMessage(mRes.getString(-1 * createResult.intValue()));
                                 errorAlert = errorAlertBuilder.create();
                                 errorAlert.show();
                             }

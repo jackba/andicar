@@ -47,4 +47,5 @@
     <string name="ERR_026">"The currency cannot be inactivated because it is used in an active car definition."</string>
     <string name="ERR_027">"Tis category cannot be deleted because it was used in refuel(s)."</string>
     <string name="ERR_028">"Tis category cannot be deleted because it was used in expense(s)."</string>
+    <string name="ERR_029">"A rate already defined between these currencies."</string>
 </resources>

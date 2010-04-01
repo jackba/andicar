@@ -46,6 +46,7 @@
     <string name="APP_ACTIVITY_EXPENSEEDIT">"Add or edit expense"</string>
     <string name="APP_ACTIVITY_MAINSCREENPREF">"Customize your main screen"</string>
     <string name="APP_ACTIVITY_CURRENCYRATELIST">"Currency rates"</string>
+    <string name="APP_ACTIVITY_CURRENCYRATEEDIT">"Add or edit currency rates"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -218,6 +219,12 @@
 
     <string name="EXPCATEGORY_EDIT_ISEXCLUDEFROMMILEAGECOST_LABEL">"Exclude from mileage cost calculation"</string>
     <string name="EXPENSEEDIT_ACTIVITY_WARNING_LABEL">"This expense was created from %.\nTo modify it please edit the coresponding %."</string>
+
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYFROM_LABEL">"From currency "</string>
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYTO_LABEL">"To currency "</string>
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL">"Rate "</string>
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL">"Inverse rate "</string>
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_MAXALLOWEDDECIMALS_LABEL">"Max. allowed decimals: "</string>
 
     <string name="MAINSCREENPREF_ACTIVITY_LABEL">"Existing zones:"</string>
 

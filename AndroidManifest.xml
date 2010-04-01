@@ -161,5 +161,9 @@
             android:name="org.andicar.activity.CurrencyRateListActivity"
             android:label="@string/APP_ACTIVITY_CURRENCYRATELIST">
         </activity>
+        <activity
+            android:name="org.andicar.activity.CurrencyRateEditActivity"
+            android:label="@string/APP_ACTIVITY_CURRENCYRATEEDIT">
+        </activity>
     </application>
 </manifest>

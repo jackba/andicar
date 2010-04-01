@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:id="@+id/genRootViewGroup"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        >
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/currencyFromLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYFROM_LABEL"
+                />
+            <Spinner android:id="@+id/currencyFromSpinner"
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                />
+
+            <TextView
+                android:id="@+id/currencyToLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYTO_LABEL"
+                android:layout_marginLeft="10dip"
+                />
+            <Spinner android:id="@+id/currencyToSpinner"
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/currencyRateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL"
+                />
+            <EditText
+                android:id="@+id/currencyRateEntry"
+                android:layout_width="100dip"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:background="@color/mandatory_bg"
+                android:tag="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL"
+                />
+
+            <TextView
+                android:id="@+id/currencyInverseRateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL"
+                android:layout_marginLeft="10dip"
+                />
+            <TextView
+                android:id="@+id/currencyInverseRateValue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+<!--        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+        </LinearLayout>
+-->
+        <TextView
+            android:id="@+id/genUserCommentLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/GEN_USER_COMMENT_LABEL"
+            />
+        <EditText
+            android:id="@+id/genUserCommentEntry"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            />
+
+        <CheckBox
+            android:id="@+id/genIsActiveCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/GEN_ISACTIVE_LABEL"
+            />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@android:id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dip"
+                android:text="@string/GEN_OK"
+                />
+
+            <Button
+                android:id="@android:id/closeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@android:id/button1"
+                android:layout_alignTop="@android:id/button1"
+                android:text="@string/GEN_CANCEL"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
