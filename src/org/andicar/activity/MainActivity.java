@@ -341,7 +341,7 @@ public class MainActivity extends Activity {
                         BigDecimal avgCons = BigDecimal.ZERO;
                         avgCons = totalFuel.multiply(new BigDecimal("100"));
                         avgCons = avgCons.divide(avgConsMileage, 10, RoundingMode.HALF_UP)
-                                .setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode);
+                                .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
                         avgConsStr = avgCons.toString() + " " + avgConsUom;
                     }
                 }
@@ -367,10 +367,10 @@ public class MainActivity extends Activity {
                 totalExpenses = new BigDecimal(totalExpensesStr);
                 if(totalExpenses != null)
                     totalExpensesStr = totalExpenses
-                            .setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode).toString();
+                            .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode).toString();
                 mileageExpense = totalExpenses.multiply(new BigDecimal("100"));
                 mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP)
-                        .setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode);
+                        .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
                 if(mileageExpense != null){
                     carCurrency = listCursor.getString(8);
                     mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + " / 100 " + listCursor.getString(6);

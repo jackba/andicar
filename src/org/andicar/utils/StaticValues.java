@@ -58,7 +58,7 @@ public class StaticValues
     public static final RoundingMode volumeRoundingMode = RoundingMode.HALF_UP;
     public static final int lengthDecimals = 2;
     public static final RoundingMode lengthRoundingMode = RoundingMode.HALF_UP;
-    public static final int amtDecimals = 2;
+    public static final int amountDecimals = 2;
     public static final RoundingMode amountRoundingMode = RoundingMode.HALF_UP;
     public static final int conversionDecimals = 4;
     public static final RoundingMode conversionRoundingMode = RoundingMode.HALF_UP;

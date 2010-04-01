@@ -144,7 +144,7 @@ public class MainDbAdapter extends DB
                         content.getAsString(MainDbAdapter.REFUEL_COL_INDEX_NAME));
                 BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICE_NAME));
                 BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITY_NAME));
-                BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode);
+                BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
 
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
@@ -289,7 +289,7 @@ public class MainDbAdapter extends DB
                             content.getAsString(MainDbAdapter.REFUEL_COL_INDEX_NAME));
                     BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICE_NAME));
                     BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITY_NAME));
-                    BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.amtDecimals, StaticValues.amountRoundingMode);
+                    BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
                             content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME));
