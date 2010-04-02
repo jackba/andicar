@@ -21,7 +21,6 @@ package org.andicar.activity;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -38,8 +37,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-//import java.math.BigDecimal;
 
 /**
  *
@@ -63,7 +60,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     BigDecimal conversionRate;
     BigDecimal convertedAmount = null;
     LinearLayout conversionRateZone;
-    boolean isLoading = true;
+    boolean isActivityOnLoading = true;
 
     ArrayAdapter<String> userCommentAdapter;
     private String operationType;
@@ -164,7 +161,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             setEditable((ViewGroup) findViewById(R.id.genRootViewGroup), true);
             setConversionRateZoneVisible(false);
         }
-        
+
         initSpinner(carSpinner, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                 mCarId, false);
@@ -199,7 +196,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
 
         public boolean onTouch(View view, MotionEvent me) {
-            isLoading = false;
+            isActivityOnLoading = false;
             return false;
         }
     };
@@ -284,7 +281,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    if(isLoading)
+                    if(isActivityOnLoading)
                         return;
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this,
@@ -317,7 +314,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerCurrencyOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    if(isLoading)
+                    if(isActivityOnLoading)
                         return;
                     mCurrencyId = currencySpinner.getSelectedItemId();
                     if(mCurrencyId != carDefaultCurrencyId){

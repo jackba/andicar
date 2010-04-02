@@ -133,7 +133,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
                                 MainDbAdapter.currencyTableColNames, currencyToSpinner.getSelectedItemId())
                                     .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
                         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                currFromCode + " -> " + currToCode);
+                                currFromCode + " <-> " + currToCode);
                         data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
                                 (((CheckBox) findViewById( R.id.genIsActiveCheck )).isChecked() ? "Y" : "N") );
                         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
