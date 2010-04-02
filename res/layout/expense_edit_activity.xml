@@ -128,28 +128,6 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/indexLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/GEN_INDEX_LABEL"
-                />
-            <EditText
-                android:id="@+id/indexEntry"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:numeric="decimal"
-                android:layout_marginLeft="10dip"
-                android:background="@android:drawable/editbox_background"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            >
-            <TextView
                 android:id="@+id/amountLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -173,12 +151,69 @@
                 android:tag="@string/GEN_AMOUNT_LABEL"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:id="@+id/conversionRateZone"
+            >
+            <TextView
+                android:id="@+id/conversionRateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_CONVRATE_LABEL"
+                />
+            <EditText
+                android:id="@+id/conversionRateEntry"
+                android:layout_width="70dip"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                />
+            <TextView
+                android:id="@+id/convertedAmountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="@string/GEN_CONVERTEDAMOUNT_LABEL"
+                />
+            <TextView
+                android:id="@+id/convertedAmountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                />
+        </LinearLayout>
         
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/indexLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_INDEX_LABEL"
+                />
+            <EditText
+                android:id="@+id/indexEntry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="10dip"
+                android:background="@android:drawable/editbox_background"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
             >
             <TextView
                 android:id="@+id/documentNoLabel"

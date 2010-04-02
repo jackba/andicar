@@ -56,7 +56,8 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
         Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
         whereConditions = new Bundle();
         whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME, MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
+                MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
                 mCarId.toString() );
 
         super.onCreate( icicle, null, ExpenseEditActivity.class,

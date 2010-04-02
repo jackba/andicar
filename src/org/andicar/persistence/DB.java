@@ -103,6 +103,13 @@ public class DB {
     public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
     public static final String REFUEL_COL_EXPENSECATEGORY_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
     public static final String REFUEL_COL_ISFULLREFUEL_NAME = "IsFullRefuel";
+
+    public static final String REFUEL_COL_QUANTITYENTERED_NAME = "QuantityEntered";
+    public static final String REFUEL_COL_UOMVOLUMEENTERED_ID_NAME = UOM_TABLE_NAME + "_EnteredVolume_ID";
+    public static final String REFUEL_COL_PRICEENTERED_NAME = "PriceEntered";
+    public static final String REFUEL_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
+    public static final String REFUEL_COL_CURRENCYRATE_NAME = "CurrencyRate"; //CurrencyEntered -> Car Base Currency
+
     //expense category
     public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
     //car expenses
@@ -117,6 +124,10 @@ public class DB {
     public static final String EXPENSES_COL_INDEX_NAME = "CarIndex";
     public static final String EXPENSES_COL_FROMTABLE_NAME = "FromTable";
     public static final String EXPENSES_COL_FROMRECORD_ID_NAME = "FromRecordId";
+    public static final String EXPENSES_COL_AMOUNTENTERED_NAME = "AmountEntered";
+    public static final String EXPENSES_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
+    public static final String EXPENSES_COL_CURRENCYRATE_NAME = "CurrencyRate"; //CurrencyEntered -> Car Base Currency
+
     //currency rate
     public static final String CURRENCYRATE_COL_FROMCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_From_ID";
     public static final String CURRENCYRATE_COL_TOCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_To_ID";
@@ -169,7 +180,13 @@ public class DB {
     public static final int REFUEL_COL_DOCUMENTNO_POS = 13;
     public static final int REFUEL_COL_EXPENSECATEGORY_ID_POS = 14;
     public static final int REFUEL_COL_ISFULLREFUEL_POS = 15;
-    //expense category
+    public static final int REFUEL_COL_QUANTITYENTERED_POS = 16;
+    public static final int REFUEL_COL_UOMVOLUMEENTERED_ID_POS = 17;
+    public static final int REFUEL_COL_PRICEENTERED_POS = 18;
+    public static final int REFUEL_COL_CURRENCYENTERED_ID_POS = 19;
+    public static final int REFUEL_COL_CURRENCYRATE_POS = 20;
+
+     //expense category
     public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
     //car expenses
     public static final int EXPENSES_COL_CAR_ID_POS = 4;
@@ -183,42 +200,60 @@ public class DB {
     public static final int EXPENSES_COL_INDEX_POS = 12;
     public static final int EXPENSES_COL_FROMTABLE_POS = 13;
     public static final int EXPENSES_COL_FROMRECORD_POS = 14;
+    public static final int EXPENSES_COL_AMOUNTENTERED_POS = 15;
+    public static final int EXPENSES_COL_CURRENCYENTERED_ID_POS = 16;
+    public static final int EXPENSES_COL_CURRENCYRATE_POS = 17;
+
     //currency rate
     public static final int CURRENCYRATE_COL_FROMCURRENCY_ID_POS = 4;
     public static final int CURRENCYRATE_COL_TOCURRENCY_ID_POS = 5;
     public static final int CURRENCYRATE_COL_RATE_POS = 6;
     public static final int CURRENCYRATE_COL_INVERSERATE_POS = 7;
+
     public static final String[] driverTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         DRIVER_COL_LICENSE_NO_NAME};
+
     public static final String[] carTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         CAR_COL_MODEL_NAME, CAR_COL_REGISTRATIONNO_NAME, CAR_COL_INDEXSTART_NAME, CAR_COL_INDEXCURRENT_NAME,
         CAR_COL_UOMLENGTH_ID_NAME, CAR_COL_UOMVOLUME_ID_NAME, CAR_COL_CURRENCY_ID_NAME};
+
     public static final String[] uomTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         UOM_COL_CODE_NAME, UOM_COL_UOMTYPE_NAME};
+
     public static final String[] uomConversionTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         UOM_CONVERSION_COL_UOMFROM_ID_NAME, UOM_CONVERSION_COL_UOMTO_ID_NAME, UOM_CONVERSION_COL_RATE_NAME};
+
     public static final String[] expenseTypeTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME};
+
     public static final String[] mileageTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         MILEAGE_COL_DATE_NAME, MILEAGE_COL_CAR_ID_NAME, MILEAGE_COL_DRIVER_ID_NAME,
         MILEAGE_COL_INDEXSTART_NAME, MILEAGE_COL_INDEXSTOP_NAME, MILEAGE_COL_UOMLENGTH_ID_NAME,
         MILEAGE_COL_EXPENSETYPE_ID_NAME, MILEAGE_COL_GPSTRACKLOG_NAME};
+
     public static final String[] currencyTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         CURRENCY_COL_CODE_NAME};
+
     public static final String[] refuelTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         REFUEL_COL_CAR_ID_NAME, REFUEL_COL_DRIVER_ID_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME, REFUEL_COL_INDEX_NAME,
         REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
         REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME,
-        REFUEL_COL_ISFULLREFUEL_NAME};
+        REFUEL_COL_ISFULLREFUEL_NAME, REFUEL_COL_QUANTITYENTERED_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME, 
+        REFUEL_COL_PRICEENTERED_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME};
+
     public static final String[] expenseCategoryTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
+
     public static final String[] expensesTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSES_COL_CAR_ID_NAME, EXPENSES_COL_DRIVER_ID_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
         EXPENSES_COL_EXPENSETYPE_ID_NAME, EXPENSES_COL_AMOUNT_NAME, EXPENSES_COL_CURRENCY_ID_NAME,
         EXPENSES_COL_DATE_NAME, EXPENSES_COL_DOCUMENTNO_NAME, EXPENSES_COL_INDEX_NAME,
-        EXPENSES_COL_FROMTABLE_NAME, EXPENSES_COL_FROMRECORD_ID_NAME};
+        EXPENSES_COL_FROMTABLE_NAME, EXPENSES_COL_FROMRECORD_ID_NAME, 
+        EXPENSES_COL_AMOUNTENTERED_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME, EXPENSES_COL_CURRENCYRATE_NAME};
+
     public static final String[] currencyRateTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         CURRENCYRATE_COL_FROMCURRENCY_ID_NAME, CURRENCYRATE_COL_TOCURRENCY_ID_NAME,
         CURRENCYRATE_COL_RATE_NAME, CURRENCYRATE_COL_INVERSERATE_NAME};
+
     public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
     public static final String isActiveCondition = " " + GEN_COL_ISACTIVE_NAME + "='Y' ";
@@ -322,8 +357,14 @@ public class DB {
             + REFUEL_COL_DATE_NAME + " DATE NULL, "
             + REFUEL_COL_DOCUMENTNO_NAME + " TEXT NULL, "
             + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER, "
-            + REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N' "
+            + REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N', "
+            + REFUEL_COL_QUANTITYENTERED_NAME + " NUMERIC NULL, "
+            + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " INTEGER NULL, "
+            + REFUEL_COL_PRICEENTERED_NAME  + " NUMERIC NULL, "
+            + REFUEL_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL, "
+            + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL "
             + ");";
+
     protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL =
             "CREATE TABLE " + EXPENSECATEGORY_TABLE_NAME
             + " ( "
@@ -350,8 +391,12 @@ public class DB {
             + EXPENSES_COL_DOCUMENTNO_NAME + " TEXT NULL, "
             + EXPENSES_COL_INDEX_NAME + " NUMERIC, "
             + EXPENSES_COL_FROMTABLE_NAME + " TEXT NULL, "
-            + EXPENSES_COL_FROMRECORD_ID_NAME + " INTEGER "
+            + EXPENSES_COL_FROMRECORD_ID_NAME + " INTEGER, "
+            + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL, "
+            + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL, "
+            + EXPENSES_COL_CURRENCYRATE_NAME + " NUMERIC NULL "
             + ");";
+
     protected static final String CURRENCYRATE_TABLE_CREATE_SQL =
             "CREATE TABLE " + CURRENCYRATE_TABLE_NAME
             + " ( "
@@ -393,14 +438,22 @@ public class DB {
     public DB open() throws SQLException {
         if(mDbHelper == null) {
             mDbHelper = new DatabaseHelper(mCtx);
+            if(mDb == null || !mDb.isOpen())
+                mDb = mDbHelper.getWritableDatabase();
         }
-        mDb = mDbHelper.getWritableDatabase();
         return this;
     }
 
     public void close() {
         mDbHelper.close();
+        mDb.close();
     }
+
+    public static String sqlConcatTableColumn(String tableName, String columnName){
+        return tableName + "." + columnName;
+    }
+
+
     protected class DatabaseHelper extends SQLiteOpenHelper {
         DatabaseHelper(Context context) {
             super(context, StaticValues.DATABASE_NAME, null, StaticValues.DATABASE_VERSION);
@@ -425,7 +478,7 @@ public class DB {
                 //create & init currencies
                 createCurrencyTable(db);
                 createRefuelTable(db);
-                createExpenseCategory(db, false);
+                createExpenseCategory(db);
                 //expenses table
                 createExpenses(db, false);
                 //currency rate
@@ -505,13 +558,20 @@ public class DB {
                 updateDbTo200(db); //update database to version 200 //AndiCar 2.0.x
                 updateDbTo210(db); //update database to version 210 //AndiCar 2.1.x
             }
-            else if(oldVersion == 200){
+//            else if(oldVersion == 200){
                 updateDbTo210(db); //update database to version 210 //AndiCar 2.1.x
-            }
+//            }
         }
 
         private void updateDbTo200(SQLiteDatabase db) throws SQLException {
-            createExpenseCategory(db, true);
+            createExpenseCategory(db);
+            String updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME
+                    + " ADD " + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
+            db.execSQL(updateSql);
+            updateSql = "UPDATE " + REFUEL_TABLE_NAME
+                    + " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
+            db.execSQL(updateSql);
+
             db.execSQL("ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N' ");
             db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX3 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
             db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
@@ -519,10 +579,73 @@ public class DB {
         }
 
         private void updateDbTo210(SQLiteDatabase db) throws SQLException {
-            createCurrencyRateTable(db);
+//            createCurrencyRateTable(db);
+            String updSql = "";
+//            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_QUANTITYENTERED_NAME + " NUMERIC NULL ";
+//            db.execSQL(updSql);
+//            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " INTEGER NULL ";
+//            db.execSQL(updSql);
+//            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_PRICEENTERED_NAME  + " NUMERIC NULL ";
+//            db.execSQL(updSql);
+//            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
+//            db.execSQL(updSql);
+//            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
+//            db.execSQL(updSql);
+
+//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+//                        " SET " +
+//                            REFUEL_COL_QUANTITYENTERED_NAME + " = " + REFUEL_COL_QUANTITY_NAME + ", " +
+//                            REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " = " + REFUEL_COL_UOMVOLUME_ID_NAME + ", " +
+//                            REFUEL_COL_PRICEENTERED_NAME + " = " + REFUEL_COL_PRICE_NAME + ", " +
+//                            REFUEL_COL_CURRENCYENTERED_ID_NAME + " = " + REFUEL_COL_CURRENCY_ID_NAME + ", " +
+//                            REFUEL_COL_CURRENCYRATE_NAME + " = 1";
+//
+//            db.execSQL(updSql);
+//
+//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+//                        " SET " +
+//                            REFUEL_COL_UOMVOLUME_ID_NAME + " = " +
+//                                "(SELECT " + CAR_COL_UOMVOLUME_ID_NAME +
+//                                " FROM " + CAR_TABLE_NAME +
+//                                " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
+//                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
+//                            "), " +
+//                            REFUEL_COL_CURRENCY_ID_NAME + " = " +
+//                                "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
+//                                " FROM " + CAR_TABLE_NAME +
+//                                " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
+//                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
+//                            ") ";
+//            db.execSQL(updSql);
+
+            updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+            db.execSQL(updSql);
+
+            updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
+            db.execSQL(updSql);
+
+            updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
+            db.execSQL(updSql);
+
+            updSql = "UPDATE " + EXPENSES_TABLE_NAME +
+                        " SET " +
+                            EXPENSES_COL_AMOUNTENTERED_NAME + " = " + EXPENSES_COL_AMOUNT_NAME + ", " +
+                            EXPENSES_COL_CURRENCYENTERED_ID_NAME + " = " + EXPENSES_COL_CURRENCY_ID_NAME + ", " +
+                            EXPENSES_COL_CURRENCYRATE_NAME + " = 1";
+            db.execSQL(updSql);
+
+            updSql = "UPDATE " + EXPENSES_TABLE_NAME +
+                        " SET " +
+                            EXPENSES_COL_CURRENCY_ID_NAME + " = " +
+                                "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
+                                " FROM " + CAR_TABLE_NAME +
+                                " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
+                                        sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) +
+                            ") ";
+            db.execSQL(updSql);
         }
 
-        private void createExpenseCategory(SQLiteDatabase db, boolean isUpdate) throws SQLException {
+        private void createExpenseCategory(SQLiteDatabase db) throws SQLException {
             //expense category
             db.execSQL(EXPENSECATEGORY_TABLE_CREATE_SQL);
             String colPart = "INSERT INTO " + EXPENSECATEGORY_TABLE_NAME
@@ -535,16 +658,6 @@ public class DB {
             db.execSQL(colPart + "VALUES ( 'Fuel', 'Y', 'Expenses with refuels', 'N' )");
             db.execSQL(colPart + "VALUES ( 'Service', 'Y', 'Expenses with services', 'N' )");
             db.execSQL(colPart + "VALUES ( 'Insurance', 'Y', 'Expenses with insurance', 'N' )");
-            if(!isUpdate) {
-                return;
-            }
-
-            String updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME
-                    + " ADD " + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
-            db.execSQL(updateSql);
-            updateSql = "UPDATE " + REFUEL_TABLE_NAME
-                    + " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
-            db.execSQL(updateSql);
         }
 
         private void createExpenses(SQLiteDatabase db, boolean isUpdate) throws SQLException {
@@ -617,16 +730,6 @@ public class DB {
         private void createCurrencyRateTable(SQLiteDatabase db) throws SQLException {
             //create currency rate table
             db.execSQL(CURRENCYRATE_TABLE_CREATE_SQL);
-//            //insert some default rates
-//
-//            String colPart = "INSERT INTO " + CURRENCY_TABLE_NAME +
-//                        " ( " +
-//                            GEN_COL_ISACTIVE_NAME + ", " +
-//                            CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + ", " +
-//                            CURRENCYRATE_COL_TOCURRENCY_ID_NAME + ", " +
-//                            CURRENCYRATE_COL_RATE_NAME + ", " +
-//                            CURRENCYRATE_COL_INVERSERATE_NAME + " " +
-//                         ") ";
         }
     }
 

@@ -228,7 +228,14 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + " || ' ' || " +
-                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || ' at ' || " +
+                sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
+                " CASE WHEN " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME) + " <> " +
+                                    sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCY_ID_NAME) + " " +
+                        " THEN " + "' (' || " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNTENTERED_NAME) +
+                                    " || ' ' || " + sqlConcatTableColumn("ec", CURRENCY_COL_CODE_NAME) + " || ')' " +
+                        " ELSE " + "'' " +
+                " END " +
+                " || ' at ' || " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + " || ' ' || " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
                         "AS " + SECOND_LINE_LIST_NAME + ", " +
@@ -253,6 +260,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CURRENCY_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CURRENCY_TABLE_NAME + " AS ec " +
+                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME) + "=" +
+                                            sqlConcatTableColumn("ec", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     public static String expensesListReportSelect =
@@ -468,10 +478,6 @@ public class ReportDbAdapter extends MainDbAdapter{
 
         return mDb.rawQuery(reportSql, null);
 
-    }
-
-    public static String sqlConcatTableColumn(String tableName, String columnName){
-        return tableName + "." + columnName;
     }
 
     public Cursor query(String sql, String[] args){

@@ -89,16 +89,18 @@ public class RefuelEditActivity extends EditActivityBase {
 
         carIndexEntry = (EditText)findViewById(R.id.indexEntry);
         qtyEntry = (EditText)findViewById(R.id.quantityEntry);
-        qtyEntry.setOnKeyListener(refuelEditOnKeyListener);
+        qtyEntry.setOnKeyListener(editTextOnKeyListener);
         
         priceEntry = (EditText)findViewById(R.id.priceEntry);
-        priceEntry.setOnKeyListener(refuelEditOnKeyListener);
+        priceEntry.setOnKeyListener(editTextOnKeyListener);
         docNo = (EditText)findViewById(R.id.documentNoEntry);
         refuelIsFullRefuel = (CheckBox) findViewById(R.id.refuelIsFullRefuel);
         conversionRateLabel = (TextView)findViewById(R.id.conversionRateLabel);
         conversionRateEntry = (EditText)findViewById(R.id.conversionRateEntry);
         conversionRateLabel.setVisibility(View.INVISIBLE);
         conversionRateEntry.setVisibility(View.INVISIBLE);
+        conversionRateEntry.setOnKeyListener(editTextOnKeyListener);
+
 
         amountValue = (TextView)findViewById(R.id.amountValue);
 
@@ -171,7 +173,6 @@ public class RefuelEditActivity extends EditActivityBase {
                     MainDbAdapter.CURRENCY_COL_CODE_NAME,
                     mCurrencyId, false);
         
-//        android.R.color.white
     }
 
     @Override
@@ -292,7 +293,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     if(mCurrencyId != carDefaultCurrencyId){
                         conversionRateLabel.setVisibility(View.VISIBLE);
                         conversionRateEntry.setVisibility(View.VISIBLE);
-                        conversionRateEntry.setTag(mRes.getString(R.string.REFUELEDIT_CONVRATE_LABEL));
+                        conversionRateEntry.setTag(mRes.getString(R.string.GEN_CONVRATE_LABEL));
                     }
                     else{
                         conversionRateLabel.setVisibility(View.INVISIBLE);
@@ -313,13 +314,22 @@ public class RefuelEditActivity extends EditActivityBase {
                 }
             };
 
-    private View.OnKeyListener refuelEditOnKeyListener =
+    private View.OnKeyListener editTextOnKeyListener =
             new View.OnKeyListener() {
                     public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
                         if(arg2.getAction() != KeyEvent.ACTION_UP) {
                             return false;
                         }
-                        calculateAmount();
+                        if(mCurrencyId == carDefaultCurrencyId)
+                            return false;
+                        if(arg0 instanceof EditText && ((EditText) arg0).getId() == R.id.conversionRateEntry){
+                            if(((EditText) arg0).getText().toString() != null
+                                    && ((EditText) arg0).getText().toString().length() > 0)
+                                conversionRate = new BigDecimal(((EditText) arg0).getText().toString());
+                        }
+
+                        if(conversionRate != null)
+                            calculateAmount();
                         return false;
                     }
                 };
@@ -334,10 +344,10 @@ public class RefuelEditActivity extends EditActivityBase {
             BigDecimal amount = (new BigDecimal(qtyStr)).multiply(new BigDecimal(priceStr))
                     .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
             amountStr = amount.toString() + " " + currencyCode;
-            if(carDefaultCurrencyId != mCurrencyId){
+            if(carDefaultCurrencyId != mCurrencyId && conversionRate != null){
                 convertedAmount = amount.multiply(conversionRate).
                         setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
-                amountStr = amountStr + " ( " + convertedAmount.toString() + " " + carDefaultCurrencyCode + " )";
+                amountStr = amountStr + " (" + convertedAmount.toString() + " " + carDefaultCurrencyCode + ")";
             }
 
             amountValue.setText(amountStr);

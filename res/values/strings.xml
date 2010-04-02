@@ -73,6 +73,8 @@
     <string name="GEN_PRICE_LABEL">"Price:"</string>
     <string name="GEN_BTNDONE_LABEL">"Done"</string>
     <string name="GEN_AMOUNT_LABEL">"Amount:"</string>
+    <string name="GEN_CONVRATE_LABEL">"Conv. rate:"</string>
+    <string name="GEN_CONVERTEDAMOUNT_LABEL">"Conv. amt:"</string>
 
 
     <string name="MENU_PREFERENCES_CAPTION">"Preferences"</string>
@@ -165,7 +167,6 @@
     <string name="MILEAGE_LISTREPORT_ACTIVITY_NOCOMMENT_TEXT">"Without user comment"</string>
 
     <string name="REFUEL_ISFULLREFUEL_LABEL">"Is full"</string>
-    <string name="REFUELEDIT_CONVRATE_LABEL">"Conv. rate:"</string>
 
     <string name="CURR_UOMS">"\nMeasurement units used:"</string>
 
