@@ -721,22 +721,6 @@ public class MainDbAdapter extends DB
         return retVal;
     }
 
-//    public long getLastMileageId(long carId){
-//        String checkSql = "";
-//        long lastId = -1;
-//        checkSql = "SELECT " + GEN_COL_ROWID_NAME +
-//                    " FROM " + MILEAGE_TABLE_NAME +
-//                    " WHERE " + MILEAGE_COL_CAR_ID_NAME + "=" + carId +
-//                    " ORDER BY " + MILEAGE_COL_INDEXSTOP_NAME + " DESC " +
-//                    " LIMIT " + 1;
-//
-//        Cursor checkCursor = mDb.rawQuery(checkSql, null);
-//        if(checkCursor.moveToFirst())
-//            lastId = checkCursor.getLong(GEN_COL_ROWID_POS);
-//        checkCursor.close();
-//
-//        return lastId;
-//    }
     public Cursor execSql(String sql){
         return mDb.rawQuery(sql, null);
     }
@@ -778,6 +762,30 @@ public class MainDbAdapter extends DB
             else
                 return BigDecimal.ZERO;
         }
+
+        return retVal;
+    }
+
+    public BigDecimal getUOMConvertionRate(long fromId, long toId){
+        BigDecimal retVal = null;
+        String retValStr = null;
+        if(fromId == toId)
+            return BigDecimal.ONE;
+        String selectSql = "";
+        Cursor selectCursor;
+
+        selectSql = " SELECT * " +
+                    " FROM " + UOM_CONVERSION_TABLE_NAME +
+                    " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
+                        " AND " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " + fromId +
+                        " AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " + toId;
+        selectCursor = execSql(selectSql);
+        if(selectCursor.moveToFirst())
+            retValStr = selectCursor.getString(UOM_CONVERSION_COL_RATE_POS);
+        selectCursor.close();
+
+        if(retValStr != null && retValStr.length() > 0)
+            return new BigDecimal(retValStr);
 
         return retVal;
     }

@@ -140,7 +140,6 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
             >
             <TextView
                 android:id="@+id/quantityLabel"
@@ -174,13 +173,32 @@
                 android:layout_height="wrap_content"
                 android:text="@string/REFUEL_ISFULLREFUEL_LABEL"
                 />
-
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/baseUOMQtyZone"
+            >
+            <TextView
+                android:id="@+id/baseUOMQtyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REFUEL_BASEUOMQTY_LABEL"
+                />
+            <TextView
+                android:id="@+id/baseUOMQtyValue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
             >
             <TextView
                 android:id="@+id/priceLabel"

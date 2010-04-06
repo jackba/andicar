@@ -167,6 +167,7 @@
     <string name="MILEAGE_LISTREPORT_ACTIVITY_NOCOMMENT_TEXT">"Without user comment"</string>
 
     <string name="REFUEL_ISFULLREFUEL_LABEL">"Is full"</string>
+    <string name="REFUEL_BASEUOMQTY_LABEL">"Quantity in base UOM: "</string>
 
     <string name="CURR_UOMS">"\nMeasurement units used:"</string>
 

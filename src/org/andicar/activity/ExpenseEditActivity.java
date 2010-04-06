@@ -56,7 +56,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     long mCurrencyId;
     long carDefaultCurrencyId;
     String carDefaultCurrencyCode;
-    String currencyCode;
+//    String currencyCode;
     BigDecimal conversionRate;
     BigDecimal convertedAmount = null;
     LinearLayout conversionRateZone;
@@ -110,7 +110,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
         carDefaultCurrencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
                 carDefaultCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-        currencyCode = carDefaultCurrencyCode;
+//        currencyCode = carDefaultCurrencyCode;
         conversionRate = BigDecimal.ONE;
 
         if (operationType.equals("E")) {
@@ -323,8 +323,8 @@ public class ExpenseEditActivity extends EditActivityBase {
                     else{
                         setConversionRateZoneVisible(false);
                     }
-                    currencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
-                            mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+//                    currencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+//                            mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
                     conversionRate = mMainDbAdapter.getCurrencyRate(carDefaultCurrencyId, mCurrencyId);
                     conversionRateEntry.setText("");
                     convertedAmountValue.setText("");
