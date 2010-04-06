@@ -168,6 +168,7 @@
 
     <string name="REFUEL_ISFULLREFUEL_LABEL">"Is full"</string>
     <string name="REFUEL_BASEUOMQTY_LABEL">"Quantity in base UOM: "</string>
+    <string name="REFUEL_NOUOMCONVERSION_MSG">"No conversion found between UOM's"</string>
 
     <string name="CURR_UOMS">"\nMeasurement units used:"</string>
 

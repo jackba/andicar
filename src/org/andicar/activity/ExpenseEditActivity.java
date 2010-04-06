@@ -43,26 +43,27 @@ import java.math.BigDecimal;
  * @author miki
  */
 public class ExpenseEditActivity extends EditActivityBase {
-    AutoCompleteTextView userComment;
-    Spinner carSpinner;
-    Spinner driverSpinner;
-    Spinner currencySpinner;
-    EditText carIndexEntry;
-    EditText amountEntry;
-    EditText docNo;
-    EditText conversionRateEntry;
-    TextView warningLabel;
-    TextView convertedAmountValue;
-    long mCurrencyId;
-    long carDefaultCurrencyId;
-    String carDefaultCurrencyCode;
+    private AutoCompleteTextView userComment;
+    private Spinner carSpinner;
+    private Spinner driverSpinner;
+    private Spinner currencySpinner;
+    private EditText carIndexEntry;
+    private EditText amountEntry;
+    private EditText docNo;
+    private EditText conversionRateEntry;
+    private TextView warningLabel;
+    private TextView convertedAmountValue;
+    private long mCurrencyId;
+    private long carDefaultCurrencyId;
+    private String carDefaultCurrencyCode;
 //    String currencyCode;
-    BigDecimal conversionRate;
-    BigDecimal convertedAmount = null;
-    LinearLayout conversionRateZone;
-    boolean isActivityOnLoading = true;
+    private BigDecimal conversionRate;
+    private BigDecimal convertedAmount = null;
+    private LinearLayout conversionRateZone;
+    private boolean isActivityOnLoading = true;
 
-    ArrayAdapter<String> userCommentAdapter;
+    private ArrayAdapter<String> userCommentAdapter;
+
     private String operationType;
     /** Called when the activity is first created. */
     @Override

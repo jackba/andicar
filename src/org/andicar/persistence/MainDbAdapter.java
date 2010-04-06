@@ -138,9 +138,18 @@ public class MainDbAdapter extends DB
                         content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME));
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_INDEX_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_INDEX_NAME));
-                BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICE_NAME));
-                BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITY_NAME));
+
+                BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME));
+                BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME));
                 BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amt.toString());
+                expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
+                        content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME));
+                expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME,
+                        content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
+
+                BigDecimal convRate = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
+                amt = (amt.multiply(convRate)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
 
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
@@ -283,10 +292,20 @@ public class MainDbAdapter extends DB
                             content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME));
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_INDEX_NAME,
                             content.getAsString(MainDbAdapter.REFUEL_COL_INDEX_NAME));
-                    BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICE_NAME));
-                    BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITY_NAME));
+
+                    BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME));
+                    BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME));
                     BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                    expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amt.toString());
+                    expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
+                            content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME));
+                    expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME,
+                            content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
+
+                    BigDecimal convRate = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
+                    amt = (amt.multiply(convRate)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
+
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
                             content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME));
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_DATE_NAME,
@@ -365,9 +384,26 @@ public class MainDbAdapter extends DB
                                  "WHERE " + GEN_COL_ROWID_NAME  + " = " + carId;
                 mDb.execSQL(updSql);
             }
-            else
+            else{
                 // 1 -> -1
                 checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                if(checkVal == -1 && tableName.equals(REFUEL_TABLE_NAME)){
+                    long expenseId = -1;
+                    String expenseIdSelect =
+                            "SELECT " + GEN_COL_ROWID_NAME + " " +
+                            "FROM " + EXPENSES_TABLE_NAME + " " +
+                            "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
+                                "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
+                    Cursor c = execSql(expenseIdSelect);
+                    if(c.moveToFirst())
+                        expenseId = c.getLong(0);
+                    c.close();
+                    if(expenseId != -1){
+                        mDb.delete(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + expenseId, null);
+                    }
+                }
+
+            }
         }
         else
             return checkVal;

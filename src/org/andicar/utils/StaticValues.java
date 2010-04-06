@@ -27,6 +27,11 @@ import java.math.RoundingMode;
  */
 public class StaticValues
 {
+    public static final int DB_URI_DRIVERS = 1;
+    public static final int DATABASE_VERSION = 206;
+    public static final String DATABASE_NAME = "AndiCar.db";
+    public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
+
     public static final int MENU_PREFERENCES_ID = 10;
     public static final int MENU_REPORTS_ID = 11;
     public static final int MENU_ABOUT_ID = 12;
@@ -47,11 +52,6 @@ public class StaticValues
 
     public static final int ACTIVITY_NEW_REQUEST_CODE = 0;
     public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;
-
-    public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 204;
-    public static final String DATABASE_NAME = "AndiCar.db";
-    public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
 
     //no. of decimals when converting uom's to/from base uom
     public static final int volumeDecimals = 2;

@@ -103,12 +103,12 @@ public class DB {
     public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
     public static final String REFUEL_COL_EXPENSECATEGORY_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
     public static final String REFUEL_COL_ISFULLREFUEL_NAME = "IsFullRefuel";
-
     public static final String REFUEL_COL_QUANTITYENTERED_NAME = "QuantityEntered";
     public static final String REFUEL_COL_UOMVOLUMEENTERED_ID_NAME = UOM_TABLE_NAME + "_EnteredVolume_ID";
     public static final String REFUEL_COL_PRICEENTERED_NAME = "PriceEntered";
     public static final String REFUEL_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
     public static final String REFUEL_COL_CURRENCYRATE_NAME = "CurrencyRate"; //CurrencyEntered -> Car Base Currency
+    public static final String REFUEL_COL_UOMVOLCONVERSIONRATE_NAME = "UOMVolumeConversionRate";
 
     //expense category
     public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
@@ -185,7 +185,7 @@ public class DB {
     public static final int REFUEL_COL_PRICEENTERED_POS = 18;
     public static final int REFUEL_COL_CURRENCYENTERED_ID_POS = 19;
     public static final int REFUEL_COL_CURRENCYRATE_POS = 20;
-
+    public static final int REFUEL_COL_UOMVOLCONVERSIONRATE_POS = 21;
      //expense category
     public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
     //car expenses
@@ -238,7 +238,7 @@ public class DB {
         REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
         REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME,
         REFUEL_COL_ISFULLREFUEL_NAME, REFUEL_COL_QUANTITYENTERED_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME, 
-        REFUEL_COL_PRICEENTERED_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME};
+        REFUEL_COL_PRICEENTERED_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME};
 
     public static final String[] expenseCategoryTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
@@ -362,7 +362,8 @@ public class DB {
             + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " INTEGER NULL, "
             + REFUEL_COL_PRICEENTERED_NAME  + " NUMERIC NULL, "
             + REFUEL_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL, "
-            + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL "
+            + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL, "
+            + REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " NUMERIC NULL "
             + ");";
 
     protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL =
@@ -561,6 +562,7 @@ public class DB {
             else if(oldVersion == 200){
                 updateDbTo210(db); //update database to version 210 //AndiCar 2.1.x
             }
+//            updateDbTo210(db); //update database to version 210 //AndiCar 2.1.x
         }
 
         private void updateDbTo200(SQLiteDatabase db) throws SQLException {
@@ -579,8 +581,9 @@ public class DB {
         }
 
         private void updateDbTo210(SQLiteDatabase db) throws SQLException {
-            createCurrencyRateTable(db);
             String updSql = "";
+
+            createCurrencyRateTable(db);
             updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_QUANTITYENTERED_NAME + " NUMERIC NULL ";
             db.execSQL(updSql);
             updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " INTEGER NULL ";
@@ -591,6 +594,8 @@ public class DB {
             db.execSQL(updSql);
             updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
             db.execSQL(updSql);
+            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " NUMERIC NULL ";
+            db.execSQL(updSql);
 
             updSql = "UPDATE " + REFUEL_TABLE_NAME +
                         " SET " +
@@ -598,7 +603,12 @@ public class DB {
                             REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " = " + REFUEL_COL_UOMVOLUME_ID_NAME + ", " +
                             REFUEL_COL_PRICEENTERED_NAME + " = " + REFUEL_COL_PRICE_NAME + ", " +
                             REFUEL_COL_CURRENCYENTERED_ID_NAME + " = " + REFUEL_COL_CURRENCY_ID_NAME + ", " +
-                            REFUEL_COL_CURRENCYRATE_NAME + " = 1";
+                            REFUEL_COL_CURRENCYRATE_NAME + " = 1, " +
+                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
+
+//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+//                        " SET " +
+//                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
 
             db.execSQL(updSql);
 
