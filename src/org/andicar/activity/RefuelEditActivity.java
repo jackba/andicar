@@ -55,8 +55,9 @@ public class RefuelEditActivity extends EditActivityBase {
     private EditText priceEntry;
     private EditText docNo;
     private EditText conversionRateEntry;
+    private LinearLayout conversionRateZone;
     private CheckBox refuelIsFullRefuel;
-    private BigDecimal fuelQuantity = null;
+//    private BigDecimal fuelQuantity = null;
     private BigDecimal baseFuelPrice = null;
     private TextView amountValue;
     private TextView conversionRateLabel;
@@ -120,9 +121,10 @@ public class RefuelEditActivity extends EditActivityBase {
         refuelIsFullRefuel = (CheckBox) findViewById(R.id.refuelIsFullRefuel);
         conversionRateLabel = (TextView)findViewById(R.id.conversionRateLabel);
         conversionRateEntry = (EditText)findViewById(R.id.conversionRateEntry);
-        setConversionRateVisibility(false);
         conversionRateEntry.setOnKeyListener(editTextOnKeyListener);
         amountValue = (TextView)findViewById(R.id.amountValue);
+        conversionRateZone = (LinearLayout)findViewById(R.id.conversionRateZone);
+        setConversionRateVisibility(false);
 
         baseUOMQtyZone = (LinearLayout)findViewById(R.id.baseUOMQtyZone);
         baseUOMQtyLabel = (TextView)findViewById(R.id.baseUOMQtyLabel);
@@ -168,9 +170,16 @@ public class RefuelEditActivity extends EditActivityBase {
                     mCarId).getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS);
             carDefaultUOMVolumeCode = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames,
                     carDefaultUOMVolumeId).getString(MainDbAdapter.UOM_COL_CODE_POS);
+            uomVolumeConversionRate = new BigDecimal(recordCursor.getString(MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_POS));
             if(carDefaultUOMVolumeId != mUomVolumeId){
                 baseUOMQtyValue.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS) +
                         " " + carDefaultUOMVolumeCode);
+                setBaseUOMQtyZoneVisibility(true);
+            }
+            if(mCurrencyId != carDefaultCurrencyId){
+                currencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+                    mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+                setConversionRateVisibility(true);
             }
         }
         else {
@@ -216,7 +225,10 @@ public class RefuelEditActivity extends EditActivityBase {
                     MainDbAdapter.isActiveCondition,
                     MainDbAdapter.CURRENCY_COL_CODE_NAME,
                     mCurrencyId, false);
-        
+        if (operationType.equals("E")){
+            calculateAmount();
+            calculateBaseUOMQty();
+        }
     }
 
     @Override
@@ -366,7 +378,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     }
                     currencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
                             mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-                    currencyConversionRate = mMainDbAdapter.getCurrencyRate(mCurrencyId, carDefaultCurrencyId);
+                    currencyConversionRate = mMainDbAdapter.getCurrencyRate(carDefaultCurrencyId, mCurrencyId);
                     conversionRateEntry.setText("");
                     if(currencyConversionRate != null){
                         conversionRateEntry.append(currencyConversionRate.toString());
@@ -479,12 +491,10 @@ public class RefuelEditActivity extends EditActivityBase {
 
     private void setConversionRateVisibility(boolean visible){
         if(visible){
-            conversionRateLabel.setVisibility(View.VISIBLE);
-            conversionRateEntry.setVisibility(View.VISIBLE);
+            conversionRateZone.setVisibility(View.VISIBLE);
             conversionRateEntry.setTag(mRes.getString(R.string.GEN_CONVRATE_LABEL));
         }else{
-            conversionRateLabel.setVisibility(View.INVISIBLE);
-            conversionRateEntry.setVisibility(View.INVISIBLE);
+            conversionRateZone.setVisibility(View.GONE);
             conversionRateEntry.setTag(null);
         }
     }

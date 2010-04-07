@@ -72,7 +72,7 @@
     <string name="GEN_QUANTITY_LABEL">"Quantity:"</string>
     <string name="GEN_PRICE_LABEL">"Price:"</string>
     <string name="GEN_BTNDONE_LABEL">"Done"</string>
-    <string name="GEN_AMOUNT_LABEL">"Amount:"</string>
+    <string name="GEN_AMOUNT_LABEL">"Amt:"</string>
     <string name="GEN_CONVRATE_LABEL">"Conv. rate:"</string>
     <string name="GEN_CONVERTEDAMOUNT_LABEL">"Conv. amt:"</string>
 

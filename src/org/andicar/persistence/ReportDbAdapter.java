@@ -113,15 +113,38 @@ public class ReportDbAdapter extends MainDbAdapter{
                     sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME)  + " || '; ' || " +
                     " SUBSTR(DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + " || ' ' || " +
-                        sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || ' x ' || " +
-                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + " || ' ' || " +
-                        sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || ' = ' || ROUND(" +
-                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + " * " +
-                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", 2) || ' ' ||" +
-                            sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + "|| ' at ' || " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + " || ' ' || " +
+                        sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || " +
+                " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + " <> " +
+                                    sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
+                        " THEN " + "' (' || " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) +
+                                    " || ' ' || " + sqlConcatTableColumn("DefaultVolumeUOM", UOM_COL_CODE_NAME) + " || ')' " +
+                        " ELSE " + "'' " +
+                " END " +
+                        " || ' x ' || " +
+                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + " || ' ' || " +
+                        sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
+                        " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + " <> " +
+                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + " " +
+                                " THEN " + "' (' || " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) +
+                                            " || ' ' || " + sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
+                                " ELSE " + "'' " +
+                        " END " +
+
+                        " || ' = ' || ROUND(" +
+                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + " * " +
+                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + ", 2) || ' ' ||" +
+                            sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
+                        " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + " <> " +
+                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + " " +
+                                " THEN " + "' (' || ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + " * " +
+                                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", 2) || ' ' ||" +
+                                                        sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
+                                " ELSE " + "'' " +
+                        " END " +
+                            " || ' at ' || " +
                         sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + " || ' ' || " +
-                            sqlConcatTableColumn("CarVUOM", UOM_COL_CODE_NAME) +
+                            sqlConcatTableColumn("CarLengthUOM", UOM_COL_CODE_NAME) +
                             " AS " + SECOND_LINE_LIST_NAME + ", " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
                         " AS " + THIRD_LINE_LIST_NAME +
@@ -133,17 +156,23 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DRIVER_ID_NAME) + "=" +
                                             sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + UOM_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + "=" +
                                             sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + UOM_TABLE_NAME + " AS DefaultVolumeUOM " +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "=" +
+                                            sqlConcatTableColumn("DefaultVolumeUOM", GEN_COL_ROWID_NAME) +
                     " JOIN " + CAR_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
-                            " JOIN " + UOM_TABLE_NAME + " AS CarVUOM " +
+                            " JOIN " + UOM_TABLE_NAME + " AS CarLengthUOM " +
                                 " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
-                                                    sqlConcatTableColumn("CarVUOM", GEN_COL_ROWID_NAME) +
+                                                    sqlConcatTableColumn("CarLengthUOM", GEN_COL_ROWID_NAME) +
                     " JOIN " + CURRENCY_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CURRENCY_TABLE_NAME + " AS DefaultCurrency " +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + "=" +
+                                            sqlConcatTableColumn("DefaultCurrency", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     public static String refuelListReportSelect =
@@ -159,7 +188,14 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UOMCode, " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " +
                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS CurrencyCode, " +
-                "DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date " +
+                "DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
+
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + ", " +
+                sqlConcatTableColumn("UomVolEntered", UOM_COL_CODE_NAME) + " AS UomEntered, " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + ", " +
+                sqlConcatTableColumn("CurrencyEntered", CURRENCY_COL_CODE_NAME) + " AS CurrencyEntered, " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYRATE_NAME) + " " +
             " FROM " + REFUEL_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -173,12 +209,18 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + UOM_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "=" +
                                             sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + UOM_TABLE_NAME + " AS UomVolEntered " +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + "=" +
+                                            sqlConcatTableColumn("UomVolEntered", GEN_COL_ROWID_NAME) +
                     " JOIN " + CAR_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CURRENCY_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CURRENCY_TABLE_NAME + " AS CurrencyEntered " +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + "=" +
+                                            sqlConcatTableColumn("CurrencyEntered", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     public static String expensesListMainViewSelect =
@@ -279,7 +321,10 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + ", " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_FROMTABLE_NAME) + " AS BaseExpense, " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_FROMRECORD_ID_NAME) + " AS BaseExpenseId, " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + " " +
+                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNTENTERED_NAME) + ", " +
+                sqlConcatTableColumn("CurrEntered", CURRENCY_COL_CODE_NAME) + " AS CurrencyEnteredCode, " +
+                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCYRATE_NAME) + " " +
             " FROM " + EXPENSES_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -296,6 +341,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CURRENCY_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CURRENCY_TABLE_NAME + " AS CurrEntered " +
+                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME) + "=" +
+                                            sqlConcatTableColumn("CurrEntered", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
 

@@ -609,8 +609,7 @@ public class DB {
 //            updSql = "UPDATE " + REFUEL_TABLE_NAME +
 //                        " SET " +
 //                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
-
-            db.execSQL(updSql);
+//            db.execSQL(updSql);
 
             updSql = "UPDATE " + REFUEL_TABLE_NAME +
                         " SET " +
