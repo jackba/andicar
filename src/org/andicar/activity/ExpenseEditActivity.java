@@ -326,7 +326,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                     }
 //                    currencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
 //                            mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-                    conversionRate = mMainDbAdapter.getCurrencyRate(carDefaultCurrencyId, mCurrencyId);
+                    conversionRate = mMainDbAdapter.getCurrencyRate(mCurrencyId, carDefaultCurrencyId);
                     conversionRateEntry.setText("");
                     convertedAmountValue.setText("");
                     if(conversionRate != null){

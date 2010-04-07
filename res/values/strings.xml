@@ -74,7 +74,7 @@
     <string name="GEN_BTNDONE_LABEL">"Done"</string>
     <string name="GEN_AMOUNT_LABEL">"Amt:"</string>
     <string name="GEN_CONVRATE_LABEL">"Conv. rate:"</string>
-    <string name="GEN_CONVERTEDAMOUNT_LABEL">"Conv. amt:"</string>
+    <string name="GEN_CONVERTEDAMOUNT_LABEL">"Conv. amt: "</string>
 
 
     <string name="MENU_PREFERENCES_CAPTION">"Preferences"</string>
@@ -129,9 +129,9 @@
     <string name="MAIN_ACTIVITY_WELLCOME_MESSAGE_TITLE">"Wellcome to AndiCar."</string>
     <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>
-    <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Cannot be selected."</string>
-    <string name="CURRENT_DRIVER_DELETE_ERROR_MESSAGE">"The current driver cannot be deleted."</string>
-    <string name="CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE">"The current driver cannot be inactivated."</string>
+    <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Can not be selected."</string>
+    <string name="CURRENT_DRIVER_DELETE_ERROR_MESSAGE">"The current driver can not be deleted."</string>
+    <string name="CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE">"The current driver can not be inactivated."</string>
 
     <string name="CAR_EDIT_ACTIVITY_MODEL">"Model:"</string>
     <string name="CAR_EDIT_ACTIVITY_REG_NO">"License plate:"</string>
@@ -139,14 +139,14 @@
     <string name="CAR_EDIT_ACTIVITY_UOMVOLUME">"UOM for volume:"</string>
     <string name="CAR_EDIT_ACTIVITY_STARTINDEX">"Initial odometer:"</string>
     <string name="CAR_EDIT_ACTIVITY_CURRENCY">"Default currency:"</string>
-    <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Cannot be selected."</string>
-    <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car cannot be deleted."</string>
-    <string name="CURRENT_CAR_INACTIVATE_ERROR_MESSAGE">"The current car cannot be inactivated."</string>
+    <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Can not be selected."</string>
+    <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car can not be deleted."</string>
+    <string name="CURRENT_CAR_INACTIVATE_ERROR_MESSAGE">"The current car can not be inactivated."</string>
 
     <string name="UOM_EDIT_ACTIVITY_CODE">"Code:"</string>
     <string name="UOM_EDIT_ACTIVITY_TITLE_LENGTH">"distance"</string>
     <string name="UOM_EDIT_ACTIVITY_TITLE_VOLUME">"volume"</string>
-    <string name="UOM_CANNOT_DELETE_ERROR_MESSAGE">"This UOM cannot be deleted.\nIt is used in cars definition."</string>
+    <string name="UOM_CANNOT_DELETE_ERROR_MESSAGE">"This UOM can not be deleted.\nIt is used in cars definition."</string>
 
     <string name="UOMCONVERSION_EDIT_ACTIVITY_CODE">"Code:"</string>
     <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMFROM">"From uom:"</string>
@@ -226,8 +226,9 @@
 
     <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYFROM_LABEL">"From currency "</string>
     <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYTO_LABEL">"To currency "</string>
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL">"Rate "</string>
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL">"Inverse rate "</string>
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL">"Rate: 1 % = "</string>
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATETO_LABEL">" %"</string>
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL">"Inverse rate: 1 % = "</string>
     <string name="CURRENCYRATE_EDIT_ACTIVITY_MAXALLOWEDDECIMALS_LABEL">"Max. allowed decimals: "</string>
 
     <string name="MAINSCREENPREF_ACTIVITY_LABEL">"Existing zones:"</string>

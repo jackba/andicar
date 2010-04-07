@@ -557,10 +557,10 @@ public class DB {
             //AndiCar 1.0.0
             if(oldVersion == 1) {
                 updateDbTo200(db); //update database to version 200 //AndiCar 2.0.x
-                updateDbTo210(db); //update database to version 210 //AndiCar 2.1.x
+                updateDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.x
             }
             else if(oldVersion == 200){
-                updateDbTo210(db); //update database to version 210 //AndiCar 2.1.x
+                updateDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.x
             }
 //            updateDbTo210(db); //update database to version 210 //AndiCar 2.1.x
         }
@@ -580,7 +580,7 @@ public class DB {
             createExpenses(db, true);
         }
 
-        private void updateDbTo210(SQLiteDatabase db) throws SQLException {
+        private void updateDbTo210(SQLiteDatabase db, int oldVersion) throws SQLException {
             String updSql = "";
 
             createCurrencyRateTable(db);
@@ -605,6 +605,36 @@ public class DB {
                             REFUEL_COL_CURRENCYENTERED_ID_NAME + " = " + REFUEL_COL_CURRENCY_ID_NAME + ", " +
                             REFUEL_COL_CURRENCYRATE_NAME + " = 1, " +
                             REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
+            db.execSQL(updSql);
+
+            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                        " SET " +
+                            REFUEL_COL_UOMVOLUME_ID_NAME + " = " +
+                                "(SELECT " + CAR_COL_UOMVOLUME_ID_NAME + " " +
+                                "FROM " + CAR_TABLE_NAME + " " +
+                                "WHERE " + GEN_COL_ROWID_NAME + " = " +
+                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + ") ";
+            db.execSQL(updSql);
+
+            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                        " SET " +
+                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = " +
+                                "(SELECT " + UOM_CONVERSION_COL_RATE_NAME + " " +
+                                "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
+                                "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " +
+                                                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
+                                        "AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " +
+                                                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "), " +
+                            REFUEL_COL_QUANTITY_NAME + " = " +
+                                        "ROUND( " + REFUEL_COL_QUANTITYENTERED_NAME + " * " +
+                                            "(SELECT " + UOM_CONVERSION_COL_RATE_NAME + " " +
+                                            "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
+                                            "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " +
+                                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
+                                                    "AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " +
+                                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "), 2 ) " +
+                      "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " <> " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME;
+            db.execSQL(updSql);
 
 //            updSql = "UPDATE " + REFUEL_TABLE_NAME +
 //                        " SET " +
@@ -613,12 +643,6 @@ public class DB {
 
             updSql = "UPDATE " + REFUEL_TABLE_NAME +
                         " SET " +
-                            REFUEL_COL_UOMVOLUME_ID_NAME + " = " +
-                                "(SELECT " + CAR_COL_UOMVOLUME_ID_NAME +
-                                " FROM " + CAR_TABLE_NAME +
-                                " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
-                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
-                            "), " +
                             REFUEL_COL_CURRENCY_ID_NAME + " = " +
                                 "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
                                 " FROM " + CAR_TABLE_NAME +
@@ -627,14 +651,16 @@ public class DB {
                             ") ";
             db.execSQL(updSql);
 
-            updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
+            if(oldVersion == 200){
+                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
 
-            updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
-            db.execSQL(updSql);
+                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
 
-            updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
+                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+            }
 
             updSql = "UPDATE " + EXPENSES_TABLE_NAME +
                         " SET " +

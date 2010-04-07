@@ -25,6 +25,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -42,12 +43,21 @@ import org.andicar.utils.StaticValues;
 public class CurrencyRateEditActivity extends EditActivityBase
 {
 
-    EditText currencyRateEntry = null;
-    TextView currencyInverseRateValue = null;
-    Spinner currencyFromSpinner = null;
-    Spinner currencyToSpinner = null;
-    BigDecimal rate = null;
-    BigDecimal inverseRate = null;
+    private EditText currencyRateEntry = null;
+    private TextView currencyInverseRateLabel = null;
+    private TextView currencyInverseRateToLabel = null;
+    private TextView currencyInverseRateValue = null;
+    private TextView currencyRateLabel = null;
+    private TextView currencyRateToLabel = null;
+    private Spinner currencyFromSpinner = null;
+    private Spinner currencyToSpinner = null;
+    private BigDecimal rate = null;
+    private BigDecimal inverseRate = null;
+    private String currencyFromCode = null;
+    private String currencyToCode = null;
+    private long currencyFromId = 1;
+    private long currencyToId = 2;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate( Bundle icicle )
@@ -55,21 +65,25 @@ public class CurrencyRateEditActivity extends EditActivityBase
         super.onCreate( icicle, R.layout.currencyrate_edit_activity, mOkClickListener );
 
         String operation = extras.getString("Operation"); //E = edit, N = new
-        long fromCurrId = 1;
-        long toCurrId = 2;
 
         currencyFromSpinner = (Spinner) findViewById( R.id.currencyFromSpinner );
+        currencyFromSpinner.setOnItemSelectedListener(spinnerCurrencyFromOnItemSelectedListener);
         currencyToSpinner = (Spinner) findViewById( R.id.currencyToSpinner );
+        currencyToSpinner.setOnItemSelectedListener(spinnerCurrencyToOnItemSelectedListener);
         currencyRateEntry = (EditText)findViewById(R.id.currencyRateEntry);
         currencyRateEntry.setOnKeyListener(currencyRateEntryInputEntryOnKeyListener);
+        currencyInverseRateLabel = (TextView)findViewById(R.id.currencyInverseRateLabel);
         currencyInverseRateValue = (TextView)findViewById(R.id.currencyInverseRateValue);
+        currencyInverseRateToLabel = (TextView)findViewById(R.id.currencyInverseRateToLabel);
+        currencyRateLabel = (TextView)findViewById(R.id.currencyRateLabel);
+        currencyRateToLabel = (TextView)findViewById(R.id.currencyRateToLabel);
         
         if( operation.equals( "E") ) {
             mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME,
                     MainDbAdapter.currencyRateTableColNames, mRowId);
-            fromCurrId = recordCursor.getLong( MainDbAdapter.CURRENCYRATE_COL_FROMCURRENCY_ID_POS );
-            toCurrId = recordCursor.getLong( MainDbAdapter.CURRENCYRATE_COL_TOCURRENCY_ID_POS );
+            currencyFromId = recordCursor.getLong( MainDbAdapter.CURRENCYRATE_COL_FROMCURRENCY_ID_POS );
+            currencyToId = recordCursor.getLong( MainDbAdapter.CURRENCYRATE_COL_TOCURRENCY_ID_POS );
             String rateStr = recordCursor.getString( MainDbAdapter.CURRENCYRATE_COL_RATE_POS );
             String inverseRateStr = recordCursor.getString( MainDbAdapter.CURRENCYRATE_COL_INVERSERATE_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
@@ -98,16 +112,17 @@ public class CurrencyRateEditActivity extends EditActivityBase
 
         initSpinner(currencyFromSpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
                 MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, fromCurrId, false);
+                MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, currencyFromId, false);
 
         initSpinner(currencyToSpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
                 MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, toCurrId, false);
+                MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, currencyToId, false);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        updateLabel();
         calculateInverseRate();
     }
 
@@ -187,7 +202,41 @@ public class CurrencyRateEditActivity extends EditActivityBase
                         return false;
                     }
                 };
+
+
+    private AdapterView.OnItemSelectedListener spinnerCurrencyFromOnItemSelectedListener =
+            new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    currencyFromId = arg3;
+                    updateLabel();
+                }
+                public void onNothingSelected(AdapterView<?> arg0) {
+                }
+            };
                 
+    private AdapterView.OnItemSelectedListener spinnerCurrencyToOnItemSelectedListener =
+            new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    currencyToId = arg3;
+                    updateLabel();
+                }
+                public void onNothingSelected(AdapterView<?> arg0) {
+                }
+            };
+
+
+    private void updateLabel(){
+        currencyFromCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+                            currencyFromId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        currencyToCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+                currencyToId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        currencyRateLabel.setText(mRes.getString(R.string.CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL).replaceAll("%", currencyFromCode));
+        currencyRateToLabel.setText(currencyToCode);
+
+        currencyInverseRateLabel.setText(mRes.getString(R.string.CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL).replaceAll("%", currencyToCode));
+        currencyInverseRateToLabel.setText(currencyFromCode);
+    }
+
     private void calculateInverseRate() {
         String rateStr = currencyRateEntry.getText().toString();
         if(rateStr != null && rateStr.length() > 0) {

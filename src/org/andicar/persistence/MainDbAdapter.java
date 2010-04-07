@@ -125,7 +125,7 @@ public class MainDbAdapter extends DB
                 ContentValues expenseContent = null;
                 expenseContent = new ContentValues();
 
-                expenseContent.put(MainDbAdapter.GEN_COL_NAME_NAME, "Refuel");
+                expenseContent.put(MainDbAdapter.GEN_COL_NAME_NAME, StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME);
                 expenseContent.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                         content.getAsString(MainDbAdapter.GEN_COL_USER_COMMENT_NAME));
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
@@ -158,7 +158,7 @@ public class MainDbAdapter extends DB
                         content.getAsString(MainDbAdapter.REFUEL_COL_DATE_NAME));
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_FROMTABLE_NAME, "Refuel");
+                expenseContent.put(MainDbAdapter.EXPENSES_COL_FROMTABLE_NAME, StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME);
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_FROMRECORD_ID_NAME, retVal);
                 mDb.insertOrThrow( MainDbAdapter.EXPENSES_TABLE_NAME, null, expenseContent);
             }
@@ -185,6 +185,9 @@ public class MainDbAdapter extends DB
         if(tableName.equals(CURRENCYRATE_TABLE_NAME)){
             long currencyFromId = content.getAsLong(CURRENCYRATE_COL_FROMCURRENCY_ID_NAME);
             long currencyToId = content.getAsLong(CURRENCYRATE_COL_TOCURRENCY_ID_NAME);
+            if(currencyFromId == currencyToId)
+                return R.string.ERR_032;
+
             //check duplicates
             checkSql = "SELECT * " +
                         "FROM " + CURRENCYRATE_TABLE_NAME + " " +
@@ -207,6 +210,11 @@ public class MainDbAdapter extends DB
             }
             if(!checkCursor.isClosed())
                 checkCursor.close();
+        }
+        else if(tableName.equals(UOM_CONVERSION_TABLE_NAME)){
+            if(content.getAsLong(UOM_CONVERSION_COL_UOMFROM_ID_NAME) ==
+                    content.getAsLong(UOM_CONVERSION_COL_UOMTO_ID_NAME))
+                return R.string.ERR_031;
         }
         return -1;
     }
@@ -578,6 +586,25 @@ public class MainDbAdapter extends DB
             }
             checkCursor.close();
         }
+        else if(tableName.equals(EXPENSES_TABLE_NAME)){
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + GEN_COL_ROWID_NAME + " = " +
+                                    "( SELECT " + EXPENSES_COL_FROMRECORD_ID_NAME + " " +
+                                        "FROM " + EXPENSES_TABLE_NAME + " " +
+                                        "WHERE " + GEN_COL_ROWID_NAME + " = " + rowId + " " +
+                                                " AND " + EXPENSES_COL_FROMTABLE_NAME + " = '" +
+                                                        StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "' ) " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_030;
+            }
+            checkCursor.close();
+        }
+
         return -1;
     }
 

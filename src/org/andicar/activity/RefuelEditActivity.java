@@ -38,7 +38,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 /**
  *
@@ -54,13 +53,12 @@ public class RefuelEditActivity extends EditActivityBase {
     private EditText qtyEntry;
     private EditText priceEntry;
     private EditText docNo;
+    private TextView convertedAmountLabel;
     private EditText conversionRateEntry;
     private LinearLayout conversionRateZone;
     private CheckBox refuelIsFullRefuel;
-//    private BigDecimal fuelQuantity = null;
     private BigDecimal baseFuelPrice = null;
     private TextView amountValue;
-    private TextView conversionRateLabel;
     private long mCurrencyId;
     private long carDefaultCurrencyId;
     private String carDefaultCurrencyCode;
@@ -119,7 +117,7 @@ public class RefuelEditActivity extends EditActivityBase {
         priceEntry.setOnKeyListener(editTextOnKeyListener);
         docNo = (EditText)findViewById(R.id.documentNoEntry);
         refuelIsFullRefuel = (CheckBox) findViewById(R.id.refuelIsFullRefuel);
-        conversionRateLabel = (TextView)findViewById(R.id.conversionRateLabel);
+        convertedAmountLabel = (TextView)findViewById(R.id.convertedAmountLabel);
         conversionRateEntry = (EditText)findViewById(R.id.conversionRateEntry);
         conversionRateEntry.setOnKeyListener(editTextOnKeyListener);
         amountValue = (TextView)findViewById(R.id.amountValue);
@@ -378,7 +376,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     }
                     currencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
                             mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-                    currencyConversionRate = mMainDbAdapter.getCurrencyRate(carDefaultCurrencyId, mCurrencyId);
+                    currencyConversionRate = mMainDbAdapter.getCurrencyRate(mCurrencyId, carDefaultCurrencyId);
                     conversionRateEntry.setText("");
                     if(currencyConversionRate != null){
                         conversionRateEntry.append(currencyConversionRate.toString());
@@ -457,16 +455,18 @@ public class RefuelEditActivity extends EditActivityBase {
             BigDecimal amount = (new BigDecimal(qtyStr)).multiply(new BigDecimal(priceStr))
                     .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
             amountStr = amount.toString() + " " + currencyCode;
+            amountValue.setText(amountStr);
             if(carDefaultCurrencyId != mCurrencyId && currencyConversionRate != null){
                 convertedAmount = amount.multiply(currencyConversionRate).
                         setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
                 baseFuelPrice = (new BigDecimal(priceStr)).multiply(currencyConversionRate).
                         setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
 
-                amountStr = amountStr + " (" + convertedAmount.toString() + " " + carDefaultCurrencyCode + ")";
+                amountStr = convertedAmount.toString() + " " + carDefaultCurrencyCode;
+                convertedAmountLabel.setText(mRes.getString(R.string.GEN_CONVERTEDAMOUNT_LABEL) + amountStr);
             }
 
-            amountValue.setText(amountStr);
+            
         }
     }
 

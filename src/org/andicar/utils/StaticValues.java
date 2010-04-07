@@ -95,6 +95,8 @@ public class StaticValues
     public static final String backupPrefix = "bk";
     public static final String backupSufix = ".db";
 
+    public static final String EXPENSES_COL_FROMREFUEL_TABLE_NAME = "Refuel";
+    
     public static String LM_COPYRIGHT_HTML1 =
             "&nbsp;&nbsp;&nbsp;&nbsp;<b><i>AndiCar</i></b> is a free and open source car management " +
             "software for Android powered devices. It is licensed under the terms of the GNU General Public License.<br>" +

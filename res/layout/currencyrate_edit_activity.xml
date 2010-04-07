@@ -89,33 +89,46 @@
                 android:background="@color/mandatory_bg"
                 android:tag="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL"
                 />
-
             <TextView
-                android:id="@+id/currencyInverseRateLabel"
+                android:id="@+id/currencyRateToLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL"
-                android:layout_marginLeft="10dip"
+                android:layout_marginLeft="5dip"
+                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATETO_LABEL"
                 />
-            <TextView
-                android:id="@+id/currencyInverseRateValue"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                />
-
         </LinearLayout>
-<!--        <LinearLayout
+
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             >
+            <TextView
+                android:id="@+id/currencyInverseRateLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL"
+                />
+            <TextView
+                android:id="@+id/currencyInverseRateValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/currencyInverseRateToLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATETO_LABEL"
+                />
         </LinearLayout>
--->
+
         <TextView
             android:id="@+id/genUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
             android:text="@string/GEN_USER_COMMENT_LABEL"
             />
         <EditText
