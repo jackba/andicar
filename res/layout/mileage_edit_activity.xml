@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:id="@+id/genRootViewGroup"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        >
+        <TextView android:id="@+id/mileageEditCarDriverLabel"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:textStyle="bold"
+                  />
+        <TextView
+            android:id="@+id/mileageEditStartStopIndexHdr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/MILEAGE_EDIT_ACTIVITY_INDEXHEADER"
+            android:layout_marginTop="5dip"
+            />
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/mileageEditStartIndexLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_STARTINDEX"
+                />
+            <EditText
+                android:id="@+id/mileageEditStartIndexEntry"
+                android:layout_width="90dip"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="2dip"
+                android:background="@color/mandatory_bg"
+                android:tag="@string/MILEAGE_EDIT_ACTIVITY_STARTINDEX"
+                />
+
+            <TextView
+                android:id="@+id/mileageEditInputLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                />
+            <EditText
+                android:id="@+id/mileageEditInputEntry"
+                android:layout_width="90dip"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="2dip"
+                android:background="@color/mandatory_bg"
+                android:tag=""
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="10dip"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/mileageEditCalculatedTextLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/mileageEditCalculatedTextContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                />
+            <TextView
+                android:id="@+id/mileageEditExpenseTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="@string/GEN_EXPENSETYPE"
+                />
+            <Spinner android:id="@+id/mileageEditExpenseTypeSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="2dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                />
+     </LinearLayout>
+
+        <TextView
+            android:id="@+id/genUserCommentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/GEN_USER_COMMENT_LABEL"
+            android:layout_marginTop="10dip"
+            />
+        <AutoCompleteTextView
+            android:id="@+id/genUserCommentEntry"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:drawable/editbox_background"
+            />
+
+        <TextView android:id="@+id/mileageEditInsertModeHdrLabel"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textStyle="bold"
+                  android:text="@string/MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION"/>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <Button
+                android:id="@android:id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="20dip"
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/GEN_BTNDONE_LABEL"
+                />
+
+            <Button
+                android:id="@android:id/closeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@android:id/button1"
+                android:layout_alignTop="@android:id/button1"
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/GEN_CANCEL"
+                />
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@android:id/closeButton"
+                android:layout_alignTop="@android:id/closeButton"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:checkedButton="@+id/mileageEditInsertModeIndexRb"
+                android:id="@+id/rgMileageInsertMode">
+                <RadioButton
+                    android:id="@id/mileageEditInsertModeIndexRb"
+                    android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_INDEX"
+                    style="?android:attr/textAppearanceSmall"
+                    />
+                <RadioButton
+                    android:id="@+id/mileageEditInsertModeMileageRb"
+                    android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE"
+                    style="?android:attr/textAppearanceSmall"
+                    />
+            </RadioGroup>
+        </RelativeLayout>
+
+
+        <!--date/time -->
+        <TextView android:id="@+id/genDateTimeHdrLabel"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textStyle="bold"
+                  android:text="@string/GEN_LBLDATETIME_CAPTION"
+                  />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <TextView android:id="@+id/genDateTimeText"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      />
+            <Button android:id="@+id/genPickDateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/GEN_PICK_DATE_BUTTON_CAPTION"/>
+            <Button android:id="@+id/genPickTimeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/GEN_PICK_TIME_BUTTON_CAPTION"/>
+        </LinearLayout>
+    <!--    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnMileageDoneBottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/MILEAGE_EDIT_ACTIVITY_BTNDONE_CAPTION"
+                />
+        </RelativeLayout>
+    -->
+    </LinearLayout>
+</ScrollView>

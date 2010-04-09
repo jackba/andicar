@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.andicar.activity"
+          android:versionCode="210"
+          android:versionName="2.1.0">
+    <uses-sdk android:minSdkVersion="3" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:label="@string/APP_NAME"
+        android:description="@string/APP_DESCRIPTION"
+        android:icon="@drawable/car2"
+        android:debuggable="true"
+    >
+        
+        <activity android:name="org.andicar.activity.MainActivity"
+                  android:label="@string/APP_NAME"
+                  android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.DriverListActivity"
+            android:label="@string/APP_ACTIVITY_DRIVERLIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.DriverEditActivity"
+            android:label="@string/APP_ACTIVITY_DRIVEREDIT">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.CarListActivity"
+            android:label="@string/APP_ACTIVITY_CARLIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.CarEditActivity"
+            android:label="@string/APP_ACTIVITY_CAREDIT">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.miscellaneous.PreferencesActivity"
+            android:label="@string/APP_ACTIVITY_PREFERENCES">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.ExpenseTypeListActivity"
+            android:label="@string/APP_ACTIVITY_EXPTYPELIST">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.ExpenseTypeEditActivity"
+            android:label="@string/APP_ACTIVITY_EXPTYPEEDIT">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.UOMListActivity"
+            android:label="@string/APP_ACTIVITY_UOMLIST">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.UOMEditActivity"
+            android:label="@string/APP_ACTIVITY_UOMEDIT">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.UOMConversionListActivity"
+            android:label="@string/APP_ACTIVITY_UOMCONVERSIONLIST">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.UOMConversionEditActivity"
+            android:label="@string/APP_ACTIVITY_UOMCONVERSIONEDIT">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.CurrencyListActivity"
+            android:label="@string/APP_ACTIVITY_CURRENCYLIST">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.CurrencyEditActivity"
+            android:label="@string/APP_ACTIVITY_CURRENCYEDIT">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.report.MileageListReportActivity"
+            android:label="@string/APP_ACTIVITY_MILEAGE_LIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.MileageEditActivity"
+            android:label="@string/APP_ACTIVITY_MILEAGEEDIT">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.report.RefuelListReportActivity"
+            android:label="@string/APP_ACTIVITY_REFUEL_LIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.RefuelEditActivity"
+            android:label="@string/APP_ACTIVITY_REFUEL">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.miscellaneous.AboutActivity"
+            android:label="@string/APP_ACTIVITY_ABOUT">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.miscellaneous.BackupRestoreActivity"
+            android:label="@string/APP_ACTIVITY_BKRESTORE">
+        </activity>
+
+        <activity
+            android:name="com.andicar.paypall.GetPayPallActivity">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.ExpenseCategoryListActivity"
+            android:label="@string/APP_ACTIVITY_EXPCATEGORYLIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.ExpenseCategoryEditActivity"
+            android:label="@string/APP_ACTIVITY_EXPCATEGORYEDIT">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.report.ExpensesListReportActivity"
+            android:label="@string/APP_ACTIVITY_EXPENSELIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.ExpenseEditActivity"
+            android:label="@string/APP_ACTIVITY_EXPENSEEDIT">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.miscellaneous.MainScreenPreferenceActivity"
+            android:label="@string/APP_ACTIVITY_MAINSCREENPREF">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.CurrencyRateListActivity"
+            android:label="@string/APP_ACTIVITY_CURRENCYRATELIST">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.CurrencyRateEditActivity"
+            android:label="@string/APP_ACTIVITY_CURRENCYRATEEDIT">
+        </activity>
+    </application>
+</manifest>

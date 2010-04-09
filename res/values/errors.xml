@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="ERR_000">"Database error."</string>
+    <string name="ERR_001">"Start index overlap with existing mileage"</string>
+    <string name="ERR_002">"Stop/New index overlap with existing mileage"</string>
+    <string name="ERR_003">"New mileage overlap with existing mileage"</string>
+    <string name="ERR_004">"Stop/New index must be greater than start index"</string>
+    <string name="ERR_005">"Conversion rate already exist"</string>
+    <string name="ERR_006">"Error on creating record!"</string>
+    <!--<string name="ERR_007">"Error on modifying record!"</string>-->
+    <string name="ERR_008">"Invalid date/time format!"</string>
+    <string name="ERR_009">"This driver can not be deleted because it was used in mileage(s)."</string>
+    <string name="ERR_010">"This driver can not be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_011">"This car can not be deleted because it was used in mileage(s)."</string>
+    <string name="ERR_012">"This car can not be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_013">"This UOM can not be deleted because it was used in mileage(s)."</string>
+    <string name="ERR_014">"This UOM can not be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_015">"This UOM can not be deleted because it was used in UOM conversion(s)."</string>
+    <string name="ERR_016">"This currency can not be deleted because it is used in car definition(s)."</string>
+    <string name="ERR_017">"This currency can not be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_018">"This expense type can not be deleted because it was used in mileage(s)."</string>
+    <string name="ERR_019">"This expense type can not be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_020">"SDCARD not found. You can not save the reports locally and you can not backup the database!"</string>
+    <string name="ERR_021">"Report folder (SDCARD/andicar/reports) can not be created. You can not save the reports locally until you create this folder on your device."</string>
+    <string name="ERR_022">"Can not create report file!"</string>
+    <string name="ERR_023">"Write error!"</string>
+    <string name="ERR_024">"Backup folder (SDCARD/andicar/backup) can not be created. You can not backup your database until you create this folder on your device."</string>
+    <string name="ERR_025">"The UOM can not be inactivated because it is used in an active car definition."</string>
+    <string name="ERR_026">"The currency can not be inactivated because it is used in an active car definition."</string>
+    <string name="ERR_027">"Tis category can not be deleted because it was used in refuel(s)."</string>
+    <string name="ERR_028">"Tis category can not be deleted because it was used in expense(s)."</string>
+    <string name="ERR_029">"A rate already defined between these currencies."</string>
+    <string name="ERR_030">"This expense can not be deleted because it was created by a refuel.\nYou should delete the refuel."</string>
+    <string name="ERR_031">"You can not define conversion between the same UOM's."</string>
+    <string name="ERR_032">"You can not define conversion between the same currencies."</string>
+</resources>

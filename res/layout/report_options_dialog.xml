@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:id="@+id/genRootViewGroup"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        >
+
+<!--        <CheckBox
+            android:id="@+id/reportOptionsCkSaveLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/REPORTOPTIONS_DIALOG_SAVELOCAL_CAPTION"
+            />
+-->
+        <CheckBox
+            android:id="@+id/reportOptionsCkSendEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/REPORTOPTIONS_DIALOG_SENDEMAIL_CAPTION"
+            />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dip"
+            >
+            <TextView
+                android:id="@+id/reportOptionsFormatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/REPORTOPTIONS_DIALOG_FORMAT_LABEL"
+                />
+            <Spinner android:id="@+id/reportOptionsFormatSpinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="2dip"
+                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
