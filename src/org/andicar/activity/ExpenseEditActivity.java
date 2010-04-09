@@ -22,7 +22,8 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.Spinner;
@@ -92,7 +93,7 @@ public class ExpenseEditActivity extends EditActivityBase {
 
         carIndexEntry = (EditText)findViewById(R.id.indexEntry);
         amountEntry = (EditText)findViewById(R.id.amountEntry);
-        amountEntry.setOnKeyListener(editTextOnKeyListener);
+        amountEntry.addTextChangedListener(textWatcher);
         
         docNo = (EditText)findViewById(R.id.documentNoEntry);
 
@@ -100,7 +101,7 @@ public class ExpenseEditActivity extends EditActivityBase {
 
         conversionRateZone = (LinearLayout)findViewById(R.id.conversionRateZone);
         conversionRateEntry = (EditText)findViewById(R.id.conversionRateEntry);
-        conversionRateEntry.setOnKeyListener(editTextOnKeyListener);
+        conversionRateEntry.addTextChangedListener(textWatcher);
         convertedAmountValue = (TextView)findViewById(R.id.convertedAmountValue);
 
         long mCarId;
@@ -190,8 +191,15 @@ public class ExpenseEditActivity extends EditActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
-        if(mCurrencyId != carDefaultCurrencyId && conversionRate != null)
-            calculateConvertedAmount();
+        isActivityOnLoading = true;
+        if(mCurrencyId != carDefaultCurrencyId)
+        {
+            setConversionRateZoneVisible(true);
+            if(conversionRate != null)
+                calculateConvertedAmount();
+        }
+        else
+            setConversionRateZoneVisible(false);
     }
 
     private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
@@ -369,23 +377,26 @@ public class ExpenseEditActivity extends EditActivityBase {
         }
     }
 
-    private View.OnKeyListener editTextOnKeyListener =
-            new View.OnKeyListener() {
-                    public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
-                        if(arg2.getAction() != KeyEvent.ACTION_UP) {
-                            return false;
-                        }
+    private TextWatcher textWatcher =
+        new TextWatcher() {
+
+            public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void afterTextChanged(Editable edtbl) {
                         if(mCurrencyId == carDefaultCurrencyId)
-                            return false;
-                        if(arg0 instanceof EditText && ((EditText) arg0).getId() == R.id.conversionRateEntry){
-                            if(((EditText) arg0).getText().toString() != null
-                                    && ((EditText) arg0).getText().toString().length() > 0)
-                                conversionRate = new BigDecimal(((EditText) arg0).getText().toString());
+                            return;
+                        if(conversionRateEntry.getText().toString() != null && conversionRateEntry.getText().toString().length() > 0){
+                                conversionRate = new BigDecimal(conversionRateEntry.getText().toString());
                         }
 
                         if(conversionRate != null)
                             calculateConvertedAmount();
-                        return false;
-                    }
-                };
+            }
+        };
 }

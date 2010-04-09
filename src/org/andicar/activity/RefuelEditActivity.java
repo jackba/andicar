@@ -22,7 +22,8 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.Spinner;
@@ -111,18 +112,18 @@ public class RefuelEditActivity extends EditActivityBase {
 
         carIndexEntry = (EditText)findViewById(R.id.indexEntry);
         qtyEntry = (EditText)findViewById(R.id.quantityEntry);
-        qtyEntry.setOnKeyListener(editTextOnKeyListener);
+        qtyEntry.addTextChangedListener(textWatcher);
         
         priceEntry = (EditText)findViewById(R.id.priceEntry);
-        priceEntry.setOnKeyListener(editTextOnKeyListener);
+        priceEntry.addTextChangedListener(textWatcher);
         docNo = (EditText)findViewById(R.id.documentNoEntry);
         refuelIsFullRefuel = (CheckBox) findViewById(R.id.refuelIsFullRefuel);
         convertedAmountLabel = (TextView)findViewById(R.id.convertedAmountLabel);
         conversionRateEntry = (EditText)findViewById(R.id.conversionRateEntry);
-        conversionRateEntry.setOnKeyListener(editTextOnKeyListener);
+        conversionRateEntry.addTextChangedListener(textWatcher);
         amountValue = (TextView)findViewById(R.id.amountValue);
         conversionRateZone = (LinearLayout)findViewById(R.id.conversionRateZone);
-        setConversionRateVisibility(false);
+//        setConversionRateVisibility(false);
 
         baseUOMQtyZone = (LinearLayout)findViewById(R.id.baseUOMQtyZone);
         baseUOMQtyLabel = (TextView)findViewById(R.id.baseUOMQtyLabel);
@@ -177,7 +178,7 @@ public class RefuelEditActivity extends EditActivityBase {
             if(mCurrencyId != carDefaultCurrencyId){
                 currencyCode = mMainDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
                     mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-                setConversionRateVisibility(true);
+//                setConversionRateVisibility(true);
             }
         }
         else {
@@ -232,7 +233,20 @@ public class RefuelEditActivity extends EditActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
+        isActivityOnLoading = true;
+
+        if(carDefaultCurrencyId != mCurrencyId)
+            setConversionRateVisibility(true);
+        else
+            setConversionRateVisibility(false);
+
+        if(carDefaultUOMVolumeId != mUomVolumeId)
+            setBaseUOMQtyZoneVisibility(true);
+        else
+            setBaseUOMQtyZoneVisibility(false);
+
         calculateAmount();
+        calculateBaseUOMQty();
     }
 
 
@@ -421,29 +435,27 @@ public class RefuelEditActivity extends EditActivityBase {
         }
     };
 
-    private View.OnKeyListener editTextOnKeyListener =
-            new View.OnKeyListener() {
-                    public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
-                        if(arg2.getAction() != KeyEvent.ACTION_UP) {
-                            return false;
-                        }
-                        if(arg0 instanceof EditText && ((EditText) arg0).getId() == R.id.conversionRateEntry){
-                            if(((EditText) arg0).getText().toString() != null
-                                    && ((EditText) arg0).getText().toString().length() > 0)
-                                currencyConversionRate = new BigDecimal(((EditText) arg0).getText().toString());
-                        }
-                        else if(arg0 instanceof EditText 
-                                    && ((EditText) arg0).getId() == R.id.quantityEntry
-                                    && mUomVolumeId != carDefaultUOMVolumeId){
-                            if(((EditText) arg0).getText().toString() != null
-                                    && ((EditText) arg0).getText().toString().length() > 0)
-                                calculateBaseUOMQty();
-                        }
+    private TextWatcher textWatcher =
+        new TextWatcher() {
 
-                        calculateAmount();
-                        return false;
-                    }
-                };
+            public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void afterTextChanged(Editable edtbl) {
+                if(conversionRateEntry.getText().toString() != null &&
+                        conversionRateEntry.getText().toString().length() > 0)
+                    currencyConversionRate = new BigDecimal(conversionRateEntry.getText().toString());
+                if(mUomVolumeId != carDefaultUOMVolumeId && qtyEntry.getText().toString() != null &&
+                        qtyEntry.toString().length() > 0)
+                    calculateBaseUOMQty();
+                calculateAmount();
+            }
+        };
 
     private void calculateAmount() {
         String qtyStr = qtyEntry.getText().toString();
@@ -474,6 +486,7 @@ public class RefuelEditActivity extends EditActivityBase {
         if(mUomVolumeId == carDefaultUOMVolumeId){
             return;
         }
+
         if(uomVolumeConversionRate == null){
             baseUOMQtyValue.setText(mRes.getString(R.string.REFUEL_NOUOMCONVERSION_MSG));
             return;

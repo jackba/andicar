@@ -24,7 +24,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -73,9 +74,9 @@ public class MileageEditActivity extends EditActivityBase {
 
         mileageEditCalculatedTextContent = (TextView) findViewById(R.id.mileageEditCalculatedTextContent);
         mileageEditInputEntry = (EditText) findViewById(R.id.mileageEditInputEntry);
-        mileageEditInputEntry.setOnKeyListener(mileageEditInputEntryOnKeyListener);
+        mileageEditInputEntry.addTextChangedListener(mileageTextWatcher);
         mileageEditStartIndexEntry = (EditText) findViewById(R.id.mileageEditStartIndexEntry);
-        mileageEditStartIndexEntry.setOnKeyListener(startIndexEntryKeyListener);
+        mileageEditStartIndexEntry.addTextChangedListener(mileageTextWatcher);
         mileageEditInsertModeIndexRb = (RadioButton) findViewById(R.id.mileageEditInsertModeIndexRb);
         mileageEditInsertModeMileageRb = (RadioButton) findViewById(R.id.mileageEditInsertModeMileageRb);
         mileageEditInputLabel = ((TextView) findViewById(R.id.mileageEditInputLabel));
@@ -335,17 +336,6 @@ public class MileageEditActivity extends EditActivityBase {
             }
     };
 
-    private View.OnKeyListener startIndexEntryKeyListener =
-            new View.OnKeyListener() {
-                    public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
-                        if(arg2.getAction() != KeyEvent.ACTION_UP) {
-                            return false;
-                        }
-                        calculateMileageOrNewIndex();
-                        return false;
-                    };
-                };
-
     private RadioGroup.OnCheckedChangeListener rgOnCheckedChangeListener  =
             new RadioGroup.OnCheckedChangeListener() {
                     public void onCheckedChanged(RadioGroup arg0, int checkedId) {
@@ -372,16 +362,19 @@ public class MileageEditActivity extends EditActivityBase {
                     }
                 };
 
-    private View.OnKeyListener mileageEditInputEntryOnKeyListener =
-            new View.OnKeyListener() {
-                    public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
-                        if(arg2.getAction() != KeyEvent.ACTION_UP) {
-                            return false;
-                        }
-                        calculateMileageOrNewIndex();
-                        return false;
-                    }
-                };
+    private TextWatcher mileageTextWatcher =
+        new TextWatcher() {
 
+            public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
 
+            public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void afterTextChanged(Editable edtbl) {
+                calculateMileageOrNewIndex();
+            }
+        };
 }

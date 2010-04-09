@@ -22,7 +22,8 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -71,7 +72,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
         currencyToSpinner = (Spinner) findViewById( R.id.currencyToSpinner );
         currencyToSpinner.setOnItemSelectedListener(spinnerCurrencyToOnItemSelectedListener);
         currencyRateEntry = (EditText)findViewById(R.id.currencyRateEntry);
-        currencyRateEntry.setOnKeyListener(currencyRateEntryInputEntryOnKeyListener);
+        currencyRateEntry.addTextChangedListener(textWatcher);
         currencyInverseRateLabel = (TextView)findViewById(R.id.currencyInverseRateLabel);
         currencyInverseRateValue = (TextView)findViewById(R.id.currencyInverseRateValue);
         currencyInverseRateToLabel = (TextView)findViewById(R.id.currencyInverseRateToLabel);
@@ -192,17 +193,21 @@ public class CurrencyRateEditActivity extends EditActivityBase
                     }
                 };
 
-    private View.OnKeyListener currencyRateEntryInputEntryOnKeyListener =
-            new View.OnKeyListener() {
-                    public boolean onKey(View arg0, int arg1, KeyEvent arg2) {
-                        if(arg2.getAction() != KeyEvent.ACTION_UP) {
-                            return false;
-                        }
-                        calculateInverseRate();
-                        return false;
-                    }
-                };
+    private TextWatcher textWatcher =
+        new TextWatcher() {
 
+            public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void afterTextChanged(Editable edtbl) {
+                calculateInverseRate();
+            }
+        };
 
     private AdapterView.OnItemSelectedListener spinnerCurrencyFromOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
