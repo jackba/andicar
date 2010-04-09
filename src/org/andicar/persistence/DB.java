@@ -19,6 +19,8 @@
 package org.andicar.persistence;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -636,11 +638,6 @@ public class DB {
                       "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " <> " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME;
             db.execSQL(updSql);
 
-//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
-//                        " SET " +
-//                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
-//            db.execSQL(updSql);
-
             updSql = "UPDATE " + REFUEL_TABLE_NAME +
                         " SET " +
                             REFUEL_COL_CURRENCY_ID_NAME + " = " +
@@ -650,6 +647,18 @@ public class DB {
                                         sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
                             ") ";
             db.execSQL(updSql);
+
+            Cursor checkCursor = db.rawQuery("SELECT COUNT(*) " +
+                                                "FROM " + REFUEL_TABLE_NAME + " " +
+                                                "WHERE " + REFUEL_COL_CURRENCY_ID_NAME + " <> " + REFUEL_COL_CURRENCYENTERED_ID_NAME, null);
+            if(checkCursor.moveToFirst() && checkCursor.getInt(0) > 0){
+                SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+                SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putString("UpdateMsg", "During the upgrade process we found foreign currencies in refuels.\n" +
+                                                "Please review and correct the currency conversion rates in your refuels.");
+                editor.commit();
+            }
+            checkCursor.close();
 
             if(oldVersion == 200){
                 updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
@@ -678,6 +687,26 @@ public class DB {
                                         sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) +
                             ") ";
             db.execSQL(updSql);
+
+            checkCursor = db.rawQuery("SELECT COUNT(*) " +
+                                                "FROM " + EXPENSES_TABLE_NAME + " " +
+                                                "WHERE " + EXPENSES_COL_CURRENCY_ID_NAME + " <> " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " " +
+                                                        "AND COALESCE(" + EXPENSES_COL_FROMTABLE_NAME + ", 'X') <> '" + StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "'", null);
+            if(checkCursor.moveToFirst() && checkCursor.getInt(0) > 0){
+                SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+                String updateMsg = mPreferences.getString("UpdateMsg", null);
+                if(updateMsg != null)
+                    updateMsg = "During the upgrade process we found foreign currencies in refuels and expenses.\n" +
+                                                "Please review and correct the currency conversion rates in your refuels and expenses.";
+                else
+                    updateMsg = "During the upgrade process we found foreign currencies in expenses.\n" +
+                                                "Please review and correct the currency conversion rates in your expenses.";
+
+                SharedPreferences.Editor editor = mPreferences.edit();
+                editor.putString("UpdateMsg", updateMsg);
+                editor.commit();
+            }
+            checkCursor.close();
         }
 
         private void createExpenseCategory(SQLiteDatabase db) throws SQLException {

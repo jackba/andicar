@@ -127,6 +127,9 @@
     <string name="MAIN_ACTIVITY_WELCOMEBACK">"Welcome back!"</string>
     <string name="MAIN_ACTIVITY_BACKUPEXISTS">"Backup files exists.\nDo you want to restore one?"</string>
     <string name="MAIN_ACTIVITY_WELLCOME_MESSAGE_TITLE">"Wellcome to AndiCar."</string>
+
+    <string name="MAIN_ACTIVITY_UPDATE_MESSAG">"Update message"</string>
+
     <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
     <string name="NO_DRIVERS">"No drivers defined yet"</string>
     <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Can not be selected."</string>

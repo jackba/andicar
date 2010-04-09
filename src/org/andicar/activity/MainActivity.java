@@ -115,6 +115,25 @@ public class MainActivity extends Activity {
             appVersion = "N/A";
         }
 
+        String updateMsg = mPreferences.getString("UpdateMsg", null);
+        if(updateMsg != null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(mRes.getString(R.string.MAIN_ACTIVITY_UPDATE_MESSAG));
+            builder.setMessage(updateMsg);
+            builder.setCancelable(false);
+            builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.remove("UpdateMsg");
+            editor.commit();
+        }
+
         mileageListBtn = (Button) findViewById(R.id.mainActivityBtnMileageList);
         mileageListBtn.setOnClickListener(btnMileageListClickListener);
         mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
