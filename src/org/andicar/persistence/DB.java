@@ -561,10 +561,10 @@ public class DB {
                 updateDbTo200(db); //update database to version 200 //AndiCar 2.0.x
                 updateDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.x
             }
+            //AndiCar 2.0.0 & 2.0.1
             else if(oldVersion == 200){
                 updateDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.x
             }
-//            updateDbTo210(db); //update database to version 210 //AndiCar 2.1.x
         }
 
         private void updateDbTo200(SQLiteDatabase db) throws SQLException {
