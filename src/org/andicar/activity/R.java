@@ -21,21 +21,24 @@ public final class R {
         public static final int separator_bg=0x7f050003;
     }
     public static final class drawable {
-        public static final int btn_donate=0x7f020000;
-        public static final int car2=0x7f020001;
-        public static final int ic_menu_add=0x7f020002;
-        public static final int ic_menu_expenses=0x7f020003;
-        public static final int ic_menu_help=0x7f020004;
-        public static final int ic_menu_info_details=0x7f020005;
-        public static final int ic_menu_mileage=0x7f020006;
-        public static final int ic_menu_preferences=0x7f020007;
-        public static final int ic_menu_refuel=0x7f020008;
-        public static final int ic_menu_report=0x7f020009;
-        public static final int ic_menu_search=0x7f02000a;
-        public static final int ic_menu_send=0x7f02000b;
-        public static final int ic_menu_show_active=0x7f02000c;
-        public static final int ic_menu_show_inactive=0x7f02000d;
-        public static final int ic_statusbar_reportservice_start=0x7f02000e;
+        public static final int andicar_gps1=0x7f020000;
+        public static final int andicar_gps2=0x7f020001;
+        public static final int andicar_gps_anim=0x7f020002;
+        public static final int btn_donate=0x7f020003;
+        public static final int car2=0x7f020004;
+        public static final int ic_menu_add=0x7f020005;
+        public static final int ic_menu_expenses=0x7f020006;
+        public static final int ic_menu_help=0x7f020007;
+        public static final int ic_menu_info_details=0x7f020008;
+        public static final int ic_menu_mileage=0x7f020009;
+        public static final int ic_menu_preferences=0x7f02000a;
+        public static final int ic_menu_refuel=0x7f02000b;
+        public static final int ic_menu_report=0x7f02000c;
+        public static final int ic_menu_search=0x7f02000d;
+        public static final int ic_menu_send=0x7f02000e;
+        public static final int ic_menu_show_active=0x7f02000f;
+        public static final int ic_menu_show_inactive=0x7f020010;
+        public static final int ic_statusbar_reportservice_start=0x7f020011;
     }
     public static final class id {
         public static final int UOMVolumeSpinner=0x7f070079;
