@@ -106,6 +106,7 @@ public class MileageEditActivity extends EditActivityBase {
 
             Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
             mStartIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
+            mileageEditStartIndexEntry.setText(mStartIndex.toString());
             BigDecimal stopIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
             mileageEditInputEntry.setText(stopIndex.toString());
             mileageEditInsertModeIndexRb.setChecked(true);
