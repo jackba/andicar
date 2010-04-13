@@ -45,7 +45,6 @@ import org.andicar.utils.StaticValues;
 import org.andicar.activity.ListActivityBase;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
-import org.andicar.service.ReportService;
 import org.andicar.utils.Utils;
 
 /**
@@ -72,6 +71,19 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
 
         super.onCreate(icicle, mItemClickListener, editClass, editTableName, editTableColumns,
                 whereCondition, orderByColumn, pLayoutId, pDbMapFrom, pLayoutIdTo);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mListDbHelper != null){
+            mListDbHelper.close();
+            mListDbHelper = null;
+        }
+        if(mReportDbHelper != null){
+            mReportDbHelper.close();
+            mReportDbHelper = null;
+        }
     }
 
     @Override

@@ -98,7 +98,24 @@ public abstract class EditActivityBase extends Activity {
             btnOk.setOnClickListener(btnOkClickListener);
 
     }
-    
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mMainDbAdapter == null)
+            mMainDbAdapter = new MainDbAdapter(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mMainDbAdapter != null){
+            mMainDbAdapter.close();
+            mMainDbAdapter = null;
+        }
+    }
+
+
     /** Use instead onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener) */
     @Override
     protected void onCreate(Bundle icicle) {
@@ -117,8 +134,7 @@ public abstract class EditActivityBase extends Activity {
             long selectedId, boolean addListener){
         try{
             Spinner spinner = (Spinner) pSpinner;
-            MainDbAdapter mLocalDbHelper = new MainDbAdapter(this);
-            Cursor mCursor = mLocalDbHelper.fetchForTable( tableName, columns, whereCondition, orderBy);
+            Cursor mCursor = mMainDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
             startManagingCursor( mCursor );
             int[] to = new int[]{android.R.id.text1};
             SimpleCursorAdapter mCursorAdapter =

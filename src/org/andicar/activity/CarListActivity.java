@@ -48,7 +48,7 @@ public class CarListActivity extends ListActivityBase
     {
         public void onItemClick( AdapterView parent, View v, int position, long id )
         {
-            Cursor selectedRecord = mMainDbHelper.fetchRecord(MainDbAdapter.CAR_TABLE_NAME,
+            Cursor selectedRecord = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME,
                     MainDbAdapter.carTableColNames, id);
             //car is actve?
             if( selectedRecord.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {

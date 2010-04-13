@@ -20,11 +20,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Binder;
 import android.os.IBinder;
 import android.widget.Toast;
 import org.andicar.activity.MainActivity;
 import org.andicar.activity.R;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -32,6 +35,8 @@ import org.andicar.activity.R;
  */
 public class GPSTrackService extends Service {
     private NotificationManager mNM;
+    private SharedPreferences mPreferences;
+    protected MainDbAdapter mMainDbAdapter = null;
 
     /**
      * Class for clients to access.  Because we know this service always
@@ -46,19 +51,31 @@ public class GPSTrackService extends Service {
 
     @Override
     public void onCreate() {
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-
+        mMainDbAdapter = new MainDbAdapter(this);
         // Display a notification about us starting.  We put an icon in the status bar.
         showNotification();
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putBoolean("isGpsTrackOn", true);
+        editor.commit();
     }
 
     @Override
     public void onDestroy() {
         // Cancel the persistent notification.
         mNM.cancel(R.string.MAIN_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE);
+        if(mMainDbAdapter != null){
+            mMainDbAdapter.close();
+            mMainDbAdapter = null;
+        }
 
         // Tell the user we stopped.
         Toast.makeText(this, R.string.MAIN_ACTIVITY_GPSTRACKSERVICESTOPPED_MESSAGE, Toast.LENGTH_SHORT).show();
+
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putBoolean("isGpsTrackOn", false);
+        editor.commit();
     }
 
     @Override

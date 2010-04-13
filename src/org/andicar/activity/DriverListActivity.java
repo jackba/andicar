@@ -50,7 +50,7 @@ public class DriverListActivity extends ListActivityBase
     {
         public void onItemClick( AdapterView parent, View v, int position, long id )
         {
-            Cursor selectedRecord = mMainDbHelper.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
+            Cursor selectedRecord = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
                     MainDbAdapter.driverTableColNames, id);
             //driver is actve?
             if( selectedRecord.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {

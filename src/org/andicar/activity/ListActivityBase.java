@@ -18,7 +18,6 @@
  */
 package org.andicar.activity;
 
-import org.andicar.activity.report.ReportListActivityBase;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -57,7 +56,7 @@ public class ListActivityBase extends ListActivity {
     protected int[] mLayoutIdTo;
     protected Resources mRes = null;
     protected SharedPreferences mPreferences;
-    protected MainDbAdapter mMainDbHelper = null;
+    protected MainDbAdapter mMainDbAdapter = null;
     protected Bundle extras = null;
     protected AlertDialog.Builder errorAlertBuilder;
     protected AlertDialog errorAlert;
@@ -75,10 +74,7 @@ public class ListActivityBase extends ListActivity {
         super.onCreate(icicle);
         mRes = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-
-        if(mMainDbHelper == null) {
-            mMainDbHelper = new MainDbAdapter(this);
-        }
+        mMainDbAdapter = new MainDbAdapter(this);
 
         if(extras == null) {
             extras = getIntent().getExtras();
@@ -116,6 +112,23 @@ public class ListActivityBase extends ListActivity {
         }
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mMainDbAdapter == null)
+            mMainDbAdapter = new MainDbAdapter(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mMainDbAdapter != null){
+            mMainDbAdapter.close();
+            mMainDbAdapter = null;
+        }
+    }
+
     protected AdapterView.OnItemLongClickListener mItemLongClickListener =
             new AdapterView.OnItemLongClickListener() {
                 public boolean onItemLongClick(AdapterView parent, View v, int position, long id) {
@@ -194,7 +207,7 @@ public class ListActivityBase extends ListActivity {
                 builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                int deleteResult = mMainDbHelper.deleteRecord(mTableName, mLongClickId);
+                                int deleteResult = mMainDbAdapter.deleteRecord(mTableName, mLongClickId);
                                 if(deleteResult != -1) {
                                     errorAlertBuilder.setMessage(mRes.getString(deleteResult));
                                     errorAlert = errorAlertBuilder.create();
@@ -260,7 +273,7 @@ public class ListActivityBase extends ListActivity {
             }
         }
 
-        recordCursor = mMainDbHelper.fetchForTable(mTableName, mColumns, tmpWhere, mOrderByColumn);
+        recordCursor = mMainDbAdapter.fetchForTable(mTableName, mColumns, tmpWhere, mOrderByColumn);
         startManagingCursor(recordCursor);
 
         setListAdapter(null);
@@ -276,7 +289,7 @@ public class ListActivityBase extends ListActivity {
 
         if(getListAdapter() != null && getListAdapter().getCount() == 1) {
             if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
-                Cursor selectedRecord = mMainDbHelper.fetchForTable(mTableName, MainDbAdapter.carTableColNames,
+                Cursor selectedRecord = mMainDbAdapter.fetchForTable(mTableName, MainDbAdapter.carTableColNames,
                         null, null);
                 selectedRecord.moveToFirst();
                 SharedPreferences.Editor editor = mPreferences.edit();
@@ -289,7 +302,7 @@ public class ListActivityBase extends ListActivity {
             }
             else {
                 if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-                    Cursor selectedRecord = mMainDbHelper.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
+                    Cursor selectedRecord = mMainDbAdapter.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
                             null, null);
                     selectedRecord.moveToFirst();
                     SharedPreferences.Editor editor = mPreferences.edit();
