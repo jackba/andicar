@@ -34,6 +34,8 @@
         android:debuggable="true"
     >
         
+        <service android:name="org.andicar.service.GPSTrackService" />
+        
         <activity android:name="org.andicar.activity.MainActivity"
                   android:label="@string/APP_NAME"
                   android:theme="@android:style/Theme.NoTitleBar">

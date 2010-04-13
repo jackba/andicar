@@ -23,6 +23,7 @@ import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.activity.miscellaneous.PreferencesActivity;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -39,10 +40,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.database.Cursor;
 import android.text.Html;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import org.andicar.activity.miscellaneous.AboutActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
@@ -50,6 +48,8 @@ import org.andicar.activity.report.ExpensesListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.service.GPSTrackService;
+import java.util.List;
 
 /**
  *
@@ -71,6 +71,7 @@ public class MainActivity extends Activity {
 
     private Button mileageListBtn;
     private Button mileageInsertBtn;
+    private Button mainActivityBtnStartStopGpsTrack;
     private Button refuelListBtn;
     private Button refuelInsertBtn;
     private Button expenseListBtn;
@@ -97,6 +98,7 @@ public class MainActivity extends Activity {
     private boolean showRefuelZone = true;
     private boolean showExpenseZone = true;
     private boolean showCarReportZone = true;
+    private boolean gpsTrackIsOn = false;
 
     /** Called when the activity is first created. */
     @Override
@@ -138,6 +140,8 @@ public class MainActivity extends Activity {
         mileageListBtn.setOnClickListener(btnMileageListClickListener);
         mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
         mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
+        mainActivityBtnStartStopGpsTrack = (Button) findViewById(R.id.mainActivityBtnStartStopGpsTrack);
+        mainActivityBtnStartStopGpsTrack.setOnClickListener(mStartStopGPStrackListener);
         refuelListBtn = (Button) findViewById(R.id.mainActivityBtnRefuelList);
         refuelListBtn.setOnClickListener(btnRefuelListClickListener);
         refuelInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
@@ -269,6 +273,13 @@ public class MainActivity extends Activity {
             threeLineListMileageText3.setText("");
             mileageListBtn.setEnabled(false);
         }
+
+        gpsTrackIsOn = isGPSTrackingServiceRunning();
+        
+        if(gpsTrackIsOn)
+            mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+        else
+            mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
 
         //fill refuel zone data
         listCursor = null;
@@ -492,6 +503,36 @@ public class MainActivity extends Activity {
             startActivityForResult(refuelInsertIntent, ACTIVITY_EXPENSEINSERT_REQUEST_CODE);
         }
     };
+
+    private OnClickListener mStartStopGPStrackListener = new OnClickListener() {
+        public void onClick(View v)
+        {
+            if(gpsTrackIsOn){
+                stopService(new Intent(MainActivity.this, GPSTrackService.class));
+                gpsTrackIsOn = false;
+                mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
+            }
+            else{
+                startService(new Intent(MainActivity.this, GPSTrackService.class));
+                gpsTrackIsOn = true;
+                mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+            }
+        };
+    };
+
+    private boolean isGPSTrackingServiceRunning(){
+        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(50);
+        String temp;
+        for (int i = 0; i < runningServices.size(); i++) {
+            ActivityManager.RunningServiceInfo runningServiceInfo = runningServices.get(i);
+//            if(runningServiceInfo.getClass().equals(GPSTrackService.class))
+//                return true;
+            temp = runningServiceInfo.service.getClassName();
+            temp = runningServiceInfo.process;
+        }
+        return false;
+    }
 
     private void fillDriverCar() {
         if (mPreferences != null) {
