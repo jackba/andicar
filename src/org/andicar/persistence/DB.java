@@ -449,7 +449,9 @@ public class DB {
 
     public void close() {
         mDbHelper.close();
+        mDbHelper = null;
         mDb.close();
+        mDb = null;
     }
 
     public static String sqlConcatTableColumn(String tableName, String columnName){
@@ -558,12 +560,12 @@ public class DB {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //AndiCar 1.0.0
             if(oldVersion == 1) {
-                updateDbTo200(db); //update database to version 200 //AndiCar 2.0.x
-                updateDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.x
+                updateDbTo200(mDb); //update database to version 200 //AndiCar 2.0.x
+                updateDbTo210(mDb, oldVersion); //update database to version 210 //AndiCar 2.1.x
             }
             //AndiCar 2.0.0 & 2.0.1
             else if(oldVersion == 200){
-                updateDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.x
+                updateDbTo210(mDb, oldVersion); //update database to version 210 //AndiCar 2.1.x
             }
         }
 
@@ -797,11 +799,16 @@ public class DB {
         }
     }
 
-    public boolean backupDb() {
+    public boolean backupDb(String bkName) {
         boolean retVal;
         String fromFile = mDb.getPath();
-        String toFile = StaticValues.backupFolder + Utils.appendDateTime(StaticValues.backupPrefix, true, true, true)
+        String toFile = StaticValues.backupFolder;
+        if(bkName == null)
+            toFile = toFile + Utils.appendDateTime(StaticValues.backupPrefix, true, true, true)
                 + StaticValues.backupSufix;
+        else
+            toFile = toFile + bkName + StaticValues.backupSufix;
+        
         mDb.close();
         FileUtils fu = new FileUtils();
         retVal = fu.copyFile(mCtx, fromFile, toFile, false);

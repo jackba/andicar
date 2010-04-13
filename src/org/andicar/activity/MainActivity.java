@@ -23,7 +23,6 @@ import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.activity.miscellaneous.PreferencesActivity;
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -49,7 +48,6 @@ import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.service.GPSTrackService;
-import java.util.List;
 
 /**
  *
@@ -98,12 +96,23 @@ public class MainActivity extends Activity {
     private boolean showRefuelZone = true;
     private boolean showExpenseZone = true;
     private boolean showCarReportZone = true;
-    private boolean gpsTrackIsOn = false;
+
+    private boolean isGpsTrackOn = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(reportDb != null){
+            reportDb.close();
+            reportDb = null;
+        }
+    }
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        
         mRes = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 
@@ -242,6 +251,12 @@ public class MainActivity extends Activity {
             editor.commit();
             finish();
         }
+
+        if(reportDb == null)
+            reportDb = new ReportDbAdapter(mainContext, null, null);
+
+        isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
+
         showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
         showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
         showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
@@ -274,9 +289,7 @@ public class MainActivity extends Activity {
             mileageListBtn.setEnabled(false);
         }
 
-        gpsTrackIsOn = isGPSTrackingServiceRunning();
-        
-        if(gpsTrackIsOn)
+        if(isGpsTrackOn)
             mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
         else
             mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
@@ -440,7 +453,10 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        reportDb.close();
+        if(reportDb != null){
+            reportDb.close();
+            reportDb = null;
+        }
     }
 
     private OnClickListener btnMileageListClickListener = new OnClickListener() {
@@ -507,33 +523,33 @@ public class MainActivity extends Activity {
     private OnClickListener mStartStopGPStrackListener = new OnClickListener() {
         public void onClick(View v)
         {
-            if(gpsTrackIsOn){
+            if(isGpsTrackOn){
                 stopService(new Intent(MainActivity.this, GPSTrackService.class));
-                gpsTrackIsOn = false;
+                isGpsTrackOn = false;
                 mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
             }
             else{
                 startService(new Intent(MainActivity.this, GPSTrackService.class));
-                gpsTrackIsOn = true;
+                isGpsTrackOn = true;
                 mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
             }
         };
     };
 
-    private boolean isGPSTrackingServiceRunning(){
-        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(50);
-        String temp;
-        for (int i = 0; i < runningServices.size(); i++) {
-            ActivityManager.RunningServiceInfo runningServiceInfo = runningServices.get(i);
-//            if(runningServiceInfo.getClass().equals(GPSTrackService.class))
-//                return true;
-            temp = runningServiceInfo.service.getClassName();
-            temp = runningServiceInfo.process;
-        }
-        return false;
-    }
-
+//    private boolean isGPSTrackingServiceRunning(){
+//        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(50);
+//        String temp;
+//        for (int i = 0; i < runningServices.size(); i++) {
+//            ActivityManager.RunningServiceInfo runningServiceInfo = runningServices.get(i);
+////            if(runningServiceInfo.getClass().equals(GPSTrackService.class))
+////                return true;
+//            temp = runningServiceInfo.service.getClassName();
+//            temp = runningServiceInfo.process;
+//        }
+//        return false;
+//    }
+//
     private void fillDriverCar() {
         if (mPreferences != null) {
             infoStr = mRes.getString(R.string.GEN_DRIVER_LABEL);
