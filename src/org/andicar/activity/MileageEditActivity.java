@@ -227,7 +227,7 @@ public class MileageEditActivity extends EditActivityBase {
                           "FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
                           "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + mCarId + " " +
                           "ORDER BY Pos ASC";
-            Cursor c = mMainDbAdapter.execSql(sql);
+            Cursor c = mMainDbAdapter.execSelectSql(sql);
             if(c.moveToFirst()){
                 mStartIndexStr = c.getString(0);
             }

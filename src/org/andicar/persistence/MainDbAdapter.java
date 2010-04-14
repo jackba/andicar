@@ -280,7 +280,7 @@ public class MainDbAdapter extends DB
                         "FROM " + EXPENSES_TABLE_NAME + " " +
                         "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
                             "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
-                Cursor c = execSql(expenseIdSelect);
+                Cursor c = execSelectSql(expenseIdSelect);
                 if(c.moveToFirst())
                     expenseId = c.getLong(0);
                 c.close();
@@ -402,7 +402,7 @@ public class MainDbAdapter extends DB
                             "FROM " + EXPENSES_TABLE_NAME + " " +
                             "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
                                 "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
-                    Cursor c = execSql(expenseIdSelect);
+                    Cursor c = execSelectSql(expenseIdSelect);
                     if(c.moveToFirst())
                         expenseId = c.getLong(0);
                     c.close();
@@ -784,10 +784,13 @@ public class MainDbAdapter extends DB
         return retVal;
     }
 
-    public Cursor execSql(String sql){
-        return mDb.rawQuery(sql, null);
+    public Cursor execSelectSql(String selectSql){
+        return mDb.rawQuery(selectSql, null);
     }
 
+    public void execSql(String sql){
+        mDb.execSQL(sql);
+    }
     public BigDecimal getCurrencyRate(long fromCurrencyId, long toCurrencyId){
         BigDecimal retVal = null;
         String retValStr = null;
@@ -801,7 +804,7 @@ public class MainDbAdapter extends DB
                     " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
                         " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + fromCurrencyId +
                         " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + toCurrencyId;
-        selectCursor = execSql(selectSql);
+        selectCursor = execSelectSql(selectSql);
         if(selectCursor.moveToFirst())
             retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
         selectCursor.close();
@@ -813,7 +816,7 @@ public class MainDbAdapter extends DB
                     " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
                         " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + fromCurrencyId +
                         " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + toCurrencyId;
-        selectCursor = execSql(selectSql);
+        selectCursor = execSelectSql(selectSql);
         if(selectCursor.moveToFirst())
             retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
         selectCursor.close();
@@ -842,7 +845,7 @@ public class MainDbAdapter extends DB
                     " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
                         " AND " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " + fromId +
                         " AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " + toId;
-        selectCursor = execSql(selectSql);
+        selectCursor = execSelectSql(selectSql);
         if(selectCursor.moveToFirst())
             retValStr = selectCursor.getString(UOM_CONVERSION_COL_RATE_POS);
         selectCursor.close();

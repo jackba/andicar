@@ -104,7 +104,6 @@
     <string name="MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION">"Start GPS Track"</string>
     <string name="MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION">"Stop GPS Track"</string>
     <string name="MAIN_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE">"GPS tracking started"</string>
-    <string name="MAIN_ACTIVITY_GPSTRACKSERVICESTOPPED_MESSAGE">"GPS tracking stopped"</string>
 
     <string name="MAIN_ACTIVITY_EXPENSE_HDR_CAPTION">"Expenses"</string>
     <string name="MAIN_ACTIVITY_EXPENSE_LISTHDR_CAPTION">"Last expense:"</string>
@@ -245,7 +244,9 @@
     <string name="REPORT_SERVICE_LABEL">"AndiCar Report Service"</string>
     <string name="REPORT_PROGRESS_DIALOG_TEXT">"Report creation started. Please wait..."</string>
 
-    <string name="SERVICE_GPS_TRACKING_LABEL">"AndiCar GPS Tracking"</string>
+    <string name="SERVICE_GPSTRACK_LABEL">"AndiCar GPS Tracking"</string>
+    <string name="SERVICE_GPSTRACK_SERVICESTOPPED_MESSAGE">"GPS tracking stopped"</string>
+    <string name="SERVICE_GPSTRACK_GPSDISABLED">"Your gps is disabled!\nPlease enable it."</string>
 
 
 </resources>

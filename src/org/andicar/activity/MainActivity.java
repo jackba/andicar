@@ -530,8 +530,10 @@ public class MainActivity extends Activity {
             }
             else{
                 startService(new Intent(MainActivity.this, GPSTrackService.class));
-                isGpsTrackOn = true;
-                mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+                isGpsTrackOn = true; //mPreferences.getBoolean("isGpsTrackOn", false); //check if the service is started succesfull
+                if(isGpsTrackOn)
+                    mainActivityBtnStartStopGpsTrack.setText(
+                            mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
             }
         };
     };
