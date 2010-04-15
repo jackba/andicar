@@ -39,6 +39,8 @@ import org.andicar.utils.StaticValues;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import org.andicar.utils.Utils;
 
 /**
  *
@@ -56,6 +58,9 @@ public class GPSTrackService extends Service {
     double currentLocationLatitude = 0;
     double currentLocationLongitude = 0;
     double currentLocationAltitude = 0;
+    long currentLocationTime = 0;
+    Calendar currentLocationDateTime = Calendar.getInstance();
+    String currentLocationDateTimeGPXStr = "";
     float[] distanceArray = new float[1];
     float distanceBetweenLocations = 0;
     private long gpsTrackId = 0;
@@ -63,6 +68,8 @@ public class GPSTrackService extends Service {
     private FileWriter gpsTrackDetailCSVFileWriter = null;
     private File gpsTrackDetailKMLFile = null;
     private FileWriter gpsTrackDetailKMLFileWriter = null;
+    private File gpsTrackDetailGPXFile = null;
+    private FileWriter gpsTrackDetailGPXFileWriter = null;
 
     /**
      * Class for clients to access.  Because we know this service always
@@ -121,6 +128,7 @@ public class GPSTrackService extends Service {
         try {
             gpsTrackDetailCSVFile = FileUtils.createGpsTrackDetailFile(StaticValues.gpsTrackFormatCSV, "" + gpsTrackId);
             gpsTrackDetailKMLFile = FileUtils.createGpsTrackDetailFile(StaticValues.gpsTrackFormatKML, "" + gpsTrackId);
+            gpsTrackDetailGPXFile = FileUtils.createGpsTrackDetailFile(StaticValues.gpsTrackFormatGPX, "" + gpsTrackId);
 
             //create a link for between the master track and the file
             if(gpsTrackDetailCSVFile != null){
@@ -165,6 +173,23 @@ public class GPSTrackService extends Service {
                     //initialize the file header
                     createKMLHeader();
             }
+            if(gpsTrackDetailGPXFile != null){
+                    gpsTrackDetailGPXFileWriter = new FileWriter(gpsTrackDetailGPXFile);
+                    sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
+                            + " ( "
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
+                                + MainDbAdapter.GEN_COL_NAME_NAME
+                            + " ) "
+                            + " VALUES ( "
+                                + gpsTrackId + ", "
+                                + "'" + StaticValues.gpsTrackFormatGPX + "', "
+                                + "'" + gpsTrackDetailGPXFile.getAbsolutePath() + "'"
+                            + " ) ";
+                    mMainDbAdapter.execSql(sqlStr);
+                    //initialize the file header
+                    createGPXHeader();
+            }
             // Display a notification about us starting.  We put an icon in the status bar.
             showNotification();
             SharedPreferences.Editor editor = mPreferences.edit();
@@ -205,6 +230,31 @@ public class GPSTrackService extends Service {
         }
         catch(IOException e){
             
+        }
+    }
+
+    private void createGPXHeader(){
+        try{
+            gpsTrackDetailGPXFileWriter.append(
+                    "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>\n"
+                    + "<?xml-stylesheet type=\"text/xsl\" href=\"details.xsl\"?>\n"
+                    + "<gpx\n"
+                        + "version=\"1.0\"\n"
+                        + "creator=\"AndiCar\"\n"
+                        + "xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n"
+                        + "xmlns=\"http://www.topografix.com/GPX/1/0\"\n"
+                        + "xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\" "
+                            + "xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\">\n"
+                    + "<trk>\n"
+                    + "<name><![CDATA[" + gpsTrackDetailGPXFile.getName() +"]]></name>\n"
+                    + "<desc><![CDATA[]]></desc>\n"
+                    + "<number>" + gpsTrackId + "</number>\n"
+                    + "<topografix:color>c0c0c0</topografix:color>\n"
+                    + "<trkseg>\n"
+                );
+        }
+        catch(IOException e){
+
         }
     }
 
@@ -252,6 +302,17 @@ public class GPSTrackService extends Service {
         }
     }
 
+    private void appendGPXFooter(){
+        try{
+            gpsTrackDetailGPXFileWriter.append(
+                "</trkseg>\n"
+                + "</trk>\n"
+                + "</gpx>"
+            );
+        }
+        catch(IOException e){
+        }
+    }
 
     @Override
     public void onDestroy() {
@@ -266,6 +327,8 @@ public class GPSTrackService extends Service {
             gpsTrackDetailCSVFileWriter.flush();
             appendKMLFooter();
             gpsTrackDetailKMLFileWriter.flush();
+            appendGPXFooter();
+            gpsTrackDetailGPXFileWriter.flush();
         }
         catch(IOException ex) {
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
@@ -330,6 +393,7 @@ public class GPSTrackService extends Service {
                     currentLocationLatitude = loc.getLatitude();
                     currentLocationLongitude = loc.getLongitude();
                     currentLocationAltitude = loc.getAltitude();
+                    currentLocationTime = loc.getTime();
                     if(oldLocationLatitude != 0) {
                         Location.distanceBetween(oldLocationLatitude, oldLocationLongitude, currentLocationLatitude, currentLocationLongitude, distanceArray);
                         distanceBetweenLocations = distanceArray[0];
@@ -344,13 +408,28 @@ public class GPSTrackService extends Service {
                                                         + currentLocationLatitude + ","
                                                         + currentLocationLongitude + ","
                                                         + loc.getSpeed() + ","
-                                                        + loc.getTime() + ","
+                                                        + currentLocationTime + ","
                                                         + distanceBetweenLocations + ","
                                                         + loc.getBearing() + "\n");
                     gpsTrackDetailKMLFileWriter.append(currentLocationLongitude + ","
                                                 + currentLocationLatitude + ","
                                                 + currentLocationAltitude + " ");
-                    
+
+                    currentLocationDateTime.setTimeInMillis(currentLocationTime);
+                    currentLocationDateTimeGPXStr =
+                            currentLocationDateTime.get(Calendar.YEAR) + "-"
+                            + Utils.pad(currentLocationDateTime.get(Calendar.MONTH) + 1) + "-"
+                            + Utils.pad(currentLocationDateTime.get(Calendar.DAY_OF_MONTH)) + "T"
+                            + Utils.pad(currentLocationDateTime.get(Calendar.HOUR_OF_DAY)) + ":"
+                            + Utils.pad(currentLocationDateTime.get(Calendar.MINUTE)) + ":"
+                            + Utils.pad(currentLocationDateTime.get(Calendar.SECOND)) + "Z";
+                    gpsTrackDetailGPXFileWriter.append(
+                            "<trkpt lat=\"" + currentLocationLatitude + "\" lon=\"" + currentLocationLongitude + "\">\n"
+                            + "<ele>" + currentLocationAltitude + "</ele>\n"
+                            + "<time>" + currentLocationDateTimeGPXStr + "</time>\n"
+                            + "</trkpt>\n"
+                            );
+
                     oldLocationLatitude = currentLocationLatitude;
                     oldLocationLongitude = currentLocationLongitude;
                 }
