@@ -148,6 +148,17 @@ public class PreferencesActivity extends PreferenceActivity {
         currencyRatePrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_CURRENCYRATELIS_SUMMARY));
         expenseCategory.addPreference(currencyRatePrefScreen);
 
+        //gps track
+        PreferenceCategory gpsTrackCategory = new PreferenceCategory(this);
+        gpsTrackCategory.setTitle(mRes.getString(R.string.PREF_GPSTRACK_CATEGORY_TITLE));
+        prefScreenRoot.addPreference(gpsTrackCategory);
+        //gps
+        PreferenceScreen gpsTrackScreen = getPreferenceManager().createPreferenceScreen(this);
+        gpsTrackScreen.setIntent(new Intent(this, GPSPreferencesActivity.class));
+        gpsTrackScreen.setTitle(mRes.getString(R.string.PREF_GPSTRACK_TITLE));
+        gpsTrackScreen.setSummary(mRes.getString(R.string.PREF_GPSTRACK_SUMMARY));
+        gpsTrackCategory.addPreference(gpsTrackScreen);
+
         //Misc settings
         PreferenceCategory miscCategory = new PreferenceCategory(this);
         miscCategory.setTitle(mRes.getString(R.string.PREF_MISC_CATEGORY_TITLE));

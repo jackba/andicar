@@ -69,6 +69,11 @@
             android:name="org.andicar.activity.miscellaneous.PreferencesActivity"
             android:label="@string/APP_ACTIVITY_PREFERENCES">
         </activity>
+        <activity
+            android:name="org.andicar.activity.miscellaneous.GPSPreferencesActivity"
+            android:label="@string/APP_ACTIVITY_GPSPREFERENCES">
+        </activity>
+
 
         <activity 
             android:name="org.andicar.activity.ExpenseTypeListActivity"

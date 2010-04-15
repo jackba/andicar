@@ -26,6 +26,7 @@
     <string name="APP_ACTIVITY_CAREDIT">"Edit car"</string>
     <string name="APP_ACTIVITY_CARLIST">"Cars"</string>
     <string name="APP_ACTIVITY_PREFERENCES">"Preferences"</string>
+    <string name="APP_ACTIVITY_GPSPREFERENCES">"GPS Track Preferences"</string>
     <string name="APP_ACTIVITY_EXPCATEGORYLIST">"Expense categories"</string>
     <string name="APP_ACTIVITY_EXPCATEGORYEDIT">"Edit expense category"</string>
     <string name="APP_ACTIVITY_EXPTYPELIST">"Expense types"</string>
@@ -205,6 +206,9 @@
     <string name="PREF_CAT_MAINSCREENCATEGORY_SUMMARY">"Customize your main sceen"</string>
     <string name="PREF_CAT_CURRENCYRATELIST_TITLE">"Currency rates"</string>
     <string name="PREF_CAT_CURRENCYRATELIS_SUMMARY">"Add, delete, modify currency rates"</string>
+    <string name="PREF_GPSTRACK_CATEGORY_TITLE">"GPS Tracking"</string>
+    <string name="PREF_GPSTRACK_TITLE">"GPS Track"</string>
+    <string name="PREF_GPSTRACK_SUMMARY">"Various options for GPS tracking."</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>
