@@ -51,4 +51,5 @@
     <string name="ERR_030">"This expense can not be deleted because it was created by a refuel.\nYou should delete the refuel."</string>
     <string name="ERR_031">"You can not define conversion between the same UOM's."</string>
     <string name="ERR_032">"You can not define conversion between the same currencies."</string>
+    <string name="ERR_033">"GPS track folder (SDCARD/andicar/gpstrack) can not be created. You can not use the gps tracking."</string>
 </resources>

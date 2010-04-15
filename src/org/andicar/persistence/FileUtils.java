@@ -30,7 +30,8 @@ import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.andicar.activity.R;
 import org.andicar.utils.StaticValues;
 
@@ -84,6 +85,19 @@ public class FileUtils {
                     exceptionAlert = exceptionAlertBuilder.create();
                     exceptionAlert.show();
                     return R.string.ERR_024;
+                }
+            }
+            file = new File(StaticValues.gpsTrackDetailsFolder);
+            if(!file.exists()){
+                if(!file.mkdirs()){
+                    lastError = "GPS track folder " +  StaticValues.gpsTrackDetailsFolder + " cannot be created.";
+                    exceptionAlertBuilder = new AlertDialog.Builder(ctx);
+                    exceptionAlertBuilder.setCancelable( false );
+                    exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
+                    exceptionAlertBuilder.setMessage(mRes.getString(R.string.ERR_033));
+                    exceptionAlert = exceptionAlertBuilder.create();
+                    exceptionAlert.show();
+                    return R.string.ERR_033;
                 }
             }
         }
@@ -182,6 +196,40 @@ public class FileUtils {
             myData.add(bkFiles[i]);
         }
         return myData;
+    }
+
+    public static File createGpsTrackDetailFile(String fileFormat, String fileName){
+        File file = new File(StaticValues.gpsTrackDetailsFolder + fileName + "." + fileFormat);
+        return file;
+    }
+
+    public static FileWriter createGpsTrackDetailFileWriter(String fileFormat, String fileName){
+        FileWriter fw = null;
+        try {
+            File file = createGpsTrackDetailFile(fileFormat, fileName);
+            fw = new FileWriter(file);
+        }
+        catch(IOException ex) {
+            Logger.getLogger(FileUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return fw;
+    }
+
+    public int updateTo220(Context ctx){
+            File file = new File(StaticValues.gpsTrackDetailsFolder);
+            if(!file.exists()){
+                if(!file.mkdirs()){
+                    lastError = "GPS track folder " +  StaticValues.gpsTrackDetailsFolder + " cannot be created.";
+                    exceptionAlertBuilder = new AlertDialog.Builder(ctx);
+                    exceptionAlertBuilder.setCancelable( false );
+                    exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
+                    exceptionAlertBuilder.setMessage(mRes.getString(R.string.ERR_033));
+                    exceptionAlert = exceptionAlertBuilder.create();
+                    exceptionAlert.show();
+                    return R.string.ERR_033;
+                }
+            }
+        return -1;
     }
 
 }

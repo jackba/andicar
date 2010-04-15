@@ -147,14 +147,16 @@ public class DB {
     public static final String GPSTRACK_COL_DATE_NAME = "Date";
     //gps track detail
     public static final String GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME = GPSTRACK_TABLE_NAME + "_ID";
-    public static final String GPSTRACKDETAIL_COL_ACCURACY_NAME = "Accuracy";
-    public static final String GPSTRACKDETAIL_COL_ALTITUDE_NAME = "Altitude";
-    public static final String GPSTRACKDETAIL_COL_LATITUDE_NAME = "Latitude";
-    public static final String GPSTRACKDETAIL_COL_LONGITUDE_NAME = "Longitude";
-    public static final String GPSTRACKDETAIL_COL_SPEED_NAME = "Speed"; //meters/second
-    public static final String GPSTRACKDETAIL_COL_TIME_NAME = "Time"; //milliseconds since January 1, 1970.
-    public static final String GPSTRACKDETAIL_COL_DISTNACE_NAME = "Distance";
-    public static final String GPSTRACKDETAIL_COL_BEARING_NAME = "Bearing";
+    public static final String GPSTRACKDETAIL_COL_FILEFORMAT_NAME = "Format"; //see StaticValues.gpsTrackFormat...
+    //for space usage consideration we use files on the sdcard to store the tracked locations
+//    public static final String GPSTRACKDETAIL_COL_ACCURACY_NAME = "Accuracy";
+//    public static final String GPSTRACKDETAIL_COL_ALTITUDE_NAME = "Altitude";
+//    public static final String GPSTRACKDETAIL_COL_LATITUDE_NAME = "Latitude";
+//    public static final String GPSTRACKDETAIL_COL_LONGITUDE_NAME = "Longitude";
+//    public static final String GPSTRACKDETAIL_COL_SPEED_NAME = "Speed"; //meters/second
+//    public static final String GPSTRACKDETAIL_COL_TIME_NAME = "Time"; //milliseconds since January 1, 1970.
+//    public static final String GPSTRACKDETAIL_COL_DISTNACE_NAME = "Distance";
+//    public static final String GPSTRACKDETAIL_COL_BEARING_NAME = "Bearing";
 
     //column positions. Some is general (GEN_) some is particular
     //generic columns must be first and must be created for ALL TABLES
@@ -240,14 +242,15 @@ public class DB {
     public static final int GPSTRACK_COL_DATE_POS = 7;
     //gps track detail
     public static final int GPSTRACKDETAIL_COL_GPSTRACK_ID_POS = 4;
-    public static final int GPSTRACKDETAIL_COL_ACCURACY_POS = 5;
-    public static final int GPSTRACKDETAIL_COL_ALTITUDE_POS = 6;
-    public static final int GPSTRACKDETAIL_COL_LATITUDE_POS = 7;
-    public static final int GPSTRACKDETAIL_COL_LONGITUDE_POS = 8;
-    public static final int GPSTRACKDETAIL_COL_SPEED_POS = 9;
-    public static final int GPSTRACKDETAIL_COL_TIME_POS = 10;
-    public static final int GPSTRACKDETAIL_COL_DISTNACE_POS = 11;
-    public static final int GPSTRACKDETAIL_COL_BEARING_POS = 12;
+    //for space usage consideration we use files on the sdcard to store the tracked locations
+//    public static final int GPSTRACKDETAIL_COL_ACCURACY_POS = 5;
+//    public static final int GPSTRACKDETAIL_COL_ALTITUDE_POS = 6;
+//    public static final int GPSTRACKDETAIL_COL_LATITUDE_POS = 7;
+//    public static final int GPSTRACKDETAIL_COL_LONGITUDE_POS = 8;
+//    public static final int GPSTRACKDETAIL_COL_SPEED_POS = 9;
+//    public static final int GPSTRACKDETAIL_COL_TIME_POS = 10;
+//    public static final int GPSTRACKDETAIL_COL_DISTNACE_POS = 11;
+//    public static final int GPSTRACKDETAIL_COL_BEARING_POS = 12;
 
     public static final String[] driverTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         DRIVER_COL_LICENSE_NO_NAME};
@@ -296,9 +299,10 @@ public class DB {
     public static final String[] gpsTrackTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         GPSTRACK_COL_CAR_ID_NAME, GPSTRACK_COL_DRIVER_ID_NAME, GPSTRACK_COL_MILEAGE_ID_NAME, GPSTRACK_COL_DATE_NAME};
     public static final String[] gpsTrackDetailTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-        GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, GPSTRACKDETAIL_COL_ACCURACY_NAME, GPSTRACKDETAIL_COL_ALTITUDE_NAME,
-        GPSTRACKDETAIL_COL_LATITUDE_NAME, GPSTRACKDETAIL_COL_LONGITUDE_NAME, GPSTRACKDETAIL_COL_SPEED_NAME,
-        GPSTRACKDETAIL_COL_TIME_NAME, GPSTRACKDETAIL_COL_DISTNACE_NAME, GPSTRACKDETAIL_COL_BEARING_NAME};
+        GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME};
+//        , GPSTRACKDETAIL_COL_ACCURACY_NAME, GPSTRACKDETAIL_COL_ALTITUDE_NAME,
+//        GPSTRACKDETAIL_COL_LATITUDE_NAME, GPSTRACKDETAIL_COL_LONGITUDE_NAME, GPSTRACKDETAIL_COL_SPEED_NAME,
+//        GPSTRACKDETAIL_COL_TIME_NAME, GPSTRACKDETAIL_COL_DISTNACE_NAME, GPSTRACKDETAIL_COL_BEARING_NAME};
 
     public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
@@ -478,14 +482,15 @@ public class DB {
             + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
             + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
             + GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + " INTEGER NOT NULL, "
-            + GPSTRACKDETAIL_COL_ACCURACY_NAME + " NUMERIC NULL, "
-            + GPSTRACKDETAIL_COL_ALTITUDE_NAME + " NUMERIC NULL, "
-            + GPSTRACKDETAIL_COL_LATITUDE_NAME + " NUMERIC NULL, "
-            + GPSTRACKDETAIL_COL_LONGITUDE_NAME + " NUMERIC NULL, "
-            + GPSTRACKDETAIL_COL_SPEED_NAME + " NUMERIC NULL, "
-            + GPSTRACKDETAIL_COL_TIME_NAME + " DATE NULL, "
-            + GPSTRACKDETAIL_COL_DISTNACE_NAME + " NUMERIC NULL, "
-            + GPSTRACKDETAIL_COL_BEARING_NAME + " NUMERIC NULL "
+            + GPSTRACKDETAIL_COL_FILEFORMAT_NAME + " TEXT NULL "
+//            + GPSTRACKDETAIL_COL_ACCURACY_NAME + " NUMERIC NULL, "
+//            + GPSTRACKDETAIL_COL_ALTITUDE_NAME + " NUMERIC NULL, "
+//            + GPSTRACKDETAIL_COL_LATITUDE_NAME + " NUMERIC NULL, "
+//            + GPSTRACKDETAIL_COL_LONGITUDE_NAME + " NUMERIC NULL, "
+//            + GPSTRACKDETAIL_COL_SPEED_NAME + " NUMERIC NULL, "
+//            + GPSTRACKDETAIL_COL_TIME_NAME + " DATE NULL, "
+//            + GPSTRACKDETAIL_COL_DISTNACE_NAME + " NUMERIC NULL, "
+//            + GPSTRACKDETAIL_COL_BEARING_NAME + " NUMERIC NULL "
             + ");";
 
     protected DatabaseHelper mDbHelper = null;
@@ -636,23 +641,23 @@ public class DB {
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //AndiCar 1.0.0
             if(oldVersion == 1) {
-                updateDbTo200(db); //update database to version 200 //AndiCar 2.0.x
-                updateDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.x
-                updateDbTo220(db, oldVersion);
+                upgradeDbTo200(db); //update database to version 200 //AndiCar 2.0.0
+                upradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
+                upgradeDbTo220(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
-                updateDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.x
-                updateDbTo220(db, oldVersion);
+                upradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
+                upgradeDbTo220(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
-                updateDbTo220(db, oldVersion);
+                upgradeDbTo220(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
             }
-//            updateDbTo220(db, oldVersion);
+//            upgradeDbTo220(db, oldVersion);
         }
 
-        private void updateDbTo200(SQLiteDatabase db) throws SQLException {
+        private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
             createExpenseCategory(db);
             String updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME
                     + " ADD " + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
@@ -667,7 +672,7 @@ public class DB {
             createExpenses(db, true);
         }
 
-        private void updateDbTo210(SQLiteDatabase db, int oldVersion) throws SQLException {
+        private void upradeDbTo210(SQLiteDatabase db, int oldVersion) throws SQLException {
             String updSql = "";
 
             createCurrencyRateTable(db);
@@ -794,10 +799,14 @@ public class DB {
             checkCursor.close();
         }
 
-        private void updateDbTo220(SQLiteDatabase db, int oldVersion) throws SQLException {
+        private void upgradeDbTo220(SQLiteDatabase db, int oldVersion) throws SQLException {
             //gps track
             db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
+//            String tmpStr = "DROP TABLE " + GPSTRACKDETAIL_TABLE_NAME;
+//            db.execSQL(tmpStr);
             db.execSQL(GPSTRACKDETAIL_TABLE_CREATE_SQL);
+            FileUtils fu = new FileUtils();
+            fu.updateTo220(mCtx);
         }
 
         private void createExpenseCategory(SQLiteDatabase db) throws SQLException {
