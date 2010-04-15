@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 211;
+    public static final int DATABASE_VERSION = 214;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
 
@@ -92,8 +92,13 @@ public class StaticValues
 
     public static final String reportFolder = "/sdcard/andicar/reports/";
     public static final String backupFolder = "/sdcard/andicar/backups/";
+    public static final String gpsTrackDetailsFolder = "/sdcard/andicar/gpstrack/";
     public static final String backupPrefix = "bk";
     public static final String backupSufix = ".db";
+
+    public static final String gpsTrackFormatCSV = "csv";
+    public static final String gpsTrackFormatKML = "kml";//Keyhole Markup Language (http://en.wikipedia.org/wiki/KML)
+    public static final String gpsTrackFormatGPX = "gpx";//GPS eXchange Format (http://en.wikipedia.org/wiki/Gpx)
 
     public static final String EXPENSES_COL_FROMREFUEL_TABLE_NAME = "Refuel";
     

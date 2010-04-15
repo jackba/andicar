@@ -29,10 +29,16 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.widget.Toast;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.andicar.activity.MainActivity;
 import org.andicar.activity.R;
+import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  *
@@ -45,8 +51,18 @@ public class GPSTrackService extends Service {
 
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
+    double oldLocationLatitude = 0;
+    double oldLocationLongitude = 0;
+    double currentLocationLatitude = 0;
+    double currentLocationLongitude = 0;
+    double currentLocationAltitude = 0;
+    float[] distanceArray = new float[1];
+    float distanceBetweenLocations = 0;
     private long gpsTrackId = 0;
-    private String gpsDetailInsertStr = "";
+    private File gpsTrackDetailCSVFile = null;
+    private FileWriter gpsTrackDetailCSVFileWriter = null;
+    private File gpsTrackDetailKMLFile = null;
+    private FileWriter gpsTrackDetailKMLFileWriter = null;
 
     /**
      * Class for clients to access.  Because we know this service always
@@ -71,7 +87,7 @@ public class GPSTrackService extends Service {
 
         mLocationListener = new AndiCarLocationListener();
         mLocationManager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER, 0, 0, mLocationListener);
+            LocationManager.GPS_PROVIDER, 0, 5, mLocationListener);
 
         mMainDbAdapter = new MainDbAdapter(this);
 
@@ -97,12 +113,143 @@ public class GPSTrackService extends Service {
         c.moveToNext();
         gpsTrackId = c.getLong(0);
         c.close();
+        sqlStr = "UPDATE " + MainDbAdapter.GPSTRACK_TABLE_NAME
+                    + " SET " + MainDbAdapter.GEN_COL_NAME_NAME + " = " + MainDbAdapter.GEN_COL_NAME_NAME + " || '_" + gpsTrackId + "' "
+                    + " WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + gpsTrackId;
+        mMainDbAdapter.execSql(sqlStr);
+        //create the track detail file(s)
+        try {
+            gpsTrackDetailCSVFile = FileUtils.createGpsTrackDetailFile(StaticValues.gpsTrackFormatCSV, "" + gpsTrackId);
+            gpsTrackDetailKMLFile = FileUtils.createGpsTrackDetailFile(StaticValues.gpsTrackFormatKML, "" + gpsTrackId);
 
-        // Display a notification about us starting.  We put an icon in the status bar.
-        showNotification();
-        SharedPreferences.Editor editor = mPreferences.edit();
-        editor.putBoolean("isGpsTrackOn", true);
-        editor.commit();
+            //create a link for between the master track and the file
+            if(gpsTrackDetailCSVFile != null){
+                    gpsTrackDetailCSVFileWriter = new FileWriter(gpsTrackDetailCSVFile);
+                    sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
+                            + " ( "
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
+                                + MainDbAdapter.GEN_COL_NAME_NAME
+                            + " ) "
+                            + " VALUES ( "
+                                + gpsTrackId + ", "
+                                + "'" + StaticValues.gpsTrackFormatCSV + "', "
+                                + "'" + gpsTrackDetailCSVFile.getAbsolutePath() + "'"
+                            + " ) ";
+                    mMainDbAdapter.execSql(sqlStr);
+                    gpsTrackDetailCSVFileWriter.append(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ","
+                                                        + "ACCURACY" + ","
+                                                        + "ALTITUDE" + ","
+                                                        + "LATITUDE" + ","
+                                                        + "LONGITUDE" + ","
+                                                        + "SPEED" + ","
+                                                        + "TIME" + ","
+                                                        + "DISTNACE" + ","
+                                                        + "BEARING" + "\n"
+                                                        );
+            }
+            if(gpsTrackDetailKMLFile != null){
+                    gpsTrackDetailKMLFileWriter = new FileWriter(gpsTrackDetailKMLFile);
+                    sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
+                            + " ( "
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
+                                + MainDbAdapter.GEN_COL_NAME_NAME
+                            + " ) "
+                            + " VALUES ( "
+                                + gpsTrackId + ", "
+                                + "'" + StaticValues.gpsTrackFormatCSV + "', "
+                                + "'" + gpsTrackDetailKMLFile.getAbsolutePath() + "'"
+                            + " ) ";
+                    mMainDbAdapter.execSql(sqlStr);
+                    //initialize the file header
+                    createKMLHeader();
+            }
+            // Display a notification about us starting.  We put an icon in the status bar.
+            showNotification();
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putBoolean("isGpsTrackOn", true);
+            editor.commit();
+        }
+        catch(IOException ex) {
+            Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
+            stopSelf();
+        }
+        //close the database
+        if(mMainDbAdapter != null){
+            mMainDbAdapter.close();
+            mMainDbAdapter = null;
+        }
+    }
+
+    private void createKMLHeader(){
+        try{
+            gpsTrackDetailKMLFileWriter.append(
+                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                + "<kml xmlns=\"http://earth.google.com/kml/2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n"
+                + "<Document>\n"
+                + "<atom:author><atom:name>Tracks running on AndiCar</atom:name></atom:author>\n"
+                + "<name><![CDATA[" + gpsTrackDetailKMLFile.getName() + "]]></name>\n"
+                + "<description><![CDATA[Created by AndiCar - http://sites.google.com/site/andicarfree/]]></description>\n"
+                + "<Style id=\"track\"><LineStyle><color>7f0000ff</color><width>4</width></LineStyle></Style>\n"
+                + "<Style id=\"sh_green-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/grn-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
+                + "<Style id=\"sh_red-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/red-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
+                + "<Style id=\"sh_ylw-pushpin\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href></Icon><hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
+                + "<Style id=\"sh_blue-pushpin\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href></Icon><hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
+                + "<Placemark>\n"
+                  + "<name><![CDATA[(Start)]]></name>\n"
+                  + "<description><![CDATA[]]></description>\n"
+                  + "<styleUrl>#sh_green-circle</styleUrl>\n"
+                  + "<Point>\n");
+        }
+        catch(IOException e){
+            
+        }
+    }
+
+    private void appendKMLStartPoint(){
+        try{
+            gpsTrackDetailKMLFileWriter.append(
+                 "<coordinates>" + currentLocationLongitude + "," + currentLocationLatitude + "," + currentLocationAltitude + "</coordinates>\n"
+                  + " </Point>\n"
+                + "</Placemark>\n"
+                + "<Placemark>\n"
+                + "<name><![CDATA[" + gpsTrackDetailKMLFile.getName() + "]]></name>\n"
+                + "<description><![CDATA[]]></description>\n"
+                + "<styleUrl>#track</styleUrl>\n"
+                + "<MultiGeometry>\n"
+                + "<LineString>\n"
+                + "<coordinates>\n");
+        }
+        catch(IOException e){
+
+        }
+    }
+
+    private void appendKMLFooter(){
+        try{
+            gpsTrackDetailKMLFileWriter.append(
+                "\n</coordinates>\n"
+                + "</LineString>\n"
+                + "</MultiGeometry>\n"
+                + "</Placemark>\n"
+                + "<Placemark>\n"
+                  + "<name><![CDATA[(End)]]></name>\n"
+                  + "<description><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a>."
+//                  "<p>Total Distance: 3.60 km (2.2 mi)<br>Total Time: 10:57<br>Moving Time: 8:12<br>Average Speed: 21.20 km/h (13.2 mi/h)<br>Average Moving Speed: 26.38 km/h (16.4 mi/h)<br>Max Speed: 59.40 km/h (36.9 mi/h)<br>Min Elevation: 588 m (1927 ft)<br>Max Elevation: 605 m (1986 ft)<br>Elevation Gain: 25 m (81 ft)<br>Max Grade: 5 %<br>Min Grade: -2 %<br>Recorded: Thu Apr 08 13:11:35 GMT+02:00 2010<br>Activity type: -<br><img border="0" src="http://chart.apis.google.com/chart?&chs=600x350&cht=lxy&chtt=Elevation&chxt=x,y&chxr=0,0,3,0%257C1,500.0,700.0,25&chco=009A00&chm=B,00AA00,0,0,0&chg=100000,12.5,1,0&chd=e:,"/>
+                      + "]]></description>\n"
+                  + "<styleUrl>#sh_red-circle</styleUrl>\n"
+                  + "<Point>\n"
+                    + "<coordinates>" + currentLocationLongitude + "," + currentLocationLatitude + "," + currentLocationAltitude + "</coordinates>\n"
+                  + "</Point>\n"
+                + "</Placemark>\n"
+                + "</Document>\n"
+                + "</kml>\n");
+        }
+        catch(IOException e){
+
+        }
     }
 
 
@@ -110,11 +257,21 @@ public class GPSTrackService extends Service {
     public void onDestroy() {
         // Cancel the persistent notification.
         mNM.cancel(R.string.MAIN_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE);
+        //close the database
         if(mMainDbAdapter != null){
             mMainDbAdapter.close();
             mMainDbAdapter = null;
         }
-
+        try {
+            gpsTrackDetailCSVFileWriter.flush();
+            appendKMLFooter();
+            gpsTrackDetailKMLFileWriter.flush();
+        }
+        catch(IOException ex) {
+            Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
+            Toast.makeText(this, "Closing file failed!", Toast.LENGTH_LONG).show();
+        }
+        
         mLocationManager.removeUpdates(mLocationListener);
         mLocationManager = null;
         
@@ -163,35 +320,45 @@ public class GPSTrackService extends Service {
     {
         @Override
         public void onLocationChanged(Location loc) {
+            if(gpsTrackDetailCSVFileWriter == null){
+                Toast.makeText(GPSTrackService.this, "No File Writer!", Toast.LENGTH_LONG).show();
+                stopSelf();
+            }
             if (loc != null) {
-                //create gps detail record
-                //use direct table insert for increasing the speed of the DB operation
-                gpsDetailInsertStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
-                            + " ( "
-                                + MainDbAdapter.GEN_COL_NAME_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_ACCURACY_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_ALTITUDE_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_LATITUDE_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_LONGITUDE_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_SPEED_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_TIME_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_DISTNACE_NAME + ", "
-                                + MainDbAdapter.GPSTRACKDETAIL_COL_BEARING_NAME + " "
-                            + " ) "
-                            + " VALUES ( "
-                                + " '" + loc.toString() + "', "
-                                + gpsTrackId + ", "
-                                + loc.getAccuracy() + ", "
-                                + loc.getAltitude() + ", "
-                                + loc.getLatitude() + ", "
-                                + loc.getLongitude() + ", "
-                                + loc.getSpeed() + ", "
-                                + loc.getTime() + ", "
-                                + " 0 " + ", "
-                                + loc.getBearing()
-                            + " ) ";
-                mMainDbAdapter.execSql(gpsDetailInsertStr);
+                try {
+                    //create gps detail 
+                    currentLocationLatitude = loc.getLatitude();
+                    currentLocationLongitude = loc.getLongitude();
+                    currentLocationAltitude = loc.getAltitude();
+                    if(oldLocationLatitude != 0) {
+                        Location.distanceBetween(oldLocationLatitude, oldLocationLongitude, currentLocationLatitude, currentLocationLongitude, distanceArray);
+                        distanceBetweenLocations = distanceArray[0];
+                    }
+                    else{
+                        //write the starting point
+                        appendKMLStartPoint();
+                    }
+                    gpsTrackDetailCSVFileWriter.append(gpsTrackId + ","
+                                                        + loc.getAccuracy() + ","
+                                                        + currentLocationAltitude + ","
+                                                        + currentLocationLatitude + ","
+                                                        + currentLocationLongitude + ","
+                                                        + loc.getSpeed() + ","
+                                                        + loc.getTime() + ","
+                                                        + distanceBetweenLocations + ","
+                                                        + loc.getBearing() + "\n");
+                    gpsTrackDetailKMLFileWriter.append(currentLocationLongitude + ","
+                                                + currentLocationLatitude + ","
+                                                + currentLocationAltitude + " ");
+                    
+                    oldLocationLatitude = currentLocationLatitude;
+                    oldLocationLongitude = currentLocationLongitude;
+                }
+                catch(IOException ex) {
+                    Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
+                    Toast.makeText(GPSTrackService.this, "File error!\n" + ex.getMessage(), Toast.LENGTH_LONG).show();
+                    stopSelf();
+                }
             }
         }
 
