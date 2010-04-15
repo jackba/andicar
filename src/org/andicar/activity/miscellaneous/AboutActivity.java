@@ -52,19 +52,10 @@ public class AboutActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.about_activity);
-//        LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.aboutLinearLayout);
-//        mLinearLayout.setOrientation(LinearLayout.VERTICAL);
-//        mLinearLayout.setGravity(Gravity.CENTER_HORIZONTAL);
 
         TextView tw1 = (TextView)findViewById(R.id.aboutText1);
         tw1.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML1));
         tw1.setMovementMethod(LinkMovementMethod.getInstance());
-
-//        ImageView i = new ImageView(this);
-//        i.setImageResource(R.drawable.btn_donate);
-//        i.setAdjustViewBounds(true); // set the ImageView bounds to match the Drawable's dimensions
-//        i.setLayoutParams(new Gallery.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-//        mLinearLayout.addView(i);
 
         ImageView imgEUR = (ImageView)findViewById(R.id.aboutDonateEUR);
         imgEUR.setImageResource(R.drawable.btn_donate);
@@ -74,11 +65,6 @@ public class AboutActivity extends EditActivityBase {
         imgUSD.setImageResource(R.drawable.btn_donate);
         imgUSD.setOnClickListener(mDonateClickListener);
 
-//        TextView tw2 = new TextView(this);
-//        tw2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
-//        tw2.setMovementMethod(LinkMovementMethod.getInstance());
-//        tw2.setGravity(Gravity.FILL);
-//        mLinearLayout.addView(tw2);
         TextView tw2 = (TextView)findViewById(R.id.aboutText2);
         tw2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
         tw2.setMovementMethod(LinkMovementMethod.getInstance());
