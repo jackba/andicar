@@ -18,6 +18,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <!-- report file formats  -->
     <string-array name="report_formats">
         <item>csv</item>
         <item>html</item>

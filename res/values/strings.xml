@@ -56,6 +56,8 @@
     <string name="GEN_FILL_MANDATORY">"Fill mandatory field"</string>
     <string name="GEN_NUMBER_FORMAT_EXCEPTION">"Invalid number"</string>
     <string name="GEN_CHOOSEONE_DIALOGTITLE">"Choose one"</string>
+    <string name="GEN_CHOOSEONE_MESSAGE">"You must choose at least one"</string>
+    <string name="GEN_CHOOSE_DIALOGTITLE">"Choose"</string>
     <string name="GEN_ISACTIVE_LABEL">"Active"</string>
     <string name="GEN_USER_COMMENT_LABEL">"Comment"</string>
     <string name="GEN_NAME_LABEL">"Name:"</string>
@@ -209,6 +211,16 @@
     <string name="PREF_GPSTRACK_CATEGORY_TITLE">"GPS Tracking"</string>
     <string name="PREF_GPSTRACK_TITLE">"GPS Track"</string>
     <string name="PREF_GPSTRACK_SUMMARY">"Various options for GPS tracking."</string>
+    <string name="PREF_GPSTRACK_SHOWONMAP_TITLE">"Show map"</string>
+    <string name="PREF_GPSTRACK_SHOWONMAP_SUMMARY">"Draw the track on the map"</string>
+    <string name="PREF_GPSTRACK_FILEFORMAT_TITLE">"File format"</string>
+    <string name="PREF_GPSTRACK_FILEFORMAT_SUMMARY">"Choose the file format(s) used for the track"</string>
+    <string name="PREF_GPSTRACK_FILEFORMATCSV_TITLE">"CSV"</string>
+    <string name="PREF_GPSTRACK_FILEFORMATCSV_SUMMARY">"Comma Separated Values"</string>
+    <string name="PREF_GPSTRACK_FILEFORMATKML_TITLE">"KML"</string>
+    <string name="PREF_GPSTRACK_FILEFORMATKML_SUMMARY">"Keyhole Markup Language"</string>
+    <string name="PREF_GPSTRACK_FILEFORMATGPX_TITLE">"GPX"</string>
+    <string name="PREF_GPSTRACK_FILEFORMATGPX_SUMMARY">"GPs eXchange format"</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>
