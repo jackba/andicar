@@ -238,6 +238,22 @@ public class MainActivity extends Activity {
             editor.putBoolean("MainActivityShowCarReport", true);
             editor.commit();
         }
+        if(!mPreferences.contains("IsGPSTrackOnMap")){
+            editor.putBoolean("IsGPSTrackOnMap", false);
+            editor.commit();
+        }
+        if(!mPreferences.contains("IsUseCSVTrack")){
+            editor.putBoolean("IsUseCSVTrack", true);
+            editor.commit();
+        }
+        if(!mPreferences.contains("IsUseKMLTrack")){
+            editor.putBoolean("IsUseKMLTrack", true);
+            editor.commit();
+        }
+        if(!mPreferences.contains("IsUseGPXTrack")){
+            editor.putBoolean("IsUseGPXTrack", true);
+            editor.commit();
+        }
     }
 
     @Override

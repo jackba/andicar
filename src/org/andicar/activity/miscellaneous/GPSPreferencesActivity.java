@@ -18,8 +18,21 @@
 
 package org.andicar.activity.miscellaneous;
 
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.DialogPreference;
+import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
+import android.widget.Toast;
+import org.andicar.utils.StaticValues;
+import org.andicar.activity.R;
 
 
 /**
@@ -27,12 +40,72 @@ import android.preference.PreferenceActivity;
  * @author Miklos Keresztes
  */
 public class GPSPreferencesActivity extends PreferenceActivity {
+    private Resources mRes = null;
+    protected SharedPreferences mPreferences;
+    private CheckBoxPreference gpsTrackCSVFileFormatCk;
+    private CheckBoxPreference gpsTrackKMLFileFormatCk;
+    private CheckBoxPreference gpsTrackGPXFileFormatCk;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        // ToDo add your GUI initialization code here        
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mRes = getResources();
+        setPreferenceScreen(createPreferenceHierarchy());
     }
+
+    private PreferenceScreen createPreferenceHierarchy() {
+        PreferenceManager prefMgr = getPreferenceManager();
+        prefMgr.setSharedPreferencesName(StaticValues.GLOBAL_PREFERENCE_NAME);
+        PreferenceScreen prefScreenRoot = prefMgr.createPreferenceScreen(this);
+
+        CheckBoxPreference gpsTrackOnMapCk = new CheckBoxPreference(this);
+        gpsTrackOnMapCk.setKey("IsGPSTrackOnMap");
+        gpsTrackOnMapCk.setTitle(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_TITLE));
+        gpsTrackOnMapCk.setSummary(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_SUMMARY));
+        prefScreenRoot.addPreference(gpsTrackOnMapCk);
+
+        PreferenceScreen gpsTrackFileFormatPref = getPreferenceManager().createPreferenceScreen(this);
+        gpsTrackFileFormatPref.setTitle(R.string.PREF_GPSTRACK_FILEFORMAT_TITLE);
+        gpsTrackFileFormatPref.setSummary(R.string.PREF_GPSTRACK_FILEFORMAT_SUMMARY);
+        prefScreenRoot.addPreference(gpsTrackFileFormatPref);
+
+        gpsTrackCSVFileFormatCk = new CheckBoxPreference(this);
+        gpsTrackCSVFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATCSV_TITLE);
+        gpsTrackCSVFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATCSV_SUMMARY);
+        gpsTrackCSVFileFormatCk.setKey("IsUseCSVTrack");
+        gpsTrackCSVFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
+        gpsTrackFileFormatPref.addPreference(gpsTrackCSVFileFormatCk);
+
+        gpsTrackKMLFileFormatCk = new CheckBoxPreference(this);
+        gpsTrackKMLFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATKML_TITLE);
+        gpsTrackKMLFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATKML_SUMMARY);
+        gpsTrackKMLFileFormatCk.setKey("IsUseKMLTrack");
+        gpsTrackKMLFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
+        gpsTrackFileFormatPref.addPreference(gpsTrackKMLFileFormatCk);
+
+        gpsTrackGPXFileFormatCk = new CheckBoxPreference(this);
+        gpsTrackGPXFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATGPX_TITLE);
+        gpsTrackGPXFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATGPX_SUMMARY);
+        gpsTrackGPXFileFormatCk.setKey("IsUseGPXTrack");
+        gpsTrackGPXFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
+        gpsTrackFileFormatPref.addPreference(gpsTrackGPXFileFormatCk);
+
+        return prefScreenRoot;
+    }
+
+    OnPreferenceClickListener gpsTrackFileFormat = new OnPreferenceClickListener() {
+
+            public boolean onPreferenceClick(Preference prfrnc) {
+                if(!gpsTrackGPXFileFormatCk.isChecked()
+                        && !gpsTrackCSVFileFormatCk.isChecked()
+                        && !gpsTrackKMLFileFormatCk.isChecked()){
+                    Toast.makeText(GPSPreferencesActivity.this, mRes.getString(R.string.GEN_CHOOSEONE_MESSAGE), Toast.LENGTH_SHORT).show();
+                    ((CheckBoxPreference)prfrnc).setChecked(true);
+                }
+                return true;
+            }
+        };
 
 }
