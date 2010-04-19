@@ -242,6 +242,7 @@ public class MainActivity extends Activity {
             editor.putBoolean("IsGPSTrackOnMap", false);
             editor.commit();
         }
+
         if(!mPreferences.contains("IsUseCSVTrack")){
             editor.putBoolean("IsUseCSVTrack", true);
             editor.commit();
@@ -252,6 +253,14 @@ public class MainActivity extends Activity {
         }
         if(!mPreferences.contains("IsUseGPXTrack")){
             editor.putBoolean("IsUseGPXTrack", true);
+            editor.commit();
+        }
+        if(!mPreferences.contains("GPSTrackMinTime")){
+            editor.putString("GPSTrackMinTime", "0");
+            editor.commit();
+        }
+        if(!mPreferences.contains("GPSTrackMinDistance")){
+            editor.putString("GPSTrackMinDistance", "5");
             editor.commit();
         }
     }
