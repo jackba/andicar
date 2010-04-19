@@ -23,5 +23,50 @@
         <item>csv</item>
         <item>html</item>
     </string-array>
+
+    <!-- Used in gps track (minimum time betwee 2 recording points) -->
+    <string-array name="gpstrack_preference_mintime_entries">
+        <item>Highest (recommended)</item>
+        <item>3 s</item>
+        <item>5 s</item>
+        <item>10 s</item>
+        <item>30 s</item>
+        <item>1 min</item>
+        <item>3 min</item>
+        <item>5 min</item>
+        <item>10 min</item>
+    </string-array>
+    <!-- values in miliseconds -->
+    <string-array name="gpstrack_preference_mintime_values">
+        <item>0</item>
+        <item>3000</item>
+        <item>5000</item>
+        <item>10000</item>
+        <item>30000</item>
+        <item>60000</item>
+        <item>180000</item>
+        <item>300000</item>
+        <item>600000</item>
+    </string-array>
+
+    <!-- Used in gps track (minimum time betwee 2 recording points) -->
+    <string-array name="gpstrack_preference_mindistance_entries">
+        <item>1 m</item>
+        <item>3 m</item>
+        <item>5 m (recommended)</item>
+        <item>10 m</item>
+        <item>50 m</item>
+        <item>100 m</item>
+    </string-array>
+    <!-- values in meter -->
+    <string-array name="gpstrack_preference_mindistance_values">
+        <item>1</item>
+        <item>3</item>
+        <item>5</item>
+        <item>10</item>
+        <item>50</item>
+        <item>100</item>
+    </string-array>
+
 </resources>
 

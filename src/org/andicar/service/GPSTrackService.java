@@ -95,7 +95,10 @@ public class GPSTrackService extends Service {
 
         mLocationListener = new AndiCarLocationListener();
         mLocationManager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER, 0, 5, mLocationListener);
+            LocationManager.GPS_PROVIDER, 
+                Long.parseLong(mPreferences.getString("GPSTrackMinTime", "0")),
+                Long.parseLong(mPreferences.getString("GPSTrackMinDistance", "5")),
+                mLocationListener);
 
         mMainDbAdapter = new MainDbAdapter(this);
 

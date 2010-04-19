@@ -27,6 +27,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
 
     <application
@@ -173,6 +174,13 @@
         <activity
             android:name="org.andicar.activity.CurrencyRateEditActivity"
             android:label="@string/APP_ACTIVITY_CURRENCYRATEEDIT">
+        </activity>
+
+        <uses-library android:name="com.google.android.maps" />
+        <activity
+            android:name="org.andicar.activity.miscellaneous.GPSTrackMap"
+            android:label=""
+            android:theme="@android:style/Theme.NoTitleBar">
         </activity>
     </application>
 </manifest>

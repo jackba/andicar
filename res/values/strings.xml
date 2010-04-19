@@ -221,6 +221,10 @@
     <string name="PREF_GPSTRACK_FILEFORMATKML_SUMMARY">"Keyhole Markup Language"</string>
     <string name="PREF_GPSTRACK_FILEFORMATGPX_TITLE">"GPX"</string>
     <string name="PREF_GPSTRACK_FILEFORMATGPX_SUMMARY">"GPs eXchange format"</string>
+    <string name="PREF_GPSTRACK_MINTIME_TITLE">"Min. time between points"</string>
+    <string name="PREF_GPSTRACK_MINTIME_SUMMARY">"Minimum time between two recordings of your position"</string>
+    <string name="PREF_GPSTRACK_MINDISTANCE_TITLE">"Min. distance between points"</string>
+    <string name="PREF_GPSTRACK_MINDISTANCE_SUMMARY">"Minimum distance between two recordings of your position"</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>

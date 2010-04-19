@@ -42,7 +42,7 @@ import org.andicar.activity.R;
 public class GPSPreferencesActivity extends PreferenceActivity {
     private Resources mRes = null;
     protected SharedPreferences mPreferences;
-    private CheckBoxPreference gpsTrackCSVFileFormatCk;
+//    private CheckBoxPreference gpsTrackCSVFileFormatCk;
     private CheckBoxPreference gpsTrackKMLFileFormatCk;
     private CheckBoxPreference gpsTrackGPXFileFormatCk;
 
@@ -71,41 +71,60 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         gpsTrackFileFormatPref.setSummary(R.string.PREF_GPSTRACK_FILEFORMAT_SUMMARY);
         prefScreenRoot.addPreference(gpsTrackFileFormatPref);
 
-        gpsTrackCSVFileFormatCk = new CheckBoxPreference(this);
-        gpsTrackCSVFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATCSV_TITLE);
-        gpsTrackCSVFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATCSV_SUMMARY);
-        gpsTrackCSVFileFormatCk.setKey("IsUseCSVTrack");
-        gpsTrackCSVFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
-        gpsTrackFileFormatPref.addPreference(gpsTrackCSVFileFormatCk);
+//        gpsTrackCSVFileFormatCk = new CheckBoxPreference(this);
+//        gpsTrackCSVFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATCSV_TITLE);
+//        gpsTrackCSVFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATCSV_SUMMARY);
+//        gpsTrackCSVFileFormatCk.setKey("IsUseCSVTrack");
+//        gpsTrackCSVFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
+//        gpsTrackFileFormatPref.addPreference(gpsTrackCSVFileFormatCk);
 
         gpsTrackKMLFileFormatCk = new CheckBoxPreference(this);
         gpsTrackKMLFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATKML_TITLE);
         gpsTrackKMLFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATKML_SUMMARY);
         gpsTrackKMLFileFormatCk.setKey("IsUseKMLTrack");
-        gpsTrackKMLFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
+//        gpsTrackKMLFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
         gpsTrackFileFormatPref.addPreference(gpsTrackKMLFileFormatCk);
 
         gpsTrackGPXFileFormatCk = new CheckBoxPreference(this);
         gpsTrackGPXFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATGPX_TITLE);
         gpsTrackGPXFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATGPX_SUMMARY);
         gpsTrackGPXFileFormatCk.setKey("IsUseGPXTrack");
-        gpsTrackGPXFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
+//        gpsTrackGPXFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
         gpsTrackFileFormatPref.addPreference(gpsTrackGPXFileFormatCk);
+
+        // Minimum time  between two recordings
+        ListPreference gpsTrackMinTimePref = new ListPreference(this);
+        gpsTrackMinTimePref.setEntries(R.array.gpstrack_preference_mintime_entries);
+        gpsTrackMinTimePref.setEntryValues(R.array.gpstrack_preference_mintime_values);
+        gpsTrackMinTimePref.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
+        gpsTrackMinTimePref.setKey("GPSTrackMinTime");
+        gpsTrackMinTimePref.setTitle(R.string.PREF_GPSTRACK_MINTIME_TITLE);
+        gpsTrackMinTimePref.setSummary(R.string.PREF_GPSTRACK_MINTIME_SUMMARY);
+        prefScreenRoot.addPreference(gpsTrackMinTimePref);
+
+        // Minimum distance between two recordings
+        ListPreference gpsTrackMinDistPref = new ListPreference(this);
+        gpsTrackMinDistPref.setEntries(R.array.gpstrack_preference_mindistance_entries);
+        gpsTrackMinDistPref.setEntryValues(R.array.gpstrack_preference_mindistance_values);
+        gpsTrackMinDistPref.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
+        gpsTrackMinDistPref.setKey("GPSTrackMinDistance");
+        gpsTrackMinDistPref.setTitle(R.string.PREF_GPSTRACK_MINDISTANCE_TITLE);
+        gpsTrackMinDistPref.setSummary(R.string.PREF_GPSTRACK_MINDISTANCE_SUMMARY);
+        prefScreenRoot.addPreference(gpsTrackMinDistPref);
 
         return prefScreenRoot;
     }
 
-    OnPreferenceClickListener gpsTrackFileFormat = new OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference prfrnc) {
-                if(!gpsTrackGPXFileFormatCk.isChecked()
-                        && !gpsTrackCSVFileFormatCk.isChecked()
-                        && !gpsTrackKMLFileFormatCk.isChecked()){
-                    Toast.makeText(GPSPreferencesActivity.this, mRes.getString(R.string.GEN_CHOOSEONE_MESSAGE), Toast.LENGTH_SHORT).show();
-                    ((CheckBoxPreference)prfrnc).setChecked(true);
-                }
-                return true;
-            }
-        };
+//    OnPreferenceClickListener gpsTrackFileFormat = new OnPreferenceClickListener() {
+//            public boolean onPreferenceClick(Preference prfrnc) {
+//                if(!gpsTrackGPXFileFormatCk.isChecked()
+////                        && !gpsTrackCSVFileFormatCk.isChecked()
+//                        && !gpsTrackKMLFileFormatCk.isChecked()){
+//                    Toast.makeText(GPSPreferencesActivity.this, mRes.getString(R.string.GEN_CHOOSEONE_MESSAGE), Toast.LENGTH_SHORT).show();
+//                    ((CheckBoxPreference)prfrnc).setChecked(true);
+//                }
+//                return true;
+//            }
+//        };
 
 }
