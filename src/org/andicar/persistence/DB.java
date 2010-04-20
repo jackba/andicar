@@ -654,7 +654,7 @@ public class DB {
             else if(oldVersion == 210){
                 upgradeDbTo220(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
             }
-            upgradeDbTo220(db, oldVersion);
+//            upgradeDbTo220(db, oldVersion);
         }
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
@@ -801,9 +801,9 @@ public class DB {
 
         private void upgradeDbTo220(SQLiteDatabase db, int oldVersion) throws SQLException {
             //gps track
-//            db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
-            String tmpStr = "DROP TABLE " + GPSTRACKDETAIL_TABLE_NAME;
-            db.execSQL(tmpStr);
+            db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
+//            String tmpStr = "DROP TABLE " + GPSTRACKDETAIL_TABLE_NAME;
+//            db.execSQL(tmpStr);
             db.execSQL(GPSTRACKDETAIL_TABLE_CREATE_SQL);
             FileUtils fu = new FileUtils();
             fu.updateTo220(mCtx);

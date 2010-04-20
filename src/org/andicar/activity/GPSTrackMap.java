@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.andicar.activity.miscellaneous;
+package org.andicar.activity;
 
 import android.os.Bundle;
 import com.google.android.maps.MapActivity;
@@ -28,6 +28,14 @@ import org.andicar.activity.R;
  * @author Miklos Keresztes
  */
 public class GPSTrackMap extends MapActivity {
+
+    /*
+     * Map Api Keys:
+     * 1. 0aQTdJnsQSHfbEz5axy7VixTxQu4UkJkLgdkbjA a
+     * 2. 0exdzR1McxKRFeUqK0G7bPCA4BhI8LfOjj-lDrg b
+     * 3. 0aQTdJnsQSHdoTbAJ0paNl9sntpqEw8hVG6nhRg r
+     */
+    
 
     @Override
     protected boolean isRouteDisplayed() {
