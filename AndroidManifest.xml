@@ -28,7 +28,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
+    
 
     <application
         android:label="@string/APP_NAME"
@@ -36,7 +36,6 @@
         android:icon="@drawable/car2"
         android:debuggable="true"
     >
-        
         <service android:name="org.andicar.service.GPSTrackService" />
         
         <activity android:name="org.andicar.activity.MainActivity"
@@ -176,9 +175,9 @@
             android:label="@string/APP_ACTIVITY_CURRENCYRATEEDIT">
         </activity>
 
-        <uses-library android:name="com.google.android.maps" />
-        <activity
-            android:name="org.andicar.activity.miscellaneous.GPSTrackMap"
+       <uses-library android:name="com.google.android.maps" />
+       <activity
+            android:name="org.andicar.activity.GPSTrackMap"
             android:label=""
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>

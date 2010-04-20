@@ -69,7 +69,7 @@ public class MainActivity extends Activity {
 
     private Button mileageListBtn;
     private Button mileageInsertBtn;
-    private Button mainActivityBtnStartStopGpsTrack;
+    private Button btnStartStopGpsTrack;
     private Button refuelListBtn;
     private Button refuelInsertBtn;
     private Button expenseListBtn;
@@ -149,8 +149,8 @@ public class MainActivity extends Activity {
         mileageListBtn.setOnClickListener(btnMileageListClickListener);
         mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
         mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
-        mainActivityBtnStartStopGpsTrack = (Button) findViewById(R.id.mainActivityBtnStartStopGpsTrack);
-        mainActivityBtnStartStopGpsTrack.setOnClickListener(mStartStopGPStrackListener);
+        btnStartStopGpsTrack = (Button) findViewById(R.id.mainActivityBtnStartStopGpsTrack);
+        btnStartStopGpsTrack.setOnClickListener(mStartStopGPStrackListener);
         refuelListBtn = (Button) findViewById(R.id.mainActivityBtnRefuelList);
         refuelListBtn.setOnClickListener(btnRefuelListClickListener);
         refuelInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
@@ -315,9 +315,9 @@ public class MainActivity extends Activity {
         }
 
         if(isGpsTrackOn)
-            mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+            btnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
         else
-            mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
+            btnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
 
         //fill refuel zone data
         listCursor = null;
@@ -549,15 +549,16 @@ public class MainActivity extends Activity {
         public void onClick(View v)
         {
             if(isGpsTrackOn){
-                stopService(new Intent(MainActivity.this, GPSTrackService.class));
+//                stopService(new Intent(MainActivity.this, GPSTrackService.class));
                 isGpsTrackOn = false;
-                mainActivityBtnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
+                btnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
             }
             else{
                 startService(new Intent(MainActivity.this, GPSTrackService.class));
                 isGpsTrackOn = true; //mPreferences.getBoolean("isGpsTrackOn", false); //check if the service is started succesfull
+//                startActivity(new Intent(MainActivity.this, GPSTrackMap.class));
                 if(isGpsTrackOn)
-                    mainActivityBtnStartStopGpsTrack.setText(
+                    btnStartStopGpsTrack.setText(
                             mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
             }
         };
