@@ -101,8 +101,6 @@ public class MainActivity extends Activity {
     private boolean showExpenseZone = true;
     private boolean showCarReportZone = true;
 
-    private boolean isGpsTrackOn = false;
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -229,51 +227,52 @@ public class MainActivity extends Activity {
                 alert.show();
             }
         }
-        
+        initPreferenceValues();
+    }
+
+    private void initPreferenceValues() {
         SharedPreferences.Editor editor = mPreferences.edit();
-        if(!mPreferences.contains("MainActivityShowMileage")){
+        if (!mPreferences.contains("MainActivityShowMileage")) {
             editor.putBoolean("MainActivityShowMileage", true);
             editor.commit();
         }
-        if(!mPreferences.contains("MainActivityShowGPSTrack")){
+        if (!mPreferences.contains("MainActivityShowGPSTrack")) {
             editor.putBoolean("MainActivityShowGPSTrack", true);
             editor.commit();
         }
-        if(!mPreferences.contains("MainActivityShowRefuel")){
+        if (!mPreferences.contains("MainActivityShowRefuel")) {
             editor.putBoolean("MainActivityShowRefuel", true);
             editor.commit();
         }
-        if(!mPreferences.contains("MainActivityShowExpense")){
+        if (!mPreferences.contains("MainActivityShowExpense")) {
             editor.putBoolean("MainActivityShowExpense", false);
             editor.commit();
         }
-        if(!mPreferences.contains("MainActivityShowCarReport")){
+        if (!mPreferences.contains("MainActivityShowCarReport")) {
             editor.putBoolean("MainActivityShowCarReport", true);
             editor.commit();
         }
-
-        if(!mPreferences.contains("IsGPSTrackOnMap")){
+        if (!mPreferences.contains("IsGPSTrackOnMap")) {
             editor.putBoolean("IsGPSTrackOnMap", false);
             editor.commit();
         }
-
-        if(!mPreferences.contains("IsUseCSVTrack")){
+        if (!mPreferences.contains("IsUseCSVTrack")) {
             editor.putBoolean("IsUseCSVTrack", true);
             editor.commit();
         }
-        if(!mPreferences.contains("IsUseKMLTrack")){
+        if (!mPreferences.contains("IsUseKMLTrack")) {
             editor.putBoolean("IsUseKMLTrack", true);
             editor.commit();
         }
-        if(!mPreferences.contains("IsUseGPXTrack")){
+        if (!mPreferences.contains("IsUseGPXTrack")) {
             editor.putBoolean("IsUseGPXTrack", true);
             editor.commit();
         }
-        if(!mPreferences.contains("GPSTrackMinTime")){
+        if (!mPreferences.contains("GPSTrackMinTime")) {
             editor.putString("GPSTrackMinTime", "0");
             editor.commit();
         }
-        if(!mPreferences.contains("GPSTrackMinDistance")){
+        if (!mPreferences.contains("GPSTrackMinDistance")) {
             editor.putString("GPSTrackMinDistance", "5");
             editor.commit();
         }
@@ -293,8 +292,6 @@ public class MainActivity extends Activity {
 
         if(reportDb == null)
             reportDb = new ReportDbAdapter(mainContext, null, null);
-
-        isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
 
         showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
         showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);

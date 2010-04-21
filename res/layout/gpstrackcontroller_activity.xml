@@ -108,31 +108,67 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
             >
-            <Button android:id="@+id/mainActivityBtnStartStopGpsTrack"
+            <CheckBox
+                android:id="@+id/gpsTrackCreateMileageCk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GPSTRACK_ACTIVITY_CREATEMILEAGE_LABEL"
+                android:layout_marginLeft="10dip"
+                android:layout_alignParentLeft="true"
+                />
+            <Button android:id="@+id/gpsTrackBtnStartStopGpsTrack"
                 style="?android:attr/buttonStyleSmall"
                 android:text="@string/GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="5dip"
+                android:layout_toRightOf="@id/gpsTrackCreateMileageCk"
                 />
-        </RelativeLayout>
-<!--
-        <Button android:id="@+id/mainActivityBtnStartStopGpsTrack"
-            style="?android:attr/buttonStyleSmall"
-            android:text="@string/MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION"
-            android:layout_width="wrap_content"
+<!--                android:layout_alignTop="@id/gpsTrackCreateMileageCk"
+-->        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            />
-        <Button android:id="@+id/mainActivityBtnShowMap"
-            style="?android:attr/buttonStyleSmall"
-            android:text="@string/MAIN_ACTIVITY_GPSSHOWMAP_BTN_CAPTION"
-            android:layout_width="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/genTrackFileFormatLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GPSTRACK_ACTIVITY_FILEFORMAT_LABEL"
+                />
+            <CheckBox
+                android:id="@+id/gpsTrackUseKMLCk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PREF_GPSTRACK_FILEFORMATKML_TITLE"
+                android:layout_marginLeft="5dip"
+                />
+            <CheckBox
+                android:id="@+id/gpsTrackUseGPXCk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PREF_GPSTRACK_FILEFORMATGPX_TITLE"
+                android:layout_marginLeft="5dip"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/mainActivityBtnStartStopGpsTrack"
-            />
--->
+            android:layout_marginTop="5dip"
+            >
+            <CheckBox
+                android:id="@+id/gpsTrackShowOnMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/PREF_GPSTRACK_SHOWONMAP_SUMMARY"
+                />
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>
