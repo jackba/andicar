@@ -279,6 +279,8 @@
 
     <string name="GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION">"Start GPS Track"</string>
     <string name="GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION">"Stop GPS Track"</string>
-    <string name="GPSTRACK_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE">"GPS tracking started"</string>
+    <string name="GPSTRACK_ACTIVITY_FILEFORMAT_LABEL">"Track file format:"</string>
+    <string name="GPSTRACK_ACTIVITY_CREATEMILEAGE_LABEL">"Create mileage"</string>
+    <string name="GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE">"Tracking in progress"</string>
 
 </resources>

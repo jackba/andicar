@@ -225,11 +225,11 @@ public abstract class EditActivityBase extends Activity {
        return null;
    }
 
-   protected void setEditable(ViewGroup wg, boolean editable){
+   protected void setEditable(ViewGroup vg, boolean editable){
        View child;
-       for(int i = 0; i < wg.getChildCount(); i++)
+       for(int i = 0; i < vg.getChildCount(); i++)
        {
-           child = wg.getChildAt(i);
+           child = vg.getChildAt(i);
            if(child instanceof ViewGroup){
                setEditable((ViewGroup)child, editable);
            }

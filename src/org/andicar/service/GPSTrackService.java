@@ -31,7 +31,7 @@ import android.os.IBinder;
 import android.widget.Toast;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.andicar.activity.MainActivity;
+import org.andicar.activity.GPSTrackController;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
@@ -321,7 +321,7 @@ public class GPSTrackService extends Service {
     @Override
     public void onDestroy() {
         // Cancel the persistent notification.
-        mNM.cancel(R.string.GPSTRACK_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE);
+        mNM.cancel(R.string.GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE);
         //close the database
         if(mMainDbAdapter != null){
             mMainDbAdapter.close();
@@ -363,8 +363,7 @@ public class GPSTrackService extends Service {
      * Show a notification while this service is running.
      */
     private void showNotification() {
-        // In this sample, we'll use the same text for the ticker and the expanded notification
-        CharSequence text = getText(R.string.GPSTRACK_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE);
+        CharSequence text = getText(R.string.GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE);
 
         // Set the icon, scrolling text and timestamp
         Notification notification = new Notification(R.drawable.andicar_gps_anim, text,
@@ -372,7 +371,7 @@ public class GPSTrackService extends Service {
 
         // The PendingIntent to launch our activity if the user selects this notification
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+                new Intent(this, GPSTrackController.class), 0);
 
         // Set the info for the views that show in the notification panel.
         notification.setLatestEventInfo(this, getText(R.string.SERVICE_GPSTRACK_LABEL),
@@ -380,7 +379,7 @@ public class GPSTrackService extends Service {
 
         // Send the notification.
         // We use a layout id because it is a unique number.  We use it later to cancel.
-        mNM.notify(R.string.GPSTRACK_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE, notification);
+        mNM.notify(R.string.GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE, notification);
     }
 
     private class AndiCarLocationListener implements LocationListener
