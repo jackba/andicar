@@ -19,7 +19,6 @@
 
 package org.andicar.activity.miscellaneous;
 
-import android.app.LauncherActivity.ListItem;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -28,7 +27,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.ArrayList;
-import java.util.Iterator;
 import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 
@@ -54,6 +52,7 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
         ArrayList<String> mainScreenZones = new ArrayList<String>();
 
         mainScreenZones.add("Show mileage zone");
+        mainScreenZones.add("Show GPS track zone");
         mainScreenZones.add("Show refuel zone");
         mainScreenZones.add("Show expense zone");
         mainScreenZones.add("Show statistics");
@@ -66,9 +65,10 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
         zonesList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         zonesList.setOnItemClickListener(zonesSelectedListener);
         zonesList.setItemChecked(0, mPreferences.getBoolean("MainActivityShowMileage", true));
-        zonesList.setItemChecked(1, mPreferences.getBoolean("MainActivityShowRefuel", true));
-        zonesList.setItemChecked(2, mPreferences.getBoolean("MainActivityShowExpense", true));
-        zonesList.setItemChecked(3, mPreferences.getBoolean("MainActivityShowCarReport", true));
+        zonesList.setItemChecked(1, mPreferences.getBoolean("MainActivityShowGPSTrack", true));
+        zonesList.setItemChecked(2, mPreferences.getBoolean("MainActivityShowRefuel", true));
+        zonesList.setItemChecked(3, mPreferences.getBoolean("MainActivityShowExpense", true));
+        zonesList.setItemChecked(4, mPreferences.getBoolean("MainActivityShowCarReport", true));
     }
 
     protected AdapterView.OnItemClickListener zonesSelectedListener = new AdapterView.OnItemClickListener() {
@@ -79,14 +79,18 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
                 else
                     editor.putBoolean("MainActivityShowMileage", false);
                 if(checkedItems.valueAt(1))
+                    editor.putBoolean("MainActivityShowGPSTrack", true);
+                else
+                    editor.putBoolean("MainActivityShowGPSTrack", false);
+                if(checkedItems.valueAt(2))
                     editor.putBoolean("MainActivityShowRefuel", true);
                 else
                     editor.putBoolean("MainActivityShowRefuel", false);
-                if(checkedItems.valueAt(2))
+                if(checkedItems.valueAt(3))
                     editor.putBoolean("MainActivityShowExpense", true);
                 else
                     editor.putBoolean("MainActivityShowExpense", false);
-                if(checkedItems.valueAt(3))
+                if(checkedItems.valueAt(4))
                     editor.putBoolean("MainActivityShowCarReport", true);
                 else
                     editor.putBoolean("MainActivityShowCarReport", false);

@@ -321,7 +321,7 @@ public class GPSTrackService extends Service {
     @Override
     public void onDestroy() {
         // Cancel the persistent notification.
-        mNM.cancel(R.string.MAIN_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE);
+        mNM.cancel(R.string.GPSTRACK_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE);
         //close the database
         if(mMainDbAdapter != null){
             mMainDbAdapter.close();
@@ -364,7 +364,7 @@ public class GPSTrackService extends Service {
      */
     private void showNotification() {
         // In this sample, we'll use the same text for the ticker and the expanded notification
-        CharSequence text = getText(R.string.MAIN_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE);
+        CharSequence text = getText(R.string.GPSTRACK_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE);
 
         // Set the icon, scrolling text and timestamp
         Notification notification = new Notification(R.drawable.andicar_gps_anim, text,
@@ -380,7 +380,7 @@ public class GPSTrackService extends Service {
 
         // Send the notification.
         // We use a layout id because it is a unique number.  We use it later to cancel.
-        mNM.notify(R.string.MAIN_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE, notification);
+        mNM.notify(R.string.GPSTRACK_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE, notification);
     }
 
     private class AndiCarLocationListener implements LocationListener

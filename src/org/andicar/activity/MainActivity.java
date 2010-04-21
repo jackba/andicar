@@ -47,7 +47,6 @@ import org.andicar.activity.report.ExpensesListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.service.GPSTrackService;
 
 /**
  *
@@ -67,19 +66,23 @@ public class MainActivity extends Activity {
     private int ACTIVITY_EXPENSEINSERT_REQUEST_CODE = 2;
     private SharedPreferences mPreferences;
 
-    private Button mileageListBtn;
-    private Button mileageInsertBtn;
-    private Button btnStartStopGpsTrack;
-    private Button refuelListBtn;
-    private Button refuelInsertBtn;
-    private Button expenseListBtn;
-    private Button expenseInsertBtn;
+    private Button btnMileageList;
+    private Button btnMileageInsert;
+    private Button btnGPSTrackList;
+    private Button btnGPSTrackInsert;
+    private Button btnRefuelList;
+    private Button btnRefuelInsert;
+    private Button btnExpenseList;
+    private Button btnExpenseInsert;
 
     private ReportDbAdapter reportDb;
     private Cursor listCursor;
     private TextView threeLineListMileageText1;
     private TextView threeLineListMileageText2;
     private TextView threeLineListMileageText3;
+    private TextView threeLineListGPSTrackText1;
+    private TextView threeLineListGPSTrackText2;
+    private TextView threeLineListGPSTrackText3;
     private TextView threeLineListRefuelText1;
     private TextView threeLineListRefuelText2;
     private TextView threeLineListRefuelText3;
@@ -93,6 +96,7 @@ public class MainActivity extends Activity {
     private boolean exitResume = false;
     private String appVersion;
     private boolean showMileageZone = true;
+    private boolean showGPSTrackZone = true;
     private boolean showRefuelZone = true;
     private boolean showExpenseZone = true;
     private boolean showCarReportZone = true;
@@ -145,24 +149,29 @@ public class MainActivity extends Activity {
             editor.commit();
         }
 
-        mileageListBtn = (Button) findViewById(R.id.mainActivityBtnMileageList);
-        mileageListBtn.setOnClickListener(btnMileageListClickListener);
-        mileageInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
-        mileageInsertBtn.setOnClickListener(btnInsertMileageClickListener);
-        btnStartStopGpsTrack = (Button) findViewById(R.id.mainActivityBtnStartStopGpsTrack);
-        btnStartStopGpsTrack.setOnClickListener(mStartStopGPStrackListener);
-        refuelListBtn = (Button) findViewById(R.id.mainActivityBtnRefuelList);
-        refuelListBtn.setOnClickListener(btnRefuelListClickListener);
-        refuelInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
-        refuelInsertBtn.setOnClickListener(btnInsertRefuelClickListener);
-        expenseListBtn = (Button) findViewById(R.id.mainActivityBtnExpenseList);
-        expenseListBtn.setOnClickListener(btnExpenseListClickListener);
-        expenseInsertBtn = (Button) findViewById(R.id.mainActivityBtnInsertExpense);
-        expenseInsertBtn.setOnClickListener(btnInsertExpenseClickListener);
+        btnMileageList = (Button) findViewById(R.id.mainActivityBtnMileageList);
+        btnMileageList.setOnClickListener(btnMileageListClickListener);
+        btnMileageInsert = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
+        btnMileageInsert.setOnClickListener(btnInsertMileageClickListener);
+        btnRefuelList = (Button) findViewById(R.id.mainActivityBtnRefuelList);
+        btnRefuelList.setOnClickListener(btnRefuelListClickListener);
+        btnRefuelInsert = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
+        btnRefuelInsert.setOnClickListener(btnInsertRefuelClickListener);
+        btnExpenseList = (Button) findViewById(R.id.mainActivityBtnExpenseList);
+        btnExpenseList.setOnClickListener(btnExpenseListClickListener);
+        btnExpenseInsert = (Button) findViewById(R.id.mainActivityBtnInsertExpense);
+        btnExpenseInsert.setOnClickListener(btnInsertExpenseClickListener);
+        btnGPSTrackInsert = (Button) findViewById(R.id.mainActivityBtnInsertGPSTrack);
+        btnGPSTrackInsert.setOnClickListener(btnGPSTrackInsertClickListener);
+        btnGPSTrackList = (Button) findViewById(R.id.mainActivityBtnGPSTrackList);
+//        btnGPSTrackList.setOnClickListener();
 
         threeLineListMileageText1 = (TextView) findViewById(R.id.mainActivityThreeLineListMileageText1);
         threeLineListMileageText2 = (TextView) findViewById(R.id.mainActivityThreeLineListMileageText2);
         threeLineListMileageText3 = (TextView) findViewById(R.id.mainActivityThreeLineListMileageText3);
+        threeLineListGPSTrackText1 = (TextView) findViewById(R.id.mainActivityThreeLineListGPSTrackText1);
+        threeLineListGPSTrackText2 = (TextView) findViewById(R.id.mainActivityThreeLineListGPSTrackText2);
+        threeLineListGPSTrackText3 = (TextView) findViewById(R.id.mainActivityThreeLineListGPSTrackText3);
         threeLineListRefuelText1 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText1);
         threeLineListRefuelText2 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText2);
         threeLineListRefuelText3 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText3);
@@ -226,6 +235,10 @@ public class MainActivity extends Activity {
             editor.putBoolean("MainActivityShowMileage", true);
             editor.commit();
         }
+        if(!mPreferences.contains("MainActivityShowGPSTrack")){
+            editor.putBoolean("MainActivityShowGPSTrack", true);
+            editor.commit();
+        }
         if(!mPreferences.contains("MainActivityShowRefuel")){
             editor.putBoolean("MainActivityShowRefuel", true);
             editor.commit();
@@ -238,6 +251,7 @@ public class MainActivity extends Activity {
             editor.putBoolean("MainActivityShowCarReport", true);
             editor.commit();
         }
+
         if(!mPreferences.contains("IsGPSTrackOnMap")){
             editor.putBoolean("IsGPSTrackOnMap", false);
             editor.commit();
@@ -283,6 +297,7 @@ public class MainActivity extends Activity {
         isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
 
         showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
+        showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
         showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
         showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
         showCarReportZone = mPreferences.getBoolean("MainActivityShowCarReport", true);
@@ -306,18 +321,32 @@ public class MainActivity extends Activity {
             threeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             threeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             threeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
-            mileageListBtn.setEnabled(true);
+            btnMileageList.setEnabled(true);
         } else {
             threeLineListMileageText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOMILEAGETEXT));
             threeLineListMileageText2.setText("");
             threeLineListMileageText3.setText("");
-            mileageListBtn.setEnabled(false);
+            btnMileageList.setEnabled(false);
         }
 
-        if(isGpsTrackOn)
-            btnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
-        else
-            btnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
+        //fill gps track zone data
+//        whereConditions.clear();
+//        whereConditions.putString(
+//                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
+//                String.valueOf(currentCarID));
+//        reportDb.setReportSql("reportMileageListViewSelect", whereConditions);
+//        listCursor = reportDb.fetchReport(1);
+//        if (listCursor.moveToFirst()) {
+//            threeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+//            threeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+//            threeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+//            btnMileageList.setEnabled(true);
+//        } else {
+            threeLineListGPSTrackText1.setText("GPSTrack1");
+            threeLineListGPSTrackText2.setText("GPSTrack2");
+            threeLineListGPSTrackText3.setText("GPSTrack3");
+//            btnMileageList.setEnabled(false);
+//        }
 
         //fill refuel zone data
         listCursor = null;
@@ -331,12 +360,12 @@ public class MainActivity extends Activity {
             threeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             threeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             threeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
-            refuelListBtn.setEnabled(true);
+            btnRefuelList.setEnabled(true);
         } else {
             threeLineListRefuelText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOREFUELTEXT));
             threeLineListRefuelText2.setText("");
             threeLineListRefuelText3.setText("");
-            refuelListBtn.setEnabled(false);
+            btnRefuelList.setEnabled(false);
         }
 
         //fill expense zone data
@@ -352,7 +381,7 @@ public class MainActivity extends Activity {
             threeLineListExpenseText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             threeLineListExpenseText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             threeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
-            expenseListBtn.setEnabled(true);
+            btnExpenseList.setEnabled(true);
         } else {
             threeLineListExpenseText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSETEXT));
             threeLineListExpenseText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT));
@@ -461,6 +490,10 @@ public class MainActivity extends Activity {
             findViewById(R.id.mainActivityMileageZone).setVisibility(View.GONE);
         else
             findViewById(R.id.mainActivityMileageZone).setVisibility(View.VISIBLE);
+        if(!showGPSTrackZone)
+            findViewById(R.id.mainActivityGPSTrackZone).setVisibility(View.GONE);
+        else
+            findViewById(R.id.mainActivityGPSTrackZone).setVisibility(View.VISIBLE);
         if(!showRefuelZone)
             findViewById(R.id.mainActivityRefuelZone).setVisibility(View.GONE);
         else
@@ -505,6 +538,17 @@ public class MainActivity extends Activity {
         }
     };
 
+    private OnClickListener btnGPSTrackInsertClickListener = new OnClickListener() {
+
+        public void onClick(View arg0) {
+            Intent gpsTrackInsertIntent = new Intent(mainContext, GPSTrackController.class);
+            gpsTrackInsertIntent.putExtra("CurrentDriver_ID", currentDriverID);
+            gpsTrackInsertIntent.putExtra("CurrentCar_ID", currentCarID);
+            gpsTrackInsertIntent.putExtra("Operation", "N");
+            startActivity(gpsTrackInsertIntent);
+        }
+    };
+
     private OnClickListener btnRefuelListClickListener = new OnClickListener() {
 
         public void onClick(View arg0) {
@@ -545,39 +589,7 @@ public class MainActivity extends Activity {
         }
     };
 
-    private OnClickListener mStartStopGPStrackListener = new OnClickListener() {
-        public void onClick(View v)
-        {
-            if(isGpsTrackOn){
-//                stopService(new Intent(MainActivity.this, GPSTrackService.class));
-                isGpsTrackOn = false;
-                btnStartStopGpsTrack.setText(mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
-            }
-            else{
-                startService(new Intent(MainActivity.this, GPSTrackService.class));
-                isGpsTrackOn = true; //mPreferences.getBoolean("isGpsTrackOn", false); //check if the service is started succesfull
-//                startActivity(new Intent(MainActivity.this, GPSTrackMap.class));
-                if(isGpsTrackOn)
-                    btnStartStopGpsTrack.setText(
-                            mRes.getString(R.string.MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
-            }
-        };
-    };
 
-//    private boolean isGPSTrackingServiceRunning(){
-//        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-//        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(50);
-//        String temp;
-//        for (int i = 0; i < runningServices.size(); i++) {
-//            ActivityManager.RunningServiceInfo runningServiceInfo = runningServices.get(i);
-////            if(runningServiceInfo.getClass().equals(GPSTrackService.class))
-////                return true;
-//            temp = runningServiceInfo.service.getClassName();
-//            temp = runningServiceInfo.process;
-//        }
-//        return false;
-//    }
-//
     private void fillDriverCar() {
         if (mPreferences != null) {
             infoStr = mRes.getString(R.string.GEN_DRIVER_LABEL);
@@ -599,12 +611,12 @@ public class MainActivity extends Activity {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
-                mileageListBtn.setEnabled(false);
-                mileageInsertBtn.setEnabled(false);
-                refuelListBtn.setEnabled(false);
-                refuelInsertBtn.setEnabled(false);
-                expenseListBtn.setEnabled(false);
-                expenseInsertBtn.setEnabled(false);
+                btnMileageList.setEnabled(false);
+                btnMileageInsert.setEnabled(false);
+                btnRefuelList.setEnabled(false);
+                btnRefuelInsert.setEnabled(false);
+                btnExpenseList.setEnabled(false);
+                btnExpenseInsert.setEnabled(false);
                 return;
             }
 
@@ -631,12 +643,12 @@ public class MainActivity extends Activity {
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
-                mileageListBtn.setEnabled(false);
-                mileageInsertBtn.setEnabled(false);
-                refuelListBtn.setEnabled(false);
-                refuelInsertBtn.setEnabled(false);
-                expenseListBtn.setEnabled(false);
-                expenseInsertBtn.setEnabled(false);
+                btnMileageList.setEnabled(false);
+                btnMileageInsert.setEnabled(false);
+                btnRefuelList.setEnabled(false);
+                btnRefuelInsert.setEnabled(false);
+                btnExpenseList.setEnabled(false);
+                btnExpenseInsert.setEnabled(false);
                 return;
             }
 
@@ -647,35 +659,37 @@ public class MainActivity extends Activity {
             ((TextView) findViewById(R.id.info)).setText(infoStr);
 
             if (currentCarID < 0 || currentDriverID < 0) {
-                mileageInsertBtn.setEnabled(false);
-                mileageListBtn.setEnabled(false);
-                refuelInsertBtn.setEnabled(false);
-                refuelListBtn.setEnabled(false);
-                expenseListBtn.setEnabled(false);
-                expenseInsertBtn.setEnabled(false);
+                btnMileageInsert.setEnabled(false);
+                btnMileageList.setEnabled(false);
+                btnRefuelInsert.setEnabled(false);
+                btnRefuelList.setEnabled(false);
+                btnExpenseList.setEnabled(false);
+                btnExpenseInsert.setEnabled(false);
             } else {
-                mileageInsertBtn.setEnabled(true);
-                mileageListBtn.setEnabled(true);
-                refuelInsertBtn.setEnabled(true);
-                refuelListBtn.setEnabled(true);
-                expenseListBtn.setEnabled(true);
-                expenseInsertBtn.setEnabled(true);
+                btnMileageInsert.setEnabled(true);
+                btnMileageList.setEnabled(true);
+                btnRefuelInsert.setEnabled(true);
+                btnRefuelList.setEnabled(true);
+                btnExpenseList.setEnabled(true);
+                btnExpenseInsert.setEnabled(true);
             }
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
-                mRes.getText(R.string.MENU_PREFERENCES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_preferences));
-        menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
-                mRes.getText(R.string.MENU_ABOUT_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
         menu.add(0, StaticValues.MENU_MILEAGE_ID, 0,
                 mRes.getText(R.string.MENU_MILEAGE_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_mileage));
+        menu.add(0, StaticValues.MENU_GPSTRACK_ID, 0,
+                mRes.getText(R.string.MENU_GPSTRACK_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_gpstrack));
         menu.add(0, StaticValues.MENU_REFUEL_ID, 0,
                 mRes.getText(R.string.MENU_REFUEL_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_refuel));
         menu.add(0, StaticValues.MENU_EXPENSES_ID, 0,
                 mRes.getText(R.string.MENU_EXPENSES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_expenses));
+        menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
+                mRes.getText(R.string.MENU_PREFERENCES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_preferences));
+        menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
+                mRes.getText(R.string.MENU_ABOUT_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
         return true;
     }
 

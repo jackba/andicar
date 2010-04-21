@@ -110,31 +110,103 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
-                <Button android:id="@+id/mainActivityBtnStartStopGpsTrack"
-                    style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_alignTop="@id/mainActivityBtnMileageList"
-                    />
-
                 <Button android:id="@+id/mainActivityBtnInsertMileage"
                     style="?android:attr/buttonStyleSmall"
                     android:text="@string/MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_alignTop="@id/mainActivityBtnStartStopGpsTrack"
+                    android:layout_alignTop="@id/mainActivityBtnMileageList"
                     />
             </RelativeLayout>
-
             <TextView
                 android:layout_height="2dip"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
                 />
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/mainActivityGPSTrackZone"
+            >
+            <TextView
+                android:id="@+id/mainActivityGPSTrackHdr"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MAIN_ACTIVITY_GPSTRACK_HDR_CAPTION"
+                />
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/mainActivityThreeLineListGPSTrackHdr"
+                          android:textSize="14sp"
+                          android:textStyle="bold|italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/MAIN_ACTIVITY_GPSTRACK_LISTHDR_CAPTION"
+                          />
+                <TextView android:id="@+id/mainActivityThreeLineListGPSTrackText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/mainActivityThreeLineListGPSTrackText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/mainActivityThreeLineListGPSTrackText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <Button android:id="@+id/mainActivityBtnGPSTrackList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button android:id="@+id/mainActivityBtnInsertGPSTrack"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/mainActivityBtnMileageList"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+        </LinearLayout>
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -210,7 +282,6 @@
                     android:layout_alignTop="@id/mainActivityBtnRefuelList"
                     />
             </RelativeLayout>
-    <!-- -->
             <TextView
                 android:layout_height="2dip"
                 android:layout_width="fill_parent"

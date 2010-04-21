@@ -68,22 +68,46 @@ public class Utils {
 
     public static String appendDateTime(String inStr, boolean appendHour, boolean appendMinute,
             boolean appendSecondMilisecond){
-        Calendar reportCal = Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         inStr = inStr +
-                    reportCal.get(Calendar.YEAR) + "" +
-                    pad(reportCal.get(Calendar.MONTH) + 1) +
-                    pad(reportCal.get(Calendar.DAY_OF_MONTH));
+                    cal.get(Calendar.YEAR) + "" +
+                    pad(cal.get(Calendar.MONTH) + 1) +
+                    pad(cal.get(Calendar.DAY_OF_MONTH));
         if(appendHour)
             inStr = inStr +
-                    pad(reportCal.get(Calendar.HOUR_OF_DAY));
+                    pad(cal.get(Calendar.HOUR_OF_DAY));
         if(appendMinute)
             inStr = inStr +
-                    pad(reportCal.get(Calendar.MINUTE));
+                    pad(cal.get(Calendar.MINUTE));
         if(appendSecondMilisecond)
             inStr = inStr +
-                    pad(reportCal.get(Calendar.SECOND)) +
-                    reportCal.get(Calendar.MILLISECOND);
+                    pad(cal.get(Calendar.SECOND)) +
+                    cal.get(Calendar.MILLISECOND);
         return inStr;
     }
 
+    /**
+     *
+     * @return the current date in the form of yyyy-mm-dd
+     */
+    public static String getDateStr(boolean appendHour, boolean appendMinute){
+        Calendar cal = Calendar.getInstance();
+        String retVal = cal.get(Calendar.YEAR) + "-" +
+                    pad(cal.get(Calendar.MONTH) + 1) + "-" +
+                    pad(cal.get(Calendar.DAY_OF_MONTH));
+        if(appendHour){
+            retVal = retVal + " " +
+                    pad(cal.get(Calendar.HOUR_OF_DAY));
+        }
+        if(appendMinute){
+            if(appendHour)
+                retVal = retVal + ":" +
+                        pad(cal.get(Calendar.MINUTE));
+            else
+                retVal = retVal + " " +
+                        pad(cal.get(Calendar.MINUTE));
+        }
+        return retVal;
+
+    }
 }

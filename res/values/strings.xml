@@ -48,6 +48,7 @@
     <string name="APP_ACTIVITY_MAINSCREENPREF">"Customize your main screen"</string>
     <string name="APP_ACTIVITY_CURRENCYRATELIST">"Currency rates"</string>
     <string name="APP_ACTIVITY_CURRENCYRATEEDIT">"Add or edit currency rates"</string>
+    <string name="APP_ACTIVITY_GPSTRACKCONTROLLER">"GPS Track Control"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -94,6 +95,7 @@
     <string name="MENU_MILEAGE_CAPTION">"Mileages"</string>
     <string name="MENU_REFUEL_CAPTION">"Refuels"</string>
     <string name="MENU_EXPENSES_CAPTION">"Expenses"</string>
+    <string name="MENU_GPSTRACK_CAPTION">"GPS Track"</string>
 
 
     <string name="MAIN_ACTIVITY_MILEAGE_HDR_CAPTION">"Mileages"</string>
@@ -104,10 +106,17 @@
     <string name="MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION">"Last refuel:"</string>
     <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"  Add new  "</string>
     <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"  View more  "</string>
+
+    <string name="MAIN_ACTIVITY_GPSTRACK_HDR_CAPTION">"GPS Tracks"</string>
+    <string name="MAIN_ACTIVITY_GPSTRACK_LISTHDR_CAPTION">"Last track:"</string>
+    <string name="MAIN_ACTIVITY_INSERT_GPSTRACK_BTN_CAPTION">"  Add new  "</string>
+    <string name="MAIN_ACTIVITY_GPSTRACKLIST_BTN_CAPTION">"  View more  "</string>
+<!--
     <string name="MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION">"Start GPS Track"</string>
     <string name="MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION">"Stop GPS Track"</string>
     <string name="MAIN_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE">"GPS tracking started"</string>
-
+    <string name="MAIN_ACTIVITY_GPSSHOWMAP_BTN_CAPTION">"show map"</string>
+-->
     <string name="MAIN_ACTIVITY_EXPENSE_HDR_CAPTION">"Expenses"</string>
     <string name="MAIN_ACTIVITY_EXPENSE_LISTHDR_CAPTION">"Last expense:"</string>
     <string name="MAIN_ACTIVITY_INSERT_EXPENSE_BTN_CAPTION">"  Add new  "</string>
@@ -268,5 +277,8 @@
     <string name="SERVICE_GPSTRACK_SERVICESTOPPED_MESSAGE">"GPS tracking stopped"</string>
     <string name="SERVICE_GPSTRACK_GPSDISABLED">"Your gps is disabled!\nPlease enable it."</string>
 
+    <string name="GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION">"Start GPS Track"</string>
+    <string name="GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION">"Stop GPS Track"</string>
+    <string name="GPSTRACK_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE">"GPS tracking started"</string>
 
 </resources>
