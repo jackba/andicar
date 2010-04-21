@@ -749,7 +749,6 @@ public class MainDbAdapter extends DB
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + MILEAGE_TABLE_NAME +
                             " WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + carId +
-//                                " AND " + MILEAGE_COL_DRIVER_ID_NAME  + " = " + driverId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + MILEAGE_COL_INDEXSTOP_NAME + " DESC " +
@@ -758,7 +757,6 @@ public class MainDbAdapter extends DB
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + REFUEL_TABLE_NAME +
                             " WHERE " + REFUEL_COL_CAR_ID_NAME + " = " + carId +
-//                                " AND " + REFUEL_COL_DRIVER_ID_NAME  + " = " + driverId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + REFUEL_COL_DATE_NAME + " DESC " +
@@ -767,10 +765,17 @@ public class MainDbAdapter extends DB
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + EXPENSES_TABLE_NAME +
                             " WHERE " + EXPENSES_COL_CAR_ID_NAME + " = " + carId +
-//                                " AND " + REFUEL_COL_DRIVER_ID_NAME  + " = " + driverId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + EXPENSES_COL_DATE_NAME + " DESC " +
+                            " LIMIT " + limitCount;
+        else if(fromTable.equals(GPSTRACK_TABLE_NAME))
+            selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
+                            " FROM " + GPSTRACK_TABLE_NAME +
+                            " WHERE " + GPSTRACK_COL_CAR_ID_NAME + " = " + carId +
+                                " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
+                                " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
+                            " ORDER BY " + GPSTRACK_COL_DATE_NAME + " DESC " +
                             " LIMIT " + limitCount;
         else
             return null;

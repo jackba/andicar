@@ -36,6 +36,7 @@
         android:icon="@drawable/car2"
         android:debuggable="true"
     >
+        <uses-library android:name="com.google.android.maps" />
         <service android:name="org.andicar.service.GPSTrackService" />
         
         <activity android:name="org.andicar.activity.MainActivity"
@@ -175,11 +176,15 @@
             android:label="@string/APP_ACTIVITY_CURRENCYRATEEDIT">
         </activity>
 
-       <uses-library android:name="com.google.android.maps" />
        <activity
             android:name="org.andicar.activity.GPSTrackMap"
             android:label=""
             android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+
+       <activity
+            android:name="org.andicar.activity.GPSTrackController"
+            android:label="@string/APP_ACTIVITY_GPSTRACKCONTROLLER">
         </activity>
     </application>
 </manifest>

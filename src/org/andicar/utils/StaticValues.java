@@ -39,6 +39,7 @@ public class StaticValues
     public static final int MENU_MILEAGE_ID = 14;
     public static final int MENU_REFUEL_ID = 15;
     public static final int MENU_EXPENSES_ID = 16;
+    public static final int MENU_GPSTRACK_ID = 17;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
