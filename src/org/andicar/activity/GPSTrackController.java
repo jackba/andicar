@@ -69,7 +69,7 @@ public class GPSTrackController extends EditActivityBase {
         spnDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
         spnCar.setOnTouchListener(spinnerOnTouchListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
-        acUserComment = ((AutoCompleteTextView) findViewById( R.id.etUserComment ));
+        acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
         etName = (EditText) findViewById(R.id.etName);
         etName.setHint(Utils.getDateStr(true, true));
         ckIsUseKML = (CheckBox) findViewById(R.id.ckIsUseKML);

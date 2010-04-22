@@ -82,7 +82,7 @@ public class MileageEditActivity extends EditActivityBase {
         tvUserInputLabel = ((TextView) findViewById(R.id.tvUserInputLabel));
         tvCalculatedTextLabel = ((TextView) findViewById(R.id.tvCalculatedTextLabel));
         spnExpType = (Spinner)findViewById(R.id.spnExpType);
-        acUserComment = (AutoCompleteTextView)findViewById(R.id.etUserComment);
+        acUserComment = (AutoCompleteTextView)findViewById(R.id.acUserComment);
 
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgMileageInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
