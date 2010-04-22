@@ -265,6 +265,7 @@
     <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATETO_LABEL">" %"</string>
     <string name="CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL">"Inverse rate: 1 % = "</string>
     <string name="CURRENCYRATE_EDIT_ACTIVITY_MAXALLOWEDDECIMALS_LABEL">"Max. allowed decimals: "</string>
+    <string name="CURRENCYRATE_EDIT_ACTIVITY_TVCURRENCYRATE_TAG">"Rate"</string>
 
     <string name="MAINSCREENPREF_ACTIVITY_LABEL">"Existing zones:"</string>
 

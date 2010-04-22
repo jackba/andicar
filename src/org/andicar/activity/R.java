@@ -59,7 +59,7 @@ public final class R {
     public static final class id {
         public static final int aboutDonateEUR=0x7f070003;
         public static final int aboutDonateUSD=0x7f070004;
-        public static final int acUserCommentEntry=0x7f070048;
+        public static final int acUserComment=0x7f070048;
         public static final int btnBackup=0x7f070006;
         public static final int btnDelete=0x7f070008;
         public static final int btnExpenseInsert=0x7f070072;

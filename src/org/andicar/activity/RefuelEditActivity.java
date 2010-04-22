@@ -90,7 +90,7 @@ public class RefuelEditActivity extends EditActivityBase {
         super.onCreate(icicle, R.layout.refuel_edit_activity, mOkClickListener);
 
         operationType = mbundleExtras.getString("Operation");
-        acUserComment = ((AutoCompleteTextView) findViewById( R.id.etUserComment ));
+        acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
 
         spnCar = (Spinner)findViewById(R.id.spnCar);
         spnDriver = (Spinner)findViewById(R.id.spnDriver);
