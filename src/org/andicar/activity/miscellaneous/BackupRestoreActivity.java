@@ -47,23 +47,23 @@ public class BackupRestoreActivity extends EditActivityBase {
     private String selectedFile = null;
     private Button btnRestore;
     private Button btnBackup;
-    private Button btnDeleteBk;
-    private ListView backupSetList;
+    private Button btnDelete;
+    private ListView lvBackupSet;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView( R.layout.backup_restore_activity );
-        btnBackup = (Button) findViewById(R.id.bkRestoreBackupBtn);
+        btnBackup = (Button) findViewById(R.id.btnBackup);
         btnBackup.setOnClickListener(btnBkClickListener);
-        btnRestore = (Button) findViewById(R.id.bkRestoreRestoreBtn);
+        btnRestore = (Button) findViewById(R.id.btnRestore);
         btnRestore.setOnClickListener(btnRestoreClickListener);
         btnRestore.setEnabled(false);
-        btnDeleteBk = (Button) findViewById(R.id.bkRestoreDeleteBkBtn);
-        btnDeleteBk.setOnClickListener(btnDeleteBkClickListener);
-        btnDeleteBk.setEnabled(false);
-        backupSetList = (ListView) findViewById(android.R.id.list);
+        btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnDelete.setOnClickListener(btnDeleteBkClickListener);
+        btnDelete.setEnabled(false);
+        lvBackupSet = (ListView) findViewById(R.id.lvBackupList);
         fillBkList();
     }
 
@@ -71,15 +71,15 @@ public class BackupRestoreActivity extends EditActivityBase {
         bkFileList = getBkFiles();
         if(bkFileList == null || bkFileList.isEmpty()){
             btnRestore.setEnabled(false);
-            btnDeleteBk.setEnabled(false);
-            backupSetList.setAdapter(null);
+            btnDelete.setEnabled(false);
+            lvBackupSet.setAdapter(null);
             return;
         }
         ArrayAdapter listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, bkFileList);
-        backupSetList.setAdapter(listAdapter);
-        backupSetList.setItemsCanFocus(false);
-        backupSetList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        backupSetList.setOnItemClickListener(bkFileSelectedListener);
+        lvBackupSet.setAdapter(listAdapter);
+        lvBackupSet.setItemsCanFocus(false);
+        lvBackupSet.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        lvBackupSet.setOnItemClickListener(bkFileSelectedListener);
     }
 
         protected ArrayList<String> getBkFiles() {
@@ -95,48 +95,48 @@ public class BackupRestoreActivity extends EditActivityBase {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 selectedFile = bkFileList.get(arg2);
                 btnRestore.setEnabled(true);
-                btnDeleteBk.setEnabled(true);
+                btnDelete.setEnabled(true);
             }
         };
 
     private View.OnClickListener btnBkClickListener =  new View.OnClickListener() {
             public void onClick(View arg0) {
-                if(mMainDbAdapter.backupDb(null)){
+                if(mDbAdapter.backupDb(null)){
                     Toast toast = Toast.
                             makeText( getApplicationContext(),
-                            mRes.getString( R.string.BKRESTORE_ACTIVITY_BKOK_MESSAGE ), Toast.LENGTH_SHORT);
+                            mResource.getString( R.string.BKRESTORE_ACTIVITY_BKOK_MESSAGE ), Toast.LENGTH_SHORT);
                     toast.show();
                     fillBkList();
                 }
                 else{
-                    errorAlertBuilder.setMessage(mRes.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
-                            mMainDbAdapter.lastErrorMessage);
-                    errorAlert = errorAlertBuilder.create();
-                    errorAlert.show();
+                    madbErrorAlert.setMessage(mResource.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
+                            mDbAdapter.lastErrorMessage);
+                    madError = madbErrorAlert.create();
+                    madError.show();
                 }
                 btnRestore.setEnabled(false);
-                btnDeleteBk.setEnabled(false);
+                btnDelete.setEnabled(false);
             }
     };
 
     private View.OnClickListener btnRestoreClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
-            builder.setMessage(mRes.getString(R.string.BKRESTORE_ACTIVITY_RESTORE_CONFIRM));
+            builder.setMessage(mResource.getString(R.string.BKRESTORE_ACTIVITY_RESTORE_CONFIRM));
             builder.setCancelable(false);
-            builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
+            builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
                        new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
-                                if(mMainDbAdapter.restoreDb(selectedFile)){
+                                if(mDbAdapter.restoreDb(selectedFile)){
                                     SharedPreferences.Editor editor = mPreferences.edit();
                                     editor.putBoolean("MustClose", true);
                                     editor.putLong( "CurrentCar_ID", -1);
                                     editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
                                     AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
-                                    builder.setMessage(mRes.getString(R.string.BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE));
+                                    builder.setMessage(mResource.getString(R.string.BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE));
                                     builder.setCancelable(false);
-                                    builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
+                                    builder.setPositiveButton(mResource.getString(R.string.GEN_OK),
                                                new DialogInterface.OnClickListener() {
                                                    public void onClick(DialogInterface dialog, int id) {
                                                        finish();
@@ -146,14 +146,14 @@ public class BackupRestoreActivity extends EditActivityBase {
                                     alert.show();
                                 }
                                 else{
-                                    errorAlertBuilder.setMessage(mRes.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
-                                            mMainDbAdapter.lastErrorMessage);
-                                    errorAlert = errorAlertBuilder.create();
-                                    errorAlert.show();
+                                    madbErrorAlert.setMessage(mResource.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
+                                            mDbAdapter.lastErrorMessage);
+                                    madError = madbErrorAlert.create();
+                                    madError.show();
                                 }
                            }
                        });
-            builder.setNegativeButton(mRes.getString(R.string.GEN_NO),
+            builder.setNegativeButton(mResource.getString(R.string.GEN_NO),
                         new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -167,19 +167,19 @@ public class BackupRestoreActivity extends EditActivityBase {
     private View.OnClickListener btnDeleteBkClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
-            builder.setMessage(mRes.getString(R.string.BKRESTORE_ACTIVITY_DELETE_CONFIRM));
+            builder.setMessage(mResource.getString(R.string.BKRESTORE_ACTIVITY_DELETE_CONFIRM));
             builder.setCancelable(false);
-            builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
+            builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
                        new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
                                 FileUtils fu = new FileUtils();
-                                fu.deleteFile(StaticValues.backupFolder + selectedFile);
+                                fu.deleteFile(StaticValues.BACKUP_FOLDER + selectedFile);
                                 fillBkList();
                                 btnRestore.setEnabled(false);
-                                btnDeleteBk.setEnabled(false);
+                                btnDelete.setEnabled(false);
                            }
                        });
-            builder.setNegativeButton(mRes.getString(R.string.GEN_NO),
+            builder.setNegativeButton(mResource.getString(R.string.GEN_NO),
                         new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();

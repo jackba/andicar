@@ -22,7 +22,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
-    android:id="@+id/genRootViewGroup"
+    android:id="@+id/vgRoot"
     >
 
     <LinearLayout
@@ -33,20 +33,19 @@
         >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/genNameLabel"
+                android:id="@+id/tvNameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_NAME_LABEL"
                 />
             <EditText
-                android:id="@+id/genNameEntry"
+                android:id="@+id/etName"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -56,20 +55,19 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/carEditCarRegNoLabel"
+                android:id="@+id/tvCarRegNoLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/CAR_EDIT_ACTIVITY_REG_NO"
                 />
             <EditText
-                android:id="@+id/carEditCarRegNoEntry"
+                android:id="@+id/etCarRegNo"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -79,20 +77,19 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/carEditCarStartIndexLabel"
+                android:id="@+id/tvIndexStartLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/CAR_EDIT_ACTIVITY_STARTINDEX"
                 />
             <EditText
-                android:id="@+id/carEditCarStartIndexEntry"
+                android:id="@+id/etIndexStart"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -103,7 +100,6 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -114,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/CAR_EDIT_ACTIVITY_UOMLENGTH"
             />
-            <Spinner android:id="@+id/carEditUomLengthSpinner"
+            <Spinner android:id="@+id/spnUomLength"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -125,7 +121,6 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -136,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/CAR_EDIT_ACTIVITY_UOMVOLUME"
             />
-            <Spinner android:id="@+id/carEditUomVolumeSpinner"
+            <Spinner android:id="@+id/spnUomVolume"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -147,7 +142,6 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -158,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/CAR_EDIT_ACTIVITY_CURRENCY"
             />
-            <Spinner android:id="@+id/carEditCurrencySpinner"
+            <Spinner android:id="@+id/spnCurrency"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -169,27 +163,26 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/genIsActiveCheck"
+            android:id="@+id/ckIsActive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/GEN_ISACTIVE_LABEL"
             />
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/carEditCarModelLabel"
+                android:id="@+id/tvModelLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/CAR_EDIT_ACTIVITY_MODEL"
                 />
             <EditText
-                android:id="@+id/carEditCarModelEntry"
+                android:id="@+id/etCarModel"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -198,13 +191,13 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/genUserCommentLabel"
+            android:id="@+id/tvUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/GEN_USER_COMMENT_LABEL"
             />
         <EditText
-            android:id="@+id/genUserCommentEntry"
+            android:id="@+id/etUserComment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"

@@ -77,21 +77,21 @@ public class MainActivity extends Activity {
 
     private ReportDbAdapter reportDb;
     private Cursor listCursor;
-    private TextView threeLineListMileageText1;
-    private TextView threeLineListMileageText2;
-    private TextView threeLineListMileageText3;
-    private TextView threeLineListGPSTrackText1;
-    private TextView threeLineListGPSTrackText2;
-    private TextView threeLineListGPSTrackText3;
-    private TextView threeLineListRefuelText1;
-    private TextView threeLineListRefuelText2;
-    private TextView threeLineListRefuelText3;
-    private TextView threeLineListExpenseText1;
-    private TextView threeLineListExpenseText2;
-    private TextView threeLineListExpenseText3;
-    private TextView threeLineListCarReportText1;
-    private TextView threeLineListCarReportText2;
-    private TextView threeLineListCarReportText3;
+    private TextView tvThreeLineListMileageText1;
+    private TextView tvThreeLineListMileageText2;
+    private TextView tvThreeLineListMileageText3;
+    private TextView tvThreeLineListGPSTrackText1;
+    private TextView tvThreeLineListGPSTrackText2;
+    private TextView tvThreeLineListGPSTrackText3;
+    private TextView tvThreeLineListRefuelText1;
+    private TextView tvThreeLineListRefuelText2;
+    private TextView tvThreeLineListRefuelText3;
+    private TextView tvThreeLineListExpenseText1;
+    private TextView tvThreeLineListExpenseText2;
+    private TextView tvThreeLineListExpenseText3;
+    private TextView tvThreeLineListCarReportText1;
+    private TextView tvThreeLineListCarReportText2;
+    private TextView tvThreeLineListCarReportText3;
 
     private boolean exitResume = false;
     private String appVersion;
@@ -147,38 +147,38 @@ public class MainActivity extends Activity {
             editor.commit();
         }
 
-        btnMileageList = (Button) findViewById(R.id.mainActivityBtnMileageList);
+        btnMileageList = (Button) findViewById(R.id.btnMileageList);
         btnMileageList.setOnClickListener(btnMileageListClickListener);
-        btnMileageInsert = (Button) findViewById(R.id.mainActivityBtnInsertMileage);
+        btnMileageInsert = (Button) findViewById(R.id.btnMileageInsert);
         btnMileageInsert.setOnClickListener(btnInsertMileageClickListener);
-        btnRefuelList = (Button) findViewById(R.id.mainActivityBtnRefuelList);
+        btnRefuelList = (Button) findViewById(R.id.btnRefuelList);
         btnRefuelList.setOnClickListener(btnRefuelListClickListener);
-        btnRefuelInsert = (Button) findViewById(R.id.mainActivityBtnInsertRefuel);
+        btnRefuelInsert = (Button) findViewById(R.id.btnRefuelInsert);
         btnRefuelInsert.setOnClickListener(btnInsertRefuelClickListener);
-        btnExpenseList = (Button) findViewById(R.id.mainActivityBtnExpenseList);
+        btnExpenseList = (Button) findViewById(R.id.btnExpenseList);
         btnExpenseList.setOnClickListener(btnExpenseListClickListener);
-        btnExpenseInsert = (Button) findViewById(R.id.mainActivityBtnInsertExpense);
+        btnExpenseInsert = (Button) findViewById(R.id.btnExpenseInsert);
         btnExpenseInsert.setOnClickListener(btnInsertExpenseClickListener);
-        btnGPSTrackInsert = (Button) findViewById(R.id.mainActivityBtnInsertGPSTrack);
+        btnGPSTrackInsert = (Button) findViewById(R.id.btnGPSTrackInsert);
         btnGPSTrackInsert.setOnClickListener(btnGPSTrackInsertClickListener);
-        btnGPSTrackList = (Button) findViewById(R.id.mainActivityBtnGPSTrackList);
+        btnGPSTrackList = (Button) findViewById(R.id.btnGPSTrackList);
 //        btnGPSTrackList.setOnClickListener();
 
-        threeLineListMileageText1 = (TextView) findViewById(R.id.mainActivityThreeLineListMileageText1);
-        threeLineListMileageText2 = (TextView) findViewById(R.id.mainActivityThreeLineListMileageText2);
-        threeLineListMileageText3 = (TextView) findViewById(R.id.mainActivityThreeLineListMileageText3);
-        threeLineListGPSTrackText1 = (TextView) findViewById(R.id.mainActivityThreeLineListGPSTrackText1);
-        threeLineListGPSTrackText2 = (TextView) findViewById(R.id.mainActivityThreeLineListGPSTrackText2);
-        threeLineListGPSTrackText3 = (TextView) findViewById(R.id.mainActivityThreeLineListGPSTrackText3);
-        threeLineListRefuelText1 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText1);
-        threeLineListRefuelText2 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText2);
-        threeLineListRefuelText3 = (TextView) findViewById(R.id.mainActivityThreeLineListRefuelText3);
-        threeLineListExpenseText1 = (TextView) findViewById(R.id.mainActivityThreeLineListExpenseText1);
-        threeLineListExpenseText2 = (TextView) findViewById(R.id.mainActivityThreeLineListExpenseText2);
-        threeLineListExpenseText3 = (TextView) findViewById(R.id.mainActivityThreeLineListExpenseText3);
-        threeLineListCarReportText1 = (TextView) findViewById(R.id.mainActivityThreeLineListCarReportText1);
-        threeLineListCarReportText2 = (TextView) findViewById(R.id.mainActivityThreeLineListCarReportText2);
-        threeLineListCarReportText3 = (TextView) findViewById(R.id.mainActivityThreeLineListCarReportText3);
+        tvThreeLineListMileageText1 = (TextView) findViewById(R.id.tvThreeLineListMileageText1);
+        tvThreeLineListMileageText2 = (TextView) findViewById(R.id.tvThreeLineListMileageText2);
+        tvThreeLineListMileageText3 = (TextView) findViewById(R.id.tvThreeLineListMileageText3);
+        tvThreeLineListGPSTrackText1 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText1);
+        tvThreeLineListGPSTrackText2 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText2);
+        tvThreeLineListGPSTrackText3 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText3);
+        tvThreeLineListRefuelText1 = (TextView) findViewById(R.id.tvThreeLineListRefuelText1);
+        tvThreeLineListRefuelText2 = (TextView) findViewById(R.id.tvThreeLineListRefuelText2);
+        tvThreeLineListRefuelText3 = (TextView) findViewById(R.id.tvThreeLineListRefuelText3);
+        tvThreeLineListExpenseText1 = (TextView) findViewById(R.id.tvThreeLineListExpenseText1);
+        tvThreeLineListExpenseText2 = (TextView) findViewById(R.id.tvThreeLineListExpenseText2);
+        tvThreeLineListExpenseText3 = (TextView) findViewById(R.id.tvThreeLineListExpenseText3);
+        tvThreeLineListCarReportText1 = (TextView) findViewById(R.id.tvThreeLineListCarReportText1);
+        tvThreeLineListCarReportText2 = (TextView) findViewById(R.id.tvThreeLineListCarReportText2);
+        tvThreeLineListCarReportText3 = (TextView) findViewById(R.id.tvThreeLineListCarReportText3);
 
         if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
             exitResume = true;
@@ -299,7 +299,7 @@ public class MainActivity extends Activity {
         showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
         showCarReportZone = mPreferences.getBoolean("MainActivityShowCarReport", true);
 
-        ((TextView)findViewById(R.id.mainActivityShortAboutLbl)).setText(Html.fromHtml(
+        ((TextView)findViewById(R.id.tvShortAboutLbl)).setText(Html.fromHtml(
                 "<b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices. " +
                 "It is licensed under the terms of the GNU General Public License, version 3.<br>" +
                 "For more details see the About page.<br>Copyright © 2010 Miklos Keresztes.<br> " +
@@ -315,14 +315,14 @@ public class MainActivity extends Activity {
         reportDb.setReportSql("reportMileageListViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
         if (listCursor.moveToFirst()) {
-            threeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-            threeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
-            threeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+            tvThreeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+            tvThreeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+            tvThreeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
             btnMileageList.setEnabled(true);
         } else {
-            threeLineListMileageText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOMILEAGETEXT));
-            threeLineListMileageText2.setText("");
-            threeLineListMileageText3.setText("");
+            tvThreeLineListMileageText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOMILEAGETEXT));
+            tvThreeLineListMileageText2.setText("");
+            tvThreeLineListMileageText3.setText("");
             btnMileageList.setEnabled(false);
         }
 
@@ -339,9 +339,9 @@ public class MainActivity extends Activity {
 //            threeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
 //            btnMileageList.setEnabled(true);
 //        } else {
-            threeLineListGPSTrackText1.setText("GPSTrack1");
-            threeLineListGPSTrackText2.setText("GPSTrack2");
-            threeLineListGPSTrackText3.setText("GPSTrack3");
+            tvThreeLineListGPSTrackText1.setText("GPSTrack1");
+            tvThreeLineListGPSTrackText2.setText("GPSTrack2");
+            tvThreeLineListGPSTrackText3.setText("GPSTrack3");
 //            btnMileageList.setEnabled(false);
 //        }
 
@@ -354,14 +354,14 @@ public class MainActivity extends Activity {
         reportDb.setReportSql("reportRefuelListViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
         if (listCursor.moveToFirst()) {
-            threeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-            threeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
-            threeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+            tvThreeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+            tvThreeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+            tvThreeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
             btnRefuelList.setEnabled(true);
         } else {
-            threeLineListRefuelText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOREFUELTEXT));
-            threeLineListRefuelText2.setText("");
-            threeLineListRefuelText3.setText("");
+            tvThreeLineListRefuelText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOREFUELTEXT));
+            tvThreeLineListRefuelText2.setText("");
+            tvThreeLineListRefuelText3.setText("");
             btnRefuelList.setEnabled(false);
         }
 
@@ -375,14 +375,14 @@ public class MainActivity extends Activity {
         reportDb.setReportSql("reportExpensesListMainViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
         if (listCursor.moveToFirst()) {
-            threeLineListExpenseText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-            threeLineListExpenseText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
-            threeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+            tvThreeLineListExpenseText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+            tvThreeLineListExpenseText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+            tvThreeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
             btnExpenseList.setEnabled(true);
         } else {
-            threeLineListExpenseText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSETEXT));
-            threeLineListExpenseText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT));
-            threeLineListExpenseText3.setText("");
+            tvThreeLineListExpenseText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSETEXT));
+            tvThreeLineListExpenseText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT));
+            tvThreeLineListExpenseText3.setText("");
         }
 
         //fill statistics (car report) zone data
@@ -394,8 +394,8 @@ public class MainActivity extends Activity {
         reportDb.setReportSql("carReportSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
         if (listCursor.moveToFirst()) {
-            TextView hdrText = (TextView) findViewById(R.id.mainActivityThreeLineListCarReportHdr);
-            hdrText.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION) +
+            TextView tvHdrText = (TextView) findViewById(R.id.tvThreeLineListCarReportHdr);
+            tvHdrText.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION) +
                     listCursor.getString(1));
             String avgConsUom = listCursor.getString(5);
             if(avgConsUom == null)
@@ -435,7 +435,7 @@ public class MainActivity extends Activity {
                         BigDecimal avgCons = BigDecimal.ZERO;
                         avgCons = totalFuel.multiply(new BigDecimal("100"));
                         avgCons = avgCons.divide(avgConsMileage, 10, RoundingMode.HALF_UP)
-                                .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                                .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                         avgConsStr = avgCons.toString() + " " + avgConsUom;
                     }
                 }
@@ -444,7 +444,7 @@ public class MainActivity extends Activity {
             }
             else
                 avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_AVGCONS_NODATA);
-            threeLineListCarReportText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_AVGCONS_LABEL) +
+            tvThreeLineListCarReportText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_AVGCONS_LABEL) +
                     avgConsStr);
 
             //total/mileage expenses
@@ -461,48 +461,48 @@ public class MainActivity extends Activity {
                 totalExpenses = new BigDecimal(totalExpensesStr);
                 if(totalExpenses != null)
                     totalExpensesStr = totalExpenses
-                            .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode).toString();
+                            .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
                 mileageExpense = totalExpenses.multiply(new BigDecimal("100"));
                 mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP)
-                        .setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                        .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                 if(mileageExpense != null){
                     carCurrency = listCursor.getString(8);
                     mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + " / 100 " + listCursor.getString(6);
                 }
             }
-            threeLineListCarReportText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_TOTALEXP) +
+            tvThreeLineListCarReportText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_TOTALEXP) +
                     " " + totalExpensesStr + " " + carCurrency);
                     
-            threeLineListCarReportText3.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_MILEAGEEXP) + " " +
+            tvThreeLineListCarReportText3.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_MILEAGEEXP) + " " +
                     mileageExpenseStr);
         } else {
-            threeLineListCarReportText2.setText("");
-            threeLineListCarReportText2.setText("");
-            threeLineListCarReportText3.setText("");
+            tvThreeLineListCarReportText2.setText("");
+            tvThreeLineListCarReportText2.setText("");
+            tvThreeLineListCarReportText3.setText("");
         }
 
         listCursor = null;
 
         if(!showMileageZone)
-            findViewById(R.id.mainActivityMileageZone).setVisibility(View.GONE);
+            findViewById(R.id.llMileageZone).setVisibility(View.GONE);
         else
-            findViewById(R.id.mainActivityMileageZone).setVisibility(View.VISIBLE);
+            findViewById(R.id.llMileageZone).setVisibility(View.VISIBLE);
         if(!showGPSTrackZone)
-            findViewById(R.id.mainActivityGPSTrackZone).setVisibility(View.GONE);
+            findViewById(R.id.llGPSTrackZone).setVisibility(View.GONE);
         else
-            findViewById(R.id.mainActivityGPSTrackZone).setVisibility(View.VISIBLE);
+            findViewById(R.id.llGPSTrackZone).setVisibility(View.VISIBLE);
         if(!showRefuelZone)
-            findViewById(R.id.mainActivityRefuelZone).setVisibility(View.GONE);
+            findViewById(R.id.llRefuelZone).setVisibility(View.GONE);
         else
-            findViewById(R.id.mainActivityRefuelZone).setVisibility(View.VISIBLE);
+            findViewById(R.id.llRefuelZone).setVisibility(View.VISIBLE);
         if(!showExpenseZone)
-            findViewById(R.id.mainActivityExpenseZone).setVisibility(View.GONE);
+            findViewById(R.id.llExpenseZone).setVisibility(View.GONE);
         else
-            findViewById(R.id.mainActivityExpenseZone).setVisibility(View.VISIBLE);
+            findViewById(R.id.llExpenseZone).setVisibility(View.VISIBLE);
         if(!showCarReportZone)
-            findViewById(R.id.mainActivityCarReportZone).setVisibility(View.GONE);
+            findViewById(R.id.llStatistcsZone).setVisibility(View.GONE);
         else
-            findViewById(R.id.mainActivityCarReportZone).setVisibility(View.VISIBLE);
+            findViewById(R.id.llStatistcsZone).setVisibility(View.VISIBLE);
     }
 
     @Override

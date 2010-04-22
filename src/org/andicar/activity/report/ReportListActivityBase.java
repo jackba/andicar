@@ -56,8 +56,8 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     protected ReportDbAdapter mReportDbHelper = null;
     protected Bundle whereConditions;
     private View reportDialogView;
-    private CheckBox ckSendEmail;
-    private Spinner formatSpinner;
+    private CheckBox ckIsSendEmail;
+    private Spinner spnReportFormat;
     
     AlertDialog.Builder reportOptionsDialog;
     ProgressDialog progressDialog;
@@ -127,7 +127,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             return super.onOptionsItemSelected( item );
         else if(item.getItemId() == StaticValues.OPTION_MENU_REPORT_ID)
         {
-            showDialog(StaticValues.reportOptionsDialog);
+            showDialog(StaticValues.DIALOG_REPORT_OPTIONS);
         }
         return true;
     }
@@ -161,16 +161,15 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        LayoutInflater factory = LayoutInflater.from(this);
-        reportDialogView = factory.inflate(R.layout.report_options_dialog, null);
-        formatSpinner = (Spinner)reportDialogView.findViewById(R.id.reportOptionsFormatSpinner);
+        LayoutInflater liLayoutFactory = LayoutInflater.from(this);
+        reportDialogView = liLayoutFactory.inflate(R.layout.report_options_dialog, null);
+        spnReportFormat = (Spinner)reportDialogView.findViewById(R.id.spnReportOptionsFormat);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.report_formats, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        formatSpinner.setAdapter(adapter);
+        spnReportFormat.setAdapter(adapter);
 
-//        ckSaveLocally = (CheckBox)reportDialogView.findViewById(R.id.reportOptionsCkSaveLocal);
-        ckSendEmail = (CheckBox)reportDialogView.findViewById(R.id.reportOptionsCkSendEmail);
+        ckIsSendEmail = (CheckBox)reportDialogView.findViewById(R.id.ckIsSendEmail);
 
         reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
         reportOptionsDialog.setTitle(R.string.REPORTOPTIONS_DIALOG_TITLE);
@@ -195,7 +194,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     };
 
     public void run() {
-        createReport(true, ckSendEmail.isChecked(), formatSpinner.getSelectedItemId());
+        createReport(true, ckIsSendEmail.isChecked(), spnReportFormat.getSelectedItemId());
     }
 
     private Handler handler = new Handler() {
@@ -204,7 +203,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
                 progressDialog.dismiss();
                 Toast toast = Toast.makeText( getApplicationContext(),
                             mRes.getString(R.string.REPORTLIST_REPORT_CREATED) + " " +
-                                StaticValues.reportFolder, Toast.LENGTH_LONG );
+                                StaticValues.REPORT_FOLDER, Toast.LENGTH_LONG );
                 toast.show();
             }
     };
@@ -260,7 +259,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             emailIntent.setType("text/html");
             emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar report " + reportTitle);
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Sent by AndiCar (http://sites.google.com/site/andicarfree/)");
-            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + StaticValues.reportFolder + reportFileName));
+            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + StaticValues.REPORT_FOLDER + reportFileName));
             emailIntent.setType("text/plain");
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }

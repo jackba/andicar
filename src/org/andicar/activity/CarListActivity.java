@@ -19,7 +19,6 @@
 
 package org.andicar.activity;
 
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -48,19 +47,18 @@ public class CarListActivity extends ListActivityBase
     {
         public void onItemClick( AdapterView parent, View v, int position, long id )
         {
-            Cursor selectedRecord = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME,
+            Cursor dbcTableRecords = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME,
                     MainDbAdapter.carTableColNames, id);
             //car is actve?
-            if( selectedRecord.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
-                SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putLong( "CurrentCar_ID", id );
-                editor.putString( "CurrentCar_Name", selectedRecord.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
-                editor.putLong("CarUOMLength_ID", selectedRecord.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
-                editor.putLong("CarUOMVolume_ID", selectedRecord.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
-                editor.putLong("CarCurrency_ID", selectedRecord.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
-                editor.commit();
+            if( dbcTableRecords.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
+                mPrefEditor.putLong( "CurrentCar_ID", id );
+                mPrefEditor.putString( "CurrentCar_Name", dbcTableRecords.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
+                mPrefEditor.putLong("CarUOMLength_ID", dbcTableRecords.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
+                mPrefEditor.putLong("CarUOMVolume_ID", dbcTableRecords.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
+                mPrefEditor.putLong("CarCurrency_ID", dbcTableRecords.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
+                mPrefEditor.commit();
                 Toast toast = Toast.makeText( getApplicationContext(),
-                        selectedRecord.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.RECORD_SELECTED_TOAST_MESSAGE), Toast.LENGTH_SHORT );
+                        dbcTableRecords.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.RECORD_SELECTED_TOAST_MESSAGE), Toast.LENGTH_SHORT );
                 toast.show();
                 finish();
             }

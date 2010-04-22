@@ -23,7 +23,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
-    android:id="@+id/genRootViewGroup"
+    android:id="@+id/vgRoot"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -38,13 +38,13 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                android:id="@+id/genUserCommentLabel"
+                android:id="@+id/tvUserCommentLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_USER_COMMENT_LABEL"
                 />
             <EditText
-                android:id="@+id/genUserCommentEntry"
+                android:id="@+id/etUserCommentSearch"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_marginLeft="2dip"
@@ -63,12 +63,12 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                android:id="@+id/searchExpTypeLabel"
+                android:id="@+id/tvExpTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_EXPENSETYPE"
                 />
-            <Spinner android:id="@+id/searchExpenseTypeSpinner"
+            <Spinner android:id="@+id/spnExpTypeSearch"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -85,13 +85,13 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                android:id="@+id/searchFromDateLabel"
+                android:id="@+id/tvDateFromLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/SEARCH_FROM_DATE_LBL"
                 />
             <EditText
-                android:id="@+id/searchDateFromEntry"
+                android:id="@+id/setDateFromSearch"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_marginLeft="2dip"
@@ -109,13 +109,13 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                android:id="@+id/searchToDateLabel"
+                android:id="@+id/tvDateToLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/SEARCH_TO_DATE_LBL"
                 />
             <EditText
-                android:id="@+id/searchDateToEntry"
+                android:id="@+id/etDateToSearch"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_marginLeft="2dip"
@@ -134,12 +134,12 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                android:id="@+id/searchDriverLabel"
+                android:id="@+id/tvDriverLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_DRIVER_LABEL"
                 />
-            <Spinner android:id="@+id/searchDriverSpinner"
+            <Spinner android:id="@+id/spnDriverSearch"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -157,12 +157,12 @@
             android:layout_marginTop="2dip"
             >
             <TextView
-                android:id="@+id/searchCarLabel"
+                android:id="@+id/tvCarLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_CAR_LABEL"
                 />
-            <Spinner android:id="@+id/searchCarSpinner"
+            <Spinner android:id="@+id/spnCarSearch"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"

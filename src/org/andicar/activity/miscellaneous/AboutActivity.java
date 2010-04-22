@@ -23,14 +23,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Gallery;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.andicar.paypal.GetPayPalActivity;
 import org.andicar.activity.EditActivityBase;
@@ -53,9 +47,9 @@ public class AboutActivity extends EditActivityBase {
         super.onCreate(icicle);
         setContentView(R.layout.about_activity);
 
-        TextView tw1 = (TextView)findViewById(R.id.aboutText1);
-        tw1.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML1));
-        tw1.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView tvAbout1 = (TextView)findViewById(R.id.tvAbout1);
+        tvAbout1.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML1));
+        tvAbout1.setMovementMethod(LinkMovementMethod.getInstance());
 
         ImageView imgEUR = (ImageView)findViewById(R.id.aboutDonateEUR);
         imgEUR.setImageResource(R.drawable.btn_donate);
@@ -65,9 +59,9 @@ public class AboutActivity extends EditActivityBase {
         imgUSD.setImageResource(R.drawable.btn_donate);
         imgUSD.setOnClickListener(mDonateClickListener);
 
-        TextView tw2 = (TextView)findViewById(R.id.aboutText2);
-        tw2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
-        tw2.setMovementMethod(LinkMovementMethod.getInstance());
+        TextView tvAbout2 = (TextView)findViewById(R.id.tvAbout2);
+        tvAbout2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
+        tvAbout2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     View.OnClickListener mDonateClickListener = new View.OnClickListener() {

@@ -37,18 +37,18 @@ public class Utils {
         cal.set( Integer.parseInt(dateStr.substring(0, 4)),
                     Integer.parseInt(dateStr.substring(5, 7)) - 1,
                     Integer.parseInt(dateStr.substring(8, 10)));
-        if(dateStr.length() > 10 && decodeType.equals(StaticValues.dateDecodeTypeNoChange)){
+        if(dateStr.length() > 10 && decodeType.equals(StaticValues.DATE_DECODE_NO_CHANGE)){
             cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(dateStr.substring(11, 13)));
             cal.set(Calendar.MINUTE, Integer.parseInt(dateStr.substring(14, 16)));
             cal.set(Calendar.SECOND, Integer.parseInt(dateStr.substring(17, 19)));
         }
-        else if(decodeType.equals(StaticValues.dateDecodeTypeTo0Hour)){
+        else if(decodeType.equals(StaticValues.DATE_DECODE_TO_ZERO)){
             cal.set(Calendar.HOUR_OF_DAY, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             cal.set(Calendar.MILLISECOND, 0);
         }
-        else if(decodeType.equals(StaticValues.dateDecodeTypeTo24Hour)){
+        else if(decodeType.equals(StaticValues.DATE_DECODE_TO_24)){
             cal.set(Calendar.HOUR_OF_DAY, 23);
             cal.set(Calendar.MINUTE, 59);
             cal.set(Calendar.SECOND, 59);

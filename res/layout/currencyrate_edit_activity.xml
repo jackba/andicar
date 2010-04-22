@@ -22,7 +22,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
-    android:id="@+id/genRootViewGroup"
+    android:id="@+id/vgRoot"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -38,12 +38,12 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/currencyFromLabel"
+                android:id="@+id/tvCurrencyFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYFROM_LABEL"
                 />
-            <Spinner android:id="@+id/currencyFromSpinner"
+            <Spinner android:id="@+id/spnCurrencyFrom"
                 android:layout_width="50dip"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -53,13 +53,13 @@
                 />
 
             <TextView
-                android:id="@+id/currencyToLabel"
+                android:id="@+id/tvCurrencyTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYTO_LABEL"
                 android:layout_marginLeft="10dip"
                 />
-            <Spinner android:id="@+id/currencyToSpinner"
+            <Spinner android:id="@+id/spnCurrencyTo"
                 android:layout_width="50dip"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -76,13 +76,13 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/currencyRateLabel"
+                android:id="@+id/tvCurrencyRateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL"
                 />
             <EditText
-                android:id="@+id/currencyRateEntry"
+                android:id="@+id/etCurrencyRate"
                 android:layout_width="100dip"
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
@@ -90,7 +90,7 @@
                 android:tag="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL"
                 />
             <TextView
-                android:id="@+id/currencyRateToLabel"
+                android:id="@+id/tvCurrencyRateToLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -105,18 +105,18 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/currencyInverseRateLabel"
+                android:id="@+id/tvInverseRateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL"
                 />
             <TextView
-                android:id="@+id/currencyInverseRateValue"
+                android:id="@+id/tvInverseRateValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
             <TextView
-                android:id="@+id/currencyInverseRateToLabel"
+                android:id="@+id/tvInverseRateToLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -125,21 +125,21 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/genUserCommentLabel"
+            android:id="@+id/tvUserComment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             android:text="@string/GEN_USER_COMMENT_LABEL"
             />
         <EditText
-            android:id="@+id/genUserCommentEntry"
+            android:id="@+id/etUserComment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"
             />
 
         <CheckBox
-            android:id="@+id/genIsActiveCheck"
+            android:id="@+id/ckIsActive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/GEN_ISACTIVE_LABEL"

@@ -47,7 +47,7 @@ import org.andicar.utils.Utils;
  * Base class for all edit activities. Implement common functionalities:
  *  -onCreate:
  *      -aply the layout resource
- *      -initialise global resources: Bundle extras, Resources mRes, SharedPreferences mPreferences
+ *      -initialise global resources: Bundle mbundleExtras, Resources mResource, SharedPreferences mPreferences
  *      -serach for btnCancel and if exists initialize the OnCLickListener
  *      -serach for btnOk and if exists and initialize the OnCLickListener if it is provided to the onCreate method
  *
@@ -58,36 +58,39 @@ import org.andicar.utils.Utils;
 public abstract class EditActivityBase extends Activity {
     protected Long mRowId = null;
 
-    protected Bundle extras = null;
-    protected Resources mRes = null;
+    protected Bundle mbundleExtras = null;
+    protected Resources mResource = null;
     protected SharedPreferences mPreferences;
+    protected SharedPreferences.Editor mPrefEditor;
     protected Button btnOk = null;
     protected Button btnCancel = null;
-    protected MainDbAdapter mMainDbAdapter = null;
+    protected MainDbAdapter mDbAdapter = null;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
     protected int mHour;
     protected int mMinute;
-    protected long mDateTimeInSeconds;
-    protected TextView mDateTimeLabel;
-    protected final Calendar mDateTimeCalendar = Calendar.getInstance();
+    protected long mlDateTimeInSeconds;
+    protected TextView tvDateTimeLabel;
+    protected final Calendar mcalDateTime = Calendar.getInstance();
 
-    protected AlertDialog.Builder errorAlertBuilder;
-    protected AlertDialog errorAlert;
+    protected AlertDialog.Builder madbErrorAlert;
+    protected AlertDialog madError;
 
     protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
         super.onCreate(icicle);
         
         setContentView(layoutResID);
-        extras = getIntent().getExtras();
-        mRes = getResources();
+        mbundleExtras = getIntent().getExtras();
+        mResource = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        mMainDbAdapter = new MainDbAdapter(this);
+        mPrefEditor = mPreferences.edit();
 
-        errorAlertBuilder = new AlertDialog.Builder( this );
-        errorAlertBuilder.setCancelable( false );
-        errorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
+        mDbAdapter = new MainDbAdapter(this);
+
+        madbErrorAlert = new AlertDialog.Builder( this );
+        madbErrorAlert.setCancelable( false );
+        madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
 
         btnCancel = (Button) findViewById( android.R.id.closeButton);
         if(btnCancel != null)
@@ -102,16 +105,16 @@ public abstract class EditActivityBase extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(mMainDbAdapter == null)
-            mMainDbAdapter = new MainDbAdapter(this);
+        if(mDbAdapter == null)
+            mDbAdapter = new MainDbAdapter(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mMainDbAdapter != null){
-            mMainDbAdapter.close();
-            mMainDbAdapter = null;
+        if(mDbAdapter != null){
+            mDbAdapter.close();
+            mDbAdapter = null;
         }
     }
 
@@ -120,48 +123,49 @@ public abstract class EditActivityBase extends Activity {
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        extras = getIntent().getExtras();
-        mRes = getResources();
+        mbundleExtras = getIntent().getExtras();
+        mResource = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        mMainDbAdapter = new MainDbAdapter(this);
+        mPrefEditor = mPreferences.edit();
+        mDbAdapter = new MainDbAdapter(this);
 
-        errorAlertBuilder = new AlertDialog.Builder( this );
-        errorAlertBuilder.setCancelable( false );
-        errorAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
+        madbErrorAlert = new AlertDialog.Builder( this );
+        madbErrorAlert.setCancelable( false );
+        madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
     }
 
     protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition, String orderBy,
             long selectedId, boolean addListener){
         try{
-            Spinner spinner = (Spinner) pSpinner;
-            Cursor mCursor = mMainDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
-            startManagingCursor( mCursor );
+            Spinner spnCurrentSpinner = (Spinner) pSpinner;
+            Cursor dbcRecordCursor = mDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
+            startManagingCursor( dbcRecordCursor );
             int[] to = new int[]{android.R.id.text1};
-            SimpleCursorAdapter mCursorAdapter =
-                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, mCursor,
+            SimpleCursorAdapter scaCursorAdapter =
+                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, dbcRecordCursor,
                     from, to);
-            mCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(mCursorAdapter);
+            scaCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnCurrentSpinner.setAdapter(scaCursorAdapter);
 
             if(selectedId >= 0){
             //set the spinner to the last used id
-                mCursor.moveToFirst();
-                for( int i = 0; i < mCursor.getCount(); i++ ) {
-                    if( mCursor.getLong( MainDbAdapter.GEN_COL_ROWID_POS ) == selectedId) {
-                        spinner.setSelection( i );
+                dbcRecordCursor.moveToFirst();
+                for( int i = 0; i < dbcRecordCursor.getCount(); i++ ) {
+                    if( dbcRecordCursor.getLong( MainDbAdapter.GEN_COL_ROWID_POS ) == selectedId) {
+                        spnCurrentSpinner.setSelection( i );
                         break;
                     }
-                    mCursor.moveToNext();
+                    dbcRecordCursor.moveToNext();
                 }
             }
 
             if(addListener)
-                spinner.setOnItemSelectedListener(spinnerOnItemSelectedListener);
+                spnCurrentSpinner.setOnItemSelectedListener(spinnerOnItemSelectedListener);
         }
         catch(Exception e){
-            errorAlertBuilder.setMessage(e.getMessage());
-            errorAlert = errorAlertBuilder.create();
-            errorAlert.show();
+            madbErrorAlert.setMessage(e.getMessage());
+            madError = madbErrorAlert.create();
+            madError.show();
         }
 
     }
@@ -169,22 +173,19 @@ public abstract class EditActivityBase extends Activity {
     protected AdapterView.OnItemSelectedListener spinnerOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
-                    if( ((Spinner)arg0).equals(findViewById(R.id.expenseTypeSpinner))){
-                        SharedPreferences.Editor editor = mPreferences.edit();
-                        editor.putLong("RefuelExpenseType_ID", arg3);
-                        editor.commit();
-                    }
-                    else if( ((Spinner)arg0).equals(findViewById(R.id.expenseCategorySpinner))){
-                        SharedPreferences.Editor editor = mPreferences.edit();
-                        editor.putLong("RefuelExpenseCategory_ID", arg3);
-                        editor.commit();
-                    }
-                    else if( ((Spinner)arg0).equals(findViewById(R.id.mileageEditExpenseTypeSpinner))){
-                        SharedPreferences.Editor editor = mPreferences.edit();
-                        editor.putLong("MileageInsertExpenseType_ID", arg3);
-                        editor.commit();
-                    }
+// TODO implement new naming convention
+//                    if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
+//                        mPrefEditor.putLong("RefuelExpenseType_ID", arg3);
+//                        mPrefEditor.commit();
+//                    }
+//                    else if( ((Spinner)arg0).equals(findViewById(R.id.spnExpCategory))){
+//                        mPrefEditor.putLong("RefuelExpenseCategory_ID", arg3);
+//                        mPrefEditor.commit();
+//                    }
+//                    else if( ((Spinner)arg0).equals(findViewById(R.id.mileageEditExpenseTypeSpinner))){
+//                        mPrefEditor.putLong("MileageInsertExpenseType_ID", arg3);
+//                        mPrefEditor.commit();
+//                    }
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -203,19 +204,19 @@ public abstract class EditActivityBase extends Activity {
     * @return null or field tag if is empty
     */
    protected String checkMandatory(ViewGroup wg){
-       View child;
+       View vwChild;
        EditText etChild;
-       String retVal;
+       String strRetVal;
        for(int i = 0; i < wg.getChildCount(); i++)
        {
-           child = wg.getChildAt(i);
-           if(child instanceof ViewGroup){
-               retVal = checkMandatory((ViewGroup)child);
-               if(retVal != null)
-                   return retVal;
+           vwChild = wg.getChildAt(i);
+           if(vwChild instanceof ViewGroup){
+               strRetVal = checkMandatory((ViewGroup)vwChild);
+               if(strRetVal != null)
+                   return strRetVal;
            }
-           else if(child instanceof EditText){
-               etChild = (EditText) child;
+           else if(vwChild instanceof EditText){
+               etChild = (EditText) vwChild;
                if(etChild.getTag() != null && etChild.getTag().toString().length() > 0
                        && (etChild.getText().toString() == null || etChild.getText().toString().length() == 0)){
                    return etChild.getTag().toString();
@@ -226,39 +227,39 @@ public abstract class EditActivityBase extends Activity {
    }
 
    protected void setEditable(ViewGroup vg, boolean editable){
-       View child;
+       View vwChild;
        for(int i = 0; i < vg.getChildCount(); i++)
        {
-           child = vg.getChildAt(i);
-           if(child instanceof ViewGroup){
-               setEditable((ViewGroup)child, editable);
+           vwChild = vg.getChildAt(i);
+           if(vwChild instanceof ViewGroup){
+               setEditable((ViewGroup)vwChild, editable);
            }
-           if(child.getId() != R.id.warningLabel)
-               child.setEnabled(editable);
+           if(vwChild.getId() != R.id.tvWarningLabel)
+               vwChild.setEnabled(editable);
        }
    }
 
    protected void initDateTime(long dateTimeInMiliseconds){
-        mDateTimeInSeconds = dateTimeInMiliseconds / 1000;
-        mDateTimeCalendar.setTimeInMillis(dateTimeInMiliseconds);
-        mYear = mDateTimeCalendar.get(Calendar.YEAR);
-        mMonth = mDateTimeCalendar.get(Calendar.MONTH);
-        mDay = mDateTimeCalendar.get(Calendar.DAY_OF_MONTH);
-        mHour = mDateTimeCalendar.get(Calendar.HOUR_OF_DAY);
-        mMinute = mDateTimeCalendar.get(Calendar.MINUTE);
+        mlDateTimeInSeconds = dateTimeInMiliseconds / 1000;
+        mcalDateTime.setTimeInMillis(dateTimeInMiliseconds);
+        mYear = mcalDateTime.get(Calendar.YEAR);
+        mMonth = mcalDateTime.get(Calendar.MONTH);
+        mDay = mcalDateTime.get(Calendar.DAY_OF_MONTH);
+        mHour = mcalDateTime.get(Calendar.HOUR_OF_DAY);
+        mMinute = mcalDateTime.get(Calendar.MINUTE);
 
-        mDateTimeLabel = (TextView) findViewById(R.id.genDateTimeText);
+        tvDateTimeLabel = (TextView) findViewById(R.id.tvDateTimeText);
         updateDateTime();
 
-        Button pickDate = (Button) findViewById(R.id.genPickDateButton);
-        pickDate.setOnClickListener(new View.OnClickListener() {
+        Button btnPickDate = (Button) findViewById(R.id.btnPickDate);
+        btnPickDate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 showDialog(StaticValues.DATE_DIALOG_ID);
             }
         });
 
-        Button pickTime = (Button) findViewById(R.id.genPickTimeButton);
-        pickTime.setOnClickListener(new View.OnClickListener() {
+        Button btnPickTime = (Button) findViewById(R.id.btnPickTime);
+        btnPickTime.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 showDialog(StaticValues.TIME_DIALOG_ID);
             }
@@ -310,9 +311,9 @@ public abstract class EditActivityBase extends Activity {
             };
 
     private void updateDateTime() {
-        mDateTimeCalendar.set(mYear, mMonth, mDay, mHour, mMinute, 0);
-        mDateTimeInSeconds = mDateTimeCalendar.getTimeInMillis() / 1000;
-        mDateTimeLabel.setText(
+        mcalDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
+        mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
+        tvDateTimeLabel.setText(
                 new StringBuilder() // Month is 0 based so add 1
                 .append(Utils.pad(mMonth + 1)).append("-")
                 .append(Utils.pad(mDay)).append("-")

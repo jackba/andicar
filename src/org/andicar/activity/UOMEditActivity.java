@@ -34,6 +34,10 @@ import org.andicar.persistence.MainDbAdapter;
  * @author miki
  */
 public class UOMEditActivity extends EditActivityBase {
+    private EditText etName = null;
+    private EditText etUserComment = null;
+    private EditText etCode = null;
+    private CheckBox ckIsActive = null;
 
     private String uomType = "";
 
@@ -42,17 +46,22 @@ public class UOMEditActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.uom_edit_activity, mOkClickListener);
 
-        uomType = extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME);
-        String operation = extras.getString("Operation"); //E = edit, N = new
+        etName = (EditText) findViewById(R.id.etName);
+        etUserComment = (EditText) findViewById(R.id.etUserComment);
+        etCode = (EditText) findViewById(R.id.etCode);
+        ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
+
+        uomType = mbundleExtras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME);
+        String operation = mbundleExtras.getString("Operation"); //E = edit, N = new
 
         if(uomType.equals( "L"))
-            setTitle( getTitle() + " (" + mRes.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_LENGTH) + ")");
+            setTitle( getTitle() + " (" + mResource.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_LENGTH) + ")");
         else
-            setTitle( getTitle() + " (" + mRes.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_VOLUME) + ")");
+            setTitle( getTitle() + " (" + mResource.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_VOLUME) + ")");
 
         if (operation.equals( "E")) {
-            mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
+            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.uomTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
@@ -60,20 +69,20 @@ public class UOMEditActivity extends EditActivityBase {
             String code = recordCursor.getString( MainDbAdapter.UOM_COL_CODE_POS );
 
             if (name != null) {
-                ((EditText) findViewById(R.id.genNameEntry)).setText(name);
+                etName.setText(name);
             }
             if (isActive != null) {
-                ((CheckBox) findViewById(R.id.genIsActiveCheck)).setChecked(isActive.equals("Y"));
+                ckIsActive.setChecked(isActive.equals("Y"));
             }
             if (userComment != null) {
-                ((EditText) findViewById( R.id.genUserCommentEntry )).setText( userComment );
+                etUserComment.setText( userComment );
             }
             if (code != null) {
-                ((EditText) findViewById( R.id.uomEditCodeEntry )).setText( code );
+                etCode.setText( code );
             }
 
         } else {
-            ((CheckBox) findViewById(R.id.genIsActiveCheck)).setChecked(true);
+            ckIsActive.setChecked(true);
         }
     }
 
@@ -82,39 +91,39 @@ public class UOMEditActivity extends EditActivityBase {
 
                     public void onClick(View v) {
                         //check mandatory fields
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.genRootViewGroup));
+                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( retVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mRes.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
 
                         ContentValues data = new ContentValues();
                         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                ((EditText) findViewById(R.id.genNameEntry)).getText().toString());
+                                etName.getText().toString());
                         data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (((CheckBox) findViewById( R.id.genIsActiveCheck )).isChecked() ? "Y" : "N") );
+                                (ckIsActive.isChecked() ? "Y" : "N") );
                         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                ((EditText) findViewById( R.id.genUserCommentEntry )).getText().toString() );
+                                etUserComment.getText().toString() );
                         data.put( MainDbAdapter.UOM_COL_CODE_NAME,
-                                ((EditText) findViewById(R.id.uomEditCodeEntry)).getText().toString());
+                                etCode.getText().toString());
                         data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, uomType);
 
                         if( mRowId == null ) {
-                            mMainDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
+                            mDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
+                            int updResult = mDbAdapter.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
-                                errMsg = mRes.getString(updResult);
+                                errMsg = mResource.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
-                                errorAlertBuilder.setMessage(errMsg);
-                                errorAlert = errorAlertBuilder.create();
-                                errorAlert.show();
+                                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                                madbErrorAlert.setMessage(errMsg);
+                                madError = madbErrorAlert.create();
+                                madError.show();
                             }
                             else
                                 finish();

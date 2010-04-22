@@ -35,52 +35,60 @@ import org.andicar.persistence.MainDbAdapter;
  * @author miki
  */
 public class DriverEditActivity extends EditActivityBase {
+    private EditText etName = null;
+    private EditText etLicenseNo = null;
+    private EditText etUserComment = null;
+    private CheckBox ckIsActive = null;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.driver_edit_activity, mOkClickListener);
 
-        String operation = extras.getString("Operation"); //E = edit, N = new
+        etName = (EditText) findViewById(R.id.etName);
+        etLicenseNo = (EditText) findViewById( R.id.etLicenseNo );
+        etUserComment = (EditText) findViewById( R.id.etUserComment );
+        ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
+        
+        String strOperationType = mbundleExtras.getString("Operation"); //E = edit, N = new
 
-        if( operation.equals( "E") ) {
-            mRowId = extras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
-            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mRowId);
+        if( strOperationType.equals( "E") ) {
+            mRowId = mbundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
+            Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mRowId);
 
-            String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String licenseNo = recordCursor.getString( MainDbAdapter.DRIVER_COL_LICENSE_NO_POS);
+            String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String strIsActive = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String strUserComment = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String strLicenseNo = dbcRecordCursor.getString( MainDbAdapter.DRIVER_COL_LICENSE_NO_POS);
 
-            if (name != null) {
-                ((EditText) findViewById(R.id.genNameEntry)).setText(name);
+            if (strName != null) {
+                etName.setText(strName);
             }
-            if (licenseNo != null) {
-                ((EditText) findViewById( R.id.driverEditLicenseNoEntry )).setText( licenseNo );
+            if (strLicenseNo != null) {
+                etLicenseNo.setText( strLicenseNo );
             }
-            if (isActive != null) {
-                ((CheckBox) findViewById(R.id.genIsActiveCheck)).setChecked(isActive.equals("Y"));
+            if (strIsActive != null) {
+                ckIsActive.setChecked(strIsActive.equals("Y"));
             }
-            if (userComment != null) {
-                ((EditText) findViewById( R.id.genUserCommentEntry )).setText( userComment );
+            if (strUserComment != null) {
+                etUserComment.setText( strUserComment );
             }
 
             //cannot be inactivated if is the current driver
-            if (extras.getLong("CurrentDriver_ID") == mRowId) {
-                CheckBox cb = (CheckBox) findViewById(R.id.genIsActiveCheck);
-                cb.setClickable( false );
-                cb.setOnTouchListener( new View.OnTouchListener() {
+            if (mbundleExtras.getLong("CurrentDriver_ID") == mRowId) {
+                ckIsActive.setClickable( false );
+                ckIsActive.setOnTouchListener( new View.OnTouchListener() {
                     public boolean onTouch( View arg0, MotionEvent arg1 )
                     {
                         Toast toast = Toast.makeText( getApplicationContext(),
-                                mRes.getString(R.string.CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE), Toast.LENGTH_SHORT );
+                                mResource.getString(R.string.CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE), Toast.LENGTH_SHORT );
                         toast.show();
                         return false;
                     }
                 });
             }
         } else {
-            ((CheckBox) findViewById(R.id.genIsActiveCheck)).setChecked(true);
+            ckIsActive.setChecked(true);
         }
 
     }
@@ -90,37 +98,37 @@ public class DriverEditActivity extends EditActivityBase {
 
                     public void onClick(View v) {
                         //check mandatory fields
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.genRootViewGroup));
-                        if( retVal != null ) {
+                        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+                        if( strRetVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mRes.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + strRetVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
 
-                        ContentValues data = new ContentValues();
-                        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                ((EditText) findViewById(R.id.genNameEntry)).getText().toString());
-                        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (((CheckBox) findViewById( R.id.genIsActiveCheck )).isChecked() ? "Y" : "N") );
-                        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                ((EditText) findViewById( R.id.genUserCommentEntry )).getText().toString() );
-                        data.put( MainDbAdapter.DRIVER_COL_LICENSE_NO_NAME,
-                                ((EditText) findViewById(R.id.driverEditLicenseNoEntry)).getText().toString());
+                        ContentValues cvData = new ContentValues();
+                        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                                etName.getText().toString());
+                        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+                                (ckIsActive.isChecked() ? "Y" : "N") );
+                        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                                etUserComment.getText().toString() );
+                        cvData.put( MainDbAdapter.DRIVER_COL_LICENSE_NO_NAME,
+                                etLicenseNo.getText().toString());
 
                         if (mRowId == null) {
-                            mMainDbAdapter.createRecord(MainDbAdapter.DRIVER_TABLE_NAME, data);
+                            mDbAdapter.createRecord(MainDbAdapter.DRIVER_TABLE_NAME, cvData);
                             finish();
                         } else {
-                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.DRIVER_TABLE_NAME, mRowId, data);
-                            if(updResult != -1){
-                                String errMsg = "";
-                                errMsg = mRes.getString(updResult);
-                                if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
-                                errorAlertBuilder.setMessage(errMsg);
-                                errorAlert = errorAlertBuilder.create();
-                                errorAlert.show();
+                            int strUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.DRIVER_TABLE_NAME, mRowId, cvData);
+                            if(strUpdateResult != -1){
+                                String strErrMsg = "";
+                                strErrMsg = mResource.getString(strUpdateResult);
+                                if(strUpdateResult == R.string.ERR_000)
+                                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
+                                madbErrorAlert.setMessage(strErrMsg);
+                                madError = madbErrorAlert.create();
+                                madError.show();
                             }
                             else
                                 finish();

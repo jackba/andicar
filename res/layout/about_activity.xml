@@ -23,18 +23,18 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
-    android:id="@+id/genRootViewGroup"
+    android:id="@+id/vgRoot"
     >
     <LinearLayout
         android:orientation="vertical"
-        android:id="@+id/aboutLinearLayout"
+        android:id="@+id/llAbout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_marginRight="5dip"
         android:gravity="center_horizontal"
         >
         <TextView
-            android:id="@+id/aboutText1"
+            android:id="@+id/tvAbout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="fill"
@@ -67,7 +67,7 @@
             </TableRow>
         </TableLayout>
         <TextView
-            android:id="@+id/aboutText2"
+            android:id="@+id/tvAbout2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="fill"

@@ -23,13 +23,13 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <TextView android:id="@+id/twoLineListReportText1"
+    <TextView android:id="@+id/tvTwoLineListReportText1"
               android:textSize="14sp"
               android:textStyle="bold"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"/>
 
-    <TextView android:id="@+id/twoLineListReportText2"
+    <TextView android:id="@+id/tvTwoLineListReportText2"
               android:textSize="14sp"
               android:textStyle="italic"
               android:layout_width="fill_parent"
