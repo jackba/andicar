@@ -53,16 +53,16 @@ public class MileageEditActivity extends EditActivityBase {
     private BigDecimal mNewIndex = new BigDecimal("0");
     private BigDecimal mStartIndex = new BigDecimal("0");
     private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
-    private RadioButton mileageEditInsertModeIndexRb;
-    private RadioButton mileageEditInsertModeMileageRb;
-    private TextView mileageEditInputLabel;
-    private TextView mileageEditCalculatedTextLabel;
-    private EditText mileageEditStartIndexEntry;
-    private EditText mileageEditInputEntry;
-    private TextView mileageEditCalculatedTextContent;
-    private AutoCompleteTextView mileageEditUserCommentEntry;
+    private RadioButton rbInsertModeIndex;
+    private RadioButton rbInsertModeMileage;
+    private TextView tvUserInputLabel;
+    private TextView tvCalculatedTextLabel;
+    private EditText etStartIndex;
+    private EditText etUserInput;
+    private TextView tvCalculatedContent;
+    private AutoCompleteTextView acUserComment;
     private String operationType;
-    Spinner mExpTypeSpinner;
+    private Spinner spnExpType;
 
     ArrayAdapter<String> userCommentAdapter;
 
@@ -72,98 +72,98 @@ public class MileageEditActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.mileage_edit_activity, btnOkClickListener);
 
-        mileageEditCalculatedTextContent = (TextView) findViewById(R.id.mileageEditCalculatedTextContent);
-        mileageEditInputEntry = (EditText) findViewById(R.id.mileageEditInputEntry);
-        mileageEditInputEntry.addTextChangedListener(mileageTextWatcher);
-        mileageEditStartIndexEntry = (EditText) findViewById(R.id.mileageEditStartIndexEntry);
-        mileageEditStartIndexEntry.addTextChangedListener(mileageTextWatcher);
-        mileageEditInsertModeIndexRb = (RadioButton) findViewById(R.id.mileageEditInsertModeIndexRb);
-        mileageEditInsertModeMileageRb = (RadioButton) findViewById(R.id.mileageEditInsertModeMileageRb);
-        mileageEditInputLabel = ((TextView) findViewById(R.id.mileageEditInputLabel));
-        mileageEditCalculatedTextLabel = ((TextView) findViewById(R.id.mileageEditCalculatedTextLabel));
-        mExpTypeSpinner = (Spinner)findViewById(R.id.mileageEditExpenseTypeSpinner);
-        mileageEditUserCommentEntry = (AutoCompleteTextView)findViewById(R.id.genUserCommentEntry);
+        tvCalculatedContent = (TextView) findViewById(R.id.tvCalculatedTextContent);
+        etUserInput = (EditText) findViewById(R.id.etUserInput);
+        etUserInput.addTextChangedListener(mileageTextWatcher);
+        etStartIndex = (EditText) findViewById(R.id.etIndexStart);
+        etStartIndex.addTextChangedListener(mileageTextWatcher);
+        rbInsertModeIndex = (RadioButton) findViewById(R.id.rbInsertModeIndex);
+        rbInsertModeMileage = (RadioButton) findViewById(R.id.rbInsertModeMileage);
+        tvUserInputLabel = ((TextView) findViewById(R.id.tvUserInputLabel));
+        tvCalculatedTextLabel = ((TextView) findViewById(R.id.tvCalculatedTextLabel));
+        spnExpType = (Spinner)findViewById(R.id.spnExpType);
+        acUserComment = (AutoCompleteTextView)findViewById(R.id.etUserComment);
 
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgMileageInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
         String currentDriverName = null;
         String currentCarName = null;
         String driverCarLbl = "";
-        operationType = extras.getString("Operation");
+        operationType = mbundleExtras.getString("Operation");
 
         if( operationType.equals("E") ) {
-            mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
 
-            mCarId = mMainDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
+            mCarId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
                                 .getLong(MainDbAdapter.MILEAGE_COL_CAR_ID_POS);
-            mDriverId = mMainDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
+            mDriverId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
                                 .getLong(MainDbAdapter.MILEAGE_COL_DRIVER_ID_POS);
 
-            currentDriverName = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mDriverId)
+            currentDriverName = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mDriverId)
                                 .getString(MainDbAdapter.GEN_COL_NAME_POS);
-            currentCarName = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
+            currentCarName = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                 .getString(MainDbAdapter.GEN_COL_NAME_POS);
 
-            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
+            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
             mStartIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
-            mileageEditStartIndexEntry.setText(mStartIndex.toString());
+            etStartIndex.setText(mStartIndex.toString());
             BigDecimal stopIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
-            mileageEditInputEntry.setText(stopIndex.toString());
-            mileageEditInsertModeIndexRb.setChecked(true);
-            mInsertMode = StaticValues.mileageInsertModeNewIndex;
+            etUserInput.setText(stopIndex.toString());
+            rbInsertModeIndex.setChecked(true);
+            mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX;
             initDateTime(recordCursor.getLong(MainDbAdapter.MILEAGE_COL_DATE_POS) * 1000);
-            mileageEditUserCommentEntry.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
-            initSpinner(mExpTypeSpinner, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+            acUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+            initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                     recordCursor.getLong(MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_POS), true);
         }
         else{
-            mCarId = extras.getLong("CurrentCar_ID");
-            mDriverId = extras.getLong("CurrentDriver_ID");
-            currentDriverName = extras.getString("CurrentDriver_Name");
-            currentCarName = extras.getString("CurrentCar_Name");
+            mCarId = mbundleExtras.getLong("CurrentCar_ID");
+            mDriverId = mbundleExtras.getLong("CurrentDriver_ID");
+            currentDriverName = mbundleExtras.getString("CurrentDriver_Name");
+            currentCarName = mbundleExtras.getString("CurrentCar_Name");
             mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
 
             initDateTime(System.currentTimeMillis());
 
-            initSpinner(findViewById(R.id.mileageEditExpenseTypeSpinner), MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+            initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                     mPreferences.getLong("MileageInsertExpenseType_ID", -1), true);
 
-            ((EditText) findViewById(R.id.mileageEditInputEntry)).requestFocus();
+            etUserInput.requestFocus();
 
         }
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line, 
-                mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
-        mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
+                mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
+        acUserComment.setAdapter(userCommentAdapter);
         
-        if(mInsertMode == StaticValues.mileageInsertModeNewIndex) {
-            mileageEditInsertModeIndexRb.setChecked(true);
-            mileageEditInputLabel.setText(
-                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
-            mileageEditCalculatedTextLabel.setText(
-                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
-            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+        if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX) {
+            rbInsertModeIndex.setChecked(true);
+            tvUserInputLabel.setText(
+                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+            tvCalculatedTextLabel.setText(
+                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+            etUserInput.setTag(mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
         }
         else {
-            mileageEditInsertModeMileageRb.setChecked(true);
-            mileageEditInputLabel.setText(
-                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
-            mileageEditCalculatedTextLabel.setText(
-                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
-            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+            rbInsertModeMileage.setChecked(true);
+            tvUserInputLabel.setText(
+                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+            tvCalculatedTextLabel.setText(
+                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+            etUserInput.setTag(mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
         }
-        mUOMLengthId = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
+        mUOMLengthId = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                 .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
         if(currentDriverName != null) {
-            driverCarLbl = mRes.getString(R.string.GEN_DRIVER_LABEL) + currentDriverName;
+            driverCarLbl = mResource.getString(R.string.GEN_DRIVER_LABEL) + currentDriverName;
         }
         if(currentCarName != null) {
             driverCarLbl = driverCarLbl + "; "
-                    + mRes.getString(R.string.GEN_CAR_LABEL) + " " + currentCarName;
+                    + mResource.getString(R.string.GEN_CAR_LABEL) + " " + currentCarName;
         }
-        ((TextView) findViewById(R.id.mileageEditCarDriverLabel)).setText(driverCarLbl);
+        ((TextView) findViewById(R.id.tvCarDriverLabel)).setText(driverCarLbl);
 
     }
 
@@ -179,33 +179,33 @@ public class MileageEditActivity extends EditActivityBase {
         try{
             BigDecimal pNewIndex = new BigDecimal("0");
 
-            if(mileageEditStartIndexEntry.getText() == null
-                    || mileageEditStartIndexEntry.getText().toString().length() == 0)
+            if(etStartIndex.getText() == null
+                    || etStartIndex.getText().toString().length() == 0)
                 mStartIndex = new BigDecimal("0");
             else
-                mStartIndex = new BigDecimal(mileageEditStartIndexEntry.getText().toString());
+                mStartIndex = new BigDecimal(etStartIndex.getText().toString());
 
-            if(mileageEditInputEntry.getText().toString().length() == 0)
+            if(etUserInput.getText().toString().length() == 0)
                 mEntryMileageValue = new BigDecimal("0");
             else
-                mEntryMileageValue = new BigDecimal(mileageEditInputEntry.getText().toString());
+                mEntryMileageValue = new BigDecimal(etUserInput.getText().toString());
 
             BigDecimal pEntryMileageValue = mEntryMileageValue;
             BigDecimal pStartIndex = mStartIndex;
 
-            if(mInsertMode == StaticValues.mileageInsertModeNewIndex) { //new index
+            if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX) { //new index
                 pNewIndex = pEntryMileageValue;
                 if(pNewIndex.compareTo(pStartIndex) < 0) {
-                    mileageEditCalculatedTextContent.setText("N/A;");
+                    tvCalculatedContent.setText("N/A;");
                 }
                 else {
                     BigDecimal mileage = pNewIndex.subtract(pStartIndex);
-                    mileageEditCalculatedTextContent.setText(mileage.toString() + ";");
+                    tvCalculatedContent.setText(mileage.toString() + ";");
                 }
             }
             else { //mileage
                 pNewIndex = mStartIndex.add(pEntryMileageValue);
-                mileageEditCalculatedTextContent.setText(pNewIndex.toString() + ";");
+                tvCalculatedContent.setText(pNewIndex.toString() + ";");
             }
             mNewIndex = pNewIndex;
         }
@@ -227,7 +227,7 @@ public class MileageEditActivity extends EditActivityBase {
                           "FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
                           "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + mCarId + " " +
                           "ORDER BY Pos ASC";
-            Cursor c = mMainDbAdapter.execSelectSql(sql);
+            Cursor c = mDbAdapter.execSelectSql(sql);
             if(c.moveToFirst()){
                 mStartIndexStr = c.getString(0);
             }
@@ -239,7 +239,7 @@ public class MileageEditActivity extends EditActivityBase {
             mStartIndex = new BigDecimal(mStartIndexStr);
             c.close();
         }
-        mileageEditStartIndexEntry.setText(mStartIndex.toString());
+        etStartIndex.setText(mStartIndex.toString());
         return mStartIndex;
     }
 
@@ -248,10 +248,10 @@ public class MileageEditActivity extends EditActivityBase {
                 //check mandatory fileds & index preconditions
 
                 calculateMileageOrNewIndex();
-                String retVal = checkMandatory((ViewGroup) findViewById(R.id.genRootViewGroup));
+                String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                 if( retVal != null ) {
                     Toast toast = Toast.makeText( getApplicationContext(),
-                            mRes.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                            mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
                     toast.show();
                     return;
                 }
@@ -260,65 +260,65 @@ public class MileageEditActivity extends EditActivityBase {
                 data.put( MainDbAdapter.GEN_COL_NAME_NAME, "");
                 data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
                 data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                        mileageEditUserCommentEntry.getText().toString());
-                data.put( MainDbAdapter.MILEAGE_COL_DATE_NAME, mDateTimeInSeconds);
+                        acUserComment.getText().toString());
+                data.put( MainDbAdapter.MILEAGE_COL_DATE_NAME, mlDateTimeInSeconds);
                 data.put( MainDbAdapter.MILEAGE_COL_CAR_ID_NAME, mCarId);
                 data.put( MainDbAdapter.MILEAGE_COL_DRIVER_ID_NAME, mDriverId);
                 data.put( MainDbAdapter.MILEAGE_COL_INDEXSTART_NAME, mStartIndex.toString());
                     data.put( MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME, mNewIndex.toString());
                 data.put( MainDbAdapter.MILEAGE_COL_UOMLENGTH_ID_NAME, mUOMLengthId);
-                data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, mExpTypeSpinner.getSelectedItemId());
+                data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, spnExpType.getSelectedItemId());
                 data.put( MainDbAdapter.MILEAGE_COL_GPSTRACKLOG_NAME, "");
                 if(operationType.equals("N")){
-                    operationResult = mMainDbAdapter.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
+                    operationResult = mDbAdapter.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
                     if(operationResult == -1){
-                        Long createResult = mMainDbAdapter.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data);
+                        Long createResult = mDbAdapter.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data);
                         if( createResult.intValue() < 0){
                             if(createResult.intValue() == -1) //DB Error
-                                errorAlertBuilder.setMessage(mMainDbAdapter.lastErrorMessage);
+                                madbErrorAlert.setMessage(mDbAdapter.lastErrorMessage);
                             else //precondition error
-                                errorAlertBuilder.setMessage(mRes.getString(-1 * createResult.intValue()));
-                            errorAlert = errorAlertBuilder.create();
-                            errorAlert.show();
+                                madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
+                            madError = madbErrorAlert.create();
+                            madError.show();
                             return;
                         }
                     }
                 }
                 else{
-                    operationResult = mMainDbAdapter.checkIndex(mRowId, mCarId, mStartIndex, mNewIndex);
+                    operationResult = mDbAdapter.checkIndex(mRowId, mCarId, mStartIndex, mNewIndex);
                     if(operationResult == -1){
-                        int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.MILEAGE_TABLE_NAME, mRowId, data);
+                        int updResult = mDbAdapter.updateRecord(MainDbAdapter.MILEAGE_TABLE_NAME, mRowId, data);
                         if(updResult != -1){
                             String errMsg = "";
-                            errMsg = mRes.getString(updResult);
+                            errMsg = mResource.getString(updResult);
                             if(updResult == R.string.ERR_000)
-                                errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
-                            errorAlertBuilder.setMessage(errMsg);
-                            errorAlert = errorAlertBuilder.create();
-                            errorAlert.show();
+                                errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                            madbErrorAlert.setMessage(errMsg);
+                            madError = madbErrorAlert.create();
+                            madError.show();
                             return;
                         }
                     }
                 }
                 if( operationResult != -1) //error
                 {
-                    errorAlertBuilder.setMessage(mRes.getString(operationResult));
-                    errorAlert = errorAlertBuilder.create();
-                    errorAlert.show();
+                    madbErrorAlert.setMessage(mResource.getString(operationResult));
+                    madError = madbErrorAlert.create();
+                    madError.show();
                     return;
                 }
                 else{
                     Toast toast = Toast.makeText( getApplicationContext(),
                             (operationType.equals("N") ?
-                                mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE)
-                                : mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE)) ,
+                                mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE)
+                                : mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE)) ,
                             Toast.LENGTH_SHORT );
                     toast.show();
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line, 
-                            mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
-                    mileageEditUserCommentEntry.setAdapter(userCommentAdapter);
+                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
+                    acUserComment.setAdapter(userCommentAdapter);
                 }
 
                 //mileage inserted. reinit the activity for new mileage
@@ -327,10 +327,10 @@ public class MileageEditActivity extends EditActivityBase {
                     mStartIndex = BigDecimal.valueOf(0);
                     fillGetCurrentIndex();
 
-                    mileageEditInputEntry.setText("");
+                    etUserInput.setText("");
                     mNewIndex = BigDecimal.valueOf(0);
                     mEntryMileageValue = BigDecimal.valueOf(0);
-                    mileageEditUserCommentEntry.setText("");
+                    acUserComment.setText("");
                     calculateMileageOrNewIndex();
                 }
                 finish();
@@ -340,21 +340,21 @@ public class MileageEditActivity extends EditActivityBase {
     private RadioGroup.OnCheckedChangeListener rgOnCheckedChangeListener  =
             new RadioGroup.OnCheckedChangeListener() {
                     public void onCheckedChanged(RadioGroup arg0, int checkedId) {
-                        if(checkedId == mileageEditInsertModeIndexRb.getId()) {
-                            mInsertMode = StaticValues.mileageInsertModeNewIndex; //new index
-                            mileageEditInputLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
-                            mileageEditCalculatedTextLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
-                            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+                        if(checkedId == rbInsertModeIndex.getId()) {
+                            mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX; //new index
+                            tvUserInputLabel.setText(
+                                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+                            tvCalculatedTextLabel.setText(
+                                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+                            etUserInput.setTag(mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
                         }
                         else {
-                            mInsertMode = StaticValues.mileageEditInsertModeMileage;
-                            mileageEditInputLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
-                            mileageEditCalculatedTextLabel.setText(
-                                    mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
-                            mileageEditInputEntry.setTag(mRes.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+                            mInsertMode = StaticValues.MILEAGE_INSERTMODE_MILEAGE;
+                            tvUserInputLabel.setText(
+                                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+                            tvCalculatedTextLabel.setText(
+                                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+                            etUserInput.setTag(mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
                         }
                         SharedPreferences.Editor editor = mPreferences.edit();
                         editor.putInt("MileageInsertMode", mInsertMode);

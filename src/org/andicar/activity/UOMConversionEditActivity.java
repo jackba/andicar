@@ -41,20 +41,31 @@ public class UOMConversionEditActivity extends EditActivityBase {
     private String uomFromType = "";
     private long uomFromId = -1;
     private long uomToId = -1;
-
+    private Spinner spnUomFrom;
+    private Spinner spnUomTo;
+    private EditText etName;
+    private EditText etUserComment;
+    private EditText etConversionRate;
+    private CheckBox ckIsActive;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.uomconversion_edit_activity, mOkClickListener);
         
-        Spinner mUOMFromSpinner = (Spinner) findViewById( R.id.uomConversionEditUomFromSpinner );
-        mUOMFromSpinner.setOnItemSelectedListener(uomFromSelectedListener);
+        spnUomFrom = (Spinner) findViewById( R.id.spnUomFrom );
+        spnUomFrom.setOnItemSelectedListener(uomFromSelectedListener);
+        spnUomTo = (Spinner) findViewById( R.id.spnUomTo );
+        etName = (EditText) findViewById(R.id.etName);
+        etUserComment = (EditText) findViewById( R.id.etUserComment );
+        etConversionRate = (EditText) findViewById( R.id.etConversionRate );
+        ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
 
-        String operation = extras.getString("Operation"); //E = edit, N = new
+        String operation = mbundleExtras.getString("Operation"); //E = edit, N = new
 
         if( operation.equals( "E") ) {
-            mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME,
+            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME,
                     MainDbAdapter.uomConversionTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
@@ -64,37 +75,37 @@ public class UOMConversionEditActivity extends EditActivityBase {
             uomToId = recordCursor.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_POS );
 
             if (name != null) {
-                ((EditText) findViewById(R.id.genNameEntry)).setText(name);
+                etName.setText(name);
             }
             if (isActive != null) {
-                ((CheckBox) findViewById(R.id.genIsActiveCheck)).setChecked(isActive.equals("Y"));
+                ckIsActive.setChecked(isActive.equals("Y"));
             }
             if (userComment != null) {
-                ((EditText) findViewById( R.id.genUserCommentEntry )).setText( userComment );
+                etUserComment.setText( userComment );
             }
 
-            initSpinner(mUOMFromSpinner, MainDbAdapter.UOM_TABLE_NAME,
+            initSpinner(spnUomFrom, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                         MainDbAdapter.isActiveCondition,
                         MainDbAdapter.UOM_COL_CODE_NAME, uomFromId, false);
 
-            uomFromType = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomFromId)
+            uomFromType = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomFromId)
                             .getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
 
-            initSpinner((Spinner) findViewById( R.id.uomConversionEditUomToSpinner ), MainDbAdapter.UOM_TABLE_NAME,
+            initSpinner(spnUomTo, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                         MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomFromType + "' " +
                         " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " <> " + uomFromId +
                         MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, uomToId, false);
             if (conversionRate != null) {
-                ((EditText) findViewById( R.id.uomConversionEditRateEntry )).setText( conversionRate.toString() );
+                etConversionRate.setText( conversionRate.toString() );
             }
 
         } else {
-            initSpinner(mUOMFromSpinner, MainDbAdapter.UOM_TABLE_NAME,
+            initSpinner(spnUomFrom, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                         MainDbAdapter.isActiveCondition, MainDbAdapter.UOM_COL_CODE_NAME, -1, false);
-            ((CheckBox) findViewById(R.id.genIsActiveCheck)).setChecked(true);
+            ckIsActive.setChecked(true);
         }
 
     }
@@ -104,51 +115,51 @@ public class UOMConversionEditActivity extends EditActivityBase {
 
                     public void onClick(View v) {
                         //check mandatory fields
-                        String convRateStr = ((EditText) findViewById(R.id.uomConversionEditRateEntry)).getText().toString();
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.genRootViewGroup));
+                        String convRateStr = etConversionRate.getText().toString();
+                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( retVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mRes.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
 
-                        long fromId = ((Spinner) findViewById( R.id.uomConversionEditUomFromSpinner )).getSelectedItemId();
-                        long toId = ((Spinner) findViewById( R.id.uomConversionEditUomToSpinner )).getSelectedItemId();
+                        long fromId = spnUomFrom.getSelectedItemId();
+                        long toId = spnUomTo.getSelectedItemId();
                         retVal = null;
-                        int retVal2 = mMainDbAdapter.canInsertUpdateUOMConversion(mRowId, fromId, toId);
+                        int retVal2 = mDbAdapter.canInsertUpdateUOMConversion(mRowId, fromId, toId);
                         if(retVal2 != -1){
-                            errorAlertBuilder.setMessage(mRes.getString(retVal2));
-                            errorAlert = errorAlertBuilder.create();
-                            errorAlert.show();
+                            madbErrorAlert.setMessage(mResource.getString(retVal2));
+                            madError = madbErrorAlert.create();
+                            madError.show();
                             return;
                         }
 
                         ContentValues data = new ContentValues();
                         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                ((EditText) findViewById(R.id.genNameEntry)).getText().toString());
+                                etName.getText().toString());
                         data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (((CheckBox) findViewById( R.id.genIsActiveCheck )).isChecked() ? "Y" : "N") );
+                                (ckIsActive.isChecked() ? "Y" : "N") );
                         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                ((EditText) findViewById( R.id.genUserCommentEntry )).getText().toString() );
+                                etUserComment.getText().toString() );
                         data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMFROM_ID_NAME, fromId);
                         data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_NAME, toId);
                         data.put( MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME, convRateStr);
 
                         if( mRowId == null ) {
-                            mMainDbAdapter.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
+                            mDbAdapter.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
+                            int updResult = mDbAdapter.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
-                                errMsg = mRes.getString(updResult);
+                                errMsg = mResource.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
-                                errorAlertBuilder.setMessage(errMsg);
-                                errorAlert = errorAlertBuilder.create();
-                                errorAlert.show();
+                                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                                madbErrorAlert.setMessage(errMsg);
+                                madError = madbErrorAlert.create();
+                                madError.show();
                             }
                             else
                                 finish();
@@ -159,10 +170,10 @@ public class UOMConversionEditActivity extends EditActivityBase {
     private OnItemSelectedListener uomFromSelectedListener =
                 new OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                        uomFromType = mMainDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, arg3)
+                        uomFromType = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, arg3)
                             .getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
 
-                        initSpinner((Spinner) findViewById( R.id.uomConversionEditUomToSpinner ), MainDbAdapter.UOM_TABLE_NAME,
+                        initSpinner(spnUomTo, MainDbAdapter.UOM_TABLE_NAME,
                                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomFromType + "' " +
                                     " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " <> " + arg3 +

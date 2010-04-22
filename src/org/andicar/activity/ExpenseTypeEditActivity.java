@@ -35,6 +35,9 @@ import org.andicar.persistence.MainDbAdapter;
  */
 public class ExpenseTypeEditActivity extends EditActivityBase
 {
+    private EditText etName = null;
+    private EditText etUserComment = null;
+    private CheckBox ckIsActive = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -42,28 +45,32 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     {
         super.onCreate( icicle, R.layout.expensetype_edit_activity, mOkClickListener );
 
-        String operation = extras.getString("Operation"); //E = edit, N = new
+        etName = (EditText) findViewById( R.id.etName );
+        etUserComment = (EditText) findViewById( R.id.etUserComment );
+        ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
+
+        String operation = mbundleExtras.getString("Operation"); //E = edit, N = new
 
         if( operation.equals( "E") ) {
-            mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.expenseTypeTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
             String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
 
             if( name != null ) {
-                ((EditText) findViewById( R.id.genNameEntry )).setText( name );
+                etName.setText( name );
             }
             if( isActive != null ) {
-                ((CheckBox) findViewById( R.id.genIsActiveCheck )).setChecked( isActive.equals( "Y" ) );
+                ckIsActive.setChecked( isActive.equals( "Y" ) );
             }
             if( userComment != null ) {
-                ((EditText) findViewById( R.id.genUserCommentEntry )).setText( userComment );
+                etUserComment.setText( userComment );
             }
         }
         else {
-            ((CheckBox) findViewById( R.id.genIsActiveCheck )).setChecked( true );
+            ckIsActive.setChecked( true );
         }
 
     }
@@ -73,36 +80,36 @@ public class ExpenseTypeEditActivity extends EditActivityBase
                 {
                     public void onClick( View v )
                     {
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.genRootViewGroup));
+                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( retVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mRes.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
 
                         ContentValues data = new ContentValues();
                         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                ((EditText) findViewById( R.id.genNameEntry )).getText().toString());
+                                etName.getText().toString());
                         data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (((CheckBox) findViewById( R.id.genIsActiveCheck )).isChecked() ? "Y" : "N") );
+                                (ckIsActive.isChecked() ? "Y" : "N") );
                         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                ((EditText) findViewById( R.id.genUserCommentEntry )).getText().toString() );
+                                etUserComment.getText().toString() );
 
                         if( mRowId == null ) {
-                            mMainDbAdapter.createRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, data);
+                            mDbAdapter.createRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, data);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, mRowId, data);
+                            int updResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, mRowId, data);
                             if(updResult != -1){
                                 String errMsg = "";
-                                errMsg = mRes.getString(updResult);
+                                errMsg = mResource.getString(updResult);
                                 if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
-                                errorAlertBuilder.setMessage(errMsg);
-                                errorAlert = errorAlertBuilder.create();
-                                errorAlert.show();
+                                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                                madbErrorAlert.setMessage(errMsg);
+                                madError = madbErrorAlert.create();
+                                madError.show();
                             }
                             else
                                 finish();

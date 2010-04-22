@@ -130,9 +130,9 @@ public class GPSTrackService extends Service {
         mMainDbAdapter.execSql(sqlStr);
         //create the track detail file(s)
         try {
-            gpsTrackDetailCSVFile = FileUtils.createGpsTrackDetailFile(StaticValues.gpsTrackFormatCSV, "" + gpsTrackId);
-            gpsTrackDetailKMLFile = FileUtils.createGpsTrackDetailFile(StaticValues.gpsTrackFormatKML, "" + gpsTrackId);
-            gpsTrackDetailGPXFile = FileUtils.createGpsTrackDetailFile(StaticValues.gpsTrackFormatGPX, "" + gpsTrackId);
+            gpsTrackDetailCSVFile = FileUtils.createGpsTrackDetailFile(StaticValues.CSV_FORMAT, "" + gpsTrackId);
+            gpsTrackDetailKMLFile = FileUtils.createGpsTrackDetailFile(StaticValues.KML_FORMAT, "" + gpsTrackId);
+            gpsTrackDetailGPXFile = FileUtils.createGpsTrackDetailFile(StaticValues.GPX_FORMAT, "" + gpsTrackId);
 
             //create a link for between the master track and the file
             if(gpsTrackDetailCSVFile != null){
@@ -145,7 +145,7 @@ public class GPSTrackService extends Service {
                             + " ) "
                             + " VALUES ( "
                                 + gpsTrackId + ", "
-                                + "'" + StaticValues.gpsTrackFormatCSV + "', "
+                                + "'" + StaticValues.CSV_FORMAT + "', "
                                 + "'" + gpsTrackDetailCSVFile.getAbsolutePath() + "'"
                             + " ) ";
                     mMainDbAdapter.execSql(sqlStr);
@@ -170,7 +170,7 @@ public class GPSTrackService extends Service {
                             + " ) "
                             + " VALUES ( "
                                 + gpsTrackId + ", "
-                                + "'" + StaticValues.gpsTrackFormatCSV + "', "
+                                + "'" + StaticValues.CSV_FORMAT + "', "
                                 + "'" + gpsTrackDetailKMLFile.getAbsolutePath() + "'"
                             + " ) ";
                     mMainDbAdapter.execSql(sqlStr);
@@ -187,7 +187,7 @@ public class GPSTrackService extends Service {
                             + " ) "
                             + " VALUES ( "
                                 + gpsTrackId + ", "
-                                + "'" + StaticValues.gpsTrackFormatGPX + "', "
+                                + "'" + StaticValues.GPX_FORMAT + "', "
                                 + "'" + gpsTrackDetailGPXFile.getAbsolutePath() + "'"
                             + " ) ";
                     mMainDbAdapter.execSql(sqlStr);
@@ -447,18 +447,15 @@ public class GPSTrackService extends Service {
 
         @Override
         public void onProviderDisabled(String provider) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-            // TODO Auto-generated method stub
         }
 
         @Override
         public void onStatusChanged(String provider, int status,
             Bundle extras) {
-            // TODO Auto-generated method stub
         }
     }
 

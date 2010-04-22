@@ -900,12 +900,12 @@ public class DB {
     public boolean backupDb(String bkName) {
         boolean retVal;
         String fromFile = mDb.getPath();
-        String toFile = StaticValues.backupFolder;
+        String toFile = StaticValues.BACKUP_FOLDER;
         if(bkName == null)
-            toFile = toFile + Utils.appendDateTime(StaticValues.backupPrefix, true, true, true)
-                + StaticValues.backupSufix;
+            toFile = toFile + Utils.appendDateTime(StaticValues.BACKUP_PREFIX, true, true, true)
+                + StaticValues.BACKUP_SUFIX;
         else
-            toFile = toFile + bkName + StaticValues.backupSufix;
+            toFile = toFile + bkName + StaticValues.BACKUP_SUFIX;
         
         mDb.close();
         FileUtils fu = new FileUtils();
@@ -922,7 +922,7 @@ public class DB {
         String toFile = mDb.getPath();
         mDb.close();
         FileUtils fu = new FileUtils();
-        retVal = fu.copyFile(mCtx, StaticValues.backupFolder + restoreFile, toFile, true);
+        retVal = fu.copyFile(mCtx, StaticValues.BACKUP_FOLDER + restoreFile, toFile, true);
         if(retVal == false) {
             lastErrorMessage = fu.lastError;
         }

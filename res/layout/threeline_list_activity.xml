@@ -23,19 +23,19 @@
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
-    <TextView android:id="@+id/threeLineListText1"
+    <TextView android:id="@+id/tvThreeLineListText1"
               android:textSize="16sp"
               android:textStyle="bold"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"/>
 
-    <TextView android:id="@+id/threeLineListText2"
+    <TextView android:id="@+id/tvThreeLineListText2"
               android:textSize="16sp"
               android:textStyle="italic"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"/>
 
-    <TextView android:id="@+id/threeLineListText3"
+    <TextView android:id="@+id/tvThreeLineListText3"
               android:textSize="14sp"
               android:textStyle="italic"
               android:layout_width="fill_parent"

@@ -41,7 +41,7 @@
             android:text="@string/MAINSCREENPREF_ACTIVITY_LABEL"
             />
 
-        <ListView android:id="@android:id/list"
+        <ListView android:id="@+id/lvZones"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
                   android:drawSelectorOnTop="false"

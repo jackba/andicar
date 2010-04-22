@@ -37,16 +37,16 @@ import org.andicar.utils.Utils;
  * @author miki
  */
 public class GPSTrackController extends EditActivityBase {
-    private Spinner spinnerCar;
-    private Spinner spinnerDriver;
-    private boolean isActivityOnLoading = true;
-    private ArrayAdapter<String> userCommentAdapter;
-    private AutoCompleteTextView userComment;
-    private EditText editTextName;
-    private CheckBox ckGpsTrackUseKML;
-    private CheckBox ckGpsTrackUseGPX;
-    private CheckBox ckGpsTrackShowOnMap;
-    private CheckBox ckGpsTrackCreateMileage;
+    private Spinner spnCar;
+    private Spinner spnDriver;
+    private boolean bIsActivityOnLoading = true;
+    private ArrayAdapter<String> aaUserComment;
+    private AutoCompleteTextView acUserComment;
+    private EditText etName;
+    private CheckBox ckIsUseKML;
+    private CheckBox ckIsUseGPX;
+    private CheckBox ckIsShowOnMap;
+    private CheckBox ckIsCreateMileage;
     private Button btnGPSTrackStartStop;
     private boolean isGpsTrackOn = false;
     private ViewGroup vgRoot;
@@ -62,49 +62,49 @@ public class GPSTrackController extends EditActivityBase {
         mCarId = mPreferences.getLong("CurrentCar_ID", -1);
         mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
 
-        vgRoot = (ViewGroup) findViewById(R.id.genRootViewGroup);
-        spinnerCar = (Spinner)findViewById(R.id.carSpinner);
-        spinnerDriver = (Spinner)findViewById(R.id.driverSpinner);
-        spinnerCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
-        spinnerDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
-        spinnerCar.setOnTouchListener(spinnerOnTouchListener);
-        spinnerDriver.setOnTouchListener(spinnerOnTouchListener);
-        userComment = ((AutoCompleteTextView) findViewById( R.id.genUserCommentEntry ));
-        editTextName = (EditText) findViewById(R.id.genNameEntry);
-        editTextName.setHint(Utils.getDateStr(true, true));
-        ckGpsTrackUseKML = (CheckBox) findViewById(R.id.gpsTrackUseKMLCk);
-        ckGpsTrackUseKML.setChecked(mPreferences.getBoolean("IsUseKMLTrack", true));
-        ckGpsTrackUseGPX = (CheckBox) findViewById(R.id.gpsTrackUseGPXCk);
-        ckGpsTrackUseGPX.setChecked(mPreferences.getBoolean("IsUseGPXTrack", true));
-        ckGpsTrackShowOnMap = (CheckBox) findViewById(R.id.gpsTrackShowOnMap);
-        ckGpsTrackShowOnMap.setChecked(mPreferences.getBoolean("IsGPSTrackOnMap", true));
-        btnGPSTrackStartStop = (Button) findViewById(R.id.gpsTrackBtnStartStopGpsTrack);
+        vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
+        spnCar = (Spinner)findViewById(R.id.spnCar);
+        spnDriver = (Spinner)findViewById(R.id.spnDriver);
+        spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnCar.setOnTouchListener(spinnerOnTouchListener);
+        spnDriver.setOnTouchListener(spinnerOnTouchListener);
+        acUserComment = ((AutoCompleteTextView) findViewById( R.id.etUserComment ));
+        etName = (EditText) findViewById(R.id.etName);
+        etName.setHint(Utils.getDateStr(true, true));
+        ckIsUseKML = (CheckBox) findViewById(R.id.ckIsUseKML);
+        ckIsUseKML.setChecked(mPreferences.getBoolean("IsUseKMLTrack", true));
+        ckIsUseGPX = (CheckBox) findViewById(R.id.ckIsUseGPX);
+        ckIsUseGPX.setChecked(mPreferences.getBoolean("IsUseGPXTrack", true));
+        ckIsShowOnMap = (CheckBox) findViewById(R.id.ckIsShowOnMap);
+        ckIsShowOnMap.setChecked(mPreferences.getBoolean("IsGPSTrackOnMap", true));
+        btnGPSTrackStartStop = (Button) findViewById(R.id.btnStartStopGpsTrack);
         btnGPSTrackStartStop.setOnClickListener(btnGPSTrackStartStopListener);
-        ckGpsTrackCreateMileage = (CheckBox) findViewById(R.id.gpsTrackCreateMileageCk);
+        ckIsCreateMileage = (CheckBox) findViewById(R.id.ckIsCreateMileage);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        isActivityOnLoading = true;
+        bIsActivityOnLoading = true;
         isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
 
         if(isGpsTrackOn){
-            btnGPSTrackStartStop.setText(mRes.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
             restoreState();
             setEditable(vgRoot, false);
         }
         else{
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
             mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
-            btnGPSTrackStartStop.setText(mRes.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
+            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
             setEditable(vgRoot, true);
         }
-        initSpinner(spinnerCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                 mCarId, false);
 
-        initSpinner(spinnerDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                 mDriverId, false);
     }
@@ -131,24 +131,24 @@ public class GPSTrackController extends EditActivityBase {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putLong("GPSTrackCarID", mCarId);
         editor.putLong("GPSTrackDriverID", mDriverId);
-        editor.putString("GPSTrackName", editTextName.getText().toString());
-        editor.putString("GPSTrackComment", userComment.getText().toString());
-        editor.putBoolean("GPSTrackCreateMileage", ckGpsTrackCreateMileage.isChecked());
-        editor.putBoolean("GPSTrackUseKML", ckGpsTrackUseKML.isChecked());
-        editor.putBoolean("GPSTrackUseGPX", ckGpsTrackUseGPX.isChecked());
-        editor.putBoolean("GPSTrackShowMap", ckGpsTrackShowOnMap.isChecked());
+        editor.putString("GPSTrackName", etName.getText().toString());
+        editor.putString("GPSTrackComment", acUserComment.getText().toString());
+        editor.putBoolean("GPSTrackCreateMileage", ckIsCreateMileage.isChecked());
+        editor.putBoolean("GPSTrackUseKML", ckIsUseKML.isChecked());
+        editor.putBoolean("GPSTrackUseGPX", ckIsUseGPX.isChecked());
+        editor.putBoolean("GPSTrackShowMap", ckIsShowOnMap.isChecked());
         editor.commit();
     }
 
     private void restoreState(){
         mCarId = mPreferences.getLong("GPSTrackCarID", mCarId);
         mDriverId = mPreferences.getLong("GPSTrackDriverID", mDriverId);
-        editTextName.setText(mPreferences.getString("GPSTrackName", ""));
-        userComment.setText(mPreferences.getString("GPSTrackComment", ""));
-        ckGpsTrackCreateMileage.setChecked(mPreferences.getBoolean("GPSTrackCreateMileage", true));
-        ckGpsTrackUseKML.setChecked(mPreferences.getBoolean("GPSTrackUseKML", true));
-        ckGpsTrackUseGPX.setChecked(mPreferences.getBoolean("GPSTrackUseGPX", true));
-        ckGpsTrackShowOnMap.setChecked(mPreferences.getBoolean("GPSTrackShowMap", false));
+        etName.setText(mPreferences.getString("GPSTrackName", ""));
+        acUserComment.setText(mPreferences.getString("GPSTrackComment", ""));
+        ckIsCreateMileage.setChecked(mPreferences.getBoolean("GPSTrackCreateMileage", true));
+        ckIsUseKML.setChecked(mPreferences.getBoolean("GPSTrackUseKML", true));
+        ckIsUseGPX.setChecked(mPreferences.getBoolean("GPSTrackUseGPX", true));
+        ckIsShowOnMap.setChecked(mPreferences.getBoolean("GPSTrackShowMap", false));
     }
 
     @Override
@@ -161,8 +161,8 @@ public class GPSTrackController extends EditActivityBase {
                setEditable((ViewGroup)child, editable);
            }
 
-           if(!(child.getId() == R.id.gpsTrackCreateMileageCk
-                   || child.getId() == R.id.gpsTrackBtnStartStopGpsTrack))
+           if(!(child.getId() == R.id.ckIsCreateMileage
+                   || child.getId() == R.id.btnStartStopGpsTrack))
                child.setEnabled(editable);
        }
    }
@@ -170,16 +170,16 @@ public class GPSTrackController extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    if(isActivityOnLoading)
+                    if(bIsActivityOnLoading)
                         return;
-                    userCommentAdapter = null;
-                    userCommentAdapter = new ArrayAdapter<String>(GPSTrackController.this,
+                    aaUserComment = null;
+                    aaUserComment = new ArrayAdapter<String>(GPSTrackController.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mMainDbAdapter.getAutoCompleteUserComments(MainDbAdapter.GPSTRACK_TABLE_NAME,
-                            spinnerCar.getSelectedItemId(), 30));
-                    userComment.setAdapter(userCommentAdapter);
-                    mCarId = spinnerCar.getSelectedItemId();
-                    mDriverId = spinnerDriver.getSelectedItemId();
+                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                            spnCar.getSelectedItemId(), 30));
+                    acUserComment.setAdapter(aaUserComment);
+                    mCarId = spnCar.getSelectedItemId();
+                    mDriverId = spnDriver.getSelectedItemId();
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -188,7 +188,7 @@ public class GPSTrackController extends EditActivityBase {
     private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
 
         public boolean onTouch(View view, MotionEvent me) {
-            isActivityOnLoading = false;
+            bIsActivityOnLoading = false;
             return false;
         }
     };
@@ -200,20 +200,20 @@ public class GPSTrackController extends EditActivityBase {
                 stopService(new Intent(GPSTrackController.this, GPSTrackService.class));
                 isGpsTrackOn = false;
                 setEditable(vgRoot, true);
-                editTextName.setText("");
-                editTextName.setHint(Utils.getDateStr(true, true));
-                btnGPSTrackStartStop.setText(mRes.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
+                etName.setText("");
+                etName.setHint(Utils.getDateStr(true, true));
+                btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
             }
             else{
-                if(editTextName.getText().toString().length() == 0)
-                    editTextName.setText(editTextName.getHint());
+                if(etName.getText().toString().length() == 0)
+                    etName.setText(etName.getHint());
                 startService(new Intent(GPSTrackController.this, GPSTrackService.class));
                 isGpsTrackOn = true; 
                 setEditable(vgRoot, false);
 //                startActivity(new Intent(GPSTrackController.this, GPSTrackMap.class));
                 if(isGpsTrackOn)
                     btnGPSTrackStartStop.setText(
-                            mRes.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+                            mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
             }
         };
     };

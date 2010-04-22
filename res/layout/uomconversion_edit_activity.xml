@@ -22,7 +22,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
-    android:id="@+id/genRootViewGroup"
+    android:id="@+id/vgRoot"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -32,20 +32,19 @@
         >
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/genNameLabel"
+                android:id="@+id/tvNameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_NAME_LABEL"
                 />
             <EditText
-                android:id="@+id/genNameEntry"
+                android:id="@+id/etName"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +54,6 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -66,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/UOMCONVERSION_EDIT_ACTIVITY_UOMFROM"
             />
-            <Spinner android:id="@+id/uomConversionEditUomFromSpinner"
+            <Spinner android:id="@+id/spnUomFrom"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -77,7 +75,6 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -88,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/UOMCONVERSION_EDIT_ACTIVITY_UOMTO"
             />
-            <Spinner android:id="@+id/uomConversionEditUomToSpinner"
+            <Spinner android:id="@+id/spnUomTo"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -99,20 +96,19 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/uomConversionEditRateLabel"
+                android:id="@+id/tvConversionRateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/UOMCONVERSION_EDIT_ACTIVITY_RATE"
                 />
             <EditText
-                android:id="@+id/uomConversionEditRateEntry"
+                android:id="@+id/etConversionRate"
                 android:layout_marginLeft="10dip"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -123,20 +119,20 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/genIsActiveCheck"
+            android:id="@+id/ckIsActive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/GEN_ISACTIVE_LABEL"
             />
 
         <TextView
-            android:id="@+id/genUserCommentLabel"
+            android:id="@+id/tvUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/GEN_USER_COMMENT_LABEL"
             />
         <EditText
-            android:id="@+id/genUserCommentEntry"
+            android:id="@+id/etUserComment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"

@@ -55,22 +55,22 @@ public class StaticValues
     public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;
 
     //no. of decimals when converting uom's to/from base uom
-    public static final int volumeDecimals = 2;
-    public static final RoundingMode volumeRoundingMode = RoundingMode.HALF_UP;
-    public static final int lengthDecimals = 2;
-    public static final RoundingMode lengthRoundingMode = RoundingMode.HALF_UP;
-    public static final int amountDecimals = 2;
-    public static final RoundingMode amountRoundingMode = RoundingMode.HALF_UP;
-    public static final int conversionDecimals = 4;
-    public static final RoundingMode conversionRoundingMode = RoundingMode.HALF_UP;
+    public static final int DECIMALS_VOLUME = 2;
+    public static final RoundingMode ROUNDING_MODE_VOLUME = RoundingMode.HALF_UP;
+    public static final int DECIMALS_LENGTH = 2;
+    public static final RoundingMode ROUNDING_MODE_LENGTH = RoundingMode.HALF_UP;
+    public static final int DECIMALS_AMOUNT = 2;
+    public static final RoundingMode ROUNDING_MODE_AMOUNT = RoundingMode.HALF_UP;
+    public static final int DECIMALS_CONVERSIONS = 4;
+    public static final RoundingMode ROUNDING_MODE_CONVERSIONS = RoundingMode.HALF_UP;
 
 
     public static final String UOM_LENGTH_TYPE_CODE = "L";
     public static final String UOM_VOLUME_TYPE_CODE = "V";
 
     //mileage insert mode: 0 = new index; 1 = mileage
-    public static int mileageInsertModeNewIndex = 0;
-    public static int mileageEditInsertModeMileage = 1;
+    public static int MILEAGE_INSERTMODE_INDEX = 0;
+    public static int MILEAGE_INSERTMODE_MILEAGE = 1;
 
     public static final int TIME_DIALOG_ID = 0;
     public static final int DATE_DIALOG_ID = 1;
@@ -78,28 +78,28 @@ public class StaticValues
     /**
      * 
      */
-    public static String dateDecodeTypeTo0Hour = "0";
+    public static String DATE_DECODE_TO_ZERO = "0";
     /**
      * upper the hour to 23:59.999
      */
-    public static String dateDecodeTypeTo24Hour = "24";
+    public static String DATE_DECODE_TO_24 = "24";
     /**
      * leave the hour unchanged
      */
-    public static String dateDecodeTypeNoChange = "12";
+    public static String DATE_DECODE_NO_CHANGE = "12";
 
-    public static int localSearchDialog = 0;
-    public static int reportOptionsDialog = 1;
+    public static int DIALOG_LOCAL_SEARCH = 0;
+    public static int DIALOG_REPORT_OPTIONS = 1;
 
-    public static final String reportFolder = "/sdcard/andicar/reports/";
-    public static final String backupFolder = "/sdcard/andicar/backups/";
-    public static final String gpsTrackDetailsFolder = "/sdcard/andicar/gpstrack/";
-    public static final String backupPrefix = "bk";
-    public static final String backupSufix = ".db";
+    public static final String REPORT_FOLDER = "/sdcard/andicar/reports/";
+    public static final String BACKUP_FOLDER = "/sdcard/andicar/backups/";
+    public static final String TRACK_FOLDER = "/sdcard/andicar/gpstrack/";
+    public static final String BACKUP_PREFIX = "bk";
+    public static final String BACKUP_SUFIX = ".db";
 
-    public static final String gpsTrackFormatCSV = "csv";
-    public static final String gpsTrackFormatKML = "kml";//Keyhole Markup Language (http://en.wikipedia.org/wiki/KML)
-    public static final String gpsTrackFormatGPX = "gpx";//GPS eXchange Format (http://en.wikipedia.org/wiki/Gpx)
+    public static final String CSV_FORMAT = "csv";
+    public static final String KML_FORMAT = "kml";//Keyhole Markup Language (http://en.wikipedia.org/wiki/KML)
+    public static final String GPX_FORMAT = "gpx";//GPS eXchange Format (http://en.wikipedia.org/wiki/Gpx)
 
     public static final String EXPENSES_COL_FROMREFUEL_TABLE_NAME = "Refuel";
     

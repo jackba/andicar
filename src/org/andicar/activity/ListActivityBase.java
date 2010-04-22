@@ -56,6 +56,7 @@ public class ListActivityBase extends ListActivity {
     protected int[] mLayoutIdTo;
     protected Resources mRes = null;
     protected SharedPreferences mPreferences;
+    protected SharedPreferences.Editor mPrefEditor;
     protected MainDbAdapter mMainDbAdapter = null;
     protected Bundle extras = null;
     protected AlertDialog.Builder errorAlertBuilder;
@@ -74,6 +75,7 @@ public class ListActivityBase extends ListActivity {
         super.onCreate(icicle);
         mRes = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mPrefEditor = mPreferences.edit();
         mMainDbAdapter = new MainDbAdapter(this);
 
         if(extras == null) {
@@ -94,12 +96,12 @@ public class ListActivityBase extends ListActivity {
         mDbMapFrom = pDbMapFrom;
         mLayoutIdTo = pLayoutIdTo;
 
-        ListView lv = getListView();
-        lv.setTextFilterEnabled(true);
-        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        lv.setOnItemClickListener(mItemClickListener);
-        lv.setOnItemLongClickListener(mItemLongClickListener);
-        registerForContextMenu(lv);
+        ListView lvBaseList = getListView();
+        lvBaseList.setTextFilterEnabled(true);
+        lvBaseList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        lvBaseList.setOnItemClickListener(mItemClickListener);
+        lvBaseList.setOnItemLongClickListener(mItemLongClickListener);
+        registerForContextMenu(lvBaseList);
 
         fillData();
 

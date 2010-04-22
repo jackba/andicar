@@ -37,7 +37,7 @@ public class CurrencyRateListActivity extends ListActivityBase
                 MainDbAdapter.GEN_COL_NAME_NAME,
                 R.layout.threeline_list_activity,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.CURRENCYRATE_COL_RATE_NAME, MainDbAdapter.CURRENCYRATE_COL_INVERSERATE_NAME},
-                new int[]{R.id.threeLineListText1, R.id.threeLineListText2, R.id.threeLineListText3});
+                new int[]{R.id.tvThreeLineListText1, R.id.tvThreeLineListText2, R.id.tvThreeLineListText3});
     }
 
 }

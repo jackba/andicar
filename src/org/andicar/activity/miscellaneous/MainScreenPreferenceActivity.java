@@ -19,7 +19,6 @@
 
 package org.andicar.activity.miscellaneous;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -37,13 +36,12 @@ import org.andicar.activity.R;
  */
 public class MainScreenPreferenceActivity extends EditActivityBase {
 
-    SharedPreferences.Editor editor;
-    ListView zonesList;
+    private ListView lvZones;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        editor = mPreferences.edit();
+        mPrefEditor = mPreferences.edit();
         setContentView( R.layout.main_screen_preference_activity );
         fillZonesList();
     }
@@ -59,43 +57,43 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
         ArrayAdapter listAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, mainScreenZones);
 
-        zonesList = (ListView) findViewById(android.R.id.list);
-        zonesList.setAdapter(listAdapter);
-        zonesList.setItemsCanFocus(false);
-        zonesList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        zonesList.setOnItemClickListener(zonesSelectedListener);
-        zonesList.setItemChecked(0, mPreferences.getBoolean("MainActivityShowMileage", true));
-        zonesList.setItemChecked(1, mPreferences.getBoolean("MainActivityShowGPSTrack", true));
-        zonesList.setItemChecked(2, mPreferences.getBoolean("MainActivityShowRefuel", true));
-        zonesList.setItemChecked(3, mPreferences.getBoolean("MainActivityShowExpense", true));
-        zonesList.setItemChecked(4, mPreferences.getBoolean("MainActivityShowCarReport", true));
+        lvZones = (ListView) findViewById(R.id.lvZones);
+        lvZones.setAdapter(listAdapter);
+        lvZones.setItemsCanFocus(false);
+        lvZones.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        lvZones.setOnItemClickListener(zonesSelectedListener);
+        lvZones.setItemChecked(0, mPreferences.getBoolean("MainActivityShowMileage", true));
+        lvZones.setItemChecked(1, mPreferences.getBoolean("MainActivityShowGPSTrack", true));
+        lvZones.setItemChecked(2, mPreferences.getBoolean("MainActivityShowRefuel", true));
+        lvZones.setItemChecked(3, mPreferences.getBoolean("MainActivityShowExpense", true));
+        lvZones.setItemChecked(4, mPreferences.getBoolean("MainActivityShowCarReport", true));
     }
 
     protected AdapterView.OnItemClickListener zonesSelectedListener = new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                SparseBooleanArray checkedItems = zonesList.getCheckedItemPositions();
+                SparseBooleanArray checkedItems = lvZones.getCheckedItemPositions();
                 if(checkedItems.valueAt(0))
-                    editor.putBoolean("MainActivityShowMileage", true);
+                    mPrefEditor.putBoolean("MainActivityShowMileage", true);
                 else
-                    editor.putBoolean("MainActivityShowMileage", false);
+                    mPrefEditor.putBoolean("MainActivityShowMileage", false);
                 if(checkedItems.valueAt(1))
-                    editor.putBoolean("MainActivityShowGPSTrack", true);
+                    mPrefEditor.putBoolean("MainActivityShowGPSTrack", true);
                 else
-                    editor.putBoolean("MainActivityShowGPSTrack", false);
+                    mPrefEditor.putBoolean("MainActivityShowGPSTrack", false);
                 if(checkedItems.valueAt(2))
-                    editor.putBoolean("MainActivityShowRefuel", true);
+                    mPrefEditor.putBoolean("MainActivityShowRefuel", true);
                 else
-                    editor.putBoolean("MainActivityShowRefuel", false);
+                    mPrefEditor.putBoolean("MainActivityShowRefuel", false);
                 if(checkedItems.valueAt(3))
-                    editor.putBoolean("MainActivityShowExpense", true);
+                    mPrefEditor.putBoolean("MainActivityShowExpense", true);
                 else
-                    editor.putBoolean("MainActivityShowExpense", false);
+                    mPrefEditor.putBoolean("MainActivityShowExpense", false);
                 if(checkedItems.valueAt(4))
-                    editor.putBoolean("MainActivityShowCarReport", true);
+                    mPrefEditor.putBoolean("MainActivityShowCarReport", true);
                 else
-                    editor.putBoolean("MainActivityShowCarReport", false);
+                    mPrefEditor.putBoolean("MainActivityShowCarReport", false);
                 
-                editor.commit();
+                mPrefEditor.commit();
             }
         };
 

@@ -61,10 +61,10 @@ public class FileUtils {
                 exceptionAlert.show();
                 return R.string.ERR_020;
             }
-            file = new File(StaticValues.reportFolder);
+            file = new File(StaticValues.REPORT_FOLDER);
             if(!file.exists()){
                 if(!file.mkdirs()){
-                    lastError = "Report folder " +  StaticValues.reportFolder + " cannot be created.";
+                    lastError = "Report folder " +  StaticValues.REPORT_FOLDER + " cannot be created.";
                     exceptionAlertBuilder = new AlertDialog.Builder(ctx);
                     exceptionAlertBuilder.setCancelable( false );
                     exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
@@ -74,10 +74,10 @@ public class FileUtils {
                     return R.string.ERR_021;
                 }
             }
-            file = new File(StaticValues.backupFolder);
+            file = new File(StaticValues.BACKUP_FOLDER);
             if(!file.exists()){
                 if(!file.mkdirs()){
-                    lastError = "Backup folder " +  StaticValues.backupFolder + " cannot be created.";
+                    lastError = "Backup folder " +  StaticValues.BACKUP_FOLDER + " cannot be created.";
                     exceptionAlertBuilder = new AlertDialog.Builder(ctx);
                     exceptionAlertBuilder.setCancelable( false );
                     exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
@@ -87,10 +87,10 @@ public class FileUtils {
                     return R.string.ERR_024;
                 }
             }
-            file = new File(StaticValues.gpsTrackDetailsFolder);
+            file = new File(StaticValues.TRACK_FOLDER);
             if(!file.exists()){
                 if(!file.mkdirs()){
-                    lastError = "GPS track folder " +  StaticValues.gpsTrackDetailsFolder + " cannot be created.";
+                    lastError = "GPS track folder " +  StaticValues.TRACK_FOLDER + " cannot be created.";
                     exceptionAlertBuilder = new AlertDialog.Builder(ctx);
                     exceptionAlertBuilder.setCancelable( false );
                     exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
@@ -117,7 +117,7 @@ public class FileUtils {
         try
         {
             lastError = null;
-            File file = new File(StaticValues.reportFolder + fileName);
+            File file = new File(StaticValues.REPORT_FOLDER + fileName);
             if(!file.createNewFile())
                 return R.string.ERR_022;
             FileWriter fw = new FileWriter(file);
@@ -184,7 +184,7 @@ public class FileUtils {
 
     public static ArrayList<String> getBkFileNames(){
         ArrayList<String> myData = new ArrayList<String>();
-        File bkDir = new File(StaticValues.backupFolder);
+        File bkDir = new File(StaticValues.BACKUP_FOLDER);
         if(!bkDir.exists() || !bkDir.isDirectory()){
             return null;
         }
@@ -199,7 +199,7 @@ public class FileUtils {
     }
 
     public static File createGpsTrackDetailFile(String fileFormat, String fileName){
-        File file = new File(StaticValues.gpsTrackDetailsFolder + fileName + "." + fileFormat);
+        File file = new File(StaticValues.TRACK_FOLDER + fileName + "." + fileFormat);
         return file;
     }
 
@@ -216,10 +216,10 @@ public class FileUtils {
     }
 
     public int updateTo220(Context ctx){
-            File file = new File(StaticValues.gpsTrackDetailsFolder);
+            File file = new File(StaticValues.TRACK_FOLDER);
             if(!file.exists()){
                 if(!file.mkdirs()){
-                    lastError = "GPS track folder " +  StaticValues.gpsTrackDetailsFolder + " cannot be created.";
+                    lastError = "GPS track folder " +  StaticValues.TRACK_FOLDER + " cannot be created.";
                     exceptionAlertBuilder = new AlertDialog.Builder(ctx);
                     exceptionAlertBuilder.setCancelable( false );
                     exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );

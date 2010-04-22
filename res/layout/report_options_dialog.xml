@@ -23,7 +23,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
-    android:id="@+id/genRootViewGroup"
+    android:id="@+id/vgRoot"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -32,16 +32,8 @@
         android:layout_marginRight="5dip"
         >
 
-<!--        <CheckBox
-            android:id="@+id/reportOptionsCkSaveLocal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/REPORTOPTIONS_DIALOG_SAVELOCAL_CAPTION"
-            />
--->
         <CheckBox
-            android:id="@+id/reportOptionsCkSendEmail"
+            android:id="@+id/ckIsSendEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/REPORTOPTIONS_DIALOG_SENDEMAIL_CAPTION"
@@ -53,12 +45,12 @@
             android:layout_marginTop="15dip"
             >
             <TextView
-                android:id="@+id/reportOptionsFormatLabel"
+                android:id="@+id/tvFormatLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/REPORTOPTIONS_DIALOG_FORMAT_LABEL"
                 />
-            <Spinner android:id="@+id/reportOptionsFormatSpinner"
+            <Spinner android:id="@+id/spnReportOptionsFormat"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"

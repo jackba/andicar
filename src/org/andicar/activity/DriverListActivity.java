@@ -19,7 +19,6 @@
 
 package org.andicar.activity;
 
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -27,7 +26,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -50,17 +48,15 @@ public class DriverListActivity extends ListActivityBase
     {
         public void onItemClick( AdapterView parent, View v, int position, long id )
         {
-            Cursor selectedRecord = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
+            Cursor dbcRecordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
                     MainDbAdapter.driverTableColNames, id);
             //driver is actve?
-            if( selectedRecord.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
-                SharedPreferences settings = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 );
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putLong( "CurrentDriver_ID", id );
-                editor.putString( "CurrentDriver_Name", selectedRecord.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
-                editor.commit();
+            if( dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
+                mPrefEditor.putLong( "CurrentDriver_ID", id );
+                mPrefEditor.putString( "CurrentDriver_Name", dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
+                mPrefEditor.commit();
                 Toast toast = Toast.makeText( getApplicationContext(),
-                        selectedRecord.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.RECORD_SELECTED_TOAST_MESSAGE), Toast.LENGTH_SHORT );
+                        dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.RECORD_SELECTED_TOAST_MESSAGE), Toast.LENGTH_SHORT );
                 toast.show();
                 finish();
             }

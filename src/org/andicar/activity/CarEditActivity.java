@@ -39,7 +39,15 @@ import org.andicar.utils.StaticValues;
  */
 public class CarEditActivity extends EditActivityBase
 {
-//    private CarDbAdapter mCarDbHelper = null;
+    private Spinner spnUomLength = null;
+    private Spinner spnUomVolume = null;
+    private Spinner spnCurrency = null;
+    private EditText etName = null;
+    private EditText etCarModel = null;
+    private EditText etCarRegNo = null;
+    private EditText etUserComment = null;
+    private EditText etIndexStart = null;
+    private CheckBox ckIsActive = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -47,64 +55,73 @@ public class CarEditActivity extends EditActivityBase
     {
         super.onCreate( icicle, R.layout.car_edit_activity, mOkClickListener );
 
-        String operation = extras.getString("Operation"); //E = edit, N = new
+        spnUomLength = (Spinner) findViewById( R.id.spnUomLength );
+        spnUomVolume = (Spinner) findViewById( R.id.spnUomVolume );
+        spnCurrency = (Spinner) findViewById( R.id.spnCurrency );
+        etName = (EditText) findViewById( R.id.etName );
+        etCarModel = (EditText) findViewById( R.id.etCarModel );
+        etCarRegNo = (EditText) findViewById( R.id.etCarRegNo );
+        etUserComment = (EditText) findViewById( R.id.etUserComment );
+        etIndexStart = (EditText) findViewById( R.id.etIndexStart );
+        ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
+
+        String operation = mbundleExtras.getString("Operation"); //E = edit, N = new
 
         if( operation.equals( "E") ) {
-            mRowId = extras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
-            String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String model = recordCursor.getString( MainDbAdapter.CAR_COL_MODEL_POS );
-            String registrationNo = recordCursor.getString( MainDbAdapter.CAR_COL_REGISTRATIONNO_POS );
-            BigDecimal startIndex = new BigDecimal(recordCursor.getString( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
-            Long uomLengthId = recordCursor.getLong( MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS );
-            Long uomVolumeId = recordCursor.getLong( MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS );
-            Long currencyId = recordCursor.getLong( MainDbAdapter.CAR_COL_CURRENCY_ID_POS );
+            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
+            String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String strIsActive = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String strUserComment = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String strCarModel = dbcRecordCursor.getString( MainDbAdapter.CAR_COL_MODEL_POS );
+            String strRegistrationNo = dbcRecordCursor.getString( MainDbAdapter.CAR_COL_REGISTRATIONNO_POS );
+            BigDecimal bdStartIndex = new BigDecimal(dbcRecordCursor.getString( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
+            Long lUomLengthId = dbcRecordCursor.getLong( MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS );
+            Long lUomVolumeId = dbcRecordCursor.getLong( MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS );
+            Long lCurrencyId = dbcRecordCursor.getLong( MainDbAdapter.CAR_COL_CURRENCY_ID_POS );
             //uom for length
-            initSpinner((Spinner) findViewById( R.id.carEditUomLengthSpinner ), MainDbAdapter.UOM_TABLE_NAME,
+            initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, uomLengthId, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, lUomLengthId, false);
             //uom for volume
-            initSpinner((Spinner) findViewById( R.id.carEditUomVolumeSpinner ), MainDbAdapter.UOM_TABLE_NAME,
+            initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, uomVolumeId, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, lUomVolumeId, false);
              //default currency
-            initSpinner((Spinner) findViewById( R.id.carEditCurrencySpinner ), MainDbAdapter.CURRENCY_TABLE_NAME,
+            initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, currencyId, false);
+                    MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, lCurrencyId, false);
 
-            if( name != null ) {
-                ((EditText) findViewById( R.id.genNameEntry )).setText( name );
+            if( strName != null ) {
+                etName.setText( strName );
             }
-            if( model != null ) {
-                ((EditText) findViewById( R.id.carEditCarModelEntry )).setText( model );
+            if( strCarModel != null ) {
+                etCarModel.setText( strCarModel );
             }
-            if( registrationNo != null ) {
-                ((EditText) findViewById( R.id.carEditCarRegNoEntry )).setText( registrationNo );
+            if( strRegistrationNo != null ) {
+                etCarRegNo.setText( strRegistrationNo );
             }
-            if( isActive != null ) {
-                ((CheckBox) findViewById( R.id.genIsActiveCheck )).setChecked( isActive.equals( "Y" ) );
+            if( strIsActive != null ) {
+                ckIsActive.setChecked( strIsActive.equals( "Y" ) );
             }
-            if( userComment != null ) {
-                ((EditText) findViewById( R.id.genUserCommentEntry )).setText( userComment );
+            if( strUserComment != null ) {
+                etUserComment.setText( strUserComment );
             }
-            if( startIndex != null ) {
-                ((EditText) findViewById( R.id.carEditCarStartIndexEntry )).setText( startIndex.toString() );
+            if( bdStartIndex != null ) {
+                etIndexStart.setText( bdStartIndex.toString() );
             }
 
             //cannot be inactivated if is the current car
-            if( extras.getLong( "CurrentCar_ID" ) == mRowId ) {
-                CheckBox cb = (CheckBox) findViewById( R.id.genIsActiveCheck );
-                cb.setClickable( false );
-                cb.setOnTouchListener( new View.OnTouchListener()
+            if( mbundleExtras.getLong( "CurrentCar_ID" ) == mRowId ) {
+                ckIsActive.setClickable( false );
+                ckIsActive.setOnTouchListener( new View.OnTouchListener()
                 {
                     public boolean onTouch( View arg0, MotionEvent arg1 )
                     {
                         Toast toast = Toast.makeText( getApplicationContext(),
-                                mRes.getString( R.string.CURRENT_CAR_INACTIVATE_ERROR_MESSAGE ), Toast.LENGTH_SHORT );
+                                mResource.getString( R.string.CURRENT_CAR_INACTIVATE_ERROR_MESSAGE ), Toast.LENGTH_SHORT );
                         toast.show();
                         return false;
                     }
@@ -112,21 +129,21 @@ public class CarEditActivity extends EditActivityBase
             }
         }
         else {
-            initSpinner((Spinner) findViewById( R.id.carEditUomLengthSpinner ), MainDbAdapter.UOM_TABLE_NAME,
+            initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
                         MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 1, false);
             //uom for volume
-            initSpinner((Spinner) findViewById( R.id.carEditUomVolumeSpinner ), MainDbAdapter.UOM_TABLE_NAME,
+            initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
                         MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 3, false);
              //default currency
-            initSpinner((Spinner) findViewById( R.id.carEditCurrencySpinner ), MainDbAdapter.CURRENCY_TABLE_NAME,
+            initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, 1, false);
 
-            ((CheckBox) findViewById( R.id.genIsActiveCheck )).setChecked( true );
+            ckIsActive.setChecked( true );
         }
     }
 
@@ -135,63 +152,63 @@ public class CarEditActivity extends EditActivityBase
                 {
                     public void onClick( View v )
                     {
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.genRootViewGroup));
-                        if( retVal != null ) {
+                        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+                        if( strRetVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mRes.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + strRetVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
 
-                        BigDecimal startIndex = null;
-                        String startIndexStr = ((EditText) findViewById( R.id.carEditCarStartIndexEntry )).getText().toString();
-                        if( startIndexStr != null && startIndexStr.length() > 0 ) {
+                        BigDecimal bdStartIndex = null;
+                        String strIndexStart = etIndexStart.getText().toString();
+                        if( strIndexStart != null && strIndexStart.length() > 0 ) {
                             try {
-                                startIndex = new BigDecimal( startIndexStr );
+                                bdStartIndex = new BigDecimal( strIndexStart );
                             }
                             catch( NumberFormatException e ) {
                                 Toast toast = Toast.makeText( getApplicationContext(),
-                                        mRes.getString( R.string.GEN_NUMBER_FORMAT_EXCEPTION ) + ": "
-                                        + mRes.getString( R.string.CAR_EDIT_ACTIVITY_STARTINDEX ), Toast.LENGTH_SHORT );
+                                        mResource.getString( R.string.GEN_NUMBER_FORMAT_EXCEPTION ) + ": "
+                                        + mResource.getString( R.string.CAR_EDIT_ACTIVITY_STARTINDEX ), Toast.LENGTH_SHORT );
                                 toast.show();
                                 return;
                             }
                         }
-                        ContentValues data = new ContentValues();
-                        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                ((EditText) findViewById( R.id.genNameEntry )).getText().toString());
-                        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (((CheckBox) findViewById( R.id.genIsActiveCheck )).isChecked() ? "Y" : "N") );
-                        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                ((EditText) findViewById( R.id.genUserCommentEntry )).getText().toString() );
-                        data.put( MainDbAdapter.CAR_COL_MODEL_NAME,
-                                ((EditText) findViewById( R.id.carEditCarModelEntry )).getText().toString() );
-                        data.put( MainDbAdapter.CAR_COL_REGISTRATIONNO_NAME,
-                                ((EditText) findViewById( R.id.carEditCarRegNoEntry )).getText().toString());
-                        data.put( MainDbAdapter.CAR_COL_INDEXSTART_NAME, startIndex.toString() );
-                        data.put( MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME,
-                                ((Spinner) findViewById( R.id.carEditUomLengthSpinner )).getSelectedItemId() );
-                        data.put( MainDbAdapter.CAR_COL_UOMVOLUME_ID_NAME,
-                                ((Spinner) findViewById( R.id.carEditUomVolumeSpinner )).getSelectedItemId() );
-                        data.put( MainDbAdapter.CAR_COL_CURRENCY_ID_NAME,
-                                ((Spinner) findViewById( R.id.carEditCurrencySpinner )).getSelectedItemId());
+                        ContentValues cvData = new ContentValues();
+                        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                                etName.getText().toString());
+                        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+                                (ckIsActive.isChecked() ? "Y" : "N") );
+                        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                                etUserComment.getText().toString() );
+                        cvData.put( MainDbAdapter.CAR_COL_MODEL_NAME,
+                                etCarModel.getText().toString() );
+                        cvData.put( MainDbAdapter.CAR_COL_REGISTRATIONNO_NAME,
+                                etCarRegNo.getText().toString());
+                        cvData.put( MainDbAdapter.CAR_COL_INDEXSTART_NAME, bdStartIndex.toString() );
+                        cvData.put( MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME,
+                                spnUomLength.getSelectedItemId() );
+                        cvData.put( MainDbAdapter.CAR_COL_UOMVOLUME_ID_NAME,
+                                spnUomVolume.getSelectedItemId() );
+                        cvData.put( MainDbAdapter.CAR_COL_CURRENCY_ID_NAME,
+                                spnCurrency.getSelectedItemId());
 
                         if( mRowId == null ) {
                             //when a new car defined the current index is same with the start index
-                            data.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, startIndex.toString() );
-                            mMainDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, data);
+                            cvData.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, bdStartIndex.toString() );
+                            mDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, cvData);
                             finish();
                         }
                         else {
-                            int updResult = mMainDbAdapter.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, data);
-                            if(updResult != -1){
-                                String errMsg = "";
-                                errMsg = mRes.getString(updResult);
-                                if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mMainDbAdapter.lastErrorMessage;
-                                errorAlertBuilder.setMessage(errMsg);
-                                errorAlert = errorAlertBuilder.create();
-                                errorAlert.show();
+                            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, cvData);
+                            if(iUpdateResult != -1){
+                                String strErrMsg = "";
+                                strErrMsg = mResource.getString(iUpdateResult);
+                                if(iUpdateResult == R.string.ERR_000)
+                                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
+                                madbErrorAlert.setMessage(strErrMsg);
+                                madError = madbErrorAlert.create();
+                                madError.show();
                             }
                             else
                                 finish();

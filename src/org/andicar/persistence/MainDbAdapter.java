@@ -24,7 +24,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import org.andicar.utils.StaticValues;
@@ -141,7 +140,7 @@ public class MainDbAdapter extends DB
 
                 BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME));
                 BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME));
-                BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amt.toString());
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME));
@@ -149,7 +148,7 @@ public class MainDbAdapter extends DB
                         content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
 
                 BigDecimal convRate = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
-                amt = (amt.multiply(convRate)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                amt = (amt.multiply(convRate)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
 
                 expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
@@ -303,7 +302,7 @@ public class MainDbAdapter extends DB
 
                     BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME));
                     BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME));
-                    BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                    BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amt.toString());
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
                             content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME));
@@ -311,7 +310,7 @@ public class MainDbAdapter extends DB
                             content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
 
                     BigDecimal convRate = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
-                    amt = (amt.multiply(convRate)).setScale(StaticValues.amountDecimals, StaticValues.amountRoundingMode);
+                    amt = (amt.multiply(convRate)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
 
                     expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
@@ -829,7 +828,7 @@ public class MainDbAdapter extends DB
             retVal = new BigDecimal(retValStr);
             if(retVal.compareTo(BigDecimal.ZERO) != 0)
                 return BigDecimal.ONE.divide(retVal, 10, RoundingMode.HALF_UP)
-                        .setScale(StaticValues.conversionDecimals, StaticValues.conversionRoundingMode);
+                        .setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
             else
                 return BigDecimal.ZERO;
         }

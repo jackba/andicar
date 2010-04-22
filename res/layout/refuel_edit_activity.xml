@@ -22,7 +22,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
-    android:id="@+id/genRootViewGroup"
+    android:id="@+id/vgRoot"
     >
 
     <LinearLayout
@@ -38,12 +38,12 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/carLabel"
+                android:id="@+id/tvCarLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_CAR_LABEL"
                 />
-            <Spinner android:id="@+id/carSpinner"
+            <Spinner android:id="@+id/spnCar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -53,13 +53,13 @@
                 />
 
             <TextView
-                android:id="@+id/driverLabel"
+                android:id="@+id/tvDriverLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
                 android:text="@string/GEN_DRIVER_LABEL"
                 />
-            <Spinner android:id="@+id/driverSpinner"
+            <Spinner android:id="@+id/spnDriver"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -76,12 +76,12 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/expenseCategoryLabel"
+                android:id="@+id/tvExpenseCategoryLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_EXPENSECATEGORY_LABEL"
                 />
-            <Spinner android:id="@+id/expenseCategorySpinner"
+            <Spinner android:id="@+id/spnExpCategory"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -98,12 +98,12 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/expenseTypeLabel"
+                android:id="@+id/tvExpenseTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_EXPENSETYPE_LABEL"
                 />
-            <Spinner android:id="@+id/expenseTypeSpinner"
+            <Spinner android:id="@+id/spnExpType"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -120,13 +120,13 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/indexLabel"
+                android:id="@+id/tvIndexLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_INDEX_LABEL"
                 />
             <EditText
-                android:id="@+id/indexEntry"
+                android:id="@+id/etIndex"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
@@ -142,12 +142,12 @@
             android:layout_height="wrap_content"
             >
             <TextView
-                android:id="@+id/quantityLabel"
+                android:id="@+id/tvQuantityLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_QUANTITY_LABEL"
                 />
-            <Spinner android:id="@+id/UOMVolumeSpinner"
+            <Spinner android:id="@+id/spnUomVolume"
                 android:layout_width="50dip"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -156,7 +156,7 @@
                 android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
             <EditText
-                android:id="@+id/quantityEntry"
+                android:id="@+id/etQuantity"
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
                 android:layout_marginLeft="5dip"
@@ -166,7 +166,7 @@
                 />
 
             <CheckBox
-                android:id="@+id/refuelIsFullRefuel"
+                android:id="@+id/ckIsFullRefuel"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dip"
                 style="?android:attr/textAppearanceSmall"
@@ -178,16 +178,16 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/baseUOMQtyZone"
+            android:id="@+id/llBaseUOMQtyZone"
             >
             <TextView
-                android:id="@+id/baseUOMQtyLabel"
+                android:id="@+id/tvBaseUOMQtyLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/REFUEL_BASEUOMQTY_LABEL"
                 />
             <TextView
-                android:id="@+id/baseUOMQtyValue"
+                android:id="@+id/tvBaseUOMQtyValue"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -201,12 +201,12 @@
             android:layout_marginTop="5dip"
             >
             <TextView
-                android:id="@+id/priceLabel"
+                android:id="@+id/tvPriceLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_PRICE_LABEL"
                 />
-            <Spinner android:id="@+id/currencySpinner"
+            <Spinner android:id="@+id/spnCurrency"
                 android:layout_width="35dip"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
@@ -215,7 +215,7 @@
                 android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
                 />
             <EditText
-                android:id="@+id/priceEntry"
+                android:id="@+id/etPrice"
                 android:layout_width="50dip"
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
@@ -224,14 +224,14 @@
                 android:tag="@string/GEN_PRICE_LABEL"
                 />
             <TextView
-                android:id="@+id/amountLabel"
+                android:id="@+id/tvAmountLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
                 android:text="@string/GEN_AMOUNT_LABEL"
                 />
             <TextView
-                android:id="@+id/amountValue"
+                android:id="@+id/tvAmountValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dip"
@@ -242,16 +242,16 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dip"
-            android:id="@+id/conversionRateZone"
+            android:id="@+id/llConversionRateZone"
             >
             <TextView
-                android:id="@+id/conversionRateLabel"
+                android:id="@+id/tvConversionRateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_CONVRATE_LABEL"
                 />
             <EditText
-                android:id="@+id/conversionRateEntry"
+                android:id="@+id/etConversionRate"
                 android:layout_width="70dip"
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
@@ -259,7 +259,7 @@
                 android:background="@color/mandatory_bg"
                 />
             <TextView
-                android:id="@+id/convertedAmountLabel"
+                android:id="@+id/tvConvertedAmountLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -273,13 +273,13 @@
             android:layout_marginTop="10dip"
             >
             <TextView
-                android:id="@+id/documentNoLabel"
+                android:id="@+id/tvDocumentNoLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_DOCUMENTNO_LABEL"
                 />
             <EditText
-                android:id="@+id/documentNoEntry"
+                android:id="@+id/etDocumentNo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
@@ -288,23 +288,22 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginTop="10dip"
             >
-            <TextView android:id="@+id/genDateTimeText"
+            <TextView android:id="@+id/tvDateTimeText"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       />
-            <Button android:id="@+id/genPickDateButton"
+            <Button android:id="@+id/btnPickDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonStyleSmall"
                     android:layout_marginLeft="10dip"
                     android:text="@string/GEN_PICK_DATE_BUTTON_CAPTION"/>
-            <Button android:id="@+id/genPickTimeButton"
+            <Button android:id="@+id/btnPickTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonStyleSmall"
@@ -312,13 +311,13 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/genUserCommentLabel"
+            android:id="@+id/tvUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/GEN_USER_COMMENT_LABEL"
             />
         <AutoCompleteTextView
-            android:id="@+id/genUserCommentEntry"
+            android:id="@+id/acUserCommentEntry"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"

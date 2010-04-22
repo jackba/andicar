@@ -22,15 +22,10 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.DialogPreference;
 import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
-import android.widget.Toast;
 import org.andicar.utils.StaticValues;
 import org.andicar.activity.R;
 
@@ -42,9 +37,9 @@ import org.andicar.activity.R;
 public class GPSPreferencesActivity extends PreferenceActivity {
     private Resources mRes = null;
     protected SharedPreferences mPreferences;
-//    private CheckBoxPreference gpsTrackCSVFileFormatCk;
-    private CheckBoxPreference gpsTrackKMLFileFormatCk;
-    private CheckBoxPreference gpsTrackGPXFileFormatCk;
+    private CheckBoxPreference ckpIsTrackKML;
+    private CheckBoxPreference ckpIsTrackGPX;
+    private CheckBoxPreference ckpIsTrackOnMap;
 
     /** Called when the activity is first created. */
     @Override
@@ -60,11 +55,11 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         prefMgr.setSharedPreferencesName(StaticValues.GLOBAL_PREFERENCE_NAME);
         PreferenceScreen prefScreenRoot = prefMgr.createPreferenceScreen(this);
 
-        CheckBoxPreference gpsTrackOnMapCk = new CheckBoxPreference(this);
-        gpsTrackOnMapCk.setKey("IsGPSTrackOnMap");
-        gpsTrackOnMapCk.setTitle(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_TITLE));
-        gpsTrackOnMapCk.setSummary(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_SUMMARY));
-        prefScreenRoot.addPreference(gpsTrackOnMapCk);
+        ckpIsTrackOnMap = new CheckBoxPreference(this);
+        ckpIsTrackOnMap.setKey("IsGPSTrackOnMap");
+        ckpIsTrackOnMap.setTitle(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_TITLE));
+        ckpIsTrackOnMap.setSummary(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_SUMMARY));
+        prefScreenRoot.addPreference(ckpIsTrackOnMap);
 
         PreferenceScreen gpsTrackFileFormatPref = getPreferenceManager().createPreferenceScreen(this);
         gpsTrackFileFormatPref.setTitle(R.string.PREF_GPSTRACK_FILEFORMAT_TITLE);
@@ -78,19 +73,19 @@ public class GPSPreferencesActivity extends PreferenceActivity {
 //        gpsTrackCSVFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
 //        gpsTrackFileFormatPref.addPreference(gpsTrackCSVFileFormatCk);
 
-        gpsTrackKMLFileFormatCk = new CheckBoxPreference(this);
-        gpsTrackKMLFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATKML_TITLE);
-        gpsTrackKMLFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATKML_SUMMARY);
-        gpsTrackKMLFileFormatCk.setKey("IsUseKMLTrack");
+        ckpIsTrackKML = new CheckBoxPreference(this);
+        ckpIsTrackKML.setTitle(R.string.PREF_GPSTRACK_FILEFORMATKML_TITLE);
+        ckpIsTrackKML.setSummary(R.string.PREF_GPSTRACK_FILEFORMATKML_SUMMARY);
+        ckpIsTrackKML.setKey("IsUseKMLTrack");
 //        gpsTrackKMLFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
-        gpsTrackFileFormatPref.addPreference(gpsTrackKMLFileFormatCk);
+        gpsTrackFileFormatPref.addPreference(ckpIsTrackKML);
 
-        gpsTrackGPXFileFormatCk = new CheckBoxPreference(this);
-        gpsTrackGPXFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATGPX_TITLE);
-        gpsTrackGPXFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATGPX_SUMMARY);
-        gpsTrackGPXFileFormatCk.setKey("IsUseGPXTrack");
+        ckpIsTrackGPX = new CheckBoxPreference(this);
+        ckpIsTrackGPX.setTitle(R.string.PREF_GPSTRACK_FILEFORMATGPX_TITLE);
+        ckpIsTrackGPX.setSummary(R.string.PREF_GPSTRACK_FILEFORMATGPX_SUMMARY);
+        ckpIsTrackGPX.setKey("IsUseGPXTrack");
 //        gpsTrackGPXFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
-        gpsTrackFileFormatPref.addPreference(gpsTrackGPXFileFormatCk);
+        gpsTrackFileFormatPref.addPreference(ckpIsTrackGPX);
 
         // Minimum time  between two recordings
         ListPreference gpsTrackMinTimePref = new ListPreference(this);
