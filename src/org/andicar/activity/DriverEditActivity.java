@@ -50,10 +50,10 @@ public class DriverEditActivity extends EditActivityBase {
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
         
-        String strOperationType = mbundleExtras.getString("Operation"); //E = edit, N = new
+        String strOperationType = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if( strOperationType.equals( "E") ) {
-            mRowId = mbundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
+            mRowId = mBundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
             Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mRowId);
 
             String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
@@ -75,7 +75,7 @@ public class DriverEditActivity extends EditActivityBase {
             }
 
             //cannot be inactivated if is the current driver
-            if (mbundleExtras.getLong("CurrentDriver_ID") == mRowId) {
+            if (mBundleExtras.getLong("CurrentDriver_ID") == mRowId) {
                 ckIsActive.setClickable( false );
                 ckIsActive.setOnTouchListener( new View.OnTouchListener() {
                     public boolean onTouch( View arg0, MotionEvent arg1 )

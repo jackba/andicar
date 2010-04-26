@@ -36,6 +36,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+import com.flurry.android.FlurryAgent;
 import java.math.BigDecimal;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
@@ -89,10 +90,10 @@ public class MileageEditActivity extends EditActivityBase {
         String currentDriverName = null;
         String currentCarName = null;
         String driverCarLbl = "";
-        operationType = mbundleExtras.getString("Operation");
+        operationType = mBundleExtras.getString("Operation");
 
         if( operationType.equals("E") ) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
 
             mCarId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
                                 .getLong(MainDbAdapter.MILEAGE_COL_CAR_ID_POS);
@@ -118,10 +119,10 @@ public class MileageEditActivity extends EditActivityBase {
                     recordCursor.getLong(MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_POS), true);
         }
         else{
-            mCarId = mbundleExtras.getLong("CurrentCar_ID");
-            mDriverId = mbundleExtras.getLong("CurrentDriver_ID");
-            currentDriverName = mbundleExtras.getString("CurrentDriver_Name");
-            currentCarName = mbundleExtras.getString("CurrentCar_Name");
+            mCarId = mBundleExtras.getLong("CurrentCar_ID");
+            mDriverId = mBundleExtras.getLong("CurrentDriver_ID");
+            currentDriverName = mBundleExtras.getString("CurrentDriver_Name");
+            currentCarName = mBundleExtras.getString("CurrentCar_Name");
             mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
 
             initDateTime(System.currentTimeMillis());
@@ -174,6 +175,19 @@ public class MileageEditActivity extends EditActivityBase {
         calculateMileageOrNewIndex();
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        FlurryAgent.setReportLocation(false);
+        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+    }
+    @Override
+    public void onStop()
+    {
+       super.onStop();
+       FlurryAgent.onEndSession(this);
+    }
 
     private void calculateMileageOrNewIndex() throws NumberFormatException {
         try{

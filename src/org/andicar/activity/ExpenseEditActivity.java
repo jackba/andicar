@@ -37,6 +37,7 @@ import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.flurry.android.FlurryAgent;
 import java.math.BigDecimal;
 
 /**
@@ -73,7 +74,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.expense_edit_activity, mOkClickListener);
 
-        operationType = mbundleExtras.getString("Operation");
+        operationType = mBundleExtras.getString("Operation");
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
 
         spnCar = (Spinner)findViewById(R.id.spnCar);
@@ -103,7 +104,7 @@ public class ExpenseEditActivity extends EditActivityBase {
 
         tvWarningLabel = (TextView)findViewById(R.id.tvWarningLabel);
 
-        llConversionRateZone = (LinearLayout)findViewById(R.id.conversionRateZone);
+        llConversionRateZone = (LinearLayout)findViewById(R.id.llConversionRateZone);
         etConversionRate = (EditText)findViewById(R.id.etConversionRate);
         etConversionRate.addTextChangedListener(textWatcher);
         tbConvertedAmountValue = (TextView)findViewById(R.id.tvConvertedAmountValue);
@@ -120,7 +121,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         conversionRate = BigDecimal.ONE;
 
         if (operationType.equals("E")) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSES_TABLE_NAME,
                     MainDbAdapter.expensesTableColNames, mRowId);
             mCarId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_CAR_ID_POS);
@@ -190,6 +191,20 @@ public class ExpenseEditActivity extends EditActivityBase {
                     MainDbAdapter.CURRENCY_COL_CODE_NAME,
                     mCurrencyId, false);
         
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        FlurryAgent.setReportLocation(false);
+        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+    }
+    @Override
+    public void onStop()
+    {
+       super.onStop();
+       FlurryAgent.onEndSession(this);
     }
 
     @Override

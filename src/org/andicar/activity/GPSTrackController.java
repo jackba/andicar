@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import com.flurry.android.FlurryAgent;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;
 import org.andicar.utils.Utils;
@@ -84,6 +85,14 @@ public class GPSTrackController extends EditActivityBase {
     }
 
     @Override
+    public void onStart()
+    {
+        super.onStart();
+        FlurryAgent.setReportLocation(false);
+        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         bIsActivityOnLoading = true;
@@ -118,6 +127,7 @@ public class GPSTrackController extends EditActivityBase {
     @Override
     protected void onStop() {
         super.onStop();
+        FlurryAgent.onEndSession(this);
         saveState();
     }
 
@@ -196,8 +206,9 @@ public class GPSTrackController extends EditActivityBase {
     private View.OnClickListener btnGPSTrackStartStopListener = new View.OnClickListener() {
         public void onClick(View v)
         {
+            Intent gpsTrackIntent = new Intent(GPSTrackController.this, GPSTrackService.class);
             if(isGpsTrackOn){
-                stopService(new Intent(GPSTrackController.this, GPSTrackService.class));
+                stopService(gpsTrackIntent);
                 isGpsTrackOn = false;
                 setEditable(vgRoot, true);
                 etName.setText("");
@@ -207,7 +218,18 @@ public class GPSTrackController extends EditActivityBase {
             else{
                 if(etName.getText().toString().length() == 0)
                     etName.setText(etName.getHint());
-                startService(new Intent(GPSTrackController.this, GPSTrackService.class));
+
+                mPrefEditor.putString("GPSTrackTmp_Name", etName.getText().toString());
+                mPrefEditor.putString("GPSTrackTmp_UserComment", acUserComment.getText().toString());
+                mPrefEditor.putLong("GPSTrackTmp_CarId", mCarId);
+                mPrefEditor.putLong("GPSTrackTmp_DriverId", mDriverId);
+                mPrefEditor.putBoolean("GPSTrackTmp_IsCreateMileage", ckIsCreateMileage.isChecked());
+                mPrefEditor.putBoolean("GPSTrackTmp_IsUseKML", ckIsUseKML.isChecked());
+                mPrefEditor.putBoolean("GPSTrackTmp_IsUseGPX", ckIsUseGPX.isChecked());
+                mPrefEditor.putBoolean("GPSTrackTmp_IsShowOnMap", ckIsShowOnMap.isChecked());
+                mPrefEditor.commit();
+
+                startService(gpsTrackIntent);
                 isGpsTrackOn = true; 
                 setEditable(vgRoot, false);
 //                startActivity(new Intent(GPSTrackController.this, GPSTrackMap.class));

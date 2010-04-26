@@ -65,10 +65,10 @@ public class CarEditActivity extends EditActivityBase
         etIndexStart = (EditText) findViewById( R.id.etIndexStart );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
 
-        String operation = mbundleExtras.getString("Operation"); //E = edit, N = new
+        String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if( operation.equals( "E") ) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
             String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String strIsActive = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
@@ -114,7 +114,7 @@ public class CarEditActivity extends EditActivityBase
             }
 
             //cannot be inactivated if is the current car
-            if( mbundleExtras.getLong( "CurrentCar_ID" ) == mRowId ) {
+            if( mBundleExtras.getLong( "CurrentCar_ID" ) == mRowId ) {
                 ckIsActive.setClickable( false );
                 ckIsActive.setOnTouchListener( new View.OnTouchListener()
                 {

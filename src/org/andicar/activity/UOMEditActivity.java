@@ -51,8 +51,8 @@ public class UOMEditActivity extends EditActivityBase {
         etCode = (EditText) findViewById(R.id.etCode);
         ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
 
-        uomType = mbundleExtras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME);
-        String operation = mbundleExtras.getString("Operation"); //E = edit, N = new
+        uomType = mBundleExtras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME);
+        String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if(uomType.equals( "L"))
             setTitle( getTitle() + " (" + mResource.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_LENGTH) + ")");
@@ -60,7 +60,7 @@ public class UOMEditActivity extends EditActivityBase {
             setTitle( getTitle() + " (" + mResource.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_VOLUME) + ")");
 
         if (operation.equals( "E")) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.uomTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );

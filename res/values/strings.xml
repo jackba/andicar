@@ -122,19 +122,19 @@
     <string name="MAIN_ACTIVITY_INSERT_EXPENSE_BTN_CAPTION">"  Add new  "</string>
     <string name="MAIN_ACTIVITY_EXPENSELIST_BTN_CAPTION">"  View more  "</string>
 
-    <string name="MAIN_ACTIVITY_CARREPORT_HDR_CAPTION">"Statistics"</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION">"Last know odometer: "</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_BTN_CAPTION">"  More details  "</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_AVGCONS_LABEL">"Average fuel consumption: "</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_AVGCONS_NODATA">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuel."</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_NOSTAT">"Statistics not available yet."</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_TOTALEXP">"Total expenses:"</string>
-    <string name="MAIN_ACTIVITY_CARREPORT_MILEAGEEXP">"Mileage expense:"</string>
+    <string name="MAIN_ACTIVITY_STATISTICS_HDR_CAPTION">"Statistics for "</string>
+    <string name="MAIN_ACTIVITY_STATISTICS_LISTHDR_CAPTION">"Last know odometer: "</string>
+    <string name="MAIN_ACTIVITY_STATISTICS_BTN_CAPTION">"  More details  "</string>
+    <string name="MAIN_ACTIVITY_STATISTICS_AVGCONS_LABEL">"Average fuel consumption: "</string>
+    <string name="MAIN_ACTIVITY_STATISTICS_AVGCONS_NODATA">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuel."</string>
+    <string name="MAIN_ACTIVITY_STATISTICS_NOSTAT">"Statistics not available yet."</string>
+    <string name="MAIN_ACTIVITY_STATISTICS_TOTALEXP">"Total expenses:"</string>
+    <string name="MAIN_ACTIVITY_STATISTICS_MILEAGEEXP">"Mileage expense:"</string>
 
 
-    <string name="MAIN_ACTIVITY_NOMILEAGETEXT">"No mileage exist for this car"</string>
-    <string name="MAIN_ACTIVITY_NOREFUELTEXT">"No refuel exist for this car"</string>
-    <string name="MAIN_ACTIVITY_NOEXPENSETEXT">"No expense exist for this car"</string>
+    <string name="MAIN_ACTIVITY_NOMILEAGETEXT">"No mileage for this car"</string>
+    <string name="MAIN_ACTIVITY_NOREFUELTEXT">"No refuel for this car"</string>
+    <string name="MAIN_ACTIVITY_NOEXPENSETEXT">"No expense for this car"</string>
     <string name="MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT">"This zone does not show the expenses created conjunctively with other records (refuels, etc.)"</string>
 
     <string name="MAIN_ACTIVITY_NO_CURRENT_CAR">"No current car selected. In the following page you can select one or define on."</string>

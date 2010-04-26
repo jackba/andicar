@@ -49,10 +49,10 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
 
-        String operation = mbundleExtras.getString("Operation"); //E = edit, N = new
+        String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if( operation.equals( "E") ) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.expenseTypeTableColNames, mRowId);
             String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );

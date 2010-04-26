@@ -51,10 +51,10 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
         ckIsExcludeFromMileageCost = (CheckBox) findViewById( R.id.ckIsExcludeFromMileageCost );
 
-        String strOperationType = mbundleExtras.getString("Operation"); //E = edit, N = new
+        String strOperationType = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if( strOperationType.equals( "E") ) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME,
                     MainDbAdapter.expenseCategoryTableColNames, mRowId);
             String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );

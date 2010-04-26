@@ -38,6 +38,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.flurry.android.FlurryAgent;
 import java.math.BigDecimal;
 
 /**
@@ -89,7 +90,7 @@ public class RefuelEditActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle, R.layout.refuel_edit_activity, mOkClickListener);
 
-        operationType = mbundleExtras.getString("Operation");
+        operationType = mBundleExtras.getString("Operation");
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
 
         spnCar = (Spinner)findViewById(R.id.spnCar);
@@ -127,7 +128,7 @@ public class RefuelEditActivity extends EditActivityBase {
         etConversionRate = (EditText)findViewById(R.id.etConversionRate);
         etConversionRate.addTextChangedListener(textWatcher);
         tvAmountValue = (TextView)findViewById(R.id.tvAmountValue);
-        llConversionRateZone = (LinearLayout)findViewById(R.id.conversionRateZone);
+        llConversionRateZone = (LinearLayout)findViewById(R.id.llConversionRateZone);
 //        setConversionRateVisibility(false);
 
         llBaseUOMQtyZone = (LinearLayout)findViewById(R.id.llBaseUOMQtyZone);
@@ -148,7 +149,7 @@ public class RefuelEditActivity extends EditActivityBase {
         uomVolumeConversionRate = BigDecimal.ONE;
 
         if (operationType.equals("E")) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.refuelTableColNames, mRowId);
             mCarId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS);
             mDriverId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_DRIVER_ID_POS);
@@ -254,6 +255,19 @@ public class RefuelEditActivity extends EditActivityBase {
         calculateBaseUOMQty();
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        FlurryAgent.setReportLocation(false);
+        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+    }
+    @Override
+    public void onStop()
+    {
+       super.onStop();
+       FlurryAgent.onEndSession(this);
+    }
 
     private View.OnClickListener mOkClickListener =
             new View.OnClickListener()

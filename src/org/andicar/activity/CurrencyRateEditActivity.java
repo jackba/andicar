@@ -67,7 +67,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
     {
         super.onCreate( icicle, R.layout.currencyrate_edit_activity, mOkClickListener );
 
-        String strOperationType = mbundleExtras.getString("Operation"); //E = edit, N = new
+        String strOperationType = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         spnCurrencyFromSpinner = (Spinner) findViewById( R.id.spnCurrencyFrom );
         spnCurrencyFromSpinner.setOnItemSelectedListener(spinnerCurrencyFromOnItemSelectedListener);
@@ -84,7 +84,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
         ckIsActive = (CheckBox)findViewById(R.id.ckIsActive);
         
         if( strOperationType.equals( "E") ) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME,
                     MainDbAdapter.currencyRateTableColNames, mRowId);
             lCurrencyFromId = dbcRecordCursor.getLong( MainDbAdapter.CURRENCYRATE_COL_FROMCURRENCY_ID_POS );

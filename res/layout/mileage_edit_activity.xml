@@ -193,7 +193,7 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-            <TextView android:id="@+id/tvDateTimeText"
+            <TextView android:id="@+id/tvDateTimeValue"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       />

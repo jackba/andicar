@@ -71,6 +71,16 @@ public class GPSTrackService extends Service {
     private File gpsTrackDetailGPXFile = null;
     private FileWriter gpsTrackDetailGPXFileWriter = null;
     double totalDistance = 0;
+    /* tmp values */
+    private String sName = null;
+    private String sUserComment = null;
+    private long lCarId = -1;
+    private long lDriverId = -1;
+    private boolean isUseKML = false;
+    private boolean isUseGPX = false;
+    private boolean isShowOnMap = false;
+    private String fileName = null;
+
 
     /**
      * Class for clients to access.  Because we know this service always
@@ -102,20 +112,32 @@ public class GPSTrackService extends Service {
 
         mMainDbAdapter = new MainDbAdapter(this);
 
+        sName = mPreferences.getString("GPSTrackTmp_Name", null);
+        sUserComment = mPreferences.getString("GPSTrackTmp_UserComment", null);
+        lCarId = mPreferences.getLong("GPSTrackTmp_DriverId", mPreferences.getLong("CurrentCar_ID", 0));
+        lDriverId = mPreferences.getLong("GPSTrackTmp_CarId", mPreferences.getLong("CurrentDriver_ID", 0));
+        isUseKML = mPreferences.getBoolean("GPSTrackTmp_IsUseKML", false);
+        isUseGPX = mPreferences.getBoolean("GPSTrackTmp_IsUseGPX", false);
+        isShowOnMap = mPreferences.getBoolean("GPSTrackTmp_IsShowOnMap", false);
+        if(sName != null)
+            fileName = sName.replace(" ", "_").replace(":", "_").replace("-", "_")
+                    .replace(".", "").replace("\\", "").replace("/", "");
         //create the master record
         //use direct table insert for increasing the speed of the DB operation
         String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACK_TABLE_NAME
                     + " ( "
                         + MainDbAdapter.GEN_COL_NAME_NAME + ", "
+                        + MainDbAdapter.GEN_COL_USER_COMMENT_NAME + ", "
                         + MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME + ", "
                         + MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME + ", "
 //                        + MainDbAdapter.GPSTRACK_COL_MILEAGE_ID_NAME + ", "
                         + MainDbAdapter.GPSTRACK_COL_DATE_NAME + " "
                     + " ) "
                     + " VALUES ( "
-                        + " 'Gps Track', "
-                        + mPreferences.getLong("CurrentCar_ID", 0) + ", "
-                        + mPreferences.getLong("CurrentDriver_ID", 0) + ", "
+                        + " '" + sName + "', "
+                        + " '" + sUserComment + "', "
+                        + lCarId + ", "
+                        + lDriverId + ", "
                         + System.currentTimeMillis() + ") ";
 
         mMainDbAdapter.execSql(sqlStr);
@@ -124,15 +146,20 @@ public class GPSTrackService extends Service {
         c.moveToNext();
         gpsTrackId = c.getLong(0);
         c.close();
-        sqlStr = "UPDATE " + MainDbAdapter.GPSTRACK_TABLE_NAME
-                    + " SET " + MainDbAdapter.GEN_COL_NAME_NAME + " = " + MainDbAdapter.GEN_COL_NAME_NAME + " || '_" + gpsTrackId + "' "
-                    + " WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + gpsTrackId;
-        mMainDbAdapter.execSql(sqlStr);
         //create the track detail file(s)
         try {
-            gpsTrackDetailCSVFile = FileUtils.createGpsTrackDetailFile(StaticValues.CSV_FORMAT, "" + gpsTrackId);
-            gpsTrackDetailKMLFile = FileUtils.createGpsTrackDetailFile(StaticValues.KML_FORMAT, "" + gpsTrackId);
-            gpsTrackDetailGPXFile = FileUtils.createGpsTrackDetailFile(StaticValues.GPX_FORMAT, "" + gpsTrackId);
+            gpsTrackDetailCSVFile = FileUtils.createGpsTrackDetailFile(StaticValues.CSV_FORMAT, "" + 
+                    (fileName != null ? fileName : gpsTrackId));
+            if(isUseKML)
+                gpsTrackDetailKMLFile = FileUtils.createGpsTrackDetailFile(StaticValues.KML_FORMAT, "" +
+                    (fileName != null ? fileName : gpsTrackId));
+            else
+                gpsTrackDetailKMLFile = null;
+            if(isUseGPX)
+                gpsTrackDetailGPXFile = FileUtils.createGpsTrackDetailFile(StaticValues.GPX_FORMAT, "" +
+                    (fileName != null ? fileName : gpsTrackId));
+            else
+                gpsTrackDetailGPXFile = null;
 
             //create a link for between the master track and the file
             if(gpsTrackDetailCSVFile != null){
@@ -141,7 +168,7 @@ public class GPSTrackService extends Service {
                             + " ( "
                                 + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
                                 + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
-                                + MainDbAdapter.GEN_COL_NAME_NAME
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
                             + " ) "
                             + " VALUES ( "
                                 + gpsTrackId + ", "
@@ -166,7 +193,7 @@ public class GPSTrackService extends Service {
                             + " ( "
                                 + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
                                 + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
-                                + MainDbAdapter.GEN_COL_NAME_NAME
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
                             + " ) "
                             + " VALUES ( "
                                 + gpsTrackId + ", "
@@ -183,7 +210,7 @@ public class GPSTrackService extends Service {
                             + " ( "
                                 + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
                                 + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
-                                + MainDbAdapter.GEN_COL_NAME_NAME
+                                + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
                             + " ) "
                             + " VALUES ( "
                                 + gpsTrackId + ", "
@@ -213,6 +240,8 @@ public class GPSTrackService extends Service {
     }
 
     private void createKMLHeader(){
+        if(gpsTrackDetailKMLFileWriter == null)
+            return;
         try{
             gpsTrackDetailKMLFileWriter.append(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
@@ -238,6 +267,8 @@ public class GPSTrackService extends Service {
     }
 
     private void createGPXHeader(){
+        if(gpsTrackDetailGPXFileWriter == null)
+            return;
         try{
             gpsTrackDetailGPXFileWriter.append(
                     "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>\n"
@@ -263,6 +294,8 @@ public class GPSTrackService extends Service {
     }
 
     private void appendKMLStartPoint(){
+        if(gpsTrackDetailKMLFileWriter == null)
+            return;
         try{
             gpsTrackDetailKMLFileWriter.append(
                  "<coordinates>" + currentLocationLongitude + "," + currentLocationLatitude + "," + currentLocationAltitude + "</coordinates>\n"
@@ -282,6 +315,8 @@ public class GPSTrackService extends Service {
     }
 
     private void appendKMLFooter(){
+        if(gpsTrackDetailKMLFileWriter == null)
+            return;
         try{
             gpsTrackDetailKMLFileWriter.append(
                 "\n</coordinates>\n"
@@ -307,6 +342,8 @@ public class GPSTrackService extends Service {
     }
 
     private void appendGPXFooter(){
+        if(gpsTrackDetailGPXFileWriter == null)
+            return;
         try{
             gpsTrackDetailGPXFileWriter.append(
                 "</trkseg>\n"
@@ -328,11 +365,16 @@ public class GPSTrackService extends Service {
             mMainDbAdapter = null;
         }
         try {
-            gpsTrackDetailCSVFileWriter.flush();
-            appendKMLFooter();
-            gpsTrackDetailKMLFileWriter.flush();
-            appendGPXFooter();
-            gpsTrackDetailGPXFileWriter.flush();
+            if(gpsTrackDetailCSVFileWriter != null)
+                gpsTrackDetailCSVFileWriter.flush();
+            if(gpsTrackDetailKMLFileWriter != null){
+                appendKMLFooter();
+                gpsTrackDetailKMLFileWriter.flush();
+            }
+            if(gpsTrackDetailGPXFileWriter != null){
+                appendGPXFooter();
+                gpsTrackDetailGPXFileWriter.flush();
+            }
         }
         catch(IOException ex) {
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
@@ -404,7 +446,8 @@ public class GPSTrackService extends Service {
                     }
                     else{
                         //write the starting point
-                        appendKMLStartPoint();
+                        if(gpsTrackDetailKMLFileWriter != null)
+                            appendKMLStartPoint();
                     }
                     gpsTrackDetailCSVFileWriter.append(gpsTrackId + ","
                                                         + loc.getAccuracy() + ","
@@ -415,24 +458,27 @@ public class GPSTrackService extends Service {
                                                         + currentLocationTime + ","
                                                         + distanceBetweenLocations + ","
                                                         + loc.getBearing() + "\n");
-                    gpsTrackDetailKMLFileWriter.append(currentLocationLongitude + ","
-                                                + currentLocationLatitude + ","
-                                                + currentLocationAltitude + " ");
+                    if(gpsTrackDetailKMLFileWriter != null)
+                        gpsTrackDetailKMLFileWriter.append(currentLocationLongitude + ","
+                                                    + currentLocationLatitude + ","
+                                                    + currentLocationAltitude + " ");
 
-                    currentLocationDateTime.setTimeInMillis(currentLocationTime);
-                    currentLocationDateTimeGPXStr =
-                            currentLocationDateTime.get(Calendar.YEAR) + "-"
-                            + Utils.pad(currentLocationDateTime.get(Calendar.MONTH) + 1) + "-"
-                            + Utils.pad(currentLocationDateTime.get(Calendar.DAY_OF_MONTH)) + "T"
-                            + Utils.pad(currentLocationDateTime.get(Calendar.HOUR_OF_DAY)) + ":"
-                            + Utils.pad(currentLocationDateTime.get(Calendar.MINUTE)) + ":"
-                            + Utils.pad(currentLocationDateTime.get(Calendar.SECOND)) + "Z";
-                    gpsTrackDetailGPXFileWriter.append(
-                            "<trkpt lat=\"" + currentLocationLatitude + "\" lon=\"" + currentLocationLongitude + "\">\n"
-                            + "<ele>" + currentLocationAltitude + "</ele>\n"
-                            + "<time>" + currentLocationDateTimeGPXStr + "</time>\n"
-                            + "</trkpt>\n"
-                            );
+                    if(gpsTrackDetailGPXFileWriter != null){
+                        currentLocationDateTime.setTimeInMillis(currentLocationTime);
+                        currentLocationDateTimeGPXStr =
+                                currentLocationDateTime.get(Calendar.YEAR) + "-"
+                                + Utils.pad(currentLocationDateTime.get(Calendar.MONTH) + 1) + "-"
+                                + Utils.pad(currentLocationDateTime.get(Calendar.DAY_OF_MONTH)) + "T"
+                                + Utils.pad(currentLocationDateTime.get(Calendar.HOUR_OF_DAY)) + ":"
+                                + Utils.pad(currentLocationDateTime.get(Calendar.MINUTE)) + ":"
+                                + Utils.pad(currentLocationDateTime.get(Calendar.SECOND)) + "Z";
+                        gpsTrackDetailGPXFileWriter.append(
+                                "<trkpt lat=\"" + currentLocationLatitude + "\" lon=\"" + currentLocationLongitude + "\">\n"
+                                + "<ele>" + currentLocationAltitude + "</ele>\n"
+                                + "<time>" + currentLocationDateTimeGPXStr + "</time>\n"
+                                + "</trkpt>\n"
+                                );
+                    }
 
                     oldLocationLatitude = currentLocationLatitude;
                     oldLocationLongitude = currentLocationLongitude;

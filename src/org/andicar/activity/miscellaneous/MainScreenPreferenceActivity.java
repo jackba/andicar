@@ -66,7 +66,7 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
         lvZones.setItemChecked(1, mPreferences.getBoolean("MainActivityShowGPSTrack", true));
         lvZones.setItemChecked(2, mPreferences.getBoolean("MainActivityShowRefuel", true));
         lvZones.setItemChecked(3, mPreferences.getBoolean("MainActivityShowExpense", true));
-        lvZones.setItemChecked(4, mPreferences.getBoolean("MainActivityShowCarReport", true));
+        lvZones.setItemChecked(4, mPreferences.getBoolean("MainActivityShowStatistics", true));
     }
 
     protected AdapterView.OnItemClickListener zonesSelectedListener = new AdapterView.OnItemClickListener() {
@@ -89,9 +89,9 @@ public class MainScreenPreferenceActivity extends EditActivityBase {
                 else
                     mPrefEditor.putBoolean("MainActivityShowExpense", false);
                 if(checkedItems.valueAt(4))
-                    mPrefEditor.putBoolean("MainActivityShowCarReport", true);
+                    mPrefEditor.putBoolean("MainActivityShowStatistics", true);
                 else
-                    mPrefEditor.putBoolean("MainActivityShowCarReport", false);
+                    mPrefEditor.putBoolean("MainActivityShowStatistics", false);
                 
                 mPrefEditor.commit();
             }
