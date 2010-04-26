@@ -49,10 +49,10 @@ public class CurrencyEditActivity extends EditActivityBase {
         etCode = (EditText) findViewById(R.id.etCode);
         ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
 
-        String strOperationType = mbundleExtras.getString("Operation"); //E = edit, N = new
+        String strOperationType = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if( strOperationType.equals( "E") ) {
-            mRowId = mbundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.currencyTableColNames, mRowId);
             String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );

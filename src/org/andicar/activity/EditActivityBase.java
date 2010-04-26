@@ -47,7 +47,7 @@ import org.andicar.utils.Utils;
  * Base class for all edit activities. Implement common functionalities:
  *  -onCreate:
  *      -aply the layout resource
- *      -initialise global resources: Bundle mbundleExtras, Resources mResource, SharedPreferences mPreferences
+ *      -initialise global resources: Bundle mBundleExtras, Resources mResource, SharedPreferences mPreferences
  *      -serach for btnCancel and if exists initialize the OnCLickListener
  *      -serach for btnOk and if exists and initialize the OnCLickListener if it is provided to the onCreate method
  *
@@ -58,7 +58,7 @@ import org.andicar.utils.Utils;
 public abstract class EditActivityBase extends Activity {
     protected Long mRowId = null;
 
-    protected Bundle mbundleExtras = null;
+    protected Bundle mBundleExtras = null;
     protected Resources mResource = null;
     protected SharedPreferences mPreferences;
     protected SharedPreferences.Editor mPrefEditor;
@@ -71,7 +71,7 @@ public abstract class EditActivityBase extends Activity {
     protected int mHour;
     protected int mMinute;
     protected long mlDateTimeInSeconds;
-    protected TextView tvDateTimeLabel;
+    protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
 
     protected AlertDialog.Builder madbErrorAlert;
@@ -81,7 +81,7 @@ public abstract class EditActivityBase extends Activity {
         super.onCreate(icicle);
         
         setContentView(layoutResID);
-        mbundleExtras = getIntent().getExtras();
+        mBundleExtras = getIntent().getExtras();
         mResource = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mPrefEditor = mPreferences.edit();
@@ -123,7 +123,7 @@ public abstract class EditActivityBase extends Activity {
     @Override
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        mbundleExtras = getIntent().getExtras();
+        mBundleExtras = getIntent().getExtras();
         mResource = getResources();
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mPrefEditor = mPreferences.edit();
@@ -248,7 +248,7 @@ public abstract class EditActivityBase extends Activity {
         mHour = mcalDateTime.get(Calendar.HOUR_OF_DAY);
         mMinute = mcalDateTime.get(Calendar.MINUTE);
 
-        tvDateTimeLabel = (TextView) findViewById(R.id.tvDateTimeText);
+        tvDateTimeValue = (TextView) findViewById(R.id.tvDateTimeValue);
         updateDateTime();
 
         Button btnPickDate = (Button) findViewById(R.id.btnPickDate);
@@ -313,7 +313,7 @@ public abstract class EditActivityBase extends Activity {
     private void updateDateTime() {
         mcalDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
-        tvDateTimeLabel.setText(
+        tvDateTimeValue.setText(
                 new StringBuilder() // Month is 0 based so add 1
                 .append(Utils.pad(mMonth + 1)).append("-")
                 .append(Utils.pad(mDay)).append("-")

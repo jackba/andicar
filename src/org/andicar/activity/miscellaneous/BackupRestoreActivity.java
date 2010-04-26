@@ -29,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.flurry.android.FlurryAgent;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.andicar.activity.EditActivityBase;
@@ -66,6 +67,21 @@ public class BackupRestoreActivity extends EditActivityBase {
         lvBackupSet = (ListView) findViewById(R.id.lvBackupList);
         fillBkList();
     }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        FlurryAgent.setReportLocation(false);
+        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+    }
+    @Override
+    public void onStop()
+    {
+       super.onStop();
+       FlurryAgent.onEndSession(this);
+    }
+
 
     private void fillBkList() {
         bkFileList = getBkFiles();

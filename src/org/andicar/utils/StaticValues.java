@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 214;
+    public static final int DATABASE_VERSION = 215;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
 

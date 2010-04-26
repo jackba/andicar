@@ -145,18 +145,22 @@ public class DB {
     public static final String GPSTRACK_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
     public static final String GPSTRACK_COL_MILEAGE_ID_NAME = MILEAGE_TABLE_NAME + "_ID";
     public static final String GPSTRACK_COL_DATE_NAME = "Date";
+    //gps statistics
+    public static final String GPSTRACK_COL_MINACCURACY_NAME = "MinAccuracy";
+    public static final String GPSTRACK_COL_AVGACCURACY_NAME = "AvgAccuracy";
+    public static final String GPSTRACK_COL_MAXACCURACY_NAME = "MaxAccuracy";
+    public static final String GPSTRACK_COL_MINALTITUDE_NAME = "MinAltitude";
+    public static final String GPSTRACK_COL_MAXALTITUDE_NAME = "MaxAltitude";
+    public static final String GPSTRACK_COL_TOTALTIME_NAME = "TotalTime"; //in seconds
+    public static final String GPSTRACK_COL_MOVINGTIME_NAME = "MovingTime"; //in seconds
+    public static final String GPSTRACK_COL_DISTNACE_NAME = "Distance";
+    public static final String GPSTRACK_COL_MAXSPEED_NAME = "MaxSpeed";
+    public static final String GPSTRACK_COL_AVGSPEED_NAME = "AvgSpeed";
+    public static final String GPSTRACK_COL_AVGMOVINGSPEED_NAME = "AvgMovingSpeed";
     //gps track detail
     public static final String GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME = GPSTRACK_TABLE_NAME + "_ID";
+    public static final String GPSTRACKDETAIL_COL_FILE_NAME = "File";
     public static final String GPSTRACKDETAIL_COL_FILEFORMAT_NAME = "Format"; //see StaticValues.gpsTrackFormat...
-    //for space usage consideration we use files on the sdcard to store the tracked locations
-//    public static final String GPSTRACKDETAIL_COL_ACCURACY_NAME = "Accuracy";
-//    public static final String GPSTRACKDETAIL_COL_ALTITUDE_NAME = "Altitude";
-//    public static final String GPSTRACKDETAIL_COL_LATITUDE_NAME = "Latitude";
-//    public static final String GPSTRACKDETAIL_COL_LONGITUDE_NAME = "Longitude";
-//    public static final String GPSTRACKDETAIL_COL_SPEED_NAME = "Speed"; //meters/second
-//    public static final String GPSTRACKDETAIL_COL_TIME_NAME = "Time"; //milliseconds since January 1, 1970.
-//    public static final String GPSTRACKDETAIL_COL_DISTNACE_NAME = "Distance";
-//    public static final String GPSTRACKDETAIL_COL_BEARING_NAME = "Bearing";
 
     //column positions. Some is general (GEN_) some is particular
     //generic columns must be first and must be created for ALL TABLES
@@ -240,17 +244,22 @@ public class DB {
     public static final int GPSTRACK_COL_DRIVER_ID_POS = 5;
     public static final int GPSTRACK_COL_MILEAGE_ID_POS = 6;
     public static final int GPSTRACK_COL_DATE_POS = 7;
+    //gps statistics
+    public static final int GPSTRACK_COL_MINACCURACY_POS = 8;
+    public static final int GPSTRACK_COL_AVGACCURACY_POS = 9;
+    public static final int GPSTRACK_COL_MAXACCURACY_POS = 10;
+    public static final int GPSTRACK_COL_MINALTITUDE_POS = 11;
+    public static final int GPSTRACK_COL_MAXALTITUDE_POS = 12;
+    public static final int GPSTRACK_COL_TOTALTIME_POS = 13;
+    public static final int GPSTRACK_COL_MOVINGTIME_POS = 14;
+    public static final int GPSTRACK_COL_DISTNACE_POS = 15;
+    public static final int GPSTRACK_COL_MAXSPEED_POS = 16;
+    public static final int GPSTRACK_COL_AVGSPEED_POS = 17;
+    public static final int GPSTRACK_COL_AVGMOVINGSPEED_POS = 18;
     //gps track detail
     public static final int GPSTRACKDETAIL_COL_GPSTRACK_ID_POS = 4;
-    //for space usage consideration we use files on the sdcard to store the tracked locations
-//    public static final int GPSTRACKDETAIL_COL_ACCURACY_POS = 5;
-//    public static final int GPSTRACKDETAIL_COL_ALTITUDE_POS = 6;
-//    public static final int GPSTRACKDETAIL_COL_LATITUDE_POS = 7;
-//    public static final int GPSTRACKDETAIL_COL_LONGITUDE_POS = 8;
-//    public static final int GPSTRACKDETAIL_COL_SPEED_POS = 9;
-//    public static final int GPSTRACKDETAIL_COL_TIME_POS = 10;
-//    public static final int GPSTRACKDETAIL_COL_DISTNACE_POS = 11;
-//    public static final int GPSTRACKDETAIL_COL_BEARING_POS = 12;
+    public static final int GPSTRACKDETAIL_COL_FILE_POS = 5;
+    public static final int GPSTRACKDETAIL_COL_FILEFORMAT_POS = 6;
 
     public static final String[] driverTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         DRIVER_COL_LICENSE_NO_NAME};
@@ -297,12 +306,14 @@ public class DB {
         CURRENCYRATE_COL_RATE_NAME, CURRENCYRATE_COL_INVERSERATE_NAME};
 
     public static final String[] gpsTrackTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-        GPSTRACK_COL_CAR_ID_NAME, GPSTRACK_COL_DRIVER_ID_NAME, GPSTRACK_COL_MILEAGE_ID_NAME, GPSTRACK_COL_DATE_NAME};
+        GPSTRACK_COL_CAR_ID_NAME, GPSTRACK_COL_DRIVER_ID_NAME, GPSTRACK_COL_MILEAGE_ID_NAME, GPSTRACK_COL_DATE_NAME,
+        GPSTRACK_COL_MINACCURACY_NAME, GPSTRACK_COL_AVGACCURACY_NAME,
+        GPSTRACK_COL_MAXACCURACY_NAME, GPSTRACK_COL_MINALTITUDE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME,
+        GPSTRACK_COL_TOTALTIME_NAME, GPSTRACK_COL_MOVINGTIME_NAME, GPSTRACK_COL_DISTNACE_NAME,
+        GPSTRACK_COL_MAXSPEED_NAME, GPSTRACK_COL_AVGSPEED_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME};
     public static final String[] gpsTrackDetailTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-        GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME};
-//        , GPSTRACKDETAIL_COL_ACCURACY_NAME, GPSTRACKDETAIL_COL_ALTITUDE_NAME,
-//        GPSTRACKDETAIL_COL_LATITUDE_NAME, GPSTRACKDETAIL_COL_LONGITUDE_NAME, GPSTRACKDETAIL_COL_SPEED_NAME,
-//        GPSTRACKDETAIL_COL_TIME_NAME, GPSTRACKDETAIL_COL_DISTNACE_NAME, GPSTRACKDETAIL_COL_BEARING_NAME};
+        GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, GPSTRACKDETAIL_COL_FILE_NAME, GPSTRACKDETAIL_COL_FILEFORMAT_NAME};
+
 
     public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
@@ -471,7 +482,18 @@ public class DB {
             + GPSTRACK_COL_CAR_ID_NAME + " INTEGER NULL, "
             + GPSTRACK_COL_DRIVER_ID_NAME + " INTEGER NULL, "
             + GPSTRACK_COL_MILEAGE_ID_NAME + " INTEGER NULL, "
-            + GPSTRACK_COL_DATE_NAME + " DATE NULL "
+            + GPSTRACK_COL_DATE_NAME + " DATE NULL, "
+            + GPSTRACK_COL_MINACCURACY_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_AVGACCURACY_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_MAXACCURACY_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_MINALTITUDE_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_MAXALTITUDE_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_TOTALTIME_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_MOVINGTIME_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_DISTNACE_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_MAXSPEED_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_AVGSPEED_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_AVGMOVINGSPEED_NAME + " NUMERIC NULL "
             + ");";
 
     protected static final String GPSTRACKDETAIL_TABLE_CREATE_SQL =
@@ -482,15 +504,8 @@ public class DB {
             + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
             + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
             + GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + " INTEGER NOT NULL, "
+            + GPSTRACKDETAIL_COL_FILE_NAME + " TEXT NULL, "
             + GPSTRACKDETAIL_COL_FILEFORMAT_NAME + " TEXT NULL "
-//            + GPSTRACKDETAIL_COL_ACCURACY_NAME + " NUMERIC NULL, "
-//            + GPSTRACKDETAIL_COL_ALTITUDE_NAME + " NUMERIC NULL, "
-//            + GPSTRACKDETAIL_COL_LATITUDE_NAME + " NUMERIC NULL, "
-//            + GPSTRACKDETAIL_COL_LONGITUDE_NAME + " NUMERIC NULL, "
-//            + GPSTRACKDETAIL_COL_SPEED_NAME + " NUMERIC NULL, "
-//            + GPSTRACKDETAIL_COL_TIME_NAME + " DATE NULL, "
-//            + GPSTRACKDETAIL_COL_DISTNACE_NAME + " NUMERIC NULL, "
-//            + GPSTRACKDETAIL_COL_BEARING_NAME + " NUMERIC NULL "
             + ");";
 
     protected DatabaseHelper mDbHelper = null;
@@ -801,9 +816,13 @@ public class DB {
 
         private void upgradeDbTo220(SQLiteDatabase db, int oldVersion) throws SQLException {
             //gps track
-            db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
-//            String tmpStr = "DROP TABLE " + GPSTRACKDETAIL_TABLE_NAME;
+//            String tmpStr = "DROP TABLE " + GPSTRACK_TABLE_NAME;
 //            db.execSQL(tmpStr);
+            db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
+
+//            tmpStr = "DROP TABLE " + GPSTRACKDETAIL_TABLE_NAME;
+//            db.execSQL(tmpStr);
+
             db.execSQL(GPSTRACKDETAIL_TABLE_CREATE_SQL);
             FileUtils fu = new FileUtils();
             fu.updateTo220(mCtx);

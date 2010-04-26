@@ -39,6 +39,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.database.Cursor;
 import android.text.Html;
+import com.flurry.android.FlurryAgent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import org.andicar.activity.miscellaneous.AboutActivity;
@@ -89,9 +90,11 @@ public class MainActivity extends Activity {
     private TextView tvThreeLineListExpenseText1;
     private TextView tvThreeLineListExpenseText2;
     private TextView tvThreeLineListExpenseText3;
-    private TextView tvThreeLineListCarReportText1;
-    private TextView tvThreeLineListCarReportText2;
-    private TextView tvThreeLineListCarReportText3;
+    private TextView tvThreeLineListStatisticsText1;
+    private TextView tvThreeLineListStatisticsText2;
+    private TextView tvThreeLineListStatisticsText3;
+
+    private TextView tvStatisticsHdr;
 
     private boolean exitResume = false;
     private String appVersion;
@@ -99,7 +102,7 @@ public class MainActivity extends Activity {
     private boolean showGPSTrackZone = true;
     private boolean showRefuelZone = true;
     private boolean showExpenseZone = true;
-    private boolean showCarReportZone = true;
+    private boolean showStatistcsZone = true;
 
     @Override
     protected void onPause() {
@@ -176,9 +179,11 @@ public class MainActivity extends Activity {
         tvThreeLineListExpenseText1 = (TextView) findViewById(R.id.tvThreeLineListExpenseText1);
         tvThreeLineListExpenseText2 = (TextView) findViewById(R.id.tvThreeLineListExpenseText2);
         tvThreeLineListExpenseText3 = (TextView) findViewById(R.id.tvThreeLineListExpenseText3);
-        tvThreeLineListCarReportText1 = (TextView) findViewById(R.id.tvThreeLineListCarReportText1);
-        tvThreeLineListCarReportText2 = (TextView) findViewById(R.id.tvThreeLineListCarReportText2);
-        tvThreeLineListCarReportText3 = (TextView) findViewById(R.id.tvThreeLineListCarReportText3);
+        tvStatisticsHdr = (TextView) findViewById(R.id.tvStatisticsHdr);
+        tvThreeLineListStatisticsText1 = (TextView) findViewById(R.id.tvThreeLineListStatisticsText1);
+        tvThreeLineListStatisticsText2 = (TextView) findViewById(R.id.tvThreeLineListStatisticsText2);
+        tvThreeLineListStatisticsText3 = (TextView) findViewById(R.id.tvThreeLineListStatisticsText3);
+
 
         if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
             exitResume = true;
@@ -248,8 +253,14 @@ public class MainActivity extends Activity {
             editor.putBoolean("MainActivityShowExpense", false);
             editor.commit();
         }
-        if (!mPreferences.contains("MainActivityShowCarReport")) {
-            editor.putBoolean("MainActivityShowCarReport", true);
+        if (mPreferences.contains("MainActivityShowCarReport")) {
+            editor.putBoolean("MainActivityShowStatistics",
+                    mPreferences.getBoolean("MainActivityShowCarReport", true));
+            editor.remove("MainActivityShowCarReport");
+            editor.commit();
+        }
+        if (!mPreferences.contains("MainActivityShowStatistics")) {
+            editor.putBoolean("MainActivityShowStatistics", true);
             editor.commit();
         }
         if (!mPreferences.contains("IsGPSTrackOnMap")) {
@@ -297,7 +308,7 @@ public class MainActivity extends Activity {
         showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
         showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
         showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
-        showCarReportZone = mPreferences.getBoolean("MainActivityShowCarReport", true);
+        showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
 
         ((TextView)findViewById(R.id.tvShortAboutLbl)).setText(Html.fromHtml(
                 "<b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices. " +
@@ -307,26 +318,30 @@ public class MainActivity extends Activity {
                 "Application version: " + appVersion));
         fillDriverCar();
 
+        Bundle whereConditions = null;
         //fill mileage zone data
-        Bundle whereConditions = new Bundle();
-        whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
-                String.valueOf(currentCarID));
-        reportDb.setReportSql("reportMileageListViewSelect", whereConditions);
-        listCursor = reportDb.fetchReport(1);
-        if (listCursor.moveToFirst()) {
-            tvThreeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-            tvThreeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
-            tvThreeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
-            btnMileageList.setEnabled(true);
-        } else {
-            tvThreeLineListMileageText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOMILEAGETEXT));
-            tvThreeLineListMileageText2.setText("");
-            tvThreeLineListMileageText3.setText("");
-            btnMileageList.setEnabled(false);
+        if(showMileageZone){
+            whereConditions = new Bundle();
+            whereConditions.putString(
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
+                    String.valueOf(currentCarID));
+            reportDb.setReportSql("reportMileageListViewSelect", whereConditions);
+            listCursor = reportDb.fetchReport(1);
+            if (listCursor.moveToFirst()) {
+                tvThreeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+                tvThreeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+                tvThreeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+                btnMileageList.setEnabled(true);
+            } else {
+                tvThreeLineListMileageText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOMILEAGETEXT));
+                tvThreeLineListMileageText2.setText("");
+                tvThreeLineListMileageText3.setText("");
+                btnMileageList.setEnabled(false);
+            }
         }
 
         //fill gps track zone data
+        if(showGPSTrackZone){
 //        whereConditions.clear();
 //        whereConditions.putString(
 //                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
@@ -344,141 +359,153 @@ public class MainActivity extends Activity {
             tvThreeLineListGPSTrackText3.setText("GPSTrack3");
 //            btnMileageList.setEnabled(false);
 //        }
+        }
 
         //fill refuel zone data
-        listCursor = null;
-        whereConditions.clear();
-        whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=",
-                String.valueOf(currentCarID));
-        reportDb.setReportSql("reportRefuelListViewSelect", whereConditions);
-        listCursor = reportDb.fetchReport(1);
-        if (listCursor.moveToFirst()) {
-            tvThreeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-            tvThreeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
-            tvThreeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
-            btnRefuelList.setEnabled(true);
-        } else {
-            tvThreeLineListRefuelText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOREFUELTEXT));
-            tvThreeLineListRefuelText2.setText("");
-            tvThreeLineListRefuelText3.setText("");
-            btnRefuelList.setEnabled(false);
+        if(showRefuelZone){
+            listCursor = null;
+            whereConditions.clear();
+            whereConditions.putString(
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=",
+                    String.valueOf(currentCarID));
+            reportDb.setReportSql("reportRefuelListViewSelect", whereConditions);
+            listCursor = reportDb.fetchReport(1);
+            if (listCursor.moveToFirst()) {
+                tvThreeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+                tvThreeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+                tvThreeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+                btnRefuelList.setEnabled(true);
+            } else {
+                tvThreeLineListRefuelText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOREFUELTEXT));
+                tvThreeLineListRefuelText2.setText("");
+                tvThreeLineListRefuelText3.setText("");
+                btnRefuelList.setEnabled(false);
+            }
         }
 
         //fill expense zone data
-        listCursor = null;
-        whereConditions.clear();
-        whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                    MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
-                String.valueOf(currentCarID));
-        reportDb.setReportSql("reportExpensesListMainViewSelect", whereConditions);
-        listCursor = reportDb.fetchReport(1);
-        if (listCursor.moveToFirst()) {
-            tvThreeLineListExpenseText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-            tvThreeLineListExpenseText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
-            tvThreeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
-            btnExpenseList.setEnabled(true);
-        } else {
-            tvThreeLineListExpenseText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSETEXT));
-            tvThreeLineListExpenseText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT));
-            tvThreeLineListExpenseText3.setText("");
+        if(showExpenseZone){
+            listCursor = null;
+            whereConditions.clear();
+            whereConditions.putString(
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
+                        MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
+                    String.valueOf(currentCarID));
+            reportDb.setReportSql("reportExpensesListMainViewSelect", whereConditions);
+            listCursor = reportDb.fetchReport(1);
+            if (listCursor.moveToFirst()) {
+                tvThreeLineListExpenseText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+                tvThreeLineListExpenseText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+                tvThreeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+                btnExpenseList.setEnabled(true);
+            } else {
+                tvThreeLineListExpenseText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSETEXT));
+                tvThreeLineListExpenseText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT));
+                tvThreeLineListExpenseText3.setText("");
+            }
         }
 
         //fill statistics (car report) zone data
-        listCursor = null;
-        whereConditions.clear();
-        whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME,
-                    MainDbAdapter.GEN_COL_ROWID_NAME) + "=", String.valueOf(currentCarID));
-        reportDb.setReportSql("carReportSelect", whereConditions);
-        listCursor = reportDb.fetchReport(1);
-        if (listCursor.moveToFirst()) {
-            TextView tvHdrText = (TextView) findViewById(R.id.tvThreeLineListCarReportHdr);
-            tvHdrText.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_LISTHDR_CAPTION) +
-                    listCursor.getString(1));
-            String avgConsUom = listCursor.getString(5);
-            if(avgConsUom == null)
-                avgConsUom = " N/A ";
-            else
-                avgConsUom = avgConsUom + " / 100 " + listCursor.getString(6);
-            
-            String avgConsStr = "";
-            String totalFuelStr = listCursor.getString(2);
-            String indexCurrentStr = listCursor.getString(3);
-            String indexStartStr = listCursor.getString(4);
-            BigDecimal mileage = null;
-            if(indexCurrentStr != null && indexStartStr != null)
-                mileage = (new BigDecimal(indexCurrentStr)).subtract(new BigDecimal(indexStartStr));
+        if(showStatistcsZone){
+            listCursor = null;
+            whereConditions.clear();
+            whereConditions.putString(
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME,
+                        MainDbAdapter.GEN_COL_ROWID_NAME) + "=", String.valueOf(currentCarID));
+            reportDb.setReportSql("carReportSelect", whereConditions);
+            listCursor = reportDb.fetchReport(1);
+            if (listCursor.moveToFirst()) {
+                TextView tvHdrText = (TextView) findViewById(R.id.tvThreeLineListCarReportHdr);
+                tvHdrText.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_LISTHDR_CAPTION) +
+                        listCursor.getString(1));
+                String avgConsUom = listCursor.getString(5);
+                if(avgConsUom == null)
+                    avgConsUom = " N/A ";
+                else
+                    avgConsUom = avgConsUom + " / 100 " + listCursor.getString(6);
 
-            String firstFullRefuelIndexStr = listCursor.getString(9);
-            String lastFullRefuelIndexStr = listCursor.getString(10);
-            if(firstFullRefuelIndexStr != null && firstFullRefuelIndexStr.length() == 0)
-                firstFullRefuelIndexStr = null;
-            if(lastFullRefuelIndexStr != null && lastFullRefuelIndexStr.length() == 0)
-                lastFullRefuelIndexStr = null;
-            if(firstFullRefuelIndexStr != null && lastFullRefuelIndexStr != null){
-                BigDecimal firstFullRefuelIndex = new BigDecimal(firstFullRefuelIndexStr);
-                BigDecimal lastFullRefuelIndex = new BigDecimal(lastFullRefuelIndexStr);
-                if(firstFullRefuelIndex != null && lastFullRefuelIndex != null &&
-                        lastFullRefuelIndex.compareTo(firstFullRefuelIndex) > 0){
-                    BigDecimal avgConsMileage = (lastFullRefuelIndex).subtract(firstFullRefuelIndex);
+                String avgConsStr = "";
+                String totalFuelStr = listCursor.getString(2);
+                String indexCurrentStr = listCursor.getString(3);
+                String indexStartStr = listCursor.getString(4);
+                BigDecimal mileage = null;
+                if(indexCurrentStr != null && indexStartStr != null){
+                    mileage = (new BigDecimal(indexCurrentStr)).subtract(new BigDecimal(indexStartStr));
+                    tvStatisticsHdr.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_HDR_CAPTION) + " " +
+                            mileage.toString() + " " + listCursor.getString(6));
+                }
 
-                    //avg. fuel consimption
-                    if(totalFuelStr == null || totalFuelStr.length() == 0 ||
-                            firstFullRefuelIndexStr == null || firstFullRefuelIndexStr.length() == 0 ||
-                            lastFullRefuelIndexStr == null || lastFullRefuelIndexStr.length() == 0 ||
-                            avgConsMileage == null || avgConsMileage.equals(BigDecimal.ZERO))
-                        avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_AVGCONS_NODATA);
-                    else{
-                        BigDecimal totalFuel = new BigDecimal(totalFuelStr);
-                        BigDecimal avgCons = BigDecimal.ZERO;
-                        avgCons = totalFuel.multiply(new BigDecimal("100"));
-                        avgCons = avgCons.divide(avgConsMileage, 10, RoundingMode.HALF_UP)
-                                .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                        avgConsStr = avgCons.toString() + " " + avgConsUom;
+                String firstFullRefuelIndexStr = listCursor.getString(9);
+                String lastFullRefuelIndexStr = listCursor.getString(10);
+                if(firstFullRefuelIndexStr != null && firstFullRefuelIndexStr.length() == 0)
+                    firstFullRefuelIndexStr = null;
+                if(lastFullRefuelIndexStr != null && lastFullRefuelIndexStr.length() == 0)
+                    lastFullRefuelIndexStr = null;
+                if(firstFullRefuelIndexStr != null && lastFullRefuelIndexStr != null){
+                    BigDecimal firstFullRefuelIndex = new BigDecimal(firstFullRefuelIndexStr);
+                    BigDecimal lastFullRefuelIndex = new BigDecimal(lastFullRefuelIndexStr);
+                    if(firstFullRefuelIndex != null && lastFullRefuelIndex != null &&
+                            lastFullRefuelIndex.compareTo(firstFullRefuelIndex) > 0){
+                        BigDecimal avgConsMileage = (lastFullRefuelIndex).subtract(firstFullRefuelIndex);
+
+                        //avg. fuel consimption
+                        if(totalFuelStr == null || totalFuelStr.length() == 0 ||
+                                firstFullRefuelIndexStr == null || firstFullRefuelIndexStr.length() == 0 ||
+                                lastFullRefuelIndexStr == null || lastFullRefuelIndexStr.length() == 0 ||
+                                avgConsMileage == null || avgConsMileage.equals(BigDecimal.ZERO))
+                            avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_AVGCONS_NODATA);
+                        else{
+                            BigDecimal totalFuel = new BigDecimal(totalFuelStr);
+                            BigDecimal avgCons = BigDecimal.ZERO;
+                            avgCons = totalFuel.multiply(new BigDecimal("100"));
+                            avgCons = avgCons.divide(avgConsMileage, 10, RoundingMode.HALF_UP)
+                                    .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                            avgConsStr = avgCons.toString() + " " + avgConsUom;
+                        }
                     }
+                    else
+                        avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_AVGCONS_NODATA);
                 }
                 else
-                    avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_AVGCONS_NODATA);
-            }
-            else
-                avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_AVGCONS_NODATA);
-            tvThreeLineListCarReportText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_AVGCONS_LABEL) +
-                    avgConsStr);
+                    avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_AVGCONS_NODATA);
 
-            //total/mileage expenses
-            String totalExpensesStr = listCursor.getString(7);
-            String mileageExpenseStr = "N/A";
-            String carCurrency = "";
-            BigDecimal totalExpenses;
-            BigDecimal mileageExpense;
-            if(totalExpensesStr == null || totalExpensesStr.length() == 0 || mileage == null || mileage.equals(BigDecimal.ZERO)){
-                mileageExpenseStr = "N/A";
-                totalExpensesStr = "N/A";
-            }
-            else{
-                totalExpenses = new BigDecimal(totalExpensesStr);
-                if(totalExpenses != null)
-                    totalExpensesStr = totalExpenses
-                            .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
-                mileageExpense = totalExpenses.multiply(new BigDecimal("100"));
-                mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP)
-                        .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                if(mileageExpense != null){
-                    carCurrency = listCursor.getString(8);
-                    mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + " / 100 " + listCursor.getString(6);
+                tvThreeLineListStatisticsText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_AVGCONS_LABEL) +
+                        avgConsStr);
+
+                //total/mileage expenses
+                String totalExpensesStr = listCursor.getString(7);
+                String mileageExpenseStr = "N/A";
+                String carCurrency = "";
+                BigDecimal totalExpenses;
+                BigDecimal mileageExpense;
+                if(totalExpensesStr == null || totalExpensesStr.length() == 0 ||
+                        mileage == null || mileage.equals(BigDecimal.ZERO)){
+                    mileageExpenseStr = "N/A";
+                    totalExpensesStr = "N/A";
                 }
+                else{
+                    totalExpenses = new BigDecimal(totalExpensesStr);
+                    if(totalExpenses != null)
+                        totalExpensesStr = totalExpenses
+                                .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
+                    mileageExpense = totalExpenses.multiply(new BigDecimal("100"));
+                    mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP)
+                            .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                    if(mileageExpense != null){
+                        carCurrency = listCursor.getString(8);
+                        mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + " / 100 " + listCursor.getString(6);
+                    }
+                }
+                tvThreeLineListStatisticsText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_TOTALEXP) +
+                        " " + totalExpensesStr + " " + carCurrency);
+
+                tvThreeLineListStatisticsText3.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_MILEAGEEXP) + " " +
+                        mileageExpenseStr);
+            } else {
+                tvThreeLineListStatisticsText2.setText("");
+                tvThreeLineListStatisticsText2.setText("");
+                tvThreeLineListStatisticsText3.setText("");
             }
-            tvThreeLineListCarReportText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_TOTALEXP) +
-                    " " + totalExpensesStr + " " + carCurrency);
-                    
-            tvThreeLineListCarReportText3.setText(mRes.getString(R.string.MAIN_ACTIVITY_CARREPORT_MILEAGEEXP) + " " +
-                    mileageExpenseStr);
-        } else {
-            tvThreeLineListCarReportText2.setText("");
-            tvThreeLineListCarReportText2.setText("");
-            tvThreeLineListCarReportText3.setText("");
         }
 
         listCursor = null;
@@ -499,7 +526,7 @@ public class MainActivity extends Activity {
             findViewById(R.id.llExpenseZone).setVisibility(View.GONE);
         else
             findViewById(R.id.llExpenseZone).setVisibility(View.VISIBLE);
-        if(!showCarReportZone)
+        if(!showStatistcsZone)
             findViewById(R.id.llStatistcsZone).setVisibility(View.GONE);
         else
             findViewById(R.id.llStatistcsZone).setVisibility(View.VISIBLE);
@@ -512,6 +539,20 @@ public class MainActivity extends Activity {
             reportDb.close();
             reportDb = null;
         }
+    }
+
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        FlurryAgent.setReportLocation(false);
+        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+    }
+    @Override
+    public void onStop()
+    {
+       super.onStop();
+       FlurryAgent.onEndSession(this);
     }
 
     private OnClickListener btnMileageListClickListener = new OnClickListener() {
@@ -705,6 +746,8 @@ public class MainActivity extends Activity {
             startActivity(new Intent(this, RefuelListReportActivity.class));
         } else if (item.getItemId() == StaticValues.MENU_EXPENSES_ID) {
             startActivity(new Intent(this, ExpensesListReportActivity.class));
+        } else if (item.getItemId() == StaticValues.MENU_GPSTRACK_ID) {
+            startActivity(new Intent(this, GPSTrackController.class));
         }
         return false;
     }
