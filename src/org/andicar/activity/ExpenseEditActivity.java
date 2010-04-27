@@ -75,7 +75,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         super.onCreate(icicle, R.layout.expense_edit_activity, mOkClickListener);
 
         operationType = mBundleExtras.getString("Operation");
-        acUserComment = null; //((AutoCompleteTextView) findViewById( R.id.acUserComment ));
+        acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
 
         spnCar = (Spinner)findViewById(R.id.spnCar);
         spnDriver = (Spinner)findViewById(R.id.spnDriver);
