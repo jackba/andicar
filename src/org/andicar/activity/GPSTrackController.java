@@ -28,7 +28,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import com.flurry.android.FlurryAgent;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;
 import org.andicar.utils.Utils;
@@ -85,11 +84,9 @@ public class GPSTrackController extends EditActivityBase {
     }
 
     @Override
-    public void onStart()
-    {
-        super.onStart();
-        FlurryAgent.setReportLocation(false);
-        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+    protected void onStop() {
+        super.onStop();
+        saveState();
     }
 
     @Override
@@ -121,13 +118,6 @@ public class GPSTrackController extends EditActivityBase {
     @Override
     protected void onPause() {
         super.onPause();
-        saveState();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        FlurryAgent.onEndSession(this);
         saveState();
     }
 

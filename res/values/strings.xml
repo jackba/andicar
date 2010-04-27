@@ -234,6 +234,8 @@
     <string name="PREF_GPSTRACK_MINTIME_SUMMARY">"Minimum time between two recordings of your position"</string>
     <string name="PREF_GPSTRACK_MINDISTANCE_TITLE">"Min. distance between points"</string>
     <string name="PREF_GPSTRACK_MINDISTANCE_SUMMARY">"Minimum distance between two recordings of your position"</string>
+    <string name="PREF_SENDUSAGESTATS_TITLE">"Crash and usage statistics"</string>
+    <string name="PREF_SENDUSAGESTATS_SUMMARY">"Send anonymous crash reports and usage statistics to developers"</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>

@@ -28,7 +28,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import com.flurry.android.FlurryAgent;
 import org.andicar.activity.ExpenseEditActivity;
 import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
@@ -68,20 +67,6 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
                 "reportExpensesListViewSelect",  whereConditions);
 
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        FlurryAgent.setReportLocation(false);
-        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
-    }
-    @Override
-    public void onStop()
-    {
-       super.onStop();
-       FlurryAgent.onEndSession(this);
     }
 
     @Override

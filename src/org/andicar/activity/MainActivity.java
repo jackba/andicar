@@ -21,7 +21,7 @@ package org.andicar.activity;
 import android.content.pm.PackageManager.NameNotFoundException;
 import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
-import org.andicar.activity.miscellaneous.PreferencesActivity;
+import org.andicar.activity.miscellaneous.AndiCarPreferencesActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -39,7 +39,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.database.Cursor;
 import android.text.Html;
-import com.flurry.android.FlurryAgent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import org.andicar.activity.miscellaneous.AboutActivity;
@@ -48,6 +47,8 @@ import org.andicar.activity.report.ExpensesListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.utils.AndiCarExceptionHandler;
+import org.andicar.utils.AndiCarStatistics;
 
 /**
  *
@@ -104,6 +105,8 @@ public class MainActivity extends Activity {
     private boolean showExpenseZone = true;
     private boolean showStatistcsZone = true;
 
+    private boolean isSendStatistics = true;
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -117,9 +120,14 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        
-        mRes = getResources();
+
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+        if(isSendStatistics)
+            Thread.setDefaultUncaughtExceptionHandler(
+                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+
+        mRes = getResources();
 
         setContentView(R.layout.main_activity);
         mainContext = this;
@@ -287,6 +295,10 @@ public class MainActivity extends Activity {
             editor.putString("GPSTrackMinDistance", "5");
             editor.commit();
         }
+        if (!mPreferences.contains("SendUsageStatistics")) {
+            editor.putBoolean("SendUsageStatistics", true);
+            editor.commit();
+        }
     }
 
     @Override
@@ -294,6 +306,7 @@ public class MainActivity extends Activity {
         super.onResume();
         if(exitResume)
             return;
+        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         if (mPreferences.getBoolean("MustClose", false)) {
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putBoolean("MustClose", false);
@@ -545,14 +558,15 @@ public class MainActivity extends Activity {
     public void onStart()
     {
         super.onStart();
-        FlurryAgent.setReportLocation(false);
-        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryStartSession(this);
     }
     @Override
     public void onStop()
     {
-       super.onStop();
-       FlurryAgent.onEndSession(this);
+        super.onStop();
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEndSession(this);
     }
 
     private OnClickListener btnMileageListClickListener = new OnClickListener() {
@@ -734,8 +748,8 @@ public class MainActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == StaticValues.MENU_PREFERENCES_ID) {
-            startActivity(new Intent(this, PreferencesActivity.class));
-//            Intent i = new Intent(this, PreferencesActivity.class);
+            startActivity(new Intent(this, AndiCarPreferencesActivity.class));
+//            Intent i = new Intent(this, AndiCarPreferencesActivity.class);
 //            startActivityForResult(i, SETTINGS_ACTIVITY_REQUEST_CODE);
 //            return true;
         } else if (item.getItemId() == StaticValues.MENU_ABOUT_ID) {

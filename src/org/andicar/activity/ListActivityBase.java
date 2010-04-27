@@ -35,6 +35,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 
 /**
@@ -61,6 +62,7 @@ public class ListActivityBase extends ListActivity {
     protected Bundle extras = null;
     protected AlertDialog.Builder errorAlertBuilder;
     protected AlertDialog errorAlert;
+    boolean isSendStatistics = true;
 
     /** Use instead  */
     @Override
@@ -73,8 +75,13 @@ public class ListActivityBase extends ListActivity {
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo) {
 
         super.onCreate(icicle);
-        mRes = getResources();
+
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+        if(isSendStatistics)
+            Thread.setDefaultUncaughtExceptionHandler(
+                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+        mRes = getResources();
         mPrefEditor = mPreferences.edit();
         mMainDbAdapter = new MainDbAdapter(this);
 
@@ -118,6 +125,7 @@ public class ListActivityBase extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         if(mMainDbAdapter == null)
             mMainDbAdapter = new MainDbAdapter(this);
     }

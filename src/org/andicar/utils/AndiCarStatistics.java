@@ -16,36 +16,27 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.andicar.activity;
+package org.andicar.utils;
 
-import android.os.Bundle;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
+import android.content.Context;
+import com.flurry.android.FlurryAgent;
+import java.util.Map;
 
 /**
- *
- * @author Miklos Keresztes
  */
-public class GPSTrackMap extends MapActivity {
-
-    /*
-     * Map Api Keys:
-     * 1. 0aQTdJnsQSHfbEz5axy7VixTxQu4UkJkLgdkbjA a
-     * 2. 0exdzR1McxKRFeUqK0G7bPCA4BhI8LfOjj-lDrg b
-     * 3. 0aQTdJnsQSHdoTbAJ0paNl9sntpqEw8hVG6nhRg r
-     */
-    
-
-    @Override
-    protected boolean isRouteDisplayed() {
-        return false;
+public class AndiCarStatistics {
+    public static void sendFlurryStartSession(Context ctx){
+        FlurryAgent.setReportLocation(false);
+        FlurryAgent.onStartSession(ctx, StaticValues.FLURRY_ID);
+    }
+    public static void sendFlurryEndSession(Context ctx){
+        FlurryAgent.onEndSession(ctx);
+    }
+    public static void sendFlurryEvent(String event, Map<String, String> parameters){
+        FlurryAgent.onEvent(event, parameters);
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.gps_track_map);
-        MapView mapView = (MapView) findViewById(R.id.gpstrackmap);
-        mapView.setBuiltInZoomControls(true);
+    public static void sendFlurryError(String errorId, String message, String errorClass){
+        FlurryAgent.onError(errorId, message, errorClass);
     }
 }

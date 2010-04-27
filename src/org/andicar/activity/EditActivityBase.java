@@ -41,6 +41,7 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
+import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.Utils;
 
 /**
@@ -76,14 +77,20 @@ public abstract class EditActivityBase extends Activity {
 
     protected AlertDialog.Builder madbErrorAlert;
     protected AlertDialog madError;
+    protected boolean isSendStatistics = true;
 
     protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
         super.onCreate(icicle);
-        
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+        if(isSendStatistics)
+            Thread.setDefaultUncaughtExceptionHandler(
+                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+
         setContentView(layoutResID);
         mBundleExtras = getIntent().getExtras();
         mResource = getResources();
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        
         mPrefEditor = mPreferences.edit();
 
         mDbAdapter = new MainDbAdapter(this);
@@ -105,6 +112,7 @@ public abstract class EditActivityBase extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);
     }
@@ -173,19 +181,22 @@ public abstract class EditActivityBase extends Activity {
     protected AdapterView.OnItemSelectedListener spinnerOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-// TODO implement new naming convention
-//                    if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
-//                        mPrefEditor.putLong("RefuelExpenseType_ID", arg3);
-//                        mPrefEditor.commit();
-//                    }
-//                    else if( ((Spinner)arg0).equals(findViewById(R.id.spnExpCategory))){
-//                        mPrefEditor.putLong("RefuelExpenseCategory_ID", arg3);
-//                        mPrefEditor.commit();
-//                    }
-//                    else if( ((Spinner)arg0).equals(findViewById(R.id.mileageEditExpenseTypeSpinner))){
-//                        mPrefEditor.putLong("MileageInsertExpenseType_ID", arg3);
-//                        mPrefEditor.commit();
-//                    }
+                    if(EditActivityBase.this instanceof RefuelEditActivity){
+                        if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
+                            mPrefEditor.putLong("RefuelExpenseType_ID", arg3);
+                            mPrefEditor.commit();
+                        }
+                        else if( ((Spinner)arg0).equals(findViewById(R.id.spnExpCategory))){
+                            mPrefEditor.putLong("RefuelExpenseCategory_ID", arg3);
+                            mPrefEditor.commit();
+                        }
+                    }
+                    else if(EditActivityBase.this instanceof MileageEditActivity){
+                        if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
+                            mPrefEditor.putLong("MileageInsertExpenseType_ID", arg3);
+                            mPrefEditor.commit();
+                        }
+                    }
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }

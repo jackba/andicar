@@ -25,6 +25,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
@@ -519,6 +520,9 @@ public class DB {
      * @param ctx the Context within which to work
      */
     public DB(Context ctx) {
+        if(ctx != null && ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendUsageStatistics", true))
+            Thread.setDefaultUncaughtExceptionHandler(
+                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), ctx));
         this.mCtx = ctx;
         if(mDb == null) {
             open();
@@ -586,7 +590,7 @@ public class DB {
                 createCurrencyRateTable(db);
 
                 //create the report folder on SDCARD
-                FileUtils fu = new FileUtils();
+                FileUtils fu = new FileUtils(mCtx);
                 if(fu.onCreate(mCtx) != -1) {
                     Log.e(TAG, fu.lastError);
                 }
@@ -657,12 +661,12 @@ public class DB {
             //AndiCar 1.0.0
             if(oldVersion == 1) {
                 upgradeDbTo200(db); //update database to version 200 //AndiCar 2.0.0
-                upradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
+                upgradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
                 upgradeDbTo220(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
-                upradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
+                upgradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
                 upgradeDbTo220(db, oldVersion);
             }
             //AndiCar 2.1.x
@@ -687,7 +691,7 @@ public class DB {
             createExpenses(db, true);
         }
 
-        private void upradeDbTo210(SQLiteDatabase db, int oldVersion) throws SQLException {
+        private void upgradeDbTo210(SQLiteDatabase db, int oldVersion) throws SQLException {
             String updSql = "";
 
             createCurrencyRateTable(db);
@@ -824,7 +828,7 @@ public class DB {
 //            db.execSQL(tmpStr);
 
             db.execSQL(GPSTRACKDETAIL_TABLE_CREATE_SQL);
-            FileUtils fu = new FileUtils();
+            FileUtils fu = new FileUtils(mCtx);
             fu.updateTo220(mCtx);
         }
 
@@ -927,7 +931,7 @@ public class DB {
             toFile = toFile + bkName + StaticValues.BACKUP_SUFIX;
         
         mDb.close();
-        FileUtils fu = new FileUtils();
+        FileUtils fu = new FileUtils(mCtx);
         retVal = fu.copyFile(mCtx, fromFile, toFile, false);
         if(retVal == false) {
             lastErrorMessage = fu.lastError;
@@ -940,7 +944,7 @@ public class DB {
         boolean retVal;
         String toFile = mDb.getPath();
         mDb.close();
-        FileUtils fu = new FileUtils();
+        FileUtils fu = new FileUtils(mCtx);
         retVal = fu.copyFile(mCtx, StaticValues.BACKUP_FOLDER + restoreFile, toFile, true);
         if(retVal == false) {
             lastErrorMessage = fu.lastError;

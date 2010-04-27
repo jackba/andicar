@@ -36,9 +36,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-import com.flurry.android.FlurryAgent;
 import java.math.BigDecimal;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
 /**
@@ -166,6 +166,8 @@ public class MileageEditActivity extends EditActivityBase {
         }
         ((TextView) findViewById(R.id.tvCarDriverLabel)).setText(driverCarLbl);
 
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEvent("MileageEdit", null);
     }
 
     @Override
@@ -173,20 +175,6 @@ public class MileageEditActivity extends EditActivityBase {
         super.onResume();
         fillGetCurrentIndex();
         calculateMileageOrNewIndex();
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        FlurryAgent.setReportLocation(false);
-        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
-    }
-    @Override
-    public void onStop()
-    {
-       super.onStop();
-       FlurryAgent.onEndSession(this);
     }
 
     private void calculateMileageOrNewIndex() throws NumberFormatException {

@@ -38,8 +38,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.flurry.android.FlurryAgent;
 import java.math.BigDecimal;
+import org.andicar.utils.AndiCarStatistics;
 
 /**
  *
@@ -234,6 +234,9 @@ public class RefuelEditActivity extends EditActivityBase {
             calculateAmount();
             calculateBaseUOMQty();
         }
+
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEvent("RefuelEdit", null);
     }
 
     @Override
@@ -253,20 +256,6 @@ public class RefuelEditActivity extends EditActivityBase {
 
         calculateAmount();
         calculateBaseUOMQty();
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        FlurryAgent.setReportLocation(false);
-        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
-    }
-    @Override
-    public void onStop()
-    {
-       super.onStop();
-       FlurryAgent.onEndSession(this);
     }
 
     private View.OnClickListener mOkClickListener =

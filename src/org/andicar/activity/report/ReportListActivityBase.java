@@ -242,7 +242,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         }
         reportCursor.close();
 
-        FileUtils fu = new FileUtils();
+        FileUtils fu = new FileUtils(this);
         i = fu.writeToFile(reportContent, reportFileName);
         if(i != -1){ //error
             if(fu.lastError != null)
