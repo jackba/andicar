@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 215;
+    public static final int DATABASE_VERSION = 217;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
 
@@ -130,4 +130,6 @@ public class StaticValues
             "&nbsp;&nbsp;&nbsp;&nbsp;You should have received a copy of the GNU General Public License along with this program. " +
             "If not, see <a href=\"http://www.gnu.org/licenses\">http://www.gnu.org/licenses</a>.<br> " +
             "&nbsp;&nbsp;&nbsp;&nbsp;The whole license can be found <a href=\"http://www.gnu.org/licenses/gpl.html\">here</a>.<br>";
+    
+    public static final String FLURRY_ID = "E8C8QUTB7KS46SHMEP6V";
 }

@@ -23,8 +23,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import org.andicar.activity.CarListActivity;
 import org.andicar.activity.CurrencyListActivity;
@@ -37,12 +39,13 @@ import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
 import org.andicar.utils.StaticValues;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarExceptionHandler;
 
 /**
  *
  * @author miki
  */
-public class PreferencesActivity extends PreferenceActivity {
+public class AndiCarPreferencesActivity extends PreferenceActivity {
 
     private Resources mRes = null;
     protected SharedPreferences mPreferences;
@@ -52,6 +55,10 @@ public class PreferencesActivity extends PreferenceActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        boolean isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+        if(isSendStatistics)
+            Thread.setDefaultUncaughtExceptionHandler(
+                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
         mRes = getResources();
 
         setPreferenceScreen(createPreferenceHierarchy());
@@ -59,8 +66,9 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     private PreferenceScreen createPreferenceHierarchy() {
-
-        PreferenceScreen prefScreenRoot = getPreferenceManager().createPreferenceScreen(this);
+        PreferenceManager prefMgr = getPreferenceManager();
+        prefMgr.setSharedPreferencesName(StaticValues.GLOBAL_PREFERENCE_NAME);
+        PreferenceScreen prefScreenRoot = prefMgr.createPreferenceScreen(this);
 
         //cars and drivers
         PreferenceCategory carDriverCategory = new PreferenceCategory(this);
@@ -170,6 +178,13 @@ public class PreferencesActivity extends PreferenceActivity {
         mainScreenPref.setTitle(mRes.getString(R.string.PREF_CAT_MAINSCREENCATEGORY_TITLE));
         mainScreenPref.setSummary(mRes.getString(R.string.PREF_CAT_MAINSCREENCATEGORY_SUMMARY));
         miscCategory.addPreference(mainScreenPref);
+        //send crash and usage statistiscs
+        CheckBoxPreference sendUsagePrefCk = new CheckBoxPreference(this);
+        sendUsagePrefCk.setTitle(R.string.PREF_SENDUSAGESTATS_TITLE);
+        sendUsagePrefCk.setSummary(R.string.PREF_SENDUSAGESTATS_SUMMARY);
+        sendUsagePrefCk.setKey("SendUsageStatistics");
+        miscCategory.addPreference(sendUsagePrefCk);
+
 
         return prefScreenRoot;
     }

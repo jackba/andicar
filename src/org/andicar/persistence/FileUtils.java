@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.andicar.activity.R;
+import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 
 /**
@@ -45,6 +46,12 @@ public class FileUtils {
     private Resources mRes;
 
     public String lastError = null;
+
+    public FileUtils(Context ctx) {
+        if(ctx != null && ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendUsageStatistics", true))
+            Thread.setDefaultUncaughtExceptionHandler(
+                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), ctx));
+    }
 
     public int onCreate(Context ctx){
         try{

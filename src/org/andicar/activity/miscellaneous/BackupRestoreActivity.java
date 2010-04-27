@@ -29,12 +29,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.flurry.android.FlurryAgent;
 import java.util.ArrayList;
 import java.util.Collections;
 import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
+import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
 
@@ -66,22 +66,10 @@ public class BackupRestoreActivity extends EditActivityBase {
         btnDelete.setEnabled(false);
         lvBackupSet = (ListView) findViewById(R.id.lvBackupList);
         fillBkList();
-    }
 
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        FlurryAgent.setReportLocation(false);
-        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEvent("BackupRestore", null);
     }
-    @Override
-    public void onStop()
-    {
-       super.onStop();
-       FlurryAgent.onEndSession(this);
-    }
-
 
     private void fillBkList() {
         bkFileList = getBkFiles();
@@ -188,7 +176,7 @@ public class BackupRestoreActivity extends EditActivityBase {
             builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
                        new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
-                                FileUtils fu = new FileUtils();
+                                FileUtils fu = new FileUtils(BackupRestoreActivity.this);
                                 fu.deleteFile(StaticValues.BACKUP_FOLDER + selectedFile);
                                 fillBkList();
                                 btnRestore.setEnabled(false);

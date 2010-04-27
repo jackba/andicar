@@ -28,6 +28,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import org.andicar.utils.StaticValues;
 import org.andicar.activity.R;
+import org.andicar.utils.AndiCarExceptionHandler;
 
 
 /**
@@ -46,6 +47,11 @@ public class GPSPreferencesActivity extends PreferenceActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        boolean isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+        if(isSendStatistics)
+            Thread.setDefaultUncaughtExceptionHandler(
+                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+
         mRes = getResources();
         setPreferenceScreen(createPreferenceHierarchy());
     }

@@ -37,8 +37,8 @@ import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.flurry.android.FlurryAgent;
 import java.math.BigDecimal;
+import org.andicar.utils.AndiCarStatistics;
 
 /**
  *
@@ -75,7 +75,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         super.onCreate(icicle, R.layout.expense_edit_activity, mOkClickListener);
 
         operationType = mBundleExtras.getString("Operation");
-        acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
+        acUserComment = null; //((AutoCompleteTextView) findViewById( R.id.acUserComment ));
 
         spnCar = (Spinner)findViewById(R.id.spnCar);
         spnDriver = (Spinner)findViewById(R.id.spnDriver);
@@ -190,21 +190,8 @@ public class ExpenseEditActivity extends EditActivityBase {
                     MainDbAdapter.isActiveCondition,
                     MainDbAdapter.CURRENCY_COL_CODE_NAME,
                     mCurrencyId, false);
-        
-    }
-
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        FlurryAgent.setReportLocation(false);
-        FlurryAgent.onStartSession(this, "E8C8QUTB7KS46SHMEP6V");
-    }
-    @Override
-    public void onStop()
-    {
-       super.onStop();
-       FlurryAgent.onEndSession(this);
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEvent("ExpenseEdit", null);
     }
 
     @Override

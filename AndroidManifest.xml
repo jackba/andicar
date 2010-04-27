@@ -67,7 +67,7 @@
         </activity>
 
         <activity 
-            android:name="org.andicar.activity.miscellaneous.PreferencesActivity"
+            android:name="org.andicar.activity.miscellaneous.AndiCarPreferencesActivity"
             android:label="@string/APP_ACTIVITY_PREFERENCES">
         </activity>
         <activity
