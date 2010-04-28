@@ -125,8 +125,7 @@
                 android:layout_marginTop="5dip"
                 android:layout_toRightOf="@id/ckIsCreateMileage"
                 />
-<!--                android:layout_alignTop="@id/gpsTrackCreateMileageCk"
--->        </RelativeLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -156,7 +155,7 @@
                 />
         </LinearLayout>
 
-        <LinearLayout
+<!--        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -169,6 +168,6 @@
                 android:text="@string/PREF_GPSTRACK_SHOWONMAP_SUMMARY"
                 />
         </LinearLayout>
-
+-->
     </LinearLayout>
 </ScrollView>

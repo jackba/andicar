@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.andicar.activity.miscellaneous;
+package org.andicar.activity.preference;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +37,7 @@ import org.andicar.activity.ExpenseTypeListActivity;
 import org.andicar.activity.R;
 import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
+import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.utils.StaticValues;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
