@@ -26,7 +26,7 @@
 
     <!-- Used in gps track (minimum time betwee 2 recording points) -->
     <string-array name="gpstrack_preference_mintime_entries">
-        <item>Highest (recommended)</item>
+        <item>Highest</item>
         <item>3 s</item>
         <item>5 s</item>
         <item>10 s</item>
@@ -49,17 +49,19 @@
         <item>600000</item>
     </string-array>
 
-    <!-- Used in gps track (minimum time betwee 2 recording points) -->
-    <string-array name="gpstrack_preference_mindistance_entries">
-        <item>1 m</item>
-        <item>3 m</item>
-        <item>5 m (recommended)</item>
-        <item>10 m</item>
-        <item>50 m</item>
-        <item>100 m</item>
+    <!-- Used in gps track (minimum distance betwee 2 recording points) -->
+<!--    <string-array name="gpstrack_preference_mindistance_entries">
+        <item>0</item>
+        <item>1 m / 1.09 yd</item>
+        <item>3 m / 3.28 yd</item>
+        <item>5 m / 5.47 yd</item>
+        <item>10 m / 10.94 yd</item>
+        <item>50 m / 54.68 yd</item>
+        <item>100 m / 109.36 yd</item>
     </string-array>
-    <!-- values in meter -->
+     values in meter 
     <string-array name="gpstrack_preference_mindistance_values">
+        <item>0</item>
         <item>1</item>
         <item>3</item>
         <item>5</item>
@@ -67,6 +69,44 @@
         <item>50</item>
         <item>100</item>
     </string-array>
+-->
+    <!-- Used in gps track (maximum value of accuracy) -->
+    <string-array name="gpstrack_preference_maxaccuracy_entries">
+        <item>10 m / 10.94 yd</item>
+        <item>20 m / 21.87 yd</item>
+        <item>50 m / 54.68 yd</item>
+        <item>100 m / 109.36 yd</item>
+        <item>250 m / 273.40 yd</item>
+        <item>500 m / 546.80 yd</item>
+        <item>"Don\'t use"</item>
+    </string-array>
+    <!-- values in meter -->
+    <string-array name="gpstrack_preference_maxaccuracy_values">
+        <item>10</item>
+        <item>20</item>
+        <item>50</item>
+        <item>100</item>
+        <item>250</item>
+        <item>500</item>
+        <item>9999999</item>
+    </string-array>
 
+    <!-- Used in gps track. Maximum value of percentage of skipped track points.
+    Tracking will be automatically stopped over this limit -->
+    <string-array name="gpstrack_preference_maxaccuracyshutdownlimit_entries">
+        <item>10%</item>
+        <item>20%</item>
+        <item>30%</item>
+        <item>50%</item>
+        <item>70%</item>
+    </string-array>
+    <!-- values in meter -->
+    <string-array name="gpstrack_preference_maxaccuracyshutdownlimit_values">
+        <item>10</item>
+        <item>20</item>
+        <item>30</item>
+        <item>50</item>
+        <item>70</item>
+    </string-array>
 </resources>
 

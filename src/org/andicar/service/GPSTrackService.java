@@ -21,6 +21,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -39,6 +40,7 @@ import org.andicar.utils.StaticValues;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
@@ -49,9 +51,16 @@ import org.andicar.utils.Utils;
  * @author miki
  */
 public class GPSTrackService extends Service {
+
+    private static int NOTIF_TYPE_GPSTRACK_STARTED = 1;
+    private static int NOTIF_TYPE_ACCURACY_WARNING = 2;
+    private static int NOTIF_TYPE_ACCURACY_SHUTDOWN = 3;
+    private static int NOTIF_TYPE_FILESYSTEM_ERROR = 4;
+
     private NotificationManager mNM;
     private SharedPreferences mPreferences;
     protected MainDbAdapter mMainDbAdapter = null;
+    protected Resources mResource = null;
 
     private LocationManager mLocationManager;
     private LocationListener mLocationListener;
@@ -60,6 +69,9 @@ public class GPSTrackService extends Service {
     private double currentLocationLatitude = 0;
     private double currentLocationLongitude = 0;
     private double currentLocationAltitude = 0;
+    private double lastGoodLocationLatitude = 0;
+    private double lastGoodLocationLongitude = 0;
+    private double lastGoodLocationAltitude = 0;
     private float currentAccuracy = 0 ;
     private float currentSpeed = 0;
     private long currentLocationTime = 0;
@@ -81,25 +93,32 @@ public class GPSTrackService extends Service {
     private long lDriverId = -1;
     private boolean isUseKML = false;
     private boolean isUseGPX = false;
-    private boolean isShowOnMap = false;
+//    private boolean isShowOnMap = false;
     private String fileName = null;
     //statistics
     private float fMinAccuracy = 9999;
-    private float fAvgAccuracy = 0;
+    private double dAvgAccuracy = 0;
     private float fMaxAccuracy = 0;
     private double dMinAltitude = 99999;
     private double dMaxAltitude = 0;
-    private long lTotalTimeStart = 0;
-    private long lTotalTimeStop = 0;
+    private long lStartTime = 0;
+    private long lStopTime = 0;
     private long lTotalMovingTime = 0;
     private float fDistance = 0;
     private float fMaxSpeed = 0;
-    private float fAvgSpeed = 0;
-    private float fAvgMovingSpeed = 0;
-    private int iTrackPointCount = 0;
+    private double dAvgSpeed = 0;
+    private double dAvgMovingSpeed = 0;
     private boolean isFirstPoint = true;
     private long lLastMovingTime = 0;
     private long lTmpMovingTime = 0;
+    private int iMaxAccuracy = 9999999;
+    private int iMaxAccuracyShutdownLimit = 30;
+    private double dTotalTrackPoints = 0;
+    private double dTotalSkippedTrackPoints = 0;
+    private double dTotalUsedTrackPoints = 0;
+    private double dTmpSkippedTrackPoints = 0;
+    private boolean bNotificationShowed = false;
+    private double skippedPointPercentage = 0;
 
     /**
      * Class for clients to access.  Because we know this service always
@@ -115,6 +134,7 @@ public class GPSTrackService extends Service {
     @Override
     public void onCreate() {
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mResource = getResources();
         boolean isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         if(isSendStatistics)
             Thread.setDefaultUncaughtExceptionHandler(
@@ -131,7 +151,7 @@ public class GPSTrackService extends Service {
         mLocationManager.requestLocationUpdates(
             LocationManager.GPS_PROVIDER, 
                 Long.parseLong(mPreferences.getString("GPSTrackMinTime", "0")),
-                Long.parseLong(mPreferences.getString("GPSTrackMinDistance", "5")),
+                /*Long.parseLong(mPreferences.getString("GPSTrackMinDistance", "5"))*/ 0,
                 mLocationListener);
 
         mMainDbAdapter = new MainDbAdapter(this);
@@ -142,7 +162,10 @@ public class GPSTrackService extends Service {
         lDriverId = mPreferences.getLong("GPSTrackTmp_CarId", mPreferences.getLong("CurrentDriver_ID", 0));
         isUseKML = mPreferences.getBoolean("GPSTrackTmp_IsUseKML", false);
         isUseGPX = mPreferences.getBoolean("GPSTrackTmp_IsUseGPX", false);
-        isShowOnMap = mPreferences.getBoolean("GPSTrackTmp_IsShowOnMap", false);
+//        isShowOnMap = mPreferences.getBoolean("GPSTrackTmp_IsShowOnMap", false);
+        iMaxAccuracy = Integer.parseInt(mPreferences.getString("GPSTrackMaxAccuracy", "20"));
+        iMaxAccuracyShutdownLimit = Integer.parseInt(mPreferences.getString("GPSTrackMaxAccuracyShutdownLimit", "30"));
+
         //create the master record
         //use direct table insert for increasing the speed of the DB operation
         String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACK_TABLE_NAME
@@ -195,15 +218,20 @@ public class GPSTrackService extends Service {
                                 + "'" + gpsTrackDetailCSVFile.getAbsolutePath() + "'"
                             + " ) ";
                     mMainDbAdapter.execSql(sqlStr);
+                    //create the header
                     gpsTrackDetailCSVFileWriter.append(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ","
-                                                        + "ACCURACY" + ","
-                                                        + "ALTITUDE" + ","
-                                                        + "LATITUDE" + ","
-                                                        + "LONGITUDE" + ","
-                                                        + "SPEED" + ","
-                                                        + "TIME" + ","
-                                                        + "DISTNACE" + ","
-                                                        + "BEARING" + "\n"
+                                                        + "Accuracy" + ","
+                                                        + "Altitude" + ","
+                                                        + "Latitude" + ","
+                                                        + "Longitude" + ","
+                                                        + "Speed" + ","
+                                                        + "Time" + ","
+                                                        + "Distance" + ","
+                                                        + "Bearing" + ","
+                                                        + "TotalTrackPointCount" + ","
+                                                        + "InvalidTrackPointCount" + ","
+                                                        + "SkippedPointPercentage" + ","
+                                                        + "IsValidPoint"+ "\n"
                                                         );
             }
             if(gpsTrackDetailKMLFile != null){
@@ -241,14 +269,14 @@ public class GPSTrackService extends Service {
                     createGPXHeader();
             }
             // Display a notification about us starting.  We put an icon in the status bar.
-            showNotification();
+            showNotification(NOTIF_TYPE_GPSTRACK_STARTED, false);
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putBoolean("isGpsTrackOn", true);
             editor.commit();
         }
         catch(IOException ex) {
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
-            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_LONG).show();
+            showNotification(NOTIF_TYPE_FILESYSTEM_ERROR, true);
             stopSelf();
         }
         //close the database
@@ -270,7 +298,7 @@ public class GPSTrackService extends Service {
                 + "<kml xmlns=\"http://earth.google.com/kml/2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n"
                 + "<Document>\n"
                 + "<atom:author><atom:name>Tracks running on AndiCar</atom:name></atom:author>\n"
-                + "<name><![CDATA[" + gpsTrackDetailKMLFile.getName() + "]]></name>\n"
+                + "<name><![CDATA[" + sName + "]]></name>\n"
                 + "<description><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a>]]></description>\n"
                 + "<Style id=\"track\"><LineStyle><color>7f0000ff</color><width>4</width></LineStyle></Style>\n"
                 + "<Style id=\"sh_green-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/grn-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
@@ -303,7 +331,7 @@ public class GPSTrackService extends Service {
                         + "xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\" "
                             + "xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\">\n"
                     + "<trk>\n"
-                    + "<name><![CDATA[" + gpsTrackDetailGPXFile.getName() +"]]></name>\n"
+                    + "<name><![CDATA[" + sName +"]]></name>\n"
                     + "<desc><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a> on an Android powered device]]></desc>\n"
                     + "<number>" + gpsTrackId + "</number>\n"
                     + "<topografix:color>c0c0c0</topografix:color>\n"
@@ -320,7 +348,8 @@ public class GPSTrackService extends Service {
             return;
         try{
             gpsTrackDetailKMLFileWriter.append(
-                 "<coordinates>" + currentLocationLongitude + "," + currentLocationLatitude + "," + currentLocationAltitude + "</coordinates>\n"
+                 "<coordinates>" + currentLocationLongitude + "," + currentLocationLatitude + "," +
+                            currentLocationAltitude + "</coordinates>\n"
                   + " </Point>\n"
                 + "</Placemark>\n"
                 + "<Placemark>\n"
@@ -352,7 +381,8 @@ public class GPSTrackService extends Service {
                       + "]]></description>\n"
                   + "<styleUrl>#sh_red-circle</styleUrl>\n"
                   + "<Point>\n"
-                    + "<coordinates>" + currentLocationLongitude + "," + currentLocationLatitude + "," + currentLocationAltitude + "</coordinates>\n"
+                    + "<coordinates>" + lastGoodLocationLongitude + "," + lastGoodLocationLatitude + "," +
+                            lastGoodLocationAltitude + "</coordinates>\n"
                   + "</Point>\n"
                 + "</Placemark>\n"
                 + "</Document>\n"
@@ -405,7 +435,7 @@ public class GPSTrackService extends Service {
         }
         catch(IOException ex) {
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
-            Toast.makeText(this, "Closing file failed!", Toast.LENGTH_LONG).show();
+            showNotification(NOTIF_TYPE_FILESYSTEM_ERROR, true);
         }
         
         mLocationManager.removeUpdates(mLocationListener);
@@ -427,24 +457,59 @@ public class GPSTrackService extends Service {
     /**
      * Show a notification while this service is running.
      */
-    private void showNotification() {
-        CharSequence text = getText(R.string.GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE);
-
-        // Set the icon, scrolling text and timestamp
-        Notification notification = new Notification(R.drawable.andicar_gps_anim, text,
-                System.currentTimeMillis());
-
-        // The PendingIntent to launch our activity if the user selects this notification
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+    private void showNotification(int what, boolean showToast) {
+        String message;
+        CharSequence title;
+        Notification notification = null;
+        PendingIntent contentIntent;
+        int id = 0;
+        title = getText(R.string.SERVICE_GPSTRACK_LABEL);
+        
+        contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, GPSTrackController.class), 0);
+        if(what == NOTIF_TYPE_GPSTRACK_STARTED){
+            message = getString(R.string.GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE);
+            id = R.string.GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE;
 
-        // Set the info for the views that show in the notification panel.
-        notification.setLatestEventInfo(this, getText(R.string.SERVICE_GPSTRACK_LABEL),
-                       text, contentIntent);
+            notification = new Notification(R.drawable.andicar_gps_anim, message,
+                    System.currentTimeMillis());
+            notification.setLatestEventInfo(this, title, message, contentIntent);
+        }
+        else if(what == NOTIF_TYPE_ACCURACY_WARNING){
+            message = getString(R.string.SERVICE_GPSTRACK_ACCURACYPROBLEM);
+            id = R.string.SERVICE_GPSTRACK_ACCURACYPROBLEM;
 
-        // Send the notification.
-        // We use a layout id because it is a unique number.  We use it later to cancel.
-        mNM.notify(R.string.GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE, notification);
+            notification = new Notification(R.drawable.stat_sys_warning, message,
+                    System.currentTimeMillis());
+            notification.setLatestEventInfo(this, title, message, contentIntent);
+            if(showToast)
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+        else if(what == NOTIF_TYPE_FILESYSTEM_ERROR){
+            message = getString(R.string.ERR_034);
+            id = R.string.ERR_034;
+
+            notification = new Notification(R.drawable.stat_sys_error, message,
+                    System.currentTimeMillis());
+            notification.setLatestEventInfo(this, title, message, contentIntent);
+            if(showToast)
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+        else if(what == NOTIF_TYPE_ACCURACY_SHUTDOWN){
+            message = getString(R.string.SERVICE_GPSTRACK_AUTOSHUTDOWN_MSG);
+            BigDecimal bdSkippedPointPercentage = new BigDecimal(skippedPointPercentage).setScale(0, BigDecimal.ROUND_HALF_UP);
+            message = message.replace("%1",  bdSkippedPointPercentage.toString() + "%").
+                    replace("%2", iMaxAccuracyShutdownLimit + "%");
+            id = R.string.SERVICE_GPSTRACK_AUTOSHUTDOWN_MSG;
+
+            notification = new Notification(R.drawable.stat_sys_error, message,
+                    System.currentTimeMillis());
+            notification.setLatestEventInfo(this, title, message, contentIntent);
+            if(showToast)
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+
+        mNM.notify(id, notification);
     }
 
     private void updateStatistics(){
@@ -452,33 +517,33 @@ public class GPSTrackService extends Service {
         /*
          * convertion for distance and speed to car uom!
          */
-        if(iTrackPointCount != 0)
-            fAvgAccuracy = fAvgAccuracy / iTrackPointCount;
+        if(dTotalUsedTrackPoints != 0)
+            dAvgAccuracy = dAvgAccuracy / dTotalUsedTrackPoints;
         else
-            fAvgAccuracy = 99999;
+            dAvgAccuracy = 0;
 
-        if(lTotalTimeStop - lTotalTimeStart != 0)
-            fAvgSpeed = fDistance / ((lTotalTimeStop - lTotalTimeStart)/1000); // m/s
+        if(lStopTime - lStartTime != 0)
+            dAvgSpeed = fDistance / ((lStopTime - lStartTime)/1000); // m/s
         else
-            fAvgSpeed = 0;
+            dAvgSpeed = 0;
 
         if(lTotalMovingTime != 0)
-            fAvgMovingSpeed = fDistance / (lTmpMovingTime / 1000); // m/s
+            dAvgMovingSpeed = fDistance / (lTotalMovingTime / 1000); // m/s
         else
-            fAvgMovingSpeed = 0;
+            dAvgMovingSpeed = 0;
         
         String updateSql = "UPDATE " + MainDbAdapter.GPSTRACK_TABLE_NAME +
                 " SET "
                     + MainDbAdapter.GPSTRACK_COL_MINACCURACY_NAME + " = " + fMinAccuracy + ", "
                     + MainDbAdapter.GPSTRACK_COL_MAXACCURACY_NAME + " = " + fMaxAccuracy + ", "
-                    + MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME + " = " + fAvgAccuracy + ", "
+                    + MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME + " = " + (dAvgAccuracy > 0 ? dAvgAccuracy : null) + ", "
                     + MainDbAdapter.GPSTRACK_COL_MINALTITUDE_NAME + " = " + dMinAltitude + ", "
                     + MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME + " = " + dMaxAltitude + ", "
-                    + MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME + " = " + (lTotalTimeStop - lTotalTimeStart) + ", "
+                    + MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME + " = " + (lStopTime - lStartTime) + ", "
                     + MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME + " = " + lTotalMovingTime + ", "
                     + MainDbAdapter.GPSTRACK_COL_DISTNACE_NAME + " = " + fDistance + ", "
-                    + MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME + " = " + fAvgSpeed + ", "
-                    + MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME + " = " + fAvgMovingSpeed + ", "
+                    + MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME + " = " + dAvgSpeed + ", "
+                    + MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME + " = " + (dAvgMovingSpeed > 0 ? dAvgMovingSpeed : null)  + ", "
                     + MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME + " = " + fMaxSpeed + " " +
                 " WHERE "+ MainDbAdapter.GEN_COL_ROWID_NAME + " = " + gpsTrackId;
 
@@ -492,18 +557,87 @@ public class GPSTrackService extends Service {
     {
         @Override
         public void onLocationChanged(Location loc) {
+            boolean isValid = true;
             if(gpsTrackDetailCSVFileWriter == null){
                 Toast.makeText(GPSTrackService.this, "No File Writer!", Toast.LENGTH_LONG).show();
                 stopSelf();
             }
             if (loc != null) {
                 try {
+                    dTotalTrackPoints++;
                     currentLocationLatitude = loc.getLatitude();
                     currentLocationLongitude = loc.getLongitude();
                     currentLocationAltitude = loc.getAltitude();
                     currentLocationTime = loc.getTime();
                     currentAccuracy = loc.getAccuracy();
                     currentSpeed = loc.getSpeed();
+
+                    if(isFirstPoint)
+                        lStartTime = currentLocationTime;
+
+                    if(currentAccuracy > iMaxAccuracy){
+                        isValid = false;
+
+                        //
+                        if(currentLocationTime - lStartTime > 20000){
+                            dTotalSkippedTrackPoints++;
+                            dTmpSkippedTrackPoints++;
+                        }
+                        if(dTmpSkippedTrackPoints > 10 && !bNotificationShowed){
+                            //notify the user
+                            showNotification(NOTIF_TYPE_ACCURACY_WARNING, true);
+                            bNotificationShowed = true;
+
+                        }
+                        skippedPointPercentage = (dTotalSkippedTrackPoints / dTotalTrackPoints) * 100;
+                        if(skippedPointPercentage > iMaxAccuracyShutdownLimit){
+                            showNotification(NOTIF_TYPE_ACCURACY_SHUTDOWN, true);
+                            stopSelf();
+                        }
+                    }
+                    else{
+                        isValid = true;
+                        dTotalUsedTrackPoints++;
+                        dTmpSkippedTrackPoints = 0;
+                        bNotificationShowed = false;
+                    }
+
+                    if(isValid){
+                        if(isFirstPoint){
+                            //write the starting point
+                            if(gpsTrackDetailKMLFileWriter != null)
+                                appendKMLStartPoint();
+                            lStartTime = currentLocationTime;
+                            isFirstPoint = false;
+                        }
+                        else{
+                            Location.distanceBetween(oldLocationLatitude, oldLocationLongitude,
+                                    currentLocationLatitude, currentLocationLongitude, distanceArray);
+                            distanceBetweenLocations = distanceArray[0];
+                            fDistance = fDistance + distanceBetweenLocations;
+                        }
+                    }
+
+                    gpsTrackDetailCSVFileWriter.append(gpsTrackId + ","
+                                                        + currentAccuracy + ","
+                                                        + currentLocationAltitude + ","
+                                                        + currentLocationLatitude + ","
+                                                        + currentLocationLongitude + ","
+                                                        + currentSpeed + ","
+                                                        + currentLocationTime + ","
+                                                        + distanceBetweenLocations + ","
+                                                        + loc.getBearing() + ","
+                                                        + dTotalTrackPoints + ","
+                                                        + dTotalSkippedTrackPoints + ","
+                                                        + skippedPointPercentage + ","
+                                                        + (isValid ? "Yes" : "No") + "\n");
+                    if(!isValid)
+                        return;
+
+                    //set the stop time on each location change => the last will be the final lTotalTimeStop
+                    lStopTime = currentLocationTime;
+
+                    //statistics
                     if(currentSpeed > 0){
                         if(lLastMovingTime != 0)
                             lTmpMovingTime = lTmpMovingTime + (currentLocationTime - lLastMovingTime);
@@ -514,14 +648,13 @@ public class GPSTrackService extends Service {
                         lLastMovingTime = 0;
                     }
 
-                    //statistics
                     if(currentAccuracy < fMinAccuracy)
                         fMinAccuracy = currentAccuracy;
                     if(currentAccuracy > fMaxAccuracy)
                         fMaxAccuracy = currentAccuracy;
 
                     //at the end of the tracking fAvgAccuracy will be fAvgAccuracy / iTrackPointCount
-                    fAvgAccuracy = fAvgAccuracy + currentAccuracy;
+                    dAvgAccuracy = dAvgAccuracy + currentAccuracy;
 
                     if(currentLocationAltitude < dMinAltitude)
                         dMinAltitude = currentLocationAltitude;
@@ -530,34 +663,6 @@ public class GPSTrackService extends Service {
 
                     if(currentSpeed > fMaxSpeed)
                         fMaxSpeed = currentSpeed;
-
-                    iTrackPointCount++;
-
-                    if(isFirstPoint){
-                        //write the starting point
-                        if(gpsTrackDetailKMLFileWriter != null)
-                            appendKMLStartPoint();
-                        lTotalTimeStart = currentLocationTime;
-                        isFirstPoint = false;
-                    }
-                    else{
-                        Location.distanceBetween(oldLocationLatitude, oldLocationLongitude,
-                                currentLocationLatitude, currentLocationLongitude, distanceArray);
-                        distanceBetweenLocations = distanceArray[0];
-                        fDistance = fDistance + distanceBetweenLocations;
-                    }
-                    //set the stop time on each location change => the last will be the final lTotalTimeStop
-                    lTotalTimeStop = currentLocationTime;
-
-                    gpsTrackDetailCSVFileWriter.append(gpsTrackId + ","
-                                                        + currentAccuracy + ","
-                                                        + currentLocationAltitude + ","
-                                                        + currentLocationLatitude + ","
-                                                        + currentLocationLongitude + ","
-                                                        + currentSpeed + ","
-                                                        + currentLocationTime + ","
-                                                        + distanceBetweenLocations + ","
-                                                        + loc.getBearing() + "\n");
 
                     if(gpsTrackDetailKMLFileWriter != null)
                         gpsTrackDetailKMLFileWriter.append(currentLocationLongitude + ","
@@ -583,6 +688,9 @@ public class GPSTrackService extends Service {
 
                     oldLocationLatitude = currentLocationLatitude;
                     oldLocationLongitude = currentLocationLongitude;
+                    lastGoodLocationLatitude = currentLocationLatitude;
+                    lastGoodLocationLongitude = currentLocationLongitude;
+                    lastGoodLocationAltitude = currentLocationAltitude;
                 }
                 catch(IOException ex) {
                     Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);

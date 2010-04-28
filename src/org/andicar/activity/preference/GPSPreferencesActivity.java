@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.andicar.activity.miscellaneous;
+package org.andicar.activity.preference;
 
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -61,11 +61,11 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         prefMgr.setSharedPreferencesName(StaticValues.GLOBAL_PREFERENCE_NAME);
         PreferenceScreen prefScreenRoot = prefMgr.createPreferenceScreen(this);
 
-        ckpIsTrackOnMap = new CheckBoxPreference(this);
-        ckpIsTrackOnMap.setKey("IsGPSTrackOnMap");
-        ckpIsTrackOnMap.setTitle(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_TITLE));
-        ckpIsTrackOnMap.setSummary(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_SUMMARY));
-        prefScreenRoot.addPreference(ckpIsTrackOnMap);
+//        ckpIsTrackOnMap = new CheckBoxPreference(this);
+//        ckpIsTrackOnMap.setKey("IsGPSTrackOnMap");
+//        ckpIsTrackOnMap.setTitle(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_TITLE));
+//        ckpIsTrackOnMap.setSummary(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_SUMMARY));
+//        prefScreenRoot.addPreference(ckpIsTrackOnMap);
 
         PreferenceScreen gpsTrackFileFormatPref = getPreferenceManager().createPreferenceScreen(this);
         gpsTrackFileFormatPref.setTitle(R.string.PREF_GPSTRACK_FILEFORMAT_TITLE);
@@ -103,29 +103,37 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         gpsTrackMinTimePref.setSummary(R.string.PREF_GPSTRACK_MINTIME_SUMMARY);
         prefScreenRoot.addPreference(gpsTrackMinTimePref);
 
-        // Minimum distance between two recordings
-        ListPreference gpsTrackMinDistPref = new ListPreference(this);
-        gpsTrackMinDistPref.setEntries(R.array.gpstrack_preference_mindistance_entries);
-        gpsTrackMinDistPref.setEntryValues(R.array.gpstrack_preference_mindistance_values);
-        gpsTrackMinDistPref.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
-        gpsTrackMinDistPref.setKey("GPSTrackMinDistance");
-        gpsTrackMinDistPref.setTitle(R.string.PREF_GPSTRACK_MINDISTANCE_TITLE);
-        gpsTrackMinDistPref.setSummary(R.string.PREF_GPSTRACK_MINDISTANCE_SUMMARY);
-        prefScreenRoot.addPreference(gpsTrackMinDistPref);
+//        // Minimum distance between two recordings
+//        ListPreference gpsTrackMinDistPref = new ListPreference(this);
+//        gpsTrackMinDistPref.setEntries(R.array.gpstrack_preference_mindistance_entries);
+//        gpsTrackMinDistPref.setEntryValues(R.array.gpstrack_preference_mindistance_values);
+//        gpsTrackMinDistPref.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
+//        gpsTrackMinDistPref.setKey("GPSTrackMinDistance");
+//        gpsTrackMinDistPref.setTitle(R.string.PREF_GPSTRACK_MINDISTANCE_TITLE);
+//        gpsTrackMinDistPref.setSummary(R.string.PREF_GPSTRACK_MINDISTANCE_SUMMARY);
+//        prefScreenRoot.addPreference(gpsTrackMinDistPref);
+
+        // Maximum deviation (accuracy)
+        ListPreference gpsTrackMaxAccuracy = new ListPreference(this);
+        gpsTrackMaxAccuracy.setEntries(R.array.gpstrack_preference_maxaccuracy_entries);
+        gpsTrackMaxAccuracy.setEntryValues(R.array.gpstrack_preference_maxaccuracy_values);
+        gpsTrackMaxAccuracy.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
+        gpsTrackMaxAccuracy.setKey("GPSTrackMaxAccuracy");
+        gpsTrackMaxAccuracy.setTitle(R.string.PREF_GPSTRACK_MAXACCURACY_TITLE);
+        gpsTrackMaxAccuracy.setSummary(R.string.PREF_GPSTRACK_MAXACCURACY_SUMMARY);
+        prefScreenRoot.addPreference(gpsTrackMaxAccuracy);
+
+        // Maximum deviation (accuracy)
+        ListPreference gpsTrackMaxAccuracyShutdownLimit = new ListPreference(this);
+        gpsTrackMaxAccuracyShutdownLimit.setEntries(R.array.gpstrack_preference_maxaccuracyshutdownlimit_entries);
+        gpsTrackMaxAccuracyShutdownLimit.setEntryValues(R.array.gpstrack_preference_maxaccuracyshutdownlimit_values);
+        gpsTrackMaxAccuracyShutdownLimit.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
+        gpsTrackMaxAccuracyShutdownLimit.setKey("GPSTrackMaxAccuracyShutdownLimit");
+        gpsTrackMaxAccuracyShutdownLimit.setTitle(R.string.PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_TITLE);
+        gpsTrackMaxAccuracyShutdownLimit.setSummary(R.string.PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_SUMMARY);
+        prefScreenRoot.addPreference(gpsTrackMaxAccuracyShutdownLimit);
 
         return prefScreenRoot;
     }
-
-//    OnPreferenceClickListener gpsTrackFileFormat = new OnPreferenceClickListener() {
-//            public boolean onPreferenceClick(Preference prfrnc) {
-//                if(!gpsTrackGPXFileFormatCk.isChecked()
-////                        && !gpsTrackCSVFileFormatCk.isChecked()
-//                        && !gpsTrackKMLFileFormatCk.isChecked()){
-//                    Toast.makeText(GPSPreferencesActivity.this, mRes.getString(R.string.GEN_CHOOSEONE_MESSAGE), Toast.LENGTH_SHORT).show();
-//                    ((CheckBoxPreference)prfrnc).setChecked(true);
-//                }
-//                return true;
-//            }
-//        };
 
 }

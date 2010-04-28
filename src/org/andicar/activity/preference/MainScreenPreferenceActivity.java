@@ -17,7 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.andicar.activity.miscellaneous;
+package org.andicar.activity.preference;
 
 import android.os.Bundle;
 import android.util.SparseBooleanArray;

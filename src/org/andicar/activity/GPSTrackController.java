@@ -45,7 +45,7 @@ public class GPSTrackController extends EditActivityBase {
     private EditText etName;
     private CheckBox ckIsUseKML;
     private CheckBox ckIsUseGPX;
-    private CheckBox ckIsShowOnMap;
+//    private CheckBox ckIsShowOnMap;
     private CheckBox ckIsCreateMileage;
     private Button btnGPSTrackStartStop;
     private boolean isGpsTrackOn = false;
@@ -76,8 +76,8 @@ public class GPSTrackController extends EditActivityBase {
         ckIsUseKML.setChecked(mPreferences.getBoolean("IsUseKMLTrack", true));
         ckIsUseGPX = (CheckBox) findViewById(R.id.ckIsUseGPX);
         ckIsUseGPX.setChecked(mPreferences.getBoolean("IsUseGPXTrack", true));
-        ckIsShowOnMap = (CheckBox) findViewById(R.id.ckIsShowOnMap);
-        ckIsShowOnMap.setChecked(mPreferences.getBoolean("IsGPSTrackOnMap", true));
+//        ckIsShowOnMap = (CheckBox) findViewById(R.id.ckIsShowOnMap);
+//        ckIsShowOnMap.setChecked(mPreferences.getBoolean("IsGPSTrackOnMap", true));
         btnGPSTrackStartStop = (Button) findViewById(R.id.btnStartStopGpsTrack);
         btnGPSTrackStartStop.setOnClickListener(btnGPSTrackStartStopListener);
         ckIsCreateMileage = (CheckBox) findViewById(R.id.ckIsCreateMileage);
@@ -136,7 +136,7 @@ public class GPSTrackController extends EditActivityBase {
         editor.putBoolean("GPSTrackCreateMileage", ckIsCreateMileage.isChecked());
         editor.putBoolean("GPSTrackUseKML", ckIsUseKML.isChecked());
         editor.putBoolean("GPSTrackUseGPX", ckIsUseGPX.isChecked());
-        editor.putBoolean("GPSTrackShowMap", ckIsShowOnMap.isChecked());
+//        editor.putBoolean("GPSTrackShowMap", ckIsShowOnMap.isChecked());
         editor.commit();
     }
 
@@ -148,7 +148,7 @@ public class GPSTrackController extends EditActivityBase {
         ckIsCreateMileage.setChecked(mPreferences.getBoolean("GPSTrackCreateMileage", true));
         ckIsUseKML.setChecked(mPreferences.getBoolean("GPSTrackUseKML", true));
         ckIsUseGPX.setChecked(mPreferences.getBoolean("GPSTrackUseGPX", true));
-        ckIsShowOnMap.setChecked(mPreferences.getBoolean("GPSTrackShowMap", false));
+//        ckIsShowOnMap.setChecked(mPreferences.getBoolean("GPSTrackShowMap", false));
     }
 
     @Override
@@ -216,7 +216,7 @@ public class GPSTrackController extends EditActivityBase {
                 mPrefEditor.putBoolean("GPSTrackTmp_IsCreateMileage", ckIsCreateMileage.isChecked());
                 mPrefEditor.putBoolean("GPSTrackTmp_IsUseKML", ckIsUseKML.isChecked());
                 mPrefEditor.putBoolean("GPSTrackTmp_IsUseGPX", ckIsUseGPX.isChecked());
-                mPrefEditor.putBoolean("GPSTrackTmp_IsShowOnMap", ckIsShowOnMap.isChecked());
+//                mPrefEditor.putBoolean("GPSTrackTmp_IsShowOnMap", ckIsShowOnMap.isChecked());
                 mPrefEditor.commit();
 
                 startService(gpsTrackIntent);
@@ -226,29 +226,8 @@ public class GPSTrackController extends EditActivityBase {
                 if(isGpsTrackOn)
                     btnGPSTrackStartStop.setText(
                             mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+                finish();
             }
         };
     };
-/*
-    private OnClickListener mShowMapListener = new OnClickListener() {
-        public void onClick(View v)
-        {
-            startActivity(new Intent(MainActivity.this, GPSTrackMap.class));
-        };
-    };
- */
-    //    private boolean isGPSTrackingServiceRunning(){
-//        ActivityManager activityManager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-//        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(50);
-//        String temp;
-//        for (int i = 0; i < runningServices.size(); i++) {
-//            ActivityManager.RunningServiceInfo runningServiceInfo = runningServices.get(i);
-////            if(runningServiceInfo.getClass().equals(GPSTrackService.class))
-////                return true;
-//            temp = runningServiceInfo.service.getClassName();
-//            temp = runningServiceInfo.process;
-//        }
-//        return false;
-//    }
-//
 }

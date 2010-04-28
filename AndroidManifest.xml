@@ -67,11 +67,11 @@
         </activity>
 
         <activity 
-            android:name="org.andicar.activity.miscellaneous.AndiCarPreferencesActivity"
+            android:name="org.andicar.activity.preference.AndiCarPreferencesActivity"
             android:label="@string/APP_ACTIVITY_PREFERENCES">
         </activity>
         <activity
-            android:name="org.andicar.activity.miscellaneous.GPSPreferencesActivity"
+            android:name="org.andicar.activity.preference.GPSPreferencesActivity"
             android:label="@string/APP_ACTIVITY_GPSPREFERENCES">
         </activity>
 
@@ -163,7 +163,7 @@
         </activity>
 
         <activity
-            android:name="org.andicar.activity.miscellaneous.MainScreenPreferenceActivity"
+            android:name="org.andicar.activity.preference.MainScreenPreferenceActivity"
             android:label="@string/APP_ACTIVITY_MAINSCREENPREF">
         </activity>
 

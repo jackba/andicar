@@ -52,4 +52,5 @@
     <string name="ERR_031">"You can not define conversion between the same UOM's."</string>
     <string name="ERR_032">"You can not define conversion between the same currencies."</string>
     <string name="ERR_033">"GPS track folder (SDCARD/andicar/gpstrack) can not be created. You can not use the gps tracking."</string>
+    <string name="ERR_034">"File system error!\nCheck your SDCARD."</string>
 </resources>

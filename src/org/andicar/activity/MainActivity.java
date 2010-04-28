@@ -21,7 +21,7 @@ package org.andicar.activity;
 import android.content.pm.PackageManager.NameNotFoundException;
 import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
-import org.andicar.activity.miscellaneous.AndiCarPreferencesActivity;
+import org.andicar.activity.preference.AndiCarPreferencesActivity;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -291,14 +291,23 @@ public class MainActivity extends Activity {
             editor.putString("GPSTrackMinTime", "0");
             editor.commit();
         }
-        if (!mPreferences.contains("GPSTrackMinDistance")) {
-            editor.putString("GPSTrackMinDistance", "5");
-            editor.commit();
-        }
+//        if (!mPreferences.contains("GPSTrackMinDistance")) {
+//            editor.putString("GPSTrackMinDistance", "0");
+//            editor.commit();
+//        }
         if (!mPreferences.contains("SendUsageStatistics")) {
             editor.putBoolean("SendUsageStatistics", true);
             editor.commit();
         }
+        if (!mPreferences.contains("GPSTrackMaxAccuracy")) {
+            editor.putString("GPSTrackMaxAccuracy", "20");
+            editor.commit();
+        }
+        if (!mPreferences.contains("GPSTrackMaxAccuracyShutdownLimit")) {
+            editor.putString("GPSTrackMaxAccuracyShutdownLimit", "30");
+            editor.commit();
+        }
+
     }
 
     @Override

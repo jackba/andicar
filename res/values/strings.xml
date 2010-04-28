@@ -236,6 +236,10 @@
     <string name="PREF_GPSTRACK_MINDISTANCE_SUMMARY">"Minimum distance between two recordings of your position"</string>
     <string name="PREF_SENDUSAGESTATS_TITLE">"Crash and usage statistics"</string>
     <string name="PREF_SENDUSAGESTATS_SUMMARY">"Send anonymous crash reports and usage statistics to developers"</string>
+    <string name="PREF_GPSTRACK_MAXACCURACY_TITLE">"Accuracy"</string>
+    <string name="PREF_GPSTRACK_MAXACCURACY_SUMMARY">"Minimum accuracy to be considered a valid track point"</string>
+    <string name="PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_TITLE">"Self stop limit"</string>
+    <string name="PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_SUMMARY">"The tracking will be automatically stopped if the skipped points percentage is greater than this value"</string>
 
     <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
     <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>
@@ -279,6 +283,8 @@
     <string name="SERVICE_GPSTRACK_LABEL">"AndiCar GPS Tracking"</string>
     <string name="SERVICE_GPSTRACK_SERVICESTOPPED_MESSAGE">"GPS tracking stopped"</string>
     <string name="SERVICE_GPSTRACK_GPSDISABLED">"Your gps is disabled!\nPlease enable it."</string>
+    <string name="SERVICE_GPSTRACK_ACCURACYPROBLEM">"Accuracy is over the limit!"</string>
+    <string name="SERVICE_GPSTRACK_AUTOSHUTDOWN_MSG">"GPS Tracking was stopped because the skipped points percent (%1) is over the limit (%2)!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
 
     <string name="GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION">"Start GPS Track"</string>
     <string name="GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION">"Stop GPS Track"</string>
