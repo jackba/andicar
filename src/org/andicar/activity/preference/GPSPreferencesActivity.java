@@ -19,9 +19,9 @@
 package org.andicar.activity.preference;
 
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
@@ -36,23 +36,21 @@ import org.andicar.utils.AndiCarExceptionHandler;
  * @author Miklos Keresztes
  */
 public class GPSPreferencesActivity extends PreferenceActivity {
-    private Resources mRes = null;
     protected SharedPreferences mPreferences;
     private CheckBoxPreference ckpIsTrackKML;
     private CheckBoxPreference ckpIsTrackGPX;
-    private CheckBoxPreference ckpIsTrackOnMap;
+    private boolean isSendCrashReport;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        boolean isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-        if(isSendStatistics)
+        isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
+        if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 
-        mRes = getResources();
         setPreferenceScreen(createPreferenceHierarchy());
     }
 
@@ -61,36 +59,27 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         prefMgr.setSharedPreferencesName(StaticValues.GLOBAL_PREFERENCE_NAME);
         PreferenceScreen prefScreenRoot = prefMgr.createPreferenceScreen(this);
 
-//        ckpIsTrackOnMap = new CheckBoxPreference(this);
-//        ckpIsTrackOnMap.setKey("IsGPSTrackOnMap");
-//        ckpIsTrackOnMap.setTitle(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_TITLE));
-//        ckpIsTrackOnMap.setSummary(mRes.getString(R.string.PREF_GPSTRACK_SHOWONMAP_SUMMARY));
-//        prefScreenRoot.addPreference(ckpIsTrackOnMap);
-
         PreferenceScreen gpsTrackFileFormatPref = getPreferenceManager().createPreferenceScreen(this);
         gpsTrackFileFormatPref.setTitle(R.string.PREF_GPSTRACK_FILEFORMAT_TITLE);
         gpsTrackFileFormatPref.setSummary(R.string.PREF_GPSTRACK_FILEFORMAT_SUMMARY);
         prefScreenRoot.addPreference(gpsTrackFileFormatPref);
 
-//        gpsTrackCSVFileFormatCk = new CheckBoxPreference(this);
-//        gpsTrackCSVFileFormatCk.setTitle(R.string.PREF_GPSTRACK_FILEFORMATCSV_TITLE);
-//        gpsTrackCSVFileFormatCk.setSummary(R.string.PREF_GPSTRACK_FILEFORMATCSV_SUMMARY);
-//        gpsTrackCSVFileFormatCk.setKey("IsUseCSVTrack");
-//        gpsTrackCSVFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
-//        gpsTrackFileFormatPref.addPreference(gpsTrackCSVFileFormatCk);
 
+        EditTextPreference tv = new EditTextPreference(this);
+        tv.setTitle(R.string.PREF_GPSTRACK_FILEFORMATCSV_TITLE);
+        tv.setEnabled(false);
+        gpsTrackFileFormatPref.addPreference(tv);
+        
         ckpIsTrackKML = new CheckBoxPreference(this);
         ckpIsTrackKML.setTitle(R.string.PREF_GPSTRACK_FILEFORMATKML_TITLE);
         ckpIsTrackKML.setSummary(R.string.PREF_GPSTRACK_FILEFORMATKML_SUMMARY);
         ckpIsTrackKML.setKey("IsUseKMLTrack");
-//        gpsTrackKMLFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
         gpsTrackFileFormatPref.addPreference(ckpIsTrackKML);
 
         ckpIsTrackGPX = new CheckBoxPreference(this);
         ckpIsTrackGPX.setTitle(R.string.PREF_GPSTRACK_FILEFORMATGPX_TITLE);
         ckpIsTrackGPX.setSummary(R.string.PREF_GPSTRACK_FILEFORMATGPX_SUMMARY);
         ckpIsTrackGPX.setKey("IsUseGPXTrack");
-//        gpsTrackGPXFileFormatCk.setOnPreferenceClickListener(gpsTrackFileFormat);
         gpsTrackFileFormatPref.addPreference(ckpIsTrackGPX);
 
         // Minimum time  between two recordings
@@ -102,16 +91,6 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         gpsTrackMinTimePref.setTitle(R.string.PREF_GPSTRACK_MINTIME_TITLE);
         gpsTrackMinTimePref.setSummary(R.string.PREF_GPSTRACK_MINTIME_SUMMARY);
         prefScreenRoot.addPreference(gpsTrackMinTimePref);
-
-//        // Minimum distance between two recordings
-//        ListPreference gpsTrackMinDistPref = new ListPreference(this);
-//        gpsTrackMinDistPref.setEntries(R.array.gpstrack_preference_mindistance_entries);
-//        gpsTrackMinDistPref.setEntryValues(R.array.gpstrack_preference_mindistance_values);
-//        gpsTrackMinDistPref.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
-//        gpsTrackMinDistPref.setKey("GPSTrackMinDistance");
-//        gpsTrackMinDistPref.setTitle(R.string.PREF_GPSTRACK_MINDISTANCE_TITLE);
-//        gpsTrackMinDistPref.setSummary(R.string.PREF_GPSTRACK_MINDISTANCE_SUMMARY);
-//        prefScreenRoot.addPreference(gpsTrackMinDistPref);
 
         // Maximum deviation (accuracy)
         ListPreference gpsTrackMaxAccuracy = new ListPreference(this);

@@ -106,6 +106,7 @@ public class MainActivity extends Activity {
     private boolean showStatistcsZone = true;
 
     private boolean isSendStatistics = true;
+    private boolean isSendCrashReport;
 
     @Override
     protected void onPause() {
@@ -123,7 +124,8 @@ public class MainActivity extends Activity {
 
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-        if(isSendStatistics)
+        isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
+        if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 
@@ -299,6 +301,11 @@ public class MainActivity extends Activity {
             editor.putBoolean("SendUsageStatistics", true);
             editor.commit();
         }
+        if (!mPreferences.contains("SendCrashReport")) {
+            editor.putBoolean("SendCrashReport", true);
+            editor.commit();
+        }
+
         if (!mPreferences.contains("GPSTrackMaxAccuracy")) {
             editor.putString("GPSTrackMaxAccuracy", "20");
             editor.commit();
@@ -564,14 +571,15 @@ public class MainActivity extends Activity {
     }
 
     @Override
-    public void onStart()
+    protected void onStart()
     {
         super.onStart();
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryStartSession(this);
     }
+
     @Override
-    public void onStop()
+    protected void onStop()
     {
         super.onStop();
         if(isSendStatistics)

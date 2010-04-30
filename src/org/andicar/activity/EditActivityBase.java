@@ -42,6 +42,7 @@ import org.andicar.utils.StaticValues;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
 import org.andicar.utils.AndiCarExceptionHandler;
+import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
 
 /**
@@ -78,12 +79,29 @@ public abstract class EditActivityBase extends Activity {
     protected AlertDialog.Builder madbErrorAlert;
     protected AlertDialog madError;
     protected boolean isSendStatistics = true;
+    protected boolean isSendCrashReport;
 
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryStartSession(this);
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEndSession(this);
+    }
+    
     protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-        if(isSendStatistics)
+        isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
+        if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 

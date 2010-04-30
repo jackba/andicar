@@ -36,6 +36,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
+import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
 /**
@@ -62,12 +63,31 @@ public class ListActivityBase extends ListActivity {
     protected Bundle extras = null;
     protected AlertDialog.Builder errorAlertBuilder;
     protected AlertDialog errorAlert;
-    boolean isSendStatistics = true;
+    protected boolean isSendStatistics = true;
+    protected boolean isSendCrashReport = true;
 
-    /** Use instead  */
+    /** Use onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
+     *                  String tableName, String[] columns, String whereCondition, String orderByColumn,
+     *                  int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo)
+     */
     @Override
     @Deprecated
     public void onCreate(Bundle icicle) {
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryStartSession(this);
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEndSession(this);
     }
 
     protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
@@ -78,7 +98,8 @@ public class ListActivityBase extends ListActivity {
 
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-        if(isSendStatistics)
+        isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
+        if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
         mRes = getResources();

@@ -32,6 +32,9 @@ import org.andicar.activity.R;
 import org.andicar.utils.StaticValues;
 import android.os.Vibrator;
 import android.content.Context;
+import java.util.HashMap;
+import java.util.Map;
+import org.andicar.utils.AndiCarStatistics;
 
 
 /**
@@ -66,12 +69,25 @@ public class AboutActivity extends EditActivityBase {
 
     View.OnClickListener mDonateClickListener = new View.OnClickListener() {
         public  void onClick(View v) {
+
             ImageView srcImg = (ImageView)v;
             String payPalCurrency = "";
-            if(srcImg.getId() == R.id.aboutDonateEUR)
+            if(srcImg.getId() == R.id.aboutDonateEUR){
                 payPalCurrency = "EUR";
-            else if(srcImg.getId() == R.id.aboutDonateUSD)
+                if(isSendStatistics){
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("Currency", "Eur");
+                    AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                }
+            }
+            else if(srcImg.getId() == R.id.aboutDonateUSD){
                 payPalCurrency = "USD";
+                if(isSendStatistics){
+                    Map<String, String> parameters = new HashMap<String, String>();
+                    parameters.put("Currency", "USD");
+                    AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                }
+            }
             Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(100);
             GetPayPalActivity ppa = new GetPayPalActivity();

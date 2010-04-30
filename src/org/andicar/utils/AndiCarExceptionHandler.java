@@ -18,9 +18,6 @@
 package org.andicar.utils;
 
 import android.content.Context;
-import com.flurry.android.FlurryAgent;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  */
@@ -39,16 +36,16 @@ public class AndiCarExceptionHandler
         Throwable cause = thrwbl.getCause();
         StackTraceElement[] stackTrace = cause.getStackTrace();
         StackTraceElement stackTraceElement;
-        String stackStr = thrwbl.getMessage() + "\n";
+        String stackStr = "";
         for(int i = 0; i < stackTrace.length; i++) {
             stackTraceElement = stackTrace[i];
             if(stackTraceElement.getClassName().contains("org.andicar")) {
-                stackStr = stackStr + stackTraceElement.getMethodName() + ": " +
+                stackStr = stackStr + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " +
                         stackTraceElement.getLineNumber() + "\n";
             }
         }
         AndiCarStatistics.sendFlurryStartSession(mCtx);
-        AndiCarStatistics.sendFlurryError("AndiCarError", thrwbl.getMessage(), stackStr);
+        AndiCarStatistics.sendFlurryError("AndiCarError", stackStr, thrwbl.getMessage());
         AndiCarStatistics.sendFlurryEndSession(mCtx);
         mPreviousHandler.uncaughtException(thread, thrwbl);
     }

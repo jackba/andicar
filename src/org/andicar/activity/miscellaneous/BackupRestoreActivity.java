@@ -31,6 +31,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
@@ -67,8 +70,6 @@ public class BackupRestoreActivity extends EditActivityBase {
         lvBackupSet = (ListView) findViewById(R.id.lvBackupList);
         fillBkList();
 
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent("BackupRestore", null);
     }
 
     private void fillBkList() {
@@ -111,6 +112,11 @@ public class BackupRestoreActivity extends EditActivityBase {
                             mResource.getString( R.string.BKRESTORE_ACTIVITY_BKOK_MESSAGE ), Toast.LENGTH_SHORT);
                     toast.show();
                     fillBkList();
+                    if(isSendStatistics){
+                        Map<String, String> parameters = new HashMap<String, String>();
+                        parameters.put("Operation", "Backup");
+                        AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                    }
                 }
                 else{
                     madbErrorAlert.setMessage(mResource.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
@@ -137,6 +143,12 @@ public class BackupRestoreActivity extends EditActivityBase {
                                     editor.putLong( "CurrentCar_ID", -1);
                                     editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
+                                    if(isSendStatistics){
+                                        Map<String, String> parameters = new HashMap<String, String>();
+                                        parameters.put("Operation", "Restore");
+                                        AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                                    }
+
                                     AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
                                     builder.setMessage(mResource.getString(R.string.BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE));
                                     builder.setCancelable(false);
@@ -148,6 +160,7 @@ public class BackupRestoreActivity extends EditActivityBase {
                                                });
                                     AlertDialog alert = builder.create();
                                     alert.show();
+
                                 }
                                 else{
                                     madbErrorAlert.setMessage(mResource.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
