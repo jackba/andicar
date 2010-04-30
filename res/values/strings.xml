@@ -224,8 +224,7 @@
     <string name="PREF_GPSTRACK_SHOWONMAP_SUMMARY">"Draw the track on the map"</string>
     <string name="PREF_GPSTRACK_FILEFORMAT_TITLE">"File format"</string>
     <string name="PREF_GPSTRACK_FILEFORMAT_SUMMARY">"Choose the file format(s) used for the track"</string>
-    <string name="PREF_GPSTRACK_FILEFORMATCSV_TITLE">"CSV"</string>
-    <string name="PREF_GPSTRACK_FILEFORMATCSV_SUMMARY">"Comma Separated Values"</string>
+    <string name="PREF_GPSTRACK_FILEFORMATCSV_TITLE">"CSV is allways used"</string>
     <string name="PREF_GPSTRACK_FILEFORMATKML_TITLE">"KML"</string>
     <string name="PREF_GPSTRACK_FILEFORMATKML_SUMMARY">"Keyhole Markup Language"</string>
     <string name="PREF_GPSTRACK_FILEFORMATGPX_TITLE">"GPX"</string>
@@ -234,8 +233,10 @@
     <string name="PREF_GPSTRACK_MINTIME_SUMMARY">"Minimum time between two recordings of your position"</string>
     <string name="PREF_GPSTRACK_MINDISTANCE_TITLE">"Min. distance between points"</string>
     <string name="PREF_GPSTRACK_MINDISTANCE_SUMMARY">"Minimum distance between two recordings of your position"</string>
-    <string name="PREF_SENDUSAGESTATS_TITLE">"Crash and usage statistics"</string>
-    <string name="PREF_SENDUSAGESTATS_SUMMARY">"Send anonymous crash reports and usage statistics to developers"</string>
+    <string name="PREF_SENDUSAGESTATS_TITLE">"Usage statistics"</string>
+    <string name="PREF_SENDUSAGESTATS_SUMMARY">"Send anonymous usage statistics to developers"</string>
+    <string name="PREF_SENDCRASHREPORT_TITLE">"Crash reports"</string>
+    <string name="PREF_SENDCRASHREPORT_SUMMARY">"Send anonymous crash reports to developers"</string>
     <string name="PREF_GPSTRACK_MAXACCURACY_TITLE">"Accuracy"</string>
     <string name="PREF_GPSTRACK_MAXACCURACY_SUMMARY">"Minimum accuracy to be considered a valid track point"</string>
     <string name="PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_TITLE">"Self stop limit"</string>

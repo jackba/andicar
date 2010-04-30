@@ -119,6 +119,7 @@ public class GPSTrackService extends Service {
     private double dTmpSkippedTrackPoints = 0;
     private boolean bNotificationShowed = false;
     private double skippedPointPercentage = 0;
+    private boolean isSendCrashReport;
 
     /**
      * Class for clients to access.  Because we know this service always
@@ -135,8 +136,8 @@ public class GPSTrackService extends Service {
     public void onCreate() {
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mResource = getResources();
-        boolean isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-        if(isSendStatistics)
+        isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
+        if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
         
@@ -285,7 +286,7 @@ public class GPSTrackService extends Service {
             mMainDbAdapter = null;
         }
 
-        if(isSendStatistics)
+        if(isSendCrashReport)
             AndiCarStatistics.sendFlurryEvent("GPSTrack", null);
     }
 
@@ -473,7 +474,7 @@ public class GPSTrackService extends Service {
 
             notification = new Notification(R.drawable.andicar_gps_anim, message,
                     System.currentTimeMillis());
-            notification.setLatestEventInfo(this, title, message, contentIntent);
+            notification.setLatestEventInfo(this, title, message, contentIntent); 
         }
         else if(what == NOTIF_TYPE_ACCURACY_WARNING){
             message = getString(R.string.SERVICE_GPSTRACK_ACCURACYPROBLEM);

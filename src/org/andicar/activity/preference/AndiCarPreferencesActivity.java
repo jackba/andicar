@@ -28,6 +28,8 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import java.util.HashMap;
+import java.util.Map;
 import org.andicar.activity.CarListActivity;
 import org.andicar.activity.CurrencyListActivity;
 import org.andicar.activity.CurrencyRateListActivity;
@@ -41,6 +43,7 @@ import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.utils.StaticValues;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
+import org.andicar.utils.AndiCarStatistics;
 
 /**
  *
@@ -50,20 +53,50 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
 
     private Resources mRes = null;
     protected SharedPreferences mPreferences;
+    private boolean isSendStatistics;
+    private boolean isSendCrashReport;
     
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        boolean isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-        if(isSendStatistics)
+        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+        isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
+        if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
         mRes = getResources();
 
         setPreferenceScreen(createPreferenceHierarchy());
 
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryStartSession(this);
+    }
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+
+        if(isSendStatistics != mPreferences.getBoolean("SendUsageStatistics", true)){
+            if(!isSendStatistics)
+                AndiCarStatistics.sendFlurryStartSession(this);
+            Map<String, String> parameters = new HashMap<String, String>();
+            parameters.put("SendStatisticsChanged", "From " + isSendStatistics + " to " + mPreferences.getBoolean("SendUsageStatistics", true));
+            AndiCarStatistics.sendFlurryEvent("SendStatistics", parameters);
+            if(!isSendStatistics)
+                AndiCarStatistics.sendFlurryEndSession(this);
+        }
+
+        if(isSendStatistics){
+            AndiCarStatistics.sendFlurryEndSession(this);
+        }
     }
 
     private PreferenceScreen createPreferenceHierarchy() {
@@ -179,6 +212,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         mainScreenPref.setTitle(mRes.getString(R.string.PREF_CAT_MAINSCREENCATEGORY_TITLE));
         mainScreenPref.setSummary(mRes.getString(R.string.PREF_CAT_MAINSCREENCATEGORY_SUMMARY));
         miscCategory.addPreference(mainScreenPref);
+
         //send crash and usage statistiscs
         CheckBoxPreference sendUsagePrefCk = new CheckBoxPreference(this);
         sendUsagePrefCk.setTitle(R.string.PREF_SENDUSAGESTATS_TITLE);
@@ -186,6 +220,11 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         sendUsagePrefCk.setKey("SendUsageStatistics");
         miscCategory.addPreference(sendUsagePrefCk);
 
+        CheckBoxPreference sendCrashPrefCk = new CheckBoxPreference(this);
+        sendCrashPrefCk.setTitle(R.string.PREF_SENDCRASHREPORT_TITLE);
+        sendCrashPrefCk.setSummary(R.string.PREF_SENDCRASHREPORT_SUMMARY);
+        sendCrashPrefCk.setKey("SendCrashReport");
+        miscCategory.addPreference(sendCrashPrefCk);
 
         return prefScreenRoot;
     }
