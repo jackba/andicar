@@ -76,7 +76,7 @@ public class AboutActivity extends EditActivityBase {
                 if(isSendStatistics){
                     Map<String, String> parameters = new HashMap<String, String>();
                     parameters.put("Currency", "Eur");
-                    AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                    AndiCarStatistics.sendFlurryEvent("PayPal", parameters);
                 }
             }
             else if(srcImg.getId() == R.id.aboutDonateUSD){
@@ -84,7 +84,7 @@ public class AboutActivity extends EditActivityBase {
                 if(isSendStatistics){
                     Map<String, String> parameters = new HashMap<String, String>();
                     parameters.put("Currency", "USD");
-                    AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                    AndiCarStatistics.sendFlurryEvent("PayPal", parameters);
                 }
             }
             Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
