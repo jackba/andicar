@@ -91,7 +91,7 @@
                 android:text="@string/SEARCH_FROM_DATE_LBL"
                 />
             <EditText
-                android:id="@+id/setDateFromSearch"
+                android:id="@+id/etDateFromSearch"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:layout_marginLeft="2dip"

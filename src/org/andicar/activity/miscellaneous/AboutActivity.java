@@ -43,7 +43,6 @@ import org.andicar.utils.AndiCarStatistics;
  */
 public class AboutActivity extends EditActivityBase {
 
-    Vibrator vib;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {

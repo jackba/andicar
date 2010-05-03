@@ -103,6 +103,12 @@ public class StaticValues
 
     public static final String EXPENSES_COL_FROMREFUEL_TABLE_NAME = "Refuel";
     
+    public static int NOTIF_TYPE_GPSTRACK_STARTED_ID = 1;
+    public static int NOTIF_TYPE_ACCURACY_WARNING_ID = 2;
+    public static int NOTIF_TYPE_FILESYSTEM_ERROR_ID = 3;
+    public static int NOTIF_TYPE_ACCURACY_SHUTDOWN_ID = 4;
+
+    
     public static String LM_COPYRIGHT_HTML1 =
             "&nbsp;&nbsp;&nbsp;&nbsp;<b><i>AndiCar</i></b> is a free and open source car management " +
             "software for Android powered devices. It is licensed under the terms of the GNU General Public License.<br>" +
