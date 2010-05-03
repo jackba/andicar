@@ -96,7 +96,7 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
         initSpinner(spnExpCategorySearch, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME);
         spnExpTypeSearch = (Spinner) searchView.findViewById(R.id.spnExpTypeSearch);
         initSpinner(spnExpTypeSearch, MainDbAdapter.EXPENSETYPE_TABLE_NAME);
-        etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserComment);
+        etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
         etUserCommentSearch.setText("%");
         etDateFromSearch = (EditText) searchView.findViewById(R.id.etDateFromSearch);
         etDateToSearch = (EditText) searchView.findViewById(R.id.etDateToSearch);

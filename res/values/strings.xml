@@ -281,16 +281,21 @@
     <string name="REPORT_SERVICE_LABEL">"AndiCar Report Service"</string>
     <string name="REPORT_PROGRESS_DIALOG_TEXT">"Report creation started. Please wait..."</string>
 
-    <string name="SERVICE_GPSTRACK_LABEL">"AndiCar GPS Tracking"</string>
+<!--    <string name="SERVICE_GPSTRACK_LABEL">"AndiCar GPS Tracking"</string> -->
     <string name="SERVICE_GPSTRACK_SERVICESTOPPED_MESSAGE">"GPS tracking stopped"</string>
     <string name="SERVICE_GPSTRACK_GPSDISABLED">"Your gps is disabled!\nPlease enable it."</string>
-    <string name="SERVICE_GPSTRACK_ACCURACYPROBLEM">"Accuracy is over the limit!"</string>
-    <string name="SERVICE_GPSTRACK_AUTOSHUTDOWN_MSG">"GPS Tracking was stopped because the skipped points percent (%1) is over the limit (%2)!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
 
     <string name="GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION">"Start GPS Track"</string>
     <string name="GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION">"Stop GPS Track"</string>
     <string name="GPSTRACK_ACTIVITY_FILEFORMAT_LABEL">"Track file format:"</string>
     <string name="GPSTRACK_ACTIVITY_CREATEMILEAGE_LABEL">"Create mileage"</string>
+
+    <string name="GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_TITLE">"AndiCar GPS Tracking"</string>
     <string name="GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE">"Tracking in progress"</string>
+    <string name="SERVICE_GPSTRACK_ACCURACYPROBLEM_TITLE">"AndiCar GPS Warning!"</string>
+    <string name="SERVICE_GPSTRACK_ACCURACYPROBLEM_MESSAGE">"Accuracy is over the limit!"</string>
+    <string name="SERVICE_GPSTRACK_AUTOSHUTDOWN_TITLE">"AndiCar GPS Stopped!"</string>
+    <string name="SERVICE_GPSTRACK_AUTOSHUTDOWN_MESSAGE">"GPS Tracking was stopped because the skipped points percent (%1) is over the limit (%2)!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
+    <string name="SERVICE_GPSTRACK_FILESYSTEMERROR_TITLE">"AndiCar File System Error!"</string>
 
 </resources>

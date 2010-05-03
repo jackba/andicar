@@ -92,7 +92,7 @@ public class MileageListReportActivity extends ReportListActivityBase {
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
         spnExpTypeSearch = (Spinner) searchView.findViewById(R.id.spnExpTypeSearch);
         initSpinner(spnExpTypeSearch, MainDbAdapter.EXPENSETYPE_TABLE_NAME);
-        etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserComment);
+        etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
         etUserCommentSearch.setText("%");
         etDateFromSearch = (EditText) searchView.findViewById(R.id.etDateFromSearch);
         etDateToSearch = (EditText) searchView.findViewById(R.id.etDateToSearch);
