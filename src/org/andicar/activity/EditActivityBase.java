@@ -344,10 +344,10 @@ public abstract class EditActivityBase extends Activity {
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
         tvDateTimeValue.setText(
                 new StringBuilder() // Month is 0 based so add 1
-                .append(Utils.pad(mMonth + 1)).append("-")
-                .append(Utils.pad(mDay)).append("-")
+                .append(Utils.pad(mMonth + 1, 2)).append("-")
+                .append(Utils.pad(mDay, 2)).append("-")
                 .append(mYear).append(" ")
-                .append(Utils.pad(mHour)).append(":").append(Utils.pad(mMinute)));
+                .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
     }
 
 }
