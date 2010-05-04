@@ -57,13 +57,16 @@ public class Utils {
          return cal.getTimeInMillis();
     }
 
-    public static String pad(int c) {
-        if(c >= 10) {
-            return String.valueOf(c);
-        }
-        else {
-            return "0" + String.valueOf(c);
-        }
+    public static String pad(int value, int length) {
+        return pad(Integer.toString(value), length);
+    }
+    public static String pad(String value, int length) {
+        String retVal = value;
+        if(retVal.length() >= length)
+            return retVal;
+        else
+            return pad("0" + retVal, length);
+
     }
 
     public static String appendDateTime(String inStr, boolean appendHour, boolean appendMinute,
@@ -71,17 +74,17 @@ public class Utils {
         Calendar cal = Calendar.getInstance();
         inStr = inStr +
                     cal.get(Calendar.YEAR) + "" +
-                    pad(cal.get(Calendar.MONTH) + 1) +
-                    pad(cal.get(Calendar.DAY_OF_MONTH));
+                    pad(cal.get(Calendar.MONTH) + 1, 2) +
+                    pad(cal.get(Calendar.DAY_OF_MONTH), 2);
         if(appendHour)
             inStr = inStr +
-                    pad(cal.get(Calendar.HOUR_OF_DAY));
+                    pad(cal.get(Calendar.HOUR_OF_DAY), 2);
         if(appendMinute)
             inStr = inStr +
-                    pad(cal.get(Calendar.MINUTE));
+                    pad(cal.get(Calendar.MINUTE), 2);
         if(appendSecondMilisecond)
             inStr = inStr +
-                    pad(cal.get(Calendar.SECOND)) +
+                    pad(cal.get(Calendar.SECOND), 2) +
                     cal.get(Calendar.MILLISECOND);
         return inStr;
     }
@@ -93,19 +96,19 @@ public class Utils {
     public static String getDateStr(boolean appendHour, boolean appendMinute){
         Calendar cal = Calendar.getInstance();
         String retVal = cal.get(Calendar.YEAR) + "-" +
-                    pad(cal.get(Calendar.MONTH) + 1) + "-" +
-                    pad(cal.get(Calendar.DAY_OF_MONTH));
+                    pad(cal.get(Calendar.MONTH) + 1, 2) + "-" +
+                    pad(cal.get(Calendar.DAY_OF_MONTH), 2);
         if(appendHour){
             retVal = retVal + " " +
-                    pad(cal.get(Calendar.HOUR_OF_DAY));
+                    pad(cal.get(Calendar.HOUR_OF_DAY), 2);
         }
         if(appendMinute){
             if(appendHour)
                 retVal = retVal + ":" +
-                        pad(cal.get(Calendar.MINUTE));
+                        pad(cal.get(Calendar.MINUTE), 2);
             else
                 retVal = retVal + " " +
-                        pad(cal.get(Calendar.MINUTE));
+                        pad(cal.get(Calendar.MINUTE), 2);
         }
         return retVal;
 

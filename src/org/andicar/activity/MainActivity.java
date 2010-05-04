@@ -314,6 +314,10 @@ public class MainActivity extends Activity {
             editor.putString("GPSTrackMaxAccuracyShutdownLimit", "30");
             editor.commit();
         }
+        if (!mPreferences.contains("GPSTrackTrackFileSplitCount")) {
+            editor.putString("GPSTrackTrackFileSplitCount", "1000");
+            editor.commit();
+        }
 
     }
 

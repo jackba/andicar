@@ -19,6 +19,7 @@
 package org.andicar.activity.preference;
 
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
@@ -40,12 +41,14 @@ public class GPSPreferencesActivity extends PreferenceActivity {
     private CheckBoxPreference ckpIsTrackKML;
     private CheckBoxPreference ckpIsTrackGPX;
     private boolean isSendCrashReport;
+    private Resources mRes;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mRes = getResources();
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
@@ -66,7 +69,7 @@ public class GPSPreferencesActivity extends PreferenceActivity {
 
 
         EditTextPreference tv = new EditTextPreference(this);
-        tv.setTitle(R.string.PREF_GPSTRACK_FILEFORMATCSV_TITLE);
+        tv.setTitle(R.string.PREF_GPSTRACK_FileFormatCSV_Msg);
         tv.setEnabled(false);
         gpsTrackFileFormatPref.addPreference(tv);
         
@@ -81,6 +84,11 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         ckpIsTrackGPX.setSummary(R.string.PREF_GPSTRACK_FILEFORMATGPX_SUMMARY);
         ckpIsTrackGPX.setKey("IsUseGPXTrack");
         gpsTrackFileFormatPref.addPreference(ckpIsTrackGPX);
+
+        EditTextPreference tv2 = new EditTextPreference(this);
+        tv2.setSummary(R.string.PREF_GPSTRACK_TrackFileLocation_Msg);
+        tv2.setEnabled(false);
+        gpsTrackFileFormatPref.addPreference(tv2);
 
         // Minimum time  between two recordings
         ListPreference gpsTrackMinTimePref = new ListPreference(this);
@@ -111,6 +119,12 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         gpsTrackMaxAccuracyShutdownLimit.setTitle(R.string.PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_TITLE);
         gpsTrackMaxAccuracyShutdownLimit.setSummary(R.string.PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_SUMMARY);
         prefScreenRoot.addPreference(gpsTrackMaxAccuracyShutdownLimit);
+
+        EditTextPreference tpSplitFile = new EditTextPreference(this);
+        tpSplitFile.setTitle(R.string.PREF_GPSTRACK_TrackFileSplitCount_TITLE);
+        tpSplitFile.setSummary(R.string.PREF_GPSTRACK_TrackFileSplitCount_SUMMARY);
+        tpSplitFile.setKey("GPSTrackTrackFileSplitCount");
+        prefScreenRoot.addPreference(tpSplitFile);
 
         return prefScreenRoot;
     }
