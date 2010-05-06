@@ -55,9 +55,9 @@ public class UOMEditActivity extends EditActivityBase {
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if(uomType.equals( "L"))
-            setTitle( getTitle() + " (" + mResource.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_LENGTH) + ")");
+            setTitle( getTitle() + " (" + mResource.getString( R.string.UOMEditActivity_UOMTypeLengthTitle) + ")");
         else
-            setTitle( getTitle() + " (" + mResource.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_VOLUME) + ")");
+            setTitle( getTitle() + " (" + mResource.getString( R.string.UOMEditActivity_UOMTypeVolumeTitle) + ")");
 
         if (operation.equals( "E")) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
@@ -94,7 +94,7 @@ public class UOMEditActivity extends EditActivityBase {
                         String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( retVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }

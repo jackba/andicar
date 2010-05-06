@@ -56,13 +56,13 @@ public class DriverListActivity extends ListActivityBase
                 mPrefEditor.putString( "CurrentDriver_Name", dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
                 mPrefEditor.commit();
                 Toast toast = Toast.makeText( getApplicationContext(),
-                        dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.RECORD_SELECTED_TOAST_MESSAGE), Toast.LENGTH_SHORT );
+                        dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
                 toast.show();
                 finish();
             }
             else //inactive driver selected
             {
-                errorAlertBuilder.setMessage(mRes.getString(R.string.INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE));
+                errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_InactiveDriverSelectedMessage));
                 errorAlert = errorAlertBuilder.create();
                 errorAlert.show();
             }

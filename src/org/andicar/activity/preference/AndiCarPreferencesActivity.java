@@ -106,123 +106,123 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
 
         //cars and drivers
         PreferenceCategory carDriverCategory = new PreferenceCategory(this);
-        carDriverCategory.setTitle(mRes.getString(R.string.PREF_CARSDRIVER_CATEGORY_TITLE));
+        carDriverCategory.setTitle(mRes.getString(R.string.PREF_CarDriverCategoryTitle));
         prefScreenRoot.addPreference(carDriverCategory);
         //cars
         PreferenceScreen carPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         carPrefScreen.setIntent(new Intent(this, CarListActivity.class));
-        carPrefScreen.setTitle(mRes.getString(R.string.PREF_CARS_TITLE));
-        carPrefScreen.setSummary(mRes.getString(R.string.PREF_CARS_SUMMARY));
+        carPrefScreen.setTitle(mRes.getString(R.string.PREF_CarTitle));
+        carPrefScreen.setSummary(mRes.getString(R.string.PREF_CarSummary));
         carDriverCategory.addPreference(carPrefScreen);
         //drivers
         PreferenceScreen driverPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         driverPrefScreen.setIntent(new Intent(this, DriverListActivity.class));
-        driverPrefScreen.setTitle(mRes.getString(R.string.PREF_DRIVERS_TITLE));
-        driverPrefScreen.setSummary(mRes.getString(R.string.PREF_DRIVERS_SUMMARY));
+        driverPrefScreen.setTitle(mRes.getString(R.string.PREF_DriverTitle));
+        driverPrefScreen.setSummary(mRes.getString(R.string.PREF_DriverSummary));
         carDriverCategory.addPreference(driverPrefScreen);
 
         //uom's
         PreferenceCategory uomPrefCategory = new PreferenceCategory(this);
-        uomPrefCategory.setTitle(mRes.getString( R.string.PREF_UOMS_CATEGORY_TITLE ));
+        uomPrefCategory.setTitle(mRes.getString( R.string.PREF_UOMCategoryTitle ));
         prefScreenRoot.addPreference(uomPrefCategory);
         //preference for length (distance) uom
         PreferenceScreen uomLengthPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         Intent uomLengthIntent = new Intent(this, UOMListActivity.class);
         uomLengthIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_LENGTH_TYPE_CODE);
         uomLengthPrefScreen.setIntent(uomLengthIntent);
-        uomLengthPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMLENGTH_TITLE));
-        uomLengthPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMLENGTH_SUMMARY));
+        uomLengthPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMLengthTitle));
+        uomLengthPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMLengthSummary));
         uomPrefCategory.addPreference(uomLengthPrefScreen);
         //preference for volumne uom
         PreferenceScreen uomVolumePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         Intent uomVolumeIntent = new Intent(this, UOMListActivity.class);
         uomVolumeIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_VOLUME_TYPE_CODE);
         uomVolumePrefScreen.setIntent(uomVolumeIntent);
-        uomVolumePrefScreen.setTitle(mRes.getString(R.string.PREF_UOMVOLUME_TITLE));
-        uomVolumePrefScreen.setSummary(mRes.getString(R.string.PREF_UOMVOLUME_SUMMARY));
+        uomVolumePrefScreen.setTitle(mRes.getString(R.string.PREF_UOMVolumeTitle));
+        uomVolumePrefScreen.setSummary(mRes.getString(R.string.PREF_UOMVolumeSummary));
         uomPrefCategory.addPreference(uomVolumePrefScreen);
         //uom conversions
         PreferenceScreen uomConversionPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         uomConversionPrefScreen.setIntent(new Intent(this, UOMConversionListActivity.class));
-        uomConversionPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMCONVERSION_TITLE));
-        uomConversionPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMCONVERSION_SUMMARY));
+        uomConversionPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMConversionTitle));
+        uomConversionPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMConversionSummary));
         uomPrefCategory.addPreference(uomConversionPrefScreen);
 
         //Backup/Restore
         PreferenceCategory bkRestoreCategory = new PreferenceCategory(this);
-        bkRestoreCategory.setTitle(mRes.getString(R.string.PREF_BKRESTORE_CATEGORY_TITLE));
+        bkRestoreCategory.setTitle(mRes.getString(R.string.PREF_BackupRestoreCategoryTitle));
         prefScreenRoot.addPreference(bkRestoreCategory);
         PreferenceScreen bkRestorePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         bkRestorePrefScreen.setIntent(new Intent(this, BackupRestoreActivity.class));
-        bkRestorePrefScreen.setTitle(mRes.getString(R.string.PREF_BKRESTORE_TITLE));
-        bkRestorePrefScreen.setSummary(mRes.getString(R.string.PREF_BKRESTORE_SUMMARY));
+        bkRestorePrefScreen.setTitle(mRes.getString(R.string.PREF_BackupRestoreTitle));
+        bkRestorePrefScreen.setSummary(mRes.getString(R.string.PREF_BackupRestoreSummary));
         bkRestoreCategory.addPreference(bkRestorePrefScreen);
 
         //Expenses settings
         PreferenceCategory expenseCategory = new PreferenceCategory(this);
-        expenseCategory.setTitle(mRes.getString(R.string.PREF_EXPENSE_CATEGORY_TITLE));
+        expenseCategory.setTitle(mRes.getString(R.string.PREF_ExpenseCategoryTitle));
         prefScreenRoot.addPreference(expenseCategory);
 
         //expense categories
         PreferenceScreen expCategoryPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         expCategoryPrefScreen.setIntent(new Intent(this, ExpenseCategoryListActivity.class));
-        expCategoryPrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_EXPCATEGORY_TITLE));
-        expCategoryPrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_EXPCATEGORY_SUMMARY));
+        expCategoryPrefScreen.setTitle(mRes.getString(R.string.PREF_ExpenseCategoryCategoryTitle));
+        expCategoryPrefScreen.setSummary(mRes.getString(R.string.PREF_ExpenseCategoryCategorySummary));
         expenseCategory.addPreference(expCategoryPrefScreen);
 
         //expense types
         PreferenceScreen expTypePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         expTypePrefScreen.setIntent(new Intent(this, ExpenseTypeListActivity.class));
-        expTypePrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_EXPTYPE_TITLE));
-        expTypePrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_EXPTYPE_SUMMARY));
+        expTypePrefScreen.setTitle(mRes.getString(R.string.PREF_ExpenseTypeCategoryTitle));
+        expTypePrefScreen.setSummary(mRes.getString(R.string.PREF_ExpenseTypeCategorySummary));
         expenseCategory.addPreference(expTypePrefScreen);
 
         //currencies
         PreferenceScreen currencyPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         currencyPrefScreen.setIntent(new Intent(this, CurrencyListActivity.class));
-        currencyPrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_CURRENCYLIST_TITLE));
-        currencyPrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_CURRENCYLIST_SUMMARY));
+        currencyPrefScreen.setTitle(mRes.getString(R.string.PREF_CurrencyTitle));
+        currencyPrefScreen.setSummary(mRes.getString(R.string.PREF_CurrencySummary));
         expenseCategory.addPreference(currencyPrefScreen);
         //currency rates
         PreferenceScreen currencyRatePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         currencyRatePrefScreen.setIntent(new Intent(this, CurrencyRateListActivity.class));
-        currencyRatePrefScreen.setTitle(mRes.getString(R.string.PREF_CAT_CURRENCYRATELIST_TITLE));
-        currencyRatePrefScreen.setSummary(mRes.getString(R.string.PREF_CAT_CURRENCYRATELIS_SUMMARY));
+        currencyRatePrefScreen.setTitle(mRes.getString(R.string.PREF_CurrencyRateCategoryTitle));
+        currencyRatePrefScreen.setSummary(mRes.getString(R.string.PREF_CurrencyRateCategorySummary));
         expenseCategory.addPreference(currencyRatePrefScreen);
 
         //gps track
         PreferenceCategory gpsTrackCategory = new PreferenceCategory(this);
-        gpsTrackCategory.setTitle(mRes.getString(R.string.PREF_GPSTRACK_CATEGORY_TITLE));
+        gpsTrackCategory.setTitle(mRes.getString(R.string.PREF_GPSTrackCategoryTitle));
         prefScreenRoot.addPreference(gpsTrackCategory);
         //gps
         PreferenceScreen gpsTrackScreen = getPreferenceManager().createPreferenceScreen(this);
         gpsTrackScreen.setIntent(new Intent(this, GPSPreferencesActivity.class));
-        gpsTrackScreen.setTitle(mRes.getString(R.string.PREF_GPSTRACK_TITLE));
-        gpsTrackScreen.setSummary(mRes.getString(R.string.PREF_GPSTRACK_SUMMARY));
+        gpsTrackScreen.setTitle(mRes.getString(R.string.PREF_GPSTrackTitle));
+        gpsTrackScreen.setSummary(mRes.getString(R.string.PREF_GPSTrackSummary));
         gpsTrackCategory.addPreference(gpsTrackScreen);
 
         //Misc settings
         PreferenceCategory miscCategory = new PreferenceCategory(this);
-        miscCategory.setTitle(mRes.getString(R.string.PREF_MISC_CATEGORY_TITLE));
+        miscCategory.setTitle(mRes.getString(R.string.PREF_MiscCategoryTitle));
         prefScreenRoot.addPreference(miscCategory);
 
         //main screen pref
         PreferenceScreen mainScreenPref = getPreferenceManager().createPreferenceScreen(this);
         mainScreenPref.setIntent(new Intent(this, MainScreenPreferenceActivity.class));
-        mainScreenPref.setTitle(mRes.getString(R.string.PREF_CAT_MAINSCREENCATEGORY_TITLE));
-        mainScreenPref.setSummary(mRes.getString(R.string.PREF_CAT_MAINSCREENCATEGORY_SUMMARY));
+        mainScreenPref.setTitle(mRes.getString(R.string.PREF_MainScreenCategoryTitle));
+        mainScreenPref.setSummary(mRes.getString(R.string.PREF_MainScreenCategorySummary));
         miscCategory.addPreference(mainScreenPref);
 
         //send crash and usage statistiscs
         CheckBoxPreference sendUsagePrefCk = new CheckBoxPreference(this);
-        sendUsagePrefCk.setTitle(R.string.PREF_SENDUSAGESTATS_TITLE);
-        sendUsagePrefCk.setSummary(R.string.PREF_SENDUSAGESTATS_SUMMARY);
+        sendUsagePrefCk.setTitle(R.string.PREF_SendUsageTitle);
+        sendUsagePrefCk.setSummary(R.string.PREF_SendUsageSummary);
         sendUsagePrefCk.setKey("SendUsageStatistics");
         miscCategory.addPreference(sendUsagePrefCk);
 
         CheckBoxPreference sendCrashPrefCk = new CheckBoxPreference(this);
-        sendCrashPrefCk.setTitle(R.string.PREF_SENDCRASHREPORT_TITLE);
-        sendCrashPrefCk.setSummary(R.string.PREF_SENDCRASHREPORT_SUMMARY);
+        sendCrashPrefCk.setTitle(R.string.PREF_SendCrashReportsTitle);
+        sendCrashPrefCk.setSummary(R.string.PREF_SendCrashReportsSummary);
         sendCrashPrefCk.setKey("SendCrashReport");
         miscCategory.addPreference(sendCrashPrefCk);
 

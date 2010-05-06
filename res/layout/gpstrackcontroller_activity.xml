@@ -41,7 +41,7 @@
                 android:id="@+id/tvCarLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_CAR_LABEL"
+                android:text="@string/GEN_CarLabel"
                 />
             <Spinner android:id="@+id/spnCar"
                 android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
 
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
-                android:text="@string/GEN_DRIVER_LABEL"
+                android:text="@string/GEN_DriverLabel"
                 />
             <Spinner android:id="@+id/spnDriver"
                 android:layout_width="fill_parent"
@@ -65,7 +65,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
@@ -80,7 +80,7 @@
                 android:id="@+id/tvNameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_NAME_LABEL"
+                android:text="@string/GEN_NameLabel"
                 />
             <EditText
                 android:id="@+id/etName"
@@ -94,7 +94,7 @@
             android:id="@+id/tvUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_USER_COMMENT_LABEL"
+            android:text="@string/GEN_UserCommentLabel"
             />
         <AutoCompleteTextView
             android:id="@+id/acUserComment"
@@ -112,13 +112,13 @@
                 android:id="@+id/ckIsCreateMileage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GPSTRACK_ACTIVITY_CREATEMILEAGE_LABEL"
+                android:text="@string/GPSTrackActivity_CreateMileageLabel"
                 android:layout_marginLeft="10dip"
                 android:layout_alignParentLeft="true"
                 />
             <Button android:id="@+id/btnStartStopGpsTrack"
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION"
+                android:text="@string/GPSTrackActivity_StartBtnCaption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
@@ -137,20 +137,20 @@
                 android:id="@+id/tvFileFormatLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GPSTRACK_ACTIVITY_FILEFORMAT_LABEL"
+                android:text="@string/GPSTrackActivity_FileFormatLabel"
                 />
             <CheckBox
                 android:id="@+id/ckIsUseKML"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PREF_GPSTRACK_FILEFORMATKML_TITLE"
+                android:text="@string/PREFGPSTrack_KMLFileFormatTitle"
                 android:layout_marginLeft="5dip"
                 />
             <CheckBox
                 android:id="@+id/ckIsUseGPX"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/PREF_GPSTRACK_FILEFORMATGPX_TITLE"
+                android:text="@string/PREFGPSTrack_GPXFileFormatTitle"
                 android:layout_marginLeft="5dip"
                 />
         </LinearLayout>

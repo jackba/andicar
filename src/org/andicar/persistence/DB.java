@@ -158,6 +158,8 @@ public class DB {
     public static final String GPSTRACK_COL_MAXSPEED_NAME = "MaxSpeed";
     public static final String GPSTRACK_COL_AVGSPEED_NAME = "AvgSpeed";
     public static final String GPSTRACK_COL_AVGMOVINGSPEED_NAME = "AvgMovingSpeed";
+    public static final String GPSTRACK_COL_TOTALTRACKPOINTS_NAME = "TotalTrackPoints";
+    public static final String GPSTRACK_COL_INVALIDTRACKPOINTS_NAME = "InvalidTrackPoints";
     //gps track detail
     public static final String GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME = GPSTRACK_TABLE_NAME + "_ID";
     public static final String GPSTRACKDETAIL_COL_FILE_NAME = "File";
@@ -257,6 +259,8 @@ public class DB {
     public static final int GPSTRACK_COL_MAXSPEED_POS = 16;
     public static final int GPSTRACK_COL_AVGSPEED_POS = 17;
     public static final int GPSTRACK_COL_AVGMOVINGSPEED_POS = 18;
+    public static final int GPSTRACK_COL_TOTALTRACKPOINTS_POS = 19;
+    public static final int GPSTRACK_COL_INVALIDTRACKPOINTS_POS = 20;
     //gps track detail
     public static final int GPSTRACKDETAIL_COL_GPSTRACK_ID_POS = 4;
     public static final int GPSTRACKDETAIL_COL_FILE_POS = 5;
@@ -311,7 +315,9 @@ public class DB {
         GPSTRACK_COL_MINACCURACY_NAME, GPSTRACK_COL_AVGACCURACY_NAME,
         GPSTRACK_COL_MAXACCURACY_NAME, GPSTRACK_COL_MINALTITUDE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME,
         GPSTRACK_COL_TOTALTIME_NAME, GPSTRACK_COL_MOVINGTIME_NAME, GPSTRACK_COL_DISTNACE_NAME,
-        GPSTRACK_COL_MAXSPEED_NAME, GPSTRACK_COL_AVGSPEED_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME};
+        GPSTRACK_COL_MAXSPEED_NAME, GPSTRACK_COL_AVGSPEED_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME,
+        GPSTRACK_COL_TOTALTRACKPOINTS_NAME, GPSTRACK_COL_INVALIDTRACKPOINTS_NAME};
+
     public static final String[] gpsTrackDetailTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, GPSTRACKDETAIL_COL_FILE_NAME, GPSTRACKDETAIL_COL_FILEFORMAT_NAME};
 
@@ -494,7 +500,9 @@ public class DB {
             + GPSTRACK_COL_DISTNACE_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_MAXSPEED_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_AVGSPEED_NAME + " NUMERIC NULL, "
-            + GPSTRACK_COL_AVGMOVINGSPEED_NAME + " NUMERIC NULL "
+            + GPSTRACK_COL_AVGMOVINGSPEED_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_TOTALTRACKPOINTS_NAME + " INTEGER NULL, "
+            + GPSTRACK_COL_INVALIDTRACKPOINTS_NAME + " INTEGER NULL "
             + ");";
 
     protected static final String GPSTRACKDETAIL_TABLE_CREATE_SQL =
@@ -600,6 +608,21 @@ public class DB {
                 Log.e(TAG, ex.getMessage());
             }
 
+        }
+
+        private void createGPSTrackTables(SQLiteDatabase db) throws SQLException {
+            db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
+            db.execSQL("CREATE INDEX " + GPSTRACK_TABLE_NAME + "_IX1 " +
+                    "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_CAR_ID_NAME + ")");
+            db.execSQL("CREATE INDEX " + GPSTRACK_TABLE_NAME + "_IX2 " +
+                    "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_DRIVER_ID_NAME + ")");
+            db.execSQL("CREATE INDEX " + GPSTRACK_TABLE_NAME + "_IX3 " +
+                    "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_MILEAGE_ID_NAME + " DESC )");
+            db.execSQL("CREATE INDEX " + GPSTRACK_TABLE_NAME + "_IX4 " +
+                    "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_DATE_NAME + " DESC )");
+            db.execSQL(GPSTRACKDETAIL_TABLE_CREATE_SQL);
+            db.execSQL("CREATE INDEX " + GPSTRACKDETAIL_TABLE_NAME + "_IX1 " +
+                    "ON " + GPSTRACKDETAIL_TABLE_NAME + " (" + GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ")");
         }
 
         private void createUOMTable(SQLiteDatabase db) throws SQLException {
@@ -819,15 +842,13 @@ public class DB {
         }
 
         private void upgradeDbTo220(SQLiteDatabase db, int oldVersion) throws SQLException {
-            //gps track
 //            String tmpStr = "DROP TABLE " + GPSTRACK_TABLE_NAME;
 //            db.execSQL(tmpStr);
-            db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
-
 //            tmpStr = "DROP TABLE " + GPSTRACKDETAIL_TABLE_NAME;
 //            db.execSQL(tmpStr);
 
-            db.execSQL(GPSTRACKDETAIL_TABLE_CREATE_SQL);
+            createGPSTrackTables(db);
+
             FileUtils fu = new FileUtils(mCtx);
             fu.updateTo220(mCtx);
         }

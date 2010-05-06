@@ -41,7 +41,7 @@
                 android:id="@+id/tvCurrencyFrom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYFROM_LABEL"
+                android:text="@string/CurrencyRateEditActivity_CurrencyFromLabel"
                 />
             <Spinner android:id="@+id/spnCurrencyFrom"
                 android:layout_width="50dip"
@@ -49,14 +49,14 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
 
             <TextView
                 android:id="@+id/tvCurrencyTo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYTO_LABEL"
+                android:text="@string/CurrencyRateEditActivity_CurrencyToLabel"
                 android:layout_marginLeft="10dip"
                 />
             <Spinner android:id="@+id/spnCurrencyTo"
@@ -65,7 +65,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
@@ -79,7 +79,7 @@
                 android:id="@+id/tvCurrencyRateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL"
+                android:text="@string/CurrencyRateEditActivity_CurrencyRateLabel"
                 />
             <EditText
                 android:id="@+id/etCurrencyRate"
@@ -87,14 +87,14 @@
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
                 android:background="@color/mandatory_bg"
-                android:tag="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL"
+                android:tag="@string/CurrencyRateEditActivity_CurrencyRateLabel"
                 />
             <TextView
                 android:id="@+id/tvCurrencyRateToLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
-                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATETO_LABEL"
+                android:text="@string/CurrencyRateEditActivity_CurrencyRateToLabel"
                 />
         </LinearLayout>
 
@@ -108,7 +108,7 @@
                 android:id="@+id/tvInverseRateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL"
+                android:text="@string/CurrencyRateEditActivity_InverseCurrencyRateLabel"
                 />
             <TextView
                 android:id="@+id/tvInverseRateValue"
@@ -120,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
-                android:text="@string/CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATETO_LABEL"
+                android:text="@string/CurrencyRateEditActivity_CurrencyRateToLabel"
                 />
         </LinearLayout>
 
@@ -129,7 +129,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
-            android:text="@string/GEN_USER_COMMENT_LABEL"
+            android:text="@string/GEN_UserCommentLabel"
             />
         <EditText
             android:id="@+id/etUserComment"
@@ -142,7 +142,7 @@
             android:id="@+id/ckIsActive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_ISACTIVE_LABEL"
+            android:text="@string/GEN_IsActiveLabel"
             />
 
         <RelativeLayout

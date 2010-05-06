@@ -96,14 +96,14 @@ public class GPSTrackController extends EditActivityBase {
         isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
 
         if(isGpsTrackOn){
-            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackActivity_StopBtnCaption));
             restoreState();
             setEditable(vgRoot, false);
         }
         else{
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
             mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
-            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
+            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackActivity_StartBtnCaption));
             setEditable(vgRoot, true);
         }
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
@@ -203,7 +203,7 @@ public class GPSTrackController extends EditActivityBase {
                 setEditable(vgRoot, true);
                 etName.setText("");
                 etName.setHint(Utils.getDateStr(true, true));
-                btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION));
+                btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackActivity_StartBtnCaption));
             }
             else{
                 if(etName.getText().toString().length() == 0)
@@ -225,7 +225,7 @@ public class GPSTrackController extends EditActivityBase {
 //                startActivity(new Intent(GPSTrackController.this, GPSTrackMap.class));
                 if(isGpsTrackOn)
                     btnGPSTrackStartStop.setText(
-                            mResource.getString(R.string.GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION));
+                            mResource.getString(R.string.GPSTrackActivity_StopBtnCaption));
                 finish();
             }
         };

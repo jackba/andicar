@@ -31,8 +31,8 @@
     
 
     <application
-        android:label="@string/APP_NAME"
-        android:description="@string/APP_DESCRIPTION"
+        android:label="@string/APP_Name"
+        android:description="@string/APP_Description"
         android:icon="@drawable/car2"
         android:debuggable="true"
     >
@@ -40,7 +40,7 @@
         <service android:name="org.andicar.service.GPSTrackService" />
         
         <activity android:name="org.andicar.activity.MainActivity"
-                  android:label="@string/APP_NAME"
+                  android:label="@string/APP_Name"
                   android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -50,94 +50,94 @@
 
         <activity
             android:name="org.andicar.activity.DriverListActivity"
-            android:label="@string/APP_ACTIVITY_DRIVERLIST">
+            android:label="@string/APP_Activity_DriverList">
         </activity>
         <activity
             android:name="org.andicar.activity.DriverEditActivity"
-            android:label="@string/APP_ACTIVITY_DRIVEREDIT">
+            android:label="@string/APP_Activity_DriverEdit">
         </activity>
 
         <activity
             android:name="org.andicar.activity.CarListActivity"
-            android:label="@string/APP_ACTIVITY_CARLIST">
+            android:label="@string/APP_Activity_CarList">
         </activity>
         <activity
             android:name="org.andicar.activity.CarEditActivity"
-            android:label="@string/APP_ACTIVITY_CAREDIT">
+            android:label="@string/APP_Activity_CarEdit">
         </activity>
 
         <activity 
             android:name="org.andicar.activity.preference.AndiCarPreferencesActivity"
-            android:label="@string/APP_ACTIVITY_PREFERENCES">
+            android:label="@string/APP_Activity_Preferences">
         </activity>
         <activity
             android:name="org.andicar.activity.preference.GPSPreferencesActivity"
-            android:label="@string/APP_ACTIVITY_GPSPREFERENCES">
+            android:label="@string/APP_Activity_GPSPreferences">
         </activity>
 
 
         <activity 
             android:name="org.andicar.activity.ExpenseTypeListActivity"
-            android:label="@string/APP_ACTIVITY_EXPTYPELIST">
+            android:label="@string/APP_Activity_ExpenseTypeList">
         </activity>
         <activity 
             android:name="org.andicar.activity.ExpenseTypeEditActivity"
-            android:label="@string/APP_ACTIVITY_EXPTYPEEDIT">
+            android:label="@string/APP_Activity_ExpenseTypeEdit">
         </activity>
 
         <activity 
             android:name="org.andicar.activity.UOMListActivity"
-            android:label="@string/APP_ACTIVITY_UOMLIST">
+            android:label="@string/APP_Activity_UOMList">
         </activity>
         <activity 
             android:name="org.andicar.activity.UOMEditActivity"
-            android:label="@string/APP_ACTIVITY_UOMEDIT">
+            android:label="@string/APP_Activity_UOMEdit">
         </activity>
 
         <activity 
             android:name="org.andicar.activity.UOMConversionListActivity"
-            android:label="@string/APP_ACTIVITY_UOMCONVERSIONLIST">
+            android:label="@string/APP_Activity_UOMConversionList">
         </activity>
         <activity 
             android:name="org.andicar.activity.UOMConversionEditActivity"
-            android:label="@string/APP_ACTIVITY_UOMCONVERSIONEDIT">
+            android:label="@string/APP_Activity_UOMConversionEdit">
         </activity>
 
         <activity 
             android:name="org.andicar.activity.CurrencyListActivity"
-            android:label="@string/APP_ACTIVITY_CURRENCYLIST">
+            android:label="@string/APP_Activity_CurrencyList">
         </activity>
         <activity 
             android:name="org.andicar.activity.CurrencyEditActivity"
-            android:label="@string/APP_ACTIVITY_CURRENCYEDIT">
+            android:label="@string/APP_Activity_CurrencyEdit">
         </activity>
 
         <activity
             android:name="org.andicar.activity.report.MileageListReportActivity"
-            android:label="@string/APP_ACTIVITY_MILEAGE_LIST">
+            android:label="@string/APP_Activity_MileageList">
         </activity>
         <activity
             android:name="org.andicar.activity.MileageEditActivity"
-            android:label="@string/APP_ACTIVITY_MILEAGEEDIT">
+            android:label="@string/APP_Activity_MileageEdit">
         </activity>
 
         <activity
             android:name="org.andicar.activity.report.RefuelListReportActivity"
-            android:label="@string/APP_ACTIVITY_REFUEL_LIST">
+            android:label="@string/APP_Activity_RefuelList">
         </activity>
         <activity
             android:name="org.andicar.activity.RefuelEditActivity"
-            android:label="@string/APP_ACTIVITY_REFUEL">
+            android:label="@string/APP_Activity_RefuelEdit">
         </activity>
 
         <activity
             android:name="org.andicar.activity.miscellaneous.AboutActivity"
-            android:label="@string/APP_ACTIVITY_ABOUT">
+            android:label="@string/APP_Activity_About">
         </activity>
 
         <activity
             android:name="org.andicar.activity.miscellaneous.BackupRestoreActivity"
-            android:label="@string/APP_ACTIVITY_BKRESTORE">
+            android:label="@string/APP_Activity_BackupRestore">
         </activity>
 
         <activity
@@ -146,34 +146,34 @@
 
         <activity
             android:name="org.andicar.activity.ExpenseCategoryListActivity"
-            android:label="@string/APP_ACTIVITY_EXPCATEGORYLIST">
+            android:label="@string/APP_Activity_ExpenseCategoryList">
         </activity>
         <activity
             android:name="org.andicar.activity.ExpenseCategoryEditActivity"
-            android:label="@string/APP_ACTIVITY_EXPCATEGORYEDIT">
+            android:label="@string/APP_Activity_ExpenseCategoryEdit">
         </activity>
 
         <activity
             android:name="org.andicar.activity.report.ExpensesListReportActivity"
-            android:label="@string/APP_ACTIVITY_EXPENSELIST">
+            android:label="@string/APP_Activity_ExpenseList">
         </activity>
         <activity
             android:name="org.andicar.activity.ExpenseEditActivity"
-            android:label="@string/APP_ACTIVITY_EXPENSEEDIT">
+            android:label="@string/APP_Activity_ExpenseEdit">
         </activity>
 
         <activity
             android:name="org.andicar.activity.preference.MainScreenPreferenceActivity"
-            android:label="@string/APP_ACTIVITY_MAINSCREENPREF">
+            android:label="@string/PREF_MainScreen">
         </activity>
 
         <activity
             android:name="org.andicar.activity.CurrencyRateListActivity"
-            android:label="@string/APP_ACTIVITY_CURRENCYRATELIST">
+            android:label="@string/APP_Activity_CurrencyRateList">
         </activity>
         <activity
             android:name="org.andicar.activity.CurrencyRateEditActivity"
-            android:label="@string/APP_ACTIVITY_CURRENCYRATEEDIT">
+            android:label="@string/APP_Activity_CurrencyRateEdit">
         </activity>
 
        <activity
@@ -184,7 +184,7 @@
 
        <activity
             android:name="org.andicar.activity.GPSTrackController"
-            android:label="@string/APP_ACTIVITY_GPSTRACKCONTROLLER">
+            android:label="@string/APP_Activity_GPSTrackController">
         </activity>
     </application>
 </manifest>

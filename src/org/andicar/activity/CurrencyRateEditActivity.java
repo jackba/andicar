@@ -140,7 +140,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
                         String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( strRetVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
@@ -239,10 +239,10 @@ public class CurrencyRateEditActivity extends EditActivityBase
                             lCurrencyFromId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
         strCurrencyToCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
                 lCurrencyToId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-        tvCurrencyRateLabel.setText(mResource.getString(R.string.CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL).replaceAll("%", strCurrencyFromCode));
+        tvCurrencyRateLabel.setText(mResource.getString(R.string.CurrencyRateEditActivity_CurrencyRateLabel).replaceAll("%", strCurrencyFromCode));
         tvCurrencyRateToLabel.setText(strCurrencyToCode);
 
-        tvInverseRateLabel.setText(mResource.getString(R.string.CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL).replaceAll("%", strCurrencyToCode));
+        tvInverseRateLabel.setText(mResource.getString(R.string.CurrencyRateEditActivity_InverseCurrencyRateLabel).replaceAll("%", strCurrencyToCode));
         tvInverseRateToLabel.setText(strCurrencyFromCode);
     }
 
@@ -260,7 +260,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
                 etCurrencyRate.setText("");
                 etCurrencyRate.append(bdRate.toString());
                 Toast toast = Toast.makeText( getApplicationContext(),
-                        mResource.getString( R.string.CURRENCYRATE_EDIT_ACTIVITY_MAXALLOWEDDECIMALS_LABEL ) +
+                        mResource.getString( R.string.CurrencyRateEditActivity_MaxDecimalsLabel ) +
                             StaticValues.DECIMALS_CONVERSIONS, Toast.LENGTH_SHORT );
                 toast.show();
             }

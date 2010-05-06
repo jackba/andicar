@@ -109,7 +109,7 @@ public class BackupRestoreActivity extends EditActivityBase {
                 if(mDbAdapter.backupDb(null)){
                     Toast toast = Toast.
                             makeText( getApplicationContext(),
-                            mResource.getString( R.string.BKRESTORE_ACTIVITY_BKOK_MESSAGE ), Toast.LENGTH_SHORT);
+                            mResource.getString( R.string.BackupRestoreEditActivity_BackupCreatedMessage ), Toast.LENGTH_SHORT);
                     toast.show();
                     fillBkList();
                     if(isSendStatistics){
@@ -119,7 +119,7 @@ public class BackupRestoreActivity extends EditActivityBase {
                     }
                 }
                 else{
-                    madbErrorAlert.setMessage(mResource.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
+                    madbErrorAlert.setMessage(mResource.getString( R.string.BackupRestoreEditActivity_BackupFailedMessage ) + "\n" +
                             mDbAdapter.lastErrorMessage);
                     madError = madbErrorAlert.create();
                     madError.show();
@@ -132,7 +132,7 @@ public class BackupRestoreActivity extends EditActivityBase {
     private View.OnClickListener btnRestoreClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
-            builder.setMessage(mResource.getString(R.string.BKRESTORE_ACTIVITY_RESTORE_CONFIRM));
+            builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_RestoreConfirmation));
             builder.setCancelable(false);
             builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
                        new DialogInterface.OnClickListener() {
@@ -150,7 +150,7 @@ public class BackupRestoreActivity extends EditActivityBase {
                                     }
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
-                                    builder.setMessage(mResource.getString(R.string.BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE));
+                                    builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_RestoreOKMessage));
                                     builder.setCancelable(false);
                                     builder.setPositiveButton(mResource.getString(R.string.GEN_OK),
                                                new DialogInterface.OnClickListener() {
@@ -163,7 +163,7 @@ public class BackupRestoreActivity extends EditActivityBase {
 
                                 }
                                 else{
-                                    madbErrorAlert.setMessage(mResource.getString( R.string.BKRESTORE_ACTIVITY_BKFAILED_MESSAGE ) + "\n" +
+                                    madbErrorAlert.setMessage(mResource.getString( R.string.BackupRestoreEditActivity_BackupFailedMessage ) + "\n" +
                                             mDbAdapter.lastErrorMessage);
                                     madError = madbErrorAlert.create();
                                     madError.show();
@@ -184,7 +184,7 @@ public class BackupRestoreActivity extends EditActivityBase {
     private View.OnClickListener btnDeleteBkClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
-            builder.setMessage(mResource.getString(R.string.BKRESTORE_ACTIVITY_DELETE_CONFIRM));
+            builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_BackupDeleteConfirmation));
             builder.setCancelable(false);
             builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
                        new DialogInterface.OnClickListener() {

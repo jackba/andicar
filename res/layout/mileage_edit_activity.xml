@@ -40,7 +40,7 @@
             android:id="@+id/tvStartStopIndexHdr"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/MILEAGE_EDIT_ACTIVITY_INDEXHEADER"
+            android:text="@string/MileageEditActivity_IndexHeaderLabel"
             android:layout_marginTop="5dip"
             />
         <LinearLayout
@@ -52,7 +52,7 @@
                 android:id="@+id/tvIndexStartLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/MILEAGE_EDIT_ACTIVITY_STARTINDEX"
+                android:text="@string/MileageEditActivity_IndexStartLabel"
                 />
             <EditText
                 android:id="@+id/etIndexStart"
@@ -61,7 +61,7 @@
                 android:numeric="decimal"
                 android:layout_marginLeft="2dip"
                 android:background="@color/mandatory_bg"
-                android:tag="@string/MILEAGE_EDIT_ACTIVITY_STARTINDEX"
+                android:tag="@string/MileageEditActivity_IndexStartLabel"
                 />
 
             <TextView
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
-                android:text="@string/GEN_EXPENSETYPE"
+                android:text="@string/GEN_ExpenseTypeLabel"
                 />
             <Spinner android:id="@+id/spnExpType"
                 android:layout_width="fill_parent"
@@ -110,7 +110,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="2dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
      </LinearLayout>
 
@@ -118,7 +118,7 @@
             android:id="@+id/tvUserCommentLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_USER_COMMENT_LABEL"
+            android:text="@string/GEN_UserCommentLabel"
             android:layout_marginTop="10dip"
             />
         <AutoCompleteTextView
@@ -132,7 +132,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textStyle="bold"
-                  android:text="@string/MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION"/>
+                  android:text="@string/MileageEditActivity_InsertModeHeaderLabel"/>
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="20dip"
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/GEN_BTNDONE_LABEL"
+                android:text="@string/GEN_Done"
                 />
 
             <Button
@@ -169,12 +169,12 @@
                 android:id="@+id/rgMileageInsertMode">
                 <RadioButton
                     android:id="@id/rbInsertModeIndex"
-                    android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_INDEX"
+                    android:text="@string/MileageEditActivity_OptionIndexLabel"
                     style="?android:attr/textAppearanceSmall"
                     />
                 <RadioButton
                     android:id="@+id/rbInsertModeMileage"
-                    android:text="@string/MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE"
+                    android:text="@string/MileageEditActivity_OptionMileageLabel"
                     style="?android:attr/textAppearanceSmall"
                     />
             </RadioGroup>
@@ -186,7 +186,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textStyle="bold"
-                  android:text="@string/GEN_LBLDATETIME_CAPTION"
+                  android:text="@string/GEN_DateTimeLabel"
                   />
 
         <LinearLayout
@@ -202,12 +202,12 @@
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonStyleSmall"
                     android:layout_marginLeft="10dip"
-                    android:text="@string/GEN_PICK_DATE_BUTTON_CAPTION"/>
+                    android:text="@string/GEN_PickDateCaption"/>
             <Button android:id="@+id/btnPickTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/GEN_PICK_TIME_BUTTON_CAPTION"/>
+                    android:text="@string/GEN_PickTimeCaption"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

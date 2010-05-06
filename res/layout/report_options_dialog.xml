@@ -36,7 +36,7 @@
             android:id="@+id/ckIsSendEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/REPORTOPTIONS_DIALOG_SENDEMAIL_CAPTION"
+            android:text="@string/DIALOGReport_SendEmailLabel"
             />
         <LinearLayout
             android:orientation="horizontal"
@@ -48,7 +48,7 @@
                 android:id="@+id/tvFormatLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/REPORTOPTIONS_DIALOG_FORMAT_LABEL"
+                android:text="@string/DIALOGReport_ReportFormatLabel"
                 />
             <Spinner android:id="@+id/spnReportOptionsFormat"
                 android:layout_width="fill_parent"
@@ -56,7 +56,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:layout_marginRight="2dip"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 

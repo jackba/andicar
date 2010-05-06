@@ -48,7 +48,7 @@
                 android:id="@+id/tvCarLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_CAR_LABEL"
+                android:text="@string/GEN_CarLabel"
                 />
             <Spinner android:id="@+id/spnCar"
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
-                android:text="@string/GEN_DRIVER_LABEL"
+                android:text="@string/GEN_DriverLabel"
                 />
             <Spinner android:id="@+id/spnDriver"
                 android:layout_width="fill_parent"
@@ -72,7 +72,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
@@ -86,7 +86,7 @@
                 android:id="@+id/tvExpenseCategoryLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_EXPENSECATEGORY_LABEL"
+                android:text="@string/GEN_ExpenseCategoryLabel"
                 />
             <Spinner android:id="@+id/spnExpCategory"
                 android:layout_width="fill_parent"
@@ -94,7 +94,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="10dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
@@ -108,7 +108,7 @@
                 android:id="@+id/tvExpenseTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_EXPENSETYPE_LABEL"
+                android:text="@string/GEN_ExpenseTypeLabel"
                 />
             <Spinner android:id="@+id/spnExpType"
                 android:layout_width="fill_parent"
@@ -116,7 +116,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="10dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
@@ -130,7 +130,7 @@
                 android:id="@+id/tvAmountLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_AMOUNT_LABEL"
+                android:text="@string/GEN_AmountLabel"
                 />
             <Spinner android:id="@+id/spnCurrency"
                 android:layout_width="50dip"
@@ -138,7 +138,7 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
             <EditText
                 android:id="@+id/etAmount"
@@ -147,7 +147,7 @@
                 android:numeric="decimal"
                 android:layout_marginLeft="5dip"
                 android:background="@color/mandatory_bg"
-                android:tag="@string/GEN_AMOUNT_LABEL"
+                android:tag="@string/GEN_AmountLabel"
                 />
         </LinearLayout>
         <LinearLayout
@@ -161,7 +161,7 @@
                 android:id="@+id/tvConversionRateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_CONVRATE_LABEL"
+                android:text="@string/GEN_ConvertionRateLabel"
                 />
             <EditText
                 android:id="@+id/etConversionRate"
@@ -176,7 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
-                android:text="@string/GEN_CONVERTEDAMOUNT_LABEL"
+                android:text="@string/GEN_ConvertedAmountLabel"
                 />
             <TextView
                 android:id="@+id/tvConvertedAmountValue"
@@ -196,7 +196,7 @@
                 android:id="@+id/tvIndexLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_INDEX_LABEL"
+                android:text="@string/GEN_IndexLabel"
                 />
             <EditText
                 android:id="@+id/etIndex"
@@ -218,7 +218,7 @@
                 android:id="@+id/tvDocumentNoLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_DOCUMENTNO_LABEL"
+                android:text="@string/GEN_DocumentNoLabel"
                 />
             <EditText
                 android:id="@+id/etDocumentNo"
@@ -245,19 +245,19 @@
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonStyleSmall"
                     android:layout_marginLeft="10dip"
-                    android:text="@string/GEN_PICK_DATE_BUTTON_CAPTION"/>
+                    android:text="@string/GEN_PickDateCaption"/>
             <Button android:id="@+id/btnPickTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/GEN_PICK_TIME_BUTTON_CAPTION"/>
+                    android:text="@string/GEN_PickTimeCaption"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/tvUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_USER_COMMENT_LABEL"
+            android:text="@string/GEN_UserCommentLabel"
             />
         <AutoCompleteTextView
             android:id="@+id/acUserComment"
@@ -276,7 +276,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 style="?android:attr/buttonStyleSmall"
-                android:text="@string/GEN_BTNDONE_LABEL"
+                android:text="@string/GEN_Done"
                 />
         </RelativeLayout>
 

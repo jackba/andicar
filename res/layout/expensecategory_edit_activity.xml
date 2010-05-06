@@ -41,7 +41,7 @@
                 android:id="@+id/tvNameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_NAME_LABEL"
+                android:text="@string/GEN_NameLabel"
                 />
 
             <EditText
@@ -50,7 +50,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/mandatory_bg"
-                android:tag="@string/GEN_NAME_LABEL"
+                android:tag="@string/GEN_NameLabel"
                 />
         </LinearLayout>
 
@@ -58,21 +58,21 @@
             android:id="@+id/ckIsActive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_ISACTIVE_LABEL"
+            android:text="@string/GEN_IsActiveLabel"
             />
 
         <CheckBox
             android:id="@+id/ckIsExcludeFromMileageCost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/EXPCATEGORY_EDIT_ISEXCLUDEFROMMILEAGECOST_LABEL"
+            android:text="@string/ExpenseCategoryEditActivity_IsExcludeLabel"
             />
             
         <TextView
             android:id="@+id/tvUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_USER_COMMENT_LABEL"
+            android:text="@string/GEN_UserCommentLabel"
             />
         <EditText
             android:id="@+id/etUserComment"

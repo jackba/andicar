@@ -35,21 +35,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
-            android:text="@string/BKRESTORE_ACTIVITY_BACKUPBTN_CAPTION"
+            android:text="@string/BackupRestoreEditActivity_BackupBtnCaption"
             />
         <Button
             android:id="@+id/btnRestore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
-            android:text="@string/BKRESTORE_ACTIVITY_RESTOREBTN_CAPTION"
+            android:text="@string/BackupRestoreEditActivity_RestoreBtnCaption"
             />
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dip"
-            android:text="@string/BKRESTORE_ACTIVITY_DELETEBK_CAPTION"
+            android:text="@string/BackupRestoreEditActivity_DeleteBkBtnCaption"
             />
     </LinearLayout>
     <LinearLayout
@@ -66,7 +66,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="@string/BKRESTORE_ACTIVITY_EXISTINGBKS_LABEL"
+            android:text="@string/BackupRestoreEditActivity_BackupListLabel"
             />
 
         <ListView android:id="@+id/lvBackupList"

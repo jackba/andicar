@@ -89,7 +89,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
                         String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( strRetVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }

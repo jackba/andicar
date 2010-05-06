@@ -121,7 +121,7 @@ public class CarEditActivity extends EditActivityBase
                     public boolean onTouch( View arg0, MotionEvent arg1 )
                     {
                         Toast toast = Toast.makeText( getApplicationContext(),
-                                mResource.getString( R.string.CURRENT_CAR_INACTIVATE_ERROR_MESSAGE ), Toast.LENGTH_SHORT );
+                                mResource.getString( R.string.CarEditActivity_CurrentCarInactivateMessage ), Toast.LENGTH_SHORT );
                         toast.show();
                         return false;
                     }
@@ -155,7 +155,7 @@ public class CarEditActivity extends EditActivityBase
                         String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( strRetVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
@@ -168,8 +168,8 @@ public class CarEditActivity extends EditActivityBase
                             }
                             catch( NumberFormatException e ) {
                                 Toast toast = Toast.makeText( getApplicationContext(),
-                                        mResource.getString( R.string.GEN_NUMBER_FORMAT_EXCEPTION ) + ": "
-                                        + mResource.getString( R.string.CAR_EDIT_ACTIVITY_STARTINDEX ), Toast.LENGTH_SHORT );
+                                        mResource.getString( R.string.GEN_NumberFormatException ) + ": "
+                                        + mResource.getString( R.string.CarEditActivity_IndexStartLabel ), Toast.LENGTH_SHORT );
                                 toast.show();
                                 return;
                             }

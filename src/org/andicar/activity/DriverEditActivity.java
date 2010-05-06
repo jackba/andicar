@@ -81,7 +81,7 @@ public class DriverEditActivity extends EditActivityBase {
                     public boolean onTouch( View arg0, MotionEvent arg1 )
                     {
                         Toast toast = Toast.makeText( getApplicationContext(),
-                                mResource.getString(R.string.CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE), Toast.LENGTH_SHORT );
+                                mResource.getString(R.string.DriverEditActivity_CurrentDriverInactivateMessage), Toast.LENGTH_SHORT );
                         toast.show();
                         return false;
                     }
@@ -101,7 +101,7 @@ public class DriverEditActivity extends EditActivityBase {
                         String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( strRetVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }

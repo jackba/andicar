@@ -65,6 +65,7 @@ public class ListActivityBase extends ListActivity {
     protected AlertDialog errorAlert;
     protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport = true;
+    protected ListView lvBaseList = null;
 
     /** Use onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
      *                  String tableName, String[] columns, String whereCondition, String orderByColumn,
@@ -110,7 +111,8 @@ public class ListActivityBase extends ListActivity {
             extras = getIntent().getExtras();
         }
 
-
+        lvBaseList = getListView();
+        
         errorAlertBuilder = new AlertDialog.Builder(this);
         errorAlertBuilder.setCancelable(false);
         errorAlertBuilder.setPositiveButton(mRes.getString(R.string.GEN_OK), null);
@@ -124,7 +126,6 @@ public class ListActivityBase extends ListActivity {
         mDbMapFrom = pDbMapFrom;
         mLayoutIdTo = pLayoutIdTo;
 
-        ListView lvBaseList = getListView();
         lvBaseList.setTextFilterEnabled(true);
         lvBaseList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lvBaseList.setOnItemClickListener(mItemClickListener);
@@ -175,9 +176,9 @@ public class ListActivityBase extends ListActivity {
         if(mEditClass == null)
             return;
 
-        menu.add(0, StaticValues.CONTEXT_MENU_EDIT_ID, 0, mRes.getString(R.string.MENU_EDIT_CAPTION));
-        menu.add(0, StaticValues.CONTEXT_MENU_INSERT_ID, 0, mRes.getString(R.string.MENU_ADD_NEW_CAPTION));
-        menu.add(0, StaticValues.CONTEXT_MENU_DELETE_ID, 0, mRes.getString(R.string.MENU_DELETE_CAPTION));
+        menu.add(0, StaticValues.CONTEXT_MENU_EDIT_ID, 0, mRes.getString(R.string.MENU_EditCaption));
+        menu.add(0, StaticValues.CONTEXT_MENU_INSERT_ID, 0, mRes.getString(R.string.MENU_AddNewCaption));
+        menu.add(0, StaticValues.CONTEXT_MENU_DELETE_ID, 0, mRes.getString(R.string.MENU_DeleteCaption));
     }
 
     @Override
@@ -185,40 +186,44 @@ public class ListActivityBase extends ListActivity {
         if(mEditClass == null)
             return false;
         optionsMenu = menu;
-        optionsMenu.add(0, StaticValues.OPTION_MENU_ADD_ID, 0, mRes.getText(R.string.MENU_ADD_NEW_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_add));
+        optionsMenu.add(0, StaticValues.OPTION_MENU_ADD_ID, 0, mRes.getText(R.string.MENU_AddNewCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_add));
         if(!showInactiveRecords) {
-            optionsMenu.add(0, StaticValues.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText(R.string.MENU_SHOWINACTIVE_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_show_inactive));
+            optionsMenu.add(0, StaticValues.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText(R.string.MENU_ShowInactiveCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_show_inactive));
         }
         else {
-            optionsMenu.add(0, StaticValues.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText(R.string.MENU_HIDEINACTIVE_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_show_active));
+            optionsMenu.add(0, StaticValues.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText(R.string.MENU_HideInactiveCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_show_active));
         }
         return true;
+    }
+
+    protected void startEditActivity(long id){
+        Intent i = new Intent(this, mEditClass);
+        i.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, id);
+        if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
+            i.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
+        }
+        else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
+            i.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+        }
+        else if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
+            i.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
+        }
+        i.putExtra("Operation", "E");
+
+        startActivityForResult(i, StaticValues.ACTIVITY_EDIT_REQUEST_CODE);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case StaticValues.CONTEXT_MENU_EDIT_ID:
-                Intent i = new Intent(this, mEditClass);
-                i.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, mLongClickId);
-                if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
-                    i.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                }
-                else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-                    i.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                }
-                else if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
-                    i.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
-                }
-                i.putExtra("Operation", "E");
-
-                startActivityForResult(i, StaticValues.ACTIVITY_EDIT_REQUEST_CODE);
+                startEditActivity(mLongClickId);
                 return true;
             case StaticValues.CONTEXT_MENU_DELETE_ID:
                 //check if the car is the selected car. If yes it cannot be deleted.
                 if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)
                         && mPreferences.getLong("CurrentCar_ID", -1) == mLongClickId) {
-                    errorAlertBuilder.setMessage(mRes.getString(R.string.CURRENT_CAR_DELETE_ERROR_MESSAGE));
+                    errorAlertBuilder.setMessage(mRes.getString(R.string.CarListActivity_CurrentCarDeleteMessage));
                     errorAlert = errorAlertBuilder.create();
                     errorAlert.show();
                     return true;
@@ -226,14 +231,14 @@ public class ListActivityBase extends ListActivity {
                 else {
                     if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)
                             && mPreferences.getLong("CurrentDriver_ID", -1) == mLongClickId) {
-                        errorAlertBuilder.setMessage(mRes.getString(R.string.CURRENT_DRIVER_DELETE_ERROR_MESSAGE));
+                        errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_CurrentDriverDeleteMessage));
                         errorAlert = errorAlertBuilder.create();
                         errorAlert.show();
                         return true;
                     }
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(ListActivityBase.this);
-                builder.setMessage(mRes.getString(R.string.GEN_DELETE_CONFIRM));
+                builder.setMessage(mRes.getString(R.string.GEN_DeleteConfirmation));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
                         new DialogInterface.OnClickListener() {
@@ -380,14 +385,14 @@ public class ListActivityBase extends ListActivity {
                 fillData();
                 optionsMenu.removeItem(StaticValues.OPTION_MENU_SHOWINACTIVE_ID);
                 optionsMenu.removeItem(StaticValues.OPTION_MENU_HIDEINACTIVE_ID);
-                optionsMenu.add(0, StaticValues.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText(R.string.MENU_HIDEINACTIVE_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_show_active));
+                optionsMenu.add(0, StaticValues.OPTION_MENU_HIDEINACTIVE_ID, 0, mRes.getText(R.string.MENU_HideInactiveCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_show_active));
                 return true;
             case StaticValues.OPTION_MENU_HIDEINACTIVE_ID:
                 showInactiveRecords = false;
                 fillData();
                 optionsMenu.removeItem(StaticValues.OPTION_MENU_SHOWINACTIVE_ID);
                 optionsMenu.removeItem(StaticValues.OPTION_MENU_HIDEINACTIVE_ID);
-                optionsMenu.add(0, StaticValues.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText(R.string.MENU_SHOWINACTIVE_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_show_inactive));
+                optionsMenu.add(0, StaticValues.OPTION_MENU_SHOWINACTIVE_ID, 0, mRes.getText(R.string.MENU_ShowInactiveCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_show_inactive));
                 return true;
         }
         return true;
