@@ -202,7 +202,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     carDefaultUOMVolumeId).getString(MainDbAdapter.UOM_COL_CODE_POS);
         }
 
-        tvBaseUOMQtyLabel.setText(mResource.getString(R.string.REFUEL_BASEUOMQTY_LABEL));
+        tvBaseUOMQtyLabel.setText(mResource.getString(R.string.RefuelEditActivity_QtyInBaseUOMLabel));
         
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
@@ -266,7 +266,7 @@ public class RefuelEditActivity extends EditActivityBase {
                         String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( retVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
@@ -483,7 +483,7 @@ public class RefuelEditActivity extends EditActivityBase {
                         setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
 
                 amountStr = convertedAmount.toString() + " " + carDefaultCurrencyCode;
-                tvConvertedAmountLabel.setText(mResource.getString(R.string.GEN_CONVERTEDAMOUNT_LABEL) + amountStr);
+                tvConvertedAmountLabel.setText(mResource.getString(R.string.GEN_ConvertedAmountLabel) + amountStr);
             }
 
             
@@ -496,7 +496,7 @@ public class RefuelEditActivity extends EditActivityBase {
         }
 
         if(uomVolumeConversionRate == null){
-            tvBaseUOMQtyValue.setText(mResource.getString(R.string.REFUEL_NOUOMCONVERSION_MSG));
+            tvBaseUOMQtyValue.setText(mResource.getString(R.string.RefuelEditActivity_NoConversionRateMessage));
             return;
         }
         String qtyStr = etQty.getText().toString();
@@ -513,7 +513,7 @@ public class RefuelEditActivity extends EditActivityBase {
     private void setConversionRateVisibility(boolean visible){
         if(visible){
             llConversionRateZone.setVisibility(View.VISIBLE);
-            etConversionRate.setTag(mResource.getString(R.string.GEN_CONVRATE_LABEL));
+            etConversionRate.setTag(mResource.getString(R.string.GEN_ConvertionRateLabel));
         }else{
             llConversionRateZone.setVisibility(View.GONE);
             etConversionRate.setTag(null);

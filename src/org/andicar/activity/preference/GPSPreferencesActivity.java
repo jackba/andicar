@@ -63,30 +63,30 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         PreferenceScreen prefScreenRoot = prefMgr.createPreferenceScreen(this);
 
         PreferenceScreen gpsTrackFileFormatPref = getPreferenceManager().createPreferenceScreen(this);
-        gpsTrackFileFormatPref.setTitle(R.string.PREF_GPSTRACK_FILEFORMAT_TITLE);
-        gpsTrackFileFormatPref.setSummary(R.string.PREF_GPSTRACK_FILEFORMAT_SUMMARY);
+        gpsTrackFileFormatPref.setTitle(R.string.PREFGPSTrack_FileFormatTitle);
+        gpsTrackFileFormatPref.setSummary(R.string.PREFGPSTrack_FileFormatSummary);
         prefScreenRoot.addPreference(gpsTrackFileFormatPref);
 
 
         EditTextPreference tv = new EditTextPreference(this);
-        tv.setTitle(R.string.PREF_GPSTRACK_FileFormatCSV_Msg);
+        tv.setTitle(R.string.PREFGPSTrack_CSVFileFormatMessage);
         tv.setEnabled(false);
         gpsTrackFileFormatPref.addPreference(tv);
         
         ckpIsTrackKML = new CheckBoxPreference(this);
-        ckpIsTrackKML.setTitle(R.string.PREF_GPSTRACK_FILEFORMATKML_TITLE);
-        ckpIsTrackKML.setSummary(R.string.PREF_GPSTRACK_FILEFORMATKML_SUMMARY);
+        ckpIsTrackKML.setTitle(R.string.PREFGPSTrack_KMLFileFormatTitle);
+        ckpIsTrackKML.setSummary(R.string.PREFGPSTrack_KMLFileFormatSummary);
         ckpIsTrackKML.setKey("IsUseKMLTrack");
         gpsTrackFileFormatPref.addPreference(ckpIsTrackKML);
 
         ckpIsTrackGPX = new CheckBoxPreference(this);
-        ckpIsTrackGPX.setTitle(R.string.PREF_GPSTRACK_FILEFORMATGPX_TITLE);
-        ckpIsTrackGPX.setSummary(R.string.PREF_GPSTRACK_FILEFORMATGPX_SUMMARY);
+        ckpIsTrackGPX.setTitle(R.string.PREFGPSTrack_GPXFileFormatTitle);
+        ckpIsTrackGPX.setSummary(R.string.PREFGPSTrack_GPXFileFormatSummary);
         ckpIsTrackGPX.setKey("IsUseGPXTrack");
         gpsTrackFileFormatPref.addPreference(ckpIsTrackGPX);
 
         EditTextPreference tv2 = new EditTextPreference(this);
-        tv2.setSummary(R.string.PREF_GPSTRACK_TrackFileLocation_Msg);
+        tv2.setSummary(R.string.PREFGPSTrack_FileLocationMessage);
         tv2.setEnabled(false);
         gpsTrackFileFormatPref.addPreference(tv2);
 
@@ -94,35 +94,35 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         ListPreference gpsTrackMinTimePref = new ListPreference(this);
         gpsTrackMinTimePref.setEntries(R.array.gpstrack_preference_mintime_entries);
         gpsTrackMinTimePref.setEntryValues(R.array.gpstrack_preference_mintime_values);
-        gpsTrackMinTimePref.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
+        gpsTrackMinTimePref.setDialogTitle(R.string.GEN_ChooseOneTitle);
         gpsTrackMinTimePref.setKey("GPSTrackMinTime");
-        gpsTrackMinTimePref.setTitle(R.string.PREF_GPSTRACK_MINTIME_TITLE);
-        gpsTrackMinTimePref.setSummary(R.string.PREF_GPSTRACK_MINTIME_SUMMARY);
+        gpsTrackMinTimePref.setTitle(R.string.PREFGPSTrack_MinimumTimeTitle);
+        gpsTrackMinTimePref.setSummary(R.string.PREFGPSTrack_MinimumTimeSummary);
         prefScreenRoot.addPreference(gpsTrackMinTimePref);
 
         // Maximum deviation (accuracy)
         ListPreference gpsTrackMaxAccuracy = new ListPreference(this);
         gpsTrackMaxAccuracy.setEntries(R.array.gpstrack_preference_maxaccuracy_entries);
         gpsTrackMaxAccuracy.setEntryValues(R.array.gpstrack_preference_maxaccuracy_values);
-        gpsTrackMaxAccuracy.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
+        gpsTrackMaxAccuracy.setDialogTitle(R.string.GEN_ChooseOneTitle);
         gpsTrackMaxAccuracy.setKey("GPSTrackMaxAccuracy");
-        gpsTrackMaxAccuracy.setTitle(R.string.PREF_GPSTRACK_MAXACCURACY_TITLE);
-        gpsTrackMaxAccuracy.setSummary(R.string.PREF_GPSTRACK_MAXACCURACY_SUMMARY);
+        gpsTrackMaxAccuracy.setTitle(R.string.PREFGPSTrack_AccuracyTitle);
+        gpsTrackMaxAccuracy.setSummary(R.string.PREFGPSTrack_AccuracySummary);
         prefScreenRoot.addPreference(gpsTrackMaxAccuracy);
 
         // Maximum deviation (accuracy)
         ListPreference gpsTrackMaxAccuracyShutdownLimit = new ListPreference(this);
         gpsTrackMaxAccuracyShutdownLimit.setEntries(R.array.gpstrack_preference_maxaccuracyshutdownlimit_entries);
         gpsTrackMaxAccuracyShutdownLimit.setEntryValues(R.array.gpstrack_preference_maxaccuracyshutdownlimit_values);
-        gpsTrackMaxAccuracyShutdownLimit.setDialogTitle(R.string.GEN_CHOOSEONE_DIALOGTITLE);
+        gpsTrackMaxAccuracyShutdownLimit.setDialogTitle(R.string.GEN_ChooseOneTitle);
         gpsTrackMaxAccuracyShutdownLimit.setKey("GPSTrackMaxAccuracyShutdownLimit");
-        gpsTrackMaxAccuracyShutdownLimit.setTitle(R.string.PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_TITLE);
-        gpsTrackMaxAccuracyShutdownLimit.setSummary(R.string.PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_SUMMARY);
+        gpsTrackMaxAccuracyShutdownLimit.setTitle(R.string.PREFGPSTrack_AutoShutDownTitle);
+        gpsTrackMaxAccuracyShutdownLimit.setSummary(R.string.PREFGPSTrack_AutoShutDownSummary);
         prefScreenRoot.addPreference(gpsTrackMaxAccuracyShutdownLimit);
 
         EditTextPreference tpSplitFile = new EditTextPreference(this);
-        tpSplitFile.setTitle(R.string.PREF_GPSTRACK_TrackFileSplitCount_TITLE);
-        tpSplitFile.setSummary(R.string.PREF_GPSTRACK_TrackFileSplitCount_SUMMARY);
+        tpSplitFile.setTitle(R.string.PREFGPSTrack_FileSplitTitle);
+        tpSplitFile.setSummary(R.string.PREFGPSTrack_FileSplitSummary);
         tpSplitFile.setKey("GPSTrackTrackFileSplitCount");
         prefScreenRoot.addPreference(tpSplitFile);
 

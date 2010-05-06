@@ -142,27 +142,27 @@ public class MileageEditActivity extends EditActivityBase {
         if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX) {
             rbInsertModeIndex.setChecked(true);
             tvUserInputLabel.setText(
-                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
             tvCalculatedTextLabel.setText(
-                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
-            etUserInput.setTag(mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
+            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
         }
         else {
             rbInsertModeMileage.setChecked(true);
             tvUserInputLabel.setText(
-                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
             tvCalculatedTextLabel.setText(
-                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
-            etUserInput.setTag(mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
         }
         mUOMLengthId = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                 .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
         if(currentDriverName != null) {
-            driverCarLbl = mResource.getString(R.string.GEN_DRIVER_LABEL) + currentDriverName;
+            driverCarLbl = mResource.getString(R.string.GEN_DriverLabel) + currentDriverName;
         }
         if(currentCarName != null) {
             driverCarLbl = driverCarLbl + "; "
-                    + mResource.getString(R.string.GEN_CAR_LABEL) + " " + currentCarName;
+                    + mResource.getString(R.string.GEN_CarLabel) + " " + currentCarName;
         }
         ((TextView) findViewById(R.id.tvCarDriverLabel)).setText(driverCarLbl);
 
@@ -253,7 +253,7 @@ public class MileageEditActivity extends EditActivityBase {
                 String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                 if( retVal != null ) {
                     Toast toast = Toast.makeText( getApplicationContext(),
-                            mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                            mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
                     toast.show();
                     return;
                 }
@@ -312,8 +312,8 @@ public class MileageEditActivity extends EditActivityBase {
                 else{
                     Toast toast = Toast.makeText( getApplicationContext(),
                             (operationType.equals("N") ?
-                                mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE)
-                                : mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE)) ,
+                                mResource.getString(R.string.MileageEditActivity_InsertOkMessage)
+                                : mResource.getString(R.string.MileageEditActivity_UpdateOkMessage)) ,
                             Toast.LENGTH_SHORT );
                     toast.show();
                     userCommentAdapter = null;
@@ -345,18 +345,18 @@ public class MileageEditActivity extends EditActivityBase {
                         if(checkedId == rbInsertModeIndex.getId()) {
                             mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX; //new index
                             tvUserInputLabel.setText(
-                                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
                             tvCalculatedTextLabel.setText(
-                                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
-                            etUserInput.setTag(mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
+                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
+                            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
                         }
                         else {
                             mInsertMode = StaticValues.MILEAGE_INSERTMODE_MILEAGE;
                             tvUserInputLabel.setText(
-                                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
                             tvCalculatedTextLabel.setText(
-                                    mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_INDEX));
-                            etUserInput.setTag(mResource.getString(R.string.MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE));
+                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+                            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
                         }
                         SharedPreferences.Editor editor = mPreferences.edit();
                         editor.putInt("MileageInsertMode", mInsertMode);

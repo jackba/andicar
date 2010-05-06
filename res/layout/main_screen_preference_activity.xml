@@ -38,7 +38,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:text="@string/MAINSCREENPREF_ACTIVITY_LABEL"
+            android:text="@string/PREFMainScreen_ZonesLabel"
             />
 
         <ListView android:id="@+id/lvZones"

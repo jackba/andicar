@@ -45,8 +45,8 @@ public class UOMListActivity extends ListActivityBase
                 new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2});
 
         if(uomType.equals( "L"))
-            setTitle( getTitle() + " (" + mRes.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_LENGTH) + ")");
+            setTitle( getTitle() + " (" + mRes.getString( R.string.UOMEditActivity_UOMTypeLengthTitle) + ")");
         else
-            setTitle( getTitle() + " (" + mRes.getString( R.string.UOM_EDIT_ACTIVITY_TITLE_VOLUME) + ")");
+            setTitle( getTitle() + " (" + mRes.getString( R.string.UOMEditActivity_UOMTypeVolumeTitle) + ")");
     }
 }

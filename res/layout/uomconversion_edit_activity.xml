@@ -41,7 +41,7 @@
                 android:id="@+id/tvNameLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_NAME_LABEL"
+                android:text="@string/GEN_NameLabel"
                 />
             <EditText
                 android:id="@+id/etName"
@@ -49,7 +49,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/mandatory_bg"
-                android:tag="@string/GEN_NAME_LABEL"
+                android:tag="@string/GEN_NameLabel"
                 />
         </LinearLayout>
 
@@ -62,7 +62,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/UOMCONVERSION_EDIT_ACTIVITY_UOMFROM"
+                android:text="@string/UOMConversionEditActivity_UOMFromLabel"
             />
             <Spinner android:id="@+id/spnUomFrom"
                 android:layout_marginLeft="10dip"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
             />
         </LinearLayout>
 
@@ -83,7 +83,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/UOMCONVERSION_EDIT_ACTIVITY_UOMTO"
+                android:text="@string/UOMConversionEditActivity_UOMToLabel"
             />
             <Spinner android:id="@+id/spnUomTo"
                 android:layout_marginLeft="10dip"
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
                 android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
             />
         </LinearLayout>
 
@@ -105,7 +105,7 @@
                 android:id="@+id/tvConversionRateLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/UOMCONVERSION_EDIT_ACTIVITY_RATE"
+                android:text="@string/UOMConversionEditActivity_ConvertionRateLabel"
                 />
             <EditText
                 android:id="@+id/etConversionRate"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:numeric="decimal"
                 android:background="@color/mandatory_bg"
-                android:tag="@string/UOMCONVERSION_EDIT_ACTIVITY_RATE"
+                android:tag="@string/UOMConversionEditActivity_ConvertionRateLabel"
                 />
         </LinearLayout>
 
@@ -122,14 +122,14 @@
             android:id="@+id/ckIsActive"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_ISACTIVE_LABEL"
+            android:text="@string/GEN_IsActiveLabel"
             />
 
         <TextView
             android:id="@+id/tvUserCommentLabel"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_USER_COMMENT_LABEL"
+            android:text="@string/GEN_UserCommentLabel"
             />
         <EditText
             android:id="@+id/etUserComment"

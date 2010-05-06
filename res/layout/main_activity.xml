@@ -61,7 +61,7 @@
                 android:layout_marginTop="10dip"
                 android:background="@color/header_bg"
                 android:gravity="center_vertical"
-                android:text="@string/MAIN_ACTIVITY_MILEAGE_HDR_CAPTION"
+                android:text="@string/MainActivity_MileageHeaderCaption"
                 />
             <LinearLayout
                           android:layout_width="fill_parent"
@@ -73,7 +73,7 @@
                           android:textStyle="bold|italic"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                            android:text="@string/MAIN_ACTIVITY_MILEAGE_LISTHDR_CAPTION"
+                            android:text="@string/MainActivity_MileageListHeaderCaption"
                           />
                 <TextView android:id="@+id/tvThreeLineListMileageText1"
                           android:textSize="14sp"
@@ -105,14 +105,14 @@
                 >
                 <Button android:id="@+id/btnMileageList"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION"
+                    android:text="@string/MainActivity_MileageListBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
                 <Button android:id="@+id/btnMileageInsert"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION"
+                    android:text="@string/MainActivity_MileageInsertBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -141,7 +141,7 @@
                 android:layout_marginTop="10dip"
                 android:background="@color/header_bg"
                 android:gravity="center_vertical"
-                android:text="@string/MAIN_ACTIVITY_GPSTRACK_HDR_CAPTION"
+                android:text="@string/MainActivity_GPSTrackHeaderCaption"
                 />
             <LinearLayout
                           android:layout_width="fill_parent"
@@ -153,7 +153,7 @@
                           android:textStyle="bold|italic"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:text="@string/MAIN_ACTIVITY_GPSTRACK_LISTHDR_CAPTION"
+                          android:text="@string/MainActivity_GPSTrackListHeaderCaption"
                           />
                 <TextView android:id="@+id/tvThreeLineListGPSTrackText1"
                           android:textSize="14sp"
@@ -186,14 +186,14 @@
                 >
                 <Button android:id="@+id/btnGPSTrackList"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION"
+                    android:text="@string/MainActivity_GPSTrackListBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
                 <Button android:id="@+id/btnGPSTrackInsert"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION"
+                    android:text="@string/MainActivity_GPSTrackInsertBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -222,7 +222,7 @@
                 android:layout_marginTop="10dip"
                 android:background="@color/header_bg"
                 android:gravity="center_vertical"
-                android:text="@string/MAIN_ACTIVITY_REFUEL_HDR_CAPTION"
+                android:text="@string/MainActivity_RefuelHeaderCaption"
                 />
             <LinearLayout
                           android:layout_width="fill_parent"
@@ -234,7 +234,7 @@
                           android:textStyle="bold|italic"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:text="@string/MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION"
+                          android:text="@string/MainActivity_RefuelListHeaderCaption"
                           />
                 <TextView android:id="@+id/tvThreeLineListRefuelText1"
                           android:textSize="14sp"
@@ -267,14 +267,14 @@
                 >
                 <Button android:id="@+id/btnRefuelList"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION"
+                    android:text="@string/MainActivity_RefuelListBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
                 <Button android:id="@+id/btnRefuelInsert"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION"
+                    android:text="@string/MainActivity_RefuelInsertBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -303,7 +303,7 @@
                 android:layout_marginTop="10dip"
                 android:background="@color/header_bg"
                 android:gravity="center_vertical"
-                android:text="@string/MAIN_ACTIVITY_EXPENSE_HDR_CAPTION"
+                android:text="@string/MainActivity_ExpenseHeaderCaption"
                 />
             <LinearLayout
                           android:layout_width="fill_parent"
@@ -315,7 +315,7 @@
                           android:textStyle="bold|italic"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:text="@string/MAIN_ACTIVITY_EXPENSE_LISTHDR_CAPTION"
+                          android:text="@string/MainActivity_ExpenseListHeaderCaption"
                           />
                 <TextView android:id="@+id/tvThreeLineListExpenseText1"
                           android:textSize="14sp"
@@ -348,14 +348,14 @@
                 >
                 <Button android:id="@+id/btnExpenseList"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_EXPENSELIST_BTN_CAPTION"
+                    android:text="@string/MainActivity_ExpenseListBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
                 <Button android:id="@+id/btnExpenseInsert"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MAIN_ACTIVITY_INSERT_EXPENSE_BTN_CAPTION"
+                    android:text="@string/MainActivity_ExpenseInsertBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -385,7 +385,7 @@
                 android:layout_marginTop="10dip"
                 android:background="@color/header_bg"
                 android:gravity="center_vertical"
-                android:text="@string/MAIN_ACTIVITY_STATISTICS_HDR_CAPTION"
+                android:text="@string/MainActivity_StatisticsHeaderCaption"
                 />
             <LinearLayout
                           android:layout_width="fill_parent"
@@ -397,7 +397,7 @@
                           android:textStyle="italic"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          android:text="@string/MAIN_ACTIVITY_STATISTICS_LISTHDR_CAPTION"
+                          android:text="@string/MainActivity_StatisticsListHeaderCaption"
                           />
                 <TextView android:id="@+id/tvThreeLineListStatisticsText1"
                           android:textSize="14sp"

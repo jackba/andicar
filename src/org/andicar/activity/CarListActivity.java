@@ -58,13 +58,13 @@ public class CarListActivity extends ListActivityBase
                 mPrefEditor.putLong("CarCurrency_ID", dbcTableRecords.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
                 mPrefEditor.commit();
                 Toast toast = Toast.makeText( getApplicationContext(),
-                        dbcTableRecords.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.RECORD_SELECTED_TOAST_MESSAGE), Toast.LENGTH_SHORT );
+                        dbcTableRecords.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
                 toast.show();
                 finish();
             }
             else //inactive car selected
             {
-                errorAlertBuilder.setMessage(mRes.getString(R.string.INACTIVE_CAR_SELECTED_ERROR_MESSAGE));
+                errorAlertBuilder.setMessage(mRes.getString(R.string.CarListActivity_InactiveCarSelectedMessage));
                 errorAlert = errorAlertBuilder.create();
                 errorAlert.show();
             }

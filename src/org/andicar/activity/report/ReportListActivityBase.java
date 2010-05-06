@@ -33,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -71,6 +72,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
 
         super.onCreate(icicle, mItemClickListener, editClass, editTableName, editTableColumns,
                 whereCondition, orderByColumn, pLayoutId, pDbMapFrom, pLayoutIdTo);
+        lvBaseList.setOnItemClickListener(mReportItemClickListener);
     }
 
     @Override
@@ -109,13 +111,13 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     {
         optionsMenu = menu;
         optionsMenu.add( 0, StaticValues.OPTION_MENU_ADD_ID, 0,
-                mRes.getText( R.string.MENU_ADD_NEW_CAPTION ) ).
+                mRes.getText( R.string.MENU_AddNewCaption ) ).
                 setIcon( mRes.getDrawable( R.drawable.ic_menu_add ) );
         optionsMenu.add( 0, StaticValues.OPTION_MENU_SEARCH_ID, 0,
-                mRes.getText( R.string.MENU_SEARCH_CAPTION ) ).
+                mRes.getText( R.string.MENU_SearchCaption ) ).
                 setIcon( mRes.getDrawable( R.drawable.ic_menu_search ) );
         optionsMenu.add( 0, StaticValues.OPTION_MENU_REPORT_ID, 0,
-                mRes.getText( R.string.MENU_REPORT_CAPTION ) ).
+                mRes.getText( R.string.MENU_CreateReportCaption ) ).
                 setIcon( mRes.getDrawable( R.drawable.ic_menu_report ) );
         return true;
     }
@@ -131,6 +133,13 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         }
         return true;
     }
+
+    protected AdapterView.OnItemClickListener mReportItemClickListener =
+            new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> av, View view, int i, long l) {
+                    startEditActivity(l);
+                }
+    };
 
     protected void initSpinner(View pSpinner, String tableName){
         try{
@@ -172,7 +181,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         ckIsSendEmail = (CheckBox)reportDialogView.findViewById(R.id.ckIsSendEmail);
 
         reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
-        reportOptionsDialog.setTitle(R.string.REPORTOPTIONS_DIALOG_TITLE);
+        reportOptionsDialog.setTitle(R.string.DIALOGReport_DialogTitle);
         reportOptionsDialog.setView(reportDialogView);
         reportOptionsDialog.setPositiveButton(R.string.GEN_OK, reportDialogButtonlistener);
         reportOptionsDialog.setNegativeButton(R.string.GEN_CANCEL, reportDialogButtonlistener);
@@ -184,7 +193,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         public void onClick(DialogInterface dialog, int whichButton) {
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
                 progressDialog = ProgressDialog.show(ReportListActivityBase.this, "",
-                    mRes.getString(R.string.REPORT_PROGRESS_DIALOG_TEXT), true);
+                    mRes.getString(R.string.REPORTActivity_ProgressMessage), true);
 //                createReport(true, ckSendEmail.isChecked(), formatSpinner.getSelectedItemId());
                 Thread thread = new Thread(ReportListActivityBase.this);
                 thread.start();
@@ -202,7 +211,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             public void handleMessage(Message msg) {
                 progressDialog.dismiss();
                 Toast toast = Toast.makeText( getApplicationContext(),
-                            mRes.getString(R.string.REPORTLIST_REPORT_CREATED) + " " +
+                            mRes.getString(R.string.REPORTActivity_ReportCreatedMessage) + " " +
                                 StaticValues.REPORT_FOLDER, Toast.LENGTH_LONG );
                 toast.show();
             }

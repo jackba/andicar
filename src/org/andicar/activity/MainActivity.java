@@ -144,7 +144,7 @@ public class MainActivity extends Activity {
         String updateMsg = mPreferences.getString("UpdateMsg", null);
         if(updateMsg != null){
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(mRes.getString(R.string.MAIN_ACTIVITY_UPDATE_MESSAG));
+            builder.setTitle(mRes.getString(R.string.MainActivity_UpdateMessage));
             builder.setMessage(updateMsg);
             builder.setCancelable(false);
             builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
@@ -200,8 +200,8 @@ public class MainActivity extends Activity {
             //test if backups exists
             if (FileUtils.getBkFileNames() != null && !FileUtils.getBkFileNames().isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle(mRes.getString(R.string.MAIN_ACTIVITY_WELCOMEBACK));
-                builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_BACKUPEXISTS));
+                builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
+                builder.setMessage(mRes.getString(R.string.MainActivity_BackupExistMessage));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
                         new DialogInterface.OnClickListener() {
@@ -227,7 +227,7 @@ public class MainActivity extends Activity {
             } else {
                 exitResume = true;
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle(mRes.getString(R.string.MAIN_ACTIVITY_WELLCOME_MESSAGE_TITLE));
+                builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeMessage));
                 builder.setMessage(mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
@@ -366,7 +366,7 @@ public class MainActivity extends Activity {
                 tvThreeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
                 btnMileageList.setEnabled(true);
             } else {
-                tvThreeLineListMileageText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOMILEAGETEXT));
+                tvThreeLineListMileageText1.setText(mRes.getString(R.string.MainActivity_MileageNoDataText));
                 tvThreeLineListMileageText2.setText("");
                 tvThreeLineListMileageText3.setText("");
                 btnMileageList.setEnabled(false);
@@ -409,7 +409,7 @@ public class MainActivity extends Activity {
                 tvThreeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
                 btnRefuelList.setEnabled(true);
             } else {
-                tvThreeLineListRefuelText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOREFUELTEXT));
+                tvThreeLineListRefuelText1.setText(mRes.getString(R.string.MainActivity_RefuelNoDataText));
                 tvThreeLineListRefuelText2.setText("");
                 tvThreeLineListRefuelText3.setText("");
                 btnRefuelList.setEnabled(false);
@@ -432,8 +432,8 @@ public class MainActivity extends Activity {
                 tvThreeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
                 btnExpenseList.setEnabled(true);
             } else {
-                tvThreeLineListExpenseText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSETEXT));
-                tvThreeLineListExpenseText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT));
+                tvThreeLineListExpenseText1.setText(mRes.getString(R.string.MainActivity_ExpenseNoDataText));
+                tvThreeLineListExpenseText2.setText(mRes.getString(R.string.MainActivity_ExpenseNoDataAditionalText));
                 tvThreeLineListExpenseText3.setText("");
             }
         }
@@ -449,7 +449,7 @@ public class MainActivity extends Activity {
             listCursor = reportDb.fetchReport(1);
             if (listCursor.moveToFirst()) {
                 TextView tvHdrText = (TextView) findViewById(R.id.tvThreeLineListCarReportHdr);
-                tvHdrText.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_LISTHDR_CAPTION) +
+                tvHdrText.setText(mRes.getString(R.string.MainActivity_StatisticsListHeaderCaption) +
                         listCursor.getString(1));
                 String avgConsUom = listCursor.getString(5);
                 if(avgConsUom == null)
@@ -464,7 +464,7 @@ public class MainActivity extends Activity {
                 BigDecimal mileage = null;
                 if(indexCurrentStr != null && indexStartStr != null){
                     mileage = (new BigDecimal(indexCurrentStr)).subtract(new BigDecimal(indexStartStr));
-                    tvStatisticsHdr.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_HDR_CAPTION) + " " +
+                    tvStatisticsHdr.setText(mRes.getString(R.string.MainActivity_StatisticsHeaderCaption) + " " +
                             mileage.toString() + " " + listCursor.getString(6));
                 }
 
@@ -486,7 +486,7 @@ public class MainActivity extends Activity {
                                 firstFullRefuelIndexStr == null || firstFullRefuelIndexStr.length() == 0 ||
                                 lastFullRefuelIndexStr == null || lastFullRefuelIndexStr.length() == 0 ||
                                 avgConsMileage == null || avgConsMileage.equals(BigDecimal.ZERO))
-                            avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_AVGCONS_NODATA);
+                            avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
                         else{
                             BigDecimal totalFuel = new BigDecimal(totalFuelStr);
                             BigDecimal avgCons = BigDecimal.ZERO;
@@ -497,12 +497,12 @@ public class MainActivity extends Activity {
                         }
                     }
                     else
-                        avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_AVGCONS_NODATA);
+                        avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
                 }
                 else
-                    avgConsStr = mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_AVGCONS_NODATA);
+                    avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
 
-                tvThreeLineListStatisticsText1.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_AVGCONS_LABEL) +
+                tvThreeLineListStatisticsText1.setText(mRes.getString(R.string.MainActivity_StatisticsAvgConsLabel) +
                         avgConsStr);
 
                 //total/mileage expenses
@@ -529,10 +529,10 @@ public class MainActivity extends Activity {
                         mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + " / 100 " + listCursor.getString(6);
                     }
                 }
-                tvThreeLineListStatisticsText2.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_TOTALEXP) +
+                tvThreeLineListStatisticsText2.setText(mRes.getString(R.string.MainActivity_StatisticsTotalExpenseLabel) +
                         " " + totalExpensesStr + " " + carCurrency);
 
-                tvThreeLineListStatisticsText3.setText(mRes.getString(R.string.MAIN_ACTIVITY_STATISTICS_MILEAGEEXP) + " " +
+                tvThreeLineListStatisticsText3.setText(mRes.getString(R.string.MainActivity_StatisticsMileageExpenseLabel) + " " +
                         mileageExpenseStr);
             } else {
                 tvThreeLineListStatisticsText2.setText("");
@@ -568,6 +568,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
         if(reportDb != null){
             reportDb.close();
             reportDb = null;
@@ -665,14 +666,14 @@ public class MainActivity extends Activity {
 
     private void fillDriverCar() {
         if (mPreferences != null) {
-            infoStr = mRes.getString(R.string.GEN_DRIVER_LABEL);
+            infoStr = mRes.getString(R.string.GEN_DriverLabel);
 
             //get the current driver id and name
             if (mPreferences.getLong("CurrentDriver_ID", -1) != -1 && !mPreferences.getAll().isEmpty()) {
                 currentDriverID = mPreferences.getLong("CurrentDriver_ID", -1);
             } else { //no saved driver. start driver list activity in order to select one.
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_NO_CURRENT_DRIVER));
+                builder.setMessage(mRes.getString(R.string.MainActivity_NoCurrentDriverMessage));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
                         new DialogInterface.OnClickListener() {
@@ -704,7 +705,7 @@ public class MainActivity extends Activity {
                 currentCarID = mPreferences.getLong("CurrentCar_ID", -1);
             } else { //no saved car. start car list activity in order to select one.
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage(mRes.getString(R.string.MAIN_ACTIVITY_NO_CURRENT_CAR));
+                builder.setMessage(mRes.getString(R.string.MainActivity_NoCurrentCarMessage));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
                         new DialogInterface.OnClickListener() {
@@ -728,7 +729,7 @@ public class MainActivity extends Activity {
             if (mPreferences.getString("CurrentCar_Name", "").length() > 0) {
                 currentCarName = mPreferences.getString("CurrentCar_Name", "");
             }
-            infoStr = infoStr + "; " + mRes.getString(R.string.GEN_CAR_LABEL) + " " + currentCarName;
+            infoStr = infoStr + "; " + mRes.getString(R.string.GEN_CarLabel) + " " + currentCarName;
             ((TextView) findViewById(R.id.info)).setText(infoStr);
 
             if (currentCarID < 0 || currentDriverID < 0) {
@@ -752,17 +753,17 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, StaticValues.MENU_MILEAGE_ID, 0,
-                mRes.getText(R.string.MENU_MILEAGE_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_mileage));
+                mRes.getText(R.string.MENU_MileageCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_mileage));
         menu.add(0, StaticValues.MENU_GPSTRACK_ID, 0,
-                mRes.getText(R.string.MENU_GPSTRACK_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_gpstrack));
+                mRes.getText(R.string.MENU_GPSTrackCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_gpstrack));
         menu.add(0, StaticValues.MENU_REFUEL_ID, 0,
-                mRes.getText(R.string.MENU_REFUEL_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_refuel));
+                mRes.getText(R.string.MENU_RefuelCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_refuel));
         menu.add(0, StaticValues.MENU_EXPENSES_ID, 0,
-                mRes.getText(R.string.MENU_EXPENSES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_expenses));
+                mRes.getText(R.string.MENU_ExpenseCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_expenses));
         menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
-                mRes.getText(R.string.MENU_PREFERENCES_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_preferences));
+                mRes.getText(R.string.MENU_PreferencesCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_preferences));
         menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
-                mRes.getText(R.string.MENU_ABOUT_CAPTION)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
+                mRes.getText(R.string.MENU_AboutCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
         return true;
     }
 

@@ -75,7 +75,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         super.onCreate(icicle, R.layout.expense_edit_activity, mOkClickListener);
 
         operationType = mBundleExtras.getString("Operation");
-        acUserComment = null; //((AutoCompleteTextView) findViewById( R.id.acUserComment ));
+        acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
 
         spnCar = (Spinner)findViewById(R.id.spnCar);
         spnDriver = (Spinner)findViewById(R.id.spnDriver);
@@ -152,8 +152,8 @@ public class ExpenseEditActivity extends EditActivityBase {
             }
             else{
                 if(fromTable.equals("Refuel")){
-                    tvWarningLabel.setText(mResource.getString(R.string.EXPENSEEDIT_ACTIVITY_WARNING_LABEL).replaceAll("%",
-                            mResource.getString(R.string.APP_ACTIVITY_REFUEL).toLowerCase()) + "\n");
+                    tvWarningLabel.setText(mResource.getString(R.string.ExpenseEditActivity_CreatedFromWarning).replaceAll("%",
+                            mResource.getString(R.string.GEN_Refuel).toLowerCase()) + "\n");
                 }
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), false);
             }
@@ -224,7 +224,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                         String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
                         if( retVal != null ) {
                             Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FILL_MANDATORY ) + ": " + retVal, Toast.LENGTH_SHORT );
+                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
                             toast.show();
                             return;
                         }
@@ -356,7 +356,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     private void setConversionRateZoneVisible(boolean isVisible){
         if(isVisible){
             llConversionRateZone.setVisibility(View.VISIBLE);
-            etConversionRate.setTag(mResource.getString(R.string.GEN_CONVRATE_LABEL));
+            etConversionRate.setTag(mResource.getString(R.string.GEN_ConvertionRateLabel));
         }
         else{
             etConversionRate.setTag(null);

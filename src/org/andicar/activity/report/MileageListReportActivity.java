@@ -86,7 +86,7 @@ public class MileageListReportActivity extends ReportListActivityBase {
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
         searchView = liLayoutFactory.inflate(R.layout.mileage_search_dialog, null);
         AlertDialog.Builder searchDialog = new AlertDialog.Builder(MileageListReportActivity.this);
-        searchDialog.setTitle(R.string.SEARCH_DIALOG_TITLE);
+        searchDialog.setTitle(R.string.DIALOGSearch_DialogTitle);
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);

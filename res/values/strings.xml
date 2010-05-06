@@ -19,284 +19,252 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <string name="APP_NAME">"AndiCar"</string>
-    <string name="APP_DESCRIPTION">"Free and open source car management software."</string>
-    <string name="APP_ACTIVITY_DRIVEREDIT">"Edit driver"</string>
-    <string name="APP_ACTIVITY_DRIVERLIST">"Drivers"</string>
-    <string name="APP_ACTIVITY_CAREDIT">"Edit car"</string>
-    <string name="APP_ACTIVITY_CARLIST">"Cars"</string>
-    <string name="APP_ACTIVITY_PREFERENCES">"Preferences"</string>
-    <string name="APP_ACTIVITY_GPSPREFERENCES">"GPS Track Preferences"</string>
-    <string name="APP_ACTIVITY_EXPCATEGORYLIST">"Expense categories"</string>
-    <string name="APP_ACTIVITY_EXPCATEGORYEDIT">"Edit expense category"</string>
-    <string name="APP_ACTIVITY_EXPTYPELIST">"Expense types"</string>
-    <string name="APP_ACTIVITY_EXPTYPEEDIT">"Edit expense type"</string>
-    <string name="APP_ACTIVITY_UOMLIST">"Measurement units"</string>
-    <string name="APP_ACTIVITY_UOMEDIT">"Edit UOM"</string>
-    <string name="APP_ACTIVITY_UOMCONVERSIONLIST">"UOM Conversions"</string>
-    <string name="APP_ACTIVITY_UOMCONVERSIONEDIT">"Edit UOM Conversion"</string>
-    <string name="APP_ACTIVITY_CURRENCYLIST">"Currencies"</string>
-    <string name="APP_ACTIVITY_CURRENCYEDIT">"Edit currency"</string>
-    <string name="APP_ACTIVITY_MILEAGE_LIST">"Mileages"</string>
-    <string name="APP_ACTIVITY_MILEAGEEDIT">"Add or edit mileage"</string>
-    <string name="APP_ACTIVITY_REFUEL_LIST">"Refuels"</string>
-    <string name="APP_ACTIVITY_REFUEL">"Refuel"</string>
-    <string name="APP_ACTIVITY_ABOUT">"About AndiCar"</string>
-    <string name="APP_ACTIVITY_BKRESTORE">"Backup / restore"</string>
-    <string name="APP_ACTIVITY_EXPENSELIST">"Expenses"</string>
-    <string name="APP_ACTIVITY_EXPENSEEDIT">"Add or edit expense"</string>
-    <string name="APP_ACTIVITY_MAINSCREENPREF">"Customize your main screen"</string>
-    <string name="APP_ACTIVITY_CURRENCYRATELIST">"Currency rates"</string>
-    <string name="APP_ACTIVITY_CURRENCYRATEEDIT">"Add or edit currency rates"</string>
-    <string name="APP_ACTIVITY_GPSTRACKCONTROLLER">"GPS Track Control"</string>
+    <string name="APP_Name">"AndiCar"</string>
+    <string name="APP_Description">"Free and open source car management software."</string>
+    <string name="APP_Activity_DriverEdit">"Edit driver"</string>
+    <string name="APP_Activity_DriverList">"Drivers"</string>
+    <string name="APP_Activity_CarEdit">"Edit car"</string>
+    <string name="APP_Activity_CarList">"Cars"</string>
+    <string name="APP_Activity_Preferences">"Preferences"</string>
+    <string name="APP_Activity_GPSPreferences">"GPS Tracking Preferences"</string>
+    <string name="APP_Activity_ExpenseCategoryList">"Expense categories"</string>
+    <string name="APP_Activity_ExpenseCategoryEdit">"Edit expense category"</string>
+    <string name="APP_Activity_ExpenseTypeList">"Expense types"</string>
+    <string name="APP_Activity_ExpenseTypeEdit">"Edit expense type"</string>
+    <string name="APP_Activity_UOMList">"Measurement units"</string>
+    <string name="APP_Activity_UOMEdit">"Edit UOM"</string>
+    <string name="APP_Activity_UOMConversionList">"UOM Conversions"</string>
+    <string name="APP_Activity_UOMConversionEdit">"Edit UOM Conversion"</string>
+    <string name="APP_Activity_CurrencyList">"Currencies"</string>
+    <string name="APP_Activity_CurrencyEdit">"Edit currency"</string>
+    <string name="APP_Activity_MileageList">"Mileages"</string>
+    <string name="APP_Activity_MileageEdit">"Add or edit mileage"</string>
+    <string name="APP_Activity_RefuelList">"Refuels"</string>
+    <string name="APP_Activity_RefuelEdit">"Add or edit refuel"</string>
+    <string name="APP_Activity_About">"About AndiCar"</string>
+    <string name="APP_Activity_BackupRestore">"Backup / restore"</string>
+    <string name="APP_Activity_ExpenseList">"Expenses"</string>
+    <string name="APP_Activity_ExpenseEdit">"Add or edit expense"</string>
+    <string name="APP_Activity_CurrencyRateList">"Currency rates"</string>
+    <string name="APP_Activity_CurrencyRateEdit">"Add or edit currency rates"</string>
+    <string name="APP_Activity_GPSTrackController">"GPS Track Control"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
     <string name="GEN_YES">"Yes"</string>
     <string name="GEN_NO">"No"</string>
-    <string name="GEN_FILL_MANDATORY">"Fill mandatory field"</string>
-    <string name="GEN_NUMBER_FORMAT_EXCEPTION">"Invalid number"</string>
-    <string name="GEN_CHOOSEONE_DIALOGTITLE">"Choose one"</string>
-    <string name="GEN_CHOOSEONE_MESSAGE">"You must choose at least one"</string>
-    <string name="GEN_CHOOSE_DIALOGTITLE">"Choose"</string>
-    <string name="GEN_ISACTIVE_LABEL">"Active"</string>
-    <string name="GEN_USER_COMMENT_LABEL">"Comment"</string>
-    <string name="GEN_NAME_LABEL">"Name:"</string>
-    <string name="GEN_LBLDATETIME_CAPTION">"<b><i>Date and time:</i></b>"</string>
-    <string name="GEN_PICK_DATE_BUTTON_CAPTION">"Change date"</string>
-    <string name="GEN_PICK_TIME_BUTTON_CAPTION">"Change time"</string>
-    <string name="GEN_DELETE_CONFIRM">"Are you sure you want to delete the selected record?"</string>
-    <string name="GEN_EXPENSETYPE">"Expense type:"</string>
-    <string name="GEN_CAR_LABEL">"Car:"</string>
-    <string name="GEN_DRIVER_LABEL">"Driver:"</string>
-    <string name="GEN_EXPENSECATEGORY_LABEL">"Expense category:"</string>
-    <string name="GEN_EXPENSETYPE_LABEL">"Expense type:"</string>
-    <string name="GEN_DOCUMENTNO_LABEL">"Document no.:"</string>
-    <string name="GEN_INDEX_LABEL">"Odometer:"</string>
-    <string name="GEN_QUANTITY_LABEL">"Quantity:"</string>
-    <string name="GEN_PRICE_LABEL">"Price:"</string>
-    <string name="GEN_BTNDONE_LABEL">"Done"</string>
-    <string name="GEN_AMOUNT_LABEL">"Amt:"</string>
-    <string name="GEN_CONVRATE_LABEL">"Conv. rate:"</string>
-    <string name="GEN_CONVERTEDAMOUNT_LABEL">"Conv. amt: "</string>
+    <string name="GEN_Done">"Done"</string>
+    <string name="GEN_FillMandatory">"Fill mandatory field"</string>
+    <string name="GEN_NumberFormatException">"Invalid number"</string>
+    <string name="GEN_ChooseOneTitle">"Choose one"</string>
+    <string name="GEN_ChooseOneMessage">"You must choose at least one"</string>
+    <string name="GEN_ChooseTitle">"Choose"</string>
+    <string name="GEN_IsActiveLabel">"Active"</string>
+    <string name="GEN_UserCommentLabel">"Comment"</string>
+    <string name="GEN_NameLabel">"Name:"</string>
+    <string name="GEN_DateTimeLabel">"<b><i>Date and time:</i></b>"</string>
+    <string name="GEN_PickDateCaption">"Change date"</string>
+    <string name="GEN_PickTimeCaption">"Change time"</string>
+    <string name="GEN_DeleteConfirmation">"Are you sure you want to delete the selected record?"</string>
+    <string name="GEN_Refuel">"Refuel"</string>
+    <string name="GEN_CarLabel">"Car:"</string>
+    <string name="GEN_DriverLabel">"Driver:"</string>
+    <string name="GEN_ExpenseCategoryLabel">"Expense category:"</string>
+    <string name="GEN_ExpenseTypeLabel">"Expense type:"</string>
+    <string name="GEN_DocumentNoLabel">"Document no.:"</string>
+    <string name="GEN_IndexLabel">"Odometer:"</string>
+    <string name="GEN_QuantityLabel">"Quantity:"</string>
+    <string name="GEN_PriceLabel">"Price:"</string>
+    <string name="GEN_AmountLabel">"Amt:"</string>
+    <string name="GEN_ConvertionRateLabel">"Conv. rate:"</string>
+    <string name="GEN_ConvertedAmountLabel">"Conv. amt: "</string>
+    <string name="GEN_SelectedMessage">" selected"</string>
 
 
-    <string name="MENU_PREFERENCES_CAPTION">"Preferences"</string>
-    <string name="MENU_REPORTS_CAPTION">"Reports"</string>
-    <string name="MENU_ABOUT_CAPTION">"About"</string>
-    <string name="MENU_HELP_CAPTION">"Help"</string>
-    <string name="MENU_DELETE_CAPTION">"Delete"</string>
-    <string name="MENU_ADD_NEW_CAPTION">"Add new"</string>
-    <string name="MENU_EDIT_CAPTION">"Edit"</string>
-    <string name="MENU_SHOWINACTIVE_CAPTION">"Show inactive"</string>
-    <string name="MENU_HIDEINACTIVE_CAPTION">"Hide inactive"</string>
-    <string name="MENU_SEARCH_CAPTION">"Search/filter"</string>
-    <string name="MENU_REPORT_CAPTION">"Create report"</string>
-    <string name="MENU_MILEAGE_CAPTION">"Mileages"</string>
-    <string name="MENU_REFUEL_CAPTION">"Refuels"</string>
-    <string name="MENU_EXPENSES_CAPTION">"Expenses"</string>
-    <string name="MENU_GPSTRACK_CAPTION">"GPS Track"</string>
+    <string name="MENU_PreferencesCaption">"Preferences"</string>
+    <string name="MENU_AboutCaption">"About"</string>
+    <string name="MENU_DeleteCaption">"Delete"</string>
+    <string name="MENU_AddNewCaption">"Add new"</string>
+    <string name="MENU_EditCaption">"Edit"</string>
+    <string name="MENU_ShowInactiveCaption">"Show inactive"</string>
+    <string name="MENU_HideInactiveCaption">"Hide inactive"</string>
+    <string name="MENU_SearchCaption">"Search/filter"</string>
+    <string name="MENU_CreateReportCaption">"Create report"</string>
+    <string name="MENU_MileageCaption">"Mileages"</string>
+    <string name="MENU_RefuelCaption">"Refuels"</string>
+    <string name="MENU_ExpenseCaption">"Expenses"</string>
+    <string name="MENU_GPSTrackCaption">"GPS Track"</string>
 
 
-    <string name="MAIN_ACTIVITY_MILEAGE_HDR_CAPTION">"Mileages"</string>
-    <string name="MAIN_ACTIVITY_MILEAGE_LISTHDR_CAPTION">"Last mileage:"</string>
-    <string name="MAIN_ACTIVITY_INSERT_MILEAGE_BTN_CAPTION">"  Add new  "</string>
-    <string name="MAIN_ACTIVITY_MILEAGELIST_BTN_CAPTION">"  View more  "</string>
-    <string name="MAIN_ACTIVITY_REFUEL_HDR_CAPTION">"Refuels"</string>
-    <string name="MAIN_ACTIVITY_REFUEL_LISTHDR_CAPTION">"Last refuel:"</string>
-    <string name="MAIN_ACTIVITY_INSERT_REFUEL_BTN_CAPTION">"  Add new  "</string>
-    <string name="MAIN_ACTIVITY_REFUELLIST_BTN_CAPTION">"  View more  "</string>
+    <string name="MainActivity_MileageHeaderCaption">"Mileages"</string>
+    <string name="MainActivity_MileageListHeaderCaption">"Last mileage:"</string>
+    <string name="MainActivity_MileageInsertBtnCaption">"  Add new  "</string>
+    <string name="MainActivity_MileageListBtnCaption">"  View more  "</string>
+    <string name="MainActivity_RefuelHeaderCaption">"Refuels"</string>
+    <string name="MainActivity_RefuelListHeaderCaption">"Last refuel:"</string>
+    <string name="MainActivity_RefuelInsertBtnCaption">"  Add new  "</string>
+    <string name="MainActivity_RefuelListBtnCaption">"  View more  "</string>
+    <string name="MainActivity_GPSTrackHeaderCaption">"GPS Tracks"</string>
+    <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string>
+    <string name="MainActivity_GPSTrackInsertBtnCaption">"  Add new  "</string>
+    <string name="MainActivity_GPSTrackListBtnCaption">"  View more  "</string>
+    <string name="MainActivity_ExpenseHeaderCaption">"Expenses"</string>
+    <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string>
+    <string name="MainActivity_ExpenseInsertBtnCaption">"  Add new  "</string>
+    <string name="MainActivity_ExpenseListBtnCaption">"  View more  "</string>
+    <string name="MainActivity_StatisticsHeaderCaption">"Statistics for "</string>
+    <string name="MainActivity_StatisticsListHeaderCaption">"Last know odometer: "</string>
+    <string name="MainActivity_StatisticsAvgConsLabel">"Average fuel consumption: "</string>
+    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuel."</string>
+    <string name="MainActivity_StatisticsTotalExpenseLabel">"Total expenses:"</string>
+    <string name="MainActivity_StatisticsMileageExpenseLabel">"Mileage expense:"</string>
+    <string name="MainActivity_MileageNoDataText">"No mileage for this car"</string>
+    <string name="MainActivity_RefuelNoDataText">"No refuel for this car"</string>
+    <string name="MainActivity_ExpenseNoDataText">"No expense for this car"</string>
+    <string name="MainActivity_ExpenseNoDataAditionalText">"This zone does not show the expenses created conjunctively with other records (refuels, etc.)"</string>
+    <string name="MainActivity_NoCurrentCarMessage">"No car selected. In the following page you can select / define one."</string>
+    <string name="MainActivity_NoCurrentDriverMessage">"No driver selected. In the following page you can select / define one."</string>
+    <string name="MainActivity_WellcomeMessage">"Wellcome to AndiCar."</string>
+    <string name="MainActivity_WellcomeBackMessage">"Welcome back!"</string>
+    <string name="MainActivity_BackupExistMessage">"Backup files exist.\nDo you want to restore one?"</string>
+    <string name="MainActivity_UpdateMessage">"Update message"</string>
 
-    <string name="MAIN_ACTIVITY_GPSTRACK_HDR_CAPTION">"GPS Tracks"</string>
-    <string name="MAIN_ACTIVITY_GPSTRACK_LISTHDR_CAPTION">"Last track:"</string>
-    <string name="MAIN_ACTIVITY_INSERT_GPSTRACK_BTN_CAPTION">"  Add new  "</string>
-    <string name="MAIN_ACTIVITY_GPSTRACKLIST_BTN_CAPTION">"  View more  "</string>
-<!--
-    <string name="MAIN_ACTIVITY_GPSTRACKSTART_BTN_CAPTION">"Start GPS Track"</string>
-    <string name="MAIN_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION">"Stop GPS Track"</string>
-    <string name="MAIN_ACTIVITY_GPSTRACKSERVICESTARTED_MESSAGE">"GPS tracking started"</string>
-    <string name="MAIN_ACTIVITY_GPSSHOWMAP_BTN_CAPTION">"show map"</string>
--->
-    <string name="MAIN_ACTIVITY_EXPENSE_HDR_CAPTION">"Expenses"</string>
-    <string name="MAIN_ACTIVITY_EXPENSE_LISTHDR_CAPTION">"Last expense:"</string>
-    <string name="MAIN_ACTIVITY_INSERT_EXPENSE_BTN_CAPTION">"  Add new  "</string>
-    <string name="MAIN_ACTIVITY_EXPENSELIST_BTN_CAPTION">"  View more  "</string>
+    <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
+    <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>
+    <string name="DriverListActivity_InactiveDriverSelectedMessage">"Inactive driver. Can not be selected."</string>
+    <string name="DriverListActivity_CurrentDriverDeleteMessage">"The current driver can not be deleted."</string>
 
-    <string name="MAIN_ACTIVITY_STATISTICS_HDR_CAPTION">"Statistics for "</string>
-    <string name="MAIN_ACTIVITY_STATISTICS_LISTHDR_CAPTION">"Last know odometer: "</string>
-    <string name="MAIN_ACTIVITY_STATISTICS_BTN_CAPTION">"  More details  "</string>
-    <string name="MAIN_ACTIVITY_STATISTICS_AVGCONS_LABEL">"Average fuel consumption: "</string>
-    <string name="MAIN_ACTIVITY_STATISTICS_AVGCONS_NODATA">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuel."</string>
-    <string name="MAIN_ACTIVITY_STATISTICS_NOSTAT">"Statistics not available yet."</string>
-    <string name="MAIN_ACTIVITY_STATISTICS_TOTALEXP">"Total expenses:"</string>
-    <string name="MAIN_ACTIVITY_STATISTICS_MILEAGEEXP">"Mileage expense:"</string>
+    <string name="CarEditActivity_ModelLabel">"Model:"</string>
+    <string name="CarEditActivity_LicensePlateLabel">"License plate:"</string>
+    <string name="CarEditActivity_UOMLengthLabel">"UOM for distance:"</string>
+    <string name="CarEditActivity_UOMVolumeLabel">"UOM for volume:"</string>
+    <string name="CarEditActivity_IndexStartLabel">"Initial odometer:"</string>
+    <string name="CarEditActivity_CurrencyLabel">"Default currency:"</string>
+    <string name="CarEditActivity_CurrentCarInactivateMessage">"The current car can not be inactivated."</string>
+    <string name="CarListActivity_InactiveCarSelectedMessage">"Inactive car. Can not be selected."</string>
+    <string name="CarListActivity_CurrentCarDeleteMessage">"The current car can not be deleted."</string>
+
+    <string name="UOMEditActivity_CodeLabel">"Code:"</string>
+    <string name="UOMEditActivity_UOMTypeLengthTitle">"distance"</string>
+    <string name="UOMEditActivity_UOMTypeVolumeTitle">"volume"</string>
+
+    <string name="UOMConversionEditActivity_UOMFromLabel">"From uom:"</string>
+    <string name="UOMConversionEditActivity_UOMToLabel">"To uom:"</string>
+    <string name="UOMConversionEditActivity_ConvertionRateLabel">"Conversion rate:"</string>
+
+    <string name="CurrencyEditActivity_CodeLabel">"Code:"</string>
+
+    <string name="MileageEditActivity_IndexHeaderLabel">"Start/stop odometer or mileage"</string>
+    <string name="MileageEditActivity_IndexStartLabel">"Start "</string>
+    <string name="MileageEditActivity_OptionIndexLabel">"Stop "</string>
+    <string name="MileageEditActivity_OptionMileageLabel">"Mileage "</string>
+    <string name="MileageEditActivity_InsertModeHeaderLabel">"<b><i>Insert mode:</i></b>"</string>
+    <string name="MileageEditActivity_InsertOkMessage">"Mileage added."</string>
+    <string name="MileageEditActivity_UpdateOkMessage">"Mileage updated."</string>
+
+    <string name="RefuelEditActivity_IsFullLabel">"Is full"</string>
+    <string name="RefuelEditActivity_QtyInBaseUOMLabel">"Quantity in base UOM: "</string>
+    <string name="RefuelEditActivity_NoConversionRateMessage">"No conversion rate defined for these UOM's"</string>
+
+    <string name="BackupRestoreEditActivity_BackupBtnCaption">"Backup"</string>
+    <string name="BackupRestoreEditActivity_RestoreBtnCaption">"Restore"</string>
+    <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Delete backup"</string>
+    <string name="BackupRestoreEditActivity_BackupListLabel">"Existing backups:"</string>
+    <string name="BackupRestoreEditActivity_BackupCreatedMessage">"Backup created."</string>
+    <string name="BackupRestoreEditActivity_BackupFailedMessage">"Backup creation failed!"</string>
+    <string name="BackupRestoreEditActivity_BackupDeleteConfirmation">"Are you sure you want to delete the selected backup?"</string>
+    <string name="BackupRestoreEditActivity_RestoreConfirmation">"Are you sure you want to restore the selected backup? This action will replace your existing data!"</string>
+    <string name="BackupRestoreEditActivity_RestoreOKMessage">"Your database was restored. The application will be closed."</string>
+
+    <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Exclude from mileage cost calculation"</string>
+
+    <string name="ExpenseEditActivity_CreatedFromWarning">"This expense was created from %.\nEdit the coresponding %."</string>
+
+    <string name="CurrencyRateEditActivity_CurrencyFromLabel">"From currency "</string>
+    <string name="CurrencyRateEditActivity_CurrencyToLabel">"To currency "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Rate: 1 % = "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
+    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Inverse rate: 1 % = "</string>
+    <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Max. allowed decimals: "</string>
+
+    <string name="REPORTActivity_ReportCreatedMessage">"Your report was created successfully to"</string>
+    <string name="REPORTActivity_ProgressMessage">"Report creation started. Please wait..."</string>
 
 
-    <string name="MAIN_ACTIVITY_NOMILEAGETEXT">"No mileage for this car"</string>
-    <string name="MAIN_ACTIVITY_NOREFUELTEXT">"No refuel for this car"</string>
-    <string name="MAIN_ACTIVITY_NOEXPENSETEXT">"No expense for this car"</string>
-    <string name="MAIN_ACTIVITY_NOEXPENSE_ADITIONAL_TEXT">"This zone does not show the expenses created conjunctively with other records (refuels, etc.)"</string>
+    <string name="GPSTrackActivity_StartBtnCaption">"Start GPS Track"</string>
+    <string name="GPSTrackActivity_StopBtnCaption">"Stop GPS Track"</string>
+    <string name="GPSTrackActivity_FileFormatLabel">"Track file format:"</string>
+    <string name="GPSTrackActivity_CreateMileageLabel">"Create mileage"</string>
 
-    <string name="MAIN_ACTIVITY_NO_CURRENT_CAR">"No current car selected. In the following page you can select one or define on."</string>
-    <string name="MAIN_ACTIVITY_NO_CURRENT_DRIVER">"No current driver selected. In the following page you can select one or define on."</string>
-    <string name="MAIN_ACTIVITY_WELCOMEBACK">"Welcome back!"</string>
-    <string name="MAIN_ACTIVITY_BACKUPEXISTS">"Backup files exists.\nDo you want to restore one?"</string>
-    <string name="MAIN_ACTIVITY_WELLCOME_MESSAGE_TITLE">"Wellcome to AndiCar."</string>
+    <string name="GPSTrackService_ServiceStoppedMessage">"GPS tracking stopped"</string>
+    <string name="GPSTrackService_GPSDisabledMessage">"Your gps is disabled!\nPlease enable it."</string>
+    <string name="GPSTrackService_TrackInProgressTitle">"AndiCar GPS Tracking"</string>
+    <string name="GPSTrackService_TrackInProgressMessage">"Tracking in progress"</string>
+    <string name="GPSTrackService_AccuracyProblemTitle">"AndiCar GPS Warning!"</string>
+    <string name="GPSTrackService_AccuracyProblemMessage">"Accuracy is over the limit!"</string>
+    <string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS Stopped!"</string>
+    <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent (%1) is over the limit (%2)!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
+    <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar File System Error!"</string>
 
-    <string name="MAIN_ACTIVITY_UPDATE_MESSAG">"Update message"</string>
+    <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
+    <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>
+    <string name="PREF_ExpenseTypeCategoryTitle">"Expense types"</string>
+    <string name="PREF_ExpenseTypeCategorySummary">"Add, delete, modify expense types"</string>
+    <string name="PREF_CarDriverCategoryTitle">"Cars and drivers"</string>
+    <string name="PREF_CarTitle">"Cars"</string>
+    <string name="PREF_CarSummary">"Add, delete, modify cars.\nSelect current car."</string>
+    <string name="PREF_DriverTitle">"Drivers"</string>
+    <string name="PREF_DriverSummary">"Add, delete, modify drivers.\nSelect current driver."</string>
+    <string name="PREF_UOMLengthTitle">"UOM for distance"</string>
+    <string name="PREF_UOMLengthSummary">"Add, delete, modify measurement units for distance"</string>
+    <string name="PREF_UOMVolumeTitle">"UOM for volume"</string>
+    <string name="PREF_UOMVolumeSummary">"Add, delete, modify measurement units for volume"</string>
+    <string name="PREF_UOMConversionTitle">"UOM conversion"</string>
+    <string name="PREF_UOMConversionSummary">"Add, delete, modify conversions between measurement units"</string>
+    <string name="PREF_CurrencyTitle">"Currencies"</string>
+    <string name="PREF_CurrencySummary">"Add, delete, modify currencies"</string>
+    <string name="PREF_BackupRestoreCategoryTitle">"Backup / restore"</string>
+    <string name="PREF_BackupRestoreTitle">"Backup or restore your database"</string>
+    <string name="PREF_BackupRestoreSummary">"Create a new backup about your database or restore it from an existing backup."</string>
+    <string name="PREF_ExpenseCategoryCategoryTitle">"Expense categories"</string>
+    <string name="PREF_ExpenseCategoryCategorySummary">"Add, delete, modify expense categories"</string>
+    <string name="PREF_MiscCategoryTitle">"Miscellaneous"</string>
+    <string name="PREF_MainScreenCategoryTitle">"Main screen preferences"</string>
+    <string name="PREF_MainScreenCategorySummary">"Customize your main sceen"</string>
+    <string name="PREF_CurrencyRateCategoryTitle">"Currency rates"</string>
+    <string name="PREF_CurrencyRateCategorySummary">"Add, delete, modify currency rates"</string>
+    <string name="PREF_GPSTrackCategoryTitle">"GPS Tracking"</string>
+    <string name="PREF_GPSTrackTitle">"GPS Track"</string>
+    <string name="PREF_GPSTrackSummary">"Various options for GPS tracking."</string>
+    <string name="PREF_SendUsageTitle">"Usage statistics"</string>
+    <string name="PREF_SendUsageSummary">"Send anonymous usage statistics to developers"</string>
+    <string name="PREF_SendCrashReportsTitle">"Crash reports"</string>
+    <string name="PREF_SendCrashReportsSummary">"Send anonymous crash reports to developers"</string>
+    <string name="PREF_MainScreen">"Customize your main screen"</string>
+    <string name="PREFMainScreen_ZonesLabel">"Existing zones:"</string>
+    <string name="PREFGPSTrack_FileFormatTitle">"File format"</string>
+    <string name="PREFGPSTrack_FileFormatSummary">"Choose the file format(s) used for the track"</string>
+    <string name="PREFGPSTrack_CSVFileFormatMessage">"CSV is allways used"</string>
+    <string name="PREFGPSTrack_KMLFileFormatTitle">"KML"</string>
+    <string name="PREFGPSTrack_KMLFileFormatSummary">"Keyhole Markup Language"</string>
+    <string name="PREFGPSTrack_GPXFileFormatTitle">"GPX"</string>
+    <string name="PREFGPSTrack_GPXFileFormatSummary">"GPs eXchange format"</string>
+    <string name="PREFGPSTrack_MinimumTimeTitle">"Min. time between points"</string>
+    <string name="PREFGPSTrack_MinimumTimeSummary">"Minimum time between two recordings of your position"</string>
+    <string name="PREFGPSTrack_AccuracyTitle">"Accuracy"</string>
+    <string name="PREFGPSTrack_AccuracySummary">"Minimum accuracy for a valid track point. Valid only for KML and GPX files."</string>
+    <string name="PREFGPSTrack_AutoShutDownTitle">"Self stop limit"</string>
+    <string name="PREFGPSTrack_AutoShutDownSummary">"Stop tracking if the skipped points percentage is greater than this value."</string>
+    <string name="PREFGPSTrack_FileSplitTitle">"Track file split"</string>
+    <string name="PREFGPSTrack_FileSplitSummary">"Split track files after every N track points. Set to 0 to disable."</string>
+    <string name="PREFGPSTrack_FileLocationMessage">"Your track files are located in SDCARD/andicar/gpstrack folder"</string>
 
-    <string name="DRIVER_EDIT_ACTIVITY_LICENSE_NO">"License No.:"</string>
-    <string name="NO_DRIVERS">"No drivers defined yet"</string>
-    <string name="INACTIVE_DRIVER_SELECTED_ERROR_MESSAGE">"Inactive driver. Can not be selected."</string>
-    <string name="CURRENT_DRIVER_DELETE_ERROR_MESSAGE">"The current driver can not be deleted."</string>
-    <string name="CURRENT_DRIVER_INACTIVATE_ERROR_MESSAGE">"The current driver can not be inactivated."</string>
+    <string name="DIALOGSearch_DialogTitle">"Enter criteria"</string>
+    <string name="DIALOGSearch_DateFromLabel">"From (YYYY-MM-DD)"</string>
+    <string name="DIALOGSearch_DateToLabel">"To (YYYY-MM-DD)"</string>
 
-    <string name="CAR_EDIT_ACTIVITY_MODEL">"Model:"</string>
-    <string name="CAR_EDIT_ACTIVITY_REG_NO">"License plate:"</string>
-    <string name="CAR_EDIT_ACTIVITY_UOMLENGTH">"UOM for distance:"</string>
-    <string name="CAR_EDIT_ACTIVITY_UOMVOLUME">"UOM for volume:"</string>
-    <string name="CAR_EDIT_ACTIVITY_STARTINDEX">"Initial odometer:"</string>
-    <string name="CAR_EDIT_ACTIVITY_CURRENCY">"Default currency:"</string>
-    <string name="INACTIVE_CAR_SELECTED_ERROR_MESSAGE">"Inactive car. Can not be selected."</string>
-    <string name="CURRENT_CAR_DELETE_ERROR_MESSAGE">"The current car can not be deleted."</string>
-    <string name="CURRENT_CAR_INACTIVATE_ERROR_MESSAGE">"The current car can not be inactivated."</string>
-
-    <string name="UOM_EDIT_ACTIVITY_CODE">"Code:"</string>
-    <string name="UOM_EDIT_ACTIVITY_TITLE_LENGTH">"distance"</string>
-    <string name="UOM_EDIT_ACTIVITY_TITLE_VOLUME">"volume"</string>
-    <string name="UOM_CANNOT_DELETE_ERROR_MESSAGE">"This UOM can not be deleted.\nIt is used in cars definition."</string>
-
-    <string name="UOMCONVERSION_EDIT_ACTIVITY_CODE">"Code:"</string>
-    <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMFROM">"From uom:"</string>
-    <string name="UOMCONVERSION_EDIT_ACTIVITY_UOMTO">"To uom:"</string>
-    <string name="UOMCONVERSION_EDIT_ACTIVITY_RATE">"Conversion rate:"</string>
-
-    <string name="CURRENCY_EDIT_ACTIVITY_CODE">"Code:"</string>
-
-    <string name="MILEAGE_EDIT_ACTIVITY_INDEXHEADER">"Odometer start/stop or mileage"</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_STARTINDEX">"Start "</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_INDEX">"Stop "</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_OPTION_MILEAGE">"Mileage "</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_HDRINSERTMODE_CAPTION">"<b><i>Insert mode:</i></b>"</string>
-    <!--Stop index OR mileage-->
-    <string name="MILEAGE_EDIT_ACTIVITY_COMMENT">"Comment"</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_INSERTOK_MESSAGE">"Mileage added."</string>
-    <string name="MILEAGE_EDIT_ACTIVITY_UPDATEOK_MESSAGE">"Mileage updated."</string>
-    <string name="MILEAGE_LISTREPORT_ACTIVITY_NOCOMMENT_TEXT">"Without user comment"</string>
-
-    <string name="REFUEL_ISFULLREFUEL_LABEL">"Is full"</string>
-    <string name="REFUEL_BASEUOMQTY_LABEL">"Quantity in base UOM: "</string>
-    <string name="REFUEL_NOUOMCONVERSION_MSG">"No conversion found between UOM's"</string>
-
-    <string name="CURR_UOMS">"\nMeasurement units used:"</string>
-
-    <string name="PREF_UOMS_CATEGORY_TITLE">"Measurement units"</string>
-    <string name="PREF_EXPENSE_CATEGORY_TITLE">"Expenses"</string>
-    <string name="PREF_CAT_EXPTYPE_TITLE">"Expense types"</string>
-    <string name="PREF_CAT_EXPTYPE_SUMMARY">"Add, delete, modify expense types"</string>
-    <string name="PREF_CARSDRIVER_CATEGORY_TITLE">"Cars and drivers"</string>
-    <string name="PREF_CARS_TITLE">"Cars"</string>
-    <string name="PREF_CARS_SUMMARY">"Add, delete, modify cars.\nSelect current car."</string>
-    <string name="PREF_DRIVERS_TITLE">"Drivers"</string>
-    <string name="PREF_DRIVERS_SUMMARY">"Add, delete, modify drivers.\nSelect current driver."</string>
-    <string name="PREF_UOMLENGTH_TITLE">"UOM for distance"</string>
-    <string name="PREF_UOMLENGTH_SUMMARY">"Add, delete, modify measurement units for distance"</string>
-    <string name="PREF_UOMVOLUME_TITLE">"UOM for volume"</string>
-    <string name="PREF_UOMVOLUME_SUMMARY">"Add, delete, modify measurement units for volume"</string>
-    <string name="PREF_UOMCONVERSION_TITLE">"UOM conversion"</string>
-    <string name="PREF_UOMCONVERSION_SUMMARY">"Add, delete, modify conversions between measurement units"</string>
-    <string name="PREF_CAT_CURRENCYLIST_TITLE">"Currencies"</string>
-    <string name="PREF_CAT_CURRENCYLIST_SUMMARY">"Add, delete, modify currencies"</string>
-    <string name="PREF_BKRESTORE_CATEGORY_TITLE">"Backup / restore"</string>
-    <string name="PREF_BKRESTORE_TITLE">"Backup or restore your database"</string>
-    <string name="PREF_BKRESTORE_SUMMARY">"Create a new backup about your database or restore it from an existing backup."</string>
-    <string name="PREF_CAT_EXPCATEGORY_TITLE">"Expense categories"</string>
-    <string name="PREF_CAT_EXPCATEGORY_SUMMARY">"Add, delete, modify expense categories"</string>
-    <string name="PREF_MISC_CATEGORY_TITLE">"Miscellaneous"</string>
-    <string name="PREF_CAT_MAINSCREENCATEGORY_TITLE">"Main screen preferences"</string>
-    <string name="PREF_CAT_MAINSCREENCATEGORY_SUMMARY">"Customize your main sceen"</string>
-    <string name="PREF_CAT_CURRENCYRATELIST_TITLE">"Currency rates"</string>
-    <string name="PREF_CAT_CURRENCYRATELIS_SUMMARY">"Add, delete, modify currency rates"</string>
-    <string name="PREF_GPSTRACK_CATEGORY_TITLE">"GPS Tracking"</string>
-    <string name="PREF_GPSTRACK_TITLE">"GPS Track"</string>
-    <string name="PREF_GPSTRACK_SUMMARY">"Various options for GPS tracking."</string>
-    <string name="PREF_GPSTRACK_SHOWONMAP_TITLE">"Show map"</string>
-    <string name="PREF_GPSTRACK_SHOWONMAP_SUMMARY">"Draw the track on the map"</string>
-    <string name="PREF_GPSTRACK_FILEFORMAT_TITLE">"File format"</string>
-    <string name="PREF_GPSTRACK_FILEFORMAT_SUMMARY">"Choose the file format(s) used for the track"</string>
-    <string name="PREF_GPSTRACK_FILEFORMATKML_TITLE">"KML"</string>
-    <string name="PREF_GPSTRACK_FILEFORMATKML_SUMMARY">"Keyhole Markup Language"</string>
-    <string name="PREF_GPSTRACK_FILEFORMATGPX_TITLE">"GPX"</string>
-    <string name="PREF_GPSTRACK_FILEFORMATGPX_SUMMARY">"GPs eXchange format"</string>
-    <string name="PREF_GPSTRACK_MINTIME_TITLE">"Min. time between points"</string>
-    <string name="PREF_GPSTRACK_MINTIME_SUMMARY">"Minimum time between two recordings of your position"</string>
-    <string name="PREF_SENDUSAGESTATS_TITLE">"Usage statistics"</string>
-    <string name="PREF_SENDUSAGESTATS_SUMMARY">"Send anonymous usage statistics to developers"</string>
-    <string name="PREF_SENDCRASHREPORT_TITLE">"Crash reports"</string>
-    <string name="PREF_SENDCRASHREPORT_SUMMARY">"Send anonymous crash reports to developers"</string>
-    <string name="PREF_GPSTRACK_MAXACCURACY_TITLE">"Accuracy"</string>
-    <string name="PREF_GPSTRACK_MAXACCURACY_SUMMARY">"Minimum accuracy for a valid track point"</string>
-    <string name="PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_TITLE">"Self stop limit"</string>
-    <string name="PREF_GPSTRACK_MAXACCURACYSHUTDOWNLIMIT_SUMMARY">"Stop tracking if the skipped points percentage is greater than this value."</string>
-    <string name="PREF_GPSTRACK_TrackFileSplitCount_TITLE">"Track file split"</string>
-    <string name="PREF_GPSTRACK_TrackFileSplitCount_SUMMARY">"Split track files after every N track points. Set to 0 to disable."</string>
-    <string name="PREF_GPSTRACK_FileFormatCSV_Msg">"CSV is allways used"</string>
-    <string name="PREF_GPSTRACK_TrackFileLocation_Msg">"Your track files are located in SDCARD/andicar/gpstrack folder"</string>
-
-    <string name="RECORD_SELECTED_TOAST_MESSAGE">" selected"</string>
-    <string name="SEARCH_DIALOG_TITLE">"Enter criteria"</string>
-    <string name="SEARCH_FROM_DATE_LBL">"From (YYYY-MM-DD)"</string>
-    <string name="SEARCH_TO_DATE_LBL">"To (YYYY-MM-DD)"</string>
-
-    <string name="REPORTOPTIONS_DIALOG_TITLE">"Report options"</string>
-    <string name="REPORTOPTIONS_DIALOG_SAVELOCAL_CAPTION">"  save locally"</string>
-    <string name="REPORTOPTIONS_DIALOG_SENDEMAIL_CAPTION">"  send as email attachment"</string>
-    <string name="REPORTOPTIONS_DIALOG_FORMAT_LABEL">"Report format:"</string>
-    <string name="REPORTLIST_REPORT_CREATED">"Your report was created successfully to"</string>
-
-    <string name="BKRESTORE_ACTIVITY_BACKUPBTN_CAPTION">"Backup"</string>
-    <string name="BKRESTORE_ACTIVITY_RESTOREBTN_CAPTION">"Restore"</string>
-    <string name="BKRESTORE_ACTIVITY_DELETEBK_CAPTION">"Delete backup"</string>
-    <string name="BKRESTORE_ACTIVITY_EXISTINGBKS_LABEL">"Existing backups:"</string>
-    <string name="BKRESTORE_ACTIVITY_BKOK_MESSAGE">"Backup created."</string>
-    <string name="BKRESTORE_ACTIVITY_BKFAILED_MESSAGE">"Backup creation failed!"</string>
-    <string name="BKRESTORE_ACTIVITY_DELETE_CONFIRM">"Are you sure you want to delete the selected backup?"</string>
-    <string name="BKRESTORE_ACTIVITY_RESTORE_CONFIRM">"Are you sure you want to restore the selected backup? This action will overwrite your existing data!"</string>
-    <string name="BKRESTORE_ACTIVITY_RESTOREOK_MESSAGE">"Your database was restored succesfully. The application will be closed."</string>
-
-    <string name="EXPCATEGORY_EDIT_ISEXCLUDEFROMMILEAGECOST_LABEL">"Exclude from mileage cost calculation"</string>
-    <string name="EXPENSEEDIT_ACTIVITY_WARNING_LABEL">"This expense was created from %.\nTo modify it please edit the coresponding %."</string>
-
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYFROM_LABEL">"From currency "</string>
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYTO_LABEL">"To currency "</string>
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATE_LABEL">"Rate: 1 % = "</string>
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_CURRENCYRATETO_LABEL">" %"</string>
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_INVERSECURRENCYRATE_LABEL">"Inverse rate: 1 % = "</string>
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_MAXALLOWEDDECIMALS_LABEL">"Max. allowed decimals: "</string>
-    <string name="CURRENCYRATE_EDIT_ACTIVITY_TVCURRENCYRATE_TAG">"Rate"</string>
-
-    <string name="MAINSCREENPREF_ACTIVITY_LABEL">"Existing zones:"</string>
-
-    <string name="REPORT_SERVICE_STARTED">"Report creation started"</string>
-    <string name="REPORT_SERVICE_STOPPED">"Report creation stopped"</string>
-    <string name="REPORT_SERVICE_LABEL">"AndiCar Report Service"</string>
-    <string name="REPORT_PROGRESS_DIALOG_TEXT">"Report creation started. Please wait..."</string>
-
-<!--    <string name="SERVICE_GPSTRACK_LABEL">"AndiCar GPS Tracking"</string> -->
-    <string name="SERVICE_GPSTRACK_SERVICESTOPPED_MESSAGE">"GPS tracking stopped"</string>
-    <string name="SERVICE_GPSTRACK_GPSDISABLED">"Your gps is disabled!\nPlease enable it."</string>
-
-    <string name="GPSTRACK_ACTIVITY_GPSTRACKSTART_BTN_CAPTION">"Start GPS Track"</string>
-    <string name="GPSTRACK_ACTIVITY_GPSTRACKSTOP_BTN_CAPTION">"Stop GPS Track"</string>
-    <string name="GPSTRACK_ACTIVITY_FILEFORMAT_LABEL">"Track file format:"</string>
-    <string name="GPSTRACK_ACTIVITY_CREATEMILEAGE_LABEL">"Create mileage"</string>
-
-    <string name="GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_TITLE">"AndiCar GPS Tracking"</string>
-    <string name="GPSTRACK_SERVICE_GPSTRACKSERVICEINPROGRESS_MESSAGE">"Tracking in progress"</string>
-    <string name="SERVICE_GPSTRACK_ACCURACYPROBLEM_TITLE">"AndiCar GPS Warning!"</string>
-    <string name="SERVICE_GPSTRACK_ACCURACYPROBLEM_MESSAGE">"Accuracy is over the limit!"</string>
-    <string name="SERVICE_GPSTRACK_AUTOSHUTDOWN_TITLE">"AndiCar GPS Stopped!"</string>
-    <string name="SERVICE_GPSTRACK_AUTOSHUTDOWN_MESSAGE">"GPS Tracking was stopped because the skipped points percent (%1) is over the limit (%2)!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
-    <string name="SERVICE_GPSTRACK_FILESYSTEMERROR_TITLE">"AndiCar File System Error!"</string>
+    <string name="DIALOGReport_DialogTitle">"Report options"</string>
+    <string name="DIALOGReport_SendEmailLabel">"  send as email attachment"</string>
+    <string name="DIALOGReport_ReportFormatLabel">"Report format:"</string>
 
 </resources>

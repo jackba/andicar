@@ -41,7 +41,7 @@
                 android:id="@+id/tvUserCommentLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_USER_COMMENT_LABEL"
+                android:text="@string/GEN_UserCommentLabel"
                 />
             <EditText
                 android:id="@+id/etUserCommentSearch"
@@ -66,7 +66,7 @@
                 android:id="@+id/tvExpCategoryLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_EXPENSECATEGORY_LABEL"
+                android:text="@string/GEN_ExpenseCategoryLabel"
                 />
             <Spinner android:id="@+id/spnExpCategorySearch"
                 android:layout_width="fill_parent"
@@ -75,7 +75,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
@@ -89,7 +89,7 @@
                 android:id="@+id/tvExpTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_EXPENSETYPE"
+                android:text="@string/GEN_ExpenseTypeLabel"
                 />
             <Spinner android:id="@+id/spnExpTypeSearch"
                 android:layout_width="fill_parent"
@@ -98,7 +98,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
@@ -111,7 +111,7 @@
                 android:id="@+id/tvDateFromLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/SEARCH_FROM_DATE_LBL"
+                android:text="@string/DIALOGSearch_DateFromLabel"
                 />
             <EditText
                 android:id="@+id/etDateFromSearch"
@@ -135,7 +135,7 @@
                 android:id="@+id/tvDateToLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/SEARCH_TO_DATE_LBL"
+                android:text="@string/DIALOGSearch_DateToLabel"
                 />
             <EditText
                 android:id="@+id/etDateToSearch"
@@ -159,7 +159,7 @@
                 android:id="@+id/tvDriverLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_DRIVER_LABEL"
+                android:text="@string/GEN_DriverLabel"
                 />
             <Spinner android:id="@+id/spnDriverSearch"
                 android:layout_width="fill_parent"
@@ -168,7 +168,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
@@ -182,7 +182,7 @@
                 android:id="@+id/tvCarLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_CAR_LABEL"
+                android:text="@string/GEN_CarLabel"
                 />
             <Spinner android:id="@+id/spnCarSearch"
                 android:layout_width="fill_parent"
@@ -191,7 +191,7 @@
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
                 android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_CHOOSEONE_DIALOGTITLE"
+                android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
