@@ -927,6 +927,10 @@ public class MainDbAdapter extends DB
         return retVal;
     }
 
+//    public BigDecimal getConvertedDistance(long fromId, long toId, BigDecimal distance){
+//        return distance.multiply(getUOMConvertionRate(fromId, toId)).setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
+//    }
+
     public long getCarUOMVolumeID(long carID){
         return fetchRecord(CAR_TABLE_NAME, carTableColNames, carID)
                 .getLong(CAR_COL_UOMVOLUME_ID_POS);
@@ -950,5 +954,14 @@ public class MainDbAdapter extends DB
     public String getUOMCode(long uomID){
         return fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames,
                     uomID).getString(MainDbAdapter.UOM_COL_CODE_POS);
+    }
+
+    public long getIdFromCode(String tableName, String code){
+        Cursor c = fetchForTable(tableName, genColRowId, "Code = '" + code + "'", "Code");
+        long retVal = -1;
+        if(c.moveToFirst())
+            retVal = c.getLong(0);
+        c.close();
+        return retVal;
     }
 }

@@ -45,7 +45,6 @@ import java.util.Calendar;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
-import android.util.Log;
 
 /**
  *
@@ -105,7 +104,7 @@ public class GPSTrackService extends Service {
     private long lStartTime = 0;
     private long lStopTime = 0;
     private float fDistance = 0;
-    private float fMaxSpeed = 0;
+    private double dMaxSpeed = 0;
     private double dAvgSpeed = 0;
     private double dAvgMovingSpeed = 0;
     private boolean isFirstPoint = true;
@@ -124,6 +123,8 @@ public class GPSTrackService extends Service {
     private int iFileCount = 1; //for splitting large gps files
     private int iFileSplitCount = 0;
     private String sNonMovingTimes = "\n";
+    private boolean isUseMetricUnits = true;
+
 
 
     /**
@@ -198,6 +199,15 @@ public class GPSTrackService extends Service {
         c.moveToNext();
         gpsTrackId = c.getLong(0);
         c.close();
+        long lMileId = mMainDbAdapter.getIdFromCode(MainDbAdapter.UOM_TABLE_NAME, "mi");
+        long lCarUomId = mMainDbAdapter.getCarUOMLengthID(lCarId);
+        if(lCarUomId == lMileId)
+            isUseMetricUnits = false; //use imperial units
+        else
+            isUseMetricUnits = true;
+        
+
+
         //create the track detail file(s)
         try {
             createFiles();
@@ -230,13 +240,13 @@ public class GPSTrackService extends Service {
         gpsTrackDetailCSVFileWriter = new FileWriter(gpsTrackDetailCSVFile);
         //create the header
         gpsTrackDetailCSVFileWriter.append(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "," +
-                                                "Accuracy" + "," +
-                                                "Altitude" + "," +
+                                                "Accuracy" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
+                                                "Altitude" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
                                                 "Latitude" + "," +
                                                 "Longitude" + "," +
-                                                "Speed" + "," +
+                                                "Speed" + (isUseMetricUnits? " [km/h]" : " [mi/h]") + "," +
                                                 "Time" + "," +
-                                                "Distance" + "," +
+                                                "Distance" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
                                                 "Bearing" + "," +
                                                 "TotalTrackPointCount" + "," +
                                                 "InvalidTrackPointCount" + "," +
@@ -397,6 +407,7 @@ public class GPSTrackService extends Service {
                 + "<Placemark>\n"
                   + "<name><![CDATA[" + pointName + "]]></name>\n"
                   + "<description><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a>."
+                  //TODO uom conversion to car default uom
                   + "<p>Distance (from start point): " + (fDistance / 1000.00) + "km\n" //(2.2 mi)<br>Total Time: 10:57<br>Moving Time: 8:12<br>Average Speed: 21.20 km/h (13.2 mi/h)<br>Average Moving Speed: 26.38 km/h (16.4 mi/h)<br>Max Speed: 59.40 km/h (36.9 mi/h)<br>Min Elevation: 588 m (1927 ft)<br>Max Elevation: 605 m (1986 ft)<br>Elevation Gain: 25 m (81 ft)<br>Max Grade: 5 %<br>Min Grade: -2 %<br>Recorded: Thu Apr 08 13:11:35 GMT+02:00 2010<br>Activity type: -<br><img border="0" src="http://chart.apis.google.com/chart?&chs=600x350&cht=lxy&chtt=Elevation&chxt=x,y&chxr=0,0,3,0%257C1,500.0,700.0,25&chco=009A00&chm=B,00AA00,0,0,0&chg=100000,12.5,1,0&chd=e:,"/>
                       + "]]></description>\n"
                   + "<styleUrl>" + pointStyle + "</styleUrl>\n"
@@ -432,13 +443,13 @@ public class GPSTrackService extends Service {
     private void appendCSVTrackPoint(boolean isValid) throws IOException {
         gpsTrackDetailCSVFileWriter.append(
                 gpsTrackId + "," +
-                fCurrentAccuracy + "," +
-                dCurrentLocationAltitude + "," +
-                dCurrentLocationLatitude + "," +
-                dCurrentLocationLongitude + "," +
-                fCurrentSpeed + "," +
+                (isUseMetricUnits ? fCurrentAccuracy : fCurrentAccuracy * 1.093613)  + "," + //m to yd
+                (isUseMetricUnits ? dCurrentLocationAltitude : dCurrentLocationAltitude * 1.093613) + "," + //m to yd
+                dCurrentLocationLatitude + "," + 
+                dCurrentLocationLongitude + "," + 
+                (isUseMetricUnits ? fCurrentSpeed * 3.6 : fCurrentSpeed * 2.2369) + "," + //m/s to km/h or mi/h
                 lCurrentLocationTime + "," +
-                distanceBetweenLocations + "," +
+                (isUseMetricUnits ? distanceBetweenLocations : distanceBetweenLocations * 1.093613) + "," +
                 fCurrentLocationBearing + "," +
                 dTotalTrackPoints + "," +
                 dTotalSkippedTrackPoints + "," +
@@ -622,11 +633,11 @@ public class GPSTrackService extends Service {
         /*
          * convertion for distance and speed to car uom!
          */
-        long lTotalTime = lStopTime - lStartTime;
+        long lTotalTime = (lStopTime - lStartTime) / 1000; //in seconds; lStopTime & lStartTime are in miliseconds
         if(lLastNonMovingTime != 0 && lFirstNonMovingTime != 0)
             lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
         
-        long lTotalMovingTime = lTotalTime - lTotalNonMovingTime;
+        long lTotalMovingTime = lTotalTime - (lTotalNonMovingTime / 1000); //lTotalNonMovingTime is in milisecond
 
         if(dTotalUsedTrackPoints != 0)
             dAvgAccuracy = dAvgAccuracy / dTotalUsedTrackPoints;
@@ -634,15 +645,32 @@ public class GPSTrackService extends Service {
             dAvgAccuracy = 0;
 
         if(lStopTime - lStartTime != 0)
-            dAvgSpeed = fDistance / (lTotalTime/1000); // m/s
+            dAvgSpeed = fDistance / lTotalTime; // m/s
         else
             dAvgSpeed = 0;
 
         if(lTotalMovingTime != 0)
-            dAvgMovingSpeed = fDistance / (lTotalMovingTime / 1000); // m/s
+            dAvgMovingSpeed = fDistance / lTotalMovingTime; // m/s
         else
             dAvgMovingSpeed = 0;
-        
+        if(!isUseMetricUnits){
+            fMinAccuracy = fMinAccuracy * (float)1.093613; //m to yd
+            fMaxAccuracy = fMaxAccuracy * (float)1.093613; //m to yd
+            dAvgAccuracy = dAvgAccuracy * 1.093613; //m to yd
+            dMinAltitude = dMinAltitude * 1.093613; //m to yd
+            dMaxAltitude = dMaxAltitude * 1.093613; //m to yd
+            fDistance = fDistance * (float)0.000621371; //m to mi
+            dAvgSpeed = dAvgSpeed * 2.23693; //m/s to mi/h
+            dAvgMovingSpeed = dAvgMovingSpeed * 2.23693; //m/s to mi/h
+            dMaxSpeed = dMaxSpeed  * 2.23693;
+        }
+        else{ // only m/s need to be converted to km/h
+            fDistance = fDistance * (float)0.001; //m to km
+            dAvgSpeed = dAvgSpeed * 3.6; //m/s to km/h
+            dAvgMovingSpeed = dAvgMovingSpeed * 3.6; //m/s to km/h
+            dMaxSpeed = dMaxSpeed  * 3.6;
+        }
+
         String updateSql = "UPDATE " + MainDbAdapter.GPSTRACK_TABLE_NAME +
                 " SET "
                     + MainDbAdapter.GPSTRACK_COL_MINACCURACY_NAME + " = " + fMinAccuracy + ", "
@@ -650,13 +678,15 @@ public class GPSTrackService extends Service {
                     + MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME + " = " + (dAvgAccuracy > 0 ? dAvgAccuracy : null) + ", "
                     + MainDbAdapter.GPSTRACK_COL_MINALTITUDE_NAME + " = " + dMinAltitude + ", "
                     + MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME + " = " + dMaxAltitude + ", "
-                    + MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME + " = " + lTotalTime + ", "
-                    + MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME + " = " + lTotalMovingTime + ", "
+                    + MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME + " = " + lTotalTime + ", " //in seconds
+                    + MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME + " = " + lTotalMovingTime + ", " //in seconds
                     + MainDbAdapter.GPSTRACK_COL_DISTNACE_NAME + " = " + fDistance + ", "
                     + MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME + " = " + dAvgSpeed + ", "
                     + MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME + " = " + (dAvgMovingSpeed > 0 ? dAvgMovingSpeed : null)  + ", "
-                    + MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME + " = " + fMaxSpeed + " " +
-                " WHERE "+ MainDbAdapter.GEN_COL_ROWID_NAME + " = " + gpsTrackId;
+                    + MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME + " = " + dMaxSpeed + ", "
+                    + MainDbAdapter.GPSTRACK_COL_TOTALTRACKPOINTS_NAME + " = " + dTotalTrackPoints + ", "
+                    + MainDbAdapter.GPSTRACK_COL_INVALIDTRACKPOINTS_NAME + " = " + dTotalSkippedTrackPoints
+                + " WHERE "+ MainDbAdapter.GEN_COL_ROWID_NAME + " = " + gpsTrackId;
 
         if(mMainDbAdapter == null)
             mMainDbAdapter = new MainDbAdapter(this);
@@ -771,8 +801,8 @@ public class GPSTrackService extends Service {
                     if(dCurrentLocationAltitude > dMaxAltitude)
                         dMaxAltitude = dCurrentLocationAltitude;
 
-                    if(fCurrentSpeed > fMaxSpeed)
-                        fMaxSpeed = fCurrentSpeed;
+                    if(fCurrentSpeed > dMaxSpeed)
+                        dMaxSpeed = fCurrentSpeed;
 
                     if(gpsTrackDetailKMLFileWriter != null)
                         appendKMLTrackPoint();

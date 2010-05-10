@@ -237,9 +237,9 @@
     <string name="PREF_GPSTrackTitle">"GPS Track"</string>
     <string name="PREF_GPSTrackSummary">"Various options for GPS tracking."</string>
     <string name="PREF_SendUsageTitle">"Usage statistics"</string>
-    <string name="PREF_SendUsageSummary">"Send anonymous usage statistics to developers"</string>
+    <string name="PREF_SendUsageSummary">"Help developers by sending anonymous usage statistics."</string>
     <string name="PREF_SendCrashReportsTitle">"Crash reports"</string>
-    <string name="PREF_SendCrashReportsSummary">"Send anonymous crash reports to developers"</string>
+    <string name="PREF_SendCrashReportsSummary">"Help developers by sending anonymous crash reports."</string>
     <string name="PREF_MainScreen">"Customize your main screen"</string>
     <string name="PREFMainScreen_ZonesLabel">"Existing zones:"</string>
     <string name="PREFGPSTrack_FileFormatTitle">"File format"</string>
@@ -252,7 +252,7 @@
     <string name="PREFGPSTrack_MinimumTimeTitle">"Min. time between points"</string>
     <string name="PREFGPSTrack_MinimumTimeSummary">"Minimum time between two recordings of your position"</string>
     <string name="PREFGPSTrack_AccuracyTitle">"Accuracy"</string>
-    <string name="PREFGPSTrack_AccuracySummary">"Minimum accuracy for a valid track point. Valid only for KML and GPX files."</string>
+    <string name="PREFGPSTrack_AccuracySummary">"Minimum accuracy for a valid track point. Used for recording in KML and GPX formats."</string>
     <string name="PREFGPSTrack_AutoShutDownTitle">"Self stop limit"</string>
     <string name="PREFGPSTrack_AutoShutDownSummary">"Stop tracking if the skipped points percentage is greater than this value."</string>
     <string name="PREFGPSTrack_FileSplitTitle">"Track file split"</string>
