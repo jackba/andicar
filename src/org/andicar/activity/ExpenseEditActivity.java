@@ -115,9 +115,9 @@ public class ExpenseEditActivity extends EditActivityBase {
         long mExpTypeId = 0;
 
         carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
-        carDefaultCurrencyCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
-                carDefaultCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-//        currencyCode = carDefaultCurrencyCode;
+        carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
+//        fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+//                carDefaultCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
         conversionRate = BigDecimal.ONE;
 
         if (operationType.equals("E")) {
@@ -304,8 +304,9 @@ public class ExpenseEditActivity extends EditActivityBase {
                             mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME, spnCar.getSelectedItemId(), 30));
                     acUserComment.setAdapter(userCommentAdapter);
                     //change the currency
-                    Long newCarCurrencyId = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames,
-                            spnCar.getSelectedItemId()).getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS);
+                    Long newCarCurrencyId = mDbAdapter.getCarCurrencyID(spnCar.getSelectedItemId());
+//                    fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames,
+//                            spnCar.getSelectedItemId()).getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS);
 
                     if(newCarCurrencyId != mCurrencyId){
                         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
@@ -315,8 +316,9 @@ public class ExpenseEditActivity extends EditActivityBase {
                                     newCarCurrencyId, false);
                         mCurrencyId = newCarCurrencyId;
                         carDefaultCurrencyId = mCurrencyId;
-                        carDefaultCurrencyCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
-                                carDefaultCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+                        carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
+//                        fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+//                                carDefaultCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
                         conversionRate = BigDecimal.ONE;
 
                         setConversionRateZoneVisible(false);
@@ -338,8 +340,6 @@ public class ExpenseEditActivity extends EditActivityBase {
                     else{
                         setConversionRateZoneVisible(false);
                     }
-//                    currencyCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
-//                            mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
                     conversionRate = mDbAdapter.getCurrencyRate(mCurrencyId, carDefaultCurrencyId);
                     etConversionRate.setText("");
                     tbConvertedAmountValue.setText("");

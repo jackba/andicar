@@ -25,6 +25,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import java.sql.PreparedStatement;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -640,7 +641,13 @@ public class DB {
         private void createUOMConversionTable(SQLiteDatabase db) throws SQLException {
             db.execSQL(UOM_CONVERSION_TABLE_CREATE_SQL);
             //init default uom conversions
-            String colPart = "INSERT INTO " + UOM_CONVERSION_TABLE_NAME + " ( " + GEN_COL_NAME_NAME + ", " + GEN_COL_ISACTIVE_NAME + ", " + GEN_COL_USER_COMMENT_NAME + ", " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + ", " + UOM_CONVERSION_COL_UOMTO_ID_NAME + ", " + UOM_CONVERSION_COL_RATE_NAME + " " + ") ";
+            String colPart = "INSERT INTO " + UOM_CONVERSION_TABLE_NAME + " ( " + 
+                                                GEN_COL_NAME_NAME + ", " +
+                                                GEN_COL_ISACTIVE_NAME + ", " +
+                                                GEN_COL_USER_COMMENT_NAME + ", " +
+                                                UOM_CONVERSION_COL_UOMFROM_ID_NAME + ", " +
+                                                UOM_CONVERSION_COL_UOMTO_ID_NAME + ", " +
+                                                UOM_CONVERSION_COL_RATE_NAME + " " + ") ";
             db.execSQL(colPart + "VALUES ( 'mi to km', 'Y', 'Mile to Kilometer', 2, 1, 1.609344 )");
             db.execSQL(colPart + "VALUES ( 'km to mi', 'Y', 'Kilometer to Mile', 1, 2, 0.621371 )");
             db.execSQL(colPart + "VALUES ( 'US gal to l', 'Y', 'US gallon to Liter', 4, 3, 3.785412 )");
@@ -848,6 +855,59 @@ public class DB {
 //            db.execSQL(tmpStr);
 
             createGPSTrackTables(db);
+
+//            String colPart = "INSERT INTO " + UOM_TABLE_NAME + " ( " +
+//                                                    GEN_COL_NAME_NAME + ", " +
+//                                                    GEN_COL_ISACTIVE_NAME + ", " +
+//                                                    GEN_COL_USER_COMMENT_NAME + ", " +
+//                                                    UOM_COL_CODE_NAME + ", " +
+//                                                    UOM_COL_UOMTYPE_NAME + ") ";
+//            //this uom's are used in gps tracking. Is inactive because don't need to see in uom list for car definition
+//            db.execSQL(colPart + "VALUES ( 'Meter', 'N', 'Meter', 'm', 'L' )");
+//            db.execSQL(colPart + "VALUES ( 'Yard', 'N', 'Yard', 'yd', 'L' )");
+//
+//            colPart = "INSERT INTO " + UOM_CONVERSION_TABLE_NAME + " ( " +
+//                                                    GEN_COL_NAME_NAME + ", " +
+//                                                    GEN_COL_ISACTIVE_NAME + ", " +
+//                                                    GEN_COL_USER_COMMENT_NAME + ", " +
+//                                                    UOM_CONVERSION_COL_UOMFROM_ID_NAME + ", " +
+//                                                    UOM_CONVERSION_COL_UOMTO_ID_NAME + ", " +
+//                                                    UOM_CONVERSION_COL_RATE_NAME + " " + ") ";
+//            long id1;
+//            long id2;
+//            String sql = "SELECT " + GEN_COL_ROWID_NAME
+//                        + " FROM " + UOM_TABLE_NAME
+//                        + " WHERE " + UOM_COL_CODE_NAME + " = ?";
+//            String sCode[] = new String[1];
+//            Cursor c = null;
+//            sCode[0] = "m";
+//            c = db.rawQuery(sql, sCode);
+//            c.moveToFirst();
+//            id1 = c.getLong(0);
+//            c.close();
+//            sCode[0] = "yd";
+//            c = db.rawQuery(sql, sCode);
+//            c.moveToFirst();
+//            id2 = c.getLong(0);
+//            c.close();
+//            db.execSQL(colPart + "VALUES ( 'm to yd', 'Y', 'Meter to Yard', " + id1 + ", " + id2 + ", 1.093613 )");
+//            db.execSQL(colPart + "VALUES ( 'yd to m', 'Y', 'Yard to Meter', " + id2 + ", " + id1 + ", 0.9144 )");
+//            sCode[0] = "km";
+//            c = db.rawQuery(sql, sCode);
+//            if(c.moveToFirst()){
+//                id2 = c.getLong(0);
+//                c.close();
+//                db.execSQL(colPart + "VALUES ( 'm to km', 'Y', 'Meter to Kilometer', " + id1 + ", " + id2 + ", 0.001 )");
+//                db.execSQL(colPart + "VALUES ( 'km to m', 'Y', 'Kilometer to Meter', " + id2 + ", " + id1 + ", 1000 )");
+//            }
+//            sCode[0] = "mi";
+//            c = db.rawQuery(sql, sCode);
+//            if(c.moveToFirst()){
+//                id2 = c.getLong(0);
+//                c.close();
+//                db.execSQL(colPart + "VALUES ( 'm to mi', 'Y', 'Meter to Mile', " + id1 + ", " + id2 + ", 0.00062137119223733397 )");
+//                db.execSQL(colPart + "VALUES ( 'mi to m', 'Y', 'Mile to Meter', " + id2 + ", " + id1 + ", 1609.344 )");
+//            }
 
             FileUtils fu = new FileUtils(mCtx);
             fu.updateTo220(mCtx);
