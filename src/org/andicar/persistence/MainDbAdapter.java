@@ -255,6 +255,58 @@ public class MainDbAdapter extends DB
                try{
                     mDb.beginTransaction();
                     mDb.update( tableName, content, GEN_COL_ROWID_NAME + "=" + rowId, null);
+                    if(tableName.equals(REFUEL_TABLE_NAME)){ //update the coresponding expense record
+                        long expenseId = -1;
+                        String expenseIdSelect =
+                                "SELECT " + GEN_COL_ROWID_NAME + " " +
+                                "FROM " + EXPENSES_TABLE_NAME + " " +
+                                "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
+                                    "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
+                        Cursor c = execSelectSql(expenseIdSelect);
+                        if(c.moveToFirst())
+                            expenseId = c.getLong(0);
+                        c.close();
+                        if(expenseId != -1){
+                            ContentValues expenseContent = null;
+                            expenseContent = new ContentValues();
+
+                            expenseContent.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                                    content.getAsString(MainDbAdapter.GEN_COL_USER_COMMENT_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_CAR_ID_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_INDEX_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_INDEX_NAME));
+
+                            BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME));
+                            BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME));
+                            BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amt.toString());
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
+
+                            BigDecimal convRate = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
+                            amt = (amt.multiply(convRate)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
+
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_DATE_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_DATE_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSES_COL_FROMTABLE_NAME, "Refuel");
+                            mDb.update( MainDbAdapter.EXPENSES_TABLE_NAME, expenseContent, GEN_COL_ROWID_NAME + "=" + expenseId, null );
+                        }
+                    }
+
                     updateCarCurrentIndex(mCarId, stopIndex);
                     if(startIndex != null)
                         updateCarInitIndex(mCarId, startIndex);
@@ -263,7 +315,7 @@ public class MainDbAdapter extends DB
                     mDb.setTransactionSuccessful();
                 }catch(SQLException e){
                     lastErrorMessage = e.getMessage();
-                    retVal = -1;
+                    retVal = 1;
                 }
                 finally{
                     mDb.endTransaction();
@@ -271,57 +323,6 @@ public class MainDbAdapter extends DB
             }
             else{
                 mDb.update( tableName, content, GEN_COL_ROWID_NAME + "=" + rowId, null );
-            }
-            if(retVal == -1 && tableName.equals(REFUEL_TABLE_NAME)){
-                long expenseId = -1;
-                String expenseIdSelect =
-                        "SELECT " + GEN_COL_ROWID_NAME + " " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
-                            "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
-                Cursor c = execSelectSql(expenseIdSelect);
-                if(c.moveToFirst())
-                    expenseId = c.getLong(0);
-                c.close();
-                if(expenseId != -1){
-                    ContentValues expenseContent = null;
-                    expenseContent = new ContentValues();
-
-                    expenseContent.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                            content.getAsString(MainDbAdapter.GEN_COL_USER_COMMENT_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_CAR_ID_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_INDEX_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_INDEX_NAME));
-
-                    BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME));
-                    BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME));
-                    BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amt.toString());
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
-
-                    BigDecimal convRate = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
-                    amt = (amt.multiply(convRate)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
-
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_DATE_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_DATE_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
-                            content.getAsString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME));
-                    expenseContent.put(MainDbAdapter.EXPENSES_COL_FROMTABLE_NAME, "Refuel");
-                    mDb.update( MainDbAdapter.EXPENSES_TABLE_NAME, expenseContent, GEN_COL_ROWID_NAME + "=" + expenseId, null );
-                }
             }
         }
         catch(SQLException e){
@@ -347,6 +348,67 @@ public class MainDbAdapter extends DB
             if (mDb.update(CAR_TABLE_NAME, content, GEN_COL_ROWID_NAME + "=" + mCarId, null) == 0) {
                 throw new SQLException("Car Update error");
             }
+        }
+        else
+            updateCarCurrentIndex(mCarId);
+    }
+
+    private void updateCarCurrentIndex(long mCarId) throws SQLException {
+        BigDecimal newStopIndex = BigDecimal.ZERO;
+        BigDecimal tmpStopIndex = BigDecimal.ZERO;
+        Cursor c = null;
+
+        String sql = "SELECT MAX(" + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ") " +
+                        " FROM " + MILEAGE_TABLE_NAME +
+                        " WHERE " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + " = " + mCarId +
+                        " GROUP BY " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME);
+        c = execSelectSql(sql);
+        if(c.moveToFirst())
+            tmpStopIndex = new BigDecimal(c.getString(0));
+        if(tmpStopIndex == null)
+            tmpStopIndex = BigDecimal.ZERO;
+        c.close();
+        c = null;
+        if(tmpStopIndex.compareTo(newStopIndex) > 0)
+            newStopIndex = tmpStopIndex;
+
+        sql = "SELECT MAX(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + ") " +
+                        " FROM " + REFUEL_TABLE_NAME +
+                        " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " = " + mCarId +
+                        " GROUP BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME);
+        c = execSelectSql(sql);
+        if(c.moveToFirst())
+            tmpStopIndex = new BigDecimal(c.getString(0));
+        if(tmpStopIndex == null)
+            tmpStopIndex = BigDecimal.ZERO;
+        c.close();
+        c = null;
+        
+        if(tmpStopIndex.compareTo(newStopIndex) > 0)
+            newStopIndex = tmpStopIndex;
+
+        sql = "SELECT MAX(" + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + ") " +
+                        " FROM " + EXPENSES_TABLE_NAME +
+                        " WHERE " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + " = " + mCarId +
+                        " GROUP BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME);
+        c = execSelectSql(sql);
+        if(c.moveToFirst())
+            tmpStopIndex = new BigDecimal(c.getString(0));
+        if(tmpStopIndex == null)
+            tmpStopIndex = BigDecimal.ZERO;
+        c.close();
+        c = null;
+
+        if(tmpStopIndex.compareTo(newStopIndex) > 0)
+            newStopIndex = tmpStopIndex;
+
+        if(newStopIndex.equals(BigDecimal.ZERO))
+            newStopIndex = new BigDecimal(fetchRecord(CAR_TABLE_NAME, carTableColNames, mCarId)
+                                                    .getString(CAR_COL_INDEXSTART_POS));
+        ContentValues content = new ContentValues();
+        content.put(CAR_COL_INDEXCURRENT_NAME, newStopIndex.toString());
+        if (mDb.update(CAR_TABLE_NAME, content, GEN_COL_ROWID_NAME + "=" + mCarId, null) == 0) {
+            throw new SQLException("Car Update error");
         }
     }
 
@@ -377,25 +439,21 @@ public class MainDbAdapter extends DB
     public int deleteRecord( String tableName, long rowId )
     {
         int checkVal = canDelete(tableName, rowId);
+        // 1 -> -1
         if(checkVal == -1){
-            if(tableName.equals(MILEAGE_TABLE_NAME)){ //if the last mileage -> update the car curent index
+            if(tableName.equals(MILEAGE_TABLE_NAME)){ // update the car curent index
                 long carId = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId)
                                 .getLong(MILEAGE_COL_CAR_ID_POS);
-                // 1 -> -1
                 checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                String updSql = "UPDATE " + CAR_TABLE_NAME + " " +
-                                "SET " + CAR_COL_INDEXCURRENT_NAME + " = " +
-                                    "COALESCE( (SELECT MAX(" + MILEAGE_COL_INDEXSTOP_NAME + ") " +
-                                        "FROM " + MILEAGE_TABLE_NAME + " " +
-                                        "WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + carId + "),  " + CAR_COL_INDEXSTART_NAME + ") " +
-                                 "WHERE " + GEN_COL_ROWID_NAME  + " = " + carId;
-                mDb.execSQL(updSql);
+                if(checkVal == -1)
+                    updateCarCurrentIndex(carId);
             }
-            else{
-                // 1 -> -1
+            else if(tableName.equals(REFUEL_TABLE_NAME)){
+                long expenseId = -1;
+                long carId = fetchRecord(REFUEL_TABLE_NAME, refuelTableColNames, rowId)
+                                .getLong(REFUEL_COL_CAR_ID_POS);
                 checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                if(checkVal == -1 && tableName.equals(REFUEL_TABLE_NAME)){
-                    long expenseId = -1;
+                if(checkVal == -1){
                     String expenseIdSelect =
                             "SELECT " + GEN_COL_ROWID_NAME + " " +
                             "FROM " + EXPENSES_TABLE_NAME + " " +
@@ -408,9 +466,18 @@ public class MainDbAdapter extends DB
                     if(expenseId != -1){
                         mDb.delete(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + expenseId, null);
                     }
+                    updateCarCurrentIndex(carId);
                 }
-
             }
+            else if(tableName.equals(EXPENSES_TABLE_NAME)){
+                long carId = fetchRecord(EXPENSES_TABLE_NAME, expensesTableColNames, rowId)
+                                .getLong(EXPENSES_COL_CAR_ID_POS);
+                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                if(checkVal == -1)
+                    updateCarCurrentIndex(carId);
+            }
+            else
+                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
         }
         else
             return checkVal;
@@ -858,5 +925,30 @@ public class MainDbAdapter extends DB
             return new BigDecimal(retValStr);
 
         return retVal;
+    }
+
+    public long getCarUOMVolumeID(long carID){
+        return fetchRecord(CAR_TABLE_NAME, carTableColNames, carID)
+                .getLong(CAR_COL_UOMVOLUME_ID_POS);
+    }
+
+    public long getCarUOMLengthID(long carID){
+        return fetchRecord(CAR_TABLE_NAME, carTableColNames, carID)
+                .getLong(CAR_COL_UOMLENGTH_ID_POS);
+    }
+
+    public long getCarCurrencyID(long carID){
+        return fetchRecord(CAR_TABLE_NAME, carTableColNames, carID)
+                .getLong(CAR_COL_CURRENCY_ID_POS);
+    }
+
+    public String getCurrencyCode(long currencyID){
+        return fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, currencyID)
+                .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);    
+    }
+
+    public String getUOMCode(long uomID){
+        return fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames,
+                    uomID).getString(MainDbAdapter.UOM_COL_CODE_POS);
     }
 }
