@@ -57,8 +57,8 @@ public class Utils {
          return cal.getTimeInMillis();
     }
 
-    public static String pad(int value, int length) {
-        return pad(Integer.toString(value), length);
+    public static String pad(long value, int length) {
+        return pad(Long.toString(value), length);
     }
     public static String pad(String value, int length) {
         String retVal = value;
@@ -113,4 +113,27 @@ public class Utils {
         return retVal;
 
     }
+
+    /**
+     * Convert seconds in format x Days HH:MM[:SS]
+     * @param lSeconds the seconds to be converted
+     * @param withSeconds include the remaining seconds in the time string
+     * @return a string representing the time in format x Days HH:MM[:SS]
+     */
+    public static String getTimeString(long lSeconds, boolean withSeconds){
+        String retVal ="";
+        long days = lSeconds / 86400;
+        //get the remaining seconds
+        long remaining = lSeconds - (days * 86400);
+        long hours = remaining / 3600;
+        remaining = remaining - (hours * 3600);
+        long minuts = remaining / 60;
+        remaining = remaining - (minuts * 60);
+        retVal = (days > 0 ? days + (days > 1 ? " Days " : " Day ") : "") + 
+                    (hours > 0 ? hours + " h " : "") +
+                    minuts + " min" +
+                (withSeconds ? " " + remaining + " s" : "");
+        return retVal;
+    }
+
 }

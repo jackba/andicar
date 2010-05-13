@@ -34,6 +34,8 @@ public class ReportDbAdapter extends MainDbAdapter{
     public static String FIRST_LINE_LIST_NAME = "FIRSTLINE";
     public static String SECOND_LINE_LIST_NAME = "SECONDLINE";
     public static String THIRD_LINE_LIST_NAME = "THIRDLINE";
+    public static String FOURTH_LINE_LIST_NAME = "FOURTHLINE";
+    public static String FIFTH_LINE_LIST_NAME = "FIFTHLINE";
     protected String mReportSqlName;
     protected Bundle mSearchCondition;
 
@@ -44,6 +46,7 @@ public class ReportDbAdapter extends MainDbAdapter{
         THIRD_LINE_LIST_NAME
     };
 
+    //used in main activity and mileage list activity
     public static String mileageListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ", " +
@@ -76,6 +79,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
+    //used in exported report
     public static String mileageListReportSelect =
             "SELECT " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS MileageId, " +
@@ -105,6 +109,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
+    //used in main activity and refuel list activity
     public static String refuelListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
@@ -175,6 +180,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn("DefaultCurrency", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
+    //used in exported report
     public static String refuelListReportSelect =
             "SELECT " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS RefuelId, " +
@@ -223,6 +229,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn("CurrencyEntered", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
+    //used in main activity
     public static String expensesListMainViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
@@ -260,6 +267,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE COALESCE(" + EXPENSES_COL_FROMTABLE_NAME + ", '') = '' ";
 
+    //used in expense list activity
     public static String expensesListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
@@ -307,6 +315,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn("ec", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
+    //used in exported report
     public static String expensesListReportSelect =
             "SELECT " +
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS ExpenseId, " +
@@ -347,7 +356,8 @@ public class ReportDbAdapter extends MainDbAdapter{
             " WHERE 1=1 ";
 
 
-    public static String carReportMainViewSelect =
+    //used in main activity (statistics)
+    public static String statisticsMainViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " + //#0
                 sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " || ' ' || " +
@@ -427,6 +437,42 @@ public class ReportDbAdapter extends MainDbAdapter{
                                 " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + "=" +
                                                 sqlConcatTableColumn("Expenses", REFUEL_COL_CAR_ID_NAME) +
             " WHERE 1=1 ";
+
+    //used in main activity and mileage list activity
+    public static String gpsTrackMainViewSelect =
+            "SELECT " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                        sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                    " SUBSTR(DATETIME(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
+                        " AS " + FIRST_LINE_LIST_NAME + ", " +
+                "'%1' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTNACE_NAME) + ", 2) || ' ' || " +
+                                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '; ' || " +
+                    "'%2' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", 2) || ' ' || " +
+                                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
+                    "'%3' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGSPEED_NAME) + ", 2) || ' ' || " +
+                                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
+                    "'%4' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME) + ", 2) || ' ' || " +
+                                sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
+                    "'%5' || '; ' || " +
+                    "'%6' " +
+                    " AS " + SECOND_LINE_LIST_NAME + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
+                        " AS " + THIRD_LINE_LIST_NAME + ", " +
+                "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTIME_NAME) + ", 2) AS " + FOURTH_LINE_LIST_NAME + ", " +
+                "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MOVINGTIME_NAME)  + ", 2) AS " + FIFTH_LINE_LIST_NAME +
+            " FROM " + GPSTRACK_TABLE_NAME +
+                    " JOIN " + DRIVER_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DRIVER_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CAR_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_CAR_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                        " JOIN " + UOM_TABLE_NAME +
+                            " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
+                                                sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+            //exclude the track in progress (the no. of trackpoints is updated after terminating the tracking)
+            " WHERE " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTRACKPOINTS_NAME) + " IS NOT NULL ";
 
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )
     {
@@ -515,10 +561,18 @@ public class ReportDbAdapter extends MainDbAdapter{
                                     " ORDER BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + " DESC";
         }
 
-        else if(mReportSqlName.equals("carReportSelect")){
-            reportSql = carReportMainViewSelect;
+        else if(mReportSqlName.equals("statisticsMainViewSelect")){
+            reportSql = statisticsMainViewSelect;
             if(whereCondition.length() > 0)
                 reportSql = reportSql + whereCondition;
+        }
+        else if(mReportSqlName.equals("gpsTrackMainViewSelect")){
+            reportSql = gpsTrackMainViewSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +
+                                    " ORDER BY " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + " DESC";
         }
 
         if(limitCount != -1)

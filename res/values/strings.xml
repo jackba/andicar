@@ -112,12 +112,12 @@
     <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string>
     <string name="MainActivity_ExpenseInsertBtnCaption">"  Add new  "</string>
     <string name="MainActivity_ExpenseListBtnCaption">"  View more  "</string>
-    <string name="MainActivity_StatisticsHeaderCaption">"Statistics for "</string>
+    <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
     <string name="MainActivity_StatisticsListHeaderCaption">"Last know odometer: "</string>
-    <string name="MainActivity_StatisticsAvgConsLabel">"Average fuel consumption: "</string>
+    <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuel."</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"Total expenses:"</string>
-    <string name="MainActivity_StatisticsMileageExpenseLabel">"Mileage expense:"</string>
+    <string name="MainActivity_StatisticsMileageExpenseLabel">"Mileage exp.:"</string>
     <string name="MainActivity_MileageNoDataText">"No mileage for this car"</string>
     <string name="MainActivity_RefuelNoDataText">"No refuel for this car"</string>
     <string name="MainActivity_ExpenseNoDataText">"No expense for this car"</string>
@@ -128,6 +128,13 @@
     <string name="MainActivity_WellcomeBackMessage">"Welcome back!"</string>
     <string name="MainActivity_BackupExistMessage">"Backup files exist.\nDo you want to restore one?"</string>
     <string name="MainActivity_UpdateMessage">"Update message"</string>
+    <string name="MainActivity_GPSTrackZone_1">"Distance: "</string>
+    <string name="MainActivity_GPSTrackZone_2">"Max. speed: "</string>
+    <string name="MainActivity_GPSTrackZone_3">"Avg. speed: "</string>
+    <string name="MainActivity_GPSTrackZone_4">"Avg. moving speed: "</string>
+    <string name="MainActivity_GPSTrackZone_5">"Total time: "</string>
+    <string name="MainActivity_GPSTrackZone_6">"Moving time: "</string>
+    <string name="MainActivity_GPSTrackZoneNoDataText">"No tracks."</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>
