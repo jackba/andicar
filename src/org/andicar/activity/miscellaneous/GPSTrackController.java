@@ -13,7 +13,7 @@
     if not, write to the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-package org.andicar.activity;
+package org.andicar.activity.miscellaneous;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,6 +28,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import org.andicar.activity.EditActivityBase;
+import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;
 import org.andicar.utils.Utils;
@@ -96,14 +98,14 @@ public class GPSTrackController extends EditActivityBase {
         isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
 
         if(isGpsTrackOn){
-            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackActivity_StopBtnCaption));
+            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackControllerActivity_StopBtnCaption));
             restoreState();
             setEditable(vgRoot, false);
         }
         else{
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
             mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
-            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackActivity_StartBtnCaption));
+            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackControllerActivity_StartBtnCaption));
             setEditable(vgRoot, true);
         }
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
@@ -203,7 +205,7 @@ public class GPSTrackController extends EditActivityBase {
                 setEditable(vgRoot, true);
                 etName.setText("");
                 etName.setHint(Utils.getDateStr(true, true));
-                btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackActivity_StartBtnCaption));
+                btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackControllerActivity_StartBtnCaption));
             }
             else{
                 if(etName.getText().toString().length() == 0)
@@ -225,7 +227,7 @@ public class GPSTrackController extends EditActivityBase {
 //                startActivity(new Intent(GPSTrackController.this, GPSTrackMap.class));
                 if(isGpsTrackOn)
                     btnGPSTrackStartStop.setText(
-                            mResource.getString(R.string.GPSTrackActivity_StopBtnCaption));
+                            mResource.getString(R.string.GPSTrackControllerActivity_StopBtnCaption));
                 finish();
             }
         };

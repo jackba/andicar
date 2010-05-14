@@ -18,6 +18,7 @@
  */
 package org.andicar.activity;
 
+import org.andicar.activity.miscellaneous.GPSTrackController;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources.NotFoundException;
 import org.andicar.activity.report.RefuelListReportActivity;
@@ -45,6 +46,7 @@ import java.math.RoundingMode;
 import org.andicar.activity.miscellaneous.AboutActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.activity.report.ExpensesListReportActivity;
+import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
@@ -177,7 +179,7 @@ public class MainActivity extends Activity {
         btnGPSTrackInsert = (Button) findViewById(R.id.btnGPSTrackInsert);
         btnGPSTrackInsert.setOnClickListener(btnGPSTrackInsertClickListener);
         btnGPSTrackList = (Button) findViewById(R.id.btnGPSTrackList);
-//        btnGPSTrackList.setOnClickListener();
+        btnGPSTrackList.setOnClickListener(btnGPSTrackListClickListener);
 
         tvThreeLineListMileageText1 = (TextView) findViewById(R.id.tvThreeLineListMileageText1);
         tvThreeLineListMileageText2 = (TextView) findViewById(R.id.tvThreeLineListMileageText2);
@@ -200,7 +202,7 @@ public class MainActivity extends Activity {
         if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
             exitResume = true;
             //test if backups exists
-            if (FileUtils.getBkFileNames() != null && !FileUtils.getBkFileNames().isEmpty()) {
+            if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER) != null && !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER).isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
                 builder.setMessage(mRes.getString(R.string.MainActivity_BackupExistMessage));
@@ -274,7 +276,7 @@ public class MainActivity extends Activity {
         whereConditions.putString(
                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
                 String.valueOf(currentCarID));
-        reportDb.setReportSql("gpsTrackMainViewSelect", whereConditions);
+        reportDb.setReportSql("gpsTrackListViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
         if (listCursor.moveToFirst()) {
             tvThreeLineListGPSTrackText1.setText(
@@ -545,6 +547,7 @@ public class MainActivity extends Activity {
                 "For more details see the About page.<br>Copyright © 2010 Miklos Keresztes.<br> " +
                 "Thank you for using <b><i>AndiCar</i></b>!<br>" +
                 "Application version: " + appVersion));
+
         fillDriverCar();
 
         //fill mileage zone data
@@ -692,6 +695,13 @@ public class MainActivity extends Activity {
         }
     };
 
+    private OnClickListener btnGPSTrackListClickListener = new OnClickListener() {
+
+        public void onClick(View arg0) {
+            Intent gpstrackReportIntent = new Intent(mainContext, GPSTrackListReportActivity.class);
+            startActivity(gpstrackReportIntent);
+        }
+    };
 
     private void fillDriverCar() {
         if (mPreferences != null) {
@@ -812,7 +822,7 @@ public class MainActivity extends Activity {
         } else if (item.getItemId() == StaticValues.MENU_EXPENSES_ID) {
             startActivity(new Intent(this, ExpensesListReportActivity.class));
         } else if (item.getItemId() == StaticValues.MENU_GPSTRACK_ID) {
-            startActivity(new Intent(this, GPSTrackController.class));
+            startActivity(new Intent(this, GPSTrackListReportActivity.class));
         }
         return false;
     }

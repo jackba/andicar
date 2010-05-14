@@ -55,6 +55,7 @@ import org.andicar.utils.Utils;
 public class ReportListActivityBase extends ListActivityBase implements Runnable{
     protected ReportDbAdapter mListDbHelper = null;
     protected ReportDbAdapter mReportDbHelper = null;
+    protected String reportSelectName = null;
     protected Bundle whereConditions;
     private View reportDialogView;
     private CheckBox ckIsSendEmail;
@@ -63,14 +64,14 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     AlertDialog.Builder reportOptionsDialog;
     ProgressDialog progressDialog;
 
-    protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
+    protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
             String editTableName, String[] editTableColumns, String whereCondition, String orderByColumn,
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo, 
             String reportSqlName, Bundle reportParams) {
 
         mListDbHelper = new ReportDbAdapter(this, reportSqlName, reportParams);
 
-        super.onCreate(icicle, mItemClickListener, editClass, editTableName, editTableColumns,
+        super.onCreate(icicle, mItemClickListener, editClass, insertClass, editTableName, editTableColumns,
                 whereCondition, orderByColumn, pLayoutId, pDbMapFrom, pLayoutIdTo);
         lvBaseList.setOnItemClickListener(mReportItemClickListener);
     }

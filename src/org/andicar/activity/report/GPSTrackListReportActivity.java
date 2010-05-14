@@ -28,8 +28,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import org.andicar.activity.ExpenseEditActivity;
+import org.andicar.activity.GPSTrackEditActivity;
+import org.andicar.activity.miscellaneous.GPSTrackController;
 import org.andicar.activity.R;
+import org.andicar.activity.RefuelEditActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.utils.StaticValues;
@@ -39,11 +41,10 @@ import org.andicar.utils.Utils;
  *
  * @author miki
  */
-public class ExpensesListReportActivity extends ReportListActivityBase{
+public class GPSTrackListReportActivity extends ReportListActivityBase{
+    //used for search dialog
     private View searchView;
     private EditText etUserCommentSearch;
-    private Spinner spnExpCategorySearch;
-    private Spinner spnExpTypeSearch;
     private EditText etDateFromSearch;
     private EditText etDateToSearch;
     private Spinner spnDriverSearch;
@@ -52,16 +53,15 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
     @Override
     public void onCreate( Bundle icicle )
     {
-        reportSelectName = "reportExpensesListViewSelect";
+        reportSelectName = "gpsTrackListViewSelect";
         Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
         whereConditions = new Bundle();
         whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
                 mCarId.toString() );
 
-        super.onCreate( icicle, null, ExpenseEditActivity.class, null,
-                MainDbAdapter.EXPENSES_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
+        super.onCreate( icicle, null, GPSTrackEditActivity.class, GPSTrackController.class,
+                MainDbAdapter.GPSTRACK_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null,
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
@@ -87,16 +87,12 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
             return super.onCreateDialog(id);
 
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
-        searchView = liLayoutFactory.inflate(R.layout.expenses_search_dialog, null);
-        AlertDialog.Builder searchDialog = new AlertDialog.Builder(ExpensesListReportActivity.this);
+        searchView = liLayoutFactory.inflate(R.layout.gpstrack_search_dialog, null);
+        AlertDialog.Builder searchDialog = new AlertDialog.Builder(GPSTrackListReportActivity.this);
         searchDialog.setTitle(R.string.DIALOGSearch_DialogTitle);
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
-        spnExpCategorySearch = (Spinner) searchView.findViewById(R.id.spnExpCategorySearch);
-        initSpinner(spnExpCategorySearch, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME);
-        spnExpTypeSearch = (Spinner) searchView.findViewById(R.id.spnExpTypeSearch);
-        initSpinner(spnExpTypeSearch, MainDbAdapter.EXPENSETYPE_TABLE_NAME);
         etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
         etUserCommentSearch.setText("%");
         etDateFromSearch = (EditText) searchView.findViewById(R.id.etDateFromSearch);
@@ -113,48 +109,36 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
                 try {
                     whereConditions.clear();
-                    if (spnExpCategorySearch.getSelectedItemId() != -1) {
-                        whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                                MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME) + "=",
-                                String.valueOf(spnExpCategorySearch.getSelectedItemId()));
-                    }
-                    if (spnExpTypeSearch.getSelectedItemId() != -1) {
-                        whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                                MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME) + "=",
-                                String.valueOf(spnExpTypeSearch.getSelectedItemId()));
-                    }
                     if (etUserCommentSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
                                 MainDbAdapter.GEN_COL_USER_COMMENT_NAME) + " LIKE ",
                                 etUserCommentSearch.getText().toString());
                     }
                     if (etDateFromSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                                MainDbAdapter.EXPENSES_COL_DATE_NAME) + " >= ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                                MainDbAdapter.GPSTRACK_COL_DATE_NAME) + " >= ",
                                 Long.toString(Utils.decodeDateStr(etDateFromSearch.getText().toString(),
                                 StaticValues.DATE_DECODE_TO_ZERO) / 1000));
                     }
                     if (etDateToSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                                MainDbAdapter.EXPENSES_COL_DATE_NAME) + " <= ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                                MainDbAdapter.GPSTRACK_COL_DATE_NAME) + " <= ",
                                 Long.toString(Utils.decodeDateStr(etDateToSearch.getText().toString(),
                                 StaticValues.DATE_DECODE_TO_24) / 1000));
                     }
                     if (spnCarSearch.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                                MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                                MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
                                 String.valueOf(spnCarSearch.getSelectedItemId()));
                     }
                     if (spnDriverSearch.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                                MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                                MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME) + "=",
                                 String.valueOf(spnDriverSearch.getSelectedItemId()));
                     }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);

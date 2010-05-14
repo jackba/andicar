@@ -49,6 +49,7 @@ public class ListActivityBase extends ListActivity {
     protected boolean showInactiveRecords = false;
     protected Menu optionsMenu;
     protected Class mEditClass = null;
+    protected Class mInsertClass = null;
     protected String mTableName = null;
     protected String[] mColumns = null;
     protected String mWhereCondition = null;
@@ -91,7 +92,7 @@ public class ListActivityBase extends ListActivity {
             AndiCarStatistics.sendFlurryEndSession(this);
     }
 
-    protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
+    protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
             String tableName, String[] columns, String whereCondition, String orderByColumn,
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo) {
 
@@ -118,6 +119,11 @@ public class ListActivityBase extends ListActivity {
         errorAlertBuilder.setPositiveButton(mRes.getString(R.string.GEN_OK), null);
 
         mEditClass = editClass;
+        if(insertClass == null)
+            mInsertClass = mEditClass;
+        else
+            mInsertClass = insertClass;
+        
         mTableName = tableName;
         mColumns = columns;
         mWhereCondition = whereCondition;
@@ -264,7 +270,7 @@ public class ListActivityBase extends ListActivity {
                 alert.show();
                 return true;
             case StaticValues.CONTEXT_MENU_INSERT_ID:
-                Intent insertIntent = new Intent(this, mEditClass);
+                Intent insertIntent = new Intent(this, mInsertClass);
                 if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
                     insertIntent.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
                 }
@@ -357,7 +363,7 @@ public class ListActivityBase extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case StaticValues.OPTION_MENU_ADD_ID:
-                Intent insertIntent = new Intent(this, mEditClass);
+                Intent insertIntent = new Intent(this, mInsertClass);
                 if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
                     insertIntent.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
                 }

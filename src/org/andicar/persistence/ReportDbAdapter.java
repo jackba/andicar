@@ -439,10 +439,10 @@ public class ReportDbAdapter extends MainDbAdapter{
             " WHERE 1=1 ";
 
     //used in main activity and mileage list activity
-    public static String gpsTrackMainViewSelect =
+    public static String gpsTrackListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                sqlConcatTableColumn(CAR_TABLE_NAME,  GEN_COL_NAME_NAME) + " || '; ' || " +
                         sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                     " SUBSTR(DATETIME(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +
@@ -457,7 +457,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                     "'%5' || '; ' || " +
                     "'%6' " +
                     " AS " + SECOND_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+                    sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
                         " AS " + THIRD_LINE_LIST_NAME + ", " +
                 "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTIME_NAME) + ", 2) AS " + FOURTH_LINE_LIST_NAME + ", " +
                 "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MOVINGTIME_NAME)  + ", 2) AS " + FIFTH_LINE_LIST_NAME +
@@ -566,8 +567,8 @@ public class ReportDbAdapter extends MainDbAdapter{
             if(whereCondition.length() > 0)
                 reportSql = reportSql + whereCondition;
         }
-        else if(mReportSqlName.equals("gpsTrackMainViewSelect")){
-            reportSql = gpsTrackMainViewSelect;
+        else if(mReportSqlName.equals("gpsTrackListViewSelect")){
+            reportSql = gpsTrackListViewSelect;
             if(whereCondition.length() > 0)
                 reportSql = reportSql + whereCondition;
 

@@ -183,8 +183,17 @@
         </activity>
 
        <activity
-            android:name="org.andicar.activity.GPSTrackController"
+            android:name="org.andicar.activity.miscellaneous.GPSTrackController"
             android:label="@string/APP_Activity_GPSTrackController">
         </activity>
+        <activity
+            android:name="org.andicar.activity.report.GPSTrackListReportActivity"
+            android:label="@string/APP_Activity_GPSTrackList">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.GPSTrackEditActivity"
+            android:label="@string/APP_Activity_GPSTrackEdit">
+        </activity>
+
     </application>
 </manifest>

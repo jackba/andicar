@@ -37,7 +37,7 @@ public class UOMListActivity extends ListActivityBase
         extras = getIntent().getExtras();
         uomType = extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME);
 
-        super.onCreate( icicle, null, UOMEditActivity.class,
+        super.onCreate( icicle, null, UOMEditActivity.class, null,
                 MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, 
                 MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomType + "'", MainDbAdapter.UOM_COL_CODE_NAME,
                 R.layout.twoline_list_activity,

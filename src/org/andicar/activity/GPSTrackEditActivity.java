@@ -1,0 +1,140 @@
+/*
+ *  AndiCar - a car management software for Android powered devices.
+ *
+ *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package org.andicar.activity;
+
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.Spinner;
+import android.widget.Toast;
+import org.andicar.persistence.MainDbAdapter;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.AutoCompleteTextView;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import org.andicar.utils.AndiCarStatistics;
+
+/**
+ *
+ * @author miki
+ */
+public class GPSTrackEditActivity extends EditActivityBase {
+    private TextView tvCarLabel;
+    private Spinner spnDriver;
+    private EditText etName;
+    private AutoCompleteTextView acUserComment;
+    private ListView lvTrackFileList;
+
+    private ArrayAdapter<String> userCommentAdapter;
+
+    /** Called when the activity is first created. */
+    @Override
+    public void onCreate(Bundle icicle) {
+        long mCarId;
+        long mDriverId;
+
+        super.onCreate(icicle, R.layout.gpstrackedit_activity, mOkClickListener);
+        
+        tvCarLabel = (TextView)findViewById(R.id.tvCarLabel);
+        etName = (EditText)findViewById(R.id.etName);
+        acUserComment = (AutoCompleteTextView) findViewById( R.id.acUserComment );
+        spnDriver = (Spinner)findViewById(R.id.spnDriver);
+        lvTrackFileList = (ListView)findViewById(R.id.lvTrackFileList);
+
+        userCommentAdapter = new ArrayAdapter<String>(GPSTrackEditActivity.this,
+                android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                mPreferences.getLong("CurrentCar_ID", -1), 30));
+        acUserComment.setAdapter(userCommentAdapter);
+
+        mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+        Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                MainDbAdapter.gpsTrackTableColNames, mRowId);
+        mCarId = recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_CAR_ID_POS);
+        mDriverId = recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
+
+        etName.setText(recordCursor.getString(MainDbAdapter.GEN_COL_NAME_POS));
+        acUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+
+        tvCarLabel.setText(mResource.getString(R.string.GEN_CarLabel) + " " +
+                        mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, mCarId).getString(1));
+
+
+        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
+                mDriverId, false);
+        initDateTime(recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_DATE_POS) * 1000);
+        tvDateTimeValue.setText(mResource.getString(R.string.GEN_DateTimeLabel) + " " + tvDateTimeValue.getText());
+
+        Cursor trackFilesRecordCursor = mDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+                MainDbAdapter.gpsTrackDetailTableColNames,
+                MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + mRowId,
+                MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
+        SimpleCursorAdapter cursorAdapter =
+                new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.oneline_list_layout_smalll, trackFilesRecordCursor,
+                                    new String[]{MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME}, new int[]{R.id.tvOneLineListTextSmall});
+
+        lvTrackFileList.setAdapter(cursorAdapter);
+
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEvent("GPSTrackEdit", null);
+    }
+
+    private View.OnClickListener mOkClickListener =
+            new View.OnClickListener()
+                {
+                    public void onClick( View v )
+                    {
+                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+                        if( retVal != null ) {
+                            Toast toast = Toast.makeText( getApplicationContext(),
+                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+                            toast.show();
+                            return;
+                        }
+
+                        ContentValues data = new ContentValues();
+                        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                                etName.getText().toString());
+                        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
+                        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                                acUserComment.getText().toString() );
+                        data.put( MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME,
+                                spnDriver.getSelectedItemId() );
+
+                        int updResult = mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, mRowId, data);
+                        if(updResult != -1){
+                            String errMsg = "";
+                            errMsg = mResource.getString(updResult);
+                            if(updResult == R.string.ERR_000)
+                                errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                            madbErrorAlert.setMessage(errMsg);
+                            madError = madbErrorAlert.create();
+                            madError.show();
+                        }
+                        else
+                            finish();
+                    }
+                };
+}

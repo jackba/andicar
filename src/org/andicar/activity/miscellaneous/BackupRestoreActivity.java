@@ -73,7 +73,7 @@ public class BackupRestoreActivity extends EditActivityBase {
     }
 
     private void fillBkList() {
-        bkFileList = getBkFiles();
+        bkFileList = FileUtils.getBkFiles();
         if(bkFileList == null || bkFileList.isEmpty()){
             btnRestore.setEnabled(false);
             btnDelete.setEnabled(false);
@@ -85,15 +85,6 @@ public class BackupRestoreActivity extends EditActivityBase {
         lvBackupSet.setItemsCanFocus(false);
         lvBackupSet.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
         lvBackupSet.setOnItemClickListener(bkFileSelectedListener);
-    }
-
-        protected ArrayList<String> getBkFiles() {
-        ArrayList<String> myData = FileUtils.getBkFileNames();
-        if(myData != null){
-            Collections.sort(myData, String.CASE_INSENSITIVE_ORDER);
-            Collections.reverse(myData);
-        }
-        return myData;
     }
 
     protected AdapterView.OnItemClickListener bkFileSelectedListener = new AdapterView.OnItemClickListener() {

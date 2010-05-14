@@ -32,7 +32,7 @@ public class CurrencyListActivity extends ListActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, null, CurrencyEditActivity.class,
+        super.onCreate( icicle, null, CurrencyEditActivity.class, null,
                 MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, null, MainDbAdapter.CURRENCY_COL_CODE_NAME,
                 R.layout.twoline_list_activity,
                 new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME, MainDbAdapter.GEN_COL_NAME_NAME},
