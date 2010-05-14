@@ -281,18 +281,20 @@ public abstract class EditActivityBase extends Activity {
         updateDateTime();
 
         Button btnPickDate = (Button) findViewById(R.id.btnPickDate);
-        btnPickDate.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                showDialog(StaticValues.DATE_DIALOG_ID);
-            }
-        });
+        if(btnPickDate != null)
+            btnPickDate.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    showDialog(StaticValues.DATE_DIALOG_ID);
+                }
+            });
 
         Button btnPickTime = (Button) findViewById(R.id.btnPickTime);
-        btnPickTime.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
-                showDialog(StaticValues.TIME_DIALOG_ID);
-            }
-        });
+        if(btnPickTime != null)
+            btnPickTime.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    showDialog(StaticValues.TIME_DIALOG_ID);
+                }
+            });
    }
     @Override
     protected Dialog onCreateDialog(int id) {

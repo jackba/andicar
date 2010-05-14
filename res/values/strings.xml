@@ -48,6 +48,8 @@
     <string name="APP_Activity_CurrencyRateList">"Currency rates"</string>
     <string name="APP_Activity_CurrencyRateEdit">"Add or edit currency rates"</string>
     <string name="APP_Activity_GPSTrackController">"GPS Track Control"</string>
+    <string name="APP_Activity_GPSTrackEdit">"Edit GPS Track"</string>
+    <string name="APP_Activity_GPSTrackList">"GPS Tracks"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -93,7 +95,7 @@
     <string name="MENU_MileageCaption">"Mileages"</string>
     <string name="MENU_RefuelCaption">"Refuels"</string>
     <string name="MENU_ExpenseCaption">"Expenses"</string>
-    <string name="MENU_GPSTrackCaption">"GPS Track"</string>
+    <string name="MENU_GPSTrackCaption">"GPS Tracks"</string>
 
 
     <string name="MainActivity_MileageHeaderCaption">"Mileages"</string>
@@ -198,10 +200,12 @@
     <string name="REPORTActivity_ProgressMessage">"Report creation started. Please wait..."</string>
 
 
-    <string name="GPSTrackActivity_StartBtnCaption">"Start GPS Track"</string>
-    <string name="GPSTrackActivity_StopBtnCaption">"Stop GPS Track"</string>
-    <string name="GPSTrackActivity_FileFormatLabel">"Track file format:"</string>
-    <string name="GPSTrackActivity_CreateMileageLabel">"Create mileage"</string>
+    <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Track files"</string>
+
+    <string name="GPSTrackControllerActivity_StartBtnCaption">"Start GPS Track"</string>
+    <string name="GPSTrackControllerActivity_StopBtnCaption">"Stop GPS Track"</string>
+    <string name="GPSTrackControllerActivity_FileFormatLabel">"Track file format:"</string>
+    <string name="GPSTrackControllerActivity_CreateMileageLabel">"Create mileage"</string>
 
     <string name="GPSTrackService_ServiceStoppedMessage">"GPS tracking stopped"</string>
     <string name="GPSTrackService_GPSDisabledMessage">"Your gps is disabled!\nPlease enable it."</string>

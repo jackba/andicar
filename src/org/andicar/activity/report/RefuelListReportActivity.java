@@ -51,19 +51,20 @@ public class RefuelListReportActivity extends ReportListActivityBase{
     @Override
     public void onCreate( Bundle icicle )
     {
+        reportSelectName = "reportRefuelListViewSelect";
         Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
         whereConditions = new Bundle();
         whereConditions.putString(
                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=",
                 mCarId.toString() );
 
-        super.onCreate( icicle, null, RefuelEditActivity.class,
+        super.onCreate( icicle, null, RefuelEditActivity.class, null,
                 MainDbAdapter.REFUEL_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null,
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
-                "reportRefuelListViewSelect",  whereConditions);
+                reportSelectName,  whereConditions);
 
     }
 
@@ -146,7 +147,7 @@ public class RefuelListReportActivity extends ReportListActivityBase{
                                 MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME) + "=",
                                 String.valueOf(spnDriverSearch.getSelectedItemId()));
                     }
-                    mListDbHelper.setReportSql("reportRefuelListViewSelect", whereConditions);
+                    mListDbHelper.setReportSql(reportSelectName, whereConditions);
                     fillData();
                 } catch (IndexOutOfBoundsException e) {
                     errorAlertBuilder.setMessage(mRes.getString(R.string.ERR_008));

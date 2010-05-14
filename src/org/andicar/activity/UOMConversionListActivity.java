@@ -32,7 +32,7 @@ public class UOMConversionListActivity extends ListActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, null, UOMConversionEditActivity.class,
+        super.onCreate( icicle, null, UOMConversionEditActivity.class, null,
                 MainDbAdapter.UOM_CONVERSION_TABLE_NAME, MainDbAdapter.uomConversionTableColNames,
                 null, MainDbAdapter.GEN_COL_NAME_NAME,
                 R.layout.threeline_list_activity,

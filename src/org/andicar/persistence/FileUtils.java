@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.andicar.activity.R;
@@ -189,9 +190,19 @@ public class FileUtils {
         }
     }
 
-    public static ArrayList<String> getBkFileNames(){
+    public static ArrayList<String> getBkFiles() {
+        ArrayList<String> fileNames = FileUtils.getFileNames(StaticValues.BACKUP_FOLDER);
+        if(fileNames != null){
+            Collections.sort(fileNames, String.CASE_INSENSITIVE_ORDER);
+            Collections.reverse(fileNames);
+        }
+        return fileNames;
+    }
+
+
+    public static ArrayList<String> getFileNames(String folder){
         ArrayList<String> myData = new ArrayList<String>();
-        File bkDir = new File(StaticValues.BACKUP_FOLDER);
+        File bkDir = new File(folder);
         if(!bkDir.exists() || !bkDir.isDirectory()){
             return null;
         }

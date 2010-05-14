@@ -115,10 +115,10 @@ public class Utils {
     }
 
     /**
-     * Convert seconds in format x Days HH:MM[:SS]
+     * Convert seconds in format X Days Y h Z min [S s]
      * @param lSeconds the seconds to be converted
      * @param withSeconds include the remaining seconds in the time string
-     * @return a string representing the time in format x Days HH:MM[:SS]
+     * @return a string representing the time in format X Days Y h Z min [S s]
      */
     public static String getTimeString(long lSeconds, boolean withSeconds){
         String retVal ="";
