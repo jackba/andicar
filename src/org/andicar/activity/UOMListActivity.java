@@ -42,7 +42,7 @@ public class UOMListActivity extends ListActivityBase
                 MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomType + "'", MainDbAdapter.UOM_COL_CODE_NAME,
                 R.layout.twoline_list_activity,
                 new String[]{MainDbAdapter.UOM_COL_CODE_NAME, MainDbAdapter.GEN_COL_NAME_NAME},
-                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2});
+                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 
         if(uomType.equals( "L"))
             setTitle( getTitle() + " (" + mRes.getString( R.string.UOMEditActivity_UOMTypeLengthTitle) + ")");

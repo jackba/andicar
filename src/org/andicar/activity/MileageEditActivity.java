@@ -37,6 +37,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -51,6 +52,7 @@ public class MileageEditActivity extends EditActivityBase {
     private long mCarId = -1;
     private long mDriverId = -1;
     private long mUOMLengthId = -1;
+    private long mGpsTrackId = -1;
     private BigDecimal mNewIndex = new BigDecimal("0");
     private BigDecimal mStartIndex = new BigDecimal("0");
     private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
@@ -117,6 +119,29 @@ public class MileageEditActivity extends EditActivityBase {
             initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                     recordCursor.getLong(MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_POS), true);
+            recordCursor.close();
+        }
+        else if(operationType.equals("TrackToMileage")){
+            mGpsTrackId = mBundleExtras.getLong("Track_ID");
+            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.gpsTrackTableColNames, mGpsTrackId);
+            mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX;
+            mCarId = recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_CAR_ID_POS);
+            mDriverId = recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
+            acUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+            currentDriverName = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mDriverId)
+                                .getString(MainDbAdapter.GEN_COL_NAME_POS);
+            currentCarName = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
+                                .getString(MainDbAdapter.GEN_COL_NAME_POS);
+            initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
+                    mPreferences.getLong("MileageInsertExpenseType_ID", -1), true);
+            initDateTime(System.currentTimeMillis());
+            mStartIndex = BigDecimal.ZERO;
+            fillGetCurrentIndex();
+            BigDecimal stopIndex = mStartIndex.add(new BigDecimal(recordCursor.getString(MainDbAdapter.GPSTRACK_COL_DISTANCE_POS))).setScale(0, BigDecimal.ROUND_FLOOR);
+
+            etUserInput.setText(stopIndex.toString());
+            recordCursor.close();
         }
         else{
             mCarId = mBundleExtras.getLong("CurrentCar_ID");
@@ -271,19 +296,23 @@ public class MileageEditActivity extends EditActivityBase {
                 data.put( MainDbAdapter.MILEAGE_COL_UOMLENGTH_ID_NAME, mUOMLengthId);
                 data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, spnExpType.getSelectedItemId());
                 data.put( MainDbAdapter.MILEAGE_COL_GPSTRACKLOG_NAME, "");
-                if(operationType.equals("N")){
+                if(operationType.equals("N") || operationType.equals("TrackToMileage")){
                     operationResult = mDbAdapter.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
                     if(operationResult == -1){
-                        Long createResult = mDbAdapter.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data);
-                        if( createResult.intValue() < 0){
-                            if(createResult.intValue() == -1) //DB Error
+                        Long result = mDbAdapter.createRecord(MainDbAdapter.MILEAGE_TABLE_NAME, data);
+                        if( result.intValue() < 0){
+                            if(result.intValue() == -1) //DB Error
                                 madbErrorAlert.setMessage(mDbAdapter.lastErrorMessage);
                             else //precondition error
-                                madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
+                                madbErrorAlert.setMessage(mResource.getString(-1 * result.intValue()));
                             madError = madbErrorAlert.create();
                             madError.show();
                             return;
                         }
+                        //set the mileage id on the gps track
+                        ContentValues cv = new ContentValues();
+                        cv.put(MainDbAdapter.GPSTRACK_COL_MILEAGE_ID_NAME, result);
+                        mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, mGpsTrackId, cv);
                     }
                 }
                 else{

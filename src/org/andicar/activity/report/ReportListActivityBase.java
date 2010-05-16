@@ -67,12 +67,13 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
             String editTableName, String[] editTableColumns, String whereCondition, String orderByColumn,
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo, 
-            String reportSqlName, Bundle reportParams) {
+            String reportSqlName, Bundle reportParams, SimpleCursorAdapter.ViewBinder pViewBinder) {
 
         mListDbHelper = new ReportDbAdapter(this, reportSqlName, reportParams);
+        mViewBinder = pViewBinder;
 
         super.onCreate(icicle, mItemClickListener, editClass, insertClass, editTableName, editTableColumns,
-                whereCondition, orderByColumn, pLayoutId, pDbMapFrom, pLayoutIdTo);
+                whereCondition, orderByColumn, pLayoutId, pDbMapFrom, pLayoutIdTo, pViewBinder);
         lvBaseList.setOnItemClickListener(mReportItemClickListener);
     }
 
@@ -103,6 +104,8 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         SimpleCursorAdapter cursorAdapter =
                 new SimpleCursorAdapter( this, mLayoutId, recordCursor, mDbMapFrom, mLayoutIdTo );
 
+        if(mViewBinder != null)
+            cursorAdapter.setViewBinder(mViewBinder);
         setListAdapter( cursorAdapter );
 
     }
@@ -211,10 +214,15 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             @Override
             public void handleMessage(Message msg) {
                 progressDialog.dismiss();
-                Toast toast = Toast.makeText( getApplicationContext(),
-                            mRes.getString(R.string.REPORTActivity_ReportCreatedMessage) + " " +
-                                StaticValues.REPORT_FOLDER, Toast.LENGTH_LONG );
-                toast.show();
+                Toast toast = null;
+                if(msg.peekData() == null)
+                    toast = Toast.makeText( getApplicationContext(),
+                            mRes.getString(msg.what), Toast.LENGTH_LONG );
+                else
+                    toast = Toast.makeText( getApplicationContext(),
+                            msg.peekData().getString("ErrorMsg"), Toast.LENGTH_LONG );
+                if(toast != null)
+                    toast.show();
             }
     };
 
@@ -223,6 +231,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         String reportContent = "";
         String reportTitle = "";
         String reportFileName = "";
+
         int i;
         if( this instanceof MileageListReportActivity){
             reportTitle = "MileageReport_";
@@ -239,6 +248,23 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             mReportDbHelper = new ReportDbAdapter(this, "reportExpensesListReportSelect", whereConditions);
             reportCursor = mReportDbHelper.fetchReport(-1);
         }
+        else if(this instanceof GPSTrackListReportActivity){
+            reportTitle = "GPSTrackReport_";
+            mReportDbHelper = new ReportDbAdapter(this, "gpsTrackListReportSelect", whereConditions);
+            reportCursor = mReportDbHelper.fetchReport(-1);
+        }
+        else{
+            handler.sendEmptyMessage(R.string.ERR_035);
+            return false;
+        }
+        if(reportCursor == null){
+            Message msg = new Message();
+            Bundle msgBundle = new Bundle();
+            msgBundle.putString("ErrorMsg", mReportDbHelper.lastErrorMessage);
+            msg.setData(msgBundle);
+            handler.sendMessage(msg);
+        }
+
         reportTitle = Utils.appendDateTime(reportTitle, true, false, false);
         reportFileName = Utils.appendDateTime(reportTitle, true, true, true);
 
@@ -255,13 +281,8 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         FileUtils fu = new FileUtils(this);
         i = fu.writeToFile(reportContent, reportFileName);
         if(i != -1){ //error
-            if(fu.lastError != null)
-                errorAlertBuilder.setMessage(mRes.getString(i) + "\n" + fu.lastError);
-            else
-                errorAlertBuilder.setMessage(mRes.getString(i));
-           errorAlert = errorAlertBuilder.create();
-           errorAlert.show();
-           return false;
+            handler.sendEmptyMessage(R.string.ERR_034);
+            return false;
         }
 
         if(sendToMail){
@@ -270,10 +291,10 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar report " + reportTitle);
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Sent by AndiCar (http://sites.google.com/site/andicarfree/)");
             emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + StaticValues.REPORT_FOLDER + reportFileName));
-            emailIntent.setType("text/plain");
+//            emailIntent.setType("text/plain");
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         }
-        handler.sendEmptyMessage(0);
+        handler.sendEmptyMessage(R.string.REPORTActivity_ReportCreatedMessage);
         return true;
     }
 

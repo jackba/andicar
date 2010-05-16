@@ -141,7 +141,7 @@ public class FileUtils {
         return -1;
     }
 
-    public boolean deleteFile(String pathToFile){
+    public static boolean deleteFile(String pathToFile){
         File file = new File(pathToFile);
         return file.delete();
     }

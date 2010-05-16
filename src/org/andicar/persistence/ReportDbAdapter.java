@@ -21,6 +21,7 @@ package org.andicar.persistence;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.os.Bundle;
 import java.util.Iterator;
 import java.util.Set;
@@ -44,6 +45,15 @@ public class ReportDbAdapter extends MainDbAdapter{
         FIRST_LINE_LIST_NAME,
         SECOND_LINE_LIST_NAME,
         THIRD_LINE_LIST_NAME
+    };
+
+    public static String[] extendedReportListViewSelectCols = {
+        GEN_COL_ROWID_NAME,
+        FIRST_LINE_LIST_NAME,
+        SECOND_LINE_LIST_NAME,
+        THIRD_LINE_LIST_NAME,
+        FOURTH_LINE_LIST_NAME,
+        FIFTH_LINE_LIST_NAME
     };
 
     //used in main activity and mileage list activity
@@ -355,7 +365,6 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn("CurrEntered", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
-
     //used in main activity (statistics)
     public static String statisticsMainViewSelect =
             "SELECT " +
@@ -446,7 +455,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                         sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                     " SUBSTR(DATETIME(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +
-                "'%1' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTNACE_NAME) + ", 2) || ' ' || " +
+                "'%1' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '; ' || " +
                     "'%2' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
@@ -474,6 +483,36 @@ public class ReportDbAdapter extends MainDbAdapter{
                                                 sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
             //exclude the track in progress (the no. of trackpoints is updated after terminating the tracking)
             " WHERE " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTRACKPOINTS_NAME) + " IS NOT NULL ";
+
+    //used in exported report
+    public static String gpsTrackListReportSelect =
+            "SELECT " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS TrackId, " +
+                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
+                sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
+                "DATETIME(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGACCURACY_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGSPEED_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINALTITUDE_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MOVINGTIME_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTIME_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTRACKPOINTS_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_INVALIDTRACKPOINTS_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MILEAGE_ID_NAME) + 
+            " FROM " + GPSTRACK_TABLE_NAME +
+                    " JOIN " + DRIVER_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DRIVER_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " JOIN " + CAR_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_CAR_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+            " WHERE 1=1 ";
 
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )
     {
@@ -575,11 +614,28 @@ public class ReportDbAdapter extends MainDbAdapter{
             reportSql = reportSql +
                                     " ORDER BY " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + " DESC";
         }
+        else if(mReportSqlName.equals("gpsTrackListReportSelect")){
+            reportSql = gpsTrackListReportSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +
+                                    " ORDER BY " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + " DESC";
+        }
 
         if(limitCount != -1)
             reportSql = reportSql + " LIMIT " + limitCount;
 
-        return mDb.rawQuery(reportSql, null);
+        try{
+            Cursor retVal = null;
+            retVal = mDb.rawQuery(reportSql, null);
+            return retVal;
+        }
+        catch(SQLException e){
+            lastErrorMessage = e.getMessage();
+            lasteException = e;
+            return null;
+        }
 
     }
 

@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -34,10 +35,22 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 
 /**
  *
@@ -67,6 +80,7 @@ public class ListActivityBase extends ListActivity {
     protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport = true;
     protected ListView lvBaseList = null;
+    protected SimpleCursorAdapter.ViewBinder mViewBinder;
 
     /** Use onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
      *                  String tableName, String[] columns, String whereCondition, String orderByColumn,
@@ -94,7 +108,7 @@ public class ListActivityBase extends ListActivity {
 
     protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
             String tableName, String[] columns, String whereCondition, String orderByColumn,
-            int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo) {
+            int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo, SimpleCursorAdapter.ViewBinder pViewBinder) {
 
         super.onCreate(icicle);
 
@@ -107,6 +121,8 @@ public class ListActivityBase extends ListActivity {
         mRes = getResources();
         mPrefEditor = mPreferences.edit();
         mMainDbAdapter = new MainDbAdapter(this);
+
+        mViewBinder = pViewBinder;
 
         if(extras == null) {
             extras = getIntent().getExtras();
@@ -185,6 +201,9 @@ public class ListActivityBase extends ListActivity {
         menu.add(0, StaticValues.CONTEXT_MENU_EDIT_ID, 0, mRes.getString(R.string.MENU_EditCaption));
         menu.add(0, StaticValues.CONTEXT_MENU_INSERT_ID, 0, mRes.getString(R.string.MENU_AddNewCaption));
         menu.add(0, StaticValues.CONTEXT_MENU_DELETE_ID, 0, mRes.getString(R.string.MENU_DeleteCaption));
+        if(this instanceof GPSTrackListReportActivity){
+            menu.add( 0, StaticValues.CONTEXT_MENU_SENDASEMAIL_ID, 0, mRes.getText( R.string.MENU_SendAsEmailCaption ));
+        }
     }
 
     @Override
@@ -289,6 +308,70 @@ public class ListActivityBase extends ListActivity {
                 insertIntent.putExtra("Operation", "N");
 
                 startActivityForResult(insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
+                return true;
+            case StaticValues.CONTEXT_MENU_SENDASEMAIL_ID:
+                Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                emailIntent.setType("text/html");
+                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar GPS Track");
+                Bundle b = new Bundle();
+                b.putString(MainDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + "=", Long.toString(mLongClickId));
+                ReportDbAdapter reportDbAdapter = new ReportDbAdapter(this, "gpsTrackListViewSelect", b);
+                Cursor reportCursor = reportDbAdapter.fetchReport(1);
+                if(reportCursor.moveToFirst()){
+                    String emailText =
+                            reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)) + "\n" +
+                            reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)).replace("%1", mRes.getString(R.string.MainActivity_GPSTrackZone_1))
+                                .replace("%2", mRes.getString(R.string.MainActivity_GPSTrackZone_2))
+                                .replace("%3", mRes.getString(R.string.MainActivity_GPSTrackZone_3))
+                                .replace("%4", mRes.getString(R.string.MainActivity_GPSTrackZone_4))
+                                .replace("%5", mRes.getString(R.string.MainActivity_GPSTrackZone_5) +
+                                        Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
+                                .replace("%6", mRes.getString(R.string.MainActivity_GPSTrackZone_6) +
+                                        Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false)) + "\n" +
+                            reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
+                            reportCursor.close();
+                            reportDbAdapter.close();
+                    emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText + "\nSent by AndiCar (http://sites.google.com/site/andicarfree/)");
+                }
+                //attach the trackfiles
+                byte[] buf = new byte[1024];
+                ZipOutputStream out = null;
+                try {
+                    out = new ZipOutputStream(new FileOutputStream(StaticValues.TRACK_FOLDER + "trackFiles.zip"));
+
+                    reportCursor = mMainDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+                                        MainDbAdapter.gpsTrackDetailTableColNames,
+                                        MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + Long.toString(mLongClickId),
+                                        MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
+                    while(reportCursor.moveToNext()){
+                        try{
+                            FileInputStream in = new FileInputStream(reportCursor.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS));
+                            //zip entry name
+                            String entryName = reportCursor.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS).replace(StaticValues.TRACK_FOLDER, "");
+                            out.putNextEntry(new ZipEntry(entryName));
+                            // Transfer bytes from the file to the ZIP file
+                            int len;
+                            while ((len = in.read(buf)) > 0) {
+                                    out.write(buf, 0, len);
+                            }
+                            // Complete the entry
+                            out.closeEntry();
+                            in.close();
+                        }
+                        catch(FileNotFoundException ex){}
+                    }
+                    out.close();
+                    reportCursor.close();
+                    Uri trackFile = Uri.parse("file://" + StaticValues.TRACK_FOLDER + "trackFiles.zip");
+                    if(trackFile != null)
+                        emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, trackFile);
+                } catch (IOException ex) {
+                    Logger.getLogger(ListActivityBase.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+
         }
         return super.onContextItemSelected(item);
     }
@@ -324,10 +407,11 @@ public class ListActivityBase extends ListActivity {
             return;
         }
 
-        SimpleCursorAdapter cursorAdapter =
+        SimpleCursorAdapter listCursorAdapter =
                 new SimpleCursorAdapter(this, mLayoutId, recordCursor, mDbMapFrom, mLayoutIdTo);
-
-        setListAdapter(cursorAdapter);
+        if(mViewBinder != null)
+            listCursorAdapter.setViewBinder(mViewBinder);
+        setListAdapter(listCursorAdapter);
 
         if(getListAdapter() != null && getListAdapter().getCount() == 1) {
             if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {

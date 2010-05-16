@@ -42,6 +42,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import org.andicar.activity.MileageEditActivity;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
@@ -205,8 +206,6 @@ public class GPSTrackService extends Service {
             isUseMetricUnits = false; //use imperial units
         else
             isUseMetricUnits = true;
-        
-
 
         //create the track detail file(s)
         try {
@@ -217,8 +216,6 @@ public class GPSTrackService extends Service {
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putBoolean("isGpsTrackOn", true);
             editor.commit();
-//            showNotification(NOTIF_TYPE_ACCURACY_WARNING, true);
-//            showNotification(NOTIF_TYPE_ACCURACY_SHUTDOWN, true);
         }
         catch(IOException ex) {
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
@@ -241,16 +238,16 @@ public class GPSTrackService extends Service {
         //create the header
         gpsTrackDetailCSVFileWriter.append(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "," +
                                                 "Accuracy" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
-                                                "Accuracy [m], " + //debug
+//                                                "Accuracy [m], " + //debug
                                                 "Altitude" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
-                                                "Altitude [m]," + //debug
+//                                                "Altitude [m]," + //debug
                                                 "Latitude" + "," +
                                                 "Longitude" + "," +
                                                 "Speed" + (isUseMetricUnits? " [km/h]" : " [mi/h]") + "," +
-                                                "Speed [m/s]," + //debug
+//                                                "Speed [m/s]," + //debug
                                                 "Time" + "," +
                                                 "Distance" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
-                                                "Distance [m]," + //debug
+//                                                "Distance [m]," + //debug
                                                 "Bearing" + "," +
                                                 "TotalTrackPointCount" + "," +
                                                 "InvalidTrackPointCount" + "," +
@@ -466,16 +463,16 @@ public class GPSTrackService extends Service {
         gpsTrackDetailCSVFileWriter.append(
                 gpsTrackId + "," +
                 (isUseMetricUnits ? dCurrentAccuracy : dCurrentAccuracy * 1.093613)  + "," + //m to yd
-                dCurrentAccuracy + "," + //debug
+//                dCurrentAccuracy + "," + //debug
                 (isUseMetricUnits ? dCurrentLocationAltitude : dCurrentLocationAltitude * 1.093613) + "," + //m to yd
-                dCurrentLocationAltitude + "," + //debug
+//                dCurrentLocationAltitude + "," + //debug
                 dCurrentLocationLatitude + "," + 
                 dCurrentLocationLongitude + "," + 
                 (isUseMetricUnits ? dCurrentSpeed * 3.6 : dCurrentSpeed * 2.2369) + "," + //m/s to km/h or mi/h
-                dCurrentSpeed + "," + //debug
+//                dCurrentSpeed + "," + //debug
                 lCurrentLocationTime + "," +
                 (isUseMetricUnits ? dDistanceBetweenLocations : dDistanceBetweenLocations * 1.093613) + "," +
-                dDistanceBetweenLocations + "," + //debug
+//                dDistanceBetweenLocations + "," + //debug
                 dCurrentLocationBearing + "," +
                 dTotalTrackPoints + "," +
                 dTotalSkippedTrackPoints + "," +
@@ -534,17 +531,17 @@ public class GPSTrackService extends Service {
     private void closeFiles(boolean isLastFile) {
         try {
             if(gpsTrackDetailCSVFileWriter != null) {
-                gpsTrackDetailCSVFileWriter.append(sNonMovingTimes);
-                //debug
-                if(isLastFile){
-                    gpsTrackDetailCSVFileWriter.append("\n" +
-                            lStartTime + "," +
-                            lStopTime + "," +
-                            ((lStopTime - lStartTime) / 1000) + "," +
-                            lTotalNonMovingTime + "," +
-                            dDistance
-                            );
-                }
+//                gpsTrackDetailCSVFileWriter.append(sNonMovingTimes);
+//                //debug
+//                if(isLastFile){
+//                    gpsTrackDetailCSVFileWriter.append("\n" +
+//                            lStartTime + "," +
+//                            lStopTime + "," +
+//                            ((lStopTime - lStartTime) / 1000) + "," +
+//                            lTotalNonMovingTime + "," +
+//                            dDistance
+//                            );
+//                }
                 gpsTrackDetailCSVFileWriter.flush();
             }
             if(gpsTrackDetailKMLFileWriter != null) {
@@ -580,9 +577,13 @@ public class GPSTrackService extends Service {
         
         mLocationManager.removeUpdates(mLocationListener);
         mLocationManager = null;
-        
-        // Tell the user we stopped.
-        Toast.makeText(this, R.string.GPSTrackService_ServiceStoppedMessage, Toast.LENGTH_SHORT).show();
+        if(mPreferences.getBoolean("GPSTrackIsCreateMileage", false)){
+            Intent mileageInsertIntent = new Intent(GPSTrackService.this, MileageEditActivity.class);
+            mileageInsertIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mileageInsertIntent.putExtra("Operation", "TrackToMileage");
+            mileageInsertIntent.putExtra("Track_ID", gpsTrackId);
+            startActivity(mileageInsertIntent);
+        }
     }
 
     @Override
@@ -716,7 +717,7 @@ public class GPSTrackService extends Service {
                     + MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME + " = " + dMaxAltitude + ", "
                     + MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME + " = " + lTotalTime + ", " //in seconds
                     + MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME + " = " + lTotalMovingTime + ", " //in seconds
-                    + MainDbAdapter.GPSTRACK_COL_DISTNACE_NAME + " = " + dDistance + ", "
+                    + MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME + " = " + dDistance + ", "
                     + MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME + " = " + dAvgSpeed + ", "
                     + MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME + " = " + dAvgMovingSpeed  + ", "
                     + MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME + " = " + dMaxSpeed + ", "

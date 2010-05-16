@@ -447,6 +447,14 @@ public class MainDbAdapter extends DB
                 checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 if(checkVal == -1)
                     updateCarCurrentIndex(carId);
+                //set null in gpstrack table col. mileage id
+                Cursor c = fetchForTable(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, GPSTRACK_COL_MILEAGE_ID_NAME + "=" + rowId, null);
+                ContentValues cv = new ContentValues();
+                cv.put(GPSTRACK_COL_MILEAGE_ID_NAME, (Long)null);
+                while(c.moveToNext()){
+                    updateRecord(GPSTRACK_TABLE_NAME, c.getLong(GEN_COL_ROWID_POS), cv);
+                }
+                c.close();
             }
             else if(tableName.equals(REFUEL_TABLE_NAME)){
                 long expenseId = -1;
@@ -475,6 +483,22 @@ public class MainDbAdapter extends DB
                 checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 if(checkVal == -1)
                     updateCarCurrentIndex(carId);
+            }
+            else if(tableName.equals(GPSTRACK_TABLE_NAME)){
+                //delete gps trtack details
+                String fileName = "";
+                Cursor c = fetchForTable(GPSTRACKDETAIL_TABLE_NAME, gpsTrackDetailTableColNames,
+                        GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + rowId, null);
+                while(c.moveToNext()){
+                    //delete track files
+                    fileName = c.getString(GPSTRACKDETAIL_COL_FILE_POS);
+                    if(fileName != null)
+                        FileUtils.deleteFile(fileName);
+                    //delete from gpstrack detail
+                    deleteRecord(GPSTRACKDETAIL_TABLE_NAME, c.getInt(GEN_COL_ROWID_POS));
+                }
+                c.close();
+                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
             }
             else
                 checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));

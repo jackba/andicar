@@ -47,9 +47,10 @@ public class StaticValues
     public static final int OPTION_MENU_SEARCH_ID = 24;
     public static final int OPTION_MENU_REPORT_ID = 25;
     
-    public  static final int CONTEXT_MENU_EDIT_ID = 1;
-    public  static final int CONTEXT_MENU_INSERT_ID = 2;
-    public  static final int CONTEXT_MENU_DELETE_ID = 3;
+    public static final int CONTEXT_MENU_EDIT_ID = 31;
+    public static final int CONTEXT_MENU_INSERT_ID = 32;
+    public static final int CONTEXT_MENU_DELETE_ID = 33;
+    public static final int CONTEXT_MENU_SENDASEMAIL_ID = 34;
 
     public static final int ACTIVITY_NEW_REQUEST_CODE = 0;
     public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;

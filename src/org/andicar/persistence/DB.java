@@ -155,7 +155,7 @@ public class DB {
     public static final String GPSTRACK_COL_MAXALTITUDE_NAME = "MaxAltitude";
     public static final String GPSTRACK_COL_TOTALTIME_NAME = "TotalTime"; //in seconds
     public static final String GPSTRACK_COL_MOVINGTIME_NAME = "MovingTime"; //in seconds
-    public static final String GPSTRACK_COL_DISTNACE_NAME = "Distance";
+    public static final String GPSTRACK_COL_DISTANCE_NAME = "Distance";
     public static final String GPSTRACK_COL_MAXSPEED_NAME = "MaxSpeed";
     public static final String GPSTRACK_COL_AVGSPEED_NAME = "AvgSpeed";
     public static final String GPSTRACK_COL_AVGMOVINGSPEED_NAME = "AvgMovingSpeed";
@@ -256,7 +256,7 @@ public class DB {
     public static final int GPSTRACK_COL_MAXALTITUDE_POS = 12;
     public static final int GPSTRACK_COL_TOTALTIME_POS = 13;
     public static final int GPSTRACK_COL_MOVINGTIME_POS = 14;
-    public static final int GPSTRACK_COL_DISTNACE_POS = 15;
+    public static final int GPSTRACK_COL_DISTANCE_POS = 15;
     public static final int GPSTRACK_COL_MAXSPEED_POS = 16;
     public static final int GPSTRACK_COL_AVGSPEED_POS = 17;
     public static final int GPSTRACK_COL_AVGMOVINGSPEED_POS = 18;
@@ -315,7 +315,7 @@ public class DB {
         GPSTRACK_COL_CAR_ID_NAME, GPSTRACK_COL_DRIVER_ID_NAME, GPSTRACK_COL_MILEAGE_ID_NAME, GPSTRACK_COL_DATE_NAME,
         GPSTRACK_COL_MINACCURACY_NAME, GPSTRACK_COL_AVGACCURACY_NAME,
         GPSTRACK_COL_MAXACCURACY_NAME, GPSTRACK_COL_MINALTITUDE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME,
-        GPSTRACK_COL_TOTALTIME_NAME, GPSTRACK_COL_MOVINGTIME_NAME, GPSTRACK_COL_DISTNACE_NAME,
+        GPSTRACK_COL_TOTALTIME_NAME, GPSTRACK_COL_MOVINGTIME_NAME, GPSTRACK_COL_DISTANCE_NAME,
         GPSTRACK_COL_MAXSPEED_NAME, GPSTRACK_COL_AVGSPEED_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME,
         GPSTRACK_COL_TOTALTRACKPOINTS_NAME, GPSTRACK_COL_INVALIDTRACKPOINTS_NAME};
 
@@ -327,6 +327,7 @@ public class DB {
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
     public static final String isActiveCondition = " " + GEN_COL_ISACTIVE_NAME + "='Y' ";
     public static final String isActiveWithAndCondition = " AND" + isActiveCondition + " ";
+    
     /**
      * Database creation sql statements
      */
@@ -498,7 +499,7 @@ public class DB {
             + GPSTRACK_COL_MAXALTITUDE_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_TOTALTIME_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_MOVINGTIME_NAME + " NUMERIC NULL, "
-            + GPSTRACK_COL_DISTNACE_NAME + " NUMERIC NULL, "
+            + GPSTRACK_COL_DISTANCE_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_MAXSPEED_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_AVGSPEED_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_AVGMOVINGSPEED_NAME + " NUMERIC NULL, "

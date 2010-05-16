@@ -37,7 +37,7 @@ public class ExpenseCategoryListActivity extends ListActivityBase
                 MainDbAdapter.GEN_COL_NAME_NAME,
                 R.layout.twoline_list_activity,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
-                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2});
+                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
     }
 
 }
