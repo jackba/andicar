@@ -29,6 +29,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import org.andicar.activity.EditActivityBase;
+import org.andicar.activity.MileageEditActivity;
 import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;
@@ -200,12 +201,15 @@ public class GPSTrackController extends EditActivityBase {
         {
             Intent gpsTrackIntent = new Intent(GPSTrackController.this, GPSTrackService.class);
             if(isGpsTrackOn){
+                mPrefEditor.putBoolean("GPSTrackIsCreateMileage", ckIsCreateMileage.isChecked());
+                mPrefEditor.commit();
                 stopService(gpsTrackIntent);
                 isGpsTrackOn = false;
                 setEditable(vgRoot, true);
                 etName.setText("");
                 etName.setHint(Utils.getDateStr(true, true));
                 btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackControllerActivity_StartBtnCaption));
+                finish();
             }
             else{
                 if(etName.getText().toString().length() == 0)

@@ -64,7 +64,7 @@ public class MileageListReportActivity extends ReportListActivityBase {
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
-                reportSelectName, whereConditions);
+                reportSelectName, whereConditions, null);
 
     }
 

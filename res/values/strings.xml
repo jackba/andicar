@@ -92,6 +92,7 @@
     <string name="MENU_HideInactiveCaption">"Hide inactive"</string>
     <string name="MENU_SearchCaption">"Search/filter"</string>
     <string name="MENU_CreateReportCaption">"Create report"</string>
+    <string name="MENU_SendAsEmailCaption">"Send as email"</string>
     <string name="MENU_MileageCaption">"Mileages"</string>
     <string name="MENU_RefuelCaption">"Refuels"</string>
     <string name="MENU_ExpenseCaption">"Expenses"</string>
@@ -196,7 +197,7 @@
     <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Inverse rate: 1 % = "</string>
     <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Max. allowed decimals: "</string>
 
-    <string name="REPORTActivity_ReportCreatedMessage">"Your report was created successfully to"</string>
+    <string name="REPORTActivity_ReportCreatedMessage">"Your report was created successfully to sdcard/andicar/reports"</string>
     <string name="REPORTActivity_ProgressMessage">"Report creation started. Please wait..."</string>
 
 

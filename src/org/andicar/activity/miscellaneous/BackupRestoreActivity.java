@@ -180,8 +180,7 @@ public class BackupRestoreActivity extends EditActivityBase {
             builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
                        new DialogInterface.OnClickListener() {
                            public void onClick(DialogInterface dialog, int id) {
-                                FileUtils fu = new FileUtils(BackupRestoreActivity.this);
-                                fu.deleteFile(StaticValues.BACKUP_FOLDER + selectedFile);
+                                FileUtils.deleteFile(StaticValues.BACKUP_FOLDER + selectedFile);
                                 fillBkList();
                                 btnRestore.setEnabled(false);
                                 btnDelete.setEnabled(false);

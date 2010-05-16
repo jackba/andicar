@@ -40,7 +40,7 @@ public class CarListActivity extends ListActivityBase
     {
         super.onCreate( icicle, mItemClickListener, CarEditActivity.class, null,
                 MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                android.R.layout.simple_list_item_2, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1});
+                android.R.layout.simple_list_item_2, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
     }
 
     private OnItemClickListener mItemClickListener = new OnItemClickListener()

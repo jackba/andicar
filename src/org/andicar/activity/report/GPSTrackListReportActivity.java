@@ -32,6 +32,7 @@ import org.andicar.activity.GPSTrackEditActivity;
 import org.andicar.activity.miscellaneous.GPSTrackController;
 import org.andicar.activity.R;
 import org.andicar.activity.RefuelEditActivity;
+import org.andicar.persistence.GPSDataBinder;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.utils.StaticValues;
@@ -66,7 +67,7 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
-                reportSelectName,  whereConditions);
+                reportSelectName,  whereConditions, new GPSDataBinder());
 
     }
 

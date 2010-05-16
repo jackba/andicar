@@ -36,7 +36,7 @@ public class CurrencyListActivity extends ListActivityBase
                 MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, null, MainDbAdapter.CURRENCY_COL_CODE_NAME,
                 R.layout.twoline_list_activity,
                 new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME, MainDbAdapter.GEN_COL_NAME_NAME},
-                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2});
+                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 
     }
 }

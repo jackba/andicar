@@ -20,7 +20,6 @@ package org.andicar.activity;
 
 import org.andicar.activity.miscellaneous.GPSTrackController;
 import android.content.pm.PackageManager.NameNotFoundException;
-import android.content.res.Resources.NotFoundException;
 import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.activity.preference.AndiCarPreferencesActivity;
@@ -290,7 +289,7 @@ public class MainActivity extends Activity {
                     .replace("%5", mRes.getString(R.string.MainActivity_GPSTrackZone_5) +
                             Utils.getTimeString(listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
                     .replace("%6", mRes.getString(R.string.MainActivity_GPSTrackZone_6) +
-                            Utils.getTimeString(listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))                    );
+                            Utils.getTimeString(listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false)));
             tvThreeLineListGPSTrackText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
             btnGPSTrackList.setEnabled(true);
         } else {
@@ -556,8 +555,13 @@ public class MainActivity extends Activity {
         
 
         //fill gps track zone data
-        if(showGPSTrackZone)
+        if(showGPSTrackZone){
             fillGpsZone();
+            if(mPreferences.getBoolean("isGpsTrackOn", false))
+                btnGPSTrackInsert.setEnabled(false);
+            else
+                btnGPSTrackInsert.setEnabled(true);
+        }
         
 
         //fill refuel zone data

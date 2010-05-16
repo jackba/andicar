@@ -37,7 +37,7 @@ public class UOMConversionListActivity extends ListActivityBase
                 null, MainDbAdapter.GEN_COL_NAME_NAME,
                 R.layout.threeline_list_activity,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME, MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME},
-                new int[]{R.id.tvThreeLineListText1, R.id.tvThreeLineListText2, R.id.tvThreeLineListText3});
+                new int[]{R.id.tvThreeLineListText1, R.id.tvThreeLineListText2, R.id.tvThreeLineListText3}, null);
 
 //        mDbHelper = new UOMConversionDbAdapter( this );
 
