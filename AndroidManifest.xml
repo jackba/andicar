@@ -177,7 +177,7 @@
         </activity>
 
        <activity
-            android:name="org.andicar.activity.GPSTrackMap"
+            android:name="org.andicar.activity.miscellaneous.GPSTrackMap"
             android:label=""
             android:theme="@android:style/Theme.NoTitleBar">
         </activity>

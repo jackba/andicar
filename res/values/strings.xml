@@ -110,6 +110,7 @@
     <string name="MainActivity_GPSTrackHeaderCaption">"GPS Tracks"</string>
     <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string>
     <string name="MainActivity_GPSTrackInsertBtnCaption">"  Add new  "</string>
+    <string name="MainActivity_GPSTrackShowOnMapBtnCaption">" Show on map "</string>
     <string name="MainActivity_GPSTrackListBtnCaption">"  View more  "</string>
     <string name="MainActivity_ExpenseHeaderCaption">"Expenses"</string>
     <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string>
@@ -131,12 +132,6 @@
     <string name="MainActivity_WellcomeBackMessage">"Welcome back!"</string>
     <string name="MainActivity_BackupExistMessage">"Backup files exist.\nDo you want to restore one?"</string>
     <string name="MainActivity_UpdateMessage">"Update message"</string>
-    <string name="MainActivity_GPSTrackZone_1">"Distance: "</string>
-    <string name="MainActivity_GPSTrackZone_2">"Max. speed: "</string>
-    <string name="MainActivity_GPSTrackZone_3">"Avg. speed: "</string>
-    <string name="MainActivity_GPSTrackZone_4">"Avg. moving speed: "</string>
-    <string name="MainActivity_GPSTrackZone_5">"Total time: "</string>
-    <string name="MainActivity_GPSTrackZone_6">"Moving time: "</string>
     <string name="MainActivity_GPSTrackZoneNoDataText">"No tracks."</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
@@ -201,6 +196,17 @@
     <string name="REPORTActivity_ProgressMessage">"Report creation started. Please wait..."</string>
 
 
+
+    <string name="GPSTrackReport_GPSTrackVar_1">"Distance: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_2">"Max. speed: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_3">"Avg. speed: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_4">"Avg. moving speed: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_5">"Total time: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_6">"Moving time: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_7">"Max. accuracy: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_8">"Min. accuracy: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_9">"Avg. accuracy: "</string>
+
     <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Track files"</string>
 
     <string name="GPSTrackControllerActivity_StartBtnCaption">"Start GPS Track"</string>
@@ -217,6 +223,10 @@
     <string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS Stopped!"</string>
     <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent (%1) is over the limit (%2)!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
     <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar File System Error!"</string>
+
+    <string name="GPSTrackShowOnMap_ProgressMessage">"Drawing in progress.\nPlease wait..."</string>
+    <string name="GPSTrackShowOnMapMenu_MapMode">"Map mode"</string>
+    <string name="GPSTrackShowOnMapMenu_SatelliteMode">"Satellite mode"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>

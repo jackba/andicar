@@ -156,10 +156,10 @@ public class ListActivityBase extends ListActivity {
 
         fillData();
 
-        if(/*!(this instanceof ReportListActivityBase)
-                && */ (getListAdapter() == null || getListAdapter().getCount() == 0)
-                && editClass != null) {
-            Intent i = new Intent(this, editClass);
+        if(/*!(this instanceof GPSTrackListReportActivity)
+                &&*/ (getListAdapter() == null || getListAdapter().getCount() == 0)
+                && mInsertClass != null) {
+            Intent i = new Intent(this, mInsertClass);
             i.putExtra("Operation", "N");
             startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
         }
@@ -320,14 +320,19 @@ public class ListActivityBase extends ListActivity {
                 if(reportCursor.moveToFirst()){
                     String emailText =
                             reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)) + "\n" +
-                            reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)).replace("%1", mRes.getString(R.string.MainActivity_GPSTrackZone_1))
-                                .replace("%2", mRes.getString(R.string.MainActivity_GPSTrackZone_2))
-                                .replace("%3", mRes.getString(R.string.MainActivity_GPSTrackZone_3))
-                                .replace("%4", mRes.getString(R.string.MainActivity_GPSTrackZone_4))
-                                .replace("%5", mRes.getString(R.string.MainActivity_GPSTrackZone_5) +
+                            reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
+                                .replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
+                                .replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+                                .replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+                                .replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+                                .replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
                                         Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
-                                .replace("%6", mRes.getString(R.string.MainActivity_GPSTrackZone_6) +
-                                        Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false)) + "\n" +
+                                .replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
+                                        Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+                                .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+                                .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+                                .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                            + "\n" +
                             reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
                             reportCursor.close();
                             reportDbAdapter.close();

@@ -19,6 +19,7 @@
 
 package org.andicar.utils;
 
+import com.google.android.maps.GeoPoint;
 import java.util.Calendar;
 
 /**
@@ -136,4 +137,37 @@ public class Utils {
         return retVal;
     }
 
+    public static GeoPoint getGeopointFromCSVTrackLine(String csvTrackLine){
+        GeoPoint retVal = null;
+        for(int i = 0; i < 3; i++){
+            csvTrackLine = csvTrackLine.replaceFirst(csvTrackLine.substring(0, csvTrackLine.indexOf(",") + 1), "");
+        }
+        String latitude = csvTrackLine.substring(0, csvTrackLine.indexOf(","));
+        csvTrackLine = csvTrackLine.replaceFirst(csvTrackLine.substring(0, csvTrackLine.indexOf(",") + 1), "");
+        String longitude = csvTrackLine.substring(0, csvTrackLine.indexOf(","));
+        try{
+            retVal = new GeoPoint(
+                            (int) (Double.parseDouble(latitude) * 1E6),
+                            (int) (Double.parseDouble(longitude) * 1E6));
+        }
+        catch(NumberFormatException e){
+            retVal = null;
+        }
+        return retVal;
+    }
+
+    public static double getDistanceFromCSVTrackLine(String csvTrackLine){
+        double retVal = 0;
+        for(int i = 0; i < 7; i++){
+            csvTrackLine = csvTrackLine.replaceFirst(csvTrackLine.substring(0, csvTrackLine.indexOf(",") + 1), "");
+        }
+        String distance = csvTrackLine.substring(0, csvTrackLine.indexOf(","));
+        try{
+            retVal = Double.parseDouble(distance);
+        }
+        catch(NumberFormatException e){
+            retVal = 0;
+        }
+        return retVal;
+    }
 }

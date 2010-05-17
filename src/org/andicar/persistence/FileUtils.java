@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -191,7 +192,7 @@ public class FileUtils {
     }
 
     public static ArrayList<String> getBkFiles() {
-        ArrayList<String> fileNames = FileUtils.getFileNames(StaticValues.BACKUP_FOLDER);
+        ArrayList<String> fileNames = FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null);
         if(fileNames != null){
             Collections.sort(fileNames, String.CASE_INSENSITIVE_ORDER);
             Collections.reverse(fileNames);
@@ -200,18 +201,22 @@ public class FileUtils {
     }
 
 
-    public static ArrayList<String> getFileNames(String folder){
+    public static ArrayList<String> getFileNames(String folder, String fileNameFilterPattern){
         ArrayList<String> myData = new ArrayList<String>();
-        File bkDir = new File(folder);
-        if(!bkDir.exists() || !bkDir.isDirectory()){
+        File fileDir = new File(folder);
+        if(!fileDir.exists() || !fileDir.isDirectory()){
             return null;
         }
-        String[] bkFiles = bkDir.list();
-        if(bkFiles.length == 0){
+
+        String[] files = fileDir.list();
+
+        if(files.length == 0){
             return null;
         }
-        for (int i = 0; i < bkFiles.length; i++) {
-            myData.add(bkFiles[i]);
+        for (int i = 0; i < files.length; i++) {
+            if(fileNameFilterPattern == null ||
+                    files[i].matches(fileNameFilterPattern))
+            myData.add(files[i]);
         }
         return myData;
     }
