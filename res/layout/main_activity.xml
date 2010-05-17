@@ -191,6 +191,14 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
+                <Button android:id="@+id/btnGPSTrackShow"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_GPSTrackShowOnMapBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal ="true"
+                    android:layout_alignTop="@id/btnGPSTrackList"
+                    />
                 <Button android:id="@+id/btnGPSTrackInsert"
                     style="?android:attr/buttonStyleSmall"
                     android:text="@string/MainActivity_GPSTrackInsertBtnCaption"

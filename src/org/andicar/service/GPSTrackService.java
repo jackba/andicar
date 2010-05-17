@@ -677,6 +677,7 @@ public class GPSTrackService extends Service {
         long lTotalMovingTime = lTotalTime - (lTotalNonMovingTime / 1000); //lTotalNonMovingTime is in milisecond
 
         if(dTotalUsedTrackPoints != 0)
+            //at this moment dAvgAccuracy = SUM(CurrentAccuracy)
             dAvgAccuracy = dAvgAccuracy / dTotalUsedTrackPoints;
         else
             dAvgAccuracy = 0;
@@ -789,7 +790,7 @@ public class GPSTrackService extends Service {
                             //write the starting point
                             if(gpsTrackDetailKMLFileWriter != null && iFileCount == 1) //first file
                                 appendKMLStartPoint();
-                            lStartTime = lCurrentLocationTime;
+//                            lStartTime = lCurrentLocationTime;
                             isFirstPoint = false;
                         }
                         else{

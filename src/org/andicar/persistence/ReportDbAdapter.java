@@ -455,16 +455,31 @@ public class ReportDbAdapter extends MainDbAdapter{
                         sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                     " SUBSTR(DATETIME(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +
-                "'%1' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", 2) || ' ' || " +
+                "'[%1]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '; ' || " +
-                    "'%2' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", 2) || ' ' || " +
+                    "'[%2]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
-                    "'%3' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGSPEED_NAME) + ", 2) || ' ' || " +
+                    "'[%3]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGSPEED_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
-                    "'%4' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME) + ", 2) || ' ' || " +
+                    "'[%4]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
-                    "'%5' || '; ' || " +
-                    "'%6' " +
+                    "'[%5]' || '; ' || " +
+                    "'[%6]' || '; ' || " +
+                    "'[%7]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", 2) || " +
+                        " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
+                                " THEN " + "' m; ' " +
+                                " ELSE " + "' yd; ' " +
+                        " END || " +
+                    "'[%8]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", 2) || " +
+                        " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
+                                " THEN " + "' m; ' " +
+                                " ELSE " + "' yd; ' " +
+                        " END || " +
+                    "'[%9]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGACCURACY_NAME) + ", 2) || " +
+                        " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
+                                " THEN " + "' m' " +
+                                " ELSE " + "' yd' " +
+                        " END " +
                     " AS " + SECOND_LINE_LIST_NAME + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                     sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +

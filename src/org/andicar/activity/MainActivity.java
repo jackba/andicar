@@ -18,6 +18,7 @@
  */
 package org.andicar.activity;
 
+import org.andicar.activity.miscellaneous.GPSTrackMap;
 import org.andicar.activity.miscellaneous.GPSTrackController;
 import android.content.pm.PackageManager.NameNotFoundException;
 import org.andicar.activity.report.RefuelListReportActivity;
@@ -75,6 +76,7 @@ public class MainActivity extends Activity {
     private Button btnMileageInsert;
     private Button btnGPSTrackList;
     private Button btnGPSTrackInsert;
+    private Button btnGPSTrackShow;
     private Button btnRefuelList;
     private Button btnRefuelInsert;
     private Button btnExpenseList;
@@ -110,6 +112,7 @@ public class MainActivity extends Activity {
 
     private boolean isSendStatistics = true;
     private boolean isSendCrashReport;
+    private long gpsTrackId = -1;
 
     @Override
     protected void onPause() {
@@ -179,6 +182,8 @@ public class MainActivity extends Activity {
         btnGPSTrackInsert.setOnClickListener(btnGPSTrackInsertClickListener);
         btnGPSTrackList = (Button) findViewById(R.id.btnGPSTrackList);
         btnGPSTrackList.setOnClickListener(btnGPSTrackListClickListener);
+        btnGPSTrackShow = (Button) findViewById(R.id.btnGPSTrackShow);
+        btnGPSTrackShow.setOnClickListener(btnGPSTrackShowClickListener);
 
         tvThreeLineListMileageText1 = (TextView) findViewById(R.id.tvThreeLineListMileageText1);
         tvThreeLineListMileageText2 = (TextView) findViewById(R.id.tvThreeLineListMileageText2);
@@ -201,7 +206,7 @@ public class MainActivity extends Activity {
         if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
             exitResume = true;
             //test if backups exists
-            if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER) != null && !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER).isEmpty()) {
+            if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null && !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null).isEmpty()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
                 builder.setMessage(mRes.getString(R.string.MainActivity_BackupExistMessage));
@@ -277,19 +282,25 @@ public class MainActivity extends Activity {
                 String.valueOf(currentCarID));
         reportDb.setReportSql("gpsTrackListViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
+        gpsTrackId = -1;
         if (listCursor.moveToFirst()) {
+            gpsTrackId = listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.GEN_COL_ROWID_NAME));
             tvThreeLineListGPSTrackText1.setText(
                     listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             tvThreeLineListGPSTrackText2.setText(
                     listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
-                    .replace("%1", mRes.getString(R.string.MainActivity_GPSTrackZone_1))
-                    .replace("%2", mRes.getString(R.string.MainActivity_GPSTrackZone_2))
-                    .replace("%3", mRes.getString(R.string.MainActivity_GPSTrackZone_3))
-                    .replace("%4", mRes.getString(R.string.MainActivity_GPSTrackZone_4))
-                    .replace("%5", mRes.getString(R.string.MainActivity_GPSTrackZone_5) +
+                    .replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
+                    .replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+                    .replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+                    .replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+                    .replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
                             Utils.getTimeString(listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
-                    .replace("%6", mRes.getString(R.string.MainActivity_GPSTrackZone_6) +
-                            Utils.getTimeString(listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false)));
+                    .replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
+                            Utils.getTimeString(listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+                    .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+                    .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+                    .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                    );
             tvThreeLineListGPSTrackText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
             btnGPSTrackList.setEnabled(true);
         } else {
@@ -515,7 +526,10 @@ public class MainActivity extends Activity {
             editor.putString("GPSTrackTrackFileSplitCount", "0");
             editor.commit();
         }
-
+        if (!mPreferences.contains("GPSTrackShowMode")) {
+            editor.putString("GPSTrackShowMode", "M"); // M: map mode; S: satellite mode
+            editor.commit();
+        }
     }
 
     @Override
@@ -704,6 +718,15 @@ public class MainActivity extends Activity {
         public void onClick(View arg0) {
             Intent gpstrackReportIntent = new Intent(mainContext, GPSTrackListReportActivity.class);
             startActivity(gpstrackReportIntent);
+        }
+    };
+
+    private OnClickListener btnGPSTrackShowClickListener = new OnClickListener() {
+
+        public void onClick(View arg0) {
+            Intent gpstrackShowMapIntent = new Intent(mainContext, GPSTrackMap.class);
+            gpstrackShowMapIntent.putExtra("gpsTrackId", Long.toString(gpsTrackId));
+            startActivity(gpstrackShowMapIntent);
         }
     };
 

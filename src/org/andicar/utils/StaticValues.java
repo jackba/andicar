@@ -52,6 +52,9 @@ public class StaticValues
     public static final int CONTEXT_MENU_DELETE_ID = 33;
     public static final int CONTEXT_MENU_SENDASEMAIL_ID = 34;
 
+    public static final int GPSTRACKMAP_MENU_MAPMODE_ID = 41;
+    public static final int GPSTRACKMAP_MENU_SATELLITEMODE_ID = 42;
+
     public static final int ACTIVITY_NEW_REQUEST_CODE = 0;
     public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;
 
