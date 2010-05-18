@@ -19,8 +19,25 @@
 
 package org.andicar.utils;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
 import com.google.android.maps.GeoPoint;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.activity.R;
 
 /**
  *
@@ -169,5 +186,80 @@ public class Utils {
             retVal = 0;
         }
         return retVal;
+    }
+
+    public void sendGPSTrackAsEmail(Context ctx, Resources mRes, long gpsTrackID){
+        Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+        emailIntent.setType("text/html");
+        Bundle b = new Bundle();
+        MainDbAdapter mMainDbAdapter = new MainDbAdapter(ctx);
+        String emailSubject = "AndiCar GPS Track";
+
+        b.putString(MainDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + "=", Long.toString(gpsTrackID));
+        ReportDbAdapter reportDbAdapter = new ReportDbAdapter(ctx, "gpsTrackListViewSelect", b);
+        Cursor reportCursor = reportDbAdapter.fetchReport(1);
+        if(reportCursor.moveToFirst()){
+            String emailText =
+                    reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)) + "\n" +
+                    reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
+                        .replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
+                        .replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+                        .replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+                        .replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+                        .replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
+                                Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
+                        .replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
+                                Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+                        .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+                        .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+                        .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                    + "\n" +
+                    reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
+            emailSubject = emailSubject + " - " +
+                    reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.GEN_COL_NAME_NAME));
+            reportCursor.close();
+            reportDbAdapter.close();
+
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText + "\nSent by AndiCar (http://sites.google.com/site/andicarfree/)");
+        }
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
+        //attach the trackfiles
+        byte[] buf = new byte[1024];
+        ZipOutputStream out = null;
+        try {
+            out = new ZipOutputStream(new FileOutputStream(StaticValues.TRACK_FOLDER + "trackFiles.zip"));
+
+            reportCursor = mMainDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+                                MainDbAdapter.gpsTrackDetailTableColNames,
+                                MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + Long.toString(gpsTrackID),
+                                MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
+            while(reportCursor.moveToNext()){
+                try{
+                    FileInputStream in = new FileInputStream(reportCursor.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS));
+                    //zip entry name
+                    String entryName = reportCursor.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS).replace(StaticValues.TRACK_FOLDER, "");
+                    out.putNextEntry(new ZipEntry(entryName));
+                    // Transfer bytes from the file to the ZIP file
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                            out.write(buf, 0, len);
+                    }
+                    // Complete the entry
+                    out.closeEntry();
+                    in.close();
+                }
+                catch(FileNotFoundException ex){}
+            }
+            out.close();
+            reportCursor.close();
+            Uri trackFile = Uri.parse("file://" + StaticValues.TRACK_FOLDER + "trackFiles.zip");
+            if(trackFile != null)
+                emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, trackFile);
+        } catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        ctx.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        mMainDbAdapter.close();
+
     }
 }

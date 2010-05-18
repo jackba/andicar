@@ -33,6 +33,7 @@ public class AndiCarExceptionHandler
     }
 
     public void uncaughtException(Thread thread, Throwable thrwbl) {
+        mPreviousHandler.uncaughtException(thread, thrwbl);
         Throwable cause = thrwbl.getCause();
         StackTraceElement[] stackTrace = cause.getStackTrace();
         StackTraceElement stackTraceElement;
@@ -47,6 +48,5 @@ public class AndiCarExceptionHandler
         AndiCarStatistics.sendFlurryStartSession(mCtx);
         AndiCarStatistics.sendFlurryError("AndiCarError", stackStr, thrwbl.getMessage());
         AndiCarStatistics.sendFlurryEndSession(mCtx);
-        mPreviousHandler.uncaughtException(thread, thrwbl);
     }
 }

@@ -51,6 +51,7 @@ public class StaticValues
     public static final int CONTEXT_MENU_INSERT_ID = 32;
     public static final int CONTEXT_MENU_DELETE_ID = 33;
     public static final int CONTEXT_MENU_SENDASEMAIL_ID = 34;
+    public static final int CONTEXT_MENU_SHOWONMAP_ID = 35;
 
     public static final int GPSTRACKMAP_MENU_MAPMODE_ID = 41;
     public static final int GPSTRACKMAP_MENU_SATELLITEMODE_ID = 42;
@@ -104,13 +105,16 @@ public class StaticValues
     public static final String CSV_FORMAT = "csv";
     public static final String KML_FORMAT = "kml";//Keyhole Markup Language (http://en.wikipedia.org/wiki/KML)
     public static final String GPX_FORMAT = "gpx";//GPS eXchange Format (http://en.wikipedia.org/wiki/Gpx)
+    public static final String GOP_FORMAT = "gop"; //geopoint coordinates. Used to draw the track on the map
 
     public static final String EXPENSES_COL_FROMREFUEL_TABLE_NAME = "Refuel";
     
-    public static int NOTIF_TYPE_GPSTRACK_STARTED_ID = 1;
-    public static int NOTIF_TYPE_ACCURACY_WARNING_ID = 2;
+    public static int NOTIF_TYPE_GPS_TRACK_STARTED_ID = 1;
+    public static int NOTIF_TYPE_GPS_ACCURACY_WARNING_ID = 2;
     public static int NOTIF_TYPE_FILESYSTEM_ERROR_ID = 3;
-    public static int NOTIF_TYPE_ACCURACY_SHUTDOWN_ID = 4;
+    public static int NOTIF_TYPE_GPS_ACCURACY_SHUTDOWN_ID = 4;
+    public static int NOTIF_TYPE_GPS_DISABLED_ID = 5;
+    public static int NOTIF_TYPE_GPS_OUTOFSERVICE_ID = 6;
 
     
     public static String LM_COPYRIGHT_HTML1 =

@@ -93,6 +93,7 @@
     <string name="MENU_SearchCaption">"Search/filter"</string>
     <string name="MENU_CreateReportCaption">"Create report"</string>
     <string name="MENU_SendAsEmailCaption">"Send as email"</string>
+    <string name="MENU_ShowOnMap">"Show on map"</string>
     <string name="MENU_MileageCaption">"Mileages"</string>
     <string name="MENU_RefuelCaption">"Refuels"</string>
     <string name="MENU_ExpenseCaption">"Expenses"</string>
@@ -208,6 +209,7 @@
     <string name="GPSTrackReport_GPSTrackVar_9">"Avg. accuracy: "</string>
 
     <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Track files"</string>
+    <string name="GPSTrackEditActivity_TrackStatistics">"Statistics"</string>
 
     <string name="GPSTrackControllerActivity_StartBtnCaption">"Start GPS Track"</string>
     <string name="GPSTrackControllerActivity_StopBtnCaption">"Stop GPS Track"</string>
@@ -216,6 +218,7 @@
 
     <string name="GPSTrackService_ServiceStoppedMessage">"GPS tracking stopped"</string>
     <string name="GPSTrackService_GPSDisabledMessage">"Your gps is disabled!\nPlease enable it."</string>
+    <string name="GPSTrackService_GPSOutOfService">"GPS Service provider out of service!"</string>
     <string name="GPSTrackService_TrackInProgressTitle">"AndiCar GPS Tracking"</string>
     <string name="GPSTrackService_TrackInProgressMessage">"Tracking in progress"</string>
     <string name="GPSTrackService_AccuracyProblemTitle">"AndiCar GPS Warning!"</string>
