@@ -89,6 +89,43 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.gps_track_map);
+        mapView = (MapView) findViewById(R.id.gpstrackmap);
+
+        mapView.setBuiltInZoomControls(true);
+        projection = mapView.getProjection();
+
+        mapOverlays = mapView.getOverlays();
+        mExtras = getIntent().getExtras();
+        mResource = getResources();
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        showMode = mPreferences.getString("GPSTrackShowMode", "M");
+
+        if(trackPoints == null)
+            trackPoints = new ArrayList<GeoPoint>();
+        //get the the csv file track id
+        trackId = mExtras.getString("gpsTrackId");
+        progressDialog = ProgressDialog.show(GPSTrackMap.this, "",
+            mResource.getString(R.string.GPSTrackShowOnMap_ProgressMessage), true);
+        Thread thread = new Thread(GPSTrackMap.this);
+        thread.start();
+
+    }
+
+    public void run() {
+        drawTrack();
+    }
+
+    private Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                progressDialog.dismiss();
+            }
+    };
+
+    @Override
     protected boolean isRouteDisplayed() {
         return false;
     }
@@ -98,61 +135,65 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         DataInputStream trackData;
         BufferedReader trackBufferedReader;
         String trackLine;
-
-        //get the list of csv files
-        ArrayList<String> trackFiles = FileUtils.getFileNames(StaticValues.TRACK_FOLDER, trackId + "_[0-9][0-9][0-9].csv");
-        if(trackFiles.isEmpty()){
-            madbErrorAlert = new AlertDialog.Builder( this );
-            madbErrorAlert.setCancelable( false );
-            madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
-            madbErrorAlert.setMessage(mResource.getString(R.string.ERR_036));
-            madError = madbErrorAlert.create();
-            madError.show();
-        }
-        mMapController = mapView.getController();
-        double distance = 0;
-        GeoPoint p;
-        for(String trackFile : trackFiles) {
-            try{
-                trackFile = StaticValues.TRACK_FOLDER + trackFile;
-                trackInputStream = new FileInputStream(trackFile);
-                trackData = new DataInputStream(trackInputStream);
-                trackBufferedReader = new BufferedReader(new InputStreamReader(trackData));
-                boolean isFirst = true;
-                while ((trackLine = trackBufferedReader.readLine()) != null)   {
-                    if(trackLine.length() == 0 ||
-                            trackLine.startsWith("GPS_TRACK_ID")) //header line
-                        continue;
-                    if(isFirst){
-                        p = Utils.getGeopointFromCSVTrackLine(trackLine);
-                        maxLatitude = p.getLatitudeE6();
-                        minLatitude = maxLatitude;
-                        maxLongitude = p.getLongitudeE6();
-                        minLongitude = maxLongitude;
-                        trackPoints.add(p);
-                        isFirst = false;
-                        continue;
-                    }
-                    distance = distance + Utils.getDistanceFromCSVTrackLine(trackLine);
-                    //add only a 5 m distanced point from the previous point
-                    if(distance > 5){
-                        p = Utils.getGeopointFromCSVTrackLine(trackLine);
-                        trackPoints.add(p);
-                        if(p.getLatitudeE6() > maxLatitude)
-                            maxLatitude = p.getLatitudeE6();
-                        else if(p.getLatitudeE6() < minLatitude)
-                            minLatitude = p.getLatitudeE6();
-                        if(p.getLongitudeE6() > maxLongitude)
-                            maxLongitude = p.getLongitudeE6();
-                        else if(p.getLongitudeE6() < minLongitude)
-                            minLongitude = p.getLongitudeE6();
-
-                        distance = 0;
-                    }
-                }
+        ArrayList<String> trackFiles;
+        if(trackPoints.size() == 0){ //trackpoints are not loaded
+            //get the list of gop files
+//            trackId = "16";
+            trackFiles = FileUtils.getFileNames(StaticValues.TRACK_FOLDER, trackId + "_[0-9][0-9][0-9].gop");
+            if(trackFiles.isEmpty()){
+                madbErrorAlert = new AlertDialog.Builder( this );
+                madbErrorAlert.setCancelable( false );
+                madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
+                madbErrorAlert.setMessage(mResource.getString(R.string.ERR_036));
+                madError = madbErrorAlert.create();
+                madError.show();
             }
-            catch(FileNotFoundException e){}
-            catch(IOException e){}
+            mMapController = mapView.getController();
+            int latitudeE6;
+            int longitudeE6;
+            int c1;
+            boolean isFirst = true;
+            for(String trackFile : trackFiles) {
+                try{
+                    trackFile = StaticValues.TRACK_FOLDER + trackFile;
+                    trackInputStream = new FileInputStream(trackFile);
+                    trackData = new DataInputStream(trackInputStream);
+                    trackBufferedReader = new BufferedReader(new InputStreamReader(trackData));
+                    while ((trackLine = trackBufferedReader.readLine()) != null) {
+                        if(trackLine.length() == 0 ||
+                                trackLine.contains("Latitude")) //header line
+                            continue;
+                        c1 = trackLine.indexOf(",");
+                        if(isFirst){
+                            latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
+                            longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
+                            maxLatitude = latitudeE6;
+                            minLatitude = maxLatitude;
+                            maxLongitude = longitudeE6;
+                            minLongitude = maxLongitude;
+                            trackPoints.add(new GeoPoint(latitudeE6, longitudeE6));
+                            isFirst = false;
+                            continue;
+                        }
+                        latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
+                        longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
+                        trackPoints.add(new GeoPoint(latitudeE6, longitudeE6));
+                        if(latitudeE6 > maxLatitude)
+                            maxLatitude = latitudeE6;
+                        if(latitudeE6 < minLatitude)
+                            minLatitude = latitudeE6;
+                        if(longitudeE6 > maxLongitude)
+                            maxLongitude = longitudeE6;
+                        if(longitudeE6 < minLongitude)
+                            minLongitude = longitudeE6;
+                    }
+                    trackInputStream.close();
+                    trackData.close();
+                    trackBufferedReader.close();
+                }
+                catch(FileNotFoundException e){}
+                catch(IOException e){}
+            }
         }
 
         if(trackPoints.size() >= 1){
@@ -176,43 +217,6 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         handler.sendEmptyMessage(0);
     }
     
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.gps_track_map);
-        mapView = (MapView) findViewById(R.id.gpstrackmap);
-
-        mapView.setBuiltInZoomControls(true);
-        projection = mapView.getProjection();
-
-        mapOverlays = mapView.getOverlays();
-        mExtras = getIntent().getExtras();
-        mResource = getResources();
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        showMode = mPreferences.getString("GPSTrackShowMode", "M");
-
-        trackPoints = new ArrayList<GeoPoint>();
-        //get the the csv file track id
-        trackId = mExtras.getString("gpsTrackId");
-        progressDialog = ProgressDialog.show(GPSTrackMap.this, "",
-            mResource.getString(R.string.GPSTrackShowOnMap_ProgressMessage), true);
-        Thread thread = new Thread(GPSTrackMap.this);
-        thread.start();
-        
-    }
-
-    public void run() {
-        drawTrack();
-    }
-
-    private Handler handler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                progressDialog.dismiss();
-            }
-    };
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         optionsMenu = menu;

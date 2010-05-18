@@ -84,6 +84,7 @@ public class GPSTrackController extends EditActivityBase {
         btnGPSTrackStartStop = (Button) findViewById(R.id.btnStartStopGpsTrack);
         btnGPSTrackStartStop.setOnClickListener(btnGPSTrackStartStopListener);
         ckIsCreateMileage = (CheckBox) findViewById(R.id.ckIsCreateMileage);
+        ckIsCreateMileage.setChecked(mPreferences.getBoolean("GPSTrackCreateMileage", true));
     }
 
     @Override
@@ -201,7 +202,7 @@ public class GPSTrackController extends EditActivityBase {
         {
             Intent gpsTrackIntent = new Intent(GPSTrackController.this, GPSTrackService.class);
             if(isGpsTrackOn){
-                mPrefEditor.putBoolean("GPSTrackIsCreateMileage", ckIsCreateMileage.isChecked());
+                mPrefEditor.putBoolean("GPSTrackCreateMileage", ckIsCreateMileage.isChecked());
                 mPrefEditor.commit();
                 stopService(gpsTrackIntent);
                 isGpsTrackOn = false;
@@ -209,6 +210,8 @@ public class GPSTrackController extends EditActivityBase {
                 etName.setText("");
                 etName.setHint(Utils.getDateStr(true, true));
                 btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackControllerActivity_StartBtnCaption));
+                mPrefEditor.putBoolean("isGpsTrackOn", false);
+                mPrefEditor.commit();
                 finish();
             }
             else{
@@ -219,7 +222,6 @@ public class GPSTrackController extends EditActivityBase {
                 mPrefEditor.putString("GPSTrackTmp_UserComment", acUserComment.getText().toString());
                 mPrefEditor.putLong("GPSTrackTmp_CarId", mCarId);
                 mPrefEditor.putLong("GPSTrackTmp_DriverId", mDriverId);
-                mPrefEditor.putBoolean("GPSTrackTmp_IsCreateMileage", ckIsCreateMileage.isChecked());
                 mPrefEditor.putBoolean("GPSTrackTmp_IsUseKML", ckIsUseKML.isChecked());
                 mPrefEditor.putBoolean("GPSTrackTmp_IsUseGPX", ckIsUseGPX.isChecked());
 //                mPrefEditor.putBoolean("GPSTrackTmp_IsShowOnMap", ckIsShowOnMap.isChecked());

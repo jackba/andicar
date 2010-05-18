@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import java.sql.PreparedStatement;
@@ -558,10 +559,13 @@ public class DB {
     }
 
     public void close() {
-        mDbHelper.close();
-        mDbHelper = null;
-        mDb.close();
-        mDb = null;
+        try{
+            mDbHelper.close();
+            mDbHelper = null;
+            mDb.close();
+            mDb = null;
+        }
+        catch(SQLiteException e){}
     }
 
     public static String sqlConcatTableColumn(String tableName, String columnName){
@@ -598,6 +602,9 @@ public class DB {
                 createExpenses(db, false);
                 //currency rate
                 createCurrencyRateTable(db);
+
+                //gps track
+                createGPSTrackTables(db);
 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
@@ -859,6 +866,10 @@ public class DB {
 
             FileUtils fu = new FileUtils(mCtx);
             fu.updateTo220(mCtx);
+            SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putString("UpdateMsg", "VersionChanged");
+            editor.commit();
         }
 
         private void createExpenseCategory(SQLiteDatabase db) throws SQLException {

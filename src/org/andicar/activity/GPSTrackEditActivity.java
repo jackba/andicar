@@ -20,6 +20,7 @@
 package org.andicar.activity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -30,10 +31,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import org.andicar.activity.miscellaneous.GPSTrackMap;
+import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.Utils;
 
 /**
  *
@@ -45,7 +50,9 @@ public class GPSTrackEditActivity extends EditActivityBase {
     private EditText etName;
     private AutoCompleteTextView acUserComment;
     private ListView lvTrackFileList;
-
+    private TextView tvTrackStats;
+    private Button btnGPSTrackShowOnMap;
+    private Button btnGPSTrackSendAsEmail;
     private ArrayAdapter<String> userCommentAdapter;
 
     /** Called when the activity is first created. */
@@ -60,7 +67,12 @@ public class GPSTrackEditActivity extends EditActivityBase {
         etName = (EditText)findViewById(R.id.etName);
         acUserComment = (AutoCompleteTextView) findViewById( R.id.acUserComment );
         spnDriver = (Spinner)findViewById(R.id.spnDriver);
+        tvTrackStats = (TextView)findViewById(R.id.tvTrackStats);
         lvTrackFileList = (ListView)findViewById(R.id.lvTrackFileList);
+        btnGPSTrackSendAsEmail = (Button)findViewById(R.id.btnGPSTrackSendAsEmail);
+        btnGPSTrackSendAsEmail.setOnClickListener(mBtnSendAsEmailListener);
+        btnGPSTrackShowOnMap = (Button)findViewById(R.id.btnGPSTrackShowOnMap);
+        btnGPSTrackShowOnMap.setOnClickListener(mBtnShowOnMapListener);
 
         userCommentAdapter = new ArrayAdapter<String>(GPSTrackEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line,
@@ -87,6 +99,33 @@ public class GPSTrackEditActivity extends EditActivityBase {
         initDateTime(recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_DATE_POS) * 1000);
         tvDateTimeValue.setText(mResource.getString(R.string.GEN_DateTimeLabel) + " " + tvDateTimeValue.getText());
 
+        //statistics
+        Bundle whereConditions = new Bundle();
+        whereConditions.clear();
+        whereConditions.putString(
+            ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + "=",
+                    String.valueOf(mRowId));
+        ReportDbAdapter reportDb = new ReportDbAdapter(this, "gpsTrackListViewSelect", whereConditions);
+        Cursor statCursor = reportDb.fetchReport(1);
+        if (statCursor.moveToFirst()) {
+            tvTrackStats.setText(
+                    statCursor.getString(statCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
+                    .replace("[%1]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_1))
+                    .replace("[%2]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+                    .replace("[%3]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+                    .replace("[%4]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+                    .replace("[%5]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
+                            Utils.getTimeString(statCursor.getLong(statCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
+                    .replace("[%6]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
+                            Utils.getTimeString(statCursor.getLong(statCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+                    .replace("[%7]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+                    .replace("[%8]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+                    .replace("[%9]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                    );
+        }
+        statCursor.close();
+        reportDb.close();
+        
         Cursor trackFilesRecordCursor = mDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
                 MainDbAdapter.gpsTrackDetailTableColNames,
                 MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + mRowId,
@@ -137,4 +176,23 @@ public class GPSTrackEditActivity extends EditActivityBase {
                             finish();
                     }
                 };
+
+    private View.OnClickListener mBtnSendAsEmailListener =
+            new View.OnClickListener()
+                {
+                    public void onClick( View v )
+                    {
+                        Utils u = new Utils();
+                        u.sendGPSTrackAsEmail(GPSTrackEditActivity.this, mResource, mRowId);
+                    }
+                };
+
+    private View.OnClickListener mBtnShowOnMapListener =
+            new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent gpstrackShowMapIntent = new Intent(GPSTrackEditActivity.this, GPSTrackMap.class);
+                    gpstrackShowMapIntent.putExtra("gpsTrackId", Long.toString(mRowId));
+                    startActivity(gpstrackShowMapIntent);
+                }
+            };
 }

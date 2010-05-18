@@ -138,7 +138,7 @@ public class MileageEditActivity extends EditActivityBase {
             initDateTime(System.currentTimeMillis());
             mStartIndex = BigDecimal.ZERO;
             fillGetCurrentIndex();
-            BigDecimal stopIndex = mStartIndex.add(new BigDecimal(recordCursor.getString(MainDbAdapter.GPSTRACK_COL_DISTANCE_POS))).setScale(0, BigDecimal.ROUND_CEILING);
+            BigDecimal stopIndex = mStartIndex.add(new BigDecimal(recordCursor.getString(MainDbAdapter.GPSTRACK_COL_DISTANCE_POS))).setScale(0, BigDecimal.ROUND_HALF_DOWN);
 
             etUserInput.setText(stopIndex.toString());
             recordCursor.close();
@@ -191,6 +191,7 @@ public class MileageEditActivity extends EditActivityBase {
         }
         ((TextView) findViewById(R.id.tvCarDriverLabel)).setText(driverCarLbl);
 
+        etUserInput.requestFocus();
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent("MileageEdit", null);
     }

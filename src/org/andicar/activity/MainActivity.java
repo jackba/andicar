@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
     private Button btnMileageInsert;
     private Button btnGPSTrackList;
     private Button btnGPSTrackInsert;
-    private Button btnGPSTrackShow;
+    private Button btnGPSTrackShowOnMap;
     private Button btnRefuelList;
     private Button btnRefuelInsert;
     private Button btnExpenseList;
@@ -149,21 +149,25 @@ public class MainActivity extends Activity {
 
         String updateMsg = mPreferences.getString("UpdateMsg", null);
         if(updateMsg != null){
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle(mRes.getString(R.string.MainActivity_UpdateMessage));
-            builder.setMessage(updateMsg);
-            builder.setCancelable(false);
-            builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-            SharedPreferences.Editor editor = mPreferences.edit();
-            editor.remove("UpdateMsg");
-            editor.commit();
+            if(!updateMsg.equals("VersionChanged")){
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(mRes.getString(R.string.MainActivity_UpdateMessage));
+                builder.setMessage(updateMsg);
+                builder.setCancelable(false);
+                builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                SharedPreferences.Editor editor = mPreferences.edit();
+                editor.remove("UpdateMsg");
+                editor.commit();
+            }
+            else
+                initPreferenceValues(); //version update => init (new) preference values
         }
 
         btnMileageList = (Button) findViewById(R.id.btnMileageList);
@@ -182,8 +186,8 @@ public class MainActivity extends Activity {
         btnGPSTrackInsert.setOnClickListener(btnGPSTrackInsertClickListener);
         btnGPSTrackList = (Button) findViewById(R.id.btnGPSTrackList);
         btnGPSTrackList.setOnClickListener(btnGPSTrackListClickListener);
-        btnGPSTrackShow = (Button) findViewById(R.id.btnGPSTrackShow);
-        btnGPSTrackShow.setOnClickListener(btnGPSTrackShowClickListener);
+        btnGPSTrackShowOnMap = (Button) findViewById(R.id.btnGPSTrackShowOnMap);
+        btnGPSTrackShowOnMap.setOnClickListener(btnGPSTrackShowClickListener);
 
         tvThreeLineListMileageText1 = (TextView) findViewById(R.id.tvThreeLineListMileageText1);
         tvThreeLineListMileageText2 = (TextView) findViewById(R.id.tvThreeLineListMileageText2);
@@ -207,6 +211,7 @@ public class MainActivity extends Activity {
             exitResume = true;
             //test if backups exists
             if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null && !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null).isEmpty()) {
+                initPreferenceValues(); //version update => init (new) preference values
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
                 builder.setMessage(mRes.getString(R.string.MainActivity_BackupExistMessage));
@@ -234,6 +239,7 @@ public class MainActivity extends Activity {
 
             } else {
                 exitResume = true;
+                initPreferenceValues(); //version update => init (new) preference values
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeMessage));
                 builder.setMessage(mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
@@ -250,7 +256,6 @@ public class MainActivity extends Activity {
                 alert.show();
             }
         }
-        initPreferenceValues();
     }
 
     private void fillExpenseZone() {
@@ -259,7 +264,7 @@ public class MainActivity extends Activity {
         whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME, MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=", String.valueOf(currentCarID));
         reportDb.setReportSql("reportExpensesListMainViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
-        if(listCursor.moveToFirst()) {
+        if(listCursor != null && listCursor.moveToFirst()) {
             tvThreeLineListExpenseText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             tvThreeLineListExpenseText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             tvThreeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
@@ -271,10 +276,12 @@ public class MainActivity extends Activity {
             tvThreeLineListExpenseText3.setText("");
             btnExpenseList.setEnabled(false);
         }
-        listCursor.close();
+        if(listCursor != null)
+            listCursor.close();
     }
 
     private void fillGpsZone() {
+        listCursor = null;
         Bundle whereConditions = new Bundle();
         whereConditions.clear();
         whereConditions.putString(
@@ -283,7 +290,7 @@ public class MainActivity extends Activity {
         reportDb.setReportSql("gpsTrackListViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
         gpsTrackId = -1;
-        if (listCursor.moveToFirst()) {
+        if (listCursor != null && listCursor.moveToFirst()) {
             gpsTrackId = listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.GEN_COL_ROWID_NAME));
             tvThreeLineListGPSTrackText1.setText(
                     listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
@@ -303,13 +310,16 @@ public class MainActivity extends Activity {
                     );
             tvThreeLineListGPSTrackText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
             btnGPSTrackList.setEnabled(true);
+            btnGPSTrackShowOnMap.setEnabled(true);
         } else {
             tvThreeLineListGPSTrackText1.setText(mRes.getString(R.string.MainActivity_GPSTrackZoneNoDataText));
             tvThreeLineListGPSTrackText2.setText("");
             tvThreeLineListGPSTrackText3.setText("");
             btnGPSTrackList.setEnabled(false);
+            btnGPSTrackShowOnMap.setEnabled(false);
         }
-        listCursor.close();
+        if(listCursor != null)
+            listCursor.close();
     }
 
     private void fillMileageZone() {
@@ -319,7 +329,7 @@ public class MainActivity extends Activity {
         whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=", String.valueOf(currentCarID));
         reportDb.setReportSql("reportMileageListViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
-        if(listCursor.moveToFirst()) {
+        if(listCursor != null && listCursor.moveToFirst()) {
             tvThreeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             tvThreeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             tvThreeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
@@ -331,7 +341,8 @@ public class MainActivity extends Activity {
             tvThreeLineListMileageText3.setText("");
             btnMileageList.setEnabled(false);
         }
-        listCursor.close();
+        if(listCursor != null)
+            listCursor.close();
     }
 
     private void fillRefuelZone() {
@@ -340,7 +351,7 @@ public class MainActivity extends Activity {
         whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=", String.valueOf(currentCarID));
         reportDb.setReportSql("reportRefuelListViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
-        if(listCursor.moveToFirst()) {
+        if(listCursor != null && listCursor.moveToFirst()) {
             tvThreeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
             tvThreeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
             tvThreeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
@@ -352,7 +363,8 @@ public class MainActivity extends Activity {
             tvThreeLineListRefuelText3.setText("");
             btnRefuelList.setEnabled(false);
         }
-        listCursor.close();
+        if(listCursor != null)
+            listCursor.close();
     }
 
     private void fillStatisticsZone(){
@@ -361,7 +373,7 @@ public class MainActivity extends Activity {
         whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + "=", String.valueOf(currentCarID));
         reportDb.setReportSql("statisticsMainViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
-        if(listCursor.moveToFirst()) {
+        if(listCursor != null && listCursor.moveToFirst()) {
             TextView tvHdrText = (TextView) findViewById(R.id.tvThreeLineListCarReportHdr);
             tvHdrText.setText(mRes.getString(R.string.MainActivity_StatisticsListHeaderCaption) + listCursor.getString(1));
             String avgConsUom = listCursor.getString(5);
@@ -450,56 +462,46 @@ public class MainActivity extends Activity {
             tvThreeLineListStatisticsText2.setText("");
             tvThreeLineListStatisticsText3.setText("");
         }
-        listCursor.close();
+        if(listCursor != null)
+            listCursor.close();
     }
 
     private void initPreferenceValues() {
         SharedPreferences.Editor editor = mPreferences.edit();
         if (!mPreferences.contains("MainActivityShowMileage")) {
             editor.putBoolean("MainActivityShowMileage", true);
-            editor.commit();
         }
         if (!mPreferences.contains("MainActivityShowGPSTrack")) {
             editor.putBoolean("MainActivityShowGPSTrack", true);
-            editor.commit();
         }
         if (!mPreferences.contains("MainActivityShowRefuel")) {
             editor.putBoolean("MainActivityShowRefuel", true);
-            editor.commit();
         }
         if (!mPreferences.contains("MainActivityShowExpense")) {
-            editor.putBoolean("MainActivityShowExpense", false);
-            editor.commit();
+            editor.putBoolean("MainActivityShowExpense", true);
         }
         if (mPreferences.contains("MainActivityShowCarReport")) {
             editor.putBoolean("MainActivityShowStatistics",
                     mPreferences.getBoolean("MainActivityShowCarReport", true));
             editor.remove("MainActivityShowCarReport");
-            editor.commit();
         }
         if (!mPreferences.contains("MainActivityShowStatistics")) {
             editor.putBoolean("MainActivityShowStatistics", true);
-            editor.commit();
         }
         if (!mPreferences.contains("IsGPSTrackOnMap")) {
             editor.putBoolean("IsGPSTrackOnMap", false);
-            editor.commit();
         }
         if (!mPreferences.contains("IsUseCSVTrack")) {
             editor.putBoolean("IsUseCSVTrack", true);
-            editor.commit();
         }
         if (!mPreferences.contains("IsUseKMLTrack")) {
             editor.putBoolean("IsUseKMLTrack", true);
-            editor.commit();
         }
         if (!mPreferences.contains("IsUseGPXTrack")) {
             editor.putBoolean("IsUseGPXTrack", true);
-            editor.commit();
         }
         if (!mPreferences.contains("GPSTrackMinTime")) {
             editor.putString("GPSTrackMinTime", "0");
-            editor.commit();
         }
 //        if (!mPreferences.contains("GPSTrackMinDistance")) {
 //            editor.putString("GPSTrackMinDistance", "0");
@@ -507,29 +509,27 @@ public class MainActivity extends Activity {
 //        }
         if (!mPreferences.contains("SendUsageStatistics")) {
             editor.putBoolean("SendUsageStatistics", true);
-            editor.commit();
         }
         if (!mPreferences.contains("SendCrashReport")) {
             editor.putBoolean("SendCrashReport", true);
-            editor.commit();
         }
 
         if (!mPreferences.contains("GPSTrackMaxAccuracy")) {
             editor.putString("GPSTrackMaxAccuracy", "20");
-            editor.commit();
         }
         if (!mPreferences.contains("GPSTrackMaxAccuracyShutdownLimit")) {
             editor.putString("GPSTrackMaxAccuracyShutdownLimit", "30");
-            editor.commit();
         }
         if (!mPreferences.contains("GPSTrackTrackFileSplitCount")) {
             editor.putString("GPSTrackTrackFileSplitCount", "0");
-            editor.commit();
         }
         if (!mPreferences.contains("GPSTrackShowMode")) {
             editor.putString("GPSTrackShowMode", "M"); // M: map mode; S: satellite mode
-            editor.commit();
         }
+        if (!mPreferences.contains("GPSTrackCreateMileage")) {
+            editor.putBoolean("GPSTrackCreateMileage", true); // M: map mode; S: satellite mode
+        }
+        editor.commit();
     }
 
     @Override
