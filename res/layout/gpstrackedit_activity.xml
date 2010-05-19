@@ -148,7 +148,7 @@
             android:text="@string/GPSTrackEditActivity_TrackStatistics"
             />
         <TextView android:id="@+id/tvTrackStats"
-                  android:textSize="16sp"
+                  android:textSize="14sp"
                   android:textStyle="italic"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"/>

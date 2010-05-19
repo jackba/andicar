@@ -121,6 +121,8 @@ public class GPSTrackEditActivity extends EditActivityBase {
                     .replace("[%7]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                     .replace("[%8]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                     .replace("[%9]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                    .replace("[%10]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_10))
+                    .replace("[%11]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_11))
                     );
         }
         statCursor.close();

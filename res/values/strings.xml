@@ -207,6 +207,8 @@
     <string name="GPSTrackReport_GPSTrackVar_7">"Max. accuracy: "</string>
     <string name="GPSTrackReport_GPSTrackVar_8">"Min. accuracy: "</string>
     <string name="GPSTrackReport_GPSTrackVar_9">"Avg. accuracy: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_10">"Min. alt.: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_11">"Max. alt.: "</string>
 
     <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Track files"</string>
     <string name="GPSTrackEditActivity_TrackStatistics">"Statistics"</string>
