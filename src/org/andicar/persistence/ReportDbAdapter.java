@@ -477,9 +477,20 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " END || " +
                     "'[%9]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGACCURACY_NAME) + ", 2) || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
-                                " THEN " + "' m' " +
-                                " ELSE " + "' yd' " +
+                                " THEN " + "' m; ' " +
+                                " ELSE " + "' yd; ' " +
+                        " END || " +
+                    "'[%10]' || " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINALTITUDE_NAME) + " || " +
+                        " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
+                                " THEN " + "' m; ' " +
+                                " ELSE " + "' yd; ' " +
+                        " END || " +
+                    "'[%11]' || " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME) + " || " +
+                        " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
+                                " THEN " + "' m; ' " +
+                                " ELSE " + "' yd; ' " +
                         " END " +
+
                     " AS " + SECOND_LINE_LIST_NAME + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                     sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +

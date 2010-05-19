@@ -307,6 +307,9 @@ public class MainActivity extends Activity {
                     .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                     .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                     .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                    .replace("[%10]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
+                    .replace("[%11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
+
                     );
             tvThreeLineListGPSTrackText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
             btnGPSTrackList.setEnabled(true);

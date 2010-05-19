@@ -341,7 +341,7 @@ public class MileageEditActivity extends EditActivityBase {
                 }
                 else{
                     Toast toast = Toast.makeText( getApplicationContext(),
-                            (operationType.equals("N") ?
+                            (operationType.equals("N") || operationType.equals("TrackToMileage") ?
                                 mResource.getString(R.string.MileageEditActivity_InsertOkMessage)
                                 : mResource.getString(R.string.MileageEditActivity_UpdateOkMessage)) ,
                             Toast.LENGTH_SHORT );

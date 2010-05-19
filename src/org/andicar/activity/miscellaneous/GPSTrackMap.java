@@ -105,8 +105,9 @@ public class GPSTrackMap extends MapActivity implements Runnable{
 
         if(trackPoints == null)
             trackPoints = new ArrayList<GeoPoint>();
-        //get the the csv file track id
+        //get the the track id
         trackId = mExtras.getString("gpsTrackId");
+//        trackId ="99";
         progressDialog = ProgressDialog.show(GPSTrackMap.this, "",
             mResource.getString(R.string.GPSTrackShowOnMap_ProgressMessage), true);
         Thread thread = new Thread(GPSTrackMap.this);
