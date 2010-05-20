@@ -580,7 +580,7 @@ public class DB {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            try {
+//            try {
                 //create drivers table
                 db.execSQL(DRIVERS_TABLE_CREATE_SQL);
                 //create cars table
@@ -612,10 +612,10 @@ public class DB {
                     Log.e(TAG, fu.lastError);
                 }
 
-            }
-            catch(SQLException ex) {
-                Log.e(TAG, ex.getMessage());
-            }
+//            }
+//            catch(SQLException ex) {
+//                Log.e(TAG, ex.getMessage());
+//            }
 
         }
 

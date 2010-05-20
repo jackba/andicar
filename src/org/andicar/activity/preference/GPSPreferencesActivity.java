@@ -24,9 +24,12 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
+import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
+import android.widget.Toast;
 import org.andicar.utils.StaticValues;
 import org.andicar.activity.R;
 import org.andicar.utils.AndiCarExceptionHandler;
@@ -121,6 +124,19 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         prefScreenRoot.addPreference(gpsTrackMaxAccuracyShutdownLimit);
 
         EditTextPreference tpSplitFile = new EditTextPreference(this);
+        tpSplitFile.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+            //check the value entered. must be an integer.
+            public boolean onPreferenceChange(Preference prfrnc, Object o) {
+                try{
+                    Integer.parseInt((String)o);
+                }
+                catch(NumberFormatException e){
+                    Toast.makeText(GPSPreferencesActivity.this, mRes.getString(R.string.GEN_NumberFormatException), Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                return true;
+            }
+        });
         tpSplitFile.setTitle(R.string.PREFGPSTrack_FileSplitTitle);
         tpSplitFile.setSummary(R.string.PREFGPSTrack_FileSplitSummary);
         tpSplitFile.setKey("GPSTrackTrackFileSplitCount");
