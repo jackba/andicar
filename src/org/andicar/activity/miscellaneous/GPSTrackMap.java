@@ -52,7 +52,6 @@ import java.util.List;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
 
 /**
  *
@@ -122,7 +121,17 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                progressDialog.dismiss();
+                if(msg.what == 0)
+                    progressDialog.dismiss();
+                else{
+                    progressDialog.dismiss();
+                    madbErrorAlert = new AlertDialog.Builder( GPSTrackMap.this );
+                    madbErrorAlert.setCancelable( false );
+                    madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
+                    madbErrorAlert.setMessage(mResource.getString(msg.what));
+                    madError = madbErrorAlert.create();
+                    madError.show();
+                }
             }
     };
 
@@ -139,15 +148,10 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         ArrayList<String> trackFiles;
         if(trackPoints.size() == 0){ //trackpoints are not loaded
             //get the list of gop files
-//            trackId = "16";
+//            trackId = "99";
             trackFiles = FileUtils.getFileNames(StaticValues.TRACK_FOLDER, trackId + "_[0-9][0-9][0-9].gop");
             if(trackFiles.isEmpty()){
-                madbErrorAlert = new AlertDialog.Builder( this );
-                madbErrorAlert.setCancelable( false );
-                madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
-                madbErrorAlert.setMessage(mResource.getString(R.string.ERR_036));
-                madError = madbErrorAlert.create();
-                madError.show();
+                handler.sendEmptyMessage(R.string.ERR_036);
             }
             mMapController = mapView.getController();
             int latitudeE6;
@@ -179,7 +183,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
                         latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
                         longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
                         trackPoints.add(new GeoPoint(latitudeE6, longitudeE6));
-                        if(latitudeE6 > maxLatitude)
+                        if( latitudeE6 > maxLatitude)
                             maxLatitude = latitudeE6;
                         if(latitudeE6 < minLatitude)
                             minLatitude = latitudeE6;

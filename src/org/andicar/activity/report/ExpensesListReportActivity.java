@@ -159,10 +159,6 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
                     }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);
                     fillData();
-                } catch (IndexOutOfBoundsException e) {
-                    errorAlertBuilder.setMessage(mRes.getString(R.string.ERR_008));
-                    errorAlert = errorAlertBuilder.create();
-                    errorAlert.show();
                 } catch (NumberFormatException e) {
                     errorAlertBuilder.setMessage(mRes.getString(R.string.ERR_008));
                     errorAlert = errorAlertBuilder.create();
