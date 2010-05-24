@@ -29,7 +29,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import org.andicar.activity.EditActivityBase;
-import org.andicar.activity.MileageEditActivity;
 import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;

@@ -99,6 +99,10 @@ public abstract class EditActivityBase extends Activity {
     protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mResource = getResources();
+        mPrefEditor = mPreferences.edit();
+        mDbAdapter = new MainDbAdapter(this);
+
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)
@@ -107,11 +111,6 @@ public abstract class EditActivityBase extends Activity {
 
         setContentView(layoutResID);
         mBundleExtras = getIntent().getExtras();
-        mResource = getResources();
-        
-        mPrefEditor = mPreferences.edit();
-
-        mDbAdapter = new MainDbAdapter(this);
 
         madbErrorAlert = new AlertDialog.Builder( this );
         madbErrorAlert.setCancelable( false );

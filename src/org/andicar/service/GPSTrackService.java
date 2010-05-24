@@ -123,6 +123,7 @@ public class GPSTrackService extends Service {
     private int iFileSplitCount = 0;
     private String sNonMovingTimes = "\n";
     private boolean isUseMetricUnits = true;
+    private boolean isErrorStop = false;
 
 
 
@@ -150,6 +151,7 @@ public class GPSTrackService extends Service {
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Toast.makeText(this, R.string.GPSTrackService_GPSDisabledMessage, Toast.LENGTH_SHORT).show();
+            isErrorStop = true;
             stopSelf();
         }
 
@@ -217,6 +219,7 @@ public class GPSTrackService extends Service {
         catch(IOException ex) {
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
             showNotification(StaticValues.NOTIF_TYPE_FILESYSTEM_ERROR_ID, true);
+            isErrorStop = true;
             stopSelf();
         }
         //close the database
@@ -594,7 +597,7 @@ public class GPSTrackService extends Service {
         
         mLocationManager.removeUpdates(mLocationListener);
         mLocationManager = null;
-        if(mPreferences.getBoolean("GPSTrackCreateMileage", true)){
+        if(mPreferences.getBoolean("GPSTrackCreateMileage", true) && !isErrorStop){
             Intent mileageInsertIntent = new Intent(GPSTrackService.this, MileageEditActivity.class);
             mileageInsertIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mileageInsertIntent.putExtra("Operation", "TrackToMileage");
@@ -776,6 +779,7 @@ public class GPSTrackService extends Service {
             double gopDistance = 0;
             if(gpsTrackDetailCSVFileWriter == null){
                 Toast.makeText(GPSTrackService.this, "No File Writer!", Toast.LENGTH_LONG).show();
+                isErrorStop = true;
                 stopSelf();
             }
 //            Log.w("GPSTrackServuce", "onLocationChanged: dTotalTrackPoints = " + dTotalTrackPoints);
@@ -811,6 +815,7 @@ public class GPSTrackService extends Service {
                         skippedPointPercentage = (dTotalSkippedTrackPoints / dTotalTrackPoints) * 100;
                         if(skippedPointPercentage > iMaxAccuracyShutdownLimit){
                             showNotification(StaticValues.NOTIF_TYPE_GPS_ACCURACY_SHUTDOWN_ID, true);
+                            isErrorStop = true;
                             stopSelf();
                         }
                     }
@@ -919,6 +924,7 @@ public class GPSTrackService extends Service {
                 catch(IOException ex) {
                     Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
                     Toast.makeText(GPSTrackService.this, "File error!\n" + ex.getMessage(), Toast.LENGTH_LONG).show();
+                    isErrorStop = true;
                     stopSelf();
                 }
             }
