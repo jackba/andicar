@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -180,8 +181,21 @@ public class MileageEditActivity extends EditActivityBase {
                     mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
         }
-        mUOMLengthId = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
-                                .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
+
+        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId);
+        if(c != null ){
+            mUOMLengthId = c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
+            c.close();
+        }
+        else{
+            if(isSendCrashReport)
+                AndiCarStatistics.sendFlurryError("MileageEditError", "mCarId=" + mCarId + ";\n operationType=" + operationType,
+                        this.toString());
+            madbErrorAlert.setMessage(mResource.getString(R.string.ERR_037));
+            madError = madbErrorAlert.create();
+            madError.show();
+        }
+
         if(currentDriverName != null) {
             driverCarLbl = mResource.getString(R.string.GEN_DriverLabel) + currentDriverName;
         }

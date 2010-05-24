@@ -61,10 +61,11 @@ public class MainDbAdapter extends DB
         Cursor mCursor =
                 mDb.query( true, tableName, columns,
                             GEN_COL_ROWID_NAME + "=" + rowId, null, null, null, null, null );
-        if( mCursor != null ) {
-            mCursor.moveToFirst();
+        if( mCursor != null && mCursor.moveToFirst()) {
+            return mCursor;
         }
-        return mCursor;
+        else
+            return null;
 
     }
 
