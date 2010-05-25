@@ -81,8 +81,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
 
     /*
      * Map Api Keys:
-     * 1. 0aQTdJnsQSHfbEz5axy7VixTxQu4UkJkLgdkbjA a
-     * 2. 0exdzR1McxKRFeUqK0G7bPCA4BhI8LfOjj-lDrg b
+     * 1. 0aQTdJnsQSHfbEz5axy7VixTxQu4UkJkLgdkbjA dbg
      * 3. 0aQTdJnsQSHdoTbAJ0paNl9sntpqEw8hVG6nhRg r
      */
     

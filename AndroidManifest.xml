@@ -116,6 +116,7 @@
             android:name="org.andicar.activity.report.MileageListReportActivity"
             android:label="@string/APP_Activity_MileageList">
         </activity>
+
         <activity
             android:name="org.andicar.activity.MileageEditActivity"
             android:label="@string/APP_Activity_MileageEdit">

@@ -65,7 +65,7 @@ public class MileageEditActivity extends EditActivityBase {
     private EditText etUserInput;
     private TextView tvCalculatedContent;
     private AutoCompleteTextView acUserComment;
-    private String operationType;
+    private String operationType = null;
     private Spinner spnExpType;
 
     ArrayAdapter<String> userCommentAdapter;
@@ -182,19 +182,8 @@ public class MileageEditActivity extends EditActivityBase {
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
         }
 
-        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId);
-        if(c != null ){
-            mUOMLengthId = c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
-            c.close();
-        }
-        else{
-            if(isSendCrashReport)
-                AndiCarStatistics.sendFlurryError("MileageEditError", "mCarId=" + mCarId + ";\n operationType=" + operationType,
-                        this.toString());
-            madbErrorAlert.setMessage(mResource.getString(R.string.ERR_037));
-            madError = madbErrorAlert.create();
-            madError.show();
-        }
+        mUOMLengthId = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
+                                        .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
 
         if(currentDriverName != null) {
             driverCarLbl = mResource.getString(R.string.GEN_DriverLabel) + currentDriverName;
