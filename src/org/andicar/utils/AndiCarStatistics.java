@@ -26,7 +26,7 @@ import java.util.Map;
  */
 public class AndiCarStatistics {
     public static void sendFlurryStartSession(Context ctx){
-        FlurryAgent.setReportLocation(false);
+        FlurryAgent.setReportLocation(true);
         FlurryAgent.onStartSession(ctx, StaticValues.FLURRY_ID);
     }
     public static void sendFlurryEndSession(Context ctx){
