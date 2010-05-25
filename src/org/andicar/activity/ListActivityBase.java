@@ -150,8 +150,19 @@ public class ListActivityBase extends ListActivity {
         if(/*!(this instanceof GPSTrackListReportActivity)
                 &&*/ (getListAdapter() == null || getListAdapter().getCount() == 0)
                 && mInsertClass != null) {
+            long currentDriverID = mPreferences.getLong("CurrentDriver_ID", -1);
+            String currentDriverName = mPreferences.getString("CurrentDriver_Name", "");
+            long currentCarID = mPreferences.getLong("CurrentCar_ID", -1);
+            String currentCarName = mPreferences.getString("CurrentCar_Name", "");
+            
             Intent i = new Intent(this, mInsertClass);
             i.putExtra("Operation", "N");
+            if(mInsertClass.equals(MileageEditActivity.class)){
+                i.putExtra("CurrentDriver_ID", currentDriverID);
+                i.putExtra("CurrentCar_ID", currentCarID);
+                i.putExtra("CurrentDriver_Name", currentDriverName);
+                i.putExtra("CurrentCar_Name", currentCarName);
+            }
             startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
         }
 
