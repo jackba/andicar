@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
@@ -50,15 +49,15 @@ public class FileUtils {
     public String lastError = null;
 
     public FileUtils(Context ctx) {
+        lastError = null;
+        mRes = ctx.getResources();
         if(ctx != null && ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), ctx));
     }
 
-    public int onCreate(Context ctx){
+    public int createFolders(Context ctx){
         try{
-            lastError = null;
-            mRes = ctx.getResources();
             File file = new File("/sdcard");
             if(!file.exists() || !file.isDirectory()){
                 lastError = "SDCARD not found.";
