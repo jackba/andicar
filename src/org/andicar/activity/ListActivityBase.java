@@ -179,6 +179,9 @@ public class ListActivityBase extends ListActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(recordCursor != null && !recordCursor.isClosed())
+            recordCursor.close();
+
         if(mMainDbAdapter != null){
             mMainDbAdapter.close();
             mMainDbAdapter = null;
@@ -364,26 +367,28 @@ public class ListActivityBase extends ListActivity {
 
         if(getListAdapter() != null && getListAdapter().getCount() == 1) {
             if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
-                Cursor selectedRecord = mMainDbAdapter.fetchForTable(mTableName, MainDbAdapter.carTableColNames,
+                Cursor c = mMainDbAdapter.fetchForTable(mTableName, MainDbAdapter.carTableColNames,
                         null, null);
-                selectedRecord.moveToFirst();
+                c.moveToFirst();
                 SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putLong("CurrentCar_ID", selectedRecord.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
-                editor.putString("CurrentCar_Name", selectedRecord.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
-                editor.putLong("CarUOMLength_ID", selectedRecord.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
-                editor.putLong("CarUOMVolume_ID", selectedRecord.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
-                editor.putLong("CarCurrency_ID", selectedRecord.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
+                editor.putLong("CurrentCar_ID", c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
+                editor.putString("CurrentCar_Name", c.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
+                editor.putLong("CarUOMLength_ID", c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
+                editor.putLong("CarUOMVolume_ID", c.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
+                editor.putLong("CarCurrency_ID", c.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
                 editor.commit();
+                c.close();
             }
             else {
                 if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-                    Cursor selectedRecord = mMainDbAdapter.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
+                    Cursor c = mMainDbAdapter.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
                             null, null);
-                    selectedRecord.moveToFirst();
+                    c.moveToFirst();
                     SharedPreferences.Editor editor = mPreferences.edit();
-                    editor.putLong("CurrentDriver_ID", selectedRecord.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
-                    editor.putString("CurrentDriver_Name", selectedRecord.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
+                    editor.putLong("CurrentDriver_ID", c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
+                    editor.putString("CurrentDriver_Name", c.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
                     editor.commit();
+                    c.close();
                 }
             }
 

@@ -81,13 +81,13 @@ public class GPSTrackEditActivity extends EditActivityBase {
         acUserComment.setAdapter(userCommentAdapter);
 
         mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-        Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.GPSTRACK_TABLE_NAME,
+        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.GPSTRACK_TABLE_NAME,
                 MainDbAdapter.gpsTrackTableColNames, mRowId);
-        mCarId = recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_CAR_ID_POS);
-        mDriverId = recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
+        mCarId = c.getLong(MainDbAdapter.GPSTRACK_COL_CAR_ID_POS);
+        mDriverId = c.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
 
-        etName.setText(recordCursor.getString(MainDbAdapter.GEN_COL_NAME_POS));
-        acUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+        etName.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+        acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
 
         tvCarLabel.setText(mResource.getString(R.string.GEN_CarLabel) + " " +
                         mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, mCarId).getString(1));
@@ -96,8 +96,9 @@ public class GPSTrackEditActivity extends EditActivityBase {
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
                 mDriverId, false);
-        initDateTime(recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_DATE_POS) * 1000);
+        initDateTime(c.getLong(MainDbAdapter.GPSTRACK_COL_DATE_POS) * 1000);
         tvDateTimeValue.setText(mResource.getString(R.string.GEN_DateTimeLabel) + " " + tvDateTimeValue.getText());
+        c.close();
 
         //statistics
         Bundle whereConditions = new Bundle();
@@ -106,18 +107,18 @@ public class GPSTrackEditActivity extends EditActivityBase {
             ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + "=",
                     String.valueOf(mRowId));
         ReportDbAdapter reportDb = new ReportDbAdapter(this, "gpsTrackListViewSelect", whereConditions);
-        Cursor statCursor = reportDb.fetchReport(1);
-        if (statCursor.moveToFirst()) {
+        c = reportDb.fetchReport(1);
+        if (c.moveToFirst()) {
             tvTrackStats.setText(
-                    statCursor.getString(statCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
+                    c.getString(c.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
                     .replace("[%1]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_1))
                     .replace("[%2]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_2))
                     .replace("[%3]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_3))
                     .replace("[%4]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_4))
                     .replace("[%5]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
-                            Utils.getTimeString(statCursor.getLong(statCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
+                            Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
                     .replace("[%6]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
-                            Utils.getTimeString(statCursor.getLong(statCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+                            Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
                     .replace("[%7]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                     .replace("[%8]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                     .replace("[%9]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_9))
@@ -125,18 +126,19 @@ public class GPSTrackEditActivity extends EditActivityBase {
                     .replace("[%11]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_11))
                     );
         }
-        statCursor.close();
+        c.close();
         reportDb.close();
         
-        Cursor trackFilesRecordCursor = mDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+        c = mDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
                 MainDbAdapter.gpsTrackDetailTableColNames,
                 MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + mRowId,
                 MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
         SimpleCursorAdapter cursorAdapter =
-                new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.oneline_list_layout_smalll, trackFilesRecordCursor,
+                new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.oneline_list_layout_smalll, c,
                                     new String[]{MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME}, new int[]{R.id.tvOneLineListTextSmall});
 
         lvTrackFileList.setAdapter(cursorAdapter);
+        c.close();
 
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent("GPSTrackEdit", null);

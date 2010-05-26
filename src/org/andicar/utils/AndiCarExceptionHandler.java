@@ -33,25 +33,27 @@ public class AndiCarExceptionHandler
     }
 
     public void uncaughtException(Thread thread, Throwable thrwbl) {
-        Throwable cause = thrwbl.getCause();
-        StackTraceElement[] stackTrace;
-        if(cause != null)
-            stackTrace = cause.getStackTrace();
-        else
-            stackTrace = thrwbl.getStackTrace();
-        
-        StackTraceElement stackTraceElement;
-        String stackStr = "";
-        for(int i = 0; i < stackTrace.length; i++) {
-            stackTraceElement = stackTrace[i];
-            if(stackTraceElement.getClassName().contains("org.andicar")) {
-                stackStr = stackStr + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " +
-                        stackTraceElement.getLineNumber() + "\n";
+        if(StaticValues.isReleaseVersion){
+            Throwable cause = thrwbl.getCause();
+            StackTraceElement[] stackTrace;
+            if(cause != null)
+                stackTrace = cause.getStackTrace();
+            else
+                stackTrace = thrwbl.getStackTrace();
+
+            StackTraceElement stackTraceElement;
+            String stackStr = "";
+            for(int i = 0; i < stackTrace.length; i++) {
+                stackTraceElement = stackTrace[i];
+                if(stackTraceElement.getClassName().contains("org.andicar")) {
+                    stackStr = stackStr + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " +
+                            stackTraceElement.getLineNumber() + "\n";
+                }
             }
+            AndiCarStatistics.sendFlurryStartSession(mCtx);
+            AndiCarStatistics.sendFlurryError("AndiCarError", stackStr, thrwbl.getMessage());
+            AndiCarStatistics.sendFlurryEndSession(mCtx);
         }
-        AndiCarStatistics.sendFlurryStartSession(mCtx);
-        AndiCarStatistics.sendFlurryError("AndiCarError", stackStr, thrwbl.getMessage());
-        AndiCarStatistics.sendFlurryEndSession(mCtx);
         mPreviousHandler.uncaughtException(thread, thrwbl);
     }
 }

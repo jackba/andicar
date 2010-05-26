@@ -85,14 +85,14 @@ public class CurrencyRateEditActivity extends EditActivityBase
         
         if( strOperationType.equals( "E") ) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME,
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME,
                     MainDbAdapter.currencyRateTableColNames, mRowId);
-            lCurrencyFromId = dbcRecordCursor.getLong( MainDbAdapter.CURRENCYRATE_COL_FROMCURRENCY_ID_POS );
-            lCurrencyToId = dbcRecordCursor.getLong( MainDbAdapter.CURRENCYRATE_COL_TOCURRENCY_ID_POS );
-            String strCurrencyRate = dbcRecordCursor.getString( MainDbAdapter.CURRENCYRATE_COL_RATE_POS );
-            String strCurrencyIverseRate = dbcRecordCursor.getString( MainDbAdapter.CURRENCYRATE_COL_INVERSERATE_POS );
-            String strIsActive = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            lCurrencyFromId = c.getLong( MainDbAdapter.CURRENCYRATE_COL_FROMCURRENCY_ID_POS );
+            lCurrencyToId = c.getLong( MainDbAdapter.CURRENCYRATE_COL_TOCURRENCY_ID_POS );
+            String strCurrencyRate = c.getString( MainDbAdapter.CURRENCYRATE_COL_RATE_POS );
+            String strCurrencyIverseRate = c.getString( MainDbAdapter.CURRENCYRATE_COL_INVERSERATE_POS );
+            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
             spnCurrencyFromSpinner.setEnabled(false);
             spnCurrencyToSpinner.setEnabled(false);
 
@@ -108,6 +108,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
             if( strUserComment != null ) {
                 etUserComment.setText( strUserComment );
             }
+            c.close();
         }
         else {
             ckIsActive.setChecked( true );

@@ -54,12 +54,12 @@ public class DriverEditActivity extends EditActivityBase {
 
         if( strOperationType.equals( "E") ) {
             mRowId = mBundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
-            Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mRowId);
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mRowId);
 
-            String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String strLicenseNo = dbcRecordCursor.getString( MainDbAdapter.DRIVER_COL_LICENSE_NO_POS);
+            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String strLicenseNo = c.getString( MainDbAdapter.DRIVER_COL_LICENSE_NO_POS);
 
             if (strName != null) {
                 etName.setText(strName);
@@ -87,6 +87,7 @@ public class DriverEditActivity extends EditActivityBase {
                     }
                 });
             }
+            c.close();
         } else {
             ckIsActive.setChecked(true);
         }

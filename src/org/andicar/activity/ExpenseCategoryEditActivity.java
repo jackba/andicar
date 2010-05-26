@@ -55,12 +55,12 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
 
         if( strOperationType.equals( "E") ) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME,
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME,
                     MainDbAdapter.expenseCategoryTableColNames, mRowId);
-            String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String strExpCatIsExcludeFromMileageCostCheck = dbcRecordCursor.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS );
+            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String strExpCatIsExcludeFromMileageCostCheck = c.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS );
 
             if( strName != null ) {
                 etName.setText( strName );
@@ -74,6 +74,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             if( strExpCatIsExcludeFromMileageCostCheck != null ) {
                 ckIsExcludeFromMileageCost.setChecked( strExpCatIsExcludeFromMileageCostCheck.equals( "Y" ) );
             }
+            c.close();
         }
         else {
             ckIsActive.setChecked( true );

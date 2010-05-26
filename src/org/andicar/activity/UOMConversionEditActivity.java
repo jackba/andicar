@@ -65,14 +65,14 @@ public class UOMConversionEditActivity extends EditActivityBase {
 
         if( operation.equals( "E") ) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME,
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME,
                     MainDbAdapter.uomConversionTableColNames, mRowId);
-            String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String conversionRate = recordCursor.getString( MainDbAdapter.UOM_CONVERSION_COL_RATE_POS );
-            uomFromId = recordCursor.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMFROM_ID_POS );
-            uomToId = recordCursor.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_POS );
+            String name = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String isActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String userComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String conversionRate = c.getString( MainDbAdapter.UOM_CONVERSION_COL_RATE_POS );
+            uomFromId = c.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMFROM_ID_POS );
+            uomToId = c.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_POS );
 
             if (name != null) {
                 etName.setText(name);
@@ -100,7 +100,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
             if (conversionRate != null) {
                 etConversionRate.setText( conversionRate.toString() );
             }
-
+            c.close();
         } else {
             initSpinner(spnUomFrom, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},

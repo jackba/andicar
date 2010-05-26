@@ -158,15 +158,14 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
                         " ORDER BY " + MainDbAdapter.GEN_COL_ROWID_NAME;
 
             Spinner spinner = (Spinner) pSpinner;
-            Cursor mCursor = mListDbHelper.query(selectSql, null);
-            startManagingCursor( mCursor );
+            Cursor c = mListDbHelper.query(selectSql, null);
+            startManagingCursor( c );
             int[] to = new int[]{android.R.id.text1};
             SimpleCursorAdapter mCursorAdapter =
-                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, mCursor,
+                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c,
             new String[] {MainDbAdapter.GEN_COL_NAME_NAME}, to);
             mCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(mCursorAdapter);
-
         }
         catch(Exception e){}
 
@@ -227,7 +226,7 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     };
 
     protected boolean createReport(boolean saveLocally, boolean sendToMail, long reportFormatId){
-        Cursor reportCursor = null;
+        Cursor c = null;
         String reportContent = "";
         String reportTitle = "";
         String reportFileName = "";
@@ -236,28 +235,28 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         if( this instanceof MileageListReportActivity){
             reportTitle = "MileageReport_";
             mReportDbHelper = new ReportDbAdapter(this, "reportMileageListReportSelect", whereConditions);
-            reportCursor = mReportDbHelper.fetchReport(-1);
+            c = mReportDbHelper.fetchReport(-1);
         }
         else if(this instanceof RefuelListReportActivity){
             reportTitle = "RefuelReport_";
             mReportDbHelper = new ReportDbAdapter(this, "reportRefuelListReportSelect", whereConditions);
-            reportCursor = mReportDbHelper.fetchReport(-1);
+            c = mReportDbHelper.fetchReport(-1);
         }
         else if(this instanceof ExpensesListReportActivity){
             reportTitle = "ExpenseReport_";
             mReportDbHelper = new ReportDbAdapter(this, "reportExpensesListReportSelect", whereConditions);
-            reportCursor = mReportDbHelper.fetchReport(-1);
+            c = mReportDbHelper.fetchReport(-1);
         }
         else if(this instanceof GPSTrackListReportActivity){
             reportTitle = "GPSTrackReport_";
             mReportDbHelper = new ReportDbAdapter(this, "gpsTrackListReportSelect", whereConditions);
-            reportCursor = mReportDbHelper.fetchReport(-1);
+            c = mReportDbHelper.fetchReport(-1);
         }
         else{
             handler.sendEmptyMessage(R.string.ERR_035);
             return false;
         }
-        if(reportCursor == null){
+        if(c == null){
             Message msg = new Message();
             Bundle msgBundle = new Bundle();
             msgBundle.putString("ErrorMsg", mReportDbHelper.lastErrorMessage);
@@ -270,13 +269,13 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
 
         if(reportFormatId == 0){
             reportFileName = reportFileName +".csv";
-            reportContent = createCSVContent(reportCursor);
+            reportContent = createCSVContent(c);
         }
         else if(reportFormatId == 1){
             reportFileName = reportFileName +".html";
-            reportContent = createHTMLContent(reportCursor, reportTitle);
+            reportContent = createHTMLContent(c, reportTitle);
         }
-        reportCursor.close();
+        c.close();
 
         FileUtils fu = new FileUtils(this);
         i = fu.writeToFile(reportContent, reportFileName);

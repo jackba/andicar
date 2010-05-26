@@ -53,12 +53,12 @@ public class CurrencyEditActivity extends EditActivityBase {
 
         if( strOperationType.equals( "E") ) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.currencyTableColNames, mRowId);
-            String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String strCode = dbcRecordCursor.getString( MainDbAdapter.CURRENCY_COL_CODE_POS );
+            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String strCode = c.getString( MainDbAdapter.CURRENCY_COL_CODE_POS );
             if (strName != null) {
                 etName.setText(strName);
             }
@@ -71,7 +71,7 @@ public class CurrencyEditActivity extends EditActivityBase {
             if (strCode != null) {
                 etCode.setText( strCode );
             }
-
+            c.close();
         } else {
             ckIsActive.setChecked(true);
         }

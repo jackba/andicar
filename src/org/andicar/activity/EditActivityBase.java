@@ -41,6 +41,8 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
+import java.util.ArrayList;
+import java.util.Iterator;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;

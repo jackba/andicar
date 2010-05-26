@@ -26,17 +26,25 @@ import java.util.Map;
  */
 public class AndiCarStatistics {
     public static void sendFlurryStartSession(Context ctx){
-        FlurryAgent.setReportLocation(true);
-        FlurryAgent.onStartSession(ctx, StaticValues.FLURRY_ID);
+        if(StaticValues.isReleaseVersion){
+            FlurryAgent.setReportLocation(true);
+            FlurryAgent.onStartSession(ctx, StaticValues.FLURRY_ID);
+        }
     }
     public static void sendFlurryEndSession(Context ctx){
-        FlurryAgent.onEndSession(ctx);
+        if(StaticValues.isReleaseVersion){
+            FlurryAgent.onEndSession(ctx);
+        }
     }
     public static void sendFlurryEvent(String event, Map<String, String> parameters){
-        FlurryAgent.onEvent(event, parameters);
+        if(StaticValues.isReleaseVersion){
+            FlurryAgent.onEvent(event, parameters);
+        }
     }
 
     public static void sendFlurryError(String errorId, String message, String errorClass){
-        FlurryAgent.onError(errorId, message, errorClass);
+        if(StaticValues.isReleaseVersion){
+            FlurryAgent.onError(errorId, message, errorClass);
+        }
     }
 }
