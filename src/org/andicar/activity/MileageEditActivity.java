@@ -108,27 +108,27 @@ public class MileageEditActivity extends EditActivityBase {
             currentCarName = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                 .getString(MainDbAdapter.GEN_COL_NAME_POS);
 
-            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
-            mStartIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
+            mStartIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
             etStartIndex.setText(mStartIndex.toString());
-            BigDecimal stopIndex = new BigDecimal(recordCursor.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
+            BigDecimal stopIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
             etUserInput.setText(stopIndex.toString());
             rbInsertModeIndex.setChecked(true);
             mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX;
-            initDateTime(recordCursor.getLong(MainDbAdapter.MILEAGE_COL_DATE_POS) * 1000);
-            acUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+            initDateTime(c.getLong(MainDbAdapter.MILEAGE_COL_DATE_POS) * 1000);
+            acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
             initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
-                    recordCursor.getLong(MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_POS), true);
-            recordCursor.close();
+                    c.getLong(MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_POS), true);
+            c.close();
         }
         else if(operationType.equals("TrackToMileage")){
             mGpsTrackId = mBundleExtras.getLong("Track_ID");
-            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.gpsTrackTableColNames, mGpsTrackId);
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.gpsTrackTableColNames, mGpsTrackId);
             mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX;
-            mCarId = recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_CAR_ID_POS);
-            mDriverId = recordCursor.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
-            acUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+            mCarId = c.getLong(MainDbAdapter.GPSTRACK_COL_CAR_ID_POS);
+            mDriverId = c.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
+            acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
             currentDriverName = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mDriverId)
                                 .getString(MainDbAdapter.GEN_COL_NAME_POS);
             currentCarName = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
@@ -139,10 +139,10 @@ public class MileageEditActivity extends EditActivityBase {
             initDateTime(System.currentTimeMillis());
             mStartIndex = BigDecimal.ZERO;
             fillGetCurrentIndex();
-            BigDecimal stopIndex = mStartIndex.add(new BigDecimal(recordCursor.getString(MainDbAdapter.GPSTRACK_COL_DISTANCE_POS))).setScale(0, BigDecimal.ROUND_HALF_DOWN);
+            BigDecimal stopIndex = mStartIndex.add(new BigDecimal(c.getString(MainDbAdapter.GPSTRACK_COL_DISTANCE_POS))).setScale(0, BigDecimal.ROUND_HALF_DOWN);
 
             etUserInput.setText(stopIndex.toString());
-            recordCursor.close();
+            c.close();
         }
         else{
             mCarId = mBundleExtras.getLong("CurrentCar_ID");

@@ -69,16 +69,16 @@ public class CarEditActivity extends EditActivityBase
 
         if( operation.equals( "E") ) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor dbcRecordCursor = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
-            String strName = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = dbcRecordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String strCarModel = dbcRecordCursor.getString( MainDbAdapter.CAR_COL_MODEL_POS );
-            String strRegistrationNo = dbcRecordCursor.getString( MainDbAdapter.CAR_COL_REGISTRATIONNO_POS );
-            BigDecimal bdStartIndex = new BigDecimal(dbcRecordCursor.getString( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
-            Long lUomLengthId = dbcRecordCursor.getLong( MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS );
-            Long lUomVolumeId = dbcRecordCursor.getLong( MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS );
-            Long lCurrencyId = dbcRecordCursor.getLong( MainDbAdapter.CAR_COL_CURRENCY_ID_POS );
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
+            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String strCarModel = c.getString( MainDbAdapter.CAR_COL_MODEL_POS );
+            String strRegistrationNo = c.getString( MainDbAdapter.CAR_COL_REGISTRATIONNO_POS );
+            BigDecimal bdStartIndex = new BigDecimal(c.getString( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
+            Long lUomLengthId = c.getLong( MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS );
+            Long lUomVolumeId = c.getLong( MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS );
+            Long lCurrencyId = c.getLong( MainDbAdapter.CAR_COL_CURRENCY_ID_POS );
             //uom for length
             initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
@@ -127,6 +127,7 @@ public class CarEditActivity extends EditActivityBase
                     }
                 } );
             }
+            c.close();
         }
         else {
             initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,

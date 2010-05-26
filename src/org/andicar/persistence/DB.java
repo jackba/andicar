@@ -699,16 +699,16 @@ public class DB {
             if(oldVersion == 1) {
                 upgradeDbTo200(db); //update database to version 200 //AndiCar 2.0.0
                 upgradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
-                upgradeDbTo220(db, oldVersion);
+                upgradeDbTo300(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
                 upgradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
-                upgradeDbTo220(db, oldVersion);
+                upgradeDbTo300(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
-                upgradeDbTo220(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
+                upgradeDbTo300(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
             }
         }
 
@@ -793,17 +793,17 @@ public class DB {
                             ") ";
             db.execSQL(updSql);
 
-            Cursor checkCursor = db.rawQuery("SELECT COUNT(*) " +
+            Cursor c = db.rawQuery("SELECT COUNT(*) " +
                                                 "FROM " + REFUEL_TABLE_NAME + " " +
                                                 "WHERE " + REFUEL_COL_CURRENCY_ID_NAME + " <> " + REFUEL_COL_CURRENCYENTERED_ID_NAME, null);
-            if(checkCursor.moveToFirst() && checkCursor.getInt(0) > 0){
+            if(c.moveToFirst() && c.getInt(0) > 0){
                 SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
                 SharedPreferences.Editor editor = mPreferences.edit();
                 editor.putString("UpdateMsg", "During the upgrade process we found foreign currencies in refuels.\n" +
                                                 "Please review and correct the currency conversion rates in your refuels.");
                 editor.commit();
             }
-            checkCursor.close();
+            c.close();
 
             if(oldVersion == 200){
                 updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
@@ -833,11 +833,11 @@ public class DB {
                             ") ";
             db.execSQL(updSql);
 
-            checkCursor = db.rawQuery("SELECT COUNT(*) " +
+            c = db.rawQuery("SELECT COUNT(*) " +
                                                 "FROM " + EXPENSES_TABLE_NAME + " " +
                                                 "WHERE " + EXPENSES_COL_CURRENCY_ID_NAME + " <> " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " " +
                                                         "AND COALESCE(" + EXPENSES_COL_FROMTABLE_NAME + ", 'X') <> '" + StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "'", null);
-            if(checkCursor.moveToFirst() && checkCursor.getInt(0) > 0){
+            if(c.moveToFirst() && c.getInt(0) > 0){
                 SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
                 String updateMsg = mPreferences.getString("UpdateMsg", null);
                 if(updateMsg != null)
@@ -851,10 +851,10 @@ public class DB {
                 editor.putString("UpdateMsg", updateMsg);
                 editor.commit();
             }
-            checkCursor.close();
+            c.close();
         }
 
-        private void upgradeDbTo220(SQLiteDatabase db, int oldVersion) throws SQLException {
+        private void upgradeDbTo300(SQLiteDatabase db, int oldVersion) throws SQLException {
 //            String tmpStr = "DROP TABLE " + GPSTRACK_TABLE_NAME;
 //            db.execSQL(tmpStr);
 //            tmpStr = "DROP TABLE " + GPSTRACKDETAIL_TABLE_NAME;

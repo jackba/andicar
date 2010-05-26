@@ -48,20 +48,22 @@ public class DriverListActivity extends ListActivityBase
     {
         public void onItemClick( AdapterView parent, View v, int position, long id )
         {
-            Cursor dbcRecordCursor = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
+            Cursor c = mMainDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
                     MainDbAdapter.driverTableColNames, id);
             //driver is actve?
-            if( dbcRecordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
+            if( c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
                 mPrefEditor.putLong( "CurrentDriver_ID", id );
-                mPrefEditor.putString( "CurrentDriver_Name", dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
+                mPrefEditor.putString( "CurrentDriver_Name", c.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
                 mPrefEditor.commit();
                 Toast toast = Toast.makeText( getApplicationContext(),
-                        dbcRecordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
+                        c.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
                 toast.show();
+                c.close();
                 finish();
             }
             else //inactive driver selected
             {
+                c.close();
                 errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_InactiveDriverSelectedMessage));
                 errorAlert = errorAlertBuilder.create();
                 errorAlert.show();

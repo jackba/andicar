@@ -197,29 +197,29 @@ public class Utils {
 
         b.putString(MainDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + "=", Long.toString(gpsTrackID));
         ReportDbAdapter reportDbAdapter = new ReportDbAdapter(ctx, "gpsTrackListViewSelect", b);
-        Cursor reportCursor = reportDbAdapter.fetchReport(1);
-        if(reportCursor.moveToFirst()){
+        Cursor c = reportDbAdapter.fetchReport(1);
+        if(c.moveToFirst()){
             String emailText =
-                    reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)) + "\n" +
-                    reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
+                    c.getString(c.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)) + "\n" +
+                    c.getString(c.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
                         .replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
                         .replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
                         .replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
                         .replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
                         .replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
-                                Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
+                                Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
                         .replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
-                                Utils.getTimeString(reportCursor.getLong(reportCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+                                Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
                         .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                         .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                         .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
                         .replace("[%10]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
                         .replace("[%11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
                     + "\n" +
-                    reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
+                    c.getString(c.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
             emailSubject = emailSubject + " - " +
-                    reportCursor.getString(reportCursor.getColumnIndex(ReportDbAdapter.GEN_COL_NAME_NAME));
-            reportCursor.close();
+                    c.getString(c.getColumnIndex(ReportDbAdapter.GEN_COL_NAME_NAME));
+            c.close();
             reportDbAdapter.close();
 
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText + "\nSent by AndiCar (http://sites.google.com/site/andicarfree/)");
@@ -231,15 +231,15 @@ public class Utils {
         try {
             out = new ZipOutputStream(new FileOutputStream(StaticValues.TRACK_FOLDER + "trackFiles.zip"));
 
-            reportCursor = mMainDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+            c = mMainDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
                                 MainDbAdapter.gpsTrackDetailTableColNames,
                                 MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + Long.toString(gpsTrackID),
                                 MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
-            while(reportCursor.moveToNext()){
+            while(c.moveToNext()){
                 try{
-                    FileInputStream in = new FileInputStream(reportCursor.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS));
+                    FileInputStream in = new FileInputStream(c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS));
                     //zip entry name
-                    String entryName = reportCursor.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS).replace(StaticValues.TRACK_FOLDER, "");
+                    String entryName = c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS).replace(StaticValues.TRACK_FOLDER, "");
                     out.putNextEntry(new ZipEntry(entryName));
                     // Transfer bytes from the file to the ZIP file
                     int len;
@@ -253,7 +253,7 @@ public class Utils {
                 catch(FileNotFoundException ex){}
             }
             out.close();
-            reportCursor.close();
+            c.close();
             Uri trackFile = Uri.parse("file://" + StaticValues.TRACK_FOLDER + "trackFiles.zip");
             if(trackFile != null)
                 emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, trackFile);

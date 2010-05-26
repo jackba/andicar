@@ -122,30 +122,30 @@ public class ExpenseEditActivity extends EditActivityBase {
 
         if (operationType.equals("E")) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSES_TABLE_NAME,
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSES_TABLE_NAME,
                     MainDbAdapter.expensesTableColNames, mRowId);
-            mCarId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_CAR_ID_POS);
-            mDriverId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_DRIVER_ID_POS);
-            mExpCategoryId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_POS);
-            mExpTypeId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_POS);
-            initDateTime(recordCursor.getLong(MainDbAdapter.EXPENSES_COL_DATE_POS) * 1000);
-            etCarIndex.setText(recordCursor.getString(MainDbAdapter.EXPENSES_COL_INDEX_POS));
+            mCarId = c.getLong(MainDbAdapter.EXPENSES_COL_CAR_ID_POS);
+            mDriverId = c.getLong(MainDbAdapter.EXPENSES_COL_DRIVER_ID_POS);
+            mExpCategoryId = c.getLong(MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_POS);
+            mExpTypeId = c.getLong(MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_POS);
+            initDateTime(c.getLong(MainDbAdapter.EXPENSES_COL_DATE_POS) * 1000);
+            etCarIndex.setText(c.getString(MainDbAdapter.EXPENSES_COL_INDEX_POS));
 
-            mCurrencyId = recordCursor.getLong(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_POS);
+            mCurrencyId = c.getLong(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_POS);
             if(mCurrencyId == carDefaultCurrencyId)
                 setConversionRateZoneVisible(false);
             else
                 setConversionRateZoneVisible(true);
 
-            atAmount.setText(recordCursor.getString(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_POS));
-            conversionRate = new BigDecimal(recordCursor.getString(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_POS));
+            atAmount.setText(c.getString(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_POS));
+            conversionRate = new BigDecimal(c.getString(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_POS));
             etConversionRate.setText(conversionRate.toString());
-            tbConvertedAmountValue.setText(recordCursor.getString(MainDbAdapter.EXPENSES_COL_AMOUNT_POS));
+            tbConvertedAmountValue.setText(c.getString(MainDbAdapter.EXPENSES_COL_AMOUNT_POS));
 
-            etDocNo.setText(recordCursor.getString(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_POS));
-            acUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+            etDocNo.setText(c.getString(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_POS));
+            acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
 
-            String fromTable = recordCursor.getString(MainDbAdapter.EXPENSES_COL_FROMTABLE_POS);
+            String fromTable = c.getString(MainDbAdapter.EXPENSES_COL_FROMTABLE_POS);
             if(fromTable == null){
                 tvWarningLabel.setText("");
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), true);
@@ -157,7 +157,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                 }
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), false);
             }
-
+            c.close();
         }
         else {
             tvWarningLabel.setText("");

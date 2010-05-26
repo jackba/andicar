@@ -53,11 +53,11 @@ public class ExpenseTypeEditActivity extends EditActivityBase
 
         if( operation.equals( "E") ) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                     MainDbAdapter.expenseTypeTableColNames, mRowId);
-            String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String name = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String isActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String userComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
 
             if( name != null ) {
                 etName.setText( name );
@@ -68,6 +68,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
             if( userComment != null ) {
                 etUserComment.setText( userComment );
             }
+            c.close();
         }
         else {
             ckIsActive.setChecked( true );

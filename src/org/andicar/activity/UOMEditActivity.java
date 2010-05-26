@@ -61,12 +61,12 @@ public class UOMEditActivity extends EditActivityBase {
 
         if (operation.equals( "E")) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.uomTableColNames, mRowId);
-            String name = recordCursor.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String isActive = recordCursor.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String userComment = recordCursor.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String code = recordCursor.getString( MainDbAdapter.UOM_COL_CODE_POS );
+            String name = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
+            String isActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String userComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String code = c.getString( MainDbAdapter.UOM_COL_CODE_POS );
 
             if (name != null) {
                 etName.setText(name);
@@ -80,8 +80,9 @@ public class UOMEditActivity extends EditActivityBase {
             if (code != null) {
                 etCode.setText( code );
             }
-
-        } else {
+            c.close();
+        }
+        else {
             ckIsActive.setChecked(true);
         }
     }

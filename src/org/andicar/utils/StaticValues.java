@@ -31,6 +31,7 @@ public class StaticValues
     public static final int DATABASE_VERSION = 300;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
+    public static boolean isReleaseVersion = false; //if false no flurry analitics are sent
 
     public static final int MENU_PREFERENCES_ID = 10;
     public static final int MENU_REPORTS_ID = 11;

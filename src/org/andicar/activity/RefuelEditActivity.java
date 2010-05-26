@@ -151,26 +151,26 @@ public class RefuelEditActivity extends EditActivityBase {
 
         if (operationType.equals("E")) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor recordCursor = mDbAdapter.fetchRecord(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.refuelTableColNames, mRowId);
-            mCarId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS);
-            mDriverId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_DRIVER_ID_POS);
-            mExpCategoryId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_POS);
-            mExpTypeId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_POS);
-            mUomVolumeId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_UOMVOLUMEENTERED_ID_POS);
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.refuelTableColNames, mRowId);
+            mCarId = c.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS);
+            mDriverId = c.getLong(MainDbAdapter.REFUEL_COL_DRIVER_ID_POS);
+            mExpCategoryId = c.getLong(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_POS);
+            mExpTypeId = c.getLong(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_POS);
+            mUomVolumeId = c.getLong(MainDbAdapter.REFUEL_COL_UOMVOLUMEENTERED_ID_POS);
 //            mUomVolumeId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_POS);
-            mCurrencyId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_POS);
+            mCurrencyId = c.getLong(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_POS);
 //            mCurrencyId = recordCursor.getLong(MainDbAdapter.REFUEL_COL_CURRENCY_ID_POS);
-            currencyConversionRate = new BigDecimal(recordCursor.getString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_POS));
+            currencyConversionRate = new BigDecimal(c.getString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_POS));
             etConversionRate.setText(currencyConversionRate.toString());
-            initDateTime(recordCursor.getLong(MainDbAdapter.REFUEL_COL_DATE_POS) * 1000);
-            etCarIndex.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
-            etQty.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_POS));
+            initDateTime(c.getLong(MainDbAdapter.REFUEL_COL_DATE_POS) * 1000);
+            etCarIndex.setText(c.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
+            etQty.setText(c.getString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_POS));
 //            qtyEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS));
-            etPrice.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_PRICEENTERED_POS));
+            etPrice.setText(c.getString(MainDbAdapter.REFUEL_COL_PRICEENTERED_POS));
 //            priceEntry.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_PRICE_POS));
-            etDocNo.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_POS));
-            acUserComment.setText(recordCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
-            ckIsFullRefuel.setChecked(recordCursor.getString(MainDbAdapter.REFUEL_COL_ISFULLREFUEL_POS).equals("Y"));
+            etDocNo.setText(c.getString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_POS));
+            acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+            ckIsFullRefuel.setChecked(c.getString(MainDbAdapter.REFUEL_COL_ISFULLREFUEL_POS).equals("Y"));
 
             carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
 //            fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames,
@@ -178,9 +178,9 @@ public class RefuelEditActivity extends EditActivityBase {
             carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
 //            fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames,
 //                    carDefaultUOMVolumeId).getString(MainDbAdapter.UOM_COL_CODE_POS);
-            uomVolumeConversionRate = new BigDecimal(recordCursor.getString(MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_POS));
+            uomVolumeConversionRate = new BigDecimal(c.getString(MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_POS));
             if(carDefaultUOMVolumeId != mUomVolumeId){
-                tvBaseUOMQtyValue.setText(recordCursor.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS) +
+                tvBaseUOMQtyValue.setText(c.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS) +
                         " " + carDefaultUOMVolumeCode);
                 setBaseUOMQtyZoneVisibility(true);
             }
@@ -189,6 +189,7 @@ public class RefuelEditActivity extends EditActivityBase {
 //                fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
 //                    mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
             }
+            c.close();
         }
         else {
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
