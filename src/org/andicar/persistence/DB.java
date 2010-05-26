@@ -26,7 +26,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import java.sql.PreparedStatement;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -608,7 +607,7 @@ public class DB {
 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
-                if(fu.onCreate(mCtx) != -1) {
+                if(fu.createFolders(mCtx) != -1) {
                     Log.e(TAG, fu.lastError);
                 }
 
@@ -711,7 +710,6 @@ public class DB {
             else if(oldVersion == 210){
                 upgradeDbTo220(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
             }
-//            upgradeDbTo220(db, oldVersion);
         }
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {

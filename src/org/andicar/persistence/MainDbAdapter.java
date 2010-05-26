@@ -21,6 +21,7 @@ package org.andicar.persistence;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import java.math.BigDecimal;
@@ -28,11 +29,17 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import org.andicar.utils.StaticValues;
 import org.andicar.activity.R;
+import org.andicar.utils.AndiCarStatistics;
 public class MainDbAdapter extends DB
 {
+    SharedPreferences mPref;
+    boolean isSendCrashReport = true;
+
     public MainDbAdapter( Context ctx )
     {
         super(ctx);
+        mPref = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        isSendCrashReport = mPref.getBoolean("SendCrashReport", true);
     }
 
     /**
@@ -364,8 +371,15 @@ public class MainDbAdapter extends DB
                         " WHERE " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + " = " + mCarId +
                         " GROUP BY " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME);
         c = execSelectSql(sql);
-        if(c.moveToFirst())
-            tmpStopIndex = new BigDecimal(c.getString(0));
+        if(c.moveToFirst()){
+            try{
+                tmpStopIndex = new BigDecimal(c.getString(0));
+            }catch(NumberFormatException e){
+                tmpStopIndex = null;
+                if(isSendCrashReport)
+                    AndiCarStatistics.sendFlurryError("DB Error - updateCarCurrentIndex", "NFE1: c.getString(0) = " + c.getString(0), this.toString());
+            }
+        }
         if(tmpStopIndex == null)
             tmpStopIndex = BigDecimal.ZERO;
         c.close();
@@ -378,8 +392,15 @@ public class MainDbAdapter extends DB
                         " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " = " + mCarId +
                         " GROUP BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME);
         c = execSelectSql(sql);
-        if(c.moveToFirst())
-            tmpStopIndex = new BigDecimal(c.getString(0));
+        if(c.moveToFirst()){
+            try{
+                tmpStopIndex = new BigDecimal(c.getString(0));
+            }catch(NumberFormatException e){
+                tmpStopIndex = null;
+                if(isSendCrashReport)
+                    AndiCarStatistics.sendFlurryError("DB Error - updateCarCurrentIndex", "NFE2: c.getString(0) = " + c.getString(0), this.toString());
+            }
+        }
         if(tmpStopIndex == null)
             tmpStopIndex = BigDecimal.ZERO;
         c.close();
@@ -393,8 +414,16 @@ public class MainDbAdapter extends DB
                         " WHERE " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + " = " + mCarId +
                         " GROUP BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME);
         c = execSelectSql(sql);
-        if(c.moveToFirst())
-            tmpStopIndex = new BigDecimal(c.getString(0));
+
+        if(c.moveToFirst()){
+            try{
+                tmpStopIndex = new BigDecimal(c.getString(0));
+            }catch(NumberFormatException e){
+                tmpStopIndex = null;
+                if(isSendCrashReport)
+                    AndiCarStatistics.sendFlurryError("DB Error - updateCarCurrentIndex", "NFE3: c.getString(0) = " + c.getString(0), this.toString());
+            }
+        }
         if(tmpStopIndex == null)
             tmpStopIndex = BigDecimal.ZERO;
         c.close();
