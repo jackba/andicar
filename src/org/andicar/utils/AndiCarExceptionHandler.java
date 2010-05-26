@@ -33,7 +33,7 @@ public class AndiCarExceptionHandler
     }
 
     public void uncaughtException(Thread thread, Throwable thrwbl) {
-        if(StaticValues.isReleaseVersion){
+        if(ReleaseVersion.isReleaseVersion){
             Throwable cause = thrwbl.getCause();
             StackTraceElement[] stackTrace;
             if(cause != null)
