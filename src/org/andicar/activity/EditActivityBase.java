@@ -41,8 +41,6 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
-import java.util.ArrayList;
-import java.util.Iterator;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
@@ -60,14 +58,14 @@ import org.andicar.utils.Utils;
  *  * 
  */
 public abstract class EditActivityBase extends Activity {
-    protected Long mRowId = null;
-
+    protected long mRowId = -1;
     protected Bundle mBundleExtras = null;
     protected Resources mResource = null;
     protected SharedPreferences mPreferences;
     protected SharedPreferences.Editor mPrefEditor;
     protected Button btnOk = null;
     protected Button btnCancel = null;
+    protected View.OnClickListener mOkClickListener = null;
     protected MainDbAdapter mDbAdapter = null;
     protected int mYear;
     protected int mMonth;
@@ -77,6 +75,7 @@ public abstract class EditActivityBase extends Activity {
     protected long mlDateTimeInSeconds;
     protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
+    protected int mLayoutResID = -1;
 
     protected AlertDialog.Builder madbErrorAlert;
     protected AlertDialog madError;
@@ -98,7 +97,11 @@ public abstract class EditActivityBase extends Activity {
             AndiCarStatistics.sendFlurryEndSession(this);
     }
     
-    protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
+    /** 
+     * Use instead onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener)
+     */
+    @Override
+    protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         mResource = getResources();
@@ -111,7 +114,7 @@ public abstract class EditActivityBase extends Activity {
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 
-        setContentView(layoutResID);
+        setContentView(mLayoutResID);
         mBundleExtras = getIntent().getExtras();
 
         madbErrorAlert = new AlertDialog.Builder( this );
@@ -123,9 +126,41 @@ public abstract class EditActivityBase extends Activity {
             btnCancel.setOnClickListener(cancelButtonClickListener);
 
         btnOk = (Button)findViewById( android.R.id.button1 );
-        if(btnOkClickListener != null)
-            btnOk.setOnClickListener(btnOkClickListener);
+        if(mOkClickListener != null)
+            btnOk.setOnClickListener(mOkClickListener);
 
+    }
+
+    protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
+//        mOkClickListener = btnOkClickListener;
+//        mLayoutResID = layoutResID;
+//        (EditActivityBase)onCreate(icicle);
+    }
+
+    
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mRowId = savedInstanceState.getLong("mRowId");
+        mlDateTimeInSeconds = savedInstanceState.getLong("mlDateTimeInSeconds");
+        mYear = savedInstanceState.getInt("mYear");
+        mMonth = savedInstanceState.getInt("mMonth");
+        mDay = savedInstanceState.getInt("mDay");
+        mHour = savedInstanceState.getInt("mHour");
+        mMinute = savedInstanceState.getInt("mMinute");
+    }
+
+    
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong("mRowId", mRowId);
+        outState.putLong("mlDateTimeInSeconds", mlDateTimeInSeconds);
+        outState.putInt("mYear", mYear);
+        outState.putInt("mMonth", mMonth);
+        outState.putInt("mDay", mDay);
+        outState.putInt("mHour", mHour);
+        outState.putInt("mMinute", mMinute);
     }
 
     @Override
@@ -145,21 +180,6 @@ public abstract class EditActivityBase extends Activity {
         }
     }
 
-
-    /** Use instead onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener) */
-    @Override
-    protected void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        mBundleExtras = getIntent().getExtras();
-        mResource = getResources();
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        mPrefEditor = mPreferences.edit();
-        mDbAdapter = new MainDbAdapter(this);
-
-        madbErrorAlert = new AlertDialog.Builder( this );
-        madbErrorAlert.setCancelable( false );
-        madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
-    }
 
     protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition, String orderBy,
             long selectedId, boolean addListener){

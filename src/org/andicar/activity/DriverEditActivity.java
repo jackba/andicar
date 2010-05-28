@@ -117,7 +117,7 @@ public class DriverEditActivity extends EditActivityBase {
                         cvData.put( MainDbAdapter.DRIVER_COL_LICENSE_NO_NAME,
                                 etLicenseNo.getText().toString());
 
-                        if (mRowId == null) {
+                        if (mRowId == -1) {
                             mDbAdapter.createRecord(MainDbAdapter.DRIVER_TABLE_NAME, cvData);
                             finish();
                         } else {

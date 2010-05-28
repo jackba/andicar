@@ -23,7 +23,6 @@ import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -38,7 +37,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -54,6 +52,7 @@ public class MileageEditActivity extends EditActivityBase {
     private long mDriverId = -1;
     private long mUOMLengthId = -1;
     private long mGpsTrackId = -1;
+
     private BigDecimal mNewIndex = new BigDecimal("0");
     private BigDecimal mStartIndex = new BigDecimal("0");
     private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
@@ -74,7 +73,9 @@ public class MileageEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle, R.layout.mileage_edit_activity, btnOkClickListener);
+        mOkClickListener = btnOkClickListener;
+        mLayoutResID = R.layout.mileage_edit_activity;
+        super.onCreate(icicle);
 
         tvCalculatedContent = (TextView) findViewById(R.id.tvCalculatedTextContent);
         etUserInput = (EditText) findViewById(R.id.etUserInput);
@@ -109,10 +110,13 @@ public class MileageEditActivity extends EditActivityBase {
                                 .getString(MainDbAdapter.GEN_COL_NAME_POS);
 
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
-            mStartIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
-            etStartIndex.setText(mStartIndex.toString());
-            BigDecimal stopIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
-            etUserInput.setText(stopIndex.toString());
+            try{
+                mStartIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
+                etStartIndex.setText(mStartIndex.toString());
+                BigDecimal stopIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
+                etUserInput.setText(stopIndex.toString());
+            }
+            catch(NumberFormatException e){}
             rbInsertModeIndex.setChecked(true);
             mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX;
             initDateTime(c.getLong(MainDbAdapter.MILEAGE_COL_DATE_POS) * 1000);
@@ -139,9 +143,11 @@ public class MileageEditActivity extends EditActivityBase {
             initDateTime(System.currentTimeMillis());
             mStartIndex = BigDecimal.ZERO;
             fillGetCurrentIndex();
-            BigDecimal stopIndex = mStartIndex.add(new BigDecimal(c.getString(MainDbAdapter.GPSTRACK_COL_DISTANCE_POS))).setScale(0, BigDecimal.ROUND_HALF_DOWN);
-
-            etUserInput.setText(stopIndex.toString());
+            try{
+                BigDecimal stopIndex = mStartIndex.add(new BigDecimal(c.getString(MainDbAdapter.GPSTRACK_COL_DISTANCE_POS))).setScale(0, BigDecimal.ROUND_HALF_DOWN);
+                etUserInput.setText(stopIndex.toString());
+            }
+            catch(NumberFormatException e){}
             c.close();
         }
         else{
@@ -247,30 +253,33 @@ public class MileageEditActivity extends EditActivityBase {
     }
 
     private BigDecimal fillGetCurrentIndex() throws SQLException {
-        if(mStartIndex.equals(new BigDecimal("0"))){
-            String mStartIndexStr = null;
-            String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
-                            "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
-                            "WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y' " +
-                                "AND " + MainDbAdapter.MILEAGE_COL_CAR_ID_NAME + " = " + mCarId + " " +
-                          "UNION " +
-                          "SELECT " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + ", 2 As Pos " +
-                          "FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
-                          "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + mCarId + " " +
-                          "ORDER BY Pos ASC";
-            Cursor c = mDbAdapter.execSelectSql(sql);
-            if(c.moveToFirst()){
-                mStartIndexStr = c.getString(0);
+        try{
+            if(mStartIndex.equals(new BigDecimal("0"))){
+                String mStartIndexStr = null;
+                String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
+                                "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
+                                "WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y' " +
+                                    "AND " + MainDbAdapter.MILEAGE_COL_CAR_ID_NAME + " = " + mCarId + " " +
+                              "UNION " +
+                              "SELECT " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + ", 2 As Pos " +
+                              "FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
+                              "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + mCarId + " " +
+                              "ORDER BY Pos ASC";
+                Cursor c = mDbAdapter.execSelectSql(sql);
+                if(c.moveToFirst()){
+                    mStartIndexStr = c.getString(0);
+                }
+                if((mStartIndexStr == null || mStartIndexStr.length() == 0)
+                        && c.moveToNext())
+                    mStartIndexStr = c.getString(0);
+                if(mStartIndexStr == null || mStartIndexStr.length() == 0)
+                    mStartIndexStr = "0";
+                mStartIndex = new BigDecimal(mStartIndexStr);
+                c.close();
             }
-            if((mStartIndexStr == null || mStartIndexStr.length() == 0)
-                    && c.moveToNext())
-                mStartIndexStr = c.getString(0);
-            if(mStartIndexStr == null)
-                mStartIndexStr = "0";
-            mStartIndex = new BigDecimal(mStartIndexStr);
-            c.close();
+            etStartIndex.setText(mStartIndex.toString());
         }
-        etStartIndex.setText(mStartIndex.toString());
+        catch(NumberFormatException e){}
         return mStartIndex;
     }
 

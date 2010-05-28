@@ -111,7 +111,7 @@ public class UOMEditActivity extends EditActivityBase {
                                 etCode.getText().toString());
                         data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, uomType);
 
-                        if( mRowId == null ) {
+                        if( mRowId == -1 ) {
                             mDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
                             finish();
                         }

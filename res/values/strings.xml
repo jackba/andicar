@@ -76,11 +76,13 @@
     <string name="GEN_DocumentNoLabel">"Document no.:"</string>
     <string name="GEN_IndexLabel">"Odometer:"</string>
     <string name="GEN_QuantityLabel">"Quantity:"</string>
-    <string name="GEN_PriceLabel">"Price:"</string>
-    <string name="GEN_AmountLabel">"Amt:"</string>
+    <string name="GEN_PriceLabel">"Price"</string>
+    <string name="GEN_AmountLabel">"Amt"</string>
     <string name="GEN_ConvertionRateLabel">"Conv. rate:"</string>
-    <string name="GEN_ConvertedAmountLabel">"Conv. amt: "</string>
+    <string name="GEN_ConvertedAmountLabel">"Amt. [%1]"</string>
+    <string name="GEN_ConvertedPriceLabel">"Price [%1]"</string>
     <string name="GEN_SelectedMessage">" selected"</string>
+    <string name="GEN_CurrencyLabel">"Currency"</string>
 
 
     <string name="MENU_PreferencesCaption">"Preferences"</string>

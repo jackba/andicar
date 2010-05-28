@@ -120,6 +120,9 @@ public class MainDbAdapter extends DB
                 }catch(SQLException e){
                     lastErrorMessage = e.getMessage();
                     retVal = -1;
+                }catch(NumberFormatException e){
+                    lastErrorMessage = e.getMessage();
+                    retVal = -1;
                 }
                 finally{
                     mDb.endTransaction();
@@ -171,6 +174,11 @@ public class MainDbAdapter extends DB
             }
         }
         catch(SQLException ex){
+            lastErrorMessage = ex.getMessage();
+            lasteException = ex;
+            return -1;
+        }
+        catch(NumberFormatException ex){
             lastErrorMessage = ex.getMessage();
             lasteException = ex;
             return -1;
@@ -321,9 +329,14 @@ public class MainDbAdapter extends DB
                     else
                         updateCarInitIndex(mCarId, stopIndex);
                     mDb.setTransactionSuccessful();
-                }catch(SQLException e){
+                }
+                catch(SQLException e){
                     lastErrorMessage = e.getMessage();
-                    retVal = 1;
+                    retVal = R.string.ERR_000;
+                }
+                catch(NumberFormatException e){
+                    lastErrorMessage = e.getMessage();
+                    retVal = R.string.ERR_000;
                 }
                 finally{
                     mDb.endTransaction();
@@ -336,7 +349,12 @@ public class MainDbAdapter extends DB
         catch(SQLException e){
             lastErrorMessage = e.getMessage();
             lasteException = e;
-            return -1;
+            retVal = R.string.ERR_000;
+        }
+        catch(NumberFormatException e){
+            lastErrorMessage = e.getMessage();
+            lasteException = e;
+            retVal = R.string.ERR_000;
         }
         return retVal;
     }
@@ -346,7 +364,7 @@ public class MainDbAdapter extends DB
      * @param content
      * @throws SQLException
      */
-    private void updateCarCurrentIndex(long mCarId, BigDecimal newIndex) throws SQLException {
+    private void updateCarCurrentIndex(long mCarId, BigDecimal newIndex) throws SQLException, NumberFormatException {
         //update car curent index
         BigDecimal carCurrentIndex = new BigDecimal(fetchRecord(CAR_TABLE_NAME, carTableColNames, mCarId)
                                                     .getString(CAR_COL_INDEXCURRENT_POS));
@@ -361,9 +379,10 @@ public class MainDbAdapter extends DB
             updateCarCurrentIndex(mCarId);
     }
 
-    private void updateCarCurrentIndex(long mCarId) throws SQLException {
+    private void updateCarCurrentIndex(long mCarId) throws SQLException, NumberFormatException {
         BigDecimal newStopIndex = BigDecimal.ZERO;
         BigDecimal tmpStopIndex = BigDecimal.ZERO;
+        String tmpStr;
         Cursor c = null;
 
         String sql = "SELECT MAX(" + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ") " +
@@ -373,7 +392,9 @@ public class MainDbAdapter extends DB
         c = execSelectSql(sql);
         if(c.moveToFirst()){
             try{
-                tmpStopIndex = new BigDecimal(c.getString(0));
+                tmpStr = c.getString(0);
+                if(tmpStr != null && tmpStr.length() > 0)
+                    tmpStopIndex = new BigDecimal(tmpStr);
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
                 if(isSendCrashReport)
@@ -394,7 +415,9 @@ public class MainDbAdapter extends DB
         c = execSelectSql(sql);
         if(c.moveToFirst()){
             try{
-                tmpStopIndex = new BigDecimal(c.getString(0));
+                tmpStr = c.getString(0);
+                if(tmpStr != null && tmpStr.length() > 0)
+                    tmpStopIndex = new BigDecimal(tmpStr);
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
                 if(isSendCrashReport)
@@ -417,7 +440,9 @@ public class MainDbAdapter extends DB
 
         if(c.moveToFirst()){
             try{
-                tmpStopIndex = new BigDecimal(c.getString(0));
+                tmpStr = c.getString(0);
+                if(tmpStr != null && tmpStr.length() > 0)
+                    tmpStopIndex = new BigDecimal(tmpStr);
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
                 if(isSendCrashReport)
@@ -468,74 +493,84 @@ public class MainDbAdapter extends DB
      */
     public int deleteRecord( String tableName, long rowId )
     {
-        int checkVal = canDelete(tableName, rowId);
-        // 1 -> -1
-        if(checkVal == -1){
-            if(tableName.equals(MILEAGE_TABLE_NAME)){ // update the car curent index
-                long carId = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId)
-                                .getLong(MILEAGE_COL_CAR_ID_POS);
-                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                if(checkVal == -1)
-                    updateCarCurrentIndex(carId);
-                //set null in gpstrack table col. mileage id
-                Cursor c = fetchForTable(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, GPSTRACK_COL_MILEAGE_ID_NAME + "=" + rowId, null);
-                ContentValues cv = new ContentValues();
-                cv.put(GPSTRACK_COL_MILEAGE_ID_NAME, (Long)null);
-                while(c.moveToNext()){
-                    updateRecord(GPSTRACK_TABLE_NAME, c.getLong(GEN_COL_ROWID_POS), cv);
-                }
-                c.close();
-            }
-            else if(tableName.equals(REFUEL_TABLE_NAME)){
-                long expenseId = -1;
-                long carId = fetchRecord(REFUEL_TABLE_NAME, refuelTableColNames, rowId)
-                                .getLong(REFUEL_COL_CAR_ID_POS);
-                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                if(checkVal == -1){
-                    String expenseIdSelect =
-                            "SELECT " + GEN_COL_ROWID_NAME + " " +
-                            "FROM " + EXPENSES_TABLE_NAME + " " +
-                            "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
-                                "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
-                    Cursor c = execSelectSql(expenseIdSelect);
-                    if(c.moveToFirst())
-                        expenseId = c.getLong(0);
-                    c.close();
-                    if(expenseId != -1){
-                        mDb.delete(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + expenseId, null);
+        int checkVal;
+        try{
+            checkVal = canDelete(tableName, rowId);
+            // 1 -> -1
+            if(checkVal == -1){
+                if(tableName.equals(MILEAGE_TABLE_NAME)){ // update the car curent index
+                    long carId = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId)
+                                    .getLong(MILEAGE_COL_CAR_ID_POS);
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                    if(checkVal == -1)
+                        updateCarCurrentIndex(carId);
+                    //set null in gpstrack table col. mileage id
+                    Cursor c = fetchForTable(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, GPSTRACK_COL_MILEAGE_ID_NAME + "=" + rowId, null);
+                    ContentValues cv = new ContentValues();
+                    cv.put(GPSTRACK_COL_MILEAGE_ID_NAME, (Long)null);
+                    while(c.moveToNext()){
+                        updateRecord(GPSTRACK_TABLE_NAME, c.getLong(GEN_COL_ROWID_POS), cv);
                     }
-                    updateCarCurrentIndex(carId);
+                    c.close();
                 }
-            }
-            else if(tableName.equals(EXPENSES_TABLE_NAME)){
-                long carId = fetchRecord(EXPENSES_TABLE_NAME, expensesTableColNames, rowId)
-                                .getLong(EXPENSES_COL_CAR_ID_POS);
-                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                if(checkVal == -1)
-                    updateCarCurrentIndex(carId);
-            }
-            else if(tableName.equals(GPSTRACK_TABLE_NAME)){
-                //delete gps trtack details
-                String fileName = "";
-                Cursor c = fetchForTable(GPSTRACKDETAIL_TABLE_NAME, gpsTrackDetailTableColNames,
-                        GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + rowId, null);
-                while(c.moveToNext()){
-                    //delete track files
-                    fileName = c.getString(GPSTRACKDETAIL_COL_FILE_POS);
-                    if(fileName != null)
-                        FileUtils.deleteFile(fileName);
-                    //delete from gpstrack detail
-                    deleteRecord(GPSTRACKDETAIL_TABLE_NAME, c.getInt(GEN_COL_ROWID_POS));
+                else if(tableName.equals(REFUEL_TABLE_NAME)){
+                    long expenseId = -1;
+                    long carId = fetchRecord(REFUEL_TABLE_NAME, refuelTableColNames, rowId)
+                                    .getLong(REFUEL_COL_CAR_ID_POS);
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                    if(checkVal == -1){
+                        String expenseIdSelect =
+                                "SELECT " + GEN_COL_ROWID_NAME + " " +
+                                "FROM " + EXPENSES_TABLE_NAME + " " +
+                                "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
+                                    "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
+                        Cursor c = execSelectSql(expenseIdSelect);
+                        if(c.moveToFirst())
+                            expenseId = c.getLong(0);
+                        c.close();
+                        if(expenseId != -1){
+                            mDb.delete(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + expenseId, null);
+                        }
+                        updateCarCurrentIndex(carId);
+                    }
                 }
-                c.close();
-                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                else if(tableName.equals(EXPENSES_TABLE_NAME)){
+                    long carId = fetchRecord(EXPENSES_TABLE_NAME, expensesTableColNames, rowId)
+                                    .getLong(EXPENSES_COL_CAR_ID_POS);
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                    if(checkVal == -1)
+                        updateCarCurrentIndex(carId);
+                }
+                else if(tableName.equals(GPSTRACK_TABLE_NAME)){
+                    //delete gps trtack details
+                    String fileName = "";
+                    Cursor c = fetchForTable(GPSTRACKDETAIL_TABLE_NAME, gpsTrackDetailTableColNames,
+                            GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + rowId, null);
+                    while(c.moveToNext()){
+                        //delete track files
+                        fileName = c.getString(GPSTRACKDETAIL_COL_FILE_POS);
+                        if(fileName != null)
+                            FileUtils.deleteFile(fileName);
+                        //delete from gpstrack detail
+                        deleteRecord(GPSTRACKDETAIL_TABLE_NAME, c.getInt(GEN_COL_ROWID_POS));
+                    }
+                    c.close();
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                }
+                else
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
             }
-            else
-                checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
         }
-        else
-            return checkVal;
-
+        catch(SQLException e){
+            lastErrorMessage = e.getMessage();
+            lasteException = e;
+            checkVal = R.string.ERR_000;
+        }
+        catch(NumberFormatException e){
+            lastErrorMessage = e.getMessage();
+            lasteException = e;
+            checkVal = R.string.ERR_000;
+        }
         return checkVal;
     }
 
@@ -916,44 +951,47 @@ public class MainDbAdapter extends DB
     public void execSql(String sql){
         mDb.execSQL(sql);
     }
+
     public BigDecimal getCurrencyRate(long fromCurrencyId, long toCurrencyId){
         BigDecimal retVal = null;
         String retValStr = null;
         if(fromCurrencyId == toCurrencyId)
             return BigDecimal.ONE;
-        String selectSql = "";
-        Cursor selectCursor;
+        try{
+            String selectSql = "";
+            Cursor selectCursor;
 
-        selectSql = " SELECT * " +
-                    " FROM " + CURRENCYRATE_TABLE_NAME +
-                    " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
-                        " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + fromCurrencyId +
-                        " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + toCurrencyId;
-        selectCursor = execSelectSql(selectSql);
-        if(selectCursor.moveToFirst())
-            retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
-        selectCursor.close();
-        if(retValStr != null && retValStr.length() > 0)
-            return new BigDecimal(retValStr);
+            selectSql = " SELECT * " +
+                        " FROM " + CURRENCYRATE_TABLE_NAME +
+                        " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
+                            " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + fromCurrencyId +
+                            " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + toCurrencyId;
+            selectCursor = execSelectSql(selectSql);
+            if(selectCursor.moveToFirst())
+                retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
+            selectCursor.close();
+            if(retValStr != null && retValStr.length() > 0)
+                return new BigDecimal(retValStr);
 
-        selectSql = " SELECT * " +
-                    " FROM " + CURRENCYRATE_TABLE_NAME +
-                    " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
-                        " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + fromCurrencyId +
-                        " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + toCurrencyId;
-        selectCursor = execSelectSql(selectSql);
-        if(selectCursor.moveToFirst())
-            retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
-        selectCursor.close();
-        if(retValStr != null && retValStr.length() > 0){
-            retVal = new BigDecimal(retValStr);
-            if(retVal.compareTo(BigDecimal.ZERO) != 0)
-                return BigDecimal.ONE.divide(retVal, 10, RoundingMode.HALF_UP)
-                        .setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
-            else
-                return BigDecimal.ZERO;
+            selectSql = " SELECT * " +
+                        " FROM " + CURRENCYRATE_TABLE_NAME +
+                        " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
+                            " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + fromCurrencyId +
+                            " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + toCurrencyId;
+            selectCursor = execSelectSql(selectSql);
+            if(selectCursor.moveToFirst())
+                retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
+            selectCursor.close();
+            if(retValStr != null && retValStr.length() > 0){
+                retVal = new BigDecimal(retValStr);
+                if(retVal.compareTo(BigDecimal.ZERO) != 0)
+                    return BigDecimal.ONE.divide(retVal, 10, RoundingMode.HALF_UP)
+                            .setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
+                else
+                    return BigDecimal.ZERO;
+            }
         }
-
+        catch(NumberFormatException e){}
         return retVal;
     }
 
@@ -962,22 +1000,24 @@ public class MainDbAdapter extends DB
         String retValStr = null;
         if(fromId == toId)
             return BigDecimal.ONE;
-        String selectSql = "";
-        Cursor selectCursor;
+        try{
+            String selectSql = "";
+            Cursor selectCursor;
 
-        selectSql = " SELECT * " +
-                    " FROM " + UOM_CONVERSION_TABLE_NAME +
-                    " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
-                        " AND " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " + fromId +
-                        " AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " + toId;
-        selectCursor = execSelectSql(selectSql);
-        if(selectCursor.moveToFirst())
-            retValStr = selectCursor.getString(UOM_CONVERSION_COL_RATE_POS);
-        selectCursor.close();
+            selectSql = " SELECT * " +
+                        " FROM " + UOM_CONVERSION_TABLE_NAME +
+                        " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
+                            " AND " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " + fromId +
+                            " AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " + toId;
+            selectCursor = execSelectSql(selectSql);
+            if(selectCursor.moveToFirst())
+                retValStr = selectCursor.getString(UOM_CONVERSION_COL_RATE_POS);
+            selectCursor.close();
 
-        if(retValStr != null && retValStr.length() > 0)
-            return new BigDecimal(retValStr);
-
+            if(retValStr != null && retValStr.length() > 0)
+                return new BigDecimal(retValStr);
+        }
+        catch(NumberFormatException e){}
         return retVal;
     }
 

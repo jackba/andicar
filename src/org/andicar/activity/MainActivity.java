@@ -392,8 +392,13 @@ public class MainActivity extends Activity {
             String indexStartStr = listCursor.getString(4);
             BigDecimal mileage = null;
             if(indexCurrentStr != null && indexStartStr != null) {
-                mileage = (new BigDecimal(indexCurrentStr)).subtract(new BigDecimal(indexStartStr));
-                tvStatisticsHdr.setText(mRes.getString(R.string.MainActivity_StatisticsHeaderCaption) + " " + mileage.toString() + " " + listCursor.getString(6));
+                try{
+                    mileage = (new BigDecimal(indexCurrentStr)).subtract(new BigDecimal(indexStartStr));
+                    tvStatisticsHdr.setText(mRes.getString(R.string.MainActivity_StatisticsHeaderCaption) + " " + mileage.toString() + " " + listCursor.getString(6));
+                }
+                catch(NumberFormatException e){
+                    mileage = null;
+                }
             }
             String firstFullRefuelIndexStr = listCursor.getString(9);
             String lastFullRefuelIndexStr = listCursor.getString(10);
@@ -404,30 +409,33 @@ public class MainActivity extends Activity {
                 lastFullRefuelIndexStr = null;
             }
             if(firstFullRefuelIndexStr != null && lastFullRefuelIndexStr != null) {
-                BigDecimal firstFullRefuelIndex = new BigDecimal(firstFullRefuelIndexStr);
-                BigDecimal lastFullRefuelIndex = new BigDecimal(lastFullRefuelIndexStr);
-                if(firstFullRefuelIndex != null && lastFullRefuelIndex != null && lastFullRefuelIndex.compareTo(firstFullRefuelIndex) > 0) {
-                    BigDecimal avgConsMileage = (lastFullRefuelIndex).subtract(firstFullRefuelIndex);
-                    //avg. fuel consimption
-                    if(totalFuelStr == null || totalFuelStr.length() == 0 || firstFullRefuelIndexStr == null || firstFullRefuelIndexStr.length() == 0 || lastFullRefuelIndexStr == null || lastFullRefuelIndexStr.length() == 0 || avgConsMileage == null || avgConsMileage.equals(BigDecimal.ZERO)) {
-                        avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
+                try{
+                    BigDecimal firstFullRefuelIndex = new BigDecimal(firstFullRefuelIndexStr);
+                    BigDecimal lastFullRefuelIndex = new BigDecimal(lastFullRefuelIndexStr);
+                    if(firstFullRefuelIndex != null && lastFullRefuelIndex != null && lastFullRefuelIndex.compareTo(firstFullRefuelIndex) > 0) {
+                        BigDecimal avgConsMileage = (lastFullRefuelIndex).subtract(firstFullRefuelIndex);
+                        //avg. fuel consimption
+                        if(totalFuelStr == null || totalFuelStr.length() == 0 || firstFullRefuelIndexStr == null || firstFullRefuelIndexStr.length() == 0 || lastFullRefuelIndexStr == null || lastFullRefuelIndexStr.length() == 0 || avgConsMileage == null || avgConsMileage.equals(BigDecimal.ZERO)) {
+                            avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
+                        }
+                        else {
+                            BigDecimal totalFuel = new BigDecimal(totalFuelStr);
+                            BigDecimal avgCons = BigDecimal.ZERO;
+                            avgCons = totalFuel.multiply(new BigDecimal("100"));
+                            avgCons = avgCons.divide(avgConsMileage, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                            //consumption: x uom volume (l or galon) / 100 uom length (km or mi)
+                            avgConsStr = avgCons.toString() + " " + avgConsUom;
+                            //efficienty: x uom length (km or mi) / uom volume (l or galon)
+                            BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                            avgConsStr = avgConsStr + "; " + avgEff.toString() + " " + listCursor.getString(6) + " / " + listCursor.getString(5);
+
+                        }
                     }
                     else {
-                        BigDecimal totalFuel = new BigDecimal(totalFuelStr);
-                        BigDecimal avgCons = BigDecimal.ZERO;
-                        avgCons = totalFuel.multiply(new BigDecimal("100"));
-                        avgCons = avgCons.divide(avgConsMileage, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                        //consumption: x uom volume (l or galon) / 100 uom length (km or mi)
-                        avgConsStr = avgCons.toString() + " " + avgConsUom;
-                        //efficienty: x uom length (km or mi) / uom volume (l or galon)
-                        BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                        avgConsStr = avgConsStr + "; " + avgEff.toString() + " " + listCursor.getString(6) + " / " + listCursor.getString(5);
-
+                        avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
                     }
                 }
-                else {
-                    avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
-                }
+                catch(NumberFormatException e){}
             }
             else {
                 avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
@@ -444,18 +452,21 @@ public class MainActivity extends Activity {
                 totalExpensesStr = "N/A";
             }
             else {
-                totalExpenses = new BigDecimal(totalExpensesStr);
-                if(totalExpenses != null) {
-                    totalExpensesStr = totalExpenses.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
+                try{
+                    totalExpenses = new BigDecimal(totalExpensesStr);
+                    if(totalExpenses != null) {
+                        totalExpensesStr = totalExpenses.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
+                    }
+                    mileageExpense = totalExpenses.multiply(new BigDecimal("100"));
+                    mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                    if(mileageExpense != null) {
+                        carCurrency = listCursor.getString(8);
+                        mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + "/100 " + listCursor.getString(6);
+                        BigDecimal mileageEff = (new BigDecimal("100")).divide(mileageExpense, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                        mileageExpenseStr = mileageExpenseStr + "; " + mileageEff.toString() + " " + listCursor.getString(6) + "/" + carCurrency;
+                    }
                 }
-                mileageExpense = totalExpenses.multiply(new BigDecimal("100"));
-                mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                if(mileageExpense != null) {
-                    carCurrency = listCursor.getString(8);
-                    mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + "/100 " + listCursor.getString(6);
-                    BigDecimal mileageEff = (new BigDecimal("100")).divide(mileageExpense, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                    mileageExpenseStr = mileageExpenseStr + "; " + mileageEff.toString() + " " + listCursor.getString(6) + "/" + carCurrency;
-                }
+                catch(NumberFormatException e){}
             }
             tvThreeLineListStatisticsText2.setText(mRes.getString(R.string.MainActivity_StatisticsTotalExpenseLabel) + " " + totalExpensesStr + " " + carCurrency);
             tvThreeLineListStatisticsText3.setText(mRes.getString(R.string.MainActivity_StatisticsMileageExpenseLabel) + " " + mileageExpenseStr);

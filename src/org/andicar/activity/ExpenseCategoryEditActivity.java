@@ -105,7 +105,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
                         cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME,
                                 (ckIsExcludeFromMileageCost.isChecked() ? "Y" : "N") );
 
-                        if( mRowId == null ) {
+                        if( mRowId == -1 ) {
                             mDbAdapter.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, cvData);
                             finish();
                         }

@@ -51,8 +51,7 @@ public class AndiCarExceptionHandler
                 }
             }
             AndiCarStatistics.sendFlurryStartSession(mCtx);
-            AndiCarStatistics.sendFlurryError("AndiCarError", stackStr, thrwbl.getMessage());
-            AndiCarStatistics.sendFlurryEndSession(mCtx);
+            AndiCarStatistics.sendFlurryError("AndiCarError", stackStr, thrwbl.getClass().toString() + ": " + thrwbl.getMessage());
         }
         mPreviousHandler.uncaughtException(thread, thrwbl);
     }

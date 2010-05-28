@@ -25,6 +25,7 @@ import android.database.SQLException;
 import android.os.Bundle;
 import java.util.Iterator;
 import java.util.Set;
+import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -132,7 +133,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                         sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || " +
                 " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + " <> " +
                                     sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
-                        " THEN " + "' (' || " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) +
+                        " THEN " + "' (' || ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + ", " + StaticValues.DECIMALS_VOLUME + ") " +
                                     " || ' ' || " + sqlConcatTableColumn("DefaultVolumeUOM", UOM_COL_CODE_NAME) + " || ')' " +
                         " ELSE " + "'' " +
                 " END " +
@@ -141,19 +142,17 @@ public class ReportDbAdapter extends MainDbAdapter{
                         sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
                         " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + " <> " +
                                             sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + " " +
-                                " THEN " + "' (' || " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) +
+                                " THEN " + "' (' || ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " + StaticValues.DECIMALS_AMOUNT + ") " +
                                             " || ' ' || " + sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
                                 " ELSE " + "'' " +
                         " END " +
 
                         " || ' = ' || ROUND(" +
-                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + " * " +
-                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + ", 2) || ' ' ||" +
+                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_AMOUNTENTERED_NAME) + ", " + StaticValues.DECIMALS_AMOUNT +") || ' ' ||" +
                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
                         " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + " <> " +
                                             sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + " " +
-                                " THEN " + "' (' || ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + " * " +
-                                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", 2) || ' ' ||" +
+                                " THEN " + "' (' || ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_AMOUNT_NAME) + ", " + StaticValues.DECIMALS_AMOUNT + ") || ' ' ||" +
                                                         sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
                                 " ELSE " + "'' " +
                         " END " +
@@ -455,7 +454,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                         sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                     " SUBSTR(DATETIME(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + ", 'unixepoch', 'localtime'), 1, 10)  " +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +
-                "'[%1]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", 2) || ' ' || " +
+                "'[%1]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", " + StaticValues.DECIMALS_LENGTH + ") || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '; ' || " +
                     "'[%2]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
@@ -653,16 +652,9 @@ public class ReportDbAdapter extends MainDbAdapter{
         if(limitCount != -1)
             reportSql = reportSql + " LIMIT " + limitCount;
 
-        try{
-            Cursor retVal = null;
-            retVal = mDb.rawQuery(reportSql, null);
-            return retVal;
-        }
-        catch(SQLException e){
-            lastErrorMessage = e.getMessage();
-            lasteException = e;
-            return null;
-        }
+        Cursor retVal = null;
+        retVal = mDb.rawQuery(reportSql, null);
+        return retVal;
 
     }
 
