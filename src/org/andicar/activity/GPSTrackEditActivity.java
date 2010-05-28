@@ -129,16 +129,15 @@ public class GPSTrackEditActivity extends EditActivityBase {
         c.close();
         reportDb.close();
         
-        c = mDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
-                MainDbAdapter.gpsTrackDetailTableColNames,
-                MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + mRowId,
-                MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
         SimpleCursorAdapter cursorAdapter =
-                new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.oneline_list_layout_smalll, c,
+                new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.oneline_list_layout_smalll,
+                                    mDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+                                        MainDbAdapter.gpsTrackDetailTableColNames,
+                                        MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + mRowId,
+                                        MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME),
                                     new String[]{MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME}, new int[]{R.id.tvOneLineListTextSmall});
 
         lvTrackFileList.setAdapter(cursorAdapter);
-        c.close();
 
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent("GPSTrackEdit", null);

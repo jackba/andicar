@@ -98,7 +98,7 @@ public class CurrencyEditActivity extends EditActivityBase {
                         cvData.put( MainDbAdapter.CURRENCY_COL_CODE_NAME,
                                 etCode.getText().toString());
 
-                        if (mRowId == null) {
+                        if (mRowId == -1) {
                             mDbAdapter.createRecord(MainDbAdapter.CURRENCY_TABLE_NAME, cvData);
                             finish();
                         } else {

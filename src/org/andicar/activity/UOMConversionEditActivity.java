@@ -146,7 +146,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
                         data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_NAME, toId);
                         data.put( MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME, convRateStr);
 
-                        if( mRowId == null ) {
+                        if( mRowId == -1 ) {
                             mDbAdapter.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
                             finish();
                         }

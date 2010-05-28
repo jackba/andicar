@@ -79,6 +79,14 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private String showMode = "M";
     protected Menu optionsMenu;
 
+    protected class SavedData{
+        public ArrayList<GeoPoint> trackPoints;
+        public int maxLatitude = 0;
+        public int minLatitude = 0;
+        public int maxLongitude = 0;
+        public int minLongitude = 0;
+    }
+
     /*
      * Map Api Keys:
      * 1. 0aQTdJnsQSHfbEz5axy7VixTxQu4UkJkLgdkbjA dbg
@@ -101,6 +109,16 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         showMode = mPreferences.getString("GPSTrackShowMode", "M");
 
+        SavedData data = (SavedData)getLastNonConfigurationInstance();
+        
+        if(data != null){
+            trackPoints = data.trackPoints;
+            maxLatitude = data.maxLatitude;
+            minLatitude = data.minLatitude;
+            maxLongitude = data.maxLongitude;
+            minLongitude = data.minLongitude;
+        }
+        
         if(trackPoints == null)
             trackPoints = new ArrayList<GeoPoint>();
         //get the the track id
@@ -139,20 +157,32 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         return false;
     }
 
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        //save existing data whwn the activity restart (for example on screen orientation change)
+        final SavedData data = new SavedData();
+        data.trackPoints = trackPoints;
+        data.maxLatitude = maxLatitude;
+        data.minLatitude = minLatitude;
+        data.maxLongitude = maxLongitude;
+        data.minLongitude = minLongitude;
+        return data;
+    }
     private void drawTrack(){
-        FileInputStream trackInputStream;
-        DataInputStream trackData;
-        BufferedReader trackBufferedReader;
-        String trackLine;
-        ArrayList<String> trackFiles;
+        mMapController = mapView.getController();
         if(trackPoints.size() == 0){ //trackpoints are not loaded
+            FileInputStream trackInputStream;
+            DataInputStream trackData;
+            BufferedReader trackBufferedReader;
+            String trackLine;
+            ArrayList<String> trackFiles;
+            
             //get the list of gop files
-//            trackId = "99";
+            trackId = "99";
             trackFiles = FileUtils.getFileNames(StaticValues.TRACK_FOLDER, trackId + "_[0-9][0-9][0-9].gop");
             if(trackFiles.isEmpty()){
                 handler.sendEmptyMessage(R.string.ERR_036);
             }
-            mMapController = mapView.getController();
             int latitudeE6;
             int longitudeE6;
             int c1;

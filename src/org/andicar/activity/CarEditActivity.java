@@ -66,6 +66,7 @@ public class CarEditActivity extends EditActivityBase
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
 
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
+        BigDecimal bdStartIndex = null;
 
         if( operation.equals( "E") ) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
@@ -75,7 +76,10 @@ public class CarEditActivity extends EditActivityBase
             String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
             String strCarModel = c.getString( MainDbAdapter.CAR_COL_MODEL_POS );
             String strRegistrationNo = c.getString( MainDbAdapter.CAR_COL_REGISTRATIONNO_POS );
-            BigDecimal bdStartIndex = new BigDecimal(c.getString( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
+            try{
+                bdStartIndex = new BigDecimal(c.getString( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
+            }
+            catch(NumberFormatException e){};
             Long lUomLengthId = c.getLong( MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS );
             Long lUomVolumeId = c.getLong( MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS );
             Long lCurrencyId = c.getLong( MainDbAdapter.CAR_COL_CURRENCY_ID_POS );
@@ -194,7 +198,7 @@ public class CarEditActivity extends EditActivityBase
                         cvData.put( MainDbAdapter.CAR_COL_CURRENCY_ID_NAME,
                                 spnCurrency.getSelectedItemId());
 
-                        if( mRowId == null ) {
+                        if( mRowId == -1 ) {
                             //when a new car defined the current index is same with the start index
                             cvData.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, bdStartIndex.toString() );
                             mDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, cvData);

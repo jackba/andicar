@@ -117,6 +117,8 @@ public class DB {
     public static final String REFUEL_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
     public static final String REFUEL_COL_CURRENCYRATE_NAME = "CurrencyRate"; //CurrencyEntered -> Car Base Currency
     public static final String REFUEL_COL_UOMVOLCONVERSIONRATE_NAME = "UOMVolumeConversionRate";
+    public static final String REFUEL_COL_AMOUNT_NAME = "Amount";
+    public static final String REFUEL_COL_AMOUNTENTERED_NAME = "AmountEntered";
 
     //expense category
     public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
@@ -219,6 +221,9 @@ public class DB {
     public static final int REFUEL_COL_CURRENCYENTERED_ID_POS = 19;
     public static final int REFUEL_COL_CURRENCYRATE_POS = 20;
     public static final int REFUEL_COL_UOMVOLCONVERSIONRATE_POS = 21;
+    public static final int REFUEL_COL_AMOUNT_POS = 22;
+    public static final int REFUEL_COL_AMOUNTENTERED_POS = 23;
+
      //expense category
     public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
     //car expenses
@@ -295,7 +300,8 @@ public class DB {
         REFUEL_COL_QUANTITY_NAME, REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
         REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME,
         REFUEL_COL_ISFULLREFUEL_NAME, REFUEL_COL_QUANTITYENTERED_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME, 
-        REFUEL_COL_PRICEENTERED_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME};
+        REFUEL_COL_PRICEENTERED_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME,
+        REFUEL_COL_AMOUNT_NAME, REFUEL_COL_AMOUNTENTERED_NAME};
 
     public static final String[] expenseCategoryTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
@@ -433,7 +439,9 @@ public class DB {
             + REFUEL_COL_PRICEENTERED_NAME  + " NUMERIC NULL, "
             + REFUEL_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL, "
             + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL, "
-            + REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " NUMERIC NULL "
+            + REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " NUMERIC NULL, "
+            + REFUEL_COL_AMOUNT_NAME + " NUMERIC NULL, "
+            + REFUEL_COL_AMOUNTENTERED_NAME + " NUMERIC NULL "
             + ");";
 
     protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL =
@@ -700,16 +708,25 @@ public class DB {
                 upgradeDbTo200(db); //update database to version 200 //AndiCar 2.0.0
                 upgradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
                 upgradeDbTo300(db, oldVersion);
+                upgradeDbTo310(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
                 upgradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
                 upgradeDbTo300(db, oldVersion);
+                upgradeDbTo310(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
                 upgradeDbTo300(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
+                upgradeDbTo310(db, oldVersion);
             }
+            //AndiCar 3.0.x
+            else if(oldVersion == 300){
+                upgradeDbTo310(db, oldVersion);
+            }
+            
+//            upgradeDbTo310(db, oldVersion);
         }
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
@@ -868,6 +885,22 @@ public class DB {
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putString("UpdateMsg", "VersionChanged");
             editor.commit();
+        }
+
+        private void upgradeDbTo310(SQLiteDatabase db, int oldVersion) throws SQLException {
+            String updSql = "";
+            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                            " ADD " + REFUEL_COL_AMOUNT_NAME + " NUMERIC NULL ";
+            db.execSQL(updSql);
+            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                            " ADD " + REFUEL_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+            db.execSQL(updSql);
+
+            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                        " SET " +
+                            REFUEL_COL_AMOUNT_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICE_NAME + ", " +
+                            REFUEL_COL_AMOUNTENTERED_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICEENTERED_NAME;
+            db.execSQL(updSql);
         }
 
         private void createExpenseCategory(SQLiteDatabase db) throws SQLException {

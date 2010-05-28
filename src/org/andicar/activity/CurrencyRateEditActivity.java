@@ -168,7 +168,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
                         cvData.put( MainDbAdapter.CURRENCYRATE_COL_INVERSERATE_NAME,
                                 bdInverseRate.toString());
 
-                        if( mRowId == null ) {
+                        if( mRowId == -1 ) {
                             Long lInsertResult = mDbAdapter.createRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME, cvData);
                             if( lInsertResult.intValue() < 0){
                                 if(lInsertResult.intValue() == -1) //DB Error
@@ -250,22 +250,25 @@ public class CurrencyRateEditActivity extends EditActivityBase
     private void calculateInverseRate() {
         String strCurrencyRate = etCurrencyRate.getText().toString();
         if(strCurrencyRate != null && strCurrencyRate.length() > 0) {
-            bdRate = new BigDecimal(strCurrencyRate);
-            if(bdRate.equals(BigDecimal.ZERO))
-                bdInverseRate = bdRate;
-            else
-                bdInverseRate = BigDecimal.ONE.divide(bdRate, 10, RoundingMode.HALF_UP)
-                        .setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
-            if(bdRate.compareTo(bdRate.setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS)) != 0){
-                bdRate = bdRate.setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
-                etCurrencyRate.setText("");
-                etCurrencyRate.append(bdRate.toString());
-                Toast toast = Toast.makeText( getApplicationContext(),
-                        mResource.getString( R.string.CurrencyRateEditActivity_MaxDecimalsLabel ) +
-                            StaticValues.DECIMALS_CONVERSIONS, Toast.LENGTH_SHORT );
-                toast.show();
+            try{
+                bdRate = new BigDecimal(strCurrencyRate);
+                if(bdRate.equals(BigDecimal.ZERO))
+                    bdInverseRate = bdRate;
+                else
+                    bdInverseRate = BigDecimal.ONE.divide(bdRate, 10, RoundingMode.HALF_UP)
+                            .setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
+                if(bdRate.compareTo(bdRate.setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS)) != 0){
+                    bdRate = bdRate.setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
+                    etCurrencyRate.setText("");
+                    etCurrencyRate.append(bdRate.toString());
+                    Toast toast = Toast.makeText( getApplicationContext(),
+                            mResource.getString( R.string.CurrencyRateEditActivity_MaxDecimalsLabel ) +
+                                StaticValues.DECIMALS_CONVERSIONS, Toast.LENGTH_SHORT );
+                    toast.show();
+                }
+                tvInverseRateValue.setText(bdInverseRate.toString());
             }
-            tvInverseRateValue.setText(bdInverseRate.toString());
+            catch(NumberFormatException e){}
         }
     }
 }

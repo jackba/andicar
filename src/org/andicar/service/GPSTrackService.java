@@ -661,20 +661,23 @@ public class GPSTrackService extends Service {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
         else if(what == StaticValues.NOTIF_TYPE_GPS_ACCURACY_SHUTDOWN_ID){
-            title = getText(R.string.GPSTrackService_AutoShutDownTitle);
-            message = getString(R.string.GPSTrackService_AutoShutDownMessage);
-            BigDecimal bdSkippedPointPercentage = new BigDecimal(skippedPointPercentage).setScale(0, BigDecimal.ROUND_HALF_UP);
-            message = message.replace("%1",  bdSkippedPointPercentage.toString() + "%").
-                    replace("%2", iMaxAccuracyShutdownLimit + "%");
+            try{
+                title = getText(R.string.GPSTrackService_AutoShutDownTitle);
+                message = getString(R.string.GPSTrackService_AutoShutDownMessage);
+                BigDecimal bdSkippedPointPercentage = new BigDecimal(skippedPointPercentage).setScale(0, BigDecimal.ROUND_HALF_UP);
+                message = message.replace("%1",  bdSkippedPointPercentage.toString() + "%").
+                        replace("%2", iMaxAccuracyShutdownLimit + "%");
 
-            notification = new Notification(R.drawable.stat_sys_error, message,
-                    System.currentTimeMillis());
-            notification.flags |= Notification.DEFAULT_LIGHTS;
-            notification.flags |= Notification.DEFAULT_SOUND;
+                notification = new Notification(R.drawable.stat_sys_error, message,
+                        System.currentTimeMillis());
+                notification.flags |= Notification.DEFAULT_LIGHTS;
+                notification.flags |= Notification.DEFAULT_SOUND;
 
-            notification.setLatestEventInfo(this, title, message, contentIntent);
-            if(showToast)
-                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+                notification.setLatestEventInfo(this, title, message, contentIntent);
+                if(showToast)
+                    Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            }
+            catch(NumberFormatException e){}
         }
         else if(what == StaticValues.NOTIF_TYPE_GPS_DISABLED_ID){
             title = getText(R.string.GPSTrackService_AutoShutDownTitle);

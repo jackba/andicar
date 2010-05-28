@@ -97,7 +97,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
                         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                                 etUserComment.getText().toString() );
 
-                        if( mRowId == null ) {
+                        if( mRowId == -1 ) {
                             mDbAdapter.createRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, data);
                             finish();
                         }
