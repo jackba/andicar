@@ -122,7 +122,7 @@
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
     <string name="MainActivity_StatisticsListHeaderCaption">"Last know odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
-    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the period between the first and last FULL refuel."</string>
+    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the mileage between the first and last FULL refuel."</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"Total expenses:"</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"Mileage exp.:"</string>
     <string name="MainActivity_MileageNoDataText">"No mileage for this car"</string>
