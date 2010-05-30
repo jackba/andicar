@@ -168,6 +168,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         data.minLongitude = minLongitude;
         return data;
     }
+    
     private void drawTrack(){
         mMapController = mapView.getController();
         if(trackPoints.size() == 0){ //trackpoints are not loaded
