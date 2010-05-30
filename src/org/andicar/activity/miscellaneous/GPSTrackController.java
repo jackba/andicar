@@ -28,7 +28,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import org.andicar.activity.EditActivityBase;
+import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;
@@ -38,7 +38,7 @@ import org.andicar.utils.Utils;
  *
  * @author miki
  */
-public class GPSTrackController extends EditActivityBase {
+public class GPSTrackController extends BaseActivity {
     private Spinner spnCar;
     private Spinner spnDriver;
     private boolean bIsActivityOnLoading = true;
@@ -47,7 +47,6 @@ public class GPSTrackController extends EditActivityBase {
     private EditText etName;
     private CheckBox ckIsUseKML;
     private CheckBox ckIsUseGPX;
-//    private CheckBox ckIsShowOnMap;
     private CheckBox ckIsCreateMileage;
     private Button btnGPSTrackStartStop;
     private boolean isGpsTrackOn = false;
@@ -59,7 +58,8 @@ public class GPSTrackController extends EditActivityBase {
     @Override
     public void onCreate(Bundle icicle) {
 
-        super.onCreate( icicle, R.layout.gpstrackcontroller_activity, null );
+        super.onCreate(icicle);
+        setContentView(R.layout.gpstrackcontroller_activity);
 
         mCarId = mPreferences.getLong("CurrentCar_ID", -1);
         mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
@@ -154,7 +154,6 @@ public class GPSTrackController extends EditActivityBase {
 //        ckIsShowOnMap.setChecked(mPreferences.getBoolean("GPSTrackShowMap", false));
     }
 
-    @Override
    protected void setEditable(ViewGroup vg, boolean editable){
        View child;
        for(int i = 0; i < vg.getChildCount(); i++)

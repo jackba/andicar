@@ -30,11 +30,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
-import org.andicar.activity.EditActivityBase;
+import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.utils.AndiCarStatistics;
@@ -45,7 +43,7 @@ import org.andicar.utils.StaticValues;
  *
  * @author miki
  */
-public class BackupRestoreActivity extends EditActivityBase {
+public class BackupRestoreActivity extends BaseActivity {
 
     private ArrayList<String> bkFileList;
     private String selectedFile = null;
@@ -59,6 +57,7 @@ public class BackupRestoreActivity extends EditActivityBase {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView( R.layout.backup_restore_activity );
+
         btnBackup = (Button) findViewById(R.id.btnBackup);
         btnBackup.setOnClickListener(btnBkClickListener);
         btnRestore = (Button) findViewById(R.id.btnRestore);

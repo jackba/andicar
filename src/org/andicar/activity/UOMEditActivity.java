@@ -22,7 +22,6 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -44,7 +43,7 @@ public class UOMEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle, R.layout.uom_edit_activity, mOkClickListener);
+        super.onCreate(icicle);
 
         etName = (EditText) findViewById(R.id.etName);
         etUserComment = (EditText) findViewById(R.id.etUserComment);
@@ -87,49 +86,51 @@ public class UOMEditActivity extends EditActivityBase {
         }
     }
 
-    private View.OnClickListener mOkClickListener =
-                new View.OnClickListener() {
+    @Override
+    void saveData() {
+        //check mandatory fields
+        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        if( retVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
 
-                    public void onClick(View v) {
-                        //check mandatory fields
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-                        if( retVal != null ) {
-                            Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
-                            toast.show();
-                            return;
-                        }
+        ContentValues data = new ContentValues();
+        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                etName.getText().toString());
+        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+                (ckIsActive.isChecked() ? "Y" : "N") );
+        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                etUserComment.getText().toString() );
+        data.put( MainDbAdapter.UOM_COL_CODE_NAME,
+                etCode.getText().toString());
+        data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, uomType);
 
-                        ContentValues data = new ContentValues();
-                        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                etName.getText().toString());
-                        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (ckIsActive.isChecked() ? "Y" : "N") );
-                        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                etUserComment.getText().toString() );
-                        data.put( MainDbAdapter.UOM_COL_CODE_NAME,
-                                etCode.getText().toString());
-                        data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, uomType);
+        if( mRowId == -1 ) {
+            mDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
+            finish();
+        }
+        else {
+            int updResult = mDbAdapter.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
+            if(updResult != -1){
+                String errMsg = "";
+                errMsg = mResource.getString(updResult);
+                if(updResult == R.string.ERR_000)
+                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                madbErrorAlert.setMessage(errMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+    }
 
-                        if( mRowId == -1 ) {
-                            mDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
-                            finish();
-                        }
-                        else {
-                            int updResult = mDbAdapter.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
-                            if(updResult != -1){
-                                String errMsg = "";
-                                errMsg = mResource.getString(updResult);
-                                if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
-                                madbErrorAlert.setMessage(errMsg);
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                    }
-                };
+    @Override
+    void setLayout() {
+        setContentView(R.layout.uom_edit_activity);
+    }
 
 }

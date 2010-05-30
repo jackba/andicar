@@ -53,7 +53,7 @@ public class CarEditActivity extends EditActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, R.layout.car_edit_activity, mOkClickListener );
+        super.onCreate(icicle);
 
         spnUomLength = (Spinner) findViewById( R.id.spnUomLength );
         spnUomVolume = (Spinner) findViewById( R.id.spnUomVolume );
@@ -152,73 +152,74 @@ public class CarEditActivity extends EditActivityBase
         }
     }
 
-    private View.OnClickListener mOkClickListener =
-            new View.OnClickListener()
-                {
-                    public void onClick( View v )
-                    {
-                        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-                        if( strRetVal != null ) {
-                            Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-                            toast.show();
-                            return;
-                        }
+    @Override
+    void saveData() {
+        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
 
-                        BigDecimal bdStartIndex = null;
-                        String strIndexStart = etIndexStart.getText().toString();
-                        if( strIndexStart != null && strIndexStart.length() > 0 ) {
-                            try {
-                                bdStartIndex = new BigDecimal( strIndexStart );
-                            }
-                            catch( NumberFormatException e ) {
-                                Toast toast = Toast.makeText( getApplicationContext(),
-                                        mResource.getString( R.string.GEN_NumberFormatException ) + ": "
-                                        + mResource.getString( R.string.CarEditActivity_IndexStartLabel ), Toast.LENGTH_SHORT );
-                                toast.show();
-                                return;
-                            }
-                        }
-                        ContentValues cvData = new ContentValues();
-                        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                etName.getText().toString());
-                        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (ckIsActive.isChecked() ? "Y" : "N") );
-                        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                etUserComment.getText().toString() );
-                        cvData.put( MainDbAdapter.CAR_COL_MODEL_NAME,
-                                etCarModel.getText().toString() );
-                        cvData.put( MainDbAdapter.CAR_COL_REGISTRATIONNO_NAME,
-                                etCarRegNo.getText().toString());
-                        cvData.put( MainDbAdapter.CAR_COL_INDEXSTART_NAME, bdStartIndex.toString() );
-                        cvData.put( MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME,
-                                spnUomLength.getSelectedItemId() );
-                        cvData.put( MainDbAdapter.CAR_COL_UOMVOLUME_ID_NAME,
-                                spnUomVolume.getSelectedItemId() );
-                        cvData.put( MainDbAdapter.CAR_COL_CURRENCY_ID_NAME,
-                                spnCurrency.getSelectedItemId());
+        BigDecimal bdStartIndex = null;
+        String strIndexStart = etIndexStart.getText().toString();
+        if( strIndexStart != null && strIndexStart.length() > 0 ) {
+            try {
+                bdStartIndex = new BigDecimal( strIndexStart );
+            }
+            catch( NumberFormatException e ) {
+                Toast toast = Toast.makeText( getApplicationContext(),
+                        mResource.getString( R.string.GEN_NumberFormatException ) + ": "
+                        + mResource.getString( R.string.CarEditActivity_IndexStartLabel ), Toast.LENGTH_SHORT );
+                toast.show();
+                return;
+            }
+        }
+        ContentValues cvData = new ContentValues();
+        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                etName.getText().toString());
+        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+                (ckIsActive.isChecked() ? "Y" : "N") );
+        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                etUserComment.getText().toString() );
+        cvData.put( MainDbAdapter.CAR_COL_MODEL_NAME,
+                etCarModel.getText().toString() );
+        cvData.put( MainDbAdapter.CAR_COL_REGISTRATIONNO_NAME,
+                etCarRegNo.getText().toString());
+        cvData.put( MainDbAdapter.CAR_COL_INDEXSTART_NAME, bdStartIndex.toString() );
+        cvData.put( MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME,
+                spnUomLength.getSelectedItemId() );
+        cvData.put( MainDbAdapter.CAR_COL_UOMVOLUME_ID_NAME,
+                spnUomVolume.getSelectedItemId() );
+        cvData.put( MainDbAdapter.CAR_COL_CURRENCY_ID_NAME,
+                spnCurrency.getSelectedItemId());
 
-                        if( mRowId == -1 ) {
-                            //when a new car defined the current index is same with the start index
-                            cvData.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, bdStartIndex.toString() );
-                            mDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, cvData);
-                            finish();
-                        }
-                        else {
-                            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, cvData);
-                            if(iUpdateResult != -1){
-                                String strErrMsg = "";
-                                strErrMsg = mResource.getString(iUpdateResult);
-                                if(iUpdateResult == R.string.ERR_000)
-                                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
-                                madbErrorAlert.setMessage(strErrMsg);
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                    }
-                };
+        if( mRowId == -1 ) {
+            //when a new car defined the current index is same with the start index
+            cvData.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, bdStartIndex.toString() );
+            mDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, cvData);
+            finish();
+        }
+        else {
+            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, cvData);
+            if(iUpdateResult != -1){
+                String strErrMsg = "";
+                strErrMsg = mResource.getString(iUpdateResult);
+                if(iUpdateResult == R.string.ERR_000)
+                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+    }
+
+    @Override
+    void setLayout() {
+        setContentView(R.layout.car_edit_activity);
+    }
 
 }

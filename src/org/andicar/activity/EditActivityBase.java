@@ -19,13 +19,10 @@
 
 package org.andicar.activity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -57,16 +54,11 @@ import org.andicar.utils.Utils;
  *      -spinners: see initSpinner
  *  * 
  */
-public abstract class EditActivityBase extends Activity {
+public abstract class EditActivityBase extends BaseActivity {
     protected long mRowId = -1;
     protected Bundle mBundleExtras = null;
-    protected Resources mResource = null;
-    protected SharedPreferences mPreferences;
-    protected SharedPreferences.Editor mPrefEditor;
     protected Button btnOk = null;
     protected Button btnCancel = null;
-    protected View.OnClickListener mOkClickListener = null;
-    protected MainDbAdapter mDbAdapter = null;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
@@ -75,13 +67,11 @@ public abstract class EditActivityBase extends Activity {
     protected long mlDateTimeInSeconds;
     protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
-    protected int mLayoutResID = -1;
+//    protected int mLayoutResID = -1;
 
-    protected AlertDialog.Builder madbErrorAlert;
-    protected AlertDialog madError;
-    protected boolean isSendStatistics = true;
-    protected boolean isSendCrashReport;
-
+    abstract void saveData();
+    abstract void setLayout();
+    
     @Override
     protected void onStart()
     {
@@ -101,29 +91,15 @@ public abstract class EditActivityBase extends Activity {
      * Use instead onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener)
      */
     @Override
-    protected void onCreate(Bundle icicle) {
+    public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        mResource = getResources();
-        mPrefEditor = mPreferences.edit();
-        mDbAdapter = new MainDbAdapter(this);
+        setLayout();
 
-        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-        isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
-        if(isSendCrashReport)
-            Thread.setDefaultUncaughtExceptionHandler(
-                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
-
-        setContentView(mLayoutResID);
         mBundleExtras = getIntent().getExtras();
-
-        madbErrorAlert = new AlertDialog.Builder( this );
-        madbErrorAlert.setCancelable( false );
-        madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
 
         btnCancel = (Button) findViewById( android.R.id.closeButton);
         if(btnCancel != null)
-            btnCancel.setOnClickListener(cancelButtonClickListener);
+            btnCancel.setOnClickListener(mCancelClickListener);
 
         btnOk = (Button)findViewById( android.R.id.button1 );
         if(mOkClickListener != null)
@@ -131,13 +107,6 @@ public abstract class EditActivityBase extends Activity {
 
     }
 
-    protected void onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener){
-//        mOkClickListener = btnOkClickListener;
-//        mLayoutResID = layoutResID;
-//        (EditActivityBase)onCreate(icicle);
-    }
-
-    
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -180,74 +149,23 @@ public abstract class EditActivityBase extends Activity {
         }
     }
 
-
-    protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition, String orderBy,
-            long selectedId, boolean addListener){
-        try{
-            Spinner spnCurrentSpinner = (Spinner) pSpinner;
-            Cursor dbcRecordCursor = mDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
-            startManagingCursor( dbcRecordCursor );
-            int[] to = new int[]{android.R.id.text1};
-            SimpleCursorAdapter scaCursorAdapter =
-                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, dbcRecordCursor,
-                    from, to);
-            scaCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spnCurrentSpinner.setAdapter(scaCursorAdapter);
-
-            if(selectedId >= 0){
-            //set the spinner to the last used id
-                dbcRecordCursor.moveToFirst();
-                for( int i = 0; i < dbcRecordCursor.getCount(); i++ ) {
-                    if( dbcRecordCursor.getLong( MainDbAdapter.GEN_COL_ROWID_POS ) == selectedId) {
-                        spnCurrentSpinner.setSelection( i );
-                        break;
-                    }
-                    dbcRecordCursor.moveToNext();
-                }
-            }
-
-            if(addListener)
-                spnCurrentSpinner.setOnItemSelectedListener(spinnerOnItemSelectedListener);
-        }
-        catch(Exception e){
-            madbErrorAlert.setMessage(e.getMessage());
-            madError = madbErrorAlert.create();
-            madError.show();
-        }
-
-    }
-
-    protected AdapterView.OnItemSelectedListener spinnerOnItemSelectedListener =
-            new AdapterView.OnItemSelectedListener() {
-                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    if(EditActivityBase.this instanceof RefuelEditActivity){
-                        if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
-                            mPrefEditor.putLong("RefuelExpenseType_ID", arg3);
-                            mPrefEditor.commit();
-                        }
-                        else if( ((Spinner)arg0).equals(findViewById(R.id.spnExpCategory))){
-                            mPrefEditor.putLong("RefuelExpenseCategory_ID", arg3);
-                            mPrefEditor.commit();
-                        }
-                    }
-                    else if(EditActivityBase.this instanceof MileageEditActivity){
-                        if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
-                            mPrefEditor.putLong("MileageInsertExpenseType_ID", arg3);
-                            mPrefEditor.commit();
-                        }
-                    }
-                }
-                public void onNothingSelected(AdapterView<?> arg0) {
-                }
-            };
-
-    protected View.OnClickListener cancelButtonClickListener =
+    protected View.OnClickListener mCancelClickListener =
             new View.OnClickListener(){
                 public void onClick( View v )
                 {
                     finish();
                 }
             };
+
+    protected View.OnClickListener mOkClickListener =
+            new View.OnClickListener()
+                {
+                    public void onClick( View v )
+                    {
+                        saveData();
+                    }
+                };
+
 
    /**
     * Check mandatory fields. Mandatory fields are detected based on view tag (if contain a value => field is mandatory)

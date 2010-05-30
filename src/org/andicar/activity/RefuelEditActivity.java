@@ -20,7 +20,6 @@
 package org.andicar.activity;
 
 import android.content.ContentValues;
-import android.content.res.Resources.NotFoundException;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -42,7 +41,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.RoundingMode;
 import org.andicar.utils.AndiCarStatistics;
 
@@ -107,7 +105,7 @@ public class RefuelEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle, R.layout.refuel_edit_activity, mOkClickListener);
+        super.onCreate(icicle);
 
         if(icicle !=null)
             return; //restoe from previous state
@@ -168,7 +166,7 @@ public class RefuelEditActivity extends EditActivityBase {
             rbInsertModeAmount.setChecked(true);
         }
 
-        initSpinners();
+        initControls();
 
         if (operationType.equals("E")){
             calculatePriceAmount();
@@ -225,7 +223,7 @@ public class RefuelEditActivity extends EditActivityBase {
         uomVolumeConversionRate = BigDecimal.ONE;
     }
 
-    private void initSpinners() {
+    private void initControls() {
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
                 MainDbAdapter.GEN_COL_NAME_NAME,
@@ -245,6 +243,7 @@ public class RefuelEditActivity extends EditActivityBase {
         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, 
                 new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME}, MainDbAdapter.isActiveCondition,
                 MainDbAdapter.CURRENCY_COL_CODE_NAME, mCurrencyId, false);
+
         userCommentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
                 mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
                 mCarId, 30));
@@ -340,7 +339,7 @@ public class RefuelEditActivity extends EditActivityBase {
             mExpCategoryId = savedInstanceState.getLong("mExpCategoryId");
             mExpTypeId = savedInstanceState.getLong("mExpTypeId");
 
-            initSpinners();
+            initControls();
             calculateBaseUOMQty();
             calculatePriceAmount();
             initDateTime(mlDateTimeInSeconds * 1000);
@@ -348,101 +347,6 @@ public class RefuelEditActivity extends EditActivityBase {
         catch(NumberFormatException e){}
     }
     
-    private View.OnClickListener mOkClickListener =
-            new View.OnClickListener()
-                {
-                    public void onClick( View v )
-                    {
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-                        if( retVal != null ) {
-                            Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
-                            toast.show();
-                            return;
-                        }
-
-                        ContentValues data = new ContentValues();
-                        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                "Refuel");
-                        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
-                        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                acUserComment.getText().toString() );
-                        data.put( MainDbAdapter.REFUEL_COL_CAR_ID_NAME,
-                                mCarId);
-                        data.put( MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME,
-                                mDriverId);
-                        data.put( MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME,
-                                spnExpCategory.getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME,
-                                spnExpType.getSelectedItemId() );
-                        data.put( MainDbAdapter.REFUEL_COL_INDEX_NAME, etCarIndex.getText().toString());
-                        data.put( MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME, etQty.getText().toString());
-                        data.put( MainDbAdapter.REFUEL_COL_UOMVOLUMEENTERED_ID_NAME,
-                                spnUomVolume.getSelectedItemId());
-                        data.put( MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME, priceEntered.toString());
-                        data.put( MainDbAdapter.REFUEL_COL_AMOUNTENTERED_NAME, amountEntered.toString());
-                        data.put( MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME,
-                                spnCurrency.getSelectedItemId());
-                        data.put( MainDbAdapter.REFUEL_COL_DATE_NAME, mlDateTimeInSeconds);
-                        data.put( MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME,
-                                etDocNo.getText().toString());
-                        data.put( MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME,
-                                (ckIsFullRefuel.isChecked() ? "Y" : "N"));
-
-                        if(mUomVolumeId == carDefaultUOMVolumeId){
-                            data.put( MainDbAdapter.REFUEL_COL_QUANTITY_NAME, etQty.getText().toString());
-                            data.put( MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_NAME, spnUomVolume.getSelectedItemId());
-                            data.put( MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_NAME, "1");
-                        }
-                        else{
-                            data.put( MainDbAdapter.REFUEL_COL_QUANTITY_NAME, baseUomQty.toString());
-                            data.put( MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_NAME, carDefaultUOMVolumeId);
-                            data.put( MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_NAME, uomVolumeConversionRate.toString());
-                        }
-
-                        if(mCurrencyId == carDefaultCurrencyId){
-                            data.put( MainDbAdapter.REFUEL_COL_PRICE_NAME, priceEntered.toString());
-                            data.put( MainDbAdapter.REFUEL_COL_AMOUNT_NAME, amountEntered.toString());
-                            data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
-                            data.put( MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME, "1");
-                        }
-                        else{
-                            data.put( MainDbAdapter.REFUEL_COL_PRICE_NAME, priceConverted.toString());
-                            data.put( MainDbAdapter.REFUEL_COL_AMOUNT_NAME, amountConverted.toString());
-                            data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
-                            data.put( MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME, currencyConversionRate.toString());
-                        }
-
-                        if( operationType.equals("N") ) {
-                            Long createResult = mDbAdapter.createRecord(MainDbAdapter.REFUEL_TABLE_NAME, data);
-                            if(createResult.intValue() < 0){
-                                if(createResult.intValue() == -1) //DB Error
-                                    madbErrorAlert.setMessage(mDbAdapter.lastErrorMessage);
-                                else //precondition error
-                                    madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                        else {
-                            int updResult = mDbAdapter.updateRecord(MainDbAdapter.REFUEL_TABLE_NAME, mRowId, data);
-                            if(updResult != -1){
-                                String errMsg = "";
-                                errMsg = mResource.getString(updResult);
-                                if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
-                                madbErrorAlert.setMessage(errMsg);
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                    }
-                };
-
     private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -693,6 +597,102 @@ public class RefuelEditActivity extends EditActivityBase {
             etUserInput.setTag(mResource.getString(R.string.GEN_AmountLabel));
         }
         calculatePriceAmount();
+    }
+
+    @Override
+    void saveData() {
+        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        if( retVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
+        ContentValues data = new ContentValues();
+        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                "Refuel");
+        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
+        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                acUserComment.getText().toString() );
+        data.put( MainDbAdapter.REFUEL_COL_CAR_ID_NAME,
+                mCarId);
+        data.put( MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME,
+                mDriverId);
+        data.put( MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME,
+                spnExpCategory.getSelectedItemId() );
+        data.put( MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME,
+                spnExpType.getSelectedItemId() );
+        data.put( MainDbAdapter.REFUEL_COL_INDEX_NAME, etCarIndex.getText().toString());
+        data.put( MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME, etQty.getText().toString());
+        data.put( MainDbAdapter.REFUEL_COL_UOMVOLUMEENTERED_ID_NAME,
+                spnUomVolume.getSelectedItemId());
+        data.put( MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME, priceEntered.toString());
+        data.put( MainDbAdapter.REFUEL_COL_AMOUNTENTERED_NAME, amountEntered.toString());
+        data.put( MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME,
+                spnCurrency.getSelectedItemId());
+        data.put( MainDbAdapter.REFUEL_COL_DATE_NAME, mlDateTimeInSeconds);
+        data.put( MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME,
+                etDocNo.getText().toString());
+        data.put( MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME,
+                (ckIsFullRefuel.isChecked() ? "Y" : "N"));
+
+        if(mUomVolumeId == carDefaultUOMVolumeId){
+            data.put( MainDbAdapter.REFUEL_COL_QUANTITY_NAME, etQty.getText().toString());
+            data.put( MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_NAME, spnUomVolume.getSelectedItemId());
+            data.put( MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_NAME, "1");
+        }
+        else{
+            data.put( MainDbAdapter.REFUEL_COL_QUANTITY_NAME, baseUomQty.toString());
+            data.put( MainDbAdapter.REFUEL_COL_UOMVOLUME_ID_NAME, carDefaultUOMVolumeId);
+            data.put( MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_NAME, uomVolumeConversionRate.toString());
+        }
+
+        if(mCurrencyId == carDefaultCurrencyId){
+            data.put( MainDbAdapter.REFUEL_COL_PRICE_NAME, priceEntered.toString());
+            data.put( MainDbAdapter.REFUEL_COL_AMOUNT_NAME, amountEntered.toString());
+            data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
+            data.put( MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME, "1");
+        }
+        else{
+            data.put( MainDbAdapter.REFUEL_COL_PRICE_NAME, priceConverted.toString());
+            data.put( MainDbAdapter.REFUEL_COL_AMOUNT_NAME, amountConverted.toString());
+            data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
+            data.put( MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME, currencyConversionRate.toString());
+        }
+
+        if( operationType.equals("N") ) {
+            Long createResult = mDbAdapter.createRecord(MainDbAdapter.REFUEL_TABLE_NAME, data);
+            if(createResult.intValue() < 0){
+                if(createResult.intValue() == -1) //DB Error
+                    madbErrorAlert.setMessage(mDbAdapter.lastErrorMessage);
+                else //precondition error
+                    madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+        else {
+            int updResult = mDbAdapter.updateRecord(MainDbAdapter.REFUEL_TABLE_NAME, mRowId, data);
+            if(updResult != -1){
+                String errMsg = "";
+                errMsg = mResource.getString(updResult);
+                if(updResult == R.string.ERR_000)
+                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                madbErrorAlert.setMessage(errMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+    }
+
+    @Override
+    void setLayout() {
+        setContentView(R.layout.refuel_edit_activity);
     }
 
 }

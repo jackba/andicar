@@ -22,7 +22,6 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -42,7 +41,7 @@ public class CurrencyEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle, R.layout.currency_edit_activity, mOkClickListener);
+        super.onCreate(icicle);
 
         etName = (EditText) findViewById(R.id.etName);
         etUserComment = (EditText) findViewById(R.id.etUserComment);
@@ -78,44 +77,48 @@ public class CurrencyEditActivity extends EditActivityBase {
 
     }
 
-    private View.OnClickListener mOkClickListener = new View.OnClickListener() {
-                    public void onClick(View v) {
-                        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-                        if( strRetVal != null ) {
-                            Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-                            toast.show();
-                            return;
-                        }
+    @Override
+    void saveData() {
+        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
 
-                        ContentValues cvData = new ContentValues();
-                        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                etName.getText().toString());
-                        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (ckIsActive.isChecked() ? "Y" : "N") );
-                        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                etUserComment.getText().toString() );
-                        cvData.put( MainDbAdapter.CURRENCY_COL_CODE_NAME,
-                                etCode.getText().toString());
+        ContentValues cvData = new ContentValues();
+        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                etName.getText().toString());
+        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+                (ckIsActive.isChecked() ? "Y" : "N") );
+        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                etUserComment.getText().toString() );
+        cvData.put( MainDbAdapter.CURRENCY_COL_CODE_NAME,
+                etCode.getText().toString());
 
-                        if (mRowId == -1) {
-                            mDbAdapter.createRecord(MainDbAdapter.CURRENCY_TABLE_NAME, cvData);
-                            finish();
-                        } else {
-                            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CURRENCY_TABLE_NAME, mRowId, cvData);
-                            if(iUpdateResult != -1){
-                                String strErrMsg = "";
-                                strErrMsg = mResource.getString(iUpdateResult);
-                                if(iUpdateResult == R.string.ERR_000)
-                                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
-                                madbErrorAlert.setMessage(strErrMsg);
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                    }
-                };
+        if (mRowId == -1) {
+            mDbAdapter.createRecord(MainDbAdapter.CURRENCY_TABLE_NAME, cvData);
+            finish();
+        } else {
+            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CURRENCY_TABLE_NAME, mRowId, cvData);
+            if(iUpdateResult != -1){
+                String strErrMsg = "";
+                strErrMsg = mResource.getString(iUpdateResult);
+                if(iUpdateResult == R.string.ERR_000)
+                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+    }
+
+    @Override
+    void setLayout() {
+        setContentView( R.layout.currency_edit_activity);
+    }
 
 }

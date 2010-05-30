@@ -21,7 +21,6 @@ package org.andicar.persistence;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.os.Bundle;
 import java.util.Iterator;
 import java.util.Set;
@@ -138,7 +137,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " ELSE " + "'' " +
                 " END " +
                         " || ' x ' || " +
-                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + " || ' ' || " +
+                        " ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + ", " +
+                                    StaticValues.DECIMALS_AMOUNT + ") || ' ' || " +
                         sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
                         " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + " <> " +
                                             sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + " " +
