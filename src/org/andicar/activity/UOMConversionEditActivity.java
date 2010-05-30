@@ -51,7 +51,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle, R.layout.uomconversion_edit_activity, mOkClickListener);
+        super.onCreate(icicle);
         
         spnUomFrom = (Spinner) findViewById( R.id.spnUomFrom );
         spnUomFrom.setOnItemSelectedListener(uomFromSelectedListener);
@@ -110,63 +110,6 @@ public class UOMConversionEditActivity extends EditActivityBase {
 
     }
 
-    private View.OnClickListener mOkClickListener =
-                new View.OnClickListener() {
-
-                    public void onClick(View v) {
-                        //check mandatory fields
-                        String convRateStr = etConversionRate.getText().toString();
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-                        if( retVal != null ) {
-                            Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
-                            toast.show();
-                            return;
-                        }
-
-                        long fromId = spnUomFrom.getSelectedItemId();
-                        long toId = spnUomTo.getSelectedItemId();
-                        retVal = null;
-                        int retVal2 = mDbAdapter.canInsertUpdateUOMConversion(mRowId, fromId, toId);
-                        if(retVal2 != -1){
-                            madbErrorAlert.setMessage(mResource.getString(retVal2));
-                            madError = madbErrorAlert.create();
-                            madError.show();
-                            return;
-                        }
-
-                        ContentValues data = new ContentValues();
-                        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                etName.getText().toString());
-                        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (ckIsActive.isChecked() ? "Y" : "N") );
-                        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                etUserComment.getText().toString() );
-                        data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMFROM_ID_NAME, fromId);
-                        data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_NAME, toId);
-                        data.put( MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME, convRateStr);
-
-                        if( mRowId == -1 ) {
-                            mDbAdapter.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
-                            finish();
-                        }
-                        else {
-                            int updResult = mDbAdapter.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
-                            if(updResult != -1){
-                                String errMsg = "";
-                                errMsg = mResource.getString(updResult);
-                                if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
-                                madbErrorAlert.setMessage(errMsg);
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                    }
-                };
-
     private OnItemSelectedListener uomFromSelectedListener =
                 new OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -182,5 +125,64 @@ public class UOMConversionEditActivity extends EditActivityBase {
                     public void onNothingSelected(AdapterView<?> arg0) {
                     }
                 };
+
+    @Override
+    void saveData() {
+        //check mandatory fields
+        String convRateStr = etConversionRate.getText().toString();
+        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        if( retVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
+        long fromId = spnUomFrom.getSelectedItemId();
+        long toId = spnUomTo.getSelectedItemId();
+        retVal = null;
+        int retVal2 = mDbAdapter.canInsertUpdateUOMConversion(mRowId, fromId, toId);
+        if(retVal2 != -1){
+            madbErrorAlert.setMessage(mResource.getString(retVal2));
+            madError = madbErrorAlert.create();
+            madError.show();
+            return;
+        }
+
+        ContentValues data = new ContentValues();
+        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                etName.getText().toString());
+        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+                (ckIsActive.isChecked() ? "Y" : "N") );
+        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                etUserComment.getText().toString() );
+        data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMFROM_ID_NAME, fromId);
+        data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_NAME, toId);
+        data.put( MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME, convRateStr);
+
+        if( mRowId == -1 ) {
+            mDbAdapter.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
+            finish();
+        }
+        else {
+            int updResult = mDbAdapter.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
+            if(updResult != -1){
+                String errMsg = "";
+                errMsg = mResource.getString(updResult);
+                if(updResult == R.string.ERR_000)
+                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                madbErrorAlert.setMessage(errMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+    }
+
+    @Override
+    void setLayout() {
+        setContentView(R.layout.uomconversion_edit_activity);
+    }
 
 }

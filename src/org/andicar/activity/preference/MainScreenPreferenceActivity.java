@@ -28,7 +28,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import org.andicar.activity.EditActivityBase;
+import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
 import org.andicar.utils.AndiCarStatistics;
 
@@ -37,7 +37,7 @@ import org.andicar.utils.AndiCarStatistics;
  *
  * @author miki
  */
-public class MainScreenPreferenceActivity extends EditActivityBase {
+public class MainScreenPreferenceActivity extends BaseActivity {
 
     private ListView lvZones;
     /** Called when the activity is first created. */

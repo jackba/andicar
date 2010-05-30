@@ -27,13 +27,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.andicar.paypal.GetPayPalActivity;
-import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 import org.andicar.utils.StaticValues;
 import android.os.Vibrator;
 import android.content.Context;
 import java.util.HashMap;
 import java.util.Map;
+import org.andicar.activity.BaseActivity;
 import org.andicar.utils.AndiCarStatistics;
 
 
@@ -41,7 +41,7 @@ import org.andicar.utils.AndiCarStatistics;
  *
  * @author miki
  */
-public class AboutActivity extends EditActivityBase {
+public class AboutActivity extends BaseActivity{
 
     /** Called when the activity is first created. */
     @Override

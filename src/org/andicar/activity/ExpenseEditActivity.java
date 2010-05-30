@@ -74,61 +74,13 @@ public class ExpenseEditActivity extends EditActivityBase {
 
     private ArrayAdapter<String> userCommentAdapter;
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        try{
-            init();
-            super.onRestoreInstanceState(savedInstanceState);
-            mCurrencyId = savedInstanceState.getLong("mCurrencyId");
-            carDefaultCurrencyId = savedInstanceState.getLong("carDefaultCurrencyId");
-            mCarId = savedInstanceState.getLong("mCarId");
-            mDriverId = savedInstanceState.getLong("mDriverId");
-            mExpCategoryId = savedInstanceState.getLong("mExpCategoryId");
-            mExpTypeId = savedInstanceState.getLong("mExpTypeId");
-
-            if(savedInstanceState.containsKey("carDefaultCurrencyCode"))
-                carDefaultCurrencyCode = savedInstanceState.getString("carDefaultCurrencyCode");
-            if(savedInstanceState.containsKey("operationType"))
-                operationType = savedInstanceState.getString("operationType");
-            if(savedInstanceState.containsKey("conversionRate"))
-                conversionRate = new BigDecimal(savedInstanceState.getString("conversionRate"));
-            if(savedInstanceState.containsKey("convertedAmount"))
-                convertedAmount = new BigDecimal(savedInstanceState.getString("convertedAmount"));
-            
-            initControls();
-            calculateConvertedAmount();
-            initDateTime(mlDateTimeInSeconds * 1000);
-        }
-        catch(NumberFormatException e){}
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong("mCurrencyId", mCurrencyId);
-        outState.putLong("carDefaultCurrencyId", carDefaultCurrencyId);
-        outState.putLong("mCarId", mCarId);
-        outState.putLong("mDriverId", mDriverId);
-        outState.putLong("mExpCategoryId", spnExpCategory.getSelectedItemId());
-        outState.putLong("mExpTypeId", spnExpType.getSelectedItemId());
-        if(carDefaultCurrencyCode != null)
-            outState.putString("carDefaultCurrencyCode", carDefaultCurrencyCode);
-        if(operationType != null)
-            outState.putString("operationType", operationType);
-        if(conversionRate != null)
-            outState.putString("conversionRate", conversionRate.toString());
-        if(convertedAmount != null)
-            outState.putString("convertedAmount", convertedAmount.toString());
-    }
-
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        super.onCreate(icicle, R.layout.expense_edit_activity, mOkClickListener);
+        super.onCreate(icicle);
 
         if(icicle !=null)
-            return; //restoe from previous state
+            return; //restored from previous state
 
         operationType = mBundleExtras.getString("Operation");
 
@@ -239,7 +191,54 @@ public class ExpenseEditActivity extends EditActivityBase {
         tvConvertedAmountLabel = (TextView) findViewById(R.id.tvConvertedAmountLabel);
         carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
         carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
-}
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        try{
+            init();
+            super.onRestoreInstanceState(savedInstanceState);
+            mCurrencyId = savedInstanceState.getLong("mCurrencyId");
+            carDefaultCurrencyId = savedInstanceState.getLong("carDefaultCurrencyId");
+            mCarId = savedInstanceState.getLong("mCarId");
+            mDriverId = savedInstanceState.getLong("mDriverId");
+            mExpCategoryId = savedInstanceState.getLong("mExpCategoryId");
+            mExpTypeId = savedInstanceState.getLong("mExpTypeId");
+
+            if(savedInstanceState.containsKey("carDefaultCurrencyCode"))
+                carDefaultCurrencyCode = savedInstanceState.getString("carDefaultCurrencyCode");
+            if(savedInstanceState.containsKey("operationType"))
+                operationType = savedInstanceState.getString("operationType");
+            if(savedInstanceState.containsKey("conversionRate"))
+                conversionRate = new BigDecimal(savedInstanceState.getString("conversionRate"));
+            if(savedInstanceState.containsKey("convertedAmount"))
+                convertedAmount = new BigDecimal(savedInstanceState.getString("convertedAmount"));
+
+            initControls();
+            calculateConvertedAmount();
+            initDateTime(mlDateTimeInSeconds * 1000);
+        }
+        catch(NumberFormatException e){}
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong("mCurrencyId", mCurrencyId);
+        outState.putLong("carDefaultCurrencyId", carDefaultCurrencyId);
+        outState.putLong("mCarId", mCarId);
+        outState.putLong("mDriverId", mDriverId);
+        outState.putLong("mExpCategoryId", spnExpCategory.getSelectedItemId());
+        outState.putLong("mExpTypeId", spnExpType.getSelectedItemId());
+        if(carDefaultCurrencyCode != null)
+            outState.putString("carDefaultCurrencyCode", carDefaultCurrencyCode);
+        if(operationType != null)
+            outState.putString("operationType", operationType);
+        if(conversionRate != null)
+            outState.putString("conversionRate", conversionRate.toString());
+        if(convertedAmount != null)
+            outState.putString("convertedAmount", convertedAmount.toString());
+    }
 
     @Override
     protected void onResume() {
@@ -262,83 +261,6 @@ public class ExpenseEditActivity extends EditActivityBase {
             return false;
         }
     };
-
-    private View.OnClickListener mOkClickListener =
-            new View.OnClickListener()
-                {
-                    public void onClick( View v )
-                    {
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-                        if( retVal != null ) {
-                            Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
-                            toast.show();
-                            return;
-                        }
-
-                        ContentValues data = new ContentValues();
-                        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                "Expense");
-                        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
-                        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                acUserComment.getText().toString() );
-                        data.put( MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
-                                mCarId );
-                        data.put( MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME,
-                                mDriverId );
-                        data.put( MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
-                                spnExpCategory.getSelectedItemId() );
-                        data.put( MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME,
-                                spnExpType.getSelectedItemId() );
-                        data.put( MainDbAdapter.EXPENSES_COL_INDEX_NAME, etCarIndex.getText().toString());
-                        
-                        data.put( MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, atAmount.getText().toString());
-                        data.put( MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
-                                mCurrencyId);
-                        data.put( MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
-                        if(mCurrencyId == carDefaultCurrencyId){
-                            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, atAmount.getText().toString());
-                            data.put( MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME, "1");
-                        }
-                        else{
-                            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, convertedAmount.toString());
-                            data.put( MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME, conversionRate.toString());
-                        }
-
-
-                        data.put( MainDbAdapter.EXPENSES_COL_DATE_NAME, mlDateTimeInSeconds);
-                        data.put( MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
-                                etDocNo.getText().toString());
-
-                        if( operationType.equals("N") ) {
-                            Long createResult = mDbAdapter.createRecord(MainDbAdapter.EXPENSES_TABLE_NAME, data);
-                            if( createResult.intValue() < 0){
-                                if(createResult.intValue() == -1) //DB Error
-                                    madbErrorAlert.setMessage(mDbAdapter.lastErrorMessage);
-                                else //precondition error
-                                    madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                        else {
-                            int updResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSES_TABLE_NAME, mRowId, data);
-                            if(updResult != -1){
-                                String errMsg = "";
-                                errMsg = mResource.getString(updResult);
-                                if(updResult == R.string.ERR_000)
-                                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
-                                madbErrorAlert.setMessage(errMsg);
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                    }
-                };
 
     private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
@@ -456,4 +378,82 @@ public class ExpenseEditActivity extends EditActivityBase {
                 catch(NumberFormatException e){}
             }
         };
+
+    @Override
+    void saveData() {
+        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        if( retVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
+        ContentValues data = new ContentValues();
+        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                "Expense");
+        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
+        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                acUserComment.getText().toString() );
+        data.put( MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
+                mCarId );
+        data.put( MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME,
+                mDriverId );
+        data.put( MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
+                spnExpCategory.getSelectedItemId() );
+        data.put( MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME,
+                spnExpType.getSelectedItemId() );
+        data.put( MainDbAdapter.EXPENSES_COL_INDEX_NAME, etCarIndex.getText().toString());
+
+        data.put( MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, atAmount.getText().toString());
+        data.put( MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
+                mCurrencyId);
+        data.put( MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
+        if(mCurrencyId == carDefaultCurrencyId){
+            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, atAmount.getText().toString());
+            data.put( MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME, "1");
+        }
+        else{
+            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, convertedAmount.toString());
+            data.put( MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME, conversionRate.toString());
+        }
+
+
+        data.put( MainDbAdapter.EXPENSES_COL_DATE_NAME, mlDateTimeInSeconds);
+        data.put( MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
+                etDocNo.getText().toString());
+
+        if( operationType.equals("N") ) {
+            Long createResult = mDbAdapter.createRecord(MainDbAdapter.EXPENSES_TABLE_NAME, data);
+            if( createResult.intValue() < 0){
+                if(createResult.intValue() == -1) //DB Error
+                    madbErrorAlert.setMessage(mDbAdapter.lastErrorMessage);
+                else //precondition error
+                    madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+        else {
+            int updResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSES_TABLE_NAME, mRowId, data);
+            if(updResult != -1){
+                String errMsg = "";
+                errMsg = mResource.getString(updResult);
+                if(updResult == R.string.ERR_000)
+                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+                madbErrorAlert.setMessage(errMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+    }
+
+    @Override
+    void setLayout() {
+        setContentView(R.layout.expense_edit_activity);
+    }
 }

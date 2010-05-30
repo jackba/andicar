@@ -415,7 +415,10 @@ public class MainActivity extends Activity {
                     if(firstFullRefuelIndex != null && lastFullRefuelIndex != null && lastFullRefuelIndex.compareTo(firstFullRefuelIndex) > 0) {
                         BigDecimal avgConsMileage = (lastFullRefuelIndex).subtract(firstFullRefuelIndex);
                         //avg. fuel consimption
-                        if(totalFuelStr == null || totalFuelStr.length() == 0 || firstFullRefuelIndexStr == null || firstFullRefuelIndexStr.length() == 0 || lastFullRefuelIndexStr == null || lastFullRefuelIndexStr.length() == 0 || avgConsMileage == null || avgConsMileage.equals(BigDecimal.ZERO)) {
+                        if(totalFuelStr == null || totalFuelStr.length() == 0 || firstFullRefuelIndexStr == null ||
+                                firstFullRefuelIndexStr.length() == 0 || lastFullRefuelIndexStr == null ||
+                                lastFullRefuelIndexStr.length() == 0 || avgConsMileage == null ||
+                                avgConsMileage.equals(BigDecimal.ZERO)) {
                             avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
                         }
                         else {
@@ -426,9 +429,10 @@ public class MainActivity extends Activity {
                             //consumption: x uom volume (l or galon) / 100 uom length (km or mi)
                             avgConsStr = avgCons.toString() + " " + avgConsUom;
                             //efficienty: x uom length (km or mi) / uom volume (l or galon)
-                            BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                            avgConsStr = avgConsStr + "; " + avgEff.toString() + " " + listCursor.getString(6) + " / " + listCursor.getString(5);
-
+                            if(avgCons != null && avgCons.signum() != 0){
+                                BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                                avgConsStr = avgConsStr + "; " + avgEff.toString() + " " + listCursor.getString(6) + " / " + listCursor.getString(5);
+                            }
                         }
                     }
                     else {
@@ -447,7 +451,8 @@ public class MainActivity extends Activity {
             String carCurrency = "";
             BigDecimal totalExpenses;
             BigDecimal mileageExpense;
-            if(totalExpensesStr == null || totalExpensesStr.length() == 0 || mileage == null || mileage.equals(BigDecimal.ZERO)) {
+            if(totalExpensesStr == null || totalExpensesStr.length() == 0 || mileage == null ||
+                    mileage.equals(BigDecimal.ZERO)) {
                 mileageExpenseStr = "N/A";
                 totalExpensesStr = "N/A";
             }

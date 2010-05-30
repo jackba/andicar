@@ -61,7 +61,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
         long mCarId;
         long mDriverId;
 
-        super.onCreate(icicle, R.layout.gpstrackedit_activity, mOkClickListener);
+        super.onCreate(icicle);
         
         tvCarLabel = (TextView)findViewById(R.id.tvCarLabel);
         etName = (EditText)findViewById(R.id.etName);
@@ -143,43 +143,6 @@ public class GPSTrackEditActivity extends EditActivityBase {
             AndiCarStatistics.sendFlurryEvent("GPSTrackEdit", null);
     }
 
-    private View.OnClickListener mOkClickListener =
-            new View.OnClickListener()
-                {
-                    public void onClick( View v )
-                    {
-                        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-                        if( retVal != null ) {
-                            Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
-                            toast.show();
-                            return;
-                        }
-
-                        ContentValues data = new ContentValues();
-                        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                etName.getText().toString());
-                        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
-                        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                acUserComment.getText().toString() );
-                        data.put( MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME,
-                                spnDriver.getSelectedItemId() );
-
-                        int updResult = mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, mRowId, data);
-                        if(updResult != -1){
-                            String errMsg = "";
-                            errMsg = mResource.getString(updResult);
-                            if(updResult == R.string.ERR_000)
-                                errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
-                            madbErrorAlert.setMessage(errMsg);
-                            madError = madbErrorAlert.create();
-                            madError.show();
-                        }
-                        else
-                            finish();
-                    }
-                };
-
     private View.OnClickListener mBtnSendAsEmailListener =
             new View.OnClickListener()
                 {
@@ -198,4 +161,42 @@ public class GPSTrackEditActivity extends EditActivityBase {
                     startActivity(gpstrackShowMapIntent);
                 }
             };
+
+    @Override
+    void saveData() {
+        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        if( retVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
+        ContentValues data = new ContentValues();
+        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                etName.getText().toString());
+        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
+        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                acUserComment.getText().toString() );
+        data.put( MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME,
+                spnDriver.getSelectedItemId() );
+
+        int updResult = mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, mRowId, data);
+        if(updResult != -1){
+            String errMsg = "";
+            errMsg = mResource.getString(updResult);
+            if(updResult == R.string.ERR_000)
+                errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
+            madbErrorAlert.setMessage(errMsg);
+            madError = madbErrorAlert.create();
+            madError.show();
+        }
+        else
+            finish();
+    }
+
+    @Override
+    void setLayout() {
+        setContentView(R.layout.gpstrackedit_activity);
+    }
 }

@@ -22,7 +22,6 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -44,7 +43,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, R.layout.expensecategory_edit_activity, mOkClickListener );
+        super.onCreate(icicle);
 
         etName = (EditText) findViewById( R.id.etName );
         etUserComment = (EditText) findViewById( R.id.etUserComment );
@@ -82,48 +81,49 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
 
     }
 
-    private View.OnClickListener mOkClickListener =
-                new View.OnClickListener()
-                {
-                    public void onClick( View v )
-                    {
-                        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-                        if( strRetVal != null ) {
-                            Toast toast = Toast.makeText( getApplicationContext(),
-                                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-                            toast.show();
-                            return;
-                        }
+    @Override
+    void saveData() {
+        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
 
-                        ContentValues cvData = new ContentValues();
-                        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
-                                etName.getText().toString());
-                        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
-                                (ckIsActive.isChecked() ? "Y" : "N") );
-                        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
-                                etUserComment.getText().toString() );
-                        cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME,
-                                (ckIsExcludeFromMileageCost.isChecked() ? "Y" : "N") );
+        ContentValues cvData = new ContentValues();
+        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+                etName.getText().toString());
+        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+                (ckIsActive.isChecked() ? "Y" : "N") );
+        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+                etUserComment.getText().toString() );
+        cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME,
+                (ckIsExcludeFromMileageCost.isChecked() ? "Y" : "N") );
 
-                        if( mRowId == -1 ) {
-                            mDbAdapter.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, cvData);
-                            finish();
-                        }
-                        else {
-                            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mRowId, cvData);
-                            if(iUpdateResult != -1){
-                                String strErrMsg = "";
-                                strErrMsg = mResource.getString(iUpdateResult);
-                                if(iUpdateResult == R.string.ERR_000)
-                                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
-                                madbErrorAlert.setMessage(strErrMsg);
-                                madError = madbErrorAlert.create();
-                                madError.show();
-                            }
-                            else
-                                finish();
-                        }
-                    }
-                };
+        if( mRowId == -1 ) {
+            mDbAdapter.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, cvData);
+            finish();
+        }
+        else {
+            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mRowId, cvData);
+            if(iUpdateResult != -1){
+                String strErrMsg = "";
+                strErrMsg = mResource.getString(iUpdateResult);
+                if(iUpdateResult == R.string.ERR_000)
+                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else
+                finish();
+        }
+    }
+
+    @Override
+    void setLayout() {
+        setContentView(R.layout.expensecategory_edit_activity);
+    }
 
 }
