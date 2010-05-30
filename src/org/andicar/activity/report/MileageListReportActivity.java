@@ -53,10 +53,14 @@ public class MileageListReportActivity extends ReportListActivityBase {
     public void onCreate(Bundle icicle) {
         reportSelectName = "reportMileageListViewSelect";
         Long mCarId = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getLong("CurrentCar_ID", 0);
-        whereConditions = new Bundle();
-        whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
-                mCarId.toString());
+        if(icicle == null){
+            whereConditions = new Bundle();
+            whereConditions.putString(
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
+                    mCarId.toString());
+        }
+        else
+            whereConditions = (Bundle)getLastNonConfigurationInstance();
 
         super.onCreate(icicle, null, MileageEditActivity.class, null,
                 MainDbAdapter.MILEAGE_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
@@ -66,6 +70,12 @@ public class MileageListReportActivity extends ReportListActivityBase {
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
                 reportSelectName, whereConditions, null);
 
+    }
+
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        //save existing data whwn the activity restart (for example on screen orientation change)
+        return whereConditions;
     }
 
     @Override

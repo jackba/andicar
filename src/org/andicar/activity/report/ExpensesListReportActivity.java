@@ -54,11 +54,15 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
     {
         reportSelectName = "reportExpensesListViewSelect";
         Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
-        whereConditions = new Bundle();
-        whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
-                mCarId.toString() );
+        if(icicle == null){
+            whereConditions = new Bundle();
+            whereConditions.putString(
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
+                    MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
+                    mCarId.toString() );
+        }
+        else
+            whereConditions = (Bundle)getLastNonConfigurationInstance();
 
         super.onCreate( icicle, null, ExpenseEditActivity.class, null,
                 MainDbAdapter.EXPENSES_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
@@ -68,6 +72,12 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
                 reportSelectName,  whereConditions, null);
 
+    }
+
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        //save existing data whwn the activity restart (for example on screen orientation change)
+        return whereConditions;
     }
 
     @Override
@@ -107,6 +117,7 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
         initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME);
         return searchDialog.create();
     }
+    
     private DialogInterface.OnClickListener searchDialogButtonlistener = new DialogInterface.OnClickListener() {
 
         public void onClick(DialogInterface dialog, int whichButton) {

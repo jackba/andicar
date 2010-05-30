@@ -55,10 +55,14 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
     {
         reportSelectName = "gpsTrackListViewSelect";
         Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
-        whereConditions = new Bundle();
-        whereConditions.putString(
-                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
-                mCarId.toString() );
+        if(icicle == null){
+            whereConditions = new Bundle();
+            whereConditions.putString(
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
+                    mCarId.toString() );
+        }
+        else
+            whereConditions = (Bundle)getLastNonConfigurationInstance();
 
         super.onCreate( icicle, null, GPSTrackEditActivity.class, GPSTrackController.class,
                 MainDbAdapter.GPSTRACK_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
@@ -68,6 +72,12 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
                 reportSelectName,  whereConditions, new GPSDataBinder());
 
+    }
+
+    @Override
+    public Object onRetainNonConfigurationInstance() {
+        //save existing data whwn the activity restart (for example on screen orientation change)
+        return whereConditions;
     }
 
     @Override
