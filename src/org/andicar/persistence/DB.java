@@ -872,11 +872,6 @@ public class DB {
         }
 
         private void upgradeDbTo300(SQLiteDatabase db, int oldVersion) throws SQLException {
-//            String tmpStr = "DROP TABLE " + GPSTRACK_TABLE_NAME;
-//            db.execSQL(tmpStr);
-//            tmpStr = "DROP TABLE " + GPSTRACKDETAIL_TABLE_NAME;
-//            db.execSQL(tmpStr);
-
             createGPSTrackTables(db);
 
             FileUtils fu = new FileUtils(mCtx);

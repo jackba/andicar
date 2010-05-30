@@ -665,8 +665,8 @@ public class GPSTrackService extends Service {
                 title = getText(R.string.GPSTrackService_AutoShutDownTitle);
                 message = getString(R.string.GPSTrackService_AutoShutDownMessage);
                 BigDecimal bdSkippedPointPercentage = new BigDecimal(skippedPointPercentage).setScale(0, BigDecimal.ROUND_HALF_UP);
-                message = message.replace("%1",  bdSkippedPointPercentage.toString() + "%").
-                        replace("%2", iMaxAccuracyShutdownLimit + "%");
+                message = message.replace("[%1]",  bdSkippedPointPercentage.toString() + "%").
+                        replace("[%2]", iMaxAccuracyShutdownLimit + "%");
 
                 notification = new Notification(R.drawable.stat_sys_error, message,
                         System.currentTimeMillis());
