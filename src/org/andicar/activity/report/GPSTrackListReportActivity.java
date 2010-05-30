@@ -31,7 +31,6 @@ import android.widget.Spinner;
 import org.andicar.activity.GPSTrackEditActivity;
 import org.andicar.activity.miscellaneous.GPSTrackController;
 import org.andicar.activity.R;
-import org.andicar.activity.RefuelEditActivity;
 import org.andicar.persistence.GPSDataBinder;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;

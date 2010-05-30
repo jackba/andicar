@@ -121,8 +121,10 @@ public class ExpenseEditActivity extends EditActivityBase {
             }
             else{
                 if(fromTable.equals("Refuel")){
-                    tvWarningLabel.setText(mResource.getString(R.string.ExpenseEditActivity_CreatedFromWarning).replaceAll("%",
-                            mResource.getString(R.string.GEN_Refuel).toLowerCase()) + "\n");
+                    tvWarningLabel.setText(
+                            mResource.getString(R.string.ExpenseEditActivity_CreatedFromWarning)
+                                .replace("[%1]", mResource.getString(R.string.GEN_Refuel).toLowerCase())
+                                .replace("[%1]", mResource.getString(R.string.GEN_Refuel).toLowerCase())+ "\n");
                 }
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), false);
             }

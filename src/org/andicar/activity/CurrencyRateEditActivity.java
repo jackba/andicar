@@ -174,10 +174,13 @@ public class CurrencyRateEditActivity extends EditActivityBase
                             lCurrencyFromId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
         strCurrencyToCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
                 lCurrencyToId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-        tvCurrencyRateLabel.setText(mResource.getString(R.string.CurrencyRateEditActivity_CurrencyRateLabel).replaceAll("%", strCurrencyFromCode));
+        tvCurrencyRateLabel.setText(mResource.getString(R.string.CurrencyRateEditActivity_CurrencyRateLabel).
+                replace("[%1]", strCurrencyFromCode));
         tvCurrencyRateToLabel.setText(strCurrencyToCode);
 
-        tvInverseRateLabel.setText(mResource.getString(R.string.CurrencyRateEditActivity_InverseCurrencyRateLabel).replaceAll("%", strCurrencyToCode));
+        tvInverseRateLabel.setText(
+                mResource.getString(R.string.CurrencyRateEditActivity_InverseCurrencyRateLabel)
+                    .replace("[%1]", strCurrencyToCode));
         tvInverseRateToLabel.setText(strCurrencyFromCode);
     }
 

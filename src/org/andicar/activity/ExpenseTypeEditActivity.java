@@ -22,7 +22,6 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;

@@ -19,26 +19,20 @@
 
 package org.andicar.activity;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SimpleCursorAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import java.util.Calendar;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
-import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
 

@@ -186,13 +186,13 @@
 
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Exclude from mileage cost calculation"</string>
 
-    <string name="ExpenseEditActivity_CreatedFromWarning">"This expense was created from %.\nEdit the coresponding %."</string>
+    <string name="ExpenseEditActivity_CreatedFromWarning">"This expense was created from [%1].\nEdit the coresponding [%1]."</string>
 
     <string name="CurrencyRateEditActivity_CurrencyFromLabel">"From currency "</string>
     <string name="CurrencyRateEditActivity_CurrencyToLabel">"To currency "</string>
-    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Rate: 1 % = "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Rate: 1 [%1] = "</string>
     <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
-    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Inverse rate: 1 % = "</string>
+    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Inverse rate: 1 [%1] = "</string>
     <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Max. allowed decimals: "</string>
 
     <string name="REPORTActivity_ReportCreatedMessage">"Your report was created successfully to sdcard/andicar/reports"</string>
@@ -228,7 +228,7 @@
     <string name="GPSTrackService_AccuracyProblemTitle">"AndiCar GPS Warning!"</string>
     <string name="GPSTrackService_AccuracyProblemMessage">"Accuracy is over the limit!"</string>
     <string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS Stopped!"</string>
-    <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent (%1) is over the limit (%2)!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
+    <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent ([%1]) is over the limit ([%2])!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
     <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar File System Error!"</string>
 
     <string name="GPSTrackShowOnMap_ProgressMessage">"Drawing in progress.\nPlease wait..."</string>
