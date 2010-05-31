@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 302;
+    public static final int DATABASE_VERSION = 310;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     
@@ -68,6 +68,8 @@ public class StaticValues
     public static final RoundingMode ROUNDING_MODE_AMOUNT = RoundingMode.HALF_UP;
     public static final int DECIMALS_CONVERSIONS = 4;
     public static final RoundingMode ROUNDING_MODE_CONVERSIONS = RoundingMode.HALF_UP;
+    public static final int DECIMALS_PRICE = 3;
+    public static final RoundingMode ROUNDING_MODE_PRICE = RoundingMode.HALF_UP;
 
 
     public static final String UOM_LENGTH_TYPE_CODE = "L";
