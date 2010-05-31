@@ -608,6 +608,14 @@ public class RefuelEditActivity extends EditActivityBase {
             toast.show();
             return;
         }
+//        if(priceEntered != null)
+//            priceEntered = priceEntered.setScale(StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
+//        if(amountEntered != null)
+//            amountEntered = amountEntered.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+//        if(priceConverted != null)
+//            priceConverted = priceConverted.setScale(StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
+//        if(amountConverted != null)
+//            amountConverted = amountConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,

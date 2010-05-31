@@ -138,11 +138,11 @@ public class ReportDbAdapter extends MainDbAdapter{
                 " END " +
                         " || ' x ' || " +
                         " ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + ", " +
-                                    StaticValues.DECIMALS_AMOUNT + ") || ' ' || " +
+                                    StaticValues.DECIMALS_PRICE + ") || ' ' || " +
                         sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
                         " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + " <> " +
                                             sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + " " +
-                                " THEN " + "' (' || ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " + StaticValues.DECIMALS_AMOUNT + ") " +
+                                " THEN " + "' (' || ROUND(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " + StaticValues.DECIMALS_PRICE + ") " +
                                             " || ' ' || " + sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
                                 " ELSE " + "'' " +
                         " END " +

@@ -30,6 +30,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -262,6 +265,19 @@ public class Utils {
         }
         ctx.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
         mMainDbAdapter.close();
+    }
 
+    public String roundStringNumber(String sNumber, int decimals){
+        String retVal = null;
+        try{
+            BigDecimal number = new BigDecimal(sNumber);
+            if(number == null)
+                return null;
+            retVal = number.setScale(decimals, RoundingMode.HALF_UP).toString();
+        }
+        catch(NumberFormatException e){
+            return null;
+        }
+        return retVal;
     }
 }
