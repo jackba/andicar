@@ -56,7 +56,7 @@ public class GPSTrackService extends Service {
 
     private NotificationManager mNM;
     private SharedPreferences mPreferences;
-    protected MainDbAdapter mMainDbAdapter = null;
+    protected MainDbAdapter mDbAdapter = null;
     protected Resources mResource = null;
 
     private LocationManager mLocationManager;
@@ -162,7 +162,7 @@ public class GPSTrackService extends Service {
                 /*Long.parseLong(mPreferences.getString("GPSTrackMinDistance", "5"))*/ 0,
                 mLocationListener);
 
-        mMainDbAdapter = new MainDbAdapter(this);
+        mDbAdapter = new MainDbAdapter(this);
 
         sName = mPreferences.getString("GPSTrackTmp_Name", null);
         sUserComment = mPreferences.getString("GPSTrackTmp_UserComment", null);
@@ -193,14 +193,14 @@ public class GPSTrackService extends Service {
                         + lDriverId + ", "
                         + (System.currentTimeMillis() / 1000) + ") ";
 
-        mMainDbAdapter.execSql(sqlStr);
+        mDbAdapter.execSql(sqlStr);
         sqlStr = "SELECT MAX(" + MainDbAdapter.GEN_COL_ROWID_NAME + ") FROM " + MainDbAdapter.GPSTRACK_TABLE_NAME;
-        Cursor c = mMainDbAdapter.execSelectSql(sqlStr);
+        Cursor c = mDbAdapter.execSelectSql(sqlStr);
         c.moveToNext();
         gpsTrackId = c.getLong(0);
         c.close();
-        long lMileId = mMainDbAdapter.getIdFromCode(MainDbAdapter.UOM_TABLE_NAME, "mi");
-        long lCarUomId = mMainDbAdapter.getCarUOMLengthID(lCarId);
+        long lMileId = mDbAdapter.getIdFromCode(MainDbAdapter.UOM_TABLE_NAME, "mi");
+        long lCarUomId = mDbAdapter.getCarUOMLengthID(lCarId);
         if(lCarUomId == lMileId)
             isUseMetricUnits = false; //use imperial units
         else
@@ -223,9 +223,9 @@ public class GPSTrackService extends Service {
             stopSelf();
         }
         //close the database
-        if(mMainDbAdapter != null){
-            mMainDbAdapter.close();
-            mMainDbAdapter = null;
+        if(mDbAdapter != null){
+            mDbAdapter.close();
+            mDbAdapter = null;
         }
 
         if(isSendCrashReport)
@@ -263,7 +263,7 @@ public class GPSTrackService extends Service {
                     + "'" + StaticValues.CSV_FORMAT + "', "
                     + "'" + gpsTrackDetailCSVFile.getAbsolutePath() + "'"
                 + " ) ";
-        mMainDbAdapter.execSql(sqlStr);
+        mDbAdapter.execSql(sqlStr);
     }
 
     private void createGOPFile(String fileName) throws IOException {
@@ -283,7 +283,7 @@ public class GPSTrackService extends Service {
                     + "'" + StaticValues.GOP_FORMAT + "', "
                     + "'" + gpsTrackDetailGOPFile.getAbsolutePath() + "'"
                 + " ) ";
-        mMainDbAdapter.execSql(sqlStr);
+        mDbAdapter.execSql(sqlStr);
     }
 
     private void createGPXFile(String fileName) throws IOException{
@@ -302,7 +302,7 @@ public class GPSTrackService extends Service {
                     + "'" + StaticValues.GPX_FORMAT + "', "
                     + "'" + gpsTrackDetailGPXFile.getAbsolutePath() + "'"
                 + " ) ";
-        mMainDbAdapter.execSql(sqlStr);
+        mDbAdapter.execSql(sqlStr);
         gpsTrackDetailGPXFileWriter.append(
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>\n"
                 + "<?xml-stylesheet type=\"text/xsl\" href=\"details.xsl\"?>\n"
@@ -351,7 +351,7 @@ public class GPSTrackService extends Service {
                     + "'" + StaticValues.CSV_FORMAT + "', "
                     + "'" + gpsTrackDetailKMLFile.getAbsolutePath() + "'"
                 + " ) ";
-        mMainDbAdapter.execSql(sqlStr);
+        mDbAdapter.execSql(sqlStr);
         //initialize the file header
 
         gpsTrackDetailKMLFileWriter.append(
@@ -532,8 +532,8 @@ public class GPSTrackService extends Service {
 
     private void createFiles() throws IOException {
         String fileName = gpsTrackId + "_" + Utils.pad(iFileCount, 3);
-        if(mMainDbAdapter == null)
-            mMainDbAdapter = new MainDbAdapter(this);
+        if(mDbAdapter == null)
+            mDbAdapter = new MainDbAdapter(this);
 
         createCSVFile(fileName);
         createGOPFile(fileName);
@@ -550,9 +550,9 @@ public class GPSTrackService extends Service {
             gpsTrackDetailGPXFile = null;
         }
 
-        if(mMainDbAdapter != null){
-            mMainDbAdapter.close();
-            mMainDbAdapter = null;
+        if(mDbAdapter != null){
+            mDbAdapter.close();
+            mDbAdapter = null;
         }
     }
 
@@ -589,9 +589,9 @@ public class GPSTrackService extends Service {
         //update the statistics for the track
         updateStatistics();
         //close the database
-        if(mMainDbAdapter != null){
-            mMainDbAdapter.close();
-            mMainDbAdapter = null;
+        if(mDbAdapter != null){
+            mDbAdapter.close();
+            mDbAdapter = null;
         }
         closeFiles(true);
         
@@ -768,10 +768,10 @@ public class GPSTrackService extends Service {
                     + MainDbAdapter.GPSTRACK_COL_INVALIDTRACKPOINTS_NAME + " = " + dTotalSkippedTrackPoints
                 + " WHERE "+ MainDbAdapter.GEN_COL_ROWID_NAME + " = " + gpsTrackId;
 
-        if(mMainDbAdapter == null)
-            mMainDbAdapter = new MainDbAdapter(this);
+        if(mDbAdapter == null)
+            mDbAdapter = new MainDbAdapter(this);
 
-        mMainDbAdapter.execSql(updateSql);
+        mDbAdapter.execSql(updateSql);
     }
 
     private class AndiCarLocationListener implements LocationListener

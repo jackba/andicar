@@ -68,6 +68,23 @@ public class BaseActivity extends Activity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mDbAdapter != null){
+            mDbAdapter.close();
+            mDbAdapter = null;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(mDbAdapter == null)
+            mDbAdapter = new MainDbAdapter(this);
+    }
+
     protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition,
             String orderBy, long selectedId, boolean addListener){
         try{

@@ -64,7 +64,7 @@ public class ListActivityBase extends ListActivity {
     protected Resources mRes = null;
     protected SharedPreferences mPreferences;
     protected SharedPreferences.Editor mPrefEditor;
-    protected MainDbAdapter mMainDbAdapter = null;
+    protected MainDbAdapter mDbAdapter = null;
     protected Bundle extras = null;
     protected AlertDialog.Builder errorAlertBuilder;
     protected AlertDialog errorAlert;
@@ -111,7 +111,7 @@ public class ListActivityBase extends ListActivity {
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
         mRes = getResources();
         mPrefEditor = mPreferences.edit();
-        mMainDbAdapter = new MainDbAdapter(this);
+        mDbAdapter = new MainDbAdapter(this);
 
         mViewBinder = pViewBinder;
 
@@ -172,8 +172,8 @@ public class ListActivityBase extends ListActivity {
     protected void onResume() {
         super.onResume();
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-        if(mMainDbAdapter == null)
-            mMainDbAdapter = new MainDbAdapter(this);
+        if(mDbAdapter == null)
+            mDbAdapter = new MainDbAdapter(this);
     }
 
     @Override
@@ -182,9 +182,9 @@ public class ListActivityBase extends ListActivity {
         if(recordCursor != null && !recordCursor.isClosed())
             recordCursor.close();
 
-        if(mMainDbAdapter != null){
-            mMainDbAdapter.close();
-            mMainDbAdapter = null;
+        if(mDbAdapter != null){
+            mDbAdapter.close();
+            mDbAdapter = null;
         }
     }
 
@@ -274,7 +274,7 @@ public class ListActivityBase extends ListActivity {
                 builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                int deleteResult = mMainDbAdapter.deleteRecord(mTableName, mLongClickId);
+                                int deleteResult = mDbAdapter.deleteRecord(mTableName, mLongClickId);
                                 if(deleteResult != -1) {
                                     errorAlertBuilder.setMessage(mRes.getString(deleteResult));
                                     errorAlert = errorAlertBuilder.create();
@@ -350,7 +350,7 @@ public class ListActivityBase extends ListActivity {
             }
         }
 
-        recordCursor = mMainDbAdapter.fetchForTable(mTableName, mColumns, tmpWhere, mOrderByColumn);
+        recordCursor = mDbAdapter.fetchForTable(mTableName, mColumns, tmpWhere, mOrderByColumn);
         startManagingCursor(recordCursor);
 
         setListAdapter(null);
@@ -367,7 +367,7 @@ public class ListActivityBase extends ListActivity {
 
         if(getListAdapter() != null && getListAdapter().getCount() == 1) {
             if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
-                Cursor c = mMainDbAdapter.fetchForTable(mTableName, MainDbAdapter.carTableColNames,
+                Cursor c = mDbAdapter.fetchForTable(mTableName, MainDbAdapter.carTableColNames,
                         null, null);
                 c.moveToFirst();
                 SharedPreferences.Editor editor = mPreferences.edit();
@@ -381,7 +381,7 @@ public class ListActivityBase extends ListActivity {
             }
             else {
                 if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-                    Cursor c = mMainDbAdapter.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
+                    Cursor c = mDbAdapter.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
                             null, null);
                     c.moveToFirst();
                     SharedPreferences.Editor editor = mPreferences.edit();
