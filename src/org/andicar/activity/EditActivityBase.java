@@ -126,23 +126,6 @@ public abstract class EditActivityBase extends BaseActivity {
         outState.putInt("mMinute", mMinute);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(mDbAdapter == null)
-            mDbAdapter = new MainDbAdapter(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(mDbAdapter != null){
-            mDbAdapter.close();
-            mDbAdapter = null;
-        }
-    }
-
     protected View.OnClickListener mCancelClickListener =
             new View.OnClickListener(){
                 public void onClick( View v )

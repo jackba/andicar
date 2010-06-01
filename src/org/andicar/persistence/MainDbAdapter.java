@@ -435,6 +435,7 @@ public class MainDbAdapter extends DB
         sql = "SELECT MAX(" + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + ") " +
                         " FROM " + EXPENSES_TABLE_NAME +
                         " WHERE " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + " = " + mCarId +
+                                    " AND " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + " IS NOT NULL " +
                         " GROUP BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME);
         c = execSelectSql(sql);
 
