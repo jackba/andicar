@@ -55,4 +55,8 @@
     <string name="ERR_035">"Invalid report."</string>
     <string name="ERR_036">"Track file not found!"</string>
     <string name="ERR_037">"Unknow car!\nIf this error persist, please report it at https://code.google.com/p/andicar/issues/entry"</string>
+    <string name="ERR_038">"This currency can not be deleted because it is used in expense(s)."</string>
+    <string name="ERR_039">"This driver can not be deleted because it is used in expense(s)."</string>
+    <string name="ERR_040">"This car can not be deleted because it is used in expense(s)."</string>
+    <string name="ERR_041">"This expense type can not be deleted because it is used in expense(s)."</string>
 </resources>
