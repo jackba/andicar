@@ -91,11 +91,13 @@ public class BaseActivity extends Activity {
             Spinner spnCurrentSpinner = (Spinner) pSpinner;
             Cursor dbcRecordCursor = mDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
             startManagingCursor( dbcRecordCursor );
-            int[] to = new int[]{android.R.id.text1};
+            int[] to = new int[]{android.R.id.text1, android.R.id.text2};
             SimpleCursorAdapter scaCursorAdapter =
-                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, dbcRecordCursor,
+//                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, dbcRecordCursor,
+                    new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, dbcRecordCursor,
                     from, to);
-            scaCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            scaCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            scaCursorAdapter.setDropDownViewResource(android.R.layout.two_line_list_item);
             spnCurrentSpinner.setAdapter(scaCursorAdapter);
 
             if(selectedId >= 0){
