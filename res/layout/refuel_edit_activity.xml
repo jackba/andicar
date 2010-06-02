@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:id="@+id/vgRoot"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        >
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/tvCarLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_CarLabel"
+                />
+            <Spinner android:id="@+id/spnCar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+
+            <TextView
+                android:id="@+id/tvDriverLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:text="@string/GEN_DriverLabel"
+                />
+            <Spinner android:id="@+id/spnDriver"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/tvExpenseCategoryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_ExpenseCategoryLabel"
+                />
+            <Spinner android:id="@+id/spnExpCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="10dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/tvExpenseTypeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_ExpenseTypeLabel"
+                />
+            <Spinner android:id="@+id/spnExpType"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="10dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/tvIndexLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_IndexLabel"
+                />
+            <EditText
+                android:id="@+id/etIndex"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="10dip"
+                android:background="@color/mandatory_bg"
+                android:tag="@string/GEN_IndexLabel"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/tvQuantityLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_QuantityLabel"
+                />
+            <Spinner android:id="@+id/spnUomVolume"
+                android:layout_width="50dip"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+            <EditText
+                android:id="@+id/etQuantity"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="5dip"
+                android:layout_width="80dip"
+                android:background="@color/mandatory_bg"
+                android:tag="@string/GEN_QuantityLabel"
+                />
+
+            <CheckBox
+                android:id="@+id/ckIsFullRefuel"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dip"
+                style="?android:attr/textAppearanceSmall"
+                android:layout_height="wrap_content"
+                android:text="@string/RefuelEditActivity_IsFullLabel"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llBaseUOMQtyZone"
+            >
+            <TextView
+                android:id="@+id/tvBaseUOMQtyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/RefuelEditActivity_QtyInBaseUOMLabel"
+                />
+            <TextView
+                android:id="@+id/tvBaseUOMQtyValue"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvCurrencyLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_CurrencyLabel"
+                />
+            <Spinner android:id="@+id/spnCurrency"
+                android:layout_width="35dip"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+            <TextView
+                android:id="@+id/tvConversionRateLabel"
+                android:layout_marginLeft="5dip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_ConvertionRateLabel"
+                />
+            <EditText
+                android:id="@+id/etConversionRate"
+                android:layout_width="70dip"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:gravity="center_vertical"
+            >
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:orientation="horizontal"
+                android:checkedButton="@+id/rbInsertModeAmount"
+                android:id="@+id/rgExpenseInsertMode">
+                <RadioButton
+                    android:id="@+id/rbInsertModeAmount"
+                    android:text="@string/GEN_AmountLabel"
+                    style="?android:attr/textAppearanceSmall"
+                    />
+                <RadioButton
+                    android:id="@+id/rbInsertModePrice"
+                    android:text="@string/GEN_PriceLabel"
+                    style="?android:attr/textAppearanceSmall"
+                    />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/etUserInput"
+                android:layout_width="60dip"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:layout_marginLeft="5dip"
+                android:background="@color/mandatory_bg"
+                android:tag="@string/GEN_PriceLabel"
+                />
+
+            <TextView
+                android:id="@+id/tvCalculatedTextLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                />
+            <TextView
+                android:id="@+id/tvCalculatedTextContent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                />
+
+<!--            <TextView
+                android:id="@+id/tvAmountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:text="@string/GEN_AmountLabel"
+                />
+            <TextView
+                android:id="@+id/tvAmountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dip"
+                />
+-->        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:id="@+id/llConversionRateZone"
+            >
+            <TextView
+                android:id="@+id/tvConvertedAmountLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <TextView
+                android:id="@+id/tvDocumentNoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_DocumentNoLabel"
+                />
+            <EditText
+                android:id="@+id/etDocumentNo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@android:drawable/editbox_background"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="10dip"
+            >
+            <TextView android:id="@+id/tvDateTimeValue"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      />
+            <Button android:id="@+id/btnPickDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/GEN_PickDateCaption"/>
+            <Button android:id="@+id/btnPickTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/GEN_PickTimeCaption"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvUserCommentLabel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/GEN_UserCommentLabel"
+            />
+        <AutoCompleteTextView
+            android:id="@+id/acUserComment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            >
+            <Button
+                android:id="@android:id/button1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                style="?android:attr/buttonStyleSmall"
+                android:text="@string/GEN_Done"
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

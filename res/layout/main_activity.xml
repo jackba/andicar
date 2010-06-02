@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:scrollbars="vertical"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="5dip"
+        android:id="@+id/vgRoot"
+        >
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_height="2dip"
+            android:layout_width="fill_parent"
+            android:background="@color/separator_bg"
+            />
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llMileageZone"
+            >
+            <TextView
+                android:id="@+id/tvMileageHdr"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MainActivity_MileageHeaderCaption"
+                />
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/tvThreeLineListMileageHdr"
+                          android:textSize="14sp"
+                          android:textStyle="bold|italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                            android:text="@string/MainActivity_MileageListHeaderCaption"
+                          />
+                <TextView android:id="@+id/tvThreeLineListMileageText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListMileageText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListMileageText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <Button android:id="@+id/btnMileageList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_MileageListBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button android:id="@+id/btnMileageInsert"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_MileageInsertBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/btnMileageList"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llGPSTrackZone"
+            >
+            <TextView
+                android:id="@+id/tvGPSTrackHdr"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MainActivity_GPSTrackHeaderCaption"
+                />
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/tvThreeLineListGPSTrackHdr"
+                          android:textSize="14sp"
+                          android:textStyle="bold|italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/MainActivity_GPSTrackListHeaderCaption"
+                          />
+                <TextView android:id="@+id/tvThreeLineListGPSTrackText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListGPSTrackText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListGPSTrackText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <Button android:id="@+id/btnGPSTrackList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_GPSTrackListBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button android:id="@+id/btnGPSTrackShowOnMap"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_GPSTrackShowOnMapBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal ="true"
+                    android:layout_alignTop="@id/btnGPSTrackList"
+                    />
+                <Button android:id="@+id/btnGPSTrackInsert"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_GPSTrackInsertBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@id/btnGPSTrackList"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llRefuelZone"
+            >
+            <TextView
+                android:id="@+id/tvRefuelHdr"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MainActivity_RefuelHeaderCaption"
+                />
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/tvThreeLineListRefuelHdr"
+                          android:textSize="14sp"
+                          android:textStyle="bold|italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/MainActivity_RefuelListHeaderCaption"
+                          />
+                <TextView android:id="@+id/tvThreeLineListRefuelText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListRefuelText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListRefuelText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <Button android:id="@+id/btnRefuelList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_RefuelListBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button android:id="@+id/btnRefuelInsert"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_RefuelInsertBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toLeftOf="@id/btnRefuelList"
+                    android:layout_alignTop="@id/btnRefuelList"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llExpenseZone"
+            >
+            <TextView
+                android:id="@+id/tvExpenseHdr"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MainActivity_ExpenseHeaderCaption"
+                />
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/tvThreeLineListRefuelHdr"
+                          android:textSize="14sp"
+                          android:textStyle="bold|italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/MainActivity_ExpenseListHeaderCaption"
+                          />
+                <TextView android:id="@+id/tvThreeLineListExpenseText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListExpenseText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListExpenseText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <Button android:id="@+id/btnExpenseList"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_ExpenseListBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    />
+                <Button android:id="@+id/btnExpenseInsert"
+                    style="?android:attr/buttonStyleSmall"
+                    android:text="@string/MainActivity_ExpenseInsertBtnCaption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_toLeftOf="@id/btnExpenseList"
+                    android:layout_alignTop="@id/btnExpenseList"
+                    />
+            </RelativeLayout>
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/llStatistcsZone"
+            >
+            <TextView
+                android:id="@+id/tvStatisticsHdr"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dip"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/MainActivity_StatisticsHeaderCaption"
+                />
+            <LinearLayout
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <TextView android:id="@+id/tvThreeLineListCarReportHdr"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:text="@string/MainActivity_StatisticsListHeaderCaption"
+                          />
+                <TextView android:id="@+id/tvThreeLineListStatisticsText1"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListStatisticsText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListStatisticsText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+
+            <TextView
+                android:layout_height="2dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvShortAboutLbl"
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal|bottom"
+            android:layout_marginTop="5dip"
+            android:textSize="12sp"
+            />
+    </LinearLayout>
+</ScrollView>
