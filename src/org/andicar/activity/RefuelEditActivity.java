@@ -241,8 +241,8 @@ public class RefuelEditActivity extends EditActivityBase {
                 new String[]{MainDbAdapter.UOM_COL_CODE_NAME}, MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition,
                 MainDbAdapter.UOM_COL_CODE_NAME, mUomVolumeId, false);
         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, 
-                new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.CURRENCY_COL_CODE_NAME, mCurrencyId, false);
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId, false);
 
         userCommentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
                 mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,

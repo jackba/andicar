@@ -96,7 +96,7 @@ public class CarEditActivity extends EditActivityBase
              //default currency
             initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, lCurrencyId, false);
+                    MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyId, false);
 
             if( strName != null ) {
                 etName.setText( strName );
@@ -146,7 +146,7 @@ public class CarEditActivity extends EditActivityBase
              //default currency
             initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, 1, false);
+                    MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, 1, false);
 
             ckIsActive.setChecked( true );
         }

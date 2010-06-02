@@ -117,12 +117,12 @@ public class CurrencyRateEditActivity extends EditActivityBase
         }
 
         initSpinner(spnCurrencyFromSpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, lCurrencyFromId, false);
+                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyFromId, false);
 
         initSpinner(spnCurrencyToSpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, lCurrencyToId, false);
+                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyToId, false);
     }
 
     @Override

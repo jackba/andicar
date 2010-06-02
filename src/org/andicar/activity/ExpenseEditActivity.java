@@ -281,9 +281,10 @@ public class ExpenseEditActivity extends EditActivityBase {
 
                     if(newCarCurrencyId != mCurrencyId){
                         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
+                                MainDbAdapter.currencyTableColNames, 
+                                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                                     MainDbAdapter.isActiveCondition,
-                                    MainDbAdapter.CURRENCY_COL_CODE_NAME,
+                                    MainDbAdapter.GEN_COL_NAME_NAME,
                                     newCarCurrencyId, false);
                         mCurrencyId = newCarCurrencyId;
                         carDefaultCurrencyId = mCurrencyId;
