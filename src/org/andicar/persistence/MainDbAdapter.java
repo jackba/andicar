@@ -558,6 +558,23 @@ public class MainDbAdapter extends DB
                     c.close();
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 }
+                else if(tableName.equals(CURRENCY_TABLE_NAME)){
+                    long currRateId = -1;
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                    if(checkVal == -1){
+                        String currencyRateSelect =
+                                "SELECT " + GEN_COL_ROWID_NAME + " " +
+                                "FROM " + CURRENCYRATE_TABLE_NAME + " " +
+                                "WHERE " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + rowId +
+                                    " OR " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + rowId;
+                        Cursor c = execSelectSql(currencyRateSelect);
+                        while(c.moveToNext()){
+                            currRateId = c.getLong(0);
+                            mDb.delete(CURRENCYRATE_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + currRateId, null);
+                        }
+                        c.close();
+                    }
+                }
                 else
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
             }
