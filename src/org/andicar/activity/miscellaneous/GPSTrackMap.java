@@ -131,6 +131,13 @@ public class GPSTrackMap extends MapActivity implements Runnable{
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(progressDialog != null && progressDialog.isShowing())
+            handler.sendEmptyMessage(0);
+    }
+
     public void run() {
         drawTrack();
     }
@@ -138,10 +145,13 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what == 0)
-                    progressDialog.dismiss();
+                if(msg.what == 0){
+                    if(progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
+                }
                 else{
-                    progressDialog.dismiss();
+                    if(progressDialog != null && progressDialog.isShowing())
+                        progressDialog.dismiss();
                     madbErrorAlert = new AlertDialog.Builder( GPSTrackMap.this );
                     madbErrorAlert.setCancelable( false );
                     madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
