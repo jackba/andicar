@@ -31,7 +31,7 @@
     
 
     <application
-        android:label="@string/APP_Name"
+        android:label="AndiCar"
         android:description="@string/APP_Description"
         android:icon="@drawable/car2"
         android:debuggable="true"
@@ -40,7 +40,7 @@
         <service android:name="org.andicar.service.GPSTrackService" />
         
         <activity android:name="org.andicar.activity.MainActivity"
-                  android:label="@string/APP_Name"
+                  android:label="AndiCar"
                   android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

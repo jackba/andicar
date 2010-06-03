@@ -17,6 +17,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
+<!-- spinner initialization arrays-->
+
 <resources>
     <!-- report file formats  -->
     <string-array name="report_formats">
@@ -49,27 +52,6 @@
         <item>600000</item>
     </string-array>
 
-    <!-- Used in gps track (minimum distance betwee 2 recording points) -->
-<!--    <string-array name="gpstrack_preference_mindistance_entries">
-        <item>0</item>
-        <item>1 m / 1.09 yd</item>
-        <item>3 m / 3.28 yd</item>
-        <item>5 m / 5.47 yd</item>
-        <item>10 m / 10.94 yd</item>
-        <item>50 m / 54.68 yd</item>
-        <item>100 m / 109.36 yd</item>
-    </string-array>
-     values in meter 
-    <string-array name="gpstrack_preference_mindistance_values">
-        <item>0</item>
-        <item>1</item>
-        <item>3</item>
-        <item>5</item>
-        <item>10</item>
-        <item>50</item>
-        <item>100</item>
-    </string-array>
--->
     <!-- Used in gps track (maximum value of accuracy) -->
     <string-array name="gpstrack_preference_maxaccuracy_entries">
         <item>10 m / 10.94 yd</item>
