@@ -18,8 +18,14 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
+<!-- UI labels and messages-->
+<!--
+    Some strings contain one or more "variables". These looks like [%No] (for example [%1]).
+    These variables are parsed in the java code and are replaced with a string value (a currency code, an UOM code, etc)
+-->
+
 <resources>
-    <string name="APP_Name">"AndiCar"</string>
     <string name="APP_Description">"Free and open source car management software."</string>
     <string name="APP_Activity_DriverEdit">"Edit driver"</string>
     <string name="APP_Activity_DriverList">"Drivers"</string>

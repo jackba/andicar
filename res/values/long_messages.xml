@@ -22,8 +22,47 @@
         AndiCar is a free and open source car management
         software for Android powered devices.\n
         It is licensed under the terms of the GNU General Public License, version 3.\n
-        For more details see the About page.\n
+        See the About page for more details.\n
         Thank you for using AndiCar!
     </string>
 
+    <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
+        &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> is a free and open source car management software for Android powered devices.
+        It is licensed under the terms of the GNU General Public License, version 3.&lt;br>
+        See the About page for more details.&lt;br>Copyright © 2010 Miklos Keresztes.&lt;br>
+        Thank you for using &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>!&lt;br>
+        Application version:
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML1">
+        &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> is a free and open source car management
+        software for Android powered devices. It is licensed under the terms of the GNU General Public License.&lt;br>
+        *  For more information (how to's, latest news, etc.) please visit the project home page at
+        &lt;a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/&lt;/a>.&lt;br>
+        &lt;small>Refresh the page in your browser if you get a "Web page not available" message.&lt;/small>&lt;br>
+        *  For questions you are welcome to the &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> discussion list at
+        &lt;a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar&lt;/a>.&lt;br>
+        *  For bug reports or enhancement requests don\'t hesitate to use the &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> issue system at
+        &lt;a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list&lt;/a>.&lt;br>
+        *  You can subscribe for the project news at
+        &lt;a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/&lt;/a>.&lt;br>
+        *  For other things you can send an email to andicar.support@gmail.com.&lt;br>&lt;br>
+        If you enjoy using &lt;b>&lt;i>AndiCar&lt;/b>&lt;/i>, please consider making a donation.
+        All donations can be made using a PayPal account.
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML2">
+        &lt;br>&lt;br>Thank you for using &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>.&lt;br>&lt;br>
+        &lt;br>&lt;b>&lt;i>Copyright notice&lt;/i>&lt;/b>:&lt;br>&lt;br>
+        Copyright © 2010 Miklos Keresztes (miklos.keresztes@gmail.com)&lt;br>&lt;br>
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;br>&lt;br>
+        This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+        without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+        See the GNU General Public License for more details.&lt;br>&lt;br>
+        You should have received a copy of the GNU General Public License along with this program.
+        If not, see &lt;a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses&lt;/a>.&lt;br>
+        The whole license can be found &lt;a href="http://www.gnu.org/licenses/gpl.html">here&lt;/a>.&lt;br>
+    </string>
 </resources>
