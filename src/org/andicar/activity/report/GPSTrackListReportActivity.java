@@ -51,35 +51,34 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
     private Spinner spnCarSearch;
 
     @Override
-    public void onCreate( Bundle icicle )
-    {
+    public void onCreate( Bundle icicle ){
+        super.onCreate(icicle);
+    }
+
+    @Override
+    protected void initView() {
         reportSelectName = "gpsTrackListViewSelect";
         Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
-        if(icicle == null){
-            whereConditions = new Bundle();
-            whereConditions.putString(
-                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
-                    mCarId.toString() );
-        }
-        else
-            whereConditions = (Bundle)getLastNonConfigurationInstance();
-
-        super.onCreate( icicle, null, GPSTrackEditActivity.class, GPSTrackController.class,
+        whereConditions = new Bundle();
+        whereConditions.putString(
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
+                mCarId.toString() );
+        standardInitView(null, GPSTrackEditActivity.class, GPSTrackController.class,
                 MainDbAdapter.GPSTRACK_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null,
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
                 reportSelectName,  whereConditions, new GPSDataBinder());
-
     }
 
-    @Override
-    public Object onRetainNonConfigurationInstance() {
-        //save existing data whwn the activity restart (for example on screen orientation change)
-        return whereConditions;
-    }
 
+//    @Override
+//    public Object onRetainNonConfigurationInstance() {
+//        //save existing data whwn the activity restart (for example on screen orientation change)
+//        return whereConditions;
+//    }
+//
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == StaticValues.OPTION_MENU_SEARCH_ID){
@@ -165,5 +164,4 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
             }
         };
     };
-
 }

@@ -32,7 +32,12 @@ public class ExpenseTypeListActivity extends ListActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, null, ExpenseTypeEditActivity.class, null,
+        super.onCreate(icicle);
+    }
+
+    @Override
+    protected void initView() {
+        standardInitView(null, ExpenseTypeEditActivity.class, null,
                 MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.expenseTypeTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
                 R.layout.twoline_list_activity,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},

@@ -32,21 +32,25 @@ public class UOMListActivity extends ListActivityBase
 
     /** Called when the activity is first created. */
     @Override
-    public void onCreate( Bundle icicle )
-    {
+    public void onCreate( Bundle icicle ){
         extras = getIntent().getExtras();
         uomType = extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME);
 
-        super.onCreate( icicle, null, UOMEditActivity.class, null,
-                MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, 
-                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomType + "'", MainDbAdapter.UOM_COL_CODE_NAME,
-                R.layout.twoline_list_activity,
-                new String[]{MainDbAdapter.UOM_COL_CODE_NAME, MainDbAdapter.GEN_COL_NAME_NAME},
-                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
+        super.onCreate(icicle);
 
         if(uomType.equals( "L"))
             setTitle( getTitle() + " (" + mRes.getString( R.string.UOMEditActivity_UOMTypeLengthTitle) + ")");
         else
             setTitle( getTitle() + " (" + mRes.getString( R.string.UOMEditActivity_UOMTypeVolumeTitle) + ")");
+    }
+
+    @Override
+    protected void initView() {
+        standardInitView(null, UOMEditActivity.class, null,
+                MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames,
+                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomType + "'", MainDbAdapter.GEN_COL_NAME_NAME,
+                R.layout.twoline_list_activity,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.UOM_COL_CODE_NAME},
+                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
     }
 }

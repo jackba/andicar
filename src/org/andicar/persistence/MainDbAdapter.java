@@ -498,12 +498,12 @@ public class MainDbAdapter extends DB
         try{
             checkVal = canDelete(tableName, rowId);
             // 1 -> -1
-            if(checkVal == -1){
+            if(checkVal < 0){
                 if(tableName.equals(MILEAGE_TABLE_NAME)){ // update the car curent index
                     long carId = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId)
                                     .getLong(MILEAGE_COL_CAR_ID_POS);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                    if(checkVal == -1)
+                    if(checkVal < 0)
                         updateCarCurrentIndex(carId);
                     //set null in gpstrack table col. mileage id
                     Cursor c = fetchForTable(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, GPSTRACK_COL_MILEAGE_ID_NAME + "=" + rowId, null);
@@ -519,7 +519,7 @@ public class MainDbAdapter extends DB
                     long carId = fetchRecord(REFUEL_TABLE_NAME, refuelTableColNames, rowId)
                                     .getLong(REFUEL_COL_CAR_ID_POS);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                    if(checkVal == -1){
+                    if(checkVal < 0){
                         String expenseIdSelect =
                                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                                 "FROM " + EXPENSES_TABLE_NAME + " " +
@@ -539,7 +539,7 @@ public class MainDbAdapter extends DB
                     long carId = fetchRecord(EXPENSES_TABLE_NAME, expensesTableColNames, rowId)
                                     .getLong(EXPENSES_COL_CAR_ID_POS);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                    if(checkVal == -1)
+                    if(checkVal < 0)
                         updateCarCurrentIndex(carId);
                 }
                 else if(tableName.equals(GPSTRACK_TABLE_NAME)){
@@ -561,7 +561,7 @@ public class MainDbAdapter extends DB
                 else if(tableName.equals(CURRENCY_TABLE_NAME)){
                     long currRateId = -1;
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                    if(checkVal == -1){
+                    if(checkVal < 0){
                         String currencyRateSelect =
                                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                                 "FROM " + CURRENCYRATE_TABLE_NAME + " " +
@@ -589,7 +589,10 @@ public class MainDbAdapter extends DB
             lasteException = e;
             checkVal = R.string.ERR_000;
         }
-        return checkVal;
+        if(checkVal < 0 )
+            return -1;
+        else
+            return checkVal;
     }
 
     /**

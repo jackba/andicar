@@ -47,7 +47,7 @@ import org.andicar.utils.Utils;
  *
  * @author Miklos Keresztes
  */
-public class ListActivityBase extends ListActivity {
+public abstract class ListActivityBase extends ListActivity {
     protected Cursor recordCursor = null;
     protected long mLongClickId = -1;
     protected boolean showInactiveRecords = false;
@@ -73,35 +73,17 @@ public class ListActivityBase extends ListActivity {
     protected ListView lvBaseList = null;
     protected SimpleCursorAdapter.ViewBinder mViewBinder;
 
-    /** Use onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
-     *                  String tableName, String[] columns, String whereCondition, String orderByColumn,
-     *                  int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo)
-     */
+    protected abstract void initView();
+
     @Override
-    @Deprecated
     public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
+        initView();
     }
 
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryStartSession(this);
-    }
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEndSession(this);
-    }
-
-    protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
+    protected void standardInitView(OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
             String tableName, String[] columns, String whereCondition, String orderByColumn,
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo, SimpleCursorAdapter.ViewBinder pViewBinder) {
-
-        super.onCreate(icicle);
 
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
@@ -141,7 +123,11 @@ public class ListActivityBase extends ListActivity {
 
         lvBaseList.setTextFilterEnabled(true);
         lvBaseList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        lvBaseList.setOnItemClickListener(mItemClickListener);
+        if(mItemClickListener != null)
+            lvBaseList.setOnItemClickListener(mItemClickListener);
+        else
+            lvBaseList.setOnItemClickListener(mListItemOnClickListener);
+        
         lvBaseList.setOnItemLongClickListener(mItemLongClickListener);
         registerForContextMenu(lvBaseList);
 
@@ -165,7 +151,24 @@ public class ListActivityBase extends ListActivity {
             }
             startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
         }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryStartSession(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mDbAdapter != null){
+            mDbAdapter.close();
+            mDbAdapter = null;
+        }
+        if(isSendStatistics)
+            AndiCarStatistics.sendFlurryEndSession(this);
     }
 
     @Override
@@ -181,13 +184,29 @@ public class ListActivityBase extends ListActivity {
         super.onDestroy();
         if(recordCursor != null && !recordCursor.isClosed())
             recordCursor.close();
-
-        if(mDbAdapter != null){
-            mDbAdapter.close();
-            mDbAdapter = null;
-        }
     }
 
+//    @Override
+//    public Object onRetainNonConfigurationInstance() {
+////        //save existing data whwn the activity restart (for example on screen orientation change)
+////        final SavedData data = new SavedData();
+////        data.handler = handler;
+////        data.progressDialog = progressDialog;
+////        data.mListDbHelper = mListDbHelper;
+////        data.mReportDbHelper = mReportDbHelper;
+////        data.whereConditions = whereConditions;
+////        data.reportSelectName = reportSelectName;
+////        return data;
+//        return null;
+//    }
+//
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+////        if(progressDialog != null && progressDialog.isShowing())
+////            handler.sendEmptyMessage(-1);
+//    }
+    
     protected AdapterView.OnItemLongClickListener mItemLongClickListener =
             new AdapterView.OnItemLongClickListener() {
                 public boolean onItemLongClick(AdapterView parent, View v, int position, long id) {
@@ -338,6 +357,13 @@ public class ListActivityBase extends ListActivity {
                 break;
         }
     }
+
+    protected AdapterView.OnItemClickListener mListItemOnClickListener =
+            new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> av, View view, int i, long l) {
+                    startEditActivity(l);
+                }
+    };
 
     protected void fillData() {
         String tmpWhere = mWhereCondition;

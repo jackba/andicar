@@ -191,7 +191,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             //get the list of gop files
 //            trackId = "99";
             trackFiles = FileUtils.getFileNames(StaticValues.TRACK_FOLDER, trackId + "_[0-9][0-9][0-9].gop");
-            if(trackFiles.isEmpty()){
+            if(trackFiles == null || trackFiles.isEmpty()){
                 handler.sendEmptyMessage(R.string.ERR_036);
             }
             int latitudeE6;

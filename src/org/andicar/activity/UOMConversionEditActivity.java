@@ -87,7 +87,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
             initSpinner(spnUomFrom, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                         MainDbAdapter.isActiveCondition,
-                        MainDbAdapter.UOM_COL_CODE_NAME, uomFromId, false);
+                        MainDbAdapter.GEN_COL_NAME_NAME, uomFromId);
 
             uomFromType = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomFromId)
                             .getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
@@ -96,7 +96,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                         MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomFromType + "' " +
                         " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " <> " + uomFromId +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, uomToId, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.GEN_COL_NAME_NAME, uomToId);
             if (conversionRate != null) {
                 etConversionRate.setText( conversionRate.toString() );
             }
@@ -104,7 +104,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
         } else {
             initSpinner(spnUomFrom, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                        MainDbAdapter.isActiveCondition, MainDbAdapter.UOM_COL_CODE_NAME, -1, false);
+                        MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, -1);
             ckIsActive.setChecked(true);
         }
 
@@ -120,7 +120,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
                                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomFromType + "' " +
                                     " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " <> " + arg3 +
-                                    MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, uomToId, false);
+                                    MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.GEN_COL_NAME_NAME, uomToId);
                     }
                     public void onNothingSelected(AdapterView<?> arg0) {
                     }
