@@ -37,10 +37,7 @@ public class DriverListActivity extends ListActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, mItemClickListener, DriverEditActivity.class, null,
-                MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                android.R.layout.simple_list_item_2,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
+        super.onCreate(icicle);
     }
 
 
@@ -70,4 +67,12 @@ public class DriverListActivity extends ListActivityBase
             }
         }
     };
+
+    @Override
+    protected void initView() {
+        standardInitView(mItemClickListener, DriverEditActivity.class, null,
+                MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                android.R.layout.simple_list_item_2,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
+    }
 }

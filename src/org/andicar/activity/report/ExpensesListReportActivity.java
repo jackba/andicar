@@ -52,32 +52,25 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
     @Override
     public void onCreate( Bundle icicle )
     {
+        super.onCreate(icicle);
+    }
+
+    @Override
+    protected void initView() {
         reportSelectName = "reportExpensesListViewSelect";
         Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
-        if(icicle == null){
-            whereConditions = new Bundle();
-            whereConditions.putString(
-                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
-                    MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
-                    mCarId.toString() );
-        }
-        else
-            whereConditions = (Bundle)getLastNonConfigurationInstance();
-
-        super.onCreate( icicle, null, ExpenseEditActivity.class, null,
+        whereConditions = new Bundle();
+        whereConditions.putString(
+                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME,
+                MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=",
+                mCarId.toString() );
+        standardInitView(null, ExpenseEditActivity.class, null,
                 MainDbAdapter.EXPENSES_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null,
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
                 reportSelectName,  whereConditions, null);
-
-    }
-
-    @Override
-    public Object onRetainNonConfigurationInstance() {
-        //save existing data whwn the activity restart (for example on screen orientation change)
-        return whereConditions;
     }
 
     @Override
@@ -178,5 +171,4 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
             }
         };
     };
-
 }
