@@ -21,8 +21,13 @@
 
 <!-- UI labels and messages-->
 <!--
-    Some strings contain one or more "variables". These looks like [%No] (for example [%1]).
-    These variables are parsed in the java code and are replaced with a string value (a currency code, an UOM code, etc)
+    Some strings contains one or more "variables". These looks like [%No] (for example [%1], [%2]).
+    These variables are parsed in the application and are replaced with a string value (a currency code, an UOM code, etc)
+
+    !!!For translators!!!:
+        If any of the translated string is longer than the english value you should
+        verify the look of the user interface (using the android emulator or any other device)
+        with the translated values.
 -->
 
 <resources>
@@ -108,23 +113,17 @@
     <string name="MENU_GPSTrackCaption">"GPS Tracks"</string>
 
 
+    <string name="MainActivity_InsertBtnCaption">"  Add new  "</string>
+    <string name="MainActivity_ListBtnCaption">"  View more  "</string>
     <string name="MainActivity_MileageHeaderCaption">"Mileages"</string>
     <string name="MainActivity_MileageListHeaderCaption">"Last mileage:"</string>
-    <string name="MainActivity_MileageInsertBtnCaption">"  Add new  "</string>
-    <string name="MainActivity_MileageListBtnCaption">"  View more  "</string>
     <string name="MainActivity_RefuelHeaderCaption">"Refuels"</string>
     <string name="MainActivity_RefuelListHeaderCaption">"Last refuel:"</string>
-    <string name="MainActivity_RefuelInsertBtnCaption">"  Add new  "</string>
-    <string name="MainActivity_RefuelListBtnCaption">"  View more  "</string>
     <string name="MainActivity_GPSTrackHeaderCaption">"GPS Tracks"</string>
     <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string>
-    <string name="MainActivity_GPSTrackInsertBtnCaption">"  Add new  "</string>
     <string name="MainActivity_GPSTrackShowOnMapBtnCaption">" Show on map "</string>
-    <string name="MainActivity_GPSTrackListBtnCaption">"  View more  "</string>
     <string name="MainActivity_ExpenseHeaderCaption">"Expenses"</string>
     <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string>
-    <string name="MainActivity_ExpenseInsertBtnCaption">"  Add new  "</string>
-    <string name="MainActivity_ExpenseListBtnCaption">"  View more  "</string>
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
     <string name="MainActivity_StatisticsListHeaderCaption">"Last know odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
