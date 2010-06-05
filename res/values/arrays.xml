@@ -20,6 +20,11 @@
 
 <!-- spinner initialization arrays-->
 
+<!--
+    !!!For translators!!!:
+    Only some items must be translated. For example the items with the "Do not use" text
+-->
+
 <resources>
     <!-- report file formats  -->
     <string-array name="report_formats">
