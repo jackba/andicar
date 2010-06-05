@@ -105,14 +105,14 @@
                 >
                 <Button android:id="@+id/btnMileageList"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MainActivity_MileageListBtnCaption"
+                    android:text="@string/MainActivity_ListBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
                 <Button android:id="@+id/btnMileageInsert"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MainActivity_MileageInsertBtnCaption"
+                    android:text="@string/MainActivity_InsertBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -186,7 +186,7 @@
                 >
                 <Button android:id="@+id/btnGPSTrackList"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MainActivity_GPSTrackListBtnCaption"
+                    android:text="@string/MainActivity_ListBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -201,7 +201,7 @@
                     />
                 <Button android:id="@+id/btnGPSTrackInsert"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MainActivity_GPSTrackInsertBtnCaption"
+                    android:text="@string/MainActivity_InsertBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -275,14 +275,14 @@
                 >
                 <Button android:id="@+id/btnRefuelList"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MainActivity_RefuelListBtnCaption"
+                    android:text="@string/MainActivity_ListBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
                 <Button android:id="@+id/btnRefuelInsert"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MainActivity_RefuelInsertBtnCaption"
+                    android:text="@string/MainActivity_InsertBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -356,14 +356,14 @@
                 >
                 <Button android:id="@+id/btnExpenseList"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MainActivity_ExpenseListBtnCaption"
+                    android:text="@string/MainActivity_ListBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     />
                 <Button android:id="@+id/btnExpenseInsert"
                     style="?android:attr/buttonStyleSmall"
-                    android:text="@string/MainActivity_ExpenseInsertBtnCaption"
+                    android:text="@string/MainActivity_InsertBtnCaption"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
