@@ -609,6 +609,17 @@ public class MainDbAdapter extends DB
                 return R.string.ERR_010;
             }
             checkCursor.close();
+            //check expenses
+            checkSql = "SELECT * " +
+                        "FROM " + EXPENSES_TABLE_NAME + " " +
+                        "WHERE " + EXPENSES_COL_DRIVER_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_039;
+            }
+            checkCursor.close();
         }
         else if(tableName.equals(CAR_TABLE_NAME)){
             //check if exists mileage for this driver
@@ -633,6 +644,17 @@ public class MainDbAdapter extends DB
                 return R.string.ERR_012;
             }
             checkCursor.close();
+            //check expenses
+            checkSql = "SELECT * " +
+                        "FROM " + EXPENSES_TABLE_NAME + " " +
+                        "WHERE " + EXPENSES_COL_CAR_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_040;
+            }
+            checkCursor.close();
         }
         else if(tableName.equals(UOM_TABLE_NAME)){
             //check if exists mileage for this driver
@@ -650,6 +672,7 @@ public class MainDbAdapter extends DB
             checkSql = "SELECT * " +
                         "FROM " + REFUEL_TABLE_NAME + " " +
                         "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " = " + rowId + " " +
+                            " OR " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
@@ -686,11 +709,24 @@ public class MainDbAdapter extends DB
             checkSql = "SELECT * " +
                         "FROM " + REFUEL_TABLE_NAME + " " +
                         "WHERE " + REFUEL_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
+                            " OR " + REFUEL_COL_CURRENCYENTERED_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
                 checkCursor.close();
                 return R.string.ERR_017;
+            }
+            checkCursor.close();
+            //check expenses
+            checkSql = "SELECT * " +
+                        "FROM " + EXPENSES_TABLE_NAME + " " +
+                        "WHERE " + EXPENSES_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
+                            " OR " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_038;
             }
             checkCursor.close();
         }
@@ -715,6 +751,17 @@ public class MainDbAdapter extends DB
             if(checkCursor.moveToFirst()){ //record exists
                 checkCursor.close();
                 return R.string.ERR_019;
+            }
+            checkCursor.close();
+            //check expenses
+            checkSql = "SELECT * " +
+                        "FROM " + EXPENSES_TABLE_NAME + " " +
+                        "WHERE " + EXPENSES_COL_EXPENSETYPE_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_041;
             }
             checkCursor.close();
         }
