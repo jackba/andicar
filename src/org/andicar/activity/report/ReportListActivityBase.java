@@ -212,16 +212,19 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     private Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                progressDialog.dismiss();
-                Toast toast = null;
-                if(msg.peekData() == null)
-                    toast = Toast.makeText( getApplicationContext(),
-                            mRes.getString(msg.what), Toast.LENGTH_LONG );
-                else
-                    toast = Toast.makeText( getApplicationContext(),
-                            msg.peekData().getString("ErrorMsg"), Toast.LENGTH_LONG );
-                if(toast != null)
-                    toast.show();
+                try{
+                    progressDialog.dismiss();
+                    Toast toast = null;
+                    if(msg.peekData() == null)
+                        toast = Toast.makeText( getApplicationContext(),
+                                mRes.getString(msg.what), Toast.LENGTH_LONG );
+                    else
+                        toast = Toast.makeText( getApplicationContext(),
+                                msg.peekData().getString("ErrorMsg"), Toast.LENGTH_LONG );
+                    if(toast != null)
+                        toast.show();
+                }
+                catch(Exception e){}
             }
     };
 
