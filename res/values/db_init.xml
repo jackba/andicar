@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Database initialisation strings-->
+
+<resources>
+    <!-- UOM's -->
+    <string name="DB_UOM_KmName">"Kilometer"</string>
+    <string name="DB_UOM_KmComment">"Kilometer"</string>
+    <string name="DB_UOM_MiName">"Mile"</string>
+    <string name="DB_UOM_MiComment">"Mile"</string>
+    <string name="DB_UOM_LName">"Liter"</string>
+    <string name="DB_UOM_LComment">"Liter"</string>
+    <string name="DB_UOM_USGName">"US gallon"</string>
+    <string name="DB_UOM_USGComment">"U.S. liquid gallon"</string>
+    <string name="DB_UOM_GBGName">"Imperial gallon"</string>
+    <string name="DB_UOM_GBGComment">"Imperial (UK) gallon"</string>
+    <!-- UOM Conversions -->
+    <string name="DB_UOMConv_MiToKmName">"mi to km"</string>
+    <string name="DB_UOMConv_MiToKmComment">"Mile to Kilometer"</string>
+    <string name="DB_UOMConv_KmToMiName">"km to mi"</string>
+    <string name="DB_UOMConv_KmToMiComment">"Kilometer to Mile"</string>
+    <string name="DB_UOMConv_USGToLName">"US gal to l"</string>
+    <string name="DB_UOMConv_USGToLComment">"US gallon to Liter"</string>
+    <string name="DB_UOMConv_LToUSGName">"l to US gal"</string>
+    <string name="DB_UOMConv_LToUSGComment">"Liter to US gallon"</string>
+    <string name="DB_UOMConv_GBGToLName">"GB gal to l"</string>
+    <string name="DB_UOMConv_GBGToLComment">"Imperial gallon to Liter"</string>
+    <string name="DB_UOMConv_LToGBGName">"l to GB gal"</string>
+    <string name="DB_UOMConv_LToGBGComment">"Liter to Imperial gallon"</string>
+    <string name="DB_UOMConv_GBGToUSGName">"GB gal to US gal"</string>
+    <string name="DB_UOMConv_GBGToUSGComment">"Imperial gallon to US gallon"</string>
+    <string name="DB_UOMConv_USGToGBGName">"US gal to GB gal"</string>
+    <string name="DB_UOMConv_USGToGBGComment">"US gallon to Imperial gallon"</string>
+    <!-- expense types -->
+    <string name="DB_ExpType_PersonalName">"Personal"</string>
+    <string name="DB_ExpType_PersonalComment">"Expenses suported by you"</string>
+    <string name="DB_ExpType_EmployerName">"Employer"</string>
+    <string name="DB_ExpType_EmployerComment">"Expenses suported by your employer"</string>
+    <!-- expense categories -->
+    <string name="DB_ExpCat_FuelName">"Fuel"</string>
+    <string name="DB_ExpCat_FuelComment">"Expenses with refuels"</string>
+    <string name="DB_ExpCat_ServiceName">"Service"</string>
+    <string name="DB_ExpCat_ServiceComment">"Expenses with services"</string>
+    <string name="DB_ExpCat_InsuranceName">"Insurance"</string>
+    <string name="DB_ExpCat_InsuranceComment">"Expenses with insurance"</string>
+    <!-- currencies -->
+    <string name="DB_Curr_EUR">"Euro"</string>
+    <string name="DB_Curr_USD">"US Dollar"</string>
+    <string name="DB_Curr_HUF">"Hungary Forint"</string>
+    <string name="DB_Curr_RON">"Romania (new) Lei"</string>
+    <string name="DB_Curr_AUD">"Australia Dollar"</string>
+    <string name="DB_Curr_CAD">"Canada Dollar"</string>
+    <string name="DB_Curr_CHF">"Switzerland Francs"</string>
+    <string name="DB_Curr_CNY">"China Yuan"</string>
+    <string name="DB_Curr_GBP">"United Kingdom Pounds"</string>
+    <string name="DB_Curr_JPY">"Japan Yen"</string>
+    <string name="DB_Curr_RUB">"Russia Ruble"</string>
+    <string name="DB_Curr_INR">"Indian rupee"</string>
+    <string name="DB_Curr_ARS">"Argentine peso"</string>
+    <string name="DB_Curr_BRL">"Brazilian real"</string>
+    <string name="DB_Curr_BGL">"Bulgarian lev"</string>
+    <string name="DB_Curr_XAF">"Central African CFA franc"</string>
+    <string name="DB_Curr_COP">"Colombian peso"</string>
+    <string name="DB_Curr_HRK">"Croatian kuna"</string>
+    <string name="DB_Curr_CZK">"Czech koruna"</string>
+    <string name="DB_Curr_DKK">"Danish krone"</string>
+    <string name="DB_Curr_EGP">"Egyptian pound"</string>
+    <string name="DB_Curr_EEK">"Estonian kroon"</string>
+    <string name="DB_Curr_GEL">"Georgian lari"</string>
+    <string name="DB_Curr_HKD">"Hong Kong dollar"</string>
+    <string name="DB_Curr_ILS">"Israeli new sheqel"</string>
+    <string name="DB_Curr_KRW">"South Korean won"</string>
+    <string name="DB_Curr_MXN">"Mexican peso"</string>
+    <string name="DB_Curr_NOK">"Norwegian krone"</string>
+    <string name="DB_Curr_PLN">"Polish złoty"</string>
+    <string name="DB_Curr_SAR">"Saudi riyal"</string>
+    <string name="DB_Curr_ZAR">"South African rand"</string>
+    <string name="DB_Curr_SEK">"Swedish krona"</string>
+    <string name="DB_Curr_TRY">"Turkish lira"</string>
+    <string name="DB_Curr_UAH">"Ukrainian hryvnia"</string>
+    <string name="DB_Curr_AED">"United Arab Emirates dirham"</string>
+</resources>
