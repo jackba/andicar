@@ -573,10 +573,12 @@ public class MainActivity extends Activity {
         showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
         showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
 
-        CharSequence abt = mRes.getString(R.string.LM_MAIN_ACTIVITY_SHORTABOUT);
-        CharSequence versionInfo = " " + appVersion;
-
-        ((TextView)findViewById(R.id.tvShortAboutLbl)).setText(Html.fromHtml(abt.toString() + versionInfo.toString()));
+        ((TextView)findViewById(R.id.tvShortAboutLbl)).setText(Html.fromHtml(
+                "<b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices. " +
+                "It is licensed under the terms of the GNU General Public License, version 3.<br>" +
+                "For more details see the About page.<br>Copyright © 2010 Miklos Keresztes.<br> " +
+                "Thank you for using <b><i>AndiCar</i></b>!<br>" +
+                "Application version: " + appVersion));
 
         fillDriverCar();
 

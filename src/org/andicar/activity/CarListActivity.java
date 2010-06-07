@@ -38,7 +38,9 @@ public class CarListActivity extends ListActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate(icicle);
+        super.onCreate( icicle, mItemClickListener, CarEditActivity.class, null,
+                MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                android.R.layout.simple_list_item_2, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
     }
 
     private OnItemClickListener mItemClickListener = new OnItemClickListener()
@@ -70,11 +72,4 @@ public class CarListActivity extends ListActivityBase
             }
         }
     };
-
-    @Override
-    protected void initView() {
-        standardInitView(mItemClickListener, CarEditActivity.class, null,
-                MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                android.R.layout.simple_list_item_2, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
-    }
 }

@@ -38,7 +38,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.SimpleCursorAdapter;
-import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
@@ -53,7 +52,7 @@ import org.andicar.utils.Utils;
  *
  * @author miki
  */
-public abstract class ReportListActivityBase extends ListActivityBase implements Runnable{
+public class ReportListActivityBase extends ListActivityBase implements Runnable{
     protected ReportDbAdapter mListDbHelper = null;
     protected ReportDbAdapter mReportDbHelper = null;
     protected String reportSelectName = null;
@@ -62,70 +61,21 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     private CheckBox ckIsSendEmail;
     private Spinner spnReportFormat;
     
-    
     AlertDialog.Builder reportOptionsDialog;
     ProgressDialog progressDialog;
 
-
-    protected abstract void initView();
-
-    protected class SavedData{
-        Handler handler;
-        ProgressDialog progressDialog;
-        ReportDbAdapter mListDbHelper;
-        ReportDbAdapter mReportDbHelper;
-        Bundle whereConditions;
-        String reportSelectName;
-    }
-
-    @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
-        initView();
-    }
-
-    protected void standardInitView(OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
+    protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
             String editTableName, String[] editTableColumns, String whereCondition, String orderByColumn,
-            int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo,
-            String reportSqlName, Bundle reportParams, SimpleCursorAdapter.ViewBinder pViewBinder){
-        
+            int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo, 
+            String reportSqlName, Bundle reportParams, SimpleCursorAdapter.ViewBinder pViewBinder) {
+
         mListDbHelper = new ReportDbAdapter(this, reportSqlName, reportParams);
         mViewBinder = pViewBinder;
 
-        super.standardInitView(mItemClickListener, editClass, insertClass, editTableName, editTableColumns,
+        super.onCreate(icicle, mItemClickListener, editClass, insertClass, editTableName, editTableColumns,
                 whereCondition, orderByColumn, pLayoutId, pDbMapFrom, pLayoutIdTo, pViewBinder);
-        
-//        SavedData data = (SavedData)getLastNonConfigurationInstance();
-//        if(data != null){
-//            handler = data.handler;
-//            progressDialog = data.progressDialog;
-//            mListDbHelper = data.mListDbHelper;
-//            mReportDbHelper = data.mReportDbHelper;
-//            whereConditions = data.whereConditions;
-//            reportSelectName = data.reportSelectName;
-//            return;
-//        }
+        lvBaseList.setOnItemClickListener(mReportItemClickListener);
     }
-
-    protected Handler handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    if(progressDialog != null && progressDialog.isShowing())
-                        progressDialog.dismiss();
-                    if(msg.what == -1)
-                        return;
-                    Toast toast = null;
-                    if(msg.peekData() == null)
-                        toast = Toast.makeText( getApplicationContext(),
-                                mRes.getString(msg.what), Toast.LENGTH_LONG );
-                    else
-                        toast = Toast.makeText( getApplicationContext(),
-                                msg.peekData().getString("ErrorMsg"), Toast.LENGTH_LONG );
-                    if(toast != null)
-                        toast.show();
-                }
-        };
-
 
     @Override
     protected void onDestroy() {
@@ -187,6 +137,13 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
         }
         return true;
     }
+
+    protected AdapterView.OnItemClickListener mReportItemClickListener =
+            new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> av, View view, int i, long l) {
+                    startEditActivity(l);
+                }
+    };
 
     protected void initSpinner(View pSpinner, String tableName){
         try{
@@ -251,6 +208,22 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     public void run() {
         createReport(true, ckIsSendEmail.isChecked(), spnReportFormat.getSelectedItemId());
     }
+
+    private Handler handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                progressDialog.dismiss();
+                Toast toast = null;
+                if(msg.peekData() == null)
+                    toast = Toast.makeText( getApplicationContext(),
+                            mRes.getString(msg.what), Toast.LENGTH_LONG );
+                else
+                    toast = Toast.makeText( getApplicationContext(),
+                            msg.peekData().getString("ErrorMsg"), Toast.LENGTH_LONG );
+                if(toast != null)
+                    toast.show();
+            }
+    };
 
     protected boolean createReport(boolean saveLocally, boolean sendToMail, long reportFormatId){
         Cursor c = null;

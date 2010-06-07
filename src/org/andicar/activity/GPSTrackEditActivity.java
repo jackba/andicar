@@ -95,7 +95,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
 
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
-                mDriverId);
+                mDriverId, false);
         initDateTime(c.getLong(MainDbAdapter.GPSTRACK_COL_DATE_POS) * 1000);
         tvDateTimeValue.setText(mResource.getString(R.string.GEN_DateTimeLabel) + " " + tvDateTimeValue.getText());
         c.close();

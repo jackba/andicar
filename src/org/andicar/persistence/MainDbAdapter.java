@@ -498,12 +498,12 @@ public class MainDbAdapter extends DB
         try{
             checkVal = canDelete(tableName, rowId);
             // 1 -> -1
-            if(checkVal < 0){
+            if(checkVal == -1){
                 if(tableName.equals(MILEAGE_TABLE_NAME)){ // update the car curent index
                     long carId = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId)
                                     .getLong(MILEAGE_COL_CAR_ID_POS);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                    if(checkVal < 0)
+                    if(checkVal == -1)
                         updateCarCurrentIndex(carId);
                     //set null in gpstrack table col. mileage id
                     Cursor c = fetchForTable(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, GPSTRACK_COL_MILEAGE_ID_NAME + "=" + rowId, null);
@@ -519,7 +519,7 @@ public class MainDbAdapter extends DB
                     long carId = fetchRecord(REFUEL_TABLE_NAME, refuelTableColNames, rowId)
                                     .getLong(REFUEL_COL_CAR_ID_POS);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                    if(checkVal < 0){
+                    if(checkVal == -1){
                         String expenseIdSelect =
                                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                                 "FROM " + EXPENSES_TABLE_NAME + " " +
@@ -539,7 +539,7 @@ public class MainDbAdapter extends DB
                     long carId = fetchRecord(EXPENSES_TABLE_NAME, expensesTableColNames, rowId)
                                     .getLong(EXPENSES_COL_CAR_ID_POS);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                    if(checkVal < 0)
+                    if(checkVal == -1)
                         updateCarCurrentIndex(carId);
                 }
                 else if(tableName.equals(GPSTRACK_TABLE_NAME)){
@@ -558,23 +558,6 @@ public class MainDbAdapter extends DB
                     c.close();
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 }
-                else if(tableName.equals(CURRENCY_TABLE_NAME)){
-                    long currRateId = -1;
-                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
-                    if(checkVal < 0){
-                        String currencyRateSelect =
-                                "SELECT " + GEN_COL_ROWID_NAME + " " +
-                                "FROM " + CURRENCYRATE_TABLE_NAME + " " +
-                                "WHERE " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + rowId +
-                                    " OR " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + rowId;
-                        Cursor c = execSelectSql(currencyRateSelect);
-                        while(c.moveToNext()){
-                            currRateId = c.getLong(0);
-                            mDb.delete(CURRENCYRATE_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + currRateId, null);
-                        }
-                        c.close();
-                    }
-                }
                 else
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
             }
@@ -589,10 +572,7 @@ public class MainDbAdapter extends DB
             lasteException = e;
             checkVal = R.string.ERR_000;
         }
-        if(checkVal < 0 )
-            return -1;
-        else
-            return checkVal;
+        return checkVal;
     }
 
     /**
@@ -629,17 +609,6 @@ public class MainDbAdapter extends DB
                 return R.string.ERR_010;
             }
             checkCursor.close();
-            //check expenses
-            checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_DRIVER_ID_NAME + " = " + rowId + " " +
-                        "LIMIT 1";
-            checkCursor = mDb.rawQuery(checkSql, null);
-            if(checkCursor.moveToFirst()){ //record exists
-                checkCursor.close();
-                return R.string.ERR_039;
-            }
-            checkCursor.close();
         }
         else if(tableName.equals(CAR_TABLE_NAME)){
             //check if exists mileage for this driver
@@ -664,17 +633,6 @@ public class MainDbAdapter extends DB
                 return R.string.ERR_012;
             }
             checkCursor.close();
-            //check expenses
-            checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_CAR_ID_NAME + " = " + rowId + " " +
-                        "LIMIT 1";
-            checkCursor = mDb.rawQuery(checkSql, null);
-            if(checkCursor.moveToFirst()){ //record exists
-                checkCursor.close();
-                return R.string.ERR_040;
-            }
-            checkCursor.close();
         }
         else if(tableName.equals(UOM_TABLE_NAME)){
             //check if exists mileage for this driver
@@ -692,7 +650,6 @@ public class MainDbAdapter extends DB
             checkSql = "SELECT * " +
                         "FROM " + REFUEL_TABLE_NAME + " " +
                         "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " = " + rowId + " " +
-                            " OR " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
@@ -729,24 +686,11 @@ public class MainDbAdapter extends DB
             checkSql = "SELECT * " +
                         "FROM " + REFUEL_TABLE_NAME + " " +
                         "WHERE " + REFUEL_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
-                            " OR " + REFUEL_COL_CURRENCYENTERED_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
                 checkCursor.close();
                 return R.string.ERR_017;
-            }
-            checkCursor.close();
-            //check expenses
-            checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
-                            " OR " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " = " + rowId + " " +
-                        "LIMIT 1";
-            checkCursor = mDb.rawQuery(checkSql, null);
-            if(checkCursor.moveToFirst()){ //record exists
-                checkCursor.close();
-                return R.string.ERR_038;
             }
             checkCursor.close();
         }
@@ -771,17 +715,6 @@ public class MainDbAdapter extends DB
             if(checkCursor.moveToFirst()){ //record exists
                 checkCursor.close();
                 return R.string.ERR_019;
-            }
-            checkCursor.close();
-            //check expenses
-            checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_EXPENSETYPE_ID_NAME + " = " + rowId + " " +
-                        "LIMIT 1";
-            checkCursor = mDb.rawQuery(checkSql, null);
-            if(checkCursor.moveToFirst()){ //record exists
-                checkCursor.close();
-                return R.string.ERR_041;
             }
             checkCursor.close();
         }

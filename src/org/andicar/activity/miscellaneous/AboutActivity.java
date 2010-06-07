@@ -50,10 +50,7 @@ public class AboutActivity extends BaseActivity{
         setContentView(R.layout.about_activity);
 
         TextView tvAbout1 = (TextView)findViewById(R.id.tvAbout1);
-        CharSequence abt = mResource.getString(R.string.LM_COPYRIGHT_HTML1);
-
-//        tvAbout1.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML1));
-        tvAbout1.setText(Html.fromHtml(abt.toString()));
+        tvAbout1.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML1));
         tvAbout1.setMovementMethod(LinkMovementMethod.getInstance());
 
         ImageView imgEUR = (ImageView)findViewById(R.id.aboutDonateEUR);
@@ -65,8 +62,7 @@ public class AboutActivity extends BaseActivity{
         imgUSD.setOnClickListener(mDonateClickListener);
 
         TextView tvAbout2 = (TextView)findViewById(R.id.tvAbout2);
-        abt = mResource.getString(R.string.LM_COPYRIGHT_HTML2);
-        tvAbout2.setText(Html.fromHtml(abt.toString()));
+        tvAbout2.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML2));
         tvAbout2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
