@@ -138,17 +138,20 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what == 0)
-                    progressDialog.dismiss();
-                else{
-                    progressDialog.dismiss();
-                    madbErrorAlert = new AlertDialog.Builder( GPSTrackMap.this );
-                    madbErrorAlert.setCancelable( false );
-                    madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
-                    madbErrorAlert.setMessage(mResource.getString(msg.what));
-                    madError = madbErrorAlert.create();
-                    madError.show();
+                try{
+                    if(msg.what == 0)
+                        progressDialog.dismiss();
+                    else{
+                        progressDialog.dismiss();
+                        madbErrorAlert = new AlertDialog.Builder( GPSTrackMap.this );
+                        madbErrorAlert.setCancelable( false );
+                        madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
+                        madbErrorAlert.setMessage(mResource.getString(msg.what));
+                        madError = madbErrorAlert.create();
+                        madError.show();
+                    }
                 }
+                catch(Exception e){}
             }
     };
 
