@@ -28,6 +28,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
@@ -86,7 +87,7 @@ public class BaseActivity extends Activity {
     }
 
     protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition,
-            String orderBy, long selectedId, boolean addListener){
+            String orderBy, long selectedId){
         try{
             Spinner spnCurrentSpinner = (Spinner) pSpinner;
             Cursor dbcRecordCursor = mDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
@@ -94,8 +95,10 @@ public class BaseActivity extends Activity {
             int[] to = new int[]{android.R.id.text1};
             SimpleCursorAdapter scaCursorAdapter =
                     new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, dbcRecordCursor,
+//                    new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, dbcRecordCursor,
                     from, to);
             scaCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            scaCursorAdapter.setDropDownViewResource(android.R.layout.two_line_list_item);
             spnCurrentSpinner.setAdapter(scaCursorAdapter);
 
             if(selectedId >= 0){
@@ -109,8 +112,7 @@ public class BaseActivity extends Activity {
                     dbcRecordCursor.moveToNext();
                 }
             }
-
-            if(addListener)
+            if(spnCurrentSpinner.getOnItemSelectedListener() == null)
                 spnCurrentSpinner.setOnItemSelectedListener(spinnerOnItemSelectedListener);
         }
         catch(Exception e){
@@ -119,6 +121,31 @@ public class BaseActivity extends Activity {
             madError.show();
         }
 
+    }
+
+    protected void setSpinnerTextToCode(AdapterView<?> arg0, long arg3, View arg1) {
+        if(arg1 == null)
+            return;
+        String code = null;
+        //set the spinner text to the selected item code
+        if ((((Spinner) arg0).equals(findViewById(R.id.spnUomFrom))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnUomLength))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnUomTo))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnUomVolume)))
+                && arg3 > 0) {
+            code = mDbAdapter.getUOMCode(arg3);
+            if (code != null) {
+                ((TextView) arg1).setText(code);
+            }
+        } else if ((((Spinner) arg0).equals(findViewById(R.id.spnCurrency))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnCurrencyFrom))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnCurrencyTo)))
+                && arg3 > 0) {
+            code = mDbAdapter.getCurrencyCode(arg3);
+            if (code != null) {
+                ((TextView) arg1).setText(code);
+            }
+        }
     }
 
     protected AdapterView.OnItemSelectedListener spinnerOnItemSelectedListener =
@@ -140,7 +167,9 @@ public class BaseActivity extends Activity {
                             mPrefEditor.commit();
                         }
                     }
+                    setSpinnerTextToCode(arg0, arg3, arg1);
                 }
+                
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
