@@ -27,7 +27,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.ListAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -696,7 +695,7 @@ public class DB {
         private void createUOMConversionTable(SQLiteDatabase db) throws SQLException {
             db.execSQL(UOM_CONVERSION_TABLE_CREATE_SQL);
             //init default uom conversions
-            String colPart = "INSERT INTO " + UOM_CONVERSION_TABLE_NAME + " ( " + 
+            String colPart = "INSERT INTO " + UOM_CONVERSION_TABLE_NAME + " ( " +
                                                 GEN_COL_NAME_NAME + ", " +
                                                 GEN_COL_ISACTIVE_NAME + ", " +
                                                 GEN_COL_USER_COMMENT_NAME + ", " +
@@ -711,7 +710,7 @@ public class DB {
                         "2, " +
                         "1, " +
                         "1.609344 )");
-            db.execSQL(colPart + 
+            db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_UOMConv_KmToMiName) + "', " +
                         "'Y', " +
@@ -719,7 +718,7 @@ public class DB {
                         "1, " +
                         "2, " +
                         "0.621371 )");
-            db.execSQL(colPart + 
+            db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_UOMConv_USGToLName) + "', " +
                         "'Y', " +
@@ -727,7 +726,7 @@ public class DB {
                         "4, " +
                         "3, " +
                         "3.785412 )");
-            db.execSQL(colPart + 
+            db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_UOMConv_LToUSGName) + "', " +
                         "'Y', " +
@@ -735,7 +734,7 @@ public class DB {
                         "3, " +
                         "4, " +
                         "0.264172 )");
-            db.execSQL(colPart + 
+            db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_UOMConv_GBGToLName) + "', " +
                         "'Y', " +
@@ -751,7 +750,7 @@ public class DB {
                         "3, " +
                         "5, " +
                         "0.219969 )");
-            db.execSQL(colPart + 
+            db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_UOMConv_GBGToUSGName) + "', " +
                         "'Y', " +
@@ -759,7 +758,7 @@ public class DB {
                         "5, " +
                         "4, " +
                         "1.200950 )");
-            db.execSQL(colPart + 
+            db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_UOMConv_USGToGBGName) + "', " +
                         "'Y', " +
@@ -783,7 +782,7 @@ public class DB {
                         "'Y', " +
                         "'" + mResource.getString(R.string.DB_ExpType_PersonalComment) + "' " +
                         ")");
-            db.execSQL(colPart + 
+            db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_ExpType_EmployerName) + "', " +
                         "'Y', " +
@@ -808,314 +807,6 @@ public class DB {
             db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX2 " + "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
             db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX3 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
             db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
-        }
-
-        private void createExpenseCategory(SQLiteDatabase db) throws SQLException {
-            //expense category
-            db.execSQL(EXPENSECATEGORY_TABLE_CREATE_SQL);
-            String colPart = "INSERT INTO " + EXPENSECATEGORY_TABLE_NAME
-                    + " ( "
-                    + GEN_COL_NAME_NAME + ", "
-                    + GEN_COL_ISACTIVE_NAME + ", "
-                    + GEN_COL_USER_COMMENT_NAME + ", "
-                    + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " "
-                    + ") ";
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_ExpCat_FuelName) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_ExpCat_FuelComment) + "', " +
-                        "'N' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_ExpCat_ServiceName) + "', " +
-                    "'Y', " +
-                        "'" + mResource.getString(R.string.DB_ExpCat_ServiceComment) + "', " +
-                    "'N' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_ExpCat_InsuranceName) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_ExpCat_InsuranceComment) + "', " +
-                        "'N' )");
-        }
-
-        private void createExpenses(SQLiteDatabase db, boolean isUpdate) throws SQLException {
-            //expenses table
-            db.execSQL(EXPENSES_TABLE_CREATE_SQL);
-            if(!isUpdate) {
-                return;
-            }
-            //initialize refuel expenses
-            String sql = "INSERT INTO " + EXPENSES_TABLE_NAME
-                    + "( "
-                    + GEN_COL_NAME_NAME + ", "
-                    + GEN_COL_USER_COMMENT_NAME + ", "
-                    + GEN_COL_ISACTIVE_NAME + ", "
-                    + EXPENSES_COL_CAR_ID_NAME + ", "
-                    + EXPENSES_COL_DRIVER_ID_NAME + ", "
-                    + EXPENSES_COL_EXPENSECATEGORY_ID_NAME + ", "
-                    + EXPENSES_COL_EXPENSETYPE_ID_NAME + ", "
-                    + EXPENSES_COL_AMOUNT_NAME + ", "
-                    + EXPENSES_COL_CURRENCY_ID_NAME + ", "
-                    + EXPENSES_COL_DATE_NAME + ", "
-                    + EXPENSES_COL_DOCUMENTNO_NAME + ", "
-                    + EXPENSES_COL_INDEX_NAME + ", "
-                    + EXPENSES_COL_FROMTABLE_NAME + ", "
-                    + EXPENSES_COL_FROMRECORD_ID_NAME + " "
-                    + ") "
-                    + "SELECT "
-                    + GEN_COL_NAME_NAME + ", "
-                    + GEN_COL_USER_COMMENT_NAME + ", "
-                    + GEN_COL_ISACTIVE_NAME + ", "
-                    + REFUEL_COL_CAR_ID_NAME + ", "
-                    + REFUEL_COL_DRIVER_ID_NAME + ", "
-                    + REFUEL_COL_EXPENSECATEGORY_NAME + ", "
-                    + REFUEL_COL_EXPENSETYPE_ID_NAME + ", "
-                    + REFUEL_COL_QUANTITY_NAME + " * " + REFUEL_COL_PRICE_NAME + ", "
-                    + REFUEL_COL_CURRENCY_ID_NAME + ", "
-                    + REFUEL_COL_DATE_NAME + ", "
-                    + REFUEL_COL_DOCUMENTNO_NAME + ", "
-                    + REFUEL_COL_INDEX_NAME + ", "
-                    + "'Refuel' " + ", "
-                    + GEN_COL_ROWID_NAME + " "
-                    + "FROM " + REFUEL_TABLE_NAME;
-            db.execSQL(sql);
-        }
-
-        private void createCurrencyTable(SQLiteDatabase db) throws SQLException {
-            //currency table name
-            db.execSQL(CURRENCY_TABLE_CREATE_SQL);
-            //insert some currencies
-            String colPart = "INSERT INTO " + CURRENCY_TABLE_NAME
-                    + " ( "
-                    + GEN_COL_NAME_NAME + ", "
-                    + GEN_COL_ISACTIVE_NAME + ", "
-                    + GEN_COL_USER_COMMENT_NAME + ", "
-                    + CURRENCY_COL_CODE_NAME
-                    + ") ";
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_EUR) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_EUR) + "', " +
-                        "'EUR' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_USD) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_USD) + "', " +
-                        "'USD' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_HUF) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_HUF) + "', " +
-                        "'HUF' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_RON) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_RON) + "', " +
-                        "'RON' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_AUD) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_AUD) + "', " +
-                        "'AUD' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_CAD) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_CAD) + "', " +
-                        "'CAD' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_CHF) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_CHF) + "', " +
-                        "'CHF' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_CNY) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_CNY) + "', " +
-                        "'CNY' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_GBP) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_GBP) + "', " +
-                        "'GBP' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_JPY) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_JPY) + "', " +
-                        "'JPY' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_RUB) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_RUB) + "', " +
-                        "'RUB' )");
-            db.execSQL(colPart + 
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_INR) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_INR) + "', " +
-                        "'INR' )");
-//////////
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_ARS) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_ARS) + "', " +
-                        "'ARS' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_BRL) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_BRL) + "', " +
-                        "'BRL' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_BGL) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_BGL) + "', " +
-                        "'BGL' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_XAF) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_XAF) + "', " +
-                        "'XAF' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_COP) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_COP) + "', " +
-                        "'COP' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_HRK) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_HRK) + "', " +
-                        "'HRK' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_CZK) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_CZK) + "', " +
-                        "'CZK' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_DKK) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_DKK) + "', " +
-                        "'DKK' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_EGP) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_EGP) + "', " +
-                        "'EGP' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_EEK) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_EEK) + "', " +
-                        "'EEK' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_DKK) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_DKK) + "', " +
-                        "'DKK' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_GEL) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_GEL) + "', " +
-                        "'GEL' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_HKD) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_HKD) + "', " +
-                        "'HKD' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_ILS) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_ILS) + "', " +
-                        "'ILS' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_KRW) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_KRW) + "', " +
-                        "'KRW' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_MXN) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_MXN) + "', " +
-                        "'MXN' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_NOK) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_NOK) + "', " +
-                        "'NOK' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_PLN) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_PLN) + "', " +
-                        "'PLN' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_SAR) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_SAR) + "', " +
-                        "'SAR' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_ZAR) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_ZAR) + "', " +
-                        "'ZAR' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_SEK) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_SEK) + "', " +
-                        "'SEK' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_TRY) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_TRY) + "', " +
-                        "'TRY' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_UAH) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_UAH) + "', " +
-                        "'UAH' )");
-            db.execSQL(colPart +
-                    "VALUES ( " +
-                        "'" + mResource.getString(R.string.DB_Curr_AED) + "', " +
-                        "'Y', " +
-                        "'" + mResource.getString(R.string.DB_Curr_AED) + "', " +
-                        "'AED' )");
-        }
-
-        private void createCurrencyRateTable(SQLiteDatabase db) throws SQLException {
-            //create currency rate table
-            db.execSQL(CURRENCYRATE_TABLE_CREATE_SQL);
         }
 
         @Override
@@ -1315,6 +1006,313 @@ public class DB {
             db.execSQL(updSql);
         }
 
+        private void createExpenseCategory(SQLiteDatabase db) throws SQLException {
+            //expense category
+            db.execSQL(EXPENSECATEGORY_TABLE_CREATE_SQL);
+            String colPart = "INSERT INTO " + EXPENSECATEGORY_TABLE_NAME
+                    + " ( "
+                    + GEN_COL_NAME_NAME + ", "
+                    + GEN_COL_ISACTIVE_NAME + ", "
+                    + GEN_COL_USER_COMMENT_NAME + ", "
+                    + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " "
+                    + ") ";
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_ExpCat_FuelName) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_ExpCat_FuelComment) + "', " +
+                        "'N' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_ExpCat_ServiceName) + "', " +
+                    "'Y', " +
+                        "'" + mResource.getString(R.string.DB_ExpCat_ServiceComment) + "', " +
+                    "'N' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_ExpCat_InsuranceName) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_ExpCat_InsuranceComment) + "', " +
+                        "'N' )");
+        }
+
+        private void createExpenses(SQLiteDatabase db, boolean isUpdate) throws SQLException {
+            //expenses table
+            db.execSQL(EXPENSES_TABLE_CREATE_SQL);
+            if(!isUpdate) {
+                return;
+            }
+            //initialize refuel expenses
+            String sql = "INSERT INTO " + EXPENSES_TABLE_NAME
+                    + "( "
+                    + GEN_COL_NAME_NAME + ", "
+                    + GEN_COL_USER_COMMENT_NAME + ", "
+                    + GEN_COL_ISACTIVE_NAME + ", "
+                    + EXPENSES_COL_CAR_ID_NAME + ", "
+                    + EXPENSES_COL_DRIVER_ID_NAME + ", "
+                    + EXPENSES_COL_EXPENSECATEGORY_ID_NAME + ", "
+                    + EXPENSES_COL_EXPENSETYPE_ID_NAME + ", "
+                    + EXPENSES_COL_AMOUNT_NAME + ", "
+                    + EXPENSES_COL_CURRENCY_ID_NAME + ", "
+                    + EXPENSES_COL_DATE_NAME + ", "
+                    + EXPENSES_COL_DOCUMENTNO_NAME + ", "
+                    + EXPENSES_COL_INDEX_NAME + ", "
+                    + EXPENSES_COL_FROMTABLE_NAME + ", "
+                    + EXPENSES_COL_FROMRECORD_ID_NAME + " "
+                    + ") "
+                    + "SELECT "
+                    + GEN_COL_NAME_NAME + ", "
+                    + GEN_COL_USER_COMMENT_NAME + ", "
+                    + GEN_COL_ISACTIVE_NAME + ", "
+                    + REFUEL_COL_CAR_ID_NAME + ", "
+                    + REFUEL_COL_DRIVER_ID_NAME + ", "
+                    + REFUEL_COL_EXPENSECATEGORY_NAME + ", "
+                    + REFUEL_COL_EXPENSETYPE_ID_NAME + ", "
+                    + REFUEL_COL_QUANTITY_NAME + " * " + REFUEL_COL_PRICE_NAME + ", "
+                    + REFUEL_COL_CURRENCY_ID_NAME + ", "
+                    + REFUEL_COL_DATE_NAME + ", "
+                    + REFUEL_COL_DOCUMENTNO_NAME + ", "
+                    + REFUEL_COL_INDEX_NAME + ", "
+                    + "'Refuel' " + ", "
+                    + GEN_COL_ROWID_NAME + " "
+                    + "FROM " + REFUEL_TABLE_NAME;
+            db.execSQL(sql);
+        }
+
+        private void createCurrencyTable(SQLiteDatabase db) throws SQLException {
+            //currency table name
+            db.execSQL(CURRENCY_TABLE_CREATE_SQL);
+            //insert some currencies
+            String colPart = "INSERT INTO " + CURRENCY_TABLE_NAME
+                    + " ( "
+                    + GEN_COL_NAME_NAME + ", "
+                    + GEN_COL_ISACTIVE_NAME + ", "
+                    + GEN_COL_USER_COMMENT_NAME + ", "
+                    + CURRENCY_COL_CODE_NAME
+                    + ") ";
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_EUR) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_EUR) + "', " +
+                        "'EUR' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_USD) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_USD) + "', " +
+                        "'USD' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_HUF) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_HUF) + "', " +
+                        "'HUF' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_RON) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_RON) + "', " +
+                        "'RON' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_AUD) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_AUD) + "', " +
+                        "'AUD' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_CAD) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_CAD) + "', " +
+                        "'CAD' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_CHF) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_CHF) + "', " +
+                        "'CHF' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_CNY) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_CNY) + "', " +
+                        "'CNY' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_GBP) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_GBP) + "', " +
+                        "'GBP' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_JPY) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_JPY) + "', " +
+                        "'JPY' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_RUB) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_RUB) + "', " +
+                        "'RUB' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_INR) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_INR) + "', " +
+                        "'INR' )");
+//////////
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_ARS) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_ARS) + "', " +
+                        "'ARS' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_BRL) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_BRL) + "', " +
+                        "'BRL' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_BGL) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_BGL) + "', " +
+                        "'BGL' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_XAF) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_XAF) + "', " +
+                        "'XAF' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_COP) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_COP) + "', " +
+                        "'COP' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_HRK) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_HRK) + "', " +
+                        "'HRK' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_CZK) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_CZK) + "', " +
+                        "'CZK' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_DKK) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_DKK) + "', " +
+                        "'DKK' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_EGP) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_EGP) + "', " +
+                        "'EGP' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_EEK) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_EEK) + "', " +
+                        "'EEK' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_DKK) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_DKK) + "', " +
+                        "'DKK' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_GEL) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_GEL) + "', " +
+                        "'GEL' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_HKD) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_HKD) + "', " +
+                        "'HKD' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_ILS) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_ILS) + "', " +
+                        "'ILS' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_KRW) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_KRW) + "', " +
+                        "'KRW' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_MXN) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_MXN) + "', " +
+                        "'MXN' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_NOK) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_NOK) + "', " +
+                        "'NOK' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_PLN) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_PLN) + "', " +
+                        "'PLN' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_SAR) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_SAR) + "', " +
+                        "'SAR' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_ZAR) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_ZAR) + "', " +
+                        "'ZAR' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_SEK) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_SEK) + "', " +
+                        "'SEK' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_TRY) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_TRY) + "', " +
+                        "'TRY' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_UAH) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_UAH) + "', " +
+                        "'UAH' )");
+            db.execSQL(colPart +
+                    "VALUES ( " +
+                        "'" + mResource.getString(R.string.DB_Curr_AED) + "', " +
+                        "'Y', " +
+                        "'" + mResource.getString(R.string.DB_Curr_AED) + "', " +
+                        "'AED' )");
+        }
+
+        private void createCurrencyRateTable(SQLiteDatabase db) throws SQLException {
+            //create currency rate table
+            db.execSQL(CURRENCYRATE_TABLE_CREATE_SQL);
+        }
     }
 
     public boolean backupDb(String bkName) {

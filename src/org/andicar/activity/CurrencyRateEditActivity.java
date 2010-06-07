@@ -117,12 +117,12 @@ public class CurrencyRateEditActivity extends EditActivityBase
         }
 
         initSpinner(spnCurrencyFromSpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyFromId);
+                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
+                MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, lCurrencyFromId, false);
 
         initSpinner(spnCurrencyToSpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyToId);
+                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
+                MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, lCurrencyToId, false);
     }
 
     @Override
@@ -151,7 +151,6 @@ public class CurrencyRateEditActivity extends EditActivityBase
     private AdapterView.OnItemSelectedListener spinnerCurrencyFromOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    setSpinnerTextToCode(arg0, arg3, arg1);
                     lCurrencyFromId = arg3;
                     updateLabel();
                 }
@@ -162,7 +161,6 @@ public class CurrencyRateEditActivity extends EditActivityBase
     private AdapterView.OnItemSelectedListener spinnerCurrencyToOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    setSpinnerTextToCode(arg0, arg3, arg1);
                     lCurrencyToId = arg3;
                     updateLabel();
                 }

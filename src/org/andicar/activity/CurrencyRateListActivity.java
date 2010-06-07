@@ -32,12 +32,7 @@ public class CurrencyRateListActivity extends ListActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate(icicle);
-    }
-
-    @Override
-    protected void initView() {
-        standardInitView(null, CurrencyRateEditActivity.class, null,
+        super.onCreate( icicle, null, CurrencyRateEditActivity.class, null,
                 MainDbAdapter.CURRENCYRATE_TABLE_NAME, MainDbAdapter.currencyRateTableColNames, null,
                 MainDbAdapter.GEN_COL_NAME_NAME,
                 R.layout.threeline_list_activity,

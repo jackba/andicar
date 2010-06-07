@@ -149,19 +149,19 @@ public class ExpenseEditActivity extends EditActivityBase {
     private void initControls() {
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mCarId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
         initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, false);
         initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId);
-        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
+        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, 
+                new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME}, MainDbAdapter.isActiveCondition,
+                MainDbAdapter.CURRENCY_COL_CODE_NAME, mCurrencyId, false);
         userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this, android.R.layout.simple_dropdown_item_1line, 
                 mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME,
                 mCarId, 30));
@@ -281,11 +281,10 @@ public class ExpenseEditActivity extends EditActivityBase {
 
                     if(newCarCurrencyId != mCurrencyId){
                         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                                    MainDbAdapter.genColName,
-                                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
                                     MainDbAdapter.isActiveCondition,
-                                    MainDbAdapter.GEN_COL_NAME_NAME,
-                                    newCarCurrencyId);
+                                    MainDbAdapter.CURRENCY_COL_CODE_NAME,
+                                    newCarCurrencyId, false);
                         mCurrencyId = newCarCurrencyId;
                         carDefaultCurrencyId = mCurrencyId;
                         carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
@@ -301,7 +300,8 @@ public class ExpenseEditActivity extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerCurrencyOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    setSpinnerTextToCode(arg0, arg3, arg1);
+                    if(isActivityOnLoading)
+                        return;
                     mCurrencyId = spnCurrency.getSelectedItemId();
                     if(mCurrencyId != carDefaultCurrencyId){
                         setConversionRateZoneVisible(true);
@@ -316,6 +316,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                         etConversionRate.append(conversionRate.toString());
                         calculateConvertedAmount();
                     }
+
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }

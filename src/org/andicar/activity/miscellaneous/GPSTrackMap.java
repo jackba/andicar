@@ -131,13 +131,6 @@ public class GPSTrackMap extends MapActivity implements Runnable{
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(progressDialog != null && progressDialog.isShowing())
-            handler.sendEmptyMessage(0);
-    }
-
     public void run() {
         drawTrack();
     }
@@ -145,13 +138,10 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what == 0){
-                    if(progressDialog != null && progressDialog.isShowing())
-                        progressDialog.dismiss();
-                }
+                if(msg.what == 0)
+                    progressDialog.dismiss();
                 else{
-                    if(progressDialog != null && progressDialog.isShowing())
-                        progressDialog.dismiss();
+                    progressDialog.dismiss();
                     madbErrorAlert = new AlertDialog.Builder( GPSTrackMap.this );
                     madbErrorAlert.setCancelable( false );
                     madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
@@ -191,7 +181,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             //get the list of gop files
 //            trackId = "99";
             trackFiles = FileUtils.getFileNames(StaticValues.TRACK_FOLDER, trackId + "_[0-9][0-9][0-9].gop");
-            if(trackFiles == null || trackFiles.isEmpty()){
+            if(trackFiles.isEmpty()){
                 handler.sendEmptyMessage(R.string.ERR_036);
             }
             int latitudeE6;
