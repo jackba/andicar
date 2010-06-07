@@ -87,16 +87,16 @@ public class CarEditActivity extends EditActivityBase
             initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, lUomLengthId, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.GEN_COL_NAME_NAME, lUomLengthId);
             //uom for volume
             initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, lUomVolumeId, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.GEN_COL_NAME_NAME, lUomVolumeId);
              //default currency
             initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, lCurrencyId, false);
+                    MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyId);
 
             if( strName != null ) {
                 etName.setText( strName );
@@ -137,16 +137,16 @@ public class CarEditActivity extends EditActivityBase
             initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 1, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.GEN_COL_NAME_NAME, 1);
             //uom for volume
             initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 3, false);
+                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.GEN_COL_NAME_NAME, 3);
              //default currency
             initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, MainDbAdapter.CURRENCY_COL_CODE_NAME, 1, false);
+                    MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, 1);
 
             ckIsActive.setChecked( true );
         }
