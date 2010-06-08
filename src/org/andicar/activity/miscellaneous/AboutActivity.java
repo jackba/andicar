@@ -28,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.andicar.paypal.GetPayPalActivity;
 import org.andicar.activity.R;
-import org.andicar.utils.StaticValues;
 import android.os.Vibrator;
 import android.content.Context;
 import java.util.HashMap;

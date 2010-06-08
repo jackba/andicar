@@ -37,10 +37,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
 import android.database.Cursor;
 import android.text.Html;
+import android.widget.ImageButton;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import org.andicar.activity.miscellaneous.AboutActivity;
@@ -72,15 +72,15 @@ public class MainActivity extends Activity {
     private int ACTIVITY_EXPENSEINSERT_REQUEST_CODE = 2;
     private SharedPreferences mPreferences;
 
-    private Button btnMileageList;
-    private Button btnMileageInsert;
-    private Button btnGPSTrackList;
-    private Button btnGPSTrackInsert;
-    private Button btnGPSTrackShowOnMap;
-    private Button btnRefuelList;
-    private Button btnRefuelInsert;
-    private Button btnExpenseList;
-    private Button btnExpenseInsert;
+    private ImageButton btnMileageList;
+    private ImageButton btnMileageInsert;
+    private ImageButton btnGPSTrackList;
+    private ImageButton btnGPSTrackInsert;
+    private ImageButton btnGPSTrackShowOnMap;
+    private ImageButton btnRefuelList;
+    private ImageButton btnRefuelInsert;
+    private ImageButton btnExpenseList;
+    private ImageButton btnExpenseInsert;
 
     private ReportDbAdapter reportDb;
     private Cursor listCursor;
@@ -170,23 +170,23 @@ public class MainActivity extends Activity {
                 initPreferenceValues(); //version update => init (new) preference values
         }
 
-        btnMileageList = (Button) findViewById(R.id.btnMileageList);
+        btnMileageList = (ImageButton) findViewById(R.id.btnMileageList);
         btnMileageList.setOnClickListener(btnMileageListClickListener);
-        btnMileageInsert = (Button) findViewById(R.id.btnMileageInsert);
+        btnMileageInsert = (ImageButton) findViewById(R.id.btnMileageInsert);
         btnMileageInsert.setOnClickListener(btnInsertMileageClickListener);
-        btnRefuelList = (Button) findViewById(R.id.btnRefuelList);
+        btnRefuelList = (ImageButton) findViewById(R.id.btnRefuelList);
         btnRefuelList.setOnClickListener(btnRefuelListClickListener);
-        btnRefuelInsert = (Button) findViewById(R.id.btnRefuelInsert);
+        btnRefuelInsert = (ImageButton) findViewById(R.id.btnRefuelInsert);
         btnRefuelInsert.setOnClickListener(btnInsertRefuelClickListener);
-        btnExpenseList = (Button) findViewById(R.id.btnExpenseList);
+        btnExpenseList = (ImageButton) findViewById(R.id.btnExpenseList);
         btnExpenseList.setOnClickListener(btnExpenseListClickListener);
-        btnExpenseInsert = (Button) findViewById(R.id.btnExpenseInsert);
+        btnExpenseInsert = (ImageButton) findViewById(R.id.btnExpenseInsert);
         btnExpenseInsert.setOnClickListener(btnInsertExpenseClickListener);
-        btnGPSTrackInsert = (Button) findViewById(R.id.btnGPSTrackInsert);
+        btnGPSTrackInsert = (ImageButton) findViewById(R.id.btnGPSTrackInsert);
         btnGPSTrackInsert.setOnClickListener(btnGPSTrackInsertClickListener);
-        btnGPSTrackList = (Button) findViewById(R.id.btnGPSTrackList);
+        btnGPSTrackList = (ImageButton) findViewById(R.id.btnGPSTrackList);
         btnGPSTrackList.setOnClickListener(btnGPSTrackListClickListener);
-        btnGPSTrackShowOnMap = (Button) findViewById(R.id.btnGPSTrackShowOnMap);
+        btnGPSTrackShowOnMap = (ImageButton) findViewById(R.id.btnGPSTrackShowOnMap);
         btnGPSTrackShowOnMap.setOnClickListener(btnGPSTrackShowClickListener);
 
         tvThreeLineListMileageText1 = (TextView) findViewById(R.id.tvThreeLineListMileageText1);
