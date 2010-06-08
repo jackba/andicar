@@ -26,7 +26,9 @@ import android.database.SQLException;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
@@ -39,6 +41,8 @@ import java.math.BigDecimal;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
+import android.view.View;
+
 
 /**
  *
@@ -52,14 +56,12 @@ public class MileageEditActivity extends EditActivityBase {
     private long mUOMLengthId = -1;
     private long mGpsTrackId = -1;
     private String operationType = null;
-    private String currentDriverName = null;
-    private String currentCarName = null;
-    private String driverCarLbl = "";
     private long mExpTypeId = 0;
     private BigDecimal mNewIndex = new BigDecimal("0");
     private BigDecimal mStartIndex = new BigDecimal("0");
     private BigDecimal mStopIndex = null;
     private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
+    private boolean isActivityOnLoading = true;
 
     private RadioButton rbInsertModeIndex;
     private RadioButton rbInsertModeMileage;
@@ -68,10 +70,10 @@ public class MileageEditActivity extends EditActivityBase {
     private EditText etStartIndex;
     private EditText etUserInput;
     private TextView tvCalculatedContent;
-    private TextView tvCarDriverLabel;
     private AutoCompleteTextView acUserComment;
     private Spinner spnExpType;
-
+    private Spinner spnCar;
+    private Spinner spnDriver;
     ArrayAdapter<String> userCommentAdapter;
 
 
@@ -95,10 +97,6 @@ public class MileageEditActivity extends EditActivityBase {
                                 .getLong(MainDbAdapter.MILEAGE_COL_CAR_ID_POS);
             mDriverId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
                                 .getLong(MainDbAdapter.MILEAGE_COL_DRIVER_ID_POS);
-            currentDriverName = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mDriverId)
-                                .getString(MainDbAdapter.GEN_COL_NAME_POS);
-            currentCarName = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
-                                .getString(MainDbAdapter.GEN_COL_NAME_POS);
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
             try{
                 mStartIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
@@ -121,10 +119,6 @@ public class MileageEditActivity extends EditActivityBase {
             mCarId = c.getLong(MainDbAdapter.GPSTRACK_COL_CAR_ID_POS);
             mDriverId = c.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
             acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
-            currentDriverName = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mDriverId)
-                                .getString(MainDbAdapter.GEN_COL_NAME_POS);
-            currentCarName = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
-                                .getString(MainDbAdapter.GEN_COL_NAME_POS);
             mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
             mStartIndex = BigDecimal.ZERO;
             fillGetCurrentIndex();
@@ -139,8 +133,6 @@ public class MileageEditActivity extends EditActivityBase {
         else{
             mCarId = mBundleExtras.getLong("CurrentCar_ID");
             mDriverId = mBundleExtras.getLong("CurrentDriver_ID");
-            currentDriverName = mBundleExtras.getString("CurrentDriver_Name");
-            currentCarName = mBundleExtras.getString("CurrentCar_Name");
             mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
             mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
             initDateTime(System.currentTimeMillis());
@@ -159,6 +151,13 @@ public class MileageEditActivity extends EditActivityBase {
     }
 
     private void initControls(){
+        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                MainDbAdapter.GEN_COL_NAME_NAME,
+                mCarId);
+        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId);
         initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                 MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
@@ -184,16 +183,6 @@ public class MileageEditActivity extends EditActivityBase {
                     mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
         }
-
-        if(currentDriverName != null) {
-            driverCarLbl = mResource.getString(R.string.GEN_DriverLabel) + currentDriverName;
-        }
-        if(currentCarName != null) {
-            driverCarLbl = driverCarLbl + "; "
-                    + mResource.getString(R.string.GEN_CarLabel) + " " + currentCarName;
-        }
-
-        tvCarDriverLabel.setText(driverCarLbl);
     }
     
     private void init(){
@@ -208,7 +197,12 @@ public class MileageEditActivity extends EditActivityBase {
         tvCalculatedTextLabel = ((TextView) findViewById(R.id.tvCalculatedTextLabel));
         spnExpType = (Spinner)findViewById(R.id.spnExpType);
         acUserComment = (AutoCompleteTextView)findViewById(R.id.acUserComment);
-        tvCarDriverLabel = (TextView)findViewById(R.id.tvCarDriverLabel);
+        spnCar = (Spinner) findViewById(R.id.spnCar);
+        spnDriver = (Spinner) findViewById(R.id.spnDriver);
+        spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnCar.setOnTouchListener(spinnerOnTouchListener);
+        spnDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnDriver.setOnTouchListener(spinnerOnTouchListener);
 
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgMileageInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
@@ -225,15 +219,6 @@ public class MileageEditActivity extends EditActivityBase {
             mUOMLengthId = savedInstanceState.getLong("mUOMLengthId");
             mGpsTrackId = savedInstanceState.getLong("mGpsTrackId");
             mInsertMode = savedInstanceState.getInt("mInsertMode");
-
-            if(savedInstanceState.containsKey("currentDriverName"))
-                currentDriverName = savedInstanceState.getString("currentDriverName");
-            if(savedInstanceState.containsKey("currentCarName"))
-                currentCarName = savedInstanceState.getString("currentCarName");
-            if(savedInstanceState.containsKey("operationType"))
-                operationType = savedInstanceState.getString("operationType");
-            if(savedInstanceState.containsKey("driverCarLbl"))
-                driverCarLbl = savedInstanceState.getString("driverCarLbl");
 
             if(savedInstanceState.containsKey("mNewIndex"))
                 mNewIndex = new BigDecimal(savedInstanceState.getString("mNewIndex"));
@@ -261,14 +246,6 @@ public class MileageEditActivity extends EditActivityBase {
         outState.putLong("mExpTypeId", spnExpType.getSelectedItemId());
         outState.putInt("mInsertMode", mInsertMode);
 
-        if(currentDriverName != null)
-            outState.putString("currentDriverName", currentDriverName);
-        if(currentCarName != null)
-            outState.putString("currentCarName", currentCarName);
-        if(operationType != null)
-            outState.putString("operationType", operationType);
-        if(driverCarLbl != null)
-            outState.putString("driverCarLbl", driverCarLbl);
         if(mNewIndex != null)
             outState.putString("mNewIndex", mNewIndex.toString());
         if(mStartIndex != null)
@@ -283,8 +260,14 @@ public class MileageEditActivity extends EditActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
+        isActivityOnLoading = true;
         fillGetCurrentIndex();
         calculateMileageOrNewIndex();
+    }
+
+    @Override
+    void setLayout() {
+        setContentView(R.layout.mileage_edit_activity);
     }
 
     private void calculateMileageOrNewIndex() throws NumberFormatException {
@@ -496,8 +479,34 @@ public class MileageEditActivity extends EditActivityBase {
         finish();
     }
 
-    @Override
-    void setLayout() {
-        setContentView(R.layout.mileage_edit_activity);
-    }
+    private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
+            new AdapterView.OnItemSelectedListener() {
+                public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    if(isActivityOnLoading)
+                        return;
+                    mCarId = spnCar.getSelectedItemId();
+                    mDriverId = spnDriver.getSelectedItemId();
+
+                    userCommentAdapter = null;
+                    userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
+                            android.R.layout.simple_dropdown_item_1line,
+                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME,
+                            mCarId, 30));
+                    acUserComment.setAdapter(userCommentAdapter);
+                    mStartIndex = BigDecimal.ZERO;
+                    fillGetCurrentIndex();
+                    calculateMileageOrNewIndex();
+
+                }
+                public void onNothingSelected(AdapterView<?> arg0) {
+                }
+            };
+
+    private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
+        public boolean onTouch(View view, MotionEvent me) {
+            isActivityOnLoading = false;
+            return false;
+        }
+    };
+
 }
