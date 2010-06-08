@@ -32,6 +32,7 @@
 
 <resources>
     <string name="APP_Description">"Free and open source car management software."</string>
+    <string name="APP_Motto">"Manage your cars with the power of open source."</string>
     <string name="APP_Activity_DriverEdit">"Edit driver"</string>
     <string name="APP_Activity_DriverList">"Drivers"</string>
     <string name="APP_Activity_CarEdit">"Edit car"</string>
@@ -115,15 +116,15 @@
 
     <string name="MainActivity_InsertBtnCaption">"  Add new  "</string>
     <string name="MainActivity_ListBtnCaption">"  View more  "</string>
-    <string name="MainActivity_MileageHeaderCaption">"Mileages"</string>
-    <string name="MainActivity_MileageListHeaderCaption">"Last mileage:"</string>
-    <string name="MainActivity_RefuelHeaderCaption">"Refuels"</string>
-    <string name="MainActivity_RefuelListHeaderCaption">"Last refuel:"</string>
-    <string name="MainActivity_GPSTrackHeaderCaption">"GPS Tracks"</string>
-    <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string>
+    <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
+    <!-- <string name="MainActivity_MileageListHeaderCaption">"Last mileage:"</string> -->
+    <string name="MainActivity_RefuelHeaderCaption">"Last refuel"</string>
+    <!-- <string name="MainActivity_RefuelListHeaderCaption">"Last refuel:"</string> -->
+    <string name="MainActivity_GPSTrackHeaderCaption">"Last GPS track"</string>
+    <!-- <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string> -->
     <string name="MainActivity_GPSTrackShowOnMapBtnCaption">" Show on map "</string>
-    <string name="MainActivity_ExpenseHeaderCaption">"Expenses"</string>
-    <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string>
+    <string name="MainActivity_ExpenseHeaderCaption">"Last expense"</string>
+    <!-- <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string> -->
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
     <string name="MainActivity_StatisticsListHeaderCaption">"Last know odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
