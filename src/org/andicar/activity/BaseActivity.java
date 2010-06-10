@@ -131,7 +131,8 @@ public class BaseActivity extends Activity {
         if ((((Spinner) arg0).equals(findViewById(R.id.spnUomFrom))
                 || ((Spinner) arg0).equals(findViewById(R.id.spnUomLength))
                 || ((Spinner) arg0).equals(findViewById(R.id.spnUomTo))
-                || ((Spinner) arg0).equals(findViewById(R.id.spnUomVolume)))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnUomVolume))
+                )
                 && arg3 > 0) {
             code = mDbAdapter.getUOMCode(arg3);
             if (code != null) {

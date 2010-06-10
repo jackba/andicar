@@ -39,9 +39,9 @@ public class UOMListActivity extends ListActivityBase
 
         super.onCreate( icicle, null, UOMEditActivity.class, null,
                 MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, 
-                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomType + "'", MainDbAdapter.UOM_COL_CODE_NAME,
+                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomType + "'", MainDbAdapter.GEN_COL_NAME_NAME,
                 R.layout.twoline_list_activity,
-                new String[]{MainDbAdapter.UOM_COL_CODE_NAME, MainDbAdapter.GEN_COL_NAME_NAME},
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.UOM_COL_CODE_NAME},
                 new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 
         if(uomType.equals( "L"))

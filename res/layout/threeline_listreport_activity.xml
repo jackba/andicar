@@ -17,27 +17,39 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+              xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:background="@android:color/black"
+              android:id="@+id/tvThreeLineListReport"
+              >
 
     <TextView android:id="@+id/tvThreeLineListReportText1"
               android:textSize="14sp"
               android:textStyle="bold"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content"/>
+              android:layout_height="wrap_content"
+              android:typeface="sans"
+              android:textColor="@android:color/white"
+              />
 
     <TextView android:id="@+id/tvThreeLineListReportText2"
               android:textSize="14sp"
               android:textStyle="italic"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content"/>
+              android:layout_height="wrap_content"
+              android:typeface="sans"
+              android:textColor="@android:color/white"
+              />
 
     <TextView android:id="@+id/tvThreeLineListReportText3"
               android:textSize="14sp"
               android:textStyle="italic"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content"/>
+              android:layout_height="wrap_content"
+              android:typeface="sans"
+              android:textColor="@android:color/white"
+              />
 </LinearLayout>

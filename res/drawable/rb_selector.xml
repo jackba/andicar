@@ -19,7 +19,7 @@
 -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-     <item android:state_enabled="false"
-           android:drawable="@drawable/btn_map_inactive24x72" />
-     <item android:drawable="@drawable/btn_map24x72" />
+     <item android:state_checked="true"
+           android:drawable="@drawable/rb_checked" />
+     <item android:drawable="@drawable/rb_unchecked" />
 </selector>

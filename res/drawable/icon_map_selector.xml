@@ -17,8 +17,9 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
      <item android:state_enabled="false"
-           android:drawable="@drawable/btn_more_inactive24x72" />
-     <item android:drawable="@drawable/btn_more24x72" />
+           android:drawable="@drawable/icon_map24x24_inactive" />
+     <item android:drawable="@drawable/icon_map24x24" />
 </selector>

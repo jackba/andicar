@@ -25,14 +25,13 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import java.util.Calendar;
-import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
 
@@ -51,8 +50,8 @@ import org.andicar.utils.Utils;
 public abstract class EditActivityBase extends BaseActivity {
     protected long mRowId = -1;
     protected Bundle mBundleExtras = null;
-    protected Button btnOk = null;
-    protected Button btnCancel = null;
+    protected ImageButton btnOk = null;
+    protected ImageButton btnCancel = null;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
@@ -91,11 +90,11 @@ public abstract class EditActivityBase extends BaseActivity {
 
         mBundleExtras = getIntent().getExtras();
 
-        btnCancel = (Button) findViewById( android.R.id.closeButton);
+        btnCancel = (ImageButton) findViewById( android.R.id.closeButton);
         if(btnCancel != null)
             btnCancel.setOnClickListener(mCancelClickListener);
 
-        btnOk = (Button)findViewById( android.R.id.button1 );
+        btnOk = (ImageButton)findViewById( android.R.id.button1 );
         if(mOkClickListener != null)
             btnOk.setOnClickListener(mOkClickListener);
 
@@ -179,7 +178,7 @@ public abstract class EditActivityBase extends BaseActivity {
            if(vwChild instanceof ViewGroup){
                setEditable((ViewGroup)vwChild, editable);
            }
-           if(vwChild.getId() != R.id.tvWarningLabel)
+           if(vwChild.getId() != R.id.tvWarningLabel && vwChild.getId() != android.R.id.closeButton)
                vwChild.setEnabled(editable);
        }
    }
@@ -196,7 +195,7 @@ public abstract class EditActivityBase extends BaseActivity {
         tvDateTimeValue = (TextView) findViewById(R.id.tvDateTimeValue);
         updateDateTime();
 
-        Button btnPickDate = (Button) findViewById(R.id.btnPickDate);
+        ImageButton btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
         if(btnPickDate != null)
             btnPickDate.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
@@ -204,7 +203,7 @@ public abstract class EditActivityBase extends BaseActivity {
                 }
             });
 
-        Button btnPickTime = (Button) findViewById(R.id.btnPickTime);
+        ImageButton btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
         if(btnPickTime != null)
             btnPickTime.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {

@@ -20,6 +20,6 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
      <item android:state_enabled="false"
-           android:drawable="@drawable/btn_add_inactive24x72" />
-     <item android:drawable="@drawable/btn_add24x72" />
+           android:drawable="@drawable/icon_cancel24x24_inactive" />
+     <item android:drawable="@drawable/icon_cancel24x24" />
 </selector>

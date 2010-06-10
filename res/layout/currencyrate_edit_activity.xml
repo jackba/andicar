@@ -17,154 +17,191 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:scrollbars="vertical"
+    android:layout_height="fill_parent"
+    android:layout_marginRight="5dip"
     android:id="@+id/vgRoot"
+    android:background="@android:color/black"
     >
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dip"
         >
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            >
-            <TextView
-                android:id="@+id/tvCurrencyFrom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/CurrencyRateEditActivity_CurrencyFromLabel"
-                />
-            <Spinner android:id="@+id/spnCurrencyFrom"
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="5dip"
-                android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                />
-
-            <TextView
-                android:id="@+id/tvCurrencyTo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/CurrencyRateEditActivity_CurrencyToLabel"
-                android:layout_marginLeft="10dip"
-                />
-            <Spinner android:id="@+id/spnCurrencyTo"
-                android:layout_width="50dip"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="5dip"
-                android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            >
-            <TextView
-                android:id="@+id/tvCurrencyRateLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/CurrencyRateEditActivity_CurrencyRateLabel"
-                />
-            <EditText
-                android:id="@+id/etCurrencyRate"
-                android:layout_width="100dip"
-                android:layout_height="wrap_content"
-                android:numeric="decimal"
-                android:background="@color/mandatory_bg"
-                android:tag="@string/CurrencyRateEditActivity_CurrencyRateLabel"
-                />
-            <TextView
-                android:id="@+id/tvCurrencyRateToLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
-                android:text="@string/CurrencyRateEditActivity_CurrencyRateToLabel"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            >
-            <TextView
-                android:id="@+id/tvInverseRateLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/CurrencyRateEditActivity_InverseCurrencyRateLabel"
-                />
-            <TextView
-                android:id="@+id/tvInverseRateValue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:id="@+id/tvInverseRateToLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
-                android:text="@string/CurrencyRateEditActivity_CurrencyRateToLabel"
-                />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvUserComment"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:text="@string/GEN_UserCommentLabel"
-            />
-        <EditText
-            android:id="@+id/etUserComment"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
-            />
-
-        <CheckBox
-            android:id="@+id/ckIsActive"
+        <ImageButton
+            android:id="@android:id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_IsActiveLabel"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_cancel_selector"
             />
-
-        <RelativeLayout
+        <ImageButton
+            android:id="@android:id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_done_selector"
+            android:layout_marginRight="5dip"
+            />
+    </RelativeLayout>
+    <TextView
+        android:layout_height="1dip"
+        android:layout_width="fill_parent"
+        android:background="@color/separator_bg"
+        android:layout_marginTop="10dip"
+        />
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        >
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@android:id/button1"
-                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dip"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="10dip"
-                android:text="@string/GEN_OK"
+                android:layout_marginTop="10dip"
+                >
+                <TextView
+                    android:id="@+id/tvCurrencyFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CurrencyRateEditActivity_CurrencyFromLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <Spinner android:id="@+id/spnCurrencyFrom"
+                    android:layout_width="50dip"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    android:prompt="@string/GEN_ChooseOneTitle"
+                    />
+
+                <TextView
+                    android:id="@+id/tvCurrencyTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CurrencyRateEditActivity_CurrencyToLabel"
+                    android:layout_marginLeft="10dip"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <Spinner android:id="@+id/spnCurrencyTo"
+                    android:layout_width="50dip"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    android:prompt="@string/GEN_ChooseOneTitle"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                >
+                <TextView
+                    android:id="@+id/tvCurrencyRateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CurrencyRateEditActivity_CurrencyRateLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <EditText
+                    android:id="@+id/etCurrencyRate"
+                    android:layout_width="100dip"
+                    android:layout_height="wrap_content"
+                    android:numeric="decimal"
+                    android:hint="@string/GEN_Required"
+                    android:background="@drawable/white_background"
+                    android:tag="@string/CurrencyRateEditActivity_CurrencyRateLabel"
+                    />
+                <TextView
+                    android:id="@+id/tvCurrencyRateToLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:text="@string/CurrencyRateEditActivity_CurrencyRateToLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                >
+                <TextView
+                    android:id="@+id/tvInverseRateLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/CurrencyRateEditActivity_InverseCurrencyRateLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <TextView
+                    android:id="@+id/tvInverseRateValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <TextView
+                    android:id="@+id/tvInverseRateToLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:text="@string/CurrencyRateEditActivity_CurrencyRateToLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvUserComment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="@string/GEN_UserCommentLabel"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                />
+            <EditText
+                android:id="@+id/etUserComment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_background"
                 />
 
-            <Button
-                android:id="@android:id/closeButton"
+            <CheckBox
+                android:id="@+id/ckIsActive"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@android:id/button1"
-                android:layout_alignTop="@android:id/button1"
-                android:text="@string/GEN_CANCEL"
+                android:text="@string/GEN_IsActiveLabel"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                android:button="@drawable/checkbox_selector"
                 />
-        </RelativeLayout>
-    </LinearLayout>
-</ScrollView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

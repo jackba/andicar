@@ -74,7 +74,6 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
 
         super.onCreate(icicle, mItemClickListener, editClass, insertClass, editTableName, editTableColumns,
                 whereCondition, orderByColumn, pLayoutId, pDbMapFrom, pLayoutIdTo, pViewBinder);
-        lvBaseList.setOnItemClickListener(mReportItemClickListener);
     }
 
     @Override
@@ -137,13 +136,6 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         }
         return true;
     }
-
-    protected AdapterView.OnItemClickListener mReportItemClickListener =
-            new OnItemClickListener() {
-                public void onItemClick(AdapterView<?> av, View view, int i, long l) {
-                    startEditActivity(l);
-                }
-    };
 
     protected void initSpinner(View pSpinner, String tableName){
         try{

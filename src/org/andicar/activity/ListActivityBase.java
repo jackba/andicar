@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 import org.andicar.activity.miscellaneous.GPSTrackMap;
 import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
@@ -144,6 +145,7 @@ public class ListActivityBase extends ListActivity {
         lvBaseList.setOnItemClickListener(mItemClickListener);
         lvBaseList.setOnItemLongClickListener(mItemLongClickListener);
         registerForContextMenu(lvBaseList);
+        lvBaseList.setOnItemClickListener(this.mItemClickListener);
 
         fillData();
 
@@ -188,6 +190,13 @@ public class ListActivityBase extends ListActivity {
         }
     }
 
+    protected AdapterView.OnItemClickListener mItemClickListener =
+            new OnItemClickListener() {
+                public void onItemClick(AdapterView<?> av, View view, int i, long l) {
+                        startEditActivity(l);
+                }
+    };
+
     protected AdapterView.OnItemLongClickListener mItemLongClickListener =
             new AdapterView.OnItemLongClickListener() {
                 public boolean onItemLongClick(AdapterView parent, View v, int position, long id) {
@@ -209,6 +218,9 @@ public class ListActivityBase extends ListActivity {
         if(this instanceof GPSTrackListReportActivity){
             menu.add( 0, StaticValues.CONTEXT_MENU_SENDASEMAIL_ID, 0, mRes.getText( R.string.MENU_SendAsEmailCaption ));
             menu.add( 0, StaticValues.CONTEXT_MENU_SHOWONMAP_ID, 0, mRes.getText( R.string.MENU_ShowOnMap ));
+        }
+        if(this instanceof CarListActivity || this instanceof DriverListActivity){
+            menu.add( 0, StaticValues.CONTEXT_MENU_SETDEFAULT_ID, 0, mRes.getText( R.string.MENU_SetDefault ));
         }
     }
 
@@ -323,6 +335,51 @@ public class ListActivityBase extends ListActivity {
                 Intent gpstrackShowMapIntent = new Intent(this, GPSTrackMap.class);
                 gpstrackShowMapIntent.putExtra("gpsTrackId", Long.toString(mLongClickId));
                 startActivity(gpstrackShowMapIntent);
+                return true;
+            case StaticValues.CONTEXT_MENU_SETDEFAULT_ID:
+                if(this instanceof CarListActivity){
+                    Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME,
+                            MainDbAdapter.carTableColNames, mLongClickId);
+                    //car is actve?
+                    if( c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
+                        mPrefEditor.putLong( "CurrentCar_ID", mLongClickId );
+                        mPrefEditor.putString( "CurrentCar_Name", c.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
+                        mPrefEditor.putLong("CarUOMLength_ID", c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
+                        mPrefEditor.putLong("CarUOMVolume_ID", c.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
+                        mPrefEditor.putLong("CarCurrency_ID", c.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
+                        mPrefEditor.commit();
+                        Toast toast = Toast.makeText( getApplicationContext(),
+                                c.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
+                        toast.show();
+                        c.close();
+                    }
+                    else //inactive car selected
+                    {
+                        errorAlertBuilder.setMessage(mRes.getString(R.string.CarListActivity_InactiveCarSelectedMessage));
+                        errorAlert = errorAlertBuilder.create();
+                        errorAlert.show();
+                    }
+                }
+                else if(this instanceof DriverListActivity){
+                    Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
+                            MainDbAdapter.driverTableColNames, mLongClickId);
+                    //driver is actve?
+                    if( c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
+                        mPrefEditor.putLong( "CurrentDriver_ID", mLongClickId );
+                        mPrefEditor.putString( "CurrentDriver_Name", c.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
+                        mPrefEditor.commit();
+                        Toast toast = Toast.makeText( getApplicationContext(),
+                                c.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
+                        toast.show();
+                    }
+                    else //inactive driver selected
+                    {
+                        errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_InactiveDriverSelectedMessage));
+                        errorAlert = errorAlertBuilder.create();
+                        errorAlert.show();
+                    }
+                    c.close();
+                }
                 return true;
         }
         return super.onContextItemSelected(item);
