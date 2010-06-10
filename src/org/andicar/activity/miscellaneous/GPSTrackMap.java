@@ -186,6 +186,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             trackFiles = FileUtils.getFileNames(StaticValues.TRACK_FOLDER, trackId + "_[0-9][0-9][0-9].gop");
             if(trackFiles == null || trackFiles.isEmpty()){
                 handler.sendEmptyMessage(R.string.ERR_036);
+                return;
             }
             int latitudeE6;
             int longitudeE6;
