@@ -83,8 +83,9 @@
     <string name="GEN_Refuel">"Refuel"</string>
     <string name="GEN_CarLabel">"Car:"</string>
     <string name="GEN_DriverLabel">"Driver:"</string>
-    <string name="GEN_ExpenseCategoryLabel">"Expense category:"</string>
+    <string name="GEN_ExpenseCategoryLabel">"Exp. category:"</string>
     <string name="GEN_ExpenseTypeLabel">"Expense type:"</string>
+    <string name="GEN_TypeLabel">"Type:"</string>
     <string name="GEN_DocumentNoLabel">"Document no.:"</string>
     <string name="GEN_IndexLabel">"Odometer:"</string>
     <string name="GEN_QuantityLabel">"Quantity:"</string>
@@ -95,6 +96,7 @@
     <string name="GEN_ConvertedPriceLabel">"Price [%1]"</string>
     <string name="GEN_SelectedMessage">" selected"</string>
     <string name="GEN_CurrencyLabel">"Currency"</string>
+    <string name="GEN_Required">"Required"</string>
 
 
     <string name="MENU_PreferencesCaption">"Preferences"</string>
@@ -112,17 +114,18 @@
     <string name="MENU_RefuelCaption">"Refuels"</string>
     <string name="MENU_ExpenseCaption">"Expenses"</string>
     <string name="MENU_GPSTrackCaption">"GPS Tracks"</string>
+    <string name="MENU_SetDefault">"Set default"</string>
 
 
-    <string name="MainActivity_InsertBtnCaption">"  Add new  "</string>
-    <string name="MainActivity_ListBtnCaption">"  View more  "</string>
+    <!--<string name="MainActivity_InsertBtnCaption">"  Add new  "</string>-->
+    <!--<string name="MainActivity_ListBtnCaption">"  View more  "</string>-->
     <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
     <!-- <string name="MainActivity_MileageListHeaderCaption">"Last mileage:"</string> -->
     <string name="MainActivity_RefuelHeaderCaption">"Last refuel"</string>
     <!-- <string name="MainActivity_RefuelListHeaderCaption">"Last refuel:"</string> -->
     <string name="MainActivity_GPSTrackHeaderCaption">"Last GPS track"</string>
     <!-- <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string> -->
-    <string name="MainActivity_GPSTrackShowOnMapBtnCaption">" Show on map "</string>
+    <!--<string name="MainActivity_GPSTrackShowOnMapBtnCaption">" Show on map "</string>-->
     <string name="MainActivity_ExpenseHeaderCaption">"Last expense"</string>
     <!-- <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string> -->
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
@@ -170,9 +173,8 @@
 
     <string name="MileageEditActivity_IndexHeaderLabel">"Start/stop odometer or mileage"</string>
     <string name="MileageEditActivity_IndexStartLabel">"Start "</string>
-    <string name="MileageEditActivity_OptionIndexLabel">"Stop "</string>
-    <string name="MileageEditActivity_OptionMileageLabel">"Mileage "</string>
-    <string name="MileageEditActivity_InsertModeHeaderLabel">"<b><i>Insert mode:</i></b>"</string>
+    <string name="MileageEditActivity_OptionIndexLabel">"Stop"</string>
+    <string name="MileageEditActivity_OptionMileageLabel">"Mileage"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Mileage added."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Mileage updated."</string>
 
@@ -221,7 +223,7 @@
     <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Track files"</string>
     <string name="GPSTrackEditActivity_TrackStatistics">"Statistics"</string>
 
-    <string name="GPSTrackControllerActivity_StartBtnCaption">"Start GPS Track"</string>
+    <!--<string name="GPSTrackControllerActivity_StartBtnCaption">"Start GPS Track"</string>-->
     <string name="GPSTrackControllerActivity_StopBtnCaption">"Stop GPS Track"</string>
     <string name="GPSTrackControllerActivity_FileFormatLabel">"Track file format:"</string>
     <string name="GPSTrackControllerActivity_CreateMileageLabel">"Create mileage"</string>

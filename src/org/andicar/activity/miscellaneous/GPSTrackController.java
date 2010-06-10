@@ -24,9 +24,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
@@ -48,7 +48,7 @@ public class GPSTrackController extends BaseActivity {
     private CheckBox ckIsUseKML;
     private CheckBox ckIsUseGPX;
     private CheckBox ckIsCreateMileage;
-    private Button btnGPSTrackStartStop;
+    private ImageButton btnGPSTrackStartStop;
     private boolean isGpsTrackOn = false;
     private ViewGroup vgRoot;
     private long mCarId;
@@ -80,7 +80,7 @@ public class GPSTrackController extends BaseActivity {
         ckIsUseGPX.setChecked(mPreferences.getBoolean("IsUseGPXTrack", true));
 //        ckIsShowOnMap = (CheckBox) findViewById(R.id.ckIsShowOnMap);
 //        ckIsShowOnMap.setChecked(mPreferences.getBoolean("IsGPSTrackOnMap", true));
-        btnGPSTrackStartStop = (Button) findViewById(R.id.btnStartStopGpsTrack);
+        btnGPSTrackStartStop = (ImageButton) findViewById(R.id.btnStartStopGpsTrack);
         btnGPSTrackStartStop.setOnClickListener(btnGPSTrackStartStopListener);
         ckIsCreateMileage = (CheckBox) findViewById(R.id.ckIsCreateMileage);
         ckIsCreateMileage.setChecked(mPreferences.getBoolean("GPSTrackCreateMileage", true));
@@ -99,14 +99,14 @@ public class GPSTrackController extends BaseActivity {
         isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
 
         if(isGpsTrackOn){
-            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackControllerActivity_StopBtnCaption));
+            btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
             restoreState();
             setEditable(vgRoot, false);
         }
         else{
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
             mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
-            btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackControllerActivity_StartBtnCaption));
+            btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
             setEditable(vgRoot, true);
         }
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
@@ -207,7 +207,7 @@ public class GPSTrackController extends BaseActivity {
                 setEditable(vgRoot, true);
                 etName.setText("");
                 etName.setHint(Utils.getDateStr(true, true));
-                btnGPSTrackStartStop.setText(mResource.getString(R.string.GPSTrackControllerActivity_StartBtnCaption));
+                btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
                 mPrefEditor.putBoolean("isGpsTrackOn", false);
                 mPrefEditor.commit();
                 finish();
@@ -230,8 +230,7 @@ public class GPSTrackController extends BaseActivity {
                 setEditable(vgRoot, false);
 //                startActivity(new Intent(GPSTrackController.this, GPSTrackMap.class));
                 if(isGpsTrackOn)
-                    btnGPSTrackStartStop.setText(
-                            mResource.getString(R.string.GPSTrackControllerActivity_StopBtnCaption));
+                    btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
                 finish();
             }
         };

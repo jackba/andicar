@@ -95,6 +95,7 @@ public class MileageEditActivity extends EditActivityBase {
 
             mCarId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
                                 .getLong(MainDbAdapter.MILEAGE_COL_CAR_ID_POS);
+            
             mDriverId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
                                 .getLong(MainDbAdapter.MILEAGE_COL_DRIVER_ID_POS);
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
@@ -172,7 +173,7 @@ public class MileageEditActivity extends EditActivityBase {
             tvUserInputLabel.setText(
                     mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
             tvCalculatedTextLabel.setText(
-                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
+                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
         }
         else {
@@ -180,7 +181,7 @@ public class MileageEditActivity extends EditActivityBase {
             tvUserInputLabel.setText(
                     mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
             tvCalculatedTextLabel.setText(
-                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
         }
     }
@@ -295,12 +296,12 @@ public class MileageEditActivity extends EditActivityBase {
                 }
                 else {
                     BigDecimal mileage = pNewIndex.subtract(pStartIndex);
-                    tvCalculatedContent.setText(mileage.toString() + ";");
+                    tvCalculatedContent.setText(mileage.toString());
                 }
             }
             else { //mileage
                 pNewIndex = mStartIndex.add(pEntryMileageValue);
-                tvCalculatedContent.setText(pNewIndex.toString() + ";");
+                tvCalculatedContent.setText(pNewIndex.toString());
             }
             mNewIndex = pNewIndex;
         }
@@ -349,7 +350,7 @@ public class MileageEditActivity extends EditActivityBase {
                             tvUserInputLabel.setText(
                                     mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
                             tvCalculatedTextLabel.setText(
-                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
+                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
                             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
                         }
                         else {
@@ -357,7 +358,7 @@ public class MileageEditActivity extends EditActivityBase {
                             tvUserInputLabel.setText(
                                     mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
                             tvCalculatedTextLabel.setText(
-                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
                             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
                         }
                         SharedPreferences.Editor editor = mPreferences.edit();

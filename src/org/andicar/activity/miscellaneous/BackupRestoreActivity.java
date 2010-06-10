@@ -50,7 +50,7 @@ public class BackupRestoreActivity extends BaseActivity {
     private Button btnRestore;
     private Button btnBackup;
     private Button btnDelete;
-    private ListView lvBackupSet;
+    private ListView lvBackupList;
 
     /** Called when the activity is first created. */
     @Override
@@ -66,7 +66,7 @@ public class BackupRestoreActivity extends BaseActivity {
         btnDelete = (Button) findViewById(R.id.btnDelete);
         btnDelete.setOnClickListener(btnDeleteBkClickListener);
         btnDelete.setEnabled(false);
-        lvBackupSet = (ListView) findViewById(R.id.lvBackupList);
+        lvBackupList = (ListView) findViewById(R.id.lvBackupList);
         fillBkList();
 
     }
@@ -76,14 +76,15 @@ public class BackupRestoreActivity extends BaseActivity {
         if(bkFileList == null || bkFileList.isEmpty()){
             btnRestore.setEnabled(false);
             btnDelete.setEnabled(false);
-            lvBackupSet.setAdapter(null);
+            lvBackupList.setAdapter(null);
             return;
         }
-        ArrayAdapter listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, bkFileList);
-        lvBackupSet.setAdapter(listAdapter);
-        lvBackupSet.setItemsCanFocus(false);
-        lvBackupSet.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        lvBackupSet.setOnItemClickListener(bkFileSelectedListener);
+        ArrayAdapter listAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_single_choice, bkFileList);
+        lvBackupList.setAdapter(listAdapter);
+        lvBackupList.setItemsCanFocus(false);
+        lvBackupList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        lvBackupList.setOnItemClickListener(bkFileSelectedListener);
     }
 
     protected AdapterView.OnItemClickListener bkFileSelectedListener = new AdapterView.OnItemClickListener() {

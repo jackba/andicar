@@ -17,157 +17,184 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:scrollbars="vertical"
+    android:layout_height="fill_parent"
+    android:layout_marginRight="5dip"
     android:id="@+id/vgRoot"
+    android:background="@android:color/black"
     >
-
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dip"
         >
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
+        <ImageButton
+            android:id="@android:id/closeButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            >
-            <TextView
-                android:id="@+id/tvCarLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/GEN_CarLabel"
-                />
-            <Spinner android:id="@+id/spnCar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="5dip"
-                android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                />
-
-            <TextView
-                android:id="@+id/tvDriverLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:text="@string/GEN_DriverLabel"
-                />
-            <Spinner android:id="@+id/spnDriver"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="5dip"
-                android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                />
-        </LinearLayout>
-
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_cancel_selector"
+            />
+        <ImageButton
+            android:id="@+id/btnStartStopGpsTrack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_record24x24"
+            android:layout_marginRight="5dip"
+            />
+    </RelativeLayout>
+    <TextView
+        android:layout_height="1dip"
+        android:layout_width="fill_parent"
+        android:background="@color/separator_bg"
+        android:layout_marginTop="10dip"
+        />
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        android:id="@+id/vgRoot"
+        >
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
+            android:layout_marginRight="5dip"
             >
-            <TextView
-                android:id="@+id/tvNameLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/GEN_NameLabel"
-                />
-            <EditText
-                android:id="@+id/etName"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
-                android:background="@android:drawable/editbox_background"
-                />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/tvUserCommentLabel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/GEN_UserCommentLabel"
-            />
-        <AutoCompleteTextView
-            android:id="@+id/acUserComment"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
-            />
+                android:layout_marginTop="5dip"
+                >
+                <TextView
+                    android:id="@+id/tvCarLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GEN_CarLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <Spinner android:id="@+id/spnCar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    android:prompt="@string/GEN_ChooseOneTitle"
+                    />
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            >
+                <TextView
+                    android:id="@+id/tvDriverLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/GEN_DriverLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <Spinner android:id="@+id/spnDriver"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    android:prompt="@string/GEN_ChooseOneTitle"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <TextView
+                    android:id="@+id/tvNameLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GEN_NameLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    />
+            </LinearLayout>
             <CheckBox
                 android:id="@+id/ckIsCreateMileage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GPSTrackControllerActivity_CreateMileageLabel"
-                android:layout_marginLeft="10dip"
                 android:layout_alignParentLeft="true"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                android:button="@drawable/checkbox_selector"
                 />
-            <Button android:id="@+id/btnStartStopGpsTrack"
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/GPSTrackControllerActivity_StartBtnCaption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dip"
-                android:layout_marginTop="5dip"
-                android:layout_toRightOf="@id/ckIsCreateMileage"
-                />
-        </RelativeLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            >
             <TextView
-                android:id="@+id/tvFileFormatLabel"
-                android:layout_width="wrap_content"
+                android:id="@+id/tvUserCommentLabel"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/GPSTrackControllerActivity_FileFormatLabel"
+                android:text="@string/GEN_UserCommentLabel"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
                 />
-            <CheckBox
-                android:id="@+id/ckIsUseKML"
-                android:layout_width="wrap_content"
+            <AutoCompleteTextView
+                android:id="@+id/acUserComment"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/PREFGPSTrack_KMLFileFormatTitle"
-                android:layout_marginLeft="5dip"
+                android:background="@drawable/white_background"
                 />
-            <CheckBox
-                android:id="@+id/ckIsUseGPX"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PREFGPSTrack_GPXFileFormatTitle"
-                android:layout_marginLeft="5dip"
-                />
-        </LinearLayout>
 
-<!--        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            >
-            <CheckBox
-                android:id="@+id/ckIsShowOnMap"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/PREF_GPSTRACK_SHOWONMAP_SUMMARY"
-                />
+                android:layout_marginTop="5dip"
+                >
+                <TextView
+                    android:id="@+id/tvFileFormatLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GPSTrackControllerActivity_FileFormatLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <CheckBox
+                    android:id="@+id/ckIsUseKML"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PREFGPSTrack_KMLFileFormatTitle"
+                    android:layout_marginLeft="5dip"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/checkbox_selector"
+                    />
+                <CheckBox
+                    android:id="@+id/ckIsUseGPX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/PREFGPSTrack_GPXFileFormatTitle"
+                    android:layout_marginLeft="5dip"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/checkbox_selector"
+                    />
+            </LinearLayout>
         </LinearLayout>
--->
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

@@ -32,6 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -51,8 +52,8 @@ public class GPSTrackEditActivity extends EditActivityBase {
     private AutoCompleteTextView acUserComment;
     private ListView lvTrackFileList;
     private TextView tvTrackStats;
-    private Button btnGPSTrackShowOnMap;
-    private Button btnGPSTrackSendAsEmail;
+    private ImageButton btnGPSTrackShowOnMap;
+    private ImageButton btnGPSTrackSendAsEmail;
     private ArrayAdapter<String> userCommentAdapter;
 
     /** Called when the activity is first created. */
@@ -69,9 +70,9 @@ public class GPSTrackEditActivity extends EditActivityBase {
         spnDriver = (Spinner)findViewById(R.id.spnDriver);
         tvTrackStats = (TextView)findViewById(R.id.tvTrackStats);
         lvTrackFileList = (ListView)findViewById(R.id.lvTrackFileList);
-        btnGPSTrackSendAsEmail = (Button)findViewById(R.id.btnGPSTrackSendAsEmail);
+        btnGPSTrackSendAsEmail = (ImageButton)findViewById(R.id.btnGPSTrackSendAsEmail);
         btnGPSTrackSendAsEmail.setOnClickListener(mBtnSendAsEmailListener);
-        btnGPSTrackShowOnMap = (Button)findViewById(R.id.btnGPSTrackShowOnMap);
+        btnGPSTrackShowOnMap = (ImageButton)findViewById(R.id.btnGPSTrackShowOnMap);
         btnGPSTrackShowOnMap.setOnClickListener(mBtnShowOnMapListener);
 
         userCommentAdapter = new ArrayAdapter<String>(GPSTrackEditActivity.this,

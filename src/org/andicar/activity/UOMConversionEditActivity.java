@@ -113,6 +113,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
     private OnItemSelectedListener uomFromSelectedListener =
                 new OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                        setSpinnerTextToCode(arg0, arg3, arg1);
                         uomFromType = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, arg3)
                             .getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
 
