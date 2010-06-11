@@ -220,6 +220,7 @@ public class MileageEditActivity extends EditActivityBase {
             mUOMLengthId = savedInstanceState.getLong("mUOMLengthId");
             mGpsTrackId = savedInstanceState.getLong("mGpsTrackId");
             mInsertMode = savedInstanceState.getInt("mInsertMode");
+            operationType = savedInstanceState.getString("operationType");
 
             if(savedInstanceState.containsKey("mNewIndex"))
                 mNewIndex = new BigDecimal(savedInstanceState.getString("mNewIndex"));
@@ -246,6 +247,7 @@ public class MileageEditActivity extends EditActivityBase {
         outState.putLong("mGpsTrackId", mGpsTrackId);
         outState.putLong("mExpTypeId", spnExpType.getSelectedItemId());
         outState.putInt("mInsertMode", mInsertMode);
+        outState.putString("operationType", operationType);
 
         if(mNewIndex != null)
             outState.putString("mNewIndex", mNewIndex.toString());
