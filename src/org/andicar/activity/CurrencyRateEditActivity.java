@@ -213,7 +213,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
 
     @Override
     void saveData() {
-        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        String strRetVal = checkMandatory(vgRoot);
         if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
                     mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
