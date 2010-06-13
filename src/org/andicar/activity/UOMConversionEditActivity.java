@@ -131,7 +131,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
     void saveData() {
         //check mandatory fields
         String convRateStr = etConversionRate.getText().toString();
-        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        String retVal = checkMandatory(vgRoot);
         if( retVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
                     mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );

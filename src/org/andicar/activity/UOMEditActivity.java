@@ -89,7 +89,7 @@ public class UOMEditActivity extends EditActivityBase {
     @Override
     void saveData() {
         //check mandatory fields
-        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        String retVal = checkMandatory(vgRoot);
         if( retVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
                     mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );

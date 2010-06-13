@@ -390,7 +390,7 @@ public class MileageEditActivity extends EditActivityBase {
     void saveData() {
         //check mandatory fileds & index preconditions
         calculateMileageOrNewIndex();
-        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+        String retVal = checkMandatory(vgRoot);
         if( retVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
                     mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
