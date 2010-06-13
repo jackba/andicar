@@ -92,11 +92,11 @@ public abstract class EditActivityBase extends BaseActivity {
 
         btnCancel = (ImageButton) findViewById( android.R.id.closeButton);
         if(btnCancel != null)
-            btnCancel.setOnClickListener(mCancelClickListener);
+            btnCancel.setOnClickListener(onCancelClickListener);
 
         btnOk = (ImageButton)findViewById( android.R.id.button1 );
-        if(mOkClickListener != null)
-            btnOk.setOnClickListener(mOkClickListener);
+        if(onOkClickListener != null)
+            btnOk.setOnClickListener(onOkClickListener);
 
     }
 
@@ -125,7 +125,7 @@ public abstract class EditActivityBase extends BaseActivity {
         outState.putInt("mMinute", mMinute);
     }
 
-    protected View.OnClickListener mCancelClickListener =
+    protected View.OnClickListener onCancelClickListener =
             new View.OnClickListener(){
                 public void onClick( View v )
                 {
@@ -133,7 +133,7 @@ public abstract class EditActivityBase extends BaseActivity {
                 }
             };
 
-    protected View.OnClickListener mOkClickListener =
+    protected View.OnClickListener onOkClickListener =
             new View.OnClickListener()
                 {
                     public void onClick( View v )
@@ -216,10 +216,10 @@ public abstract class EditActivityBase extends BaseActivity {
         switch(id) {
             case StaticValues.TIME_DIALOG_ID:
                 return new TimePickerDialog(this,
-                        mTimeSetListener, mHour, mMinute, false);
+                        onTimeSetListener, mHour, mMinute, false);
             case StaticValues.DATE_DIALOG_ID:
                 return new DatePickerDialog(this,
-                        mDateSetListener,
+                        onDateSetListener,
                         mYear, mMonth, mDay);
         }
         return null;
@@ -236,7 +236,7 @@ public abstract class EditActivityBase extends BaseActivity {
                 break;
         }
     }
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
+    private DatePickerDialog.OnDateSetListener onDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int monthOfYear,
                         int dayOfMonth) {
@@ -247,7 +247,7 @@ public abstract class EditActivityBase extends BaseActivity {
                 }
             };
             
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener =
+    private TimePickerDialog.OnTimeSetListener onTimeSetListener =
             new TimePickerDialog.OnTimeSetListener() {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     mHour = hourOfDay;
