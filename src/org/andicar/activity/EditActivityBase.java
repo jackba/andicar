@@ -23,6 +23,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -32,6 +33,7 @@ import org.andicar.utils.StaticValues;
 import android.widget.TimePicker;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import java.math.BigDecimal;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
 
@@ -60,6 +62,7 @@ public abstract class EditActivityBase extends BaseActivity {
     protected long mlDateTimeInSeconds;
     protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
+    protected ViewGroup vgRoot;
 //    protected int mLayoutResID = -1;
 
     abstract void saveData();
@@ -97,6 +100,7 @@ public abstract class EditActivityBase extends BaseActivity {
         btnOk = (ImageButton)findViewById( android.R.id.button1 );
         if(onOkClickListener != null)
             btnOk.setOnClickListener(onOkClickListener);
+        vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
 
     }
 
@@ -142,15 +146,17 @@ public abstract class EditActivityBase extends BaseActivity {
                     }
                 };
 
-
    /**
-    * Check mandatory fields. Mandatory fields are detected based on view tag (if contain a value => field is mandatory)
+    * Check mandatory fields. Mandatory fields are detected based on view hint (Required)
     * @return null or field tag if is empty
     */
    protected String checkMandatory(ViewGroup wg){
        View vwChild;
        EditText etChild;
        String strRetVal;
+       if(wg == null)
+           return null;
+       
        for(int i = 0; i < wg.getChildCount(); i++)
        {
            vwChild = wg.getChildAt(i);
@@ -161,9 +167,51 @@ public abstract class EditActivityBase extends BaseActivity {
            }
            else if(vwChild instanceof EditText){
                etChild = (EditText) vwChild;
-               if(etChild.getTag() != null && etChild.getTag().toString().length() > 0
+//               if(etChild.getTag() != null && etChild.getTag().toString().length() > 0
+               if(etChild.getHint() != null && etChild.getHint().toString().equals(mResource.getString(R.string.GEN_Required))
+                       && etChild.isShown()
                        && (etChild.getText().toString() == null || etChild.getText().toString().length() == 0)){
-                   return etChild.getTag().toString();
+                   return etChild.getTag().toString().replace(":", "");
+               }
+           }
+       }
+       return null;
+   }
+
+   /**
+    * Check numeric fields. Numeric fields are detected based on input type (TYPE_CLASS_PHONE)
+    * @return null or field tag if is empty
+    */
+   protected String checkNumeric(ViewGroup wg){
+       View vwChild;
+       EditText etChild;
+       String strRetVal;
+       if(wg == null)
+           return null;
+
+       for(int i = 0; i < wg.getChildCount(); i++)
+       {
+           vwChild = wg.getChildAt(i);
+           if(vwChild instanceof ViewGroup){
+               strRetVal = checkNumeric((ViewGroup)vwChild);
+               if(strRetVal != null)
+                   return strRetVal;
+           }
+           else if(vwChild instanceof EditText){
+               etChild = (EditText) vwChild;
+               String sValue = ((EditText)etChild).getText().toString();
+               if(etChild.getOnFocusChangeListener() == null &&
+                       etChild.getInputType() == InputType.TYPE_CLASS_PHONE){
+                    if(sValue != null && sValue.length() > 0)
+                    {
+                        try{
+                            //check if valid number
+                            new BigDecimal(sValue);
+                        }
+                        catch(NumberFormatException e){
+                            return etChild.getTag().toString().replace(":", "");
+                        }
+                    }
                }
            }
        }
@@ -236,6 +284,7 @@ public abstract class EditActivityBase extends BaseActivity {
                 break;
         }
     }
+
     private DatePickerDialog.OnDateSetListener onDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int monthOfYear,

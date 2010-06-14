@@ -10,25 +10,41 @@ package org.andicar.activity;
 public final class R {
     public static final class array {
         /**  Used in gps track (maximum value of accuracy) 
+ Used in gps track (maximum value of accuracy) 
+ Used in gps track (maximum value of accuracy) 
          */
         public static final int gpstrack_preference_maxaccuracy_entries=0x7f040003;
         /**  values in meter 
+ values in meter 
+ values in meter 
          */
         public static final int gpstrack_preference_maxaccuracy_values=0x7f040004;
         /**  Used in gps track. Maximum value of percentage of skipped track points.
     Tracking will be automatically stopped over this limit 
+ Used in gps track. Maximum value of percentage of skipped track points.
+    Tracking will be automatically stopped over this limit 
+ Used in gps track. Maximum value of percentage of skipped track points.
+    Tracking will be automatically stopped over this limit 
          */
         public static final int gpstrack_preference_maxaccuracyshutdownlimit_entries=0x7f040005;
         /**  values in meter 
+ values in meter 
+ values in meter 
          */
         public static final int gpstrack_preference_maxaccuracyshutdownlimit_values=0x7f040006;
         /**  Used in gps track (minimum time betwee 2 recording points) 
+ Used in gps track (minimum time betwee 2 recording points) 
+ Used in gps track (minimum time betwee 2 recording points) 
          */
         public static final int gpstrack_preference_mintime_entries=0x7f040001;
         /**  values in miliseconds 
+ values in miliseconds 
+ values in miliseconds 
          */
         public static final int gpstrack_preference_mintime_values=0x7f040002;
         /**  report file formats  
+ report file formats  
+ report file formats  
          */
         public static final int report_formats=0x7f040000;
     }
@@ -369,6 +385,8 @@ public final class R {
         public static final int DB_Curr_EEK=0x7f060039;
         public static final int DB_Curr_EGP=0x7f060038;
         /**  currencies 
+ currencies 
+ currencies 
          */
         public static final int DB_Curr_EUR=0x7f060024;
         public static final int DB_Curr_GBP=0x7f06002c;
@@ -394,6 +412,8 @@ public final class R {
         public static final int DB_Curr_ZAR=0x7f060042;
         public static final int DB_ExpCat_FuelComment=0x7f06001f;
         /**  expense categories 
+ expense categories 
+ expense categories 
          */
         public static final int DB_ExpCat_FuelName=0x7f06001e;
         public static final int DB_ExpCat_InsuranceComment=0x7f060023;
@@ -404,6 +424,8 @@ public final class R {
         public static final int DB_ExpType_EmployerName=0x7f06001c;
         public static final int DB_ExpType_PersonalComment=0x7f06001b;
         /**  expense types 
+ expense types 
+ expense types 
          */
         public static final int DB_ExpType_PersonalName=0x7f06001a;
         public static final int DB_UOMConv_GBGToLComment=0x7f060013;
@@ -418,6 +440,8 @@ public final class R {
         public static final int DB_UOMConv_LToUSGName=0x7f060010;
         public static final int DB_UOMConv_MiToKmComment=0x7f06000b;
         /**  UOM Conversions 
+ UOM Conversions 
+ UOM Conversions 
          */
         public static final int DB_UOMConv_MiToKmName=0x7f06000a;
         public static final int DB_UOMConv_USGToGBGComment=0x7f060019;
@@ -428,6 +452,8 @@ public final class R {
         public static final int DB_UOM_GBGName=0x7f060008;
         public static final int DB_UOM_KmComment=0x7f060001;
         /**  UOM's 
+ UOM's 
+ UOM's 
          */
         public static final int DB_UOM_KmName=0x7f060000;
         public static final int DB_UOM_LComment=0x7f060005;
@@ -526,6 +552,8 @@ public final class R {
         public static final int GPSTrackControllerActivity_CreateMileageLabel=0x7f060119;
         public static final int GPSTrackControllerActivity_FileFormatLabel=0x7f060118;
         /** <string name="GPSTrackControllerActivity_StartBtnCaption">"Start GPS Track"</string>
+ <string name="GPSTrackControllerActivity_StartBtnCaption">"开始 GPS 追踪"</string> 
+ <string name="GPSTrackControllerActivity_StartBtnCaption">"開始 GPS 追蹤"</string> 
          */
         public static final int GPSTrackControllerActivity_StopBtnCaption=0x7f060117;
         public static final int GPSTrackEditActivity_TrackFilesHeaderCaption=0x7f060115;
@@ -577,11 +605,25 @@ public final class R {
         public static final int MainActivity_BackupExistMessage=0x7f0600d7;
         /**  <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string> 
 <string name="MainActivity_GPSTrackShowOnMapBtnCaption">" Show on map "</string>
+ <string name="MainActivity_GPSTrackListHeaderCaption">"上次追踪："</string> 
+ <string name="MainActivity_GPSTrackInsertBtnCaption">"  添加  "</string> 
+ <string name="MainActivity_GPSTrackShowOnMapBtnCaption">" 在地图上显示 "</string> 
+ <string name="MainActivity_GPSTrackListBtnCaption">"  查看更多  "</string> 
+ <string name="MainActivity_GPSTrackListHeaderCaption">"上次追蹤："</string> 
+ <string name="MainActivity_GPSTrackInsertBtnCaption">"  新增  "</string> 
+ <string name="MainActivity_GPSTrackShowOnMapBtnCaption">" 在地圖上顯示 "</string> 
+ <string name="MainActivity_GPSTrackListBtnCaption">"  檢視更多  "</string> 
          */
         public static final int MainActivity_ExpenseHeaderCaption=0x7f0600c8;
         public static final int MainActivity_ExpenseNoDataAditionalText=0x7f0600d2;
         public static final int MainActivity_ExpenseNoDataText=0x7f0600d1;
         /**  <string name="MainActivity_RefuelListHeaderCaption">"Last refuel:"</string> 
+ <string name="MainActivity_RefuelListHeaderCaption">"上次加油："</string> 
+ <string name="MainActivity_RefuelInsertBtnCaption">"  添加  "</string> 
+ <string name="MainActivity_RefuelListBtnCaption">"  查看更多  "</string> 
+ <string name="MainActivity_RefuelListHeaderCaption">"上次加油："</string> 
+ <string name="MainActivity_RefuelInsertBtnCaption">"  新增  "</string> 
+ <string name="MainActivity_RefuelListBtnCaption">"  檢視更多  "</string> 
          */
         public static final int MainActivity_GPSTrackHeaderCaption=0x7f0600c7;
         public static final int MainActivity_GPSTrackZoneNoDataText=0x7f0600d9;
@@ -593,12 +635,24 @@ public final class R {
         public static final int MainActivity_NoCurrentCarMessage=0x7f0600d3;
         public static final int MainActivity_NoCurrentDriverMessage=0x7f0600d4;
         /**  <string name="MainActivity_MileageListHeaderCaption">"Last mileage:"</string> 
+ <string name="MainActivity_MileageListHeaderCaption">"最后里程："</string> 
+ <string name="MainActivity_MileageInsertBtnCaption">"  添加  "</string> 
+ <string name="MainActivity_MileageListBtnCaption">"  查看更多  "</string> 
+ <string name="MainActivity_MileageListHeaderCaption">"最後里程："</string> 
+ <string name="MainActivity_MileageInsertBtnCaption">"  新增  "</string> 
+ <string name="MainActivity_MileageListBtnCaption">"  檢視更多  "</string> 
          */
         public static final int MainActivity_RefuelHeaderCaption=0x7f0600c6;
         public static final int MainActivity_RefuelNoDataText=0x7f0600d0;
         public static final int MainActivity_StatisticsAvgConsLabel=0x7f0600cb;
         public static final int MainActivity_StatisticsAvgConsNoDataText=0x7f0600cc;
         /**  <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string> 
+ <string name="MainActivity_ExpenseListHeaderCaption">"上次支出："</string> 
+ <string name="MainActivity_ExpenseListBtnCaption">"  添加  "</string> 
+ <string name="MainActivity_ExpenseListBtnCaption">"  查看更多  "</string> 
+ <string name="MainActivity_ExpenseListHeaderCaption">"上次支出："</string> 
+ <string name="MainActivity_ExpenseInsertBtnCaption">"  新增  "</string> 
+ <string name="MainActivity_ExpenseListBtnCaption">"  檢視更多  "</string> 
          */
         public static final int MainActivity_StatisticsHeaderCaption=0x7f0600c9;
         public static final int MainActivity_StatisticsListHeaderCaption=0x7f0600ca;
@@ -609,6 +663,9 @@ public final class R {
         public static final int MainActivity_WellcomeMessage=0x7f0600d5;
         public static final int MileageEditActivity_IndexHeaderLabel=0x7f0600ee;
         public static final int MileageEditActivity_IndexStartLabel=0x7f0600ef;
+        /**  <string name="MileageEditActivity_InsertModeHeaderLabel">"<b><i>插入模式：</i></b>"</string> 
+ <string name="MileageEditActivity_InsertModeHeaderLabel">"<b><i>插入模式：</i></b>"</string> 
+         */
         public static final int MileageEditActivity_InsertOkMessage=0x7f0600f2;
         public static final int MileageEditActivity_OptionIndexLabel=0x7f0600f0;
         public static final int MileageEditActivity_OptionMileageLabel=0x7f0600f1;

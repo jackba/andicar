@@ -194,6 +194,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
+                    android:digits="-.1234567890"
+                    android:inputType="phone"
                     android:layout_marginLeft="5dip"
                     android:hint="@string/GEN_Required"
                     android:background="@drawable/white_background"
@@ -220,6 +222,8 @@
                     android:layout_width="80dip"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
+                    android:digits="-.1234567890"
+                    android:inputType="phone"
                     android:layout_marginLeft="5dip"
                     android:hint="@string/GEN_Required"
                     android:background="@drawable/white_background"
@@ -261,8 +265,11 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
+                    android:digits="-.1234567890"
+                    android:inputType="phone"
                     android:layout_marginLeft="10dip"
                     android:background="@drawable/white_background"
+                    android:tag="@string/GEN_IndexLabel"
                     />
             </LinearLayout>
 

@@ -341,8 +341,9 @@ public class RefuelEditActivity extends EditActivityBase {
 
             initControls();
             calculateBaseUOMQty();
-            calculatePriceAmount();
+//            calculatePriceAmount();
             initDateTime(mlDateTimeInSeconds * 1000);
+            setInsertMode(mInsertMode);
         }
         catch(NumberFormatException e){}
     }
@@ -603,21 +604,21 @@ public class RefuelEditActivity extends EditActivityBase {
 
     @Override
     void saveData() {
-        String retVal = checkMandatory(vgRoot);
-        if( retVal != null ) {
+        String strRetVal = checkMandatory(vgRoot);
+        if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
             toast.show();
             return;
         }
-//        if(priceEntered != null)
-//            priceEntered = priceEntered.setScale(StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
-//        if(amountEntered != null)
-//            amountEntered = amountEntered.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-//        if(priceConverted != null)
-//            priceConverted = priceConverted.setScale(StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
-//        if(amountConverted != null)
-//            amountConverted = amountConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+
+        strRetVal = checkNumeric(vgRoot);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
