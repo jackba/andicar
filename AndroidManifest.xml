@@ -21,7 +21,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
           android:versionCode="321"
-          android:versionName="3.2.1">
+          android:versionName="3.2.2 Beta">
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
