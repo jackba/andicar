@@ -117,17 +117,10 @@
     <string name="MENU_SetDefault">"Set default"</string>
 
 
-    <!--<string name="MainActivity_InsertBtnCaption">"  Add new  "</string>-->
-    <!--<string name="MainActivity_ListBtnCaption">"  View more  "</string>-->
     <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
-    <!-- <string name="MainActivity_MileageListHeaderCaption">"Last mileage:"</string> -->
     <string name="MainActivity_RefuelHeaderCaption">"Last refuel"</string>
-    <!-- <string name="MainActivity_RefuelListHeaderCaption">"Last refuel:"</string> -->
     <string name="MainActivity_GPSTrackHeaderCaption">"Last GPS track"</string>
-    <!-- <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string> -->
-    <!--<string name="MainActivity_GPSTrackShowOnMapBtnCaption">" Show on map "</string>-->
     <string name="MainActivity_ExpenseHeaderCaption">"Last expense"</string>
-    <!-- <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string> -->
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
     <string name="MainActivity_StatisticsListHeaderCaption">"Last know odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
@@ -223,7 +216,6 @@
     <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Track files"</string>
     <string name="GPSTrackEditActivity_TrackStatistics">"Statistics"</string>
 
-    <!--<string name="GPSTrackControllerActivity_StartBtnCaption">"Start GPS Track"</string>-->
     <string name="GPSTrackControllerActivity_StopBtnCaption">"Stop GPS Track"</string>
     <string name="GPSTrackControllerActivity_FileFormatLabel">"Track file format:"</string>
     <string name="GPSTrackControllerActivity_CreateMileageLabel">"Create mileage"</string>
