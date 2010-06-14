@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<resources>
+    <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
+        AndiCar 是一個ANDROID設備上免費而且開源的汽車管理程式。 \n
+        授權遵循GNU公共授權第3版的條款。\n
+        在關於頁面有更多訊息。 \n
+        感謝您使用AndiCar！
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
+        &lt;b&gt;&lt;i&gt;AndiCar&lt;/i&gt;&lt;/b&gt;是一個ANDROID設備上免費而且開源的汽車管理程式。
+        授權遵循GNU公共授權第3版的條款。&lt;br&gt;
+        在關於頁面有更多訊息 &lt;br&gt;版權所有 c 2010 Miklos Keresztes.&lt;br&gt;
+        感謝使用&lt;b&gt;&lt;i&gt;AndiCar&lt;/i&gt;&lt;/b&gt;!&lt;br&gt;
+        程式版本：
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML1">
+        &lt;b&gt;&lt;i&gt;AndiCar&lt;/i&gt;&lt;/b&gt; 是一個ANDROID設備上免費而且開源的汽車管理程式。授權遵循GNU公共授權第3版的條款。&lt;br&gt;
+        *  更多訊息（怎麼使用，最新新聞）請拜訪項目首頁：        &lt;a href="http://sites.google.com/site/andicarfree/"&gt;http://sites.google.com/site/andicarfree/&lt;/a&gt;.&lt;br&gt;
+        &lt;small&gt;如果你的瀏覽器出現了"目前頁面不可用"想新，請更新此頁。&lt;/small&gt;&lt;br&gt;
+        *  如有任何問題關於&lt;b&gt;&lt;i&gt;AndiCar&lt;/i&gt;&lt;/b&gt; 歡迎到小組討論：
+        &lt;a href="http://groups.google.com/group/andicar"&gt;http://groups.google.com/group/andicar&lt;/a&gt;.&lt;br&gt;
+        *  錯誤報告或 改進要求，請用 &lt;b&gt;&lt;i&gt;AndiCar&lt;/i&gt;&lt;/b&gt;問題系統：        &lt;a href="https://code.google.com/p/andicar/issues/list"&gt;https://code.google.com/p/andicar/issues/list&lt;/a&gt;.&lt;br&gt;
+        *  你可以在以下以上訂閱關於專案的更新訊息：
+        &lt;a href="http://sites.google.com/site/andicarfree/News/"&gt;http://sites.google.com/site/andicarfree/News/&lt;/a&gt;.&lt;br&gt;
+        *  如有任何其他的問題，可以發Email到 andicar.support@gmail.com.&lt;br&gt;&lt;br&gt;
+        如果你喜歡 &lt;b&gt;&lt;i&gt;AndiCar&lt;/b&gt;&lt;/i&gt;，請考慮為我們做一個捐贈。
+        所有的捐贈均可使用一個PayPal賬戶。
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML2">
+        &lt;br&gt;&lt;br&gt;感謝使用 &lt;b&gt;&lt;i&gt;AndiCar&lt;/i&gt;&lt;/b&gt;.&lt;br&gt;&lt;br&gt;
+        &lt;br&gt;&lt;b&gt;&lt;i&gt;版權須知&lt;/i&gt;&lt;/b&gt;:&lt;br&gt;&lt;br&gt;
+        版權所有 c 2010 Miklos Keresztes (miklos.keresztes@gmail.com)&lt;br&gt;&lt;br&gt;
+        這一程式是自由軟體，你可以遵照自由軟體基金會出版的GNU通用公共授權條款來修改和重新發佈這一程式。或者用授權的第三版，或者（根據你的選取）用任何更新的版本。&lt;br&gt;&lt;br&gt;
+      發佈這一程式的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的的隱含的擔保。更細節的情況請參閱GNU通用公共授權。&lt;br&gt;&lt;br&gt;
+        你應該已經和程式一起收到一份GNU通用公共授權的副本。如果還沒有，參照&lt;a href="http://www.gnu.org/licenses"&gt;http://www.gnu.org/licenses&lt;/a&gt;.&lt;br&gt;
+        授權全部內容見&lt;a href="http://www.gnu.org/licenses/gpl.html"&gt;here&lt;/a&gt;.&lt;br&gt;
+    </string>
+</resources>
