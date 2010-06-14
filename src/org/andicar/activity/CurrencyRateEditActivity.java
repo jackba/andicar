@@ -221,6 +221,14 @@ public class CurrencyRateEditActivity extends EditActivityBase
             return;
         }
 
+        strRetVal = checkNumeric(vgRoot);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
         ContentValues cvData = new ContentValues();
         String strCurrFromCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
                 MainDbAdapter.currencyTableColNames, spnCurrencyFromSpinner.getSelectedItemId())

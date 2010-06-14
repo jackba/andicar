@@ -308,7 +308,8 @@ public class MileageEditActivity extends EditActivityBase {
             mNewIndex = pNewIndex;
         }
         catch(NumberFormatException e){
-            Toast toast = Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    mResource.getString(R.string.GEN_NumberFormatException), Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -390,13 +391,22 @@ public class MileageEditActivity extends EditActivityBase {
     void saveData() {
         //check mandatory fileds & index preconditions
         calculateMileageOrNewIndex();
-        String retVal = checkMandatory(vgRoot);
-        if( retVal != null ) {
+        String strRetVal = checkMandatory(vgRoot);
+        if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
             toast.show();
             return;
         }
+
+        strRetVal = checkNumeric(vgRoot);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
         int operationResult = -1;
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME, "");

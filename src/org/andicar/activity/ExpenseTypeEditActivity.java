@@ -77,10 +77,18 @@ public class ExpenseTypeEditActivity extends EditActivityBase
 
     @Override
     void saveData() {
-        String retVal = checkMandatory(vgRoot);
-        if( retVal != null ) {
+        String strRetVal = checkMandatory(vgRoot);
+        if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
+        strRetVal = checkNumeric(vgRoot);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
             toast.show();
             return;
         }

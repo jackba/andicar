@@ -162,6 +162,14 @@ public class CarEditActivity extends EditActivityBase
             return;
         }
 
+        strRetVal = checkNumeric(vgRoot);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
         BigDecimal bdStartIndex = null;
         String strIndexStart = etIndexStart.getText().toString();
         if( strIndexStart != null && strIndexStart.length() > 0 ) {

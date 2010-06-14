@@ -131,17 +131,25 @@ public class UOMConversionEditActivity extends EditActivityBase {
     void saveData() {
         //check mandatory fields
         String convRateStr = etConversionRate.getText().toString();
-        String retVal = checkMandatory(vgRoot);
-        if( retVal != null ) {
+        String strRetVal = checkMandatory(vgRoot);
+        if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
+        strRetVal = checkNumeric(vgRoot);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
             toast.show();
             return;
         }
 
         long fromId = spnUomFrom.getSelectedItemId();
         long toId = spnUomTo.getSelectedItemId();
-        retVal = null;
+        strRetVal = null;
         int retVal2 = mDbAdapter.canInsertUpdateUOMConversion(mRowId, fromId, toId);
         if(retVal2 != -1){
             madbErrorAlert.setMessage(mResource.getString(retVal2));

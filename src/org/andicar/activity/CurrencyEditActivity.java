@@ -87,6 +87,14 @@ public class CurrencyEditActivity extends EditActivityBase {
             return;
         }
 
+        strRetVal = checkNumeric(vgRoot);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
         ContentValues cvData = new ContentValues();
         cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
                 etName.getText().toString());
