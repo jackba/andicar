@@ -33,7 +33,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -308,7 +307,16 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
                 String colVal = reportCursor.getString(i);
                 if(colVal == null)
                     colVal = "";
-                reportContent = reportContent  + colVal.replaceAll(",", " ");
+                reportContent = reportContent  + 
+                        colVal.replace(",", " ")
+                            .replace("[%d0]", mRes.getString(R.string.DayOfWeek_0))
+                            .replace("[%d1]", mRes.getString(R.string.DayOfWeek_1))
+                            .replace("[%d2]", mRes.getString(R.string.DayOfWeek_2))
+                            .replace("[%d3]", mRes.getString(R.string.DayOfWeek_3))
+                            .replace("[%d4]", mRes.getString(R.string.DayOfWeek_4))
+                            .replace("[%d5]", mRes.getString(R.string.DayOfWeek_5))
+                            .replace("[%d6]", mRes.getString(R.string.DayOfWeek_6))
+                            ;
             }
             reportContent = reportContent + "\n";
         }
@@ -337,8 +345,19 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             reportContent = reportContent +
                             "<TR VALIGN=TOP>\n";
             for(i = 0; i< reportCursor.getColumnCount(); i++){
+                String colVal = reportCursor.getString(i);
+                if(colVal == null)
+                    colVal = "";
                 reportContent = reportContent +
-                                "<TD>" + reportCursor.getString(i) + "</TD>\n";
+                                "<TD>" + colVal
+                                            .replace("[%d0]", mRes.getString(R.string.DayOfWeek_0))
+                                            .replace("[%d1]", mRes.getString(R.string.DayOfWeek_1))
+                                            .replace("[%d2]", mRes.getString(R.string.DayOfWeek_2))
+                                            .replace("[%d3]", mRes.getString(R.string.DayOfWeek_3))
+                                            .replace("[%d4]", mRes.getString(R.string.DayOfWeek_4))
+                                            .replace("[%d5]", mRes.getString(R.string.DayOfWeek_5))
+                                            .replace("[%d6]", mRes.getString(R.string.DayOfWeek_6))
+                                + "</TD>\n";
             }
             reportContent = reportContent +
                             "</TR\n";

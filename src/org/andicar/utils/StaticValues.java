@@ -118,7 +118,8 @@ public class StaticValues
     public static int NOTIF_TYPE_GPS_ACCURACY_SHUTDOWN_ID = 4;
     public static int NOTIF_TYPE_GPS_DISABLED_ID = 5;
     public static int NOTIF_TYPE_GPS_OUTOFSERVICE_ID = 6;
-
+    
+    public static final String DAY_OF_WEEK_NAME = "DayOfWeek";
     
     public static final String FLURRY_ID = "E8C8QUTB7KS46SHMEP6V";
 }
