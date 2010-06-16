@@ -76,6 +76,48 @@
                 android:layout_marginTop="10dip"
                 >
                 <TextView
+                    android:id="@+id/tvCodeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/UOMEditActivity_CodeLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <EditText
+                    android:id="@+id/etCode"
+                    android:layout_marginLeft="5dip"
+                    android:layout_width="100dip"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/GEN_Required"
+                    android:background="@drawable/white_background"
+                    android:tag="@string/UOMEditActivity_CodeLabel"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GEN_TypeLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:layout_marginLeft="10dip"
+                />
+                <Spinner android:id="@+id/spnUomType"
+                    android:layout_marginLeft="5dip"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:background="@drawable/white_background"
+                    android:prompt="@string/GEN_ChooseOneTitle"
+                />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                >
+                <TextView
                     android:id="@+id/tvNameLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,31 +133,6 @@
                     android:hint="@string/GEN_Required"
                     android:background="@drawable/white_background"
                     android:tag="@string/GEN_NameLabel"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
-                >
-                <TextView
-                    android:id="@+id/tvCodeLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/UOMEditActivity_CodeLabel"
-                    android:typeface="sans"
-                    android:textColor="@android:color/white"
-                    />
-                <EditText
-                    android:id="@+id/etCode"
-                    android:layout_marginLeft="10dip"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/GEN_Required"
-                    android:background="@drawable/white_background"
-                    android:tag="@string/UOMEditActivity_CodeLabel"
                     />
             </LinearLayout>
 
