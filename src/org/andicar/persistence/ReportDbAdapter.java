@@ -96,7 +96,19 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + ", " +
                 "DATETIME(" + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) +
                     ", 'unixepoch', 'localtime') AS " + MILEAGE_COL_DATE_NAME + ", " +
-                sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
+
+                "CASE strftime(\"%w\", " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) +
+                    ", 'unixepoch', 'localtime') " +
+                    "WHEN \"0\" THEN '[%d0]' " +
+                    "WHEN \"1\" THEN '[%d1]' " +
+                    "WHEN \"2\" THEN '[%d2]' " +
+                    "WHEN \"3\" THEN '[%d3]' " +
+                    "WHEN \"4\" THEN '[%d4]' " +
+                    "WHEN \"5\" THEN '[%d5]' " +
+                    "WHEN \"6\" THEN '[%d6]' " +
+                "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
+
+                    sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + ", " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ", " +
@@ -204,6 +216,17 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " +
                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS CurrencyCode, " +
                 "DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
+
+                "CASE strftime(\"%w\", " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) +
+                    ", 'unixepoch', 'localtime') " +
+                    "WHEN \"0\" THEN '[%d0]' " +
+                    "WHEN \"1\" THEN '[%d1]' " +
+                    "WHEN \"2\" THEN '[%d2]' " +
+                    "WHEN \"3\" THEN '[%d3]' " +
+                    "WHEN \"4\" THEN '[%d4]' " +
+                    "WHEN \"5\" THEN '[%d5]' " +
+                    "WHEN \"6\" THEN '[%d6]' " +
+                "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + ", " +
                 sqlConcatTableColumn("UomVolEntered", UOM_COL_CODE_NAME) + " AS UomEntered, " +
@@ -330,6 +353,18 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS ExpenseId, " +
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
                 "DATETIME(" + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
+
+                "CASE strftime(\"%w\", " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) +
+                    ", 'unixepoch', 'localtime') " +
+                    "WHEN \"0\" THEN '[%d0]' " +
+                    "WHEN \"1\" THEN '[%d1]' " +
+                    "WHEN \"2\" THEN '[%d2]' " +
+                    "WHEN \"3\" THEN '[%d3]' " +
+                    "WHEN \"4\" THEN '[%d4]' " +
+                    "WHEN \"5\" THEN '[%d5]' " +
+                    "WHEN \"6\" THEN '[%d6]' " +
+                "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
+
                 sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DOCUMENTNO_NAME) + ", " +
                 sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseCategoryName, " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
@@ -517,6 +552,18 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
                 "DATETIME(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
+
+                "CASE strftime(\"%w\", " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) +
+                    ", 'unixepoch', 'localtime') " +
+                    "WHEN \"0\" THEN '[%d0]' " +
+                    "WHEN \"1\" THEN '[%d1]' " +
+                    "WHEN \"2\" THEN '[%d2]' " +
+                    "WHEN \"3\" THEN '[%d3]' " +
+                    "WHEN \"4\" THEN '[%d4]' " +
+                    "WHEN \"5\" THEN '[%d5]' " +
+                    "WHEN \"6\" THEN '[%d6]' " +
+                "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
+
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGACCURACY_NAME) + ", " +
