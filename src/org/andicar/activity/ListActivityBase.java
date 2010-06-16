@@ -380,6 +380,7 @@ public class ListActivityBase extends ListActivity {
                     }
                     c.close();
                 }
+                finish();
                 return true;
         }
         return super.onContextItemSelected(item);
