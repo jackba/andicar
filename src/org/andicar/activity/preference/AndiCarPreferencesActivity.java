@@ -41,7 +41,6 @@ import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.utils.StaticValues;
-import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 
@@ -125,22 +124,13 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         PreferenceCategory uomPrefCategory = new PreferenceCategory(this);
         uomPrefCategory.setTitle(mRes.getString( R.string.PREF_UOMCategoryTitle ));
         prefScreenRoot.addPreference(uomPrefCategory);
-        //preference for length (distance) uom
+        //preference for uom
         PreferenceScreen uomLengthPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         Intent uomLengthIntent = new Intent(this, UOMListActivity.class);
-        uomLengthIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_LENGTH_TYPE_CODE);
         uomLengthPrefScreen.setIntent(uomLengthIntent);
-        uomLengthPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMLengthTitle));
-        uomLengthPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMLengthSummary));
+        uomLengthPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMTitle));
+        uomLengthPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMSummary));
         uomPrefCategory.addPreference(uomLengthPrefScreen);
-        //preference for volumne uom
-        PreferenceScreen uomVolumePrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        Intent uomVolumeIntent = new Intent(this, UOMListActivity.class);
-        uomVolumeIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_VOLUME_TYPE_CODE);
-        uomVolumePrefScreen.setIntent(uomVolumeIntent);
-        uomVolumePrefScreen.setTitle(mRes.getString(R.string.PREF_UOMVolumeTitle));
-        uomVolumePrefScreen.setSummary(mRes.getString(R.string.PREF_UOMVolumeSummary));
-        uomPrefCategory.addPreference(uomVolumePrefScreen);
         //uom conversions
         PreferenceScreen uomConversionPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         uomConversionPrefScreen.setIntent(new Intent(this, UOMConversionListActivity.class));

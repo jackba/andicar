@@ -244,10 +244,12 @@
     <string name="PREF_CarSummary">"Add, delete, modify cars.\nSelect current car."</string>
     <string name="PREF_DriverTitle">"Drivers"</string>
     <string name="PREF_DriverSummary">"Add, delete, modify drivers.\nSelect current driver."</string>
-    <string name="PREF_UOMLengthTitle">"UOM for distance"</string>
-    <string name="PREF_UOMLengthSummary">"Add, delete, modify measurement units for distance"</string>
+    <string name="PREF_UOMTitle">"UOM"</string>
+    <string name="PREF_UOMSummary">"Add, delete, modify measurement units"</string>
+<!--
     <string name="PREF_UOMVolumeTitle">"UOM for volume"</string>
     <string name="PREF_UOMVolumeSummary">"Add, delete, modify measurement units for volume"</string>
+-->
     <string name="PREF_UOMConversionTitle">"UOM conversion"</string>
     <string name="PREF_UOMConversionSummary">"Add, delete, modify conversions between measurement units"</string>
     <string name="PREF_CurrencyTitle">"Currencies"</string>

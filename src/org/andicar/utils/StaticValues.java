@@ -75,6 +75,7 @@ public class StaticValues
 
     public static final String UOM_LENGTH_TYPE_CODE = "L";
     public static final String UOM_VOLUME_TYPE_CODE = "V";
+    public static final String UOM_OTHER_TYPE_CODE = "O";
 
     //mileage insert mode: 0 = new index; 1 = mileage
     public static int MILEAGE_INSERTMODE_INDEX = 0;

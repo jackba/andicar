@@ -97,5 +97,11 @@
         <item>70</item>
         <item>999</item>
     </string-array>
+
+    <string-array name="uom_type_entries">
+        <item>Length</item>
+        <item>Volume</item>
+        <item>Other</item>
+    </string-array>
 </resources>
 

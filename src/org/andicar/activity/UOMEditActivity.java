@@ -22,11 +22,13 @@ package org.andicar.activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -37,28 +39,27 @@ public class UOMEditActivity extends EditActivityBase {
     private EditText etUserComment = null;
     private EditText etCode = null;
     private CheckBox ckIsActive = null;
-
-    private String uomType = "";
+    private Spinner spnUomType = null;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
+//        uomType = mBundleExtras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME);
+        String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
+
         etName = (EditText) findViewById(R.id.etName);
         etUserComment = (EditText) findViewById(R.id.etUserComment);
         etCode = (EditText) findViewById(R.id.etCode);
         ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
+        spnUomType = (Spinner)findViewById(R.id.spnUomType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+            this, R.array.uom_type_entries, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnUomType.setAdapter(adapter);
 
-        uomType = mBundleExtras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME);
-        String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
-
-        if(uomType.equals( "L"))
-            setTitle( getTitle() + " (" + mResource.getString( R.string.UOMEditActivity_UOMTypeLengthTitle) + ")");
-        else
-            setTitle( getTitle() + " (" + mResource.getString( R.string.UOMEditActivity_UOMTypeVolumeTitle) + ")");
-
-        if (operation.equals( "E")) {
+        if (operation.equals("E")) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.uomTableColNames, mRowId);
@@ -66,6 +67,13 @@ public class UOMEditActivity extends EditActivityBase {
             String isActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
             String userComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
             String code = c.getString( MainDbAdapter.UOM_COL_CODE_POS );
+            String uomType = c.getString( MainDbAdapter.UOM_COL_UOMTYPE_POS );
+            if(uomType.equals(StaticValues.UOM_LENGTH_TYPE_CODE))
+                spnUomType.setSelection(0);
+            else if(uomType.equals(StaticValues.UOM_VOLUME_TYPE_CODE))
+                spnUomType.setSelection(1);
+            else if(uomType.equals(StaticValues.UOM_OTHER_TYPE_CODE))
+                spnUomType.setSelection(2);
 
             if (name != null) {
                 etName.setText(name);
@@ -83,6 +91,7 @@ public class UOMEditActivity extends EditActivityBase {
         }
         else {
             ckIsActive.setChecked(true);
+            spnUomType.setSelection(2);
         }
     }
 
@@ -114,7 +123,12 @@ public class UOMEditActivity extends EditActivityBase {
                 etUserComment.getText().toString() );
         data.put( MainDbAdapter.UOM_COL_CODE_NAME,
                 etCode.getText().toString());
-        data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, uomType);
+        if(spnUomType.getSelectedItemPosition() == 0)
+            data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_LENGTH_TYPE_CODE);
+        else if(spnUomType.getSelectedItemPosition() == 1)
+            data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_VOLUME_TYPE_CODE);
+        else
+            data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_OTHER_TYPE_CODE);
 
         if( mRowId == -1 ) {
             mDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);

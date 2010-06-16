@@ -248,9 +248,6 @@ public class ListActivityBase extends ListActivity {
         else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
             i.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
         }
-        else if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
-            i.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
-        }
         i.putExtra("Operation", "E");
 
         startActivityForResult(i, StaticValues.ACTIVITY_EDIT_REQUEST_CODE);
@@ -308,10 +305,7 @@ public class ListActivityBase extends ListActivity {
                 return true;
             case StaticValues.CONTEXT_MENU_INSERT_ID:
                 Intent insertIntent = new Intent(this, mInsertClass);
-                if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
-                    insertIntent.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
-                }
-                else if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
+                if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                     insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
                     insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
@@ -460,10 +454,7 @@ public class ListActivityBase extends ListActivity {
         switch(item.getItemId()) {
             case StaticValues.OPTION_MENU_ADD_ID:
                 Intent insertIntent = new Intent(this, mInsertClass);
-                if(mTableName.equals(MainDbAdapter.UOM_TABLE_NAME)) {
-                    insertIntent.putExtra(MainDbAdapter.UOM_COL_UOMTYPE_NAME, extras.getString(MainDbAdapter.UOM_COL_UOMTYPE_NAME));
-                }
-                else if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
+                if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                     insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
                     insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
