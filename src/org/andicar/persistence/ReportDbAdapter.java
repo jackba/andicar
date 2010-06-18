@@ -264,97 +264,97 @@ public class ReportDbAdapter extends MainDbAdapter{
     //used in main activity
     public static String expensesListMainViewSelect =
             "SELECT " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
-                "DATE(" + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + ", 'unixepoch', 'localtime') " +
+                "DATE(" + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + ", 'unixepoch', 'localtime') " +
                         "AS " + FIRST_LINE_LIST_NAME + ", " +
                 sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + " || ' ' || " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNT_NAME) + " || ' ' || " +
                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || ' at ' || " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + " || ' ' || " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + " || ' ' || " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
                         "AS " + SECOND_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
                         "AS " + THIRD_LINE_LIST_NAME +
-            " FROM " + EXPENSES_TABLE_NAME +
+            " FROM " + EXPENSE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSETYPE_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSETYPE_ID_NAME) + "=" +
                                             sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + EXPENSECATEGORY_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSECATEGORY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + DRIVER_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DRIVER_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DRIVER_ID_NAME) + "=" +
                                             sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CAR_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
                         " JOIN " + UOM_TABLE_NAME +
                             " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
                                                 sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CURRENCY_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCY_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
-            " WHERE COALESCE(" + EXPENSES_COL_FROMTABLE_NAME + ", '') = '' ";
+            " WHERE COALESCE(" + EXPENSE_COL_FROMTABLE_NAME + ", '') = '' ";
 
     //used in expense list activity
     public static String expensesListViewSelect =
             "SELECT " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " +
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
-                "DATE(" + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + ", 'unixepoch', 'localtime') " +
+                "DATE(" + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + ", 'unixepoch', 'localtime') " +
                         "AS " + FIRST_LINE_LIST_NAME + ", " +
                 sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + " || ' ' || " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNT_NAME) + " || ' ' || " +
                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
-                " CASE WHEN " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME) + " <> " +
-                                    sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCY_ID_NAME) + " " +
-                        " THEN " + "' (' || " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNTENTERED_NAME) +
+                " CASE WHEN " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME) + " <> " +
+                                    sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCY_ID_NAME) + " " +
+                        " THEN " + "' (' || " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNTENTERED_NAME) +
                                     " || ' ' || " + sqlConcatTableColumn("ec", CURRENCY_COL_CODE_NAME) + " || ')' " +
                         " ELSE " + "'' " +
                 " END " +
                 " || ' at ' || " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + " || ' ' || " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + " || ' ' || " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
                         "AS " + SECOND_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
                         "AS " + THIRD_LINE_LIST_NAME +
-            " FROM " + EXPENSES_TABLE_NAME +
+            " FROM " + EXPENSE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSETYPE_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSETYPE_ID_NAME) + "=" +
                                             sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + EXPENSECATEGORY_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSECATEGORY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + DRIVER_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DRIVER_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DRIVER_ID_NAME) + "=" +
                                             sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CAR_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
                         " JOIN " + UOM_TABLE_NAME +
                             " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
                                                 sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CURRENCY_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCY_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CURRENCY_TABLE_NAME + " AS ec " +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME) + "=" +
                                             sqlConcatTableColumn("ec", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     //used in exported report
     public static String expensesListReportSelect =
             "SELECT " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS ExpenseId, " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS ExpenseId, " +
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
-                "DATETIME(" + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
+                "DATETIME(" + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
 
-                "CASE strftime(\"%w\", " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) +
+                "CASE strftime(\"%w\", " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) +
                     ", 'unixepoch', 'localtime') " +
                     "WHEN \"0\" THEN '[%d0]' " +
                     "WHEN \"1\" THEN '[%d1]' " +
@@ -365,37 +365,37 @@ public class ReportDbAdapter extends MainDbAdapter{
                     "WHEN \"6\" THEN '[%d6]' " +
                 "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DOCUMENTNO_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DOCUMENTNO_NAME) + ", " +
                 sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseCategoryName, " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNT_NAME) + ", " +
                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS CurrencyCode, " +
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + ", " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_FROMTABLE_NAME) + " AS BaseExpense, " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_FROMRECORD_ID_NAME) + " AS BaseExpenseId, " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + ", " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNTENTERED_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_FROMTABLE_NAME) + " AS BaseExpense, " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_FROMRECORD_ID_NAME) + " AS BaseExpenseId, " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNTENTERED_NAME) + ", " +
                 sqlConcatTableColumn("CurrEntered", CURRENCY_COL_CODE_NAME) + " AS CurrencyEnteredCode, " +
-                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCYRATE_NAME) + " " +
-            " FROM " + EXPENSES_TABLE_NAME +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYRATE_NAME) + " " +
+            " FROM " + EXPENSE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSETYPE_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSETYPE_ID_NAME) + "=" +
                                             sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + EXPENSECATEGORY_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSECATEGORY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + DRIVER_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DRIVER_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DRIVER_ID_NAME) + "=" +
                                             sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CAR_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CURRENCY_TABLE_NAME +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCY_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " JOIN " + CURRENCY_TABLE_NAME + " AS CurrEntered " +
-                        " ON " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME) + "=" +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME) + "=" +
                                             sqlConcatTableColumn("CurrEntered", GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
@@ -468,15 +468,15 @@ public class ReportDbAdapter extends MainDbAdapter{
                                                 sqlConcatTableColumn("FullRefuels", REFUEL_COL_CAR_ID_NAME) +
                         " LEFT OUTER JOIN ( " +
                                 " SELECT " +
-                                    " SUM( " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_AMOUNT_NAME) + ") AS TotalExpenses, " +
-                                    EXPENSES_COL_CAR_ID_NAME + " " +
-                                " FROM " + EXPENSES_TABLE_NAME + " " +
+                                    " SUM( " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNT_NAME) + ") AS TotalExpenses, " +
+                                    EXPENSE_COL_CAR_ID_NAME + " " +
+                                " FROM " + EXPENSE_TABLE_NAME + " " +
                                             " JOIN " + EXPENSECATEGORY_TABLE_NAME + " ON " +
-                                                sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME) + " = " +
+                                                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSECATEGORY_ID_NAME) + " = " +
                                                     sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_ROWID_NAME) +
-                                " WHERE " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+                                " WHERE " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
                                     " AND " + sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME) + " = 'N' " +
-                                " GROUP BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + " ) AS Expenses " +
+                                " GROUP BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) + " ) AS Expenses " +
                                 " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + "=" +
                                                 sqlConcatTableColumn("Expenses", REFUEL_COL_CAR_ID_NAME) +
             " WHERE 1=1 ";
@@ -655,7 +655,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                 reportSql = reportSql + whereCondition;
 
             reportSql = reportSql +
-                                    " ORDER BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + " DESC";
+                                    " ORDER BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + " DESC";
         }
         else if(mReportSqlName.equals("reportExpensesListViewSelect")){
             reportSql = expensesListViewSelect;
@@ -663,7 +663,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                 reportSql = reportSql + whereCondition;
 
             reportSql = reportSql +
-                                    " ORDER BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + " DESC";
+                                    " ORDER BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + " DESC";
         }
         else if(mReportSqlName.equals("reportExpensesListReportSelect")){
             reportSql = expensesListReportSelect;
@@ -671,7 +671,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                 reportSql = reportSql + whereCondition;
 
             reportSql = reportSql +
-                                    " ORDER BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_DATE_NAME) + " DESC";
+                                    " ORDER BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + " DESC";
         }
 
         else if(mReportSqlName.equals("statisticsMainViewSelect")){

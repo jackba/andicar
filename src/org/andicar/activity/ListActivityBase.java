@@ -466,7 +466,7 @@ public class ListActivityBase extends ListActivity {
                     insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
                     insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
                 }
-                else if(mTableName.equals(MainDbAdapter.EXPENSES_TABLE_NAME)) {
+                else if(mTableName.equals(MainDbAdapter.EXPENSE_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                     insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
                 }
