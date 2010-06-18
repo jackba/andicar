@@ -125,7 +125,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="5dip"
                 >
                 <TextView
                     android:id="@+id/tvExpenseCategoryLabel"
@@ -139,7 +139,7 @@
                     android:layout_width="60dip"
                     android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
-                    android:layout_marginLeft="10dip"
+                    android:layout_marginLeft="5dip"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
                     />
@@ -148,6 +148,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/GEN_TypeLabel"
+                    android:layout_marginLeft="10dip"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
@@ -155,7 +156,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
-                    android:layout_marginLeft="10dip"
+                    android:layout_marginLeft="5dip"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
                     />
@@ -174,46 +175,34 @@
                 android:layout_marginTop="5dip"
                 >
                 <TextView
-                    android:id="@+id/tvAmountLabel"
+                    android:id="@+id/tvCurrencyLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/GEN_AmountLabel"
+                    android:text="@string/GEN_CurrencyLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
                 <Spinner android:id="@+id/spnCurrency"
-                    android:layout_width="50dip"
+                    android:layout_width="80dip"
                     android:layout_height="wrap_content"
-                    android:drawSelectorOnTop="true"
                     android:layout_marginLeft="5dip"
+                    android:drawSelectorOnTop="true"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
-                    />
-                <EditText
-                    android:id="@+id/etAmount"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:numeric="decimal"
-                    android:digits="-.1234567890"
-                    android:inputType="phone"
-                    android:layout_marginLeft="5dip"
-                    android:hint="@string/GEN_Required"
-                    android:background="@drawable/white_background"
-                    android:tag="@string/GEN_AmountLabel"
                     />
             </LinearLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
                 android:id="@+id/llConversionRateZone"
+                android:layout_marginTop="5dip"
                 >
                 <TextView
                     android:id="@+id/tvConversionRateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/GEN_ConvertionRateLabel"
+                    android:text="@string/GEN_ConvertionRateShortLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
@@ -245,6 +234,108 @@
                     android:layout_marginLeft="5dip"
                     />
             </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                >
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:orientation="horizontal"
+                    android:checkedButton="@+id/rbInsertModeAmount"
+                    android:id="@+id/rgInsertMode">
+                    <RadioButton
+                        android:id="@+id/rbInsertModeAmount"
+                        android:text="@string/GEN_AmountLabel"
+                        style="?android:attr/textAppearanceSmall"
+                        android:typeface="sans"
+                        android:textColor="@android:color/white"
+                        android:button="@drawable/rb_selector"
+                        />
+                    <RadioButton
+                        android:id="@+id/rbInsertModePrice"
+                        android:text="@string/GEN_PriceLabel"
+                        style="?android:attr/textAppearanceSmall"
+                        android:typeface="sans"
+                        android:textColor="@android:color/white"
+                        android:button="@drawable/rb_selector"
+                        android:layout_marginLeft="10dip"
+                        />
+                </RadioGroup>
+                <EditText
+                    android:id="@+id/etUserInput"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:numeric="decimal"
+                    android:digits="-.1234567890"
+                    android:inputType="phone"
+                    android:layout_marginLeft="15dip"
+                    android:hint="@string/GEN_Required"
+                    android:background="@drawable/white_background"
+                    android:tag="@string/GEN_AmountLabel"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GEN_QuantityLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <EditText
+                    android:id="@+id/etQuantity"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:numeric="decimal"
+                    android:digits="-.1234567890"
+                    android:inputType="phone"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    android:tag="@string/GEN_QuantityLabel"
+                    />
+                <Spinner android:id="@+id/spnUOM"
+                    android:layout_width="50dip"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    android:prompt="@string/GEN_ChooseOneTitle"
+                    />
+                <TextView
+                    android:id="@+id/tvCalculatedTextLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <TextView
+                    android:id="@+id/tvCalculatedTextContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                android:layout_marginTop="5dip"
+                />
 
             <LinearLayout
                 android:orientation="horizontal"
