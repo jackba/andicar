@@ -87,10 +87,25 @@ public class BaseActivity extends Activity {
     }
 
     protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition,
-            String orderBy, long selectedId){
+            String orderBy, long selectedId, boolean addEmptyValue){
         try{
             Spinner spnCurrentSpinner = (Spinner) pSpinner;
-            Cursor dbcRecordCursor = mDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
+            Cursor dbcRecordCursor;
+            if(addEmptyValue){
+                String selectSql = "SELECT -1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME + ", " +
+                                    "null AS " + MainDbAdapter.GEN_COL_NAME_NAME +
+                                    " UNION " +
+                                    " SELECT " + MainDbAdapter.GEN_COL_ROWID_NAME + ", " +
+                                                MainDbAdapter.GEN_COL_NAME_NAME +
+                                    " FROM " + tableName;
+                if(whereCondition != null && whereCondition.length() > 0)
+                    selectSql = selectSql + " WHERE " + whereCondition;
+                selectSql = selectSql + " ORDER BY " + MainDbAdapter.GEN_COL_NAME_NAME;
+                dbcRecordCursor = mDbAdapter.execSelectSql(selectSql);
+            }
+            else
+                dbcRecordCursor = mDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
+            
             startManagingCursor( dbcRecordCursor );
             int[] to = new int[]{android.R.id.text1};
             SimpleCursorAdapter scaCursorAdapter =

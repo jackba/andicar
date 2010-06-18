@@ -227,22 +227,22 @@ public class RefuelEditActivity extends EditActivityBase {
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
                 MainDbAdapter.GEN_COL_NAME_NAME,
-                mCarId);
+                mCarId, false);
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
         initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, false);
         initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
         initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId, false);
 
         userCommentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
                 mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
@@ -370,7 +370,7 @@ public class RefuelEditActivity extends EditActivityBase {
                                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                                     MainDbAdapter.isActiveCondition,
                                     MainDbAdapter.GEN_COL_NAME_NAME,
-                                    newCarCurrencyId);
+                                    newCarCurrencyId, false);
                         mCurrencyId = newCarCurrencyId;
                         carDefaultCurrencyId = mCurrencyId;
                         carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
@@ -387,7 +387,7 @@ public class RefuelEditActivity extends EditActivityBase {
                         initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
                                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                                 MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition,
-                                MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId);
+                                MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
                         setBaseUOMQtyZoneVisibility(false);
                     }
                 }
@@ -494,10 +494,8 @@ public class RefuelEditActivity extends EditActivityBase {
                         else {
                             setInsertMode(INSERTMODE_AMOUNT);
                         }
-//                        calculateMileageOrNewIndex();
                     }
                 };
-
 
     private void calculatePriceAmount() {
         String qtyStr = etQty.getText().toString();

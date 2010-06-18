@@ -139,6 +139,10 @@ public class DB {
     public static final String EXPENSES_COL_AMOUNTENTERED_NAME = "AmountEntered";
     public static final String EXPENSES_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
     public static final String EXPENSES_COL_CURRENCYRATE_NAME = "CurrencyRate"; //CurrencyEntered -> Car Base Currency
+    public static final String EXPENSES_COL_QUANTITY_NAME = "Quantity";
+    public static final String EXPENSES_COL_PRICE_NAME = "Price";
+    public static final String EXPENSES_COL_PRICEENTERED_NAME = "PriceEntered";
+    public static final String EXPENSES_COL_UOM_ID_NAME = UOM_TABLE_NAME + "_ID";
 
     //currency rate
     public static final String CURRENCYRATE_COL_FROMCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_From_ID";
@@ -243,6 +247,10 @@ public class DB {
     public static final int EXPENSES_COL_AMOUNTENTERED_POS = 15;
     public static final int EXPENSES_COL_CURRENCYENTERED_ID_POS = 16;
     public static final int EXPENSES_COL_CURRENCYRATE_POS = 17;
+    public static final int EXPENSES_COL_QUANTITY_POS = 18;
+    public static final int EXPENSES_COL_PRICE_POS = 19;
+    public static final int EXPENSES_COL_PRICEENTERED_POS = 20;
+    public static final int EXPENSES_COL_UOM_ID_POS = 21;
 
     //currency rate
     public static final int CURRENCYRATE_COL_FROMCURRENCY_ID_POS = 4;
@@ -313,7 +321,8 @@ public class DB {
         EXPENSES_COL_EXPENSETYPE_ID_NAME, EXPENSES_COL_AMOUNT_NAME, EXPENSES_COL_CURRENCY_ID_NAME,
         EXPENSES_COL_DATE_NAME, EXPENSES_COL_DOCUMENTNO_NAME, EXPENSES_COL_INDEX_NAME,
         EXPENSES_COL_FROMTABLE_NAME, EXPENSES_COL_FROMRECORD_ID_NAME, 
-        EXPENSES_COL_AMOUNTENTERED_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME, EXPENSES_COL_CURRENCYRATE_NAME};
+        EXPENSES_COL_AMOUNTENTERED_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME, EXPENSES_COL_CURRENCYRATE_NAME,
+        EXPENSES_COL_QUANTITY_NAME, EXPENSES_COL_PRICE_NAME, EXPENSES_COL_PRICEENTERED_NAME, EXPENSES_COL_UOM_ID_NAME};
 
     public static final String[] currencyRateTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         CURRENCYRATE_COL_FROMCURRENCY_ID_NAME, CURRENCYRATE_COL_TOCURRENCY_ID_NAME,
@@ -475,8 +484,13 @@ public class DB {
             + EXPENSES_COL_FROMRECORD_ID_NAME + " INTEGER, "
             + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL, "
             + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL, "
-            + EXPENSES_COL_CURRENCYRATE_NAME + " NUMERIC NULL "
+            + EXPENSES_COL_CURRENCYRATE_NAME + " NUMERIC NULL, "
+            + EXPENSES_COL_QUANTITY_NAME + " NUMERIC NULL, "
+            + EXPENSES_COL_PRICE_NAME + " NUMERIC NULL, "
+            + EXPENSES_COL_PRICEENTERED_NAME + " NUMERIC NULL, "
+            + EXPENSES_COL_UOM_ID_NAME + " INTEGER NULL "
             + ");";
+
 
     protected static final String CURRENCYRATE_TABLE_CREATE_SQL =
             "CREATE TABLE " + CURRENCYRATE_TABLE_NAME
@@ -817,21 +831,29 @@ public class DB {
                 upgradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
                 upgradeDbTo300(db, oldVersion);
                 upgradeDbTo310(db, oldVersion);
+                upgradeDbTo330(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
                 upgradeDbTo210(db, oldVersion); //update database to version 210 //AndiCar 2.1.0
                 upgradeDbTo300(db, oldVersion);
                 upgradeDbTo310(db, oldVersion);
+                upgradeDbTo330(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
                 upgradeDbTo300(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
                 upgradeDbTo310(db, oldVersion);
+                upgradeDbTo330(db, oldVersion);
             }
             //AndiCar 3.0.x
             else if(oldVersion == 300){
                 upgradeDbTo310(db, oldVersion);
+                upgradeDbTo330(db, oldVersion);
+            }
+            //AndiCar 3.1.x
+            else if(oldVersion == 310){
+                upgradeDbTo330(db, oldVersion);
             }
             
 //            upgradeDbTo310(db, oldVersion);
@@ -1004,6 +1026,24 @@ public class DB {
                             REFUEL_COL_AMOUNT_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICE_NAME + ", " +
                             REFUEL_COL_AMOUNTENTERED_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICEENTERED_NAME;
             db.execSQL(updSql);
+        }
+
+        private void upgradeDbTo330(SQLiteDatabase db, int oldVersion) throws SQLException {
+            String updSql = "";
+            if(oldVersion > 200){
+                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME +
+                                " ADD " + EXPENSES_COL_QUANTITY_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME +
+                                " ADD " + EXPENSES_COL_PRICE_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME +
+                                " ADD " + EXPENSES_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME +
+                                " ADD " + EXPENSES_COL_UOM_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+            }
         }
 
         private void createExpenseCategory(SQLiteDatabase db) throws SQLException {

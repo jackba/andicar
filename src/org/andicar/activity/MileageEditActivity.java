@@ -155,14 +155,14 @@ public class MileageEditActivity extends EditActivityBase {
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
                 MainDbAdapter.GEN_COL_NAME_NAME,
-                mCarId);
+                mCarId, false);
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
         initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                 MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
-                mExpTypeId);
+                mExpTypeId, false);
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line,
                 mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));

@@ -36,6 +36,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import java.math.BigDecimal;
 import org.andicar.utils.AndiCarStatistics;
@@ -51,13 +53,18 @@ public class ExpenseEditActivity extends EditActivityBase {
     private Spinner spnCurrency;
     private Spinner spnExpType;
     private Spinner spnExpCategory;
+    private Spinner spnUOM;
     private EditText etCarIndex;
-    private EditText atAmount;
+    private EditText etUserInput;
     private EditText etDocNo;
     private EditText etConversionRate;
+    private EditText etQuantity;
     private TextView tvWarningLabel;
     private TextView tvConvertedAmountValue;
     private TextView tvConvertedAmountLabel;
+    private TextView tvCalculatedTextLabel;
+    private TextView tvCalculatedTextContent;
+
     private LinearLayout llConversionRateZone;
 
     private long mCurrencyId;
@@ -66,13 +73,22 @@ public class ExpenseEditActivity extends EditActivityBase {
     private long mDriverId;
     private long mExpCategoryId = 0;
     private long mExpTypeId = 0;
+    private long mUOMId = -1;
     private String carDefaultCurrencyCode = null;
     private String operationType = null;
     private BigDecimal conversionRate = BigDecimal.ONE;
     private BigDecimal convertedAmount = null;
+    private BigDecimal convertedPrice = null;
+    private BigDecimal price = null;
+    private BigDecimal quantity = null;
+    private BigDecimal amount = null;
+    private RadioButton rbInsertModeAmount;
+    private RadioButton rbInsertModePrice;
     private boolean isActivityOnLoading = true;
 
     private ArrayAdapter<String> userCommentAdapter;
+    private static int INSERTMODE_PRICE = 0;
+    private static int INSERTMODE_AMOUNT = 1;
 
     /** Called when the activity is first created. */
     @Override
@@ -103,7 +119,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             else
                 setConversionRateZoneVisible(true);
 
-            atAmount.setText(c.getString(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_POS));
+            etUserInput.setText(c.getString(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_POS));
             try{
                 conversionRate = new BigDecimal(c.getString(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_POS));
             }
@@ -113,7 +129,14 @@ public class ExpenseEditActivity extends EditActivityBase {
 
             etDocNo.setText(c.getString(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_POS));
             acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
-
+            etQuantity.setText(c.getString(MainDbAdapter.EXPENSES_COL_QUANTITY_POS));
+            if(c.getString(MainDbAdapter.EXPENSES_COL_UOM_ID_POS) != null
+                    && c.getString(MainDbAdapter.EXPENSES_COL_UOM_ID_POS).length() > 0){
+                mUOMId = c.getLong(MainDbAdapter.EXPENSES_COL_UOM_ID_POS);
+            }
+            else
+                mUOMId = -1;
+            
             String fromTable = c.getString(MainDbAdapter.EXPENSES_COL_FROMTABLE_POS);
             if(fromTable == null){
                 tvWarningLabel.setText("");
@@ -141,7 +164,8 @@ public class ExpenseEditActivity extends EditActivityBase {
         }
 
         initControls();
-        
+        setInsertMode(INSERTMODE_AMOUNT);
+        calculatePrice();
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent("ExpenseEdit", null);
     }
@@ -149,19 +173,22 @@ public class ExpenseEditActivity extends EditActivityBase {
     private void initControls() {
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mCarId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
         initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, false);
         initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId);
+                MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId, false);
+        initSpinner(spnUOM, MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.genColName,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                MainDbAdapter.GEN_COL_NAME_NAME, mUOMId, true);
         userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this, android.R.layout.simple_dropdown_item_1line, 
                 mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME,
                 mCarId, 30));
@@ -181,16 +208,25 @@ public class ExpenseEditActivity extends EditActivityBase {
         spnCurrency.setOnTouchListener(spinnerOnTouchListener);
         spnExpType = (Spinner) findViewById(R.id.spnExpType);
         spnExpCategory = (Spinner) findViewById(R.id.spnExpCategory);
+        spnUOM = (Spinner) findViewById(R.id.spnUOM);
         etCarIndex = (EditText) findViewById(R.id.etIndex);
-        atAmount = (EditText) findViewById(R.id.etAmount);
-        atAmount.addTextChangedListener(textWatcher);
+        etUserInput = (EditText) findViewById(R.id.etUserInput);
+        etUserInput.addTextChangedListener(userInputTextWatcher);
         etDocNo = (EditText) findViewById(R.id.etDocumentNo);
         tvWarningLabel = (TextView) findViewById(R.id.tvWarningLabel);
         llConversionRateZone = (LinearLayout) findViewById(R.id.llConversionRateZone);
         etConversionRate = (EditText) findViewById(R.id.etConversionRate);
-        etConversionRate.addTextChangedListener(textWatcher);
+        etConversionRate.addTextChangedListener(userInputTextWatcher);
+        etQuantity = (EditText) findViewById(R.id.etQuantity);
+        etQuantity.addTextChangedListener(userInputTextWatcher);
+        tvCalculatedTextLabel = (TextView) findViewById(R.id.tvCalculatedTextLabel);
+        tvCalculatedTextContent = (TextView) findViewById(R.id.tvCalculatedTextContent);
         tvConvertedAmountValue = (TextView) findViewById(R.id.tvConvertedAmountValue);
         tvConvertedAmountLabel = (TextView) findViewById(R.id.tvConvertedAmountLabel);
+        rbInsertModePrice = (RadioButton) findViewById(R.id.rbInsertModePrice);
+        rbInsertModeAmount = (RadioButton) findViewById(R.id.rbInsertModeAmount);
+        RadioGroup rg = (RadioGroup) findViewById(R.id.rgInsertMode);
+        rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
         carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
         carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
     }
@@ -206,7 +242,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             mDriverId = savedInstanceState.getLong("mDriverId");
             mExpCategoryId = savedInstanceState.getLong("mExpCategoryId");
             mExpTypeId = savedInstanceState.getLong("mExpTypeId");
-
+            mUOMId = savedInstanceState.getLong("mUOMId");
             if(savedInstanceState.containsKey("carDefaultCurrencyCode"))
                 carDefaultCurrencyCode = savedInstanceState.getString("carDefaultCurrencyCode");
             if(savedInstanceState.containsKey("operationType"))
@@ -217,7 +253,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                 convertedAmount = new BigDecimal(savedInstanceState.getString("convertedAmount"));
 
             initControls();
-            calculateConvertedAmount();
+//            calculateConvertedAmount();
             initDateTime(mlDateTimeInSeconds * 1000);
         }
         catch(NumberFormatException e){}
@@ -232,6 +268,8 @@ public class ExpenseEditActivity extends EditActivityBase {
         outState.putLong("mDriverId", mDriverId);
         outState.putLong("mExpCategoryId", spnExpCategory.getSelectedItemId());
         outState.putLong("mExpTypeId", spnExpType.getSelectedItemId());
+        outState.putLong("mUOMId", spnUOM.getSelectedItemId());
+
         if(carDefaultCurrencyCode != null)
             outState.putString("carDefaultCurrencyCode", carDefaultCurrencyCode);
         if(operationType != null)
@@ -240,6 +278,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             outState.putString("conversionRate", conversionRate.toString());
         if(convertedAmount != null)
             outState.putString("convertedAmount", convertedAmount.toString());
+
     }
 
     @Override
@@ -249,8 +288,8 @@ public class ExpenseEditActivity extends EditActivityBase {
         if(mCurrencyId != carDefaultCurrencyId)
         {
             setConversionRateZoneVisible(true);
-            if(conversionRate != null)
-                calculateConvertedAmount();
+//            if(conversionRate != null)
+//                calculateConvertedAmount();
         }
         else
             setConversionRateZoneVisible(false);
@@ -284,7 +323,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                                     MainDbAdapter.isActiveCondition,
                                     MainDbAdapter.GEN_COL_NAME_NAME,
-                                    newCarCurrencyId);
+                                    newCarCurrencyId, false);
                         mCurrencyId = newCarCurrencyId;
                         carDefaultCurrencyId = mCurrencyId;
                         carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
@@ -315,13 +354,44 @@ public class ExpenseEditActivity extends EditActivityBase {
                     tvConvertedAmountValue.setText("");
                     if(conversionRate != null){
                         etConversionRate.append(conversionRate.toString());
-                        calculateConvertedAmount();
+//                        calculateConvertedAmount();
                     }
 
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
+
+    private RadioGroup.OnCheckedChangeListener rgOnCheckedChangeListener  =
+            new RadioGroup.OnCheckedChangeListener() {
+                    public void onCheckedChanged(RadioGroup arg0, int checkedId) {
+                        if(checkedId == rbInsertModePrice.getId()) {
+                            setInsertMode(INSERTMODE_PRICE);
+                        }
+                        else {
+                            setInsertMode(INSERTMODE_AMOUNT);
+                        }
+                    }
+                };
+
+    private void setInsertMode(int insertMode){
+        if(insertMode == INSERTMODE_PRICE){
+            tvCalculatedTextLabel.setText(mResource.getString(R.string.GEN_AmountLabel) + "=");
+            etUserInput.setTag(mResource.getString(R.string.GEN_PriceLabel));
+            etQuantity.setHint(mResource.getString(R.string.GEN_Required));
+            calculateAmount();
+//            if(conversionRate != null)
+//                calculateConvertedAmount();
+        }
+        else{
+            tvCalculatedTextLabel.setText(mResource.getString(R.string.GEN_PriceLabel) + "=");
+            etUserInput.setTag(mResource.getString(R.string.GEN_AmountLabel));
+            etQuantity.setHint(null);
+            calculatePrice();
+            if(mCurrencyId != carDefaultCurrencyId)
+                calculateConvertedAmount();
+        }
+    }
 
     private void setConversionRateZoneVisible(boolean isVisible){
         if(isVisible){
@@ -335,29 +405,65 @@ public class ExpenseEditActivity extends EditActivityBase {
             llConversionRateZone.setVisibility(View.GONE);
         }
     }
+
     private void calculateConvertedAmount() {
         if(conversionRate == null){
             tvConvertedAmountValue.setText("");
             return;
         }
-        String amountStr = atAmount.getText().toString();
+        if(carDefaultCurrencyId == mCurrencyId)
+            return;
         String convertedAmountStr = "";
+        try{
+            if(amount != null) {
+                convertedAmount = amount.multiply(conversionRate).
+                        setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                convertedAmountStr = convertedAmount.toString() + " " + carDefaultCurrencyCode;
+                tvConvertedAmountValue.setText(convertedAmountStr);
+            }
+            if(price != null) {
+                convertedPrice = price.multiply(conversionRate).
+                        setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+            }
+        }
+        catch(NumberFormatException e){}
+    }
+
+    private void calculatePrice() {
+        String qtyStr = etQuantity.getText().toString();
+        if(qtyStr == null || qtyStr.length() == 0)
+            return;
+        String amountStr = etUserInput.getText().toString();
         if(amountStr != null && amountStr.length() > 0) {
             try{
-                BigDecimal amount = (new BigDecimal(amountStr))
-                        .setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                if(carDefaultCurrencyId != mCurrencyId){
-                    convertedAmount = amount.multiply(conversionRate).
-                            setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                    convertedAmountStr = convertedAmount.toString() + " " + carDefaultCurrencyCode;
-                }
-                tvConvertedAmountValue.setText(convertedAmountStr);
+                amount = new BigDecimal(amountStr);
+                quantity = new BigDecimal(qtyStr);
+                price = amount.divide(quantity, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
+                tvCalculatedTextContent.setText(price.toString());
             }
             catch(NumberFormatException e){}
         }
     }
 
-    private TextWatcher textWatcher =
+    private void calculateAmount() {
+        String qtyStr = etQuantity.getText().toString();
+        if(qtyStr == null || qtyStr.length() == 0)
+            return;
+        String priceStr = etUserInput.getText().toString();
+        if(priceStr != null && priceStr.length() > 0) {
+            try{
+                price = new BigDecimal(priceStr);
+                quantity = new BigDecimal(qtyStr);
+                amount = price.multiply(quantity).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                tvCalculatedTextContent.setText(amount.toString());
+            }
+            catch(NumberFormatException e){}
+        }
+        if(mCurrencyId != carDefaultCurrencyId)
+            calculateConvertedAmount();
+    }
+
+    private TextWatcher userInputTextWatcher =
         new TextWatcher() {
 
             public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
@@ -369,16 +475,29 @@ public class ExpenseEditActivity extends EditActivityBase {
             }
 
             public void afterTextChanged(Editable edtbl) {
-                if(mCurrencyId == carDefaultCurrencyId)
-                    return;
+//                if(etQuantity.getText().toString() != null && etQuantity.getText().toString().length() > 0
+//                        && etUserInput.getText().toString() != null && etUserInput.getText().toString().length() > 0){
                 try{
-                    if(etConversionRate.getText().toString() != null && etConversionRate.getText().toString().length() > 0)
-                            conversionRate = new BigDecimal(etConversionRate.getText().toString());
-
-                    if(conversionRate != null)
-                        calculateConvertedAmount();
+                    if(rbInsertModePrice.isChecked()){
+                        price = new BigDecimal(etUserInput.getText().toString());
+                        calculateAmount();
+                    }
+                    else{
+                        amount = new BigDecimal(etUserInput.getText().toString());
+                        calculatePrice();
+                    }
+                    
                 }
                 catch(NumberFormatException e){}
+                if(mCurrencyId != carDefaultCurrencyId){
+                    try{
+                        if(etConversionRate.getText().toString() != null && etConversionRate.getText().toString().length() > 0)
+                                conversionRate = new BigDecimal(etConversionRate.getText().toString());
+                        if(conversionRate != null)
+                            calculateConvertedAmount();
+                    }
+                    catch(NumberFormatException e){}
+                }
             }
         };
 
@@ -416,16 +535,28 @@ public class ExpenseEditActivity extends EditActivityBase {
                 spnExpType.getSelectedItemId() );
         data.put( MainDbAdapter.EXPENSES_COL_INDEX_NAME, etCarIndex.getText().toString());
 
-        data.put( MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, atAmount.getText().toString());
+//        data.put( MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, etUserInput.getText().toString());
+        data.put( MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amount.toString());
+        if(price != null)
+            data.put( MainDbAdapter.EXPENSES_COL_PRICEENTERED_NAME, price.toString());
+        data.put( MainDbAdapter.EXPENSES_COL_QUANTITY_NAME, etQuantity.getText().toString());
+        if(spnUOM.getSelectedItemId() != -1)
+            data.put( MainDbAdapter.EXPENSES_COL_UOM_ID_NAME, spnUOM.getSelectedItemId());
+        
         data.put( MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
                 mCurrencyId);
         data.put( MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
         if(mCurrencyId == carDefaultCurrencyId){
-            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, atAmount.getText().toString());
+//            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, etUserInput.getText().toString());
+            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amount.toString());
+            if(price != null)
+                data.put( MainDbAdapter.EXPENSES_COL_PRICE_NAME, price.toString());
             data.put( MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME, "1");
         }
         else{
             data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, convertedAmount.toString());
+            if(convertedPrice != null)
+                data.put( MainDbAdapter.EXPENSES_COL_PRICE_NAME, convertedPrice.toString());
             data.put( MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME, conversionRate.toString());
         }
 
