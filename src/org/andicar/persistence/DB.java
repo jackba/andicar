@@ -59,7 +59,7 @@ public class DB {
     //expense categories (eg. Refuel, Service, Insurance, etc.
     public static final String EXPENSECATEGORY_TABLE_NAME = "DEF_EXPENSECATEGORY";
     //car expenses
-    public static final String EXPENSES_TABLE_NAME = "CAR_EXPENSE";
+    public static final String EXPENSE_TABLE_NAME = "CAR_EXPENSE";
     //currency rate
     public static final String CURRENCYRATE_TABLE_NAME = "DEF_CURRENCYRATE";
     //gps track table
@@ -125,24 +125,24 @@ public class DB {
     //expense category
     public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
     //car expenses
-    public static final String EXPENSES_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-    public static final String EXPENSES_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
-    public static final String EXPENSES_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
-    public static final String EXPENSES_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
-    public static final String EXPENSES_COL_AMOUNT_NAME = "Amount";
-    public static final String EXPENSES_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
-    public static final String EXPENSES_COL_DATE_NAME = "Date";
-    public static final String EXPENSES_COL_DOCUMENTNO_NAME = "DocumentNo";
-    public static final String EXPENSES_COL_INDEX_NAME = "CarIndex";
-    public static final String EXPENSES_COL_FROMTABLE_NAME = "FromTable";
-    public static final String EXPENSES_COL_FROMRECORD_ID_NAME = "FromRecordId";
-    public static final String EXPENSES_COL_AMOUNTENTERED_NAME = "AmountEntered";
-    public static final String EXPENSES_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
-    public static final String EXPENSES_COL_CURRENCYRATE_NAME = "CurrencyRate"; //CurrencyEntered -> Car Base Currency
-    public static final String EXPENSES_COL_QUANTITY_NAME = "Quantity";
-    public static final String EXPENSES_COL_PRICE_NAME = "Price";
-    public static final String EXPENSES_COL_PRICEENTERED_NAME = "PriceEntered";
-    public static final String EXPENSES_COL_UOM_ID_NAME = UOM_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_AMOUNT_NAME = "Amount";
+    public static final String EXPENSE_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_DATE_NAME = "Date";
+    public static final String EXPENSE_COL_DOCUMENTNO_NAME = "DocumentNo";
+    public static final String EXPENSE_COL_INDEX_NAME = "CarIndex";
+    public static final String EXPENSE_COL_FROMTABLE_NAME = "FromTable";
+    public static final String EXPENSE_COL_FROMRECORD_ID_NAME = "FromRecordId";
+    public static final String EXPENSE_COL_AMOUNTENTERED_NAME = "AmountEntered";
+    public static final String EXPENSE_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
+    public static final String EXPENSE_COL_CURRENCYRATE_NAME = "CurrencyRate"; //CurrencyEntered -> Car Base Currency
+    public static final String EXPENSE_COL_QUANTITY_NAME = "Quantity";
+    public static final String EXPENSE_COL_PRICE_NAME = "Price";
+    public static final String EXPENSE_COL_PRICEENTERED_NAME = "PriceEntered";
+    public static final String EXPENSE_COL_UOM_ID_NAME = UOM_TABLE_NAME + "_ID";
 
     //currency rate
     public static final String CURRENCYRATE_COL_FROMCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_From_ID";
@@ -233,24 +233,24 @@ public class DB {
      //expense category
     public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
     //car expenses
-    public static final int EXPENSES_COL_CAR_ID_POS = 4;
-    public static final int EXPENSES_COL_DRIVER_ID_POS = 5;
-    public static final int EXPENSES_COL_EXPENSECATEGORY_POS = 6;
-    public static final int EXPENSES_COL_EXPENSETYPE_ID_POS = 7;
-    public static final int EXPENSES_COL_AMOUNT_POS = 8;
-    public static final int EXPENSES_COL_CURRENCY_ID_POS = 9;
-    public static final int EXPENSES_COL_DATE_POS = 10;
-    public static final int EXPENSES_COL_DOCUMENTNO_POS = 11;
-    public static final int EXPENSES_COL_INDEX_POS = 12;
-    public static final int EXPENSES_COL_FROMTABLE_POS = 13;
-    public static final int EXPENSES_COL_FROMRECORD_POS = 14;
-    public static final int EXPENSES_COL_AMOUNTENTERED_POS = 15;
-    public static final int EXPENSES_COL_CURRENCYENTERED_ID_POS = 16;
-    public static final int EXPENSES_COL_CURRENCYRATE_POS = 17;
-    public static final int EXPENSES_COL_QUANTITY_POS = 18;
-    public static final int EXPENSES_COL_PRICE_POS = 19;
-    public static final int EXPENSES_COL_PRICEENTERED_POS = 20;
-    public static final int EXPENSES_COL_UOM_ID_POS = 21;
+    public static final int EXPENSE_COL_CAR_ID_POS = 4;
+    public static final int EXPENSE_COL_DRIVER_ID_POS = 5;
+    public static final int EXPENSE_COL_EXPENSECATEGORY_POS = 6;
+    public static final int EXPENSE_COL_EXPENSETYPE_ID_POS = 7;
+    public static final int EXPENSE_COL_AMOUNT_POS = 8;
+    public static final int EXPENSE_COL_CURRENCY_ID_POS = 9;
+    public static final int EXPENSE_COL_DATE_POS = 10;
+    public static final int EXPENSE_COL_DOCUMENTNO_POS = 11;
+    public static final int EXPENSE_COL_INDEX_POS = 12;
+    public static final int EXPENSE_COL_FROMTABLE_POS = 13;
+    public static final int EXPENSE_COL_FROMRECORD_POS = 14;
+    public static final int EXPENSE_COL_AMOUNTENTERED_POS = 15;
+    public static final int EXPENSE_COL_CURRENCYENTERED_ID_POS = 16;
+    public static final int EXPENSE_COL_CURRENCYRATE_POS = 17;
+    public static final int EXPENSE_COL_QUANTITY_POS = 18;
+    public static final int EXPENSE_COL_PRICE_POS = 19;
+    public static final int EXPENSE_COL_PRICEENTERED_POS = 20;
+    public static final int EXPENSE_COL_UOM_ID_POS = 21;
 
     //currency rate
     public static final int CURRENCYRATE_COL_FROMCURRENCY_ID_POS = 4;
@@ -316,13 +316,13 @@ public class DB {
     public static final String[] expenseCategoryTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
 
-    public static final String[] expensesTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-        EXPENSES_COL_CAR_ID_NAME, EXPENSES_COL_DRIVER_ID_NAME, EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
-        EXPENSES_COL_EXPENSETYPE_ID_NAME, EXPENSES_COL_AMOUNT_NAME, EXPENSES_COL_CURRENCY_ID_NAME,
-        EXPENSES_COL_DATE_NAME, EXPENSES_COL_DOCUMENTNO_NAME, EXPENSES_COL_INDEX_NAME,
-        EXPENSES_COL_FROMTABLE_NAME, EXPENSES_COL_FROMRECORD_ID_NAME, 
-        EXPENSES_COL_AMOUNTENTERED_NAME, EXPENSES_COL_CURRENCYENTERED_ID_NAME, EXPENSES_COL_CURRENCYRATE_NAME,
-        EXPENSES_COL_QUANTITY_NAME, EXPENSES_COL_PRICE_NAME, EXPENSES_COL_PRICEENTERED_NAME, EXPENSES_COL_UOM_ID_NAME};
+    public static final String[] expenseTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
+        EXPENSE_COL_CAR_ID_NAME, EXPENSE_COL_DRIVER_ID_NAME, EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
+        EXPENSE_COL_EXPENSETYPE_ID_NAME, EXPENSE_COL_AMOUNT_NAME, EXPENSE_COL_CURRENCY_ID_NAME,
+        EXPENSE_COL_DATE_NAME, EXPENSE_COL_DOCUMENTNO_NAME, EXPENSE_COL_INDEX_NAME,
+        EXPENSE_COL_FROMTABLE_NAME, EXPENSE_COL_FROMRECORD_ID_NAME,
+        EXPENSE_COL_AMOUNTENTERED_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME, EXPENSE_COL_CURRENCYRATE_NAME,
+        EXPENSE_COL_QUANTITY_NAME, EXPENSE_COL_PRICE_NAME, EXPENSE_COL_PRICEENTERED_NAME, EXPENSE_COL_UOM_ID_NAME};
 
     public static final String[] currencyRateTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         CURRENCYRATE_COL_FROMCURRENCY_ID_NAME, CURRENCYRATE_COL_TOCURRENCY_ID_NAME,
@@ -348,7 +348,7 @@ public class DB {
     /**
      * Database creation sql statements
      */
-    protected static final String DRIVERS_TABLE_CREATE_SQL =
+    protected static final String DRIVER_TABLE_CREATE_SQL =
             "CREATE TABLE " + DRIVER_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -464,31 +464,31 @@ public class DB {
             + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
             + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " TEXT DEFAULT 'N' "
             + ");";
-    protected static final String EXPENSES_TABLE_CREATE_SQL =
-            "CREATE TABLE " + EXPENSES_TABLE_NAME
+    protected static final String EXPENSE_TABLE_CREATE_SQL =
+            "CREATE TABLE " + EXPENSE_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
             + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
             + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + EXPENSES_COL_CAR_ID_NAME + " INTEGER, "
-            + EXPENSES_COL_DRIVER_ID_NAME + " INTEGER, "
-            + EXPENSES_COL_EXPENSECATEGORY_ID_NAME + " INTEGER, "
-            + EXPENSES_COL_EXPENSETYPE_ID_NAME + " INTEGER, "
-            + EXPENSES_COL_AMOUNT_NAME + " NUMERIC, "
-            + EXPENSES_COL_CURRENCY_ID_NAME + " INTEGER, "
-            + EXPENSES_COL_DATE_NAME + " DATE NULL, "
-            + EXPENSES_COL_DOCUMENTNO_NAME + " TEXT NULL, "
-            + EXPENSES_COL_INDEX_NAME + " NUMERIC, "
-            + EXPENSES_COL_FROMTABLE_NAME + " TEXT NULL, "
-            + EXPENSES_COL_FROMRECORD_ID_NAME + " INTEGER, "
-            + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL, "
-            + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL, "
-            + EXPENSES_COL_CURRENCYRATE_NAME + " NUMERIC NULL, "
-            + EXPENSES_COL_QUANTITY_NAME + " NUMERIC NULL, "
-            + EXPENSES_COL_PRICE_NAME + " NUMERIC NULL, "
-            + EXPENSES_COL_PRICEENTERED_NAME + " NUMERIC NULL, "
-            + EXPENSES_COL_UOM_ID_NAME + " INTEGER NULL "
+            + EXPENSE_COL_CAR_ID_NAME + " INTEGER, "
+            + EXPENSE_COL_DRIVER_ID_NAME + " INTEGER, "
+            + EXPENSE_COL_EXPENSECATEGORY_ID_NAME + " INTEGER, "
+            + EXPENSE_COL_EXPENSETYPE_ID_NAME + " INTEGER, "
+            + EXPENSE_COL_AMOUNT_NAME + " NUMERIC, "
+            + EXPENSE_COL_CURRENCY_ID_NAME + " INTEGER, "
+            + EXPENSE_COL_DATE_NAME + " DATE NULL, "
+            + EXPENSE_COL_DOCUMENTNO_NAME + " TEXT NULL, "
+            + EXPENSE_COL_INDEX_NAME + " NUMERIC, "
+            + EXPENSE_COL_FROMTABLE_NAME + " TEXT NULL, "
+            + EXPENSE_COL_FROMRECORD_ID_NAME + " INTEGER, "
+            + EXPENSE_COL_AMOUNTENTERED_NAME + " NUMERIC NULL, "
+            + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL, "
+            + EXPENSE_COL_CURRENCYRATE_NAME + " NUMERIC NULL, "
+            + EXPENSE_COL_QUANTITY_NAME + " NUMERIC NULL, "
+            + EXPENSE_COL_PRICE_NAME + " NUMERIC NULL, "
+            + EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL, "
+            + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL "
             + ");";
 
 
@@ -607,7 +607,7 @@ public class DB {
         public void onCreate(SQLiteDatabase db) {
 //            try {
                 //create drivers table
-                db.execSQL(DRIVERS_TABLE_CREATE_SQL);
+                db.execSQL(DRIVER_TABLE_CREATE_SQL);
                 //create cars table
                 db.execSQL(CAR_TABLE_CREATE_SQL);
                 createUOMTable(db);
@@ -953,37 +953,37 @@ public class DB {
             c.close();
 
             if(oldVersion == 200){
-                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD " + EXPENSE_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
                 db.execSQL(updSql);
 
-                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD " + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
                 db.execSQL(updSql);
 
-                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME + " ADD " + EXPENSES_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD " + EXPENSE_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
                 db.execSQL(updSql);
             }
 
-            updSql = "UPDATE " + EXPENSES_TABLE_NAME +
+            updSql = "UPDATE " + EXPENSE_TABLE_NAME +
                         " SET " +
-                            EXPENSES_COL_AMOUNTENTERED_NAME + " = " + EXPENSES_COL_AMOUNT_NAME + ", " +
-                            EXPENSES_COL_CURRENCYENTERED_ID_NAME + " = " + EXPENSES_COL_CURRENCY_ID_NAME + ", " +
-                            EXPENSES_COL_CURRENCYRATE_NAME + " = 1";
+                            EXPENSE_COL_AMOUNTENTERED_NAME + " = " + EXPENSE_COL_AMOUNT_NAME + ", " +
+                            EXPENSE_COL_CURRENCYENTERED_ID_NAME + " = " + EXPENSE_COL_CURRENCY_ID_NAME + ", " +
+                            EXPENSE_COL_CURRENCYRATE_NAME + " = 1";
             db.execSQL(updSql);
 
-            updSql = "UPDATE " + EXPENSES_TABLE_NAME +
+            updSql = "UPDATE " + EXPENSE_TABLE_NAME +
                         " SET " +
-                            EXPENSES_COL_CURRENCY_ID_NAME + " = " +
+                            EXPENSE_COL_CURRENCY_ID_NAME + " = " +
                                 "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
                                 " FROM " + CAR_TABLE_NAME +
                                 " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
-                                        sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) +
+                                        sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) +
                             ") ";
             db.execSQL(updSql);
 
             c = db.rawQuery("SELECT COUNT(*) " +
-                                                "FROM " + EXPENSES_TABLE_NAME + " " +
-                                                "WHERE " + EXPENSES_COL_CURRENCY_ID_NAME + " <> " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " " +
-                                                        "AND COALESCE(" + EXPENSES_COL_FROMTABLE_NAME + ", 'X') <> '" + StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "'", null);
+                                                "FROM " + EXPENSE_TABLE_NAME + " " +
+                                                "WHERE " + EXPENSE_COL_CURRENCY_ID_NAME + " <> " + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " " +
+                                                        "AND COALESCE(" + EXPENSE_COL_FROMTABLE_NAME + ", 'X') <> '" + StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "'", null);
             if(c.moveToFirst() && c.getInt(0) > 0){
                 SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
                 String updateMsg = mPreferences.getString("UpdateMsg", null);
@@ -1031,17 +1031,17 @@ public class DB {
         private void upgradeDbTo330(SQLiteDatabase db, int oldVersion) throws SQLException {
             String updSql = "";
             if(oldVersion > 200){
-                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME +
-                                " ADD " + EXPENSES_COL_QUANTITY_NAME + " NUMERIC NULL ";
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_QUANTITY_NAME + " NUMERIC NULL ";
                 db.execSQL(updSql);
-                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME +
-                                " ADD " + EXPENSES_COL_PRICE_NAME + " NUMERIC NULL ";
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_PRICE_NAME + " NUMERIC NULL ";
                 db.execSQL(updSql);
-                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME +
-                                " ADD " + EXPENSES_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
                 db.execSQL(updSql);
-                updSql = "ALTER TABLE " + EXPENSES_TABLE_NAME +
-                                " ADD " + EXPENSES_COL_UOM_ID_NAME + " INTEGER NULL ";
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL ";
                 db.execSQL(updSql);
             }
         }
@@ -1078,27 +1078,27 @@ public class DB {
 
         private void createExpenses(SQLiteDatabase db, boolean isUpdate) throws SQLException {
             //expenses table
-            db.execSQL(EXPENSES_TABLE_CREATE_SQL);
+            db.execSQL(EXPENSE_TABLE_CREATE_SQL);
             if(!isUpdate) {
                 return;
             }
             //initialize refuel expenses
-            String sql = "INSERT INTO " + EXPENSES_TABLE_NAME
+            String sql = "INSERT INTO " + EXPENSE_TABLE_NAME
                     + "( "
                     + GEN_COL_NAME_NAME + ", "
                     + GEN_COL_USER_COMMENT_NAME + ", "
                     + GEN_COL_ISACTIVE_NAME + ", "
-                    + EXPENSES_COL_CAR_ID_NAME + ", "
-                    + EXPENSES_COL_DRIVER_ID_NAME + ", "
-                    + EXPENSES_COL_EXPENSECATEGORY_ID_NAME + ", "
-                    + EXPENSES_COL_EXPENSETYPE_ID_NAME + ", "
-                    + EXPENSES_COL_AMOUNT_NAME + ", "
-                    + EXPENSES_COL_CURRENCY_ID_NAME + ", "
-                    + EXPENSES_COL_DATE_NAME + ", "
-                    + EXPENSES_COL_DOCUMENTNO_NAME + ", "
-                    + EXPENSES_COL_INDEX_NAME + ", "
-                    + EXPENSES_COL_FROMTABLE_NAME + ", "
-                    + EXPENSES_COL_FROMRECORD_ID_NAME + " "
+                    + EXPENSE_COL_CAR_ID_NAME + ", "
+                    + EXPENSE_COL_DRIVER_ID_NAME + ", "
+                    + EXPENSE_COL_EXPENSECATEGORY_ID_NAME + ", "
+                    + EXPENSE_COL_EXPENSETYPE_ID_NAME + ", "
+                    + EXPENSE_COL_AMOUNT_NAME + ", "
+                    + EXPENSE_COL_CURRENCY_ID_NAME + ", "
+                    + EXPENSE_COL_DATE_NAME + ", "
+                    + EXPENSE_COL_DOCUMENTNO_NAME + ", "
+                    + EXPENSE_COL_INDEX_NAME + ", "
+                    + EXPENSE_COL_FROMTABLE_NAME + ", "
+                    + EXPENSE_COL_FROMRECORD_ID_NAME + " "
                     + ") "
                     + "SELECT "
                     + GEN_COL_NAME_NAME + ", "

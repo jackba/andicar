@@ -104,40 +104,40 @@ public class ExpenseEditActivity extends EditActivityBase {
 
         if (operationType.equals("E")) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSES_TABLE_NAME,
-                    MainDbAdapter.expensesTableColNames, mRowId);
-            mCarId = c.getLong(MainDbAdapter.EXPENSES_COL_CAR_ID_POS);
-            mDriverId = c.getLong(MainDbAdapter.EXPENSES_COL_DRIVER_ID_POS);
-            mExpCategoryId = c.getLong(MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_POS);
-            mExpTypeId = c.getLong(MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_POS);
-            initDateTime(c.getLong(MainDbAdapter.EXPENSES_COL_DATE_POS) * 1000);
-            etCarIndex.setText(c.getString(MainDbAdapter.EXPENSES_COL_INDEX_POS));
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSE_TABLE_NAME,
+                    MainDbAdapter.expenseTableColNames, mRowId);
+            mCarId = c.getLong(MainDbAdapter.EXPENSE_COL_CAR_ID_POS);
+            mDriverId = c.getLong(MainDbAdapter.EXPENSE_COL_DRIVER_ID_POS);
+            mExpCategoryId = c.getLong(MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_POS);
+            mExpTypeId = c.getLong(MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_POS);
+            initDateTime(c.getLong(MainDbAdapter.EXPENSE_COL_DATE_POS) * 1000);
+            etCarIndex.setText(c.getString(MainDbAdapter.EXPENSE_COL_INDEX_POS));
 
-            mCurrencyId = c.getLong(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_POS);
+            mCurrencyId = c.getLong(MainDbAdapter.EXPENSE_COL_CURRENCYENTERED_ID_POS);
             if(mCurrencyId == carDefaultCurrencyId)
                 setConversionRateZoneVisible(false);
             else
                 setConversionRateZoneVisible(true);
 
-            etUserInput.setText(c.getString(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_POS));
+            etUserInput.setText(c.getString(MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_POS));
             try{
-                conversionRate = new BigDecimal(c.getString(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_POS));
+                conversionRate = new BigDecimal(c.getString(MainDbAdapter.EXPENSE_COL_CURRENCYRATE_POS));
             }
             catch(NumberFormatException e){}
             etConversionRate.setText(conversionRate.toString());
-            tvConvertedAmountValue.setText(c.getString(MainDbAdapter.EXPENSES_COL_AMOUNT_POS));
+            tvConvertedAmountValue.setText(c.getString(MainDbAdapter.EXPENSE_COL_AMOUNT_POS));
 
-            etDocNo.setText(c.getString(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_POS));
+            etDocNo.setText(c.getString(MainDbAdapter.EXPENSE_COL_DOCUMENTNO_POS));
             acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
-            etQuantity.setText(c.getString(MainDbAdapter.EXPENSES_COL_QUANTITY_POS));
-            if(c.getString(MainDbAdapter.EXPENSES_COL_UOM_ID_POS) != null
-                    && c.getString(MainDbAdapter.EXPENSES_COL_UOM_ID_POS).length() > 0){
-                mUOMId = c.getLong(MainDbAdapter.EXPENSES_COL_UOM_ID_POS);
+            etQuantity.setText(c.getString(MainDbAdapter.EXPENSE_COL_QUANTITY_POS));
+            if(c.getString(MainDbAdapter.EXPENSE_COL_UOM_ID_POS) != null
+                    && c.getString(MainDbAdapter.EXPENSE_COL_UOM_ID_POS).length() > 0){
+                mUOMId = c.getLong(MainDbAdapter.EXPENSE_COL_UOM_ID_POS);
             }
             else
                 mUOMId = -1;
             
-            String fromTable = c.getString(MainDbAdapter.EXPENSES_COL_FROMTABLE_POS);
+            String fromTable = c.getString(MainDbAdapter.EXPENSE_COL_FROMTABLE_POS);
             if(fromTable == null){
                 tvWarningLabel.setText("");
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), true);
@@ -190,7 +190,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
                 MainDbAdapter.GEN_COL_NAME_NAME, mUOMId, true);
         userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this, android.R.layout.simple_dropdown_item_1line, 
-                mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME,
+                mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSE_TABLE_NAME,
                 mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
     }
@@ -313,7 +313,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSES_TABLE_NAME, mCarId, 30));
+                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.EXPENSE_TABLE_NAME, mCarId, 30));
                     acUserComment.setAdapter(userCommentAdapter);
                     //change the currency
                     Long newCarCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
@@ -525,48 +525,48 @@ public class ExpenseEditActivity extends EditActivityBase {
         data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                 acUserComment.getText().toString() );
-        data.put( MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
+        data.put( MainDbAdapter.EXPENSE_COL_CAR_ID_NAME,
                 mCarId );
-        data.put( MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME,
+        data.put( MainDbAdapter.EXPENSE_COL_DRIVER_ID_NAME,
                 mDriverId );
-        data.put( MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
+        data.put( MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
                 spnExpCategory.getSelectedItemId() );
-        data.put( MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME,
+        data.put( MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_NAME,
                 spnExpType.getSelectedItemId() );
-        data.put( MainDbAdapter.EXPENSES_COL_INDEX_NAME, etCarIndex.getText().toString());
+        data.put( MainDbAdapter.EXPENSE_COL_INDEX_NAME, etCarIndex.getText().toString());
 
-//        data.put( MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, etUserInput.getText().toString());
-        data.put( MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amount.toString());
+//        data.put( MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_NAME, etUserInput.getText().toString());
+        data.put( MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_NAME, amount.toString());
         if(price != null)
-            data.put( MainDbAdapter.EXPENSES_COL_PRICEENTERED_NAME, price.toString());
-        data.put( MainDbAdapter.EXPENSES_COL_QUANTITY_NAME, etQuantity.getText().toString());
+            data.put( MainDbAdapter.EXPENSE_COL_PRICEENTERED_NAME, price.toString());
+        data.put( MainDbAdapter.EXPENSE_COL_QUANTITY_NAME, etQuantity.getText().toString());
         if(spnUOM.getSelectedItemId() != -1)
-            data.put( MainDbAdapter.EXPENSES_COL_UOM_ID_NAME, spnUOM.getSelectedItemId());
+            data.put( MainDbAdapter.EXPENSE_COL_UOM_ID_NAME, spnUOM.getSelectedItemId());
         
-        data.put( MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
+        data.put( MainDbAdapter.EXPENSE_COL_CURRENCYENTERED_ID_NAME,
                 mCurrencyId);
-        data.put( MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
+        data.put( MainDbAdapter.EXPENSE_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
         if(mCurrencyId == carDefaultCurrencyId){
-//            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, etUserInput.getText().toString());
-            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amount.toString());
+//            data.put( MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, etUserInput.getText().toString());
+            data.put( MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, amount.toString());
             if(price != null)
-                data.put( MainDbAdapter.EXPENSES_COL_PRICE_NAME, price.toString());
-            data.put( MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME, "1");
+                data.put( MainDbAdapter.EXPENSE_COL_PRICE_NAME, price.toString());
+            data.put( MainDbAdapter.EXPENSE_COL_CURRENCYRATE_NAME, "1");
         }
         else{
-            data.put( MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, convertedAmount.toString());
+            data.put( MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, convertedAmount.toString());
             if(convertedPrice != null)
-                data.put( MainDbAdapter.EXPENSES_COL_PRICE_NAME, convertedPrice.toString());
-            data.put( MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME, conversionRate.toString());
+                data.put( MainDbAdapter.EXPENSE_COL_PRICE_NAME, convertedPrice.toString());
+            data.put( MainDbAdapter.EXPENSE_COL_CURRENCYRATE_NAME, conversionRate.toString());
         }
 
 
-        data.put( MainDbAdapter.EXPENSES_COL_DATE_NAME, mlDateTimeInSeconds);
-        data.put( MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
+        data.put( MainDbAdapter.EXPENSE_COL_DATE_NAME, mlDateTimeInSeconds);
+        data.put( MainDbAdapter.EXPENSE_COL_DOCUMENTNO_NAME,
                 etDocNo.getText().toString());
 
         if( operationType.equals("N") ) {
-            Long createResult = mDbAdapter.createRecord(MainDbAdapter.EXPENSES_TABLE_NAME, data);
+            Long createResult = mDbAdapter.createRecord(MainDbAdapter.EXPENSE_TABLE_NAME, data);
             if( createResult.intValue() < 0){
                 if(createResult.intValue() == -1) //DB Error
                     madbErrorAlert.setMessage(mDbAdapter.lastErrorMessage);
@@ -579,7 +579,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                 finish();
         }
         else {
-            int updResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSES_TABLE_NAME, mRowId, data);
+            int updResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSE_TABLE_NAME, mRowId, data);
             if(updResult != -1){
                 String errMsg = "";
                 errMsg = mResource.getString(updResult);

@@ -100,9 +100,9 @@ public class MainDbAdapter extends DB
                 mCarId = content.getAsLong(REFUEL_COL_CAR_ID_NAME);
                 stopIndex = new BigDecimal(content.getAsString(REFUEL_COL_INDEX_NAME));
             }
-            else if(tableName.equals(EXPENSES_TABLE_NAME)){
-                mCarId = content.getAsLong(EXPENSES_COL_CAR_ID_NAME);
-                String newIndexStr = content.getAsString(EXPENSES_COL_INDEX_NAME);
+            else if(tableName.equals(EXPENSE_TABLE_NAME)){
+                mCarId = content.getAsLong(EXPENSE_COL_CAR_ID_NAME);
+                String newIndexStr = content.getAsString(EXPENSE_COL_INDEX_NAME);
                 if(newIndexStr != null && newIndexStr.length() > 0)
                     stopIndex = new BigDecimal(newIndexStr);
             }
@@ -138,39 +138,39 @@ public class MainDbAdapter extends DB
                 expenseContent.put(MainDbAdapter.GEN_COL_NAME_NAME, StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME);
                 expenseContent.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                         content.getAsString(MainDbAdapter.GEN_COL_USER_COMMENT_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_CAR_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_CAR_ID_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_DRIVER_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_INDEX_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_INDEX_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_INDEX_NAME));
 
                 BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME));
                 BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME));
                 BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amt.toString());
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_NAME, amt.toString());
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_CURRENCYENTERED_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_CURRENCYRATE_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
 
                 BigDecimal convRate = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
                 amt = (amt.multiply(convRate)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, amt.toString());
 
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_CURRENCY_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_DATE_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_DATE_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_DATE_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_DOCUMENTNO_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME));
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_FROMTABLE_NAME, StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME);
-                expenseContent.put(MainDbAdapter.EXPENSES_COL_FROMRECORD_ID_NAME, retVal);
-                mDb.insertOrThrow( MainDbAdapter.EXPENSES_TABLE_NAME, null, expenseContent);
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME, StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME);
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_FROMRECORD_ID_NAME, retVal);
+                mDb.insertOrThrow( MainDbAdapter.EXPENSE_TABLE_NAME, null, expenseContent);
             }
         }
         catch(SQLException ex){
@@ -260,9 +260,9 @@ public class MainDbAdapter extends DB
                 mCarId = content.getAsLong(REFUEL_COL_CAR_ID_NAME);
                 stopIndex = new BigDecimal(content.getAsString(REFUEL_COL_INDEX_NAME));
             }
-            else if(tableName.equals(EXPENSES_TABLE_NAME)){
-                mCarId = content.getAsLong(EXPENSES_COL_CAR_ID_NAME);
-                String newIndexStr = content.getAsString(EXPENSES_COL_INDEX_NAME);
+            else if(tableName.equals(EXPENSE_TABLE_NAME)){
+                mCarId = content.getAsLong(EXPENSE_COL_CAR_ID_NAME);
+                String newIndexStr = content.getAsString(EXPENSE_COL_INDEX_NAME);
                 if(newIndexStr != null && newIndexStr.length() > 0)
                     stopIndex = new BigDecimal(newIndexStr);
             }
@@ -275,9 +275,9 @@ public class MainDbAdapter extends DB
                         long expenseId = -1;
                         String expenseIdSelect =
                                 "SELECT " + GEN_COL_ROWID_NAME + " " +
-                                "FROM " + EXPENSES_TABLE_NAME + " " +
-                                "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
-                                    "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
+                                "FROM " + EXPENSE_TABLE_NAME + " " +
+                                "WHERE " + EXPENSE_COL_FROMTABLE_NAME + " = 'Refuel' " +
+                                    "AND " + EXPENSE_COL_FROMRECORD_ID_NAME + " = " + rowId;
                         Cursor c = execSelectSql(expenseIdSelect);
                         if(c.moveToFirst())
                             expenseId = c.getLong(0);
@@ -288,38 +288,38 @@ public class MainDbAdapter extends DB
 
                             expenseContent.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                                     content.getAsString(MainDbAdapter.GEN_COL_USER_COMMENT_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_CAR_ID_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_CAR_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_CAR_ID_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_DRIVER_ID_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_DRIVER_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_EXPENSECATEGORY_ID_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_EXPENSETYPE_ID_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_INDEX_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_INDEX_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_INDEX_NAME));
 
                             BigDecimal price = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME));
                             BigDecimal quantity = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME));
                             BigDecimal amt = (price.multiply(quantity)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNTENTERED_NAME, amt.toString());
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYENTERED_ID_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_NAME, amt.toString());
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_CURRENCYENTERED_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCYRATE_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_CURRENCYRATE_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
 
                             BigDecimal convRate = new BigDecimal(content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME));
                             amt = (amt.multiply(convRate)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_AMOUNT_NAME, amt.toString());
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, amt.toString());
 
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_CURRENCY_ID_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_CURRENCY_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_DATE_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_DATE_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_DATE_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_DOCUMENTNO_NAME,
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_DOCUMENTNO_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME));
-                            expenseContent.put(MainDbAdapter.EXPENSES_COL_FROMTABLE_NAME, "Refuel");
-                            mDb.update( MainDbAdapter.EXPENSES_TABLE_NAME, expenseContent, GEN_COL_ROWID_NAME + "=" + expenseId, null );
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME, "Refuel");
+                            mDb.update( MainDbAdapter.EXPENSE_TABLE_NAME, expenseContent, GEN_COL_ROWID_NAME + "=" + expenseId, null );
                         }
                     }
 
@@ -432,11 +432,11 @@ public class MainDbAdapter extends DB
         if(tmpStopIndex.compareTo(newStopIndex) > 0)
             newStopIndex = tmpStopIndex;
 
-        sql = "SELECT MAX(" + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + ") " +
-                        " FROM " + EXPENSES_TABLE_NAME +
-                        " WHERE " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME) + " = " + mCarId +
-                                    " AND " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_INDEX_NAME) + " IS NOT NULL " +
-                        " GROUP BY " + sqlConcatTableColumn(EXPENSES_TABLE_NAME, EXPENSES_COL_CAR_ID_NAME);
+        sql = "SELECT MAX(" + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + ") " +
+                        " FROM " + EXPENSE_TABLE_NAME +
+                        " WHERE " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) + " = " + mCarId +
+                                    " AND " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + " IS NOT NULL " +
+                        " GROUP BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME);
         c = execSelectSql(sql);
 
         if(c.moveToFirst()){
@@ -522,22 +522,22 @@ public class MainDbAdapter extends DB
                     if(checkVal == -1){
                         String expenseIdSelect =
                                 "SELECT " + GEN_COL_ROWID_NAME + " " +
-                                "FROM " + EXPENSES_TABLE_NAME + " " +
-                                "WHERE " + EXPENSES_COL_FROMTABLE_NAME + " = 'Refuel' " +
-                                    "AND " + EXPENSES_COL_FROMRECORD_ID_NAME + " = " + rowId;
+                                "FROM " + EXPENSE_TABLE_NAME + " " +
+                                "WHERE " + EXPENSE_COL_FROMTABLE_NAME + " = 'Refuel' " +
+                                    "AND " + EXPENSE_COL_FROMRECORD_ID_NAME + " = " + rowId;
                         Cursor c = execSelectSql(expenseIdSelect);
                         if(c.moveToFirst())
                             expenseId = c.getLong(0);
                         c.close();
                         if(expenseId != -1){
-                            mDb.delete(EXPENSES_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + expenseId, null);
+                            mDb.delete(EXPENSE_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + expenseId, null);
                         }
                         updateCarCurrentIndex(carId);
                     }
                 }
-                else if(tableName.equals(EXPENSES_TABLE_NAME)){
-                    long carId = fetchRecord(EXPENSES_TABLE_NAME, expensesTableColNames, rowId)
-                                    .getLong(EXPENSES_COL_CAR_ID_POS);
+                else if(tableName.equals(EXPENSE_TABLE_NAME)){
+                    long carId = fetchRecord(EXPENSE_TABLE_NAME, expenseTableColNames, rowId)
+                                    .getLong(EXPENSE_COL_CAR_ID_POS);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                     if(checkVal == -1)
                         updateCarCurrentIndex(carId);
@@ -628,8 +628,8 @@ public class MainDbAdapter extends DB
             checkCursor.close();
             //check expenses
             checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_DRIVER_ID_NAME + " = " + rowId + " " +
+                        "FROM " + EXPENSE_TABLE_NAME + " " +
+                        "WHERE " + EXPENSE_COL_DRIVER_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
@@ -663,8 +663,8 @@ public class MainDbAdapter extends DB
             checkCursor.close();
             //check expenses
             checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_CAR_ID_NAME + " = " + rowId + " " +
+                        "FROM " + EXPENSE_TABLE_NAME + " " +
+                        "WHERE " + EXPENSE_COL_CAR_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
@@ -736,9 +736,9 @@ public class MainDbAdapter extends DB
             checkCursor.close();
             //check expenses
             checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
-                            " OR " + EXPENSES_COL_CURRENCYENTERED_ID_NAME + " = " + rowId + " " +
+                        "FROM " + EXPENSE_TABLE_NAME + " " +
+                        "WHERE " + EXPENSE_COL_CURRENCY_ID_NAME + " = " + rowId + " " +
+                            " OR " + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
@@ -772,8 +772,8 @@ public class MainDbAdapter extends DB
             checkCursor.close();
             //check expenses
             checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_EXPENSETYPE_ID_NAME + " = " + rowId + " " +
+                        "FROM " + EXPENSE_TABLE_NAME + " " +
+                        "WHERE " + EXPENSE_COL_EXPENSETYPE_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
@@ -796,8 +796,8 @@ public class MainDbAdapter extends DB
             checkCursor.close();
             //check expenses
             checkSql = "SELECT * " +
-                        "FROM " + EXPENSES_TABLE_NAME + " " +
-                        "WHERE " + EXPENSES_COL_EXPENSECATEGORY_ID_NAME + " = " + rowId + " " +
+                        "FROM " + EXPENSE_TABLE_NAME + " " +
+                        "WHERE " + EXPENSE_COL_EXPENSECATEGORY_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
@@ -806,15 +806,15 @@ public class MainDbAdapter extends DB
             }
             checkCursor.close();
         }
-        else if(tableName.equals(EXPENSES_TABLE_NAME)){
+        else if(tableName.equals(EXPENSE_TABLE_NAME)){
             //check refuels
             checkSql = "SELECT * " +
                         "FROM " + REFUEL_TABLE_NAME + " " +
                         "WHERE " + GEN_COL_ROWID_NAME + " = " +
-                                    "( SELECT " + EXPENSES_COL_FROMRECORD_ID_NAME + " " +
-                                        "FROM " + EXPENSES_TABLE_NAME + " " +
+                                    "( SELECT " + EXPENSE_COL_FROMRECORD_ID_NAME + " " +
+                                        "FROM " + EXPENSE_TABLE_NAME + " " +
                                         "WHERE " + GEN_COL_ROWID_NAME + " = " + rowId + " " +
-                                                " AND " + EXPENSES_COL_FROMTABLE_NAME + " = '" +
+                                                " AND " + EXPENSE_COL_FROMTABLE_NAME + " = '" +
                                                         StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "' ) " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
@@ -981,13 +981,13 @@ public class MainDbAdapter extends DB
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + REFUEL_COL_DATE_NAME + " DESC " +
                             " LIMIT " + limitCount;
-        else if(fromTable.equals(EXPENSES_TABLE_NAME))
+        else if(fromTable.equals(EXPENSE_TABLE_NAME))
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
-                            " FROM " + EXPENSES_TABLE_NAME +
-                            " WHERE " + EXPENSES_COL_CAR_ID_NAME + " = " + carId +
+                            " FROM " + EXPENSE_TABLE_NAME +
+                            " WHERE " + EXPENSE_COL_CAR_ID_NAME + " = " + carId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
-                            " ORDER BY " + EXPENSES_COL_DATE_NAME + " DESC " +
+                            " ORDER BY " + EXPENSE_COL_DATE_NAME + " DESC " +
                             " LIMIT " + limitCount;
         else if(fromTable.equals(GPSTRACK_TABLE_NAME))
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +

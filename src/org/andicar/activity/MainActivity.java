@@ -261,7 +261,7 @@ public class MainActivity extends Activity {
     private void fillExpenseZone() {
         listCursor = null;
         Bundle whereConditions = new Bundle();
-        whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSES_TABLE_NAME, MainDbAdapter.EXPENSES_COL_CAR_ID_NAME) + "=", String.valueOf(currentCarID));
+        whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME, MainDbAdapter.EXPENSE_COL_CAR_ID_NAME) + "=", String.valueOf(currentCarID));
         reportDb.setReportSql("reportExpensesListMainViewSelect", whereConditions);
         listCursor = reportDb.fetchReport(1);
         if(listCursor != null && listCursor.moveToFirst()) {
