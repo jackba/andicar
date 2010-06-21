@@ -232,7 +232,7 @@
                     android:id="@+id/tvConversionRateLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/GEN_ConvertionRateShortLabel"
+                    android:text="@string/GEN_ConversionRateLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
