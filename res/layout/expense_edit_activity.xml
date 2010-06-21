@@ -161,6 +161,36 @@
                     android:prompt="@string/GEN_ChooseOneTitle"
                     />
             </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5dip"
+                android:gravity="center_vertical"
+                >
+                <TextView android:id="@+id/tvDateTimeValue"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:gravity="center_vertical"
+                          android:typeface="sans"
+                          android:textColor="@android:color/white"
+                          />
+                <ImageButton android:id="@+id/btnPickDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/btn_background_selector"
+                        android:src="@drawable/icon_calendar_selector"
+                        />
+                <ImageButton android:id="@+id/btnPickTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/btn_background_selector"
+                        android:src="@drawable/icon_clock_selector"
+                        />
+            </LinearLayout>
+
             <TextView
                 android:layout_height="1dip"
                 android:layout_width="fill_parent"
@@ -329,13 +359,75 @@
                     android:textColor="@android:color/white"
                     />
             </LinearLayout>
-
             <TextView
                 android:layout_height="1dip"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
                 android:layout_marginTop="5dip"
                 />
+
+            <TextView
+                android:id="@+id/tvBPartnerAdressInfoLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_BPartnerAdressInfo"
+                android:typeface="sans"
+                android:layout_marginTop="5dip"
+                android:textStyle="italic"
+                android:gravity="center"
+                />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <TextView
+                    android:id="@+id/tvBPartnerLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GEN_BPartner"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <AutoCompleteTextView
+                    android:id="@+id/acBPartner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <TextView
+                    android:id="@+id/tvBPartnerAdressLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GEN_Address"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <AutoCompleteTextView
+                    android:id="@+id/acAdress"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:background="@drawable/white_background"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                android:layout_marginTop="5dip"
+                />
+
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -385,37 +477,6 @@
                     android:layout_marginLeft="5dip"
                     android:background="@drawable/white_background"
                     />
-            </LinearLayout>
-
-            <LinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginTop="10dip"
-                android:gravity="center_vertical"
-                >
-                <TextView android:id="@+id/tvDateTimeValue"
-                          android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:gravity="center_vertical"
-                          android:typeface="sans"
-                          android:textColor="@android:color/white"
-                          />
-                <ImageButton android:id="@+id/btnPickDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dip"
-                        android:background="@drawable/btn_background_selector"
-                        android:src="@drawable/icon_calendar_selector"
-                        />
-                <ImageButton android:id="@+id/btnPickTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dip"
-                        android:background="@drawable/btn_background_selector"
-                        android:src="@drawable/icon_clock_selector"
-                        />
             </LinearLayout>
 
             <TextView

@@ -191,6 +191,18 @@
             android:name="org.andicar.activity.GPSTrackEditActivity"
             android:label="@string/APP_Activity_GPSTrackEdit">
         </activity>
+        <activity
+            android:name="org.andicar.activity.BPartnerListActivity"
+            android:label="@string/APP_Activity_BPartnerList">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.BPartnerEditActivity"
+            android:label="@string/APP_Activity_BPartnerEdit">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.BPartnerLocationEditActivity"
+            android:label="@string/APP_Activity_BPartnerLocationEdit">
+        </activity>
 
     </application>
 </manifest>
