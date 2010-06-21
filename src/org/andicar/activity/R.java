@@ -405,6 +405,8 @@ public final class R {
         public static final int DB_Curr_EEK=0x7f060039;
         public static final int DB_Curr_EGP=0x7f060038;
         /**  currencies 
+ currencies 
+ currencies 
          */
         public static final int DB_Curr_EUR=0x7f060024;
         public static final int DB_Curr_GBP=0x7f06002c;
@@ -430,6 +432,8 @@ public final class R {
         public static final int DB_Curr_ZAR=0x7f060042;
         public static final int DB_ExpCat_FuelComment=0x7f06001f;
         /**  expense categories 
+ expense categories 
+ expense categories 
          */
         public static final int DB_ExpCat_FuelName=0x7f06001e;
         public static final int DB_ExpCat_InsuranceComment=0x7f060023;
@@ -440,6 +444,8 @@ public final class R {
         public static final int DB_ExpType_EmployerName=0x7f06001c;
         public static final int DB_ExpType_PersonalComment=0x7f06001b;
         /**  expense types 
+ expense types 
+ expense types 
          */
         public static final int DB_ExpType_PersonalName=0x7f06001a;
         public static final int DB_UOMConv_GBGToLComment=0x7f060013;
@@ -454,6 +460,8 @@ public final class R {
         public static final int DB_UOMConv_LToUSGName=0x7f060010;
         public static final int DB_UOMConv_MiToKmComment=0x7f06000b;
         /**  UOM Conversions 
+ UOM Conversions 
+ UOM Conversions 
          */
         public static final int DB_UOMConv_MiToKmName=0x7f06000a;
         public static final int DB_UOMConv_USGToGBGComment=0x7f060019;
@@ -464,6 +472,8 @@ public final class R {
         public static final int DB_UOM_GBGName=0x7f060008;
         public static final int DB_UOM_KmComment=0x7f060001;
         /**  UOM's 
+ UOM's 
+ UOM's 
          */
         public static final int DB_UOM_KmName=0x7f060000;
         public static final int DB_UOM_LComment=0x7f060005;
@@ -709,14 +719,13 @@ public final class R {
         public static final int PREF_SendUsageTitle=0x7f060158;
         public static final int PREF_UOMCategoryTitle=0x7f06013c;
         public static final int PREF_UOMConversionSummary=0x7f060148;
-        /** 
-    <string name="PREF_UOMVolumeTitle">"UOM for volume"</string>
-    <string name="PREF_UOMVolumeSummary">"Add, delete, modify measurement units for volume"</string>
-
-         */
         public static final int PREF_UOMConversionTitle=0x7f060147;
+        public static final int PREF_UOMLengthSummary=0x7f06017f;
+        public static final int PREF_UOMLengthTitle=0x7f06017e;
         public static final int PREF_UOMSummary=0x7f060146;
         public static final int PREF_UOMTitle=0x7f060145;
+        public static final int PREF_UOMVolumeSummary=0x7f060181;
+        public static final int PREF_UOMVolumeTitle=0x7f060180;
         public static final int REPORTActivity_ProgressMessage=0x7f06011d;
         public static final int REPORTActivity_ReportCreatedMessage=0x7f06011c;
         public static final int RefuelEditActivity_IsFullLabel=0x7f060108;
