@@ -62,6 +62,9 @@
     <string name="APP_Activity_GPSTrackController">"GPS Track Control"</string>
     <string name="APP_Activity_GPSTrackEdit">"Edit GPS Track"</string>
     <string name="APP_Activity_GPSTrackList">"GPS Tracks"</string>
+    <string name="APP_Activity_BPartnerList">"Partners"</string>
+    <string name="APP_Activity_BPartnerEdit">"Edit partner, location"</string>
+    <string name="APP_Activity_BPartnerLocationEdit">"Edit location"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -98,7 +101,18 @@
     <string name="GEN_SelectedMessage">" selected"</string>
     <string name="GEN_CurrencyLabel">"Currency"</string>
     <string name="GEN_Required">"Required"</string>
-
+    <string name="GEN_BPartner">"Vendor:"</string>
+    <string name="GEN_Address">"Address:"</string>
+    <string name="GEN_BPartnerAdressInfo">"Complete details in Preferences -> Partners"</string>
+    <string name="GEN_City">"City:"</string>
+    <string name="GEN_Region">"Region:"</string>
+    <string name="GEN_Country">"Country:"</string>
+    <string name="GEN_Contact">"Contact:"</string>
+    <string name="GEN_Phone">"Phone:"</string>
+    <string name="GEN_Phone2">"Phone 2:"</string>
+    <string name="GEN_Fax">"Fax:"</string>
+    <string name="GEN_Email">"Email:"</string>
+    <string name="GEN_Postal">"Postal:"</string>
 
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -236,6 +250,8 @@
     <string name="GPSTrackShowOnMapMenu_MapMode">"Map mode"</string>
     <string name="GPSTrackShowOnMapMenu_SatelliteMode">"Satellite mode"</string>
 
+    <string name="BPartnerEditActivity_LocationsHeaderCaption">"Locations"</string>
+
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>
     <string name="PREF_ExpenseTypeCategoryTitle">"Expense types"</string>
@@ -273,6 +289,10 @@
     <string name="PREF_SendCrashReportsTitle">"Crash reports"</string>
     <string name="PREF_SendCrashReportsSummary">"Help developers by sending anonymous crash reports."</string>
     <string name="PREF_MainScreen">"Customize your main screen"</string>
+    <string name="PREF_BPartnersCategoryTitle">"Partners and locations"</string>
+    <string name="PREF_PartnerTitle">"Partners"</string>
+    <string name="PREF_PartnerSummary">"Add, delete, modify partners and locations"</string>
+
     <string name="PREFMainScreen_ZonesLabel">"Existing zones:"</string>
     <string name="PREFGPSTrack_FileFormatTitle">"File format"</string>
     <string name="PREFGPSTrack_FileFormatSummary">"Choose the file format(s) used for the track"</string>

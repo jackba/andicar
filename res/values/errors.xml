@@ -62,4 +62,8 @@
     <string name="ERR_039">"This driver can not be deleted because it is used in expense(s)."</string>
     <string name="ERR_040">"This car can not be deleted because it is used in expense(s)."</string>
     <string name="ERR_041">"This expense type can not be deleted because it is used in expense(s)."</string>
+    <string name="ERR_042">"This partner can not be deleted because it is used in refuel(s)."</string>
+    <string name="ERR_043">"This partner can not be deleted because it is used in expense(s)."</string>
+    <string name="ERR_044">"This location can not be deleted because it is used in refuel(s)."</string>
+    <string name="ERR_045">"This location can not be deleted because it is used in expense(s)."</string>
 </resources>
