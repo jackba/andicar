@@ -575,6 +575,11 @@ public class MainDbAdapter extends DB
                         c.close();
                     }
                 }
+                else if(tableName.equals(BPARTNER_TABLE_NAME)){
+                    //also delete the locations
+                    mDb.delete(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_BPARTNER_ID_NAME + "=" + rowId, null);
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                }
                 else
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
             }
@@ -824,6 +829,54 @@ public class MainDbAdapter extends DB
             }
             checkCursor.close();
         }
+        else if(tableName.equals(BPARTNER_TABLE_NAME)){
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_BPARTNER_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_042;
+            }
+            checkCursor.close();
+            //check expenses
+            checkSql = "SELECT * " +
+                        "FROM " + EXPENSE_TABLE_NAME + " " +
+                        "WHERE " + EXPENSE_COL_BPARTNER_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_043;
+            }
+            checkCursor.close();
+        }
+        else if(tableName.equals(BPARTNER_LOCATION_TABLE_NAME)){
+            //check refuels
+            checkSql = "SELECT * " +
+                        "FROM " + REFUEL_TABLE_NAME + " " +
+                        "WHERE " + REFUEL_COL_BPARTNER_LOCATION_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_044;
+            }
+            checkCursor.close();
+            //check expenses
+            checkSql = "SELECT * " +
+                        "FROM " + EXPENSE_TABLE_NAME + " " +
+                        "WHERE " + EXPENSE_COL_BPARTNER_LOCATION_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_045;
+            }
+            checkCursor.close();
+        }
 
         return -1;
     }
@@ -956,19 +1009,20 @@ public class MainDbAdapter extends DB
 
     /**
      * Get a list of the recent user comments used in the fromTable
-     * @param carId
+     * @param whereId
      * @param driverId
      * @param limitCount limit the size of the returned comments
      * @return a string array containig the last limitCount user comment from fromTable for the carId and DriverId
      */
-    public String[] getAutoCompleteUserComments(String fromTable, long carId /*, long driverId*/, int limitCount){
+    public String[] getAutoCompleteText(String fromTable, String fromColumn,
+            long whereId, int limitCount){
         String[] retVal = null;
         ArrayList<String> commentList = new ArrayList<String>();
         String selectSql;
         if(fromTable.equals(MILEAGE_TABLE_NAME))
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + MILEAGE_TABLE_NAME +
-                            " WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + carId +
+                            " WHERE " + MILEAGE_COL_CAR_ID_NAME + " = " + whereId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + MILEAGE_COL_INDEXSTOP_NAME + " DESC " +
@@ -976,7 +1030,7 @@ public class MainDbAdapter extends DB
         else if(fromTable.equals(REFUEL_TABLE_NAME))
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + REFUEL_TABLE_NAME +
-                            " WHERE " + REFUEL_COL_CAR_ID_NAME + " = " + carId +
+                            " WHERE " + REFUEL_COL_CAR_ID_NAME + " = " + whereId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + REFUEL_COL_DATE_NAME + " DESC " +
@@ -984,7 +1038,7 @@ public class MainDbAdapter extends DB
         else if(fromTable.equals(EXPENSE_TABLE_NAME))
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + EXPENSE_TABLE_NAME +
-                            " WHERE " + EXPENSE_COL_CAR_ID_NAME + " = " + carId +
+                            " WHERE " + EXPENSE_COL_CAR_ID_NAME + " = " + whereId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + EXPENSE_COL_DATE_NAME + " DESC " +
@@ -992,11 +1046,27 @@ public class MainDbAdapter extends DB
         else if(fromTable.equals(GPSTRACK_TABLE_NAME))
             selectSql = "SELECT DISTINCT " + GEN_COL_USER_COMMENT_NAME +
                             " FROM " + GPSTRACK_TABLE_NAME +
-                            " WHERE " + GPSTRACK_COL_CAR_ID_NAME + " = " + carId +
+                            " WHERE " + GPSTRACK_COL_CAR_ID_NAME + " = " + whereId +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " IS NOT NULL " +
                                 " AND " + GEN_COL_USER_COMMENT_NAME + " <> '' " +
                             " ORDER BY " + GPSTRACK_COL_DATE_NAME + " DESC " +
                             " LIMIT " + limitCount;
+        else if(fromTable.equals(BPARTNER_TABLE_NAME))
+            selectSql = "SELECT DISTINCT " + GEN_COL_NAME_NAME +
+                            " FROM " + BPARTNER_TABLE_NAME +
+                            " WHERE " + GEN_COL_ISACTIVE_NAME + " = \'Y\'" +
+                            " ORDER BY " + GEN_COL_NAME_NAME;
+        else if(fromTable.equals(BPARTNER_LOCATION_TABLE_NAME)){
+            selectSql = "SELECT DISTINCT " + fromColumn +
+                            " FROM " + BPARTNER_LOCATION_TABLE_NAME +
+                            " WHERE " + GEN_COL_ISACTIVE_NAME + " = \'Y\' ";
+            if(whereId != -1)
+                selectSql = selectSql +
+                                " AND " + BPARTNER_LOCATION_BPARTNER_ID_NAME + " = " + whereId;
+
+            selectSql = selectSql +
+                            " ORDER BY " + BPARTNER_LOCATION_ADDRESS_NAME;
+        }
         else
             return null;
         Cursor commentCursor = mDb.rawQuery(selectSql, null);

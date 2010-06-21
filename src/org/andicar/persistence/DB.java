@@ -66,6 +66,11 @@ public class DB {
     public static final String GPSTRACK_TABLE_NAME = "GPS_TRACK";
     public static final String GPSTRACKDETAIL_TABLE_NAME = "GPS_TRACKDETAIL";
 
+    //business partner table
+    public static final String BPARTNER_TABLE_NAME = "DEF_BPARTNER";
+    //business partner locations table
+    public static final String BPARTNER_LOCATION_TABLE_NAME = "DEF_BPARTNERLOCATION";
+
     //column names. Some is general (GEN_) some is particular
     //generic columns must be first and must be created for ALL TABLES
     public static final String GEN_COL_ROWID_NAME = "_id";
@@ -121,6 +126,8 @@ public class DB {
     public static final String REFUEL_COL_UOMVOLCONVERSIONRATE_NAME = "UOMVolumeConversionRate";
     public static final String REFUEL_COL_AMOUNT_NAME = "Amount";
     public static final String REFUEL_COL_AMOUNTENTERED_NAME = "AmountEntered";
+    public static final String REFUEL_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
+    public static final String REFUEL_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
 
     //expense category
     public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
@@ -143,6 +150,8 @@ public class DB {
     public static final String EXPENSE_COL_PRICE_NAME = "Price";
     public static final String EXPENSE_COL_PRICEENTERED_NAME = "PriceEntered";
     public static final String EXPENSE_COL_UOM_ID_NAME = UOM_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
 
     //currency rate
     public static final String CURRENCYRATE_COL_FROMCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_From_ID";
@@ -173,6 +182,18 @@ public class DB {
     public static final String GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME = GPSTRACK_TABLE_NAME + "_ID";
     public static final String GPSTRACKDETAIL_COL_FILE_NAME = "File";
     public static final String GPSTRACKDETAIL_COL_FILEFORMAT_NAME = "Format"; //see StaticValues.gpsTrackFormat...
+    //business partner location
+    public static final String BPARTNER_LOCATION_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
+    public static final String BPARTNER_LOCATION_ADDRESS_NAME = "Address";
+    public static final String BPARTNER_LOCATION_POSTAL_NAME = "Postal";
+    public static final String BPARTNER_LOCATION_CITY_NAME = "City";
+    public static final String BPARTNER_LOCATION_REGION_NAME = "Region";
+    public static final String BPARTNER_LOCATION_COUNTRY_NAME = "Country";
+    public static final String BPARTNER_LOCATION_PHONE_NAME = "Phone";
+    public static final String BPARTNER_LOCATION_PHONE2_NAME = "Phone2";
+    public static final String BPARTNER_LOCATION_FAX_NAME = "Fax";
+    public static final String BPARTNER_LOCATION_EMAIL_NAME = "Email";
+    public static final String BPARTNER_LOCATION_CONTACTPERSON_NAME = "ContactPerson";
 
     //column positions. Some is general (GEN_) some is particular
     //generic columns must be first and must be created for ALL TABLES
@@ -229,6 +250,8 @@ public class DB {
     public static final int REFUEL_COL_UOMVOLCONVERSIONRATE_POS = 21;
     public static final int REFUEL_COL_AMOUNT_POS = 22;
     public static final int REFUEL_COL_AMOUNTENTERED_POS = 23;
+    public static final int REFUEL_COL_BPARTNER_ID_POS = 24;
+    public static final int REFUEL_COL_BPARTNER_LOCATION_ID_POS = 25;
 
      //expense category
     public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
@@ -251,6 +274,8 @@ public class DB {
     public static final int EXPENSE_COL_PRICE_POS = 19;
     public static final int EXPENSE_COL_PRICEENTERED_POS = 20;
     public static final int EXPENSE_COL_UOM_ID_POS = 21;
+    public static final int EXPENSE_COL_BPARTNER_ID_POS = 22;
+    public static final int EXPENSE_COL_BPARTNER_LOCATION_ID_POS = 23;
 
     //currency rate
     public static final int CURRENCYRATE_COL_FROMCURRENCY_ID_POS = 4;
@@ -281,6 +306,18 @@ public class DB {
     public static final int GPSTRACKDETAIL_COL_GPSTRACK_ID_POS = 4;
     public static final int GPSTRACKDETAIL_COL_FILE_POS = 5;
     public static final int GPSTRACKDETAIL_COL_FILEFORMAT_POS = 6;
+    //business partner location
+    public static final int BPARTNER_LOCATION_BPARTNER_ID_POS = 4;
+    public static final int BPARTNER_LOCATION_ADDRESS_POS = 5;
+    public static final int BPARTNER_LOCATION_POSTAL_POS = 6;
+    public static final int BPARTNER_LOCATION_CITY_POS = 7;
+    public static final int BPARTNER_LOCATION_REGION_POS = 8;
+    public static final int BPARTNER_LOCATION_COUNTRY_POS = 9;
+    public static final int BPARTNER_LOCATION_PHONE_POS = 10;
+    public static final int BPARTNER_LOCATION_PHONE2_POS = 11;
+    public static final int BPARTNER_LOCATION_FAX_POS = 12;
+    public static final int BPARTNER_LOCATION_EMAIL_POS = 13;
+    public static final int BPARTNER_LOCATION_CONTACTPERSON_POS = 14;
 
     public static final String[] driverTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         DRIVER_COL_LICENSE_NO_NAME};
@@ -311,7 +348,7 @@ public class DB {
         REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME,
         REFUEL_COL_ISFULLREFUEL_NAME, REFUEL_COL_QUANTITYENTERED_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME, 
         REFUEL_COL_PRICEENTERED_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME,
-        REFUEL_COL_AMOUNT_NAME, REFUEL_COL_AMOUNTENTERED_NAME};
+        REFUEL_COL_AMOUNT_NAME, REFUEL_COL_AMOUNTENTERED_NAME, REFUEL_COL_BPARTNER_ID_NAME, REFUEL_COL_BPARTNER_LOCATION_ID_NAME};
 
     public static final String[] expenseCategoryTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
@@ -322,7 +359,8 @@ public class DB {
         EXPENSE_COL_DATE_NAME, EXPENSE_COL_DOCUMENTNO_NAME, EXPENSE_COL_INDEX_NAME,
         EXPENSE_COL_FROMTABLE_NAME, EXPENSE_COL_FROMRECORD_ID_NAME,
         EXPENSE_COL_AMOUNTENTERED_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME, EXPENSE_COL_CURRENCYRATE_NAME,
-        EXPENSE_COL_QUANTITY_NAME, EXPENSE_COL_PRICE_NAME, EXPENSE_COL_PRICEENTERED_NAME, EXPENSE_COL_UOM_ID_NAME};
+        EXPENSE_COL_QUANTITY_NAME, EXPENSE_COL_PRICE_NAME, EXPENSE_COL_PRICEENTERED_NAME, EXPENSE_COL_UOM_ID_NAME,
+        EXPENSE_COL_BPARTNER_ID_NAME, EXPENSE_COL_BPARTNER_LOCATION_ID_NAME};
 
     public static final String[] currencyRateTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         CURRENCYRATE_COL_FROMCURRENCY_ID_NAME, CURRENCYRATE_COL_TOCURRENCY_ID_NAME,
@@ -339,6 +377,16 @@ public class DB {
     public static final String[] gpsTrackDetailTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, GPSTRACKDETAIL_COL_FILE_NAME, GPSTRACKDETAIL_COL_FILEFORMAT_NAME};
 
+    public static final String[] bpartnerTableColNames =
+        {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME};
+
+    //business partner location
+    public static final String[] bpartnerLocationTableColNames = {
+        GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
+        BPARTNER_LOCATION_BPARTNER_ID_NAME, BPARTNER_LOCATION_ADDRESS_NAME, BPARTNER_LOCATION_POSTAL_NAME,
+        BPARTNER_LOCATION_CITY_NAME, BPARTNER_LOCATION_REGION_NAME, BPARTNER_LOCATION_COUNTRY_NAME, BPARTNER_LOCATION_PHONE_NAME,
+        BPARTNER_LOCATION_PHONE2_NAME, BPARTNER_LOCATION_FAX_NAME, BPARTNER_LOCATION_EMAIL_NAME,
+        BPARTNER_LOCATION_CONTACTPERSON_NAME};
 
     public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
@@ -452,7 +500,9 @@ public class DB {
             + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL, "
             + REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " NUMERIC NULL, "
             + REFUEL_COL_AMOUNT_NAME + " NUMERIC NULL, "
-            + REFUEL_COL_AMOUNTENTERED_NAME + " NUMERIC NULL "
+            + REFUEL_COL_AMOUNTENTERED_NAME + " NUMERIC NULL, "
+            + REFUEL_COL_BPARTNER_ID_NAME + " INTEGER NULL, "
+            + REFUEL_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL "
             + ");";
 
     protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL =
@@ -488,7 +538,9 @@ public class DB {
             + EXPENSE_COL_QUANTITY_NAME + " NUMERIC NULL, "
             + EXPENSE_COL_PRICE_NAME + " NUMERIC NULL, "
             + EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL, "
-            + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL "
+            + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL, "
+            + EXPENSE_COL_BPARTNER_ID_NAME + " INTEGER NULL, "
+            + EXPENSE_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL "
             + ");";
 
 
@@ -541,6 +593,35 @@ public class DB {
             + GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + " INTEGER NOT NULL, "
             + GPSTRACKDETAIL_COL_FILE_NAME + " TEXT NULL, "
             + GPSTRACKDETAIL_COL_FILEFORMAT_NAME + " TEXT NULL "
+            + ");";
+
+    protected static final String BPARTNER_TABLE_CREATE_SQL =
+            "CREATE TABLE " + BPARTNER_TABLE_NAME
+            + " ( "
+            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
+            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
+            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
+            + ");";
+
+    protected static final String BPARTNER_LOCATION_TABLE_CREATE_SQL =
+            "CREATE TABLE " + BPARTNER_LOCATION_TABLE_NAME
+            + " ( "
+            + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
+            + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
+            + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_BPARTNER_ID_NAME + " INTEGER NOT NULL, "
+            + BPARTNER_LOCATION_ADDRESS_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_POSTAL_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_CITY_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_REGION_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_COUNTRY_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_PHONE_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_PHONE2_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_FAX_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_EMAIL_NAME + " TEXT NULL, "
+            + BPARTNER_LOCATION_CONTACTPERSON_NAME + " TEXT NULL "
             + ");";
 
     protected DatabaseHelper mDbHelper = null;
@@ -630,6 +711,7 @@ public class DB {
 
                 //gps track
                 createGPSTrackTables(db);
+                createBPartnerTable(db);
 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
@@ -642,6 +724,12 @@ public class DB {
 //                Log.e(TAG, ex.getMessage());
 //            }
 
+        }
+
+        private void createBPartnerTable(SQLiteDatabase db) throws SQLException {
+            //business partner
+            db.execSQL(BPARTNER_TABLE_CREATE_SQL);
+            db.execSQL(BPARTNER_LOCATION_TABLE_CREATE_SQL);
         }
 
         private void createGPSTrackTables(SQLiteDatabase db) throws SQLException {
@@ -1030,20 +1118,33 @@ public class DB {
 
         private void upgradeDbTo330(SQLiteDatabase db, int oldVersion) throws SQLException {
             String updSql = "";
-            if(oldVersion > 200){
-                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                                " ADD " + EXPENSE_COL_QUANTITY_NAME + " NUMERIC NULL ";
-                db.execSQL(updSql);
-                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                                " ADD " + EXPENSE_COL_PRICE_NAME + " NUMERIC NULL ";
-                db.execSQL(updSql);
-                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                                " ADD " + EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
-                db.execSQL(updSql);
-                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                                " ADD " + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL ";
-                db.execSQL(updSql);
-            }
+            createBPartnerTable(db);
+
+            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_QUANTITY_NAME + " NUMERIC NULL ";
+            db.execSQL(updSql);
+            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_PRICE_NAME + " NUMERIC NULL ";
+            db.execSQL(updSql);
+            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
+            db.execSQL(updSql);
+            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL ";
+            db.execSQL(updSql);
+            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
+            db.execSQL(updSql);
+            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL ";
+            db.execSQL(updSql);
+
+            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                            " ADD " + REFUEL_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
+            db.execSQL(updSql);
+            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                            " ADD " + REFUEL_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL ";
+            db.execSQL(updSql);
         }
 
         private void createExpenseCategory(SQLiteDatabase db) throws SQLException {

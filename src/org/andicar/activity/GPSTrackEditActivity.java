@@ -75,7 +75,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
 
         userCommentAdapter = new ArrayAdapter<String>(GPSTrackEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line,
-                mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
                 mPreferences.getLong("CurrentCar_ID", -1), 30));
         acUserComment.setAdapter(userCommentAdapter);
 

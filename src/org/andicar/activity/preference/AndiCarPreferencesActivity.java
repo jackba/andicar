@@ -30,6 +30,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import java.util.HashMap;
 import java.util.Map;
+import org.andicar.activity.BPartnerListActivity;
 import org.andicar.activity.CarListActivity;
 import org.andicar.activity.CurrencyListActivity;
 import org.andicar.activity.CurrencyRateListActivity;
@@ -119,6 +120,17 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         driverPrefScreen.setTitle(mRes.getString(R.string.PREF_DriverTitle));
         driverPrefScreen.setSummary(mRes.getString(R.string.PREF_DriverSummary));
         carDriverCategory.addPreference(driverPrefScreen);
+
+        //business partners
+        PreferenceCategory bPartnerCategory = new PreferenceCategory(this);
+        bPartnerCategory.setTitle(mRes.getString(R.string.PREF_BPartnersCategoryTitle));
+        prefScreenRoot.addPreference(bPartnerCategory);
+        //partners
+        PreferenceScreen partnersPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        partnersPrefScreen.setIntent(new Intent(this, BPartnerListActivity.class));
+        partnersPrefScreen.setTitle(mRes.getString(R.string.PREF_PartnerTitle));
+        partnersPrefScreen.setSummary(mRes.getString(R.string.PREF_PartnerSummary));
+        bPartnerCategory.addPreference(partnersPrefScreen);
 
         //uom's
         PreferenceCategory uomPrefCategory = new PreferenceCategory(this);

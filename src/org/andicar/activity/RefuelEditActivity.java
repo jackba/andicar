@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
@@ -50,6 +49,8 @@ import org.andicar.utils.AndiCarStatistics;
  */
 public class RefuelEditActivity extends EditActivityBase {
     private AutoCompleteTextView acUserComment;
+    private AutoCompleteTextView acBPartner;
+    private AutoCompleteTextView acAdress;
     private Spinner spnCar;
     private Spinner spnDriver;
     private Spinner spnCurrency;
@@ -77,25 +78,30 @@ public class RefuelEditActivity extends EditActivityBase {
 
     private long mCurrencyId = 0;
     private long carDefaultCurrencyId = 0;
+    private long mCarId = 0;
+    private long mDriverId = 0;
+    private long mExpCategoryId = 0;
+    private long mExpTypeId = 0;
+    private long carDefaultUOMVolumeId = 0;
+    private long mUomVolumeId = 0;
+    private long mBPartnerId = 0;
+    private long mAddressId = 0;
     private String carDefaultCurrencyCode = "";
     private String currencyCode = "";
+    private String carDefaultUOMVolumeCode = "";
     private BigDecimal currencyConversionRate = null;
     private BigDecimal priceEntered = null;
     private BigDecimal priceConverted = null;
     private BigDecimal amountEntered = null;
     private BigDecimal amountConverted = null;
-    private long carDefaultUOMVolumeId = 0;
-    private long mUomVolumeId = 0;
-    private String carDefaultUOMVolumeCode = "";
     private BigDecimal uomVolumeConversionRate= null;
     private BigDecimal baseUomQty = null;
-    private long mCarId = 0;
-    private long mDriverId = 0;
-    private long mExpCategoryId = 0;
-    private long mExpTypeId = 0;
 
     private ArrayAdapter<String> userCommentAdapter;
+    private ArrayAdapter<String> bpartnerNameAdapter;
+    private ArrayAdapter<String> addressAdapter;
     private String operationType;
+
     private int mInsertMode = 0; //0 = price; 1 = amount
     private static int INSERTMODE_PRICE = 0;
     private static int INSERTMODE_AMOUNT = 1;
@@ -123,6 +129,28 @@ public class RefuelEditActivity extends EditActivityBase {
             mExpTypeId = c.getLong(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_POS);
             mUomVolumeId = c.getLong(MainDbAdapter.REFUEL_COL_UOMVOLUMEENTERED_ID_POS);
             mCurrencyId = c.getLong(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_POS);
+            Cursor c2 = null;
+            if(c.getString(MainDbAdapter.REFUEL_COL_BPARTNER_ID_POS) != null
+                    && c.getString(MainDbAdapter.REFUEL_COL_BPARTNER_ID_POS).length() > 0){
+                mBPartnerId = c.getLong(MainDbAdapter.REFUEL_COL_BPARTNER_ID_POS);
+                c2 = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
+                                        MainDbAdapter.GEN_COL_ROWID_NAME + "=" + mBPartnerId, null);
+                if(c2.moveToFirst())
+                    acBPartner.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
+                c2.close();
+
+                if(c.getString(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_POS) != null
+                        && c.getString(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_POS).length() > 0){
+                    mAddressId = c.getLong(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_POS);
+                    c2 = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
+                            MainDbAdapter.bpartnerLocationTableColNames,
+                            MainDbAdapter.GEN_COL_ROWID_NAME + "=" + mAddressId, null);
+                    if(c2.moveToFirst())
+                        acAdress.setText(c2.getString(MainDbAdapter.BPARTNER_LOCATION_ADDRESS_POS));
+                    c2.close();
+                }
+            }
+
             try{
                 currencyConversionRate = new BigDecimal(c.getString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_POS));
                 uomVolumeConversionRate = new BigDecimal(c.getString(MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_POS));
@@ -179,6 +207,9 @@ public class RefuelEditActivity extends EditActivityBase {
 
     private void init() {
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
+        acBPartner = ((AutoCompleteTextView) findViewById( R.id.acBPartner ));
+        acBPartner.setOnFocusChangeListener(vendorChangeListener);
+        acAdress = ((AutoCompleteTextView) findViewById( R.id.acAdress ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
         spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
@@ -245,9 +276,17 @@ public class RefuelEditActivity extends EditActivityBase {
                 MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId, false);
 
         userCommentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
-                mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
                 mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
+        bpartnerNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_TABLE_NAME, null,
+                0, 0));
+        acBPartner.setAdapter(bpartnerNameAdapter);
+        addressAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME,
+                mBPartnerId, 0));
+        acAdress.setAdapter(addressAdapter);
     }
 
     @Override
@@ -347,7 +386,31 @@ public class RefuelEditActivity extends EditActivityBase {
         }
         catch(NumberFormatException e){}
     }
-    
+
+    //change the address autocomplete list when the vendor change
+    private View.OnFocusChangeListener vendorChangeListener = new View.OnFocusChangeListener() {
+
+        public void onFocusChange(View view, boolean hasFocus) {
+            if(!hasFocus){
+                Cursor c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
+                            "UPPER(" + MainDbAdapter.GEN_COL_NAME_NAME + ") = '" + acBPartner.getText().toString().toUpperCase() + "'", null);
+                String bPartnerIdStr = null;
+                if(c.moveToFirst())
+                    bPartnerIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+                c.close();
+                if(bPartnerIdStr != null && bPartnerIdStr.length() > 0)
+                    mBPartnerId = Long.parseLong(bPartnerIdStr);
+                else
+                    mBPartnerId = 0;
+                addressAdapter = new ArrayAdapter(RefuelEditActivity.this, android.R.layout.simple_dropdown_item_1line,
+                        mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME,
+                        mBPartnerId, 0));
+                acAdress.setAdapter(addressAdapter);
+                
+            }
+        }
+    };
+
     private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -359,7 +422,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
+                            mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
                             mCarId, 30));
                     acUserComment.setAdapter(userCommentAdapter);
 
@@ -668,6 +731,54 @@ public class RefuelEditActivity extends EditActivityBase {
             data.put( MainDbAdapter.REFUEL_COL_AMOUNT_NAME, amountConverted.toString());
             data.put( MainDbAdapter.REFUEL_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
             data.put( MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME, currencyConversionRate.toString());
+        }
+
+        if(acBPartner.getText().toString() != null && acBPartner.getText().toString().length() > 0){
+            Cursor c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
+                        "UPPER(" + MainDbAdapter.GEN_COL_NAME_NAME + ") = '" + acBPartner.getText().toString().toUpperCase() + "'", null);
+            String bPartnerIdStr = null;
+            if(c.moveToFirst())
+                bPartnerIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+            c.close();
+            if(bPartnerIdStr != null && bPartnerIdStr.length() > 0){
+                mBPartnerId = Long.parseLong(bPartnerIdStr);
+                data.put(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME, mBPartnerId);
+            }
+            else{
+                ContentValues tmpData = new ContentValues();
+                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acBPartner.getText().toString());
+                mBPartnerId = mDbAdapter.createRecord(MainDbAdapter.BPARTNER_TABLE_NAME, tmpData);
+                if(mBPartnerId >= 0)
+                    data.put(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME, mBPartnerId);
+            }
+
+            if(acAdress.getText().toString() != null && acAdress.getText().toString().length() > 0){
+                c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
+                            MainDbAdapter.bpartnerLocationTableColNames,
+                            "UPPER(" + MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME + ") = '" + acAdress.getText().toString().toUpperCase() + "' " +
+                                "AND " + MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + "=" + mBPartnerId, null);
+                String addressIdStr = null;
+                if(c.moveToFirst())
+                    addressIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+                c.close();
+                if(addressIdStr != null && addressIdStr.length() > 0)
+                    data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, Long.parseLong(addressIdStr));
+                else{
+                    ContentValues tmpData = new ContentValues();
+                    tmpData.put(MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME, mBPartnerId);
+                    tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acAdress.getText().toString());
+                    tmpData.put(MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME, acAdress.getText().toString());
+                    long newAddressId = mDbAdapter.createRecord(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, tmpData);
+                    if(newAddressId >= 0)
+                        data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, newAddressId);
+                }
+            }
+            else
+                data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, (String)null);
+        }
+        else{
+            data.put(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME, (String)null);
+            data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, (String)null);
         }
 
         if( operationType.equals("N") ) {

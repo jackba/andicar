@@ -177,7 +177,7 @@ public class GPSTrackController extends BaseActivity {
                     aaUserComment = null;
                     aaUserComment = new ArrayAdapter<String>(GPSTrackController.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.GPSTRACK_TABLE_NAME,
+                            mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
                             spnCar.getSelectedItemId(), 30));
                     acUserComment.setAdapter(aaUserComment);
                     mCarId = spnCar.getSelectedItemId();

@@ -165,7 +165,7 @@ public class MileageEditActivity extends EditActivityBase {
                 mExpTypeId, false);
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line,
-                mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null, mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
 
         if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX) {
@@ -473,7 +473,7 @@ public class MileageEditActivity extends EditActivityBase {
             userCommentAdapter = null;
             userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                     android.R.layout.simple_dropdown_item_1line,
-                    mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME, mCarId, 30));
+                    mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null, mCarId, 30));
             acUserComment.setAdapter(userCommentAdapter);
         }
 
@@ -503,7 +503,7 @@ public class MileageEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.MILEAGE_TABLE_NAME,
+                            mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null,
                             mCarId, 30));
                     acUserComment.setAdapter(userCommentAdapter);
                     mStartIndex = BigDecimal.ZERO;
