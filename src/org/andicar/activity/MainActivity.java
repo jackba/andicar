@@ -104,6 +104,7 @@ public class MainActivity extends Activity {
 
     private boolean exitResume = false;
     private String appVersion;
+    private String dbVersion;
     private boolean showMileageZone = true;
     private boolean showGPSTrackZone = true;
     private boolean showRefuelZone = true;
@@ -127,7 +128,6 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
@@ -140,8 +140,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main_activity);
         mainContext = this;
         reportDb = new ReportDbAdapter(mainContext, null, null);
+
         try {
             appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            dbVersion = reportDb.getVersion() + "";
+
         }
         catch(NameNotFoundException ex) {
             appVersion = "N/A";
@@ -574,7 +577,7 @@ public class MainActivity extends Activity {
         showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
 
         CharSequence abt = mRes.getString(R.string.LM_MAIN_ACTIVITY_SHORTABOUT);
-        CharSequence versionInfo = " " + appVersion;
+        CharSequence versionInfo = " " + appVersion + " (DBv: " + dbVersion + ")";
 
         ((TextView)findViewById(R.id.tvShortAboutLbl)).setText(Html.fromHtml(abt.toString() + versionInfo.toString()));
 
