@@ -949,16 +949,23 @@ public class DB {
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
             createExpenseCategory(db);
-            String updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME
-                    + " ADD " + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
-            db.execSQL(updateSql);
-            updateSql = "UPDATE " + REFUEL_TABLE_NAME
-                    + " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
-            db.execSQL(updateSql);
-
-            db.execSQL("ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N' ");
-            db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX3 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
-            db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
+            String updateSql;
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_EXPENSECATEGORY_NAME)){
+                updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME
+                        + " ADD " + REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
+                db.execSQL(updateSql);
+                updateSql = "UPDATE " + REFUEL_TABLE_NAME
+                        + " SET " + REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
+                db.execSQL(updateSql);
+            }
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME)){
+                db.execSQL("ALTER TABLE " + REFUEL_TABLE_NAME +
+                        " ADD " + REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N' ");
+                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX3 " +
+                        "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
+            }
+            db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " +
+                    "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
             createExpenses(db, true);
         }
 
@@ -966,127 +973,264 @@ public class DB {
             String updSql = "";
 
             createCurrencyRateTable(db);
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_QUANTITYENTERED_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " INTEGER NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_PRICEENTERED_NAME  + " NUMERIC NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD " + REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
-
-            updSql = "UPDATE " + REFUEL_TABLE_NAME +
-                        " SET " +
-                            REFUEL_COL_QUANTITYENTERED_NAME + " = " + REFUEL_COL_QUANTITY_NAME + ", " +
-                            REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " = " + REFUEL_COL_UOMVOLUME_ID_NAME + ", " +
-                            REFUEL_COL_PRICEENTERED_NAME + " = " + REFUEL_COL_PRICE_NAME + ", " +
-                            REFUEL_COL_CURRENCYENTERED_ID_NAME + " = " + REFUEL_COL_CURRENCY_ID_NAME + ", " +
-                            REFUEL_COL_CURRENCYRATE_NAME + " = 1, " +
-                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
-            db.execSQL(updSql);
-
-            updSql = "UPDATE " + REFUEL_TABLE_NAME +
-                        " SET " +
-                            REFUEL_COL_UOMVOLUME_ID_NAME + " = " +
-                                "(SELECT " + CAR_COL_UOMVOLUME_ID_NAME + " " +
-                                "FROM " + CAR_TABLE_NAME + " " +
-                                "WHERE " + GEN_COL_ROWID_NAME + " = " +
-                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + ") ";
-            db.execSQL(updSql);
-
-            updSql = "UPDATE " + REFUEL_TABLE_NAME +
-                        " SET " +
-                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = " +
-                                "(SELECT " + UOM_CONVERSION_COL_RATE_NAME + " " +
-                                "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
-                                "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " +
-                                                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
-                                        "AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " +
-                                                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "), " +
-                            REFUEL_COL_QUANTITY_NAME + " = " +
-                                        "ROUND( " + REFUEL_COL_QUANTITYENTERED_NAME + " * " +
-                                            "(SELECT " + UOM_CONVERSION_COL_RATE_NAME + " " +
-                                            "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
-                                            "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " +
-                                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
-                                                    "AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " +
-                                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "), 2 ) " +
-                      "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " <> " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME;
-            db.execSQL(updSql);
-
-            updSql = "UPDATE " + REFUEL_TABLE_NAME +
-                        " SET " +
-                            REFUEL_COL_CURRENCY_ID_NAME + " = " +
-                                "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
-                                " FROM " + CAR_TABLE_NAME +
-                                " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
-                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
-                            ") ";
-            db.execSQL(updSql);
-
-            Cursor c = db.rawQuery("SELECT COUNT(*) " +
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                        " ADD " + REFUEL_COL_QUANTITYENTERED_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_QUANTITYENTERED_NAME + " = " + REFUEL_COL_QUANTITY_NAME;
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                        " ADD " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " = " + REFUEL_COL_UOMVOLUME_ID_NAME;
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_UOMVOLUME_ID_NAME + " = " +
+                                    "(SELECT " + CAR_COL_UOMVOLUME_ID_NAME + " " +
+                                    "FROM " + CAR_TABLE_NAME + " " +
+                                    "WHERE " + GEN_COL_ROWID_NAME + " = " +
+                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + ") ";
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                        " ADD " + REFUEL_COL_PRICEENTERED_NAME  + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_PRICEENTERED_NAME + " = " + REFUEL_COL_PRICE_NAME;
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                        " ADD " + REFUEL_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_CURRENCYENTERED_ID_NAME + " = " + REFUEL_COL_CURRENCY_ID_NAME;
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_CURRENCY_ID_NAME + " = " +
+                                    "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
+                                    " FROM " + CAR_TABLE_NAME +
+                                    " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
+                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
+                                ") ";
+                db.execSQL(updSql);
+                Cursor c = db.rawQuery("SELECT COUNT(*) " +
                                                 "FROM " + REFUEL_TABLE_NAME + " " +
                                                 "WHERE " + REFUEL_COL_CURRENCY_ID_NAME + " <> " + REFUEL_COL_CURRENCYENTERED_ID_NAME, null);
-            if(c.moveToFirst() && c.getInt(0) > 0){
-                SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-                SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putString("UpdateMsg", "During the upgrade process we found foreign currencies in refuels.\n" +
-                                                "Please review and correct the currency conversion rates in your refuels.");
-                editor.commit();
+                if(c.moveToFirst() && c.getInt(0) > 0){
+                    SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+                    SharedPreferences.Editor editor = mPreferences.edit();
+                    editor.putString("UpdateMsg", "During the upgrade process we found foreign currencies in refuels.\n" +
+                                                    "Please review and correct the currency conversion rates in your refuels.");
+                    editor.commit();
+                }
+                c.close();
             }
-            c.close();
-
-            if(oldVersion == 200){
-                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD " + EXPENSE_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYRATE_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                        " ADD " + REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
                 db.execSQL(updSql);
-
-                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD " + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_CURRENCYRATE_NAME + " = 1 ";
                 db.execSQL(updSql);
-
-                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD " + EXPENSE_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
+            }
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                        " ADD " + REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = " +
+                                    "(SELECT " + UOM_CONVERSION_COL_RATE_NAME + " " +
+                                    "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
+                                    "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " +
+                                                    sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
+                                            "AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " +
+                                                    sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "), " +
+                                REFUEL_COL_QUANTITY_NAME + " = " +
+                                            "ROUND( " + REFUEL_COL_QUANTITYENTERED_NAME + " * " +
+                                                "(SELECT " + UOM_CONVERSION_COL_RATE_NAME + " " +
+                                                "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
+                                                "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " +
+                                                                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
+                                                        "AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " +
+                                                                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "), 2 ) " +
+                          "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " <> " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME;
                 db.execSQL(updSql);
             }
 
-            updSql = "UPDATE " + EXPENSE_TABLE_NAME +
-                        " SET " +
-                            EXPENSE_COL_AMOUNTENTERED_NAME + " = " + EXPENSE_COL_AMOUNT_NAME + ", " +
-                            EXPENSE_COL_CURRENCYENTERED_ID_NAME + " = " + EXPENSE_COL_CURRENCY_ID_NAME + ", " +
-                            EXPENSE_COL_CURRENCYRATE_NAME + " = 1";
-            db.execSQL(updSql);
+//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+//                        " SET " +
+//                            REFUEL_COL_QUANTITYENTERED_NAME + " = " + REFUEL_COL_QUANTITY_NAME + ", " +
+//                            REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " = " + REFUEL_COL_UOMVOLUME_ID_NAME + ", " +
+//                            REFUEL_COL_PRICEENTERED_NAME + " = " + REFUEL_COL_PRICE_NAME + ", " +
+//                            REFUEL_COL_CURRENCYENTERED_ID_NAME + " = " + REFUEL_COL_CURRENCY_ID_NAME + ", " +
+//                            REFUEL_COL_CURRENCYRATE_NAME + " = 1, " +
+//                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
+//            db.execSQL(updSql);
 
-            updSql = "UPDATE " + EXPENSE_TABLE_NAME +
-                        " SET " +
-                            EXPENSE_COL_CURRENCY_ID_NAME + " = " +
-                                "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
-                                " FROM " + CAR_TABLE_NAME +
-                                " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
-                                        sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) +
-                            ") ";
-            db.execSQL(updSql);
+//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+//                        " SET " +
+//                            REFUEL_COL_UOMVOLUME_ID_NAME + " = " +
+//                                "(SELECT " + CAR_COL_UOMVOLUME_ID_NAME + " " +
+//                                "FROM " + CAR_TABLE_NAME + " " +
+//                                "WHERE " + GEN_COL_ROWID_NAME + " = " +
+//                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + ") ";
+//            db.execSQL(updSql);
 
-            c = db.rawQuery("SELECT COUNT(*) " +
-                                                "FROM " + EXPENSE_TABLE_NAME + " " +
-                                                "WHERE " + EXPENSE_COL_CURRENCY_ID_NAME + " <> " + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " " +
-                                                        "AND COALESCE(" + EXPENSE_COL_FROMTABLE_NAME + ", 'X') <> '" + StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "'", null);
-            if(c.moveToFirst() && c.getInt(0) > 0){
-                SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-                String updateMsg = mPreferences.getString("UpdateMsg", null);
-                if(updateMsg != null)
-                    updateMsg = "During the upgrade process we found foreign currencies in refuels and expenses.\n" +
-                                                "Please review and correct the currency conversion rates in your refuels and expenses.";
-                else
-                    updateMsg = "During the upgrade process we found foreign currencies in expenses.\n" +
-                                                "Please review and correct the currency conversion rates in your expenses.";
+//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+//                        " SET " +
+//                            REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = " +
+//                                "(SELECT " + UOM_CONVERSION_COL_RATE_NAME + " " +
+//                                "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
+//                                "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " +
+//                                                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
+//                                        "AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " +
+//                                                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "), " +
+//                            REFUEL_COL_QUANTITY_NAME + " = " +
+//                                        "ROUND( " + REFUEL_COL_QUANTITYENTERED_NAME + " * " +
+//                                            "(SELECT " + UOM_CONVERSION_COL_RATE_NAME + " " +
+//                                            "FROM " + UOM_CONVERSION_TABLE_NAME + " " +
+//                                            "WHERE " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " +
+//                                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
+//                                                    "AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " +
+//                                                            sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + "), 2 ) " +
+//                      "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " <> " + REFUEL_COL_UOMVOLUMEENTERED_ID_NAME;
+//            db.execSQL(updSql);
 
-                SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putString("UpdateMsg", updateMsg);
-                editor.commit();
+//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+//                        " SET " +
+//                            REFUEL_COL_CURRENCY_ID_NAME + " = " +
+//                                "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
+//                                " FROM " + CAR_TABLE_NAME +
+//                                " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
+//                                        sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
+//                            ") ";
+//            db.execSQL(updSql);
+
+//            Cursor c = db.rawQuery("SELECT COUNT(*) " +
+//                                                "FROM " + REFUEL_TABLE_NAME + " " +
+//                                                "WHERE " + REFUEL_COL_CURRENCY_ID_NAME + " <> " + REFUEL_COL_CURRENCYENTERED_ID_NAME, null);
+//            if(c.moveToFirst() && c.getInt(0) > 0){
+//                SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+//                SharedPreferences.Editor editor = mPreferences.edit();
+//                editor.putString("UpdateMsg", "During the upgrade process we found foreign currencies in refuels.\n" +
+//                                                "Please review and correct the currency conversion rates in your refuels.");
+//                editor.commit();
+//            }
+//            c.close();
+
+//            if(oldVersion == 200){
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNTENTERED_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + EXPENSE_TABLE_NAME +
+                            " SET " +
+                                EXPENSE_COL_AMOUNTENTERED_NAME + " = " + EXPENSE_COL_AMOUNT_NAME;
+                db.execSQL(updSql);
             }
-            c.close();
+
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + EXPENSE_TABLE_NAME +
+                            " SET " +
+                                EXPENSE_COL_CURRENCYENTERED_ID_NAME + " = " + EXPENSE_COL_CURRENCY_ID_NAME;
+                db.execSQL(updSql);
+                updSql = "UPDATE " + EXPENSE_TABLE_NAME +
+                            " SET " +
+                                EXPENSE_COL_CURRENCY_ID_NAME + " = " +
+                                    "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
+                                    " FROM " + CAR_TABLE_NAME +
+                                    " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
+                                            sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) +
+                                ") ";
+                db.execSQL(updSql);
+                Cursor c = db.rawQuery("SELECT COUNT(*) " +
+                                                    "FROM " + EXPENSE_TABLE_NAME + " " +
+                                                    "WHERE " + EXPENSE_COL_CURRENCY_ID_NAME + " <> " + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " " +
+                                                            "AND COALESCE(" + EXPENSE_COL_FROMTABLE_NAME + ", 'X') <> '" + StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "'", null);
+                if(c.moveToFirst() && c.getInt(0) > 0){
+                    SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+                    String updateMsg = mPreferences.getString("UpdateMsg", null);
+                    if(updateMsg != null)
+                        updateMsg = "During the upgrade process we found foreign currencies in refuels and expenses.\n" +
+                                                    "Please review and correct the currency conversion rates in your refuels and expenses.";
+                    else
+                        updateMsg = "During the upgrade process we found foreign currencies in expenses.\n" +
+                                                    "Please review and correct the currency conversion rates in your expenses.";
+
+                    SharedPreferences.Editor editor = mPreferences.edit();
+                    editor.putString("UpdateMsg", updateMsg);
+                    editor.commit();
+                }
+                c.close();
+            }
+
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYRATE_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                            " ADD " + EXPENSE_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + EXPENSE_TABLE_NAME +
+                            " SET " +
+                                EXPENSE_COL_CURRENCYRATE_NAME + " = 1";
+                db.execSQL(updSql);
+            }
+
+//            updSql = "UPDATE " + EXPENSE_TABLE_NAME +
+//                        " SET " +
+//                            EXPENSE_COL_AMOUNTENTERED_NAME + " = " + EXPENSE_COL_AMOUNT_NAME + ", " +
+//                            EXPENSE_COL_CURRENCYENTERED_ID_NAME + " = " + EXPENSE_COL_CURRENCY_ID_NAME + ", " +
+//                            EXPENSE_COL_CURRENCYRATE_NAME + " = 1";
+//            db.execSQL(updSql);
+
+//            updSql = "UPDATE " + EXPENSE_TABLE_NAME +
+//                        " SET " +
+//                            EXPENSE_COL_CURRENCY_ID_NAME + " = " +
+//                                "(SELECT " + CAR_COL_CURRENCY_ID_NAME +
+//                                " FROM " + CAR_TABLE_NAME +
+//                                " WHERE " + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " = " +
+//                                        sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) +
+//                            ") ";
+//            db.execSQL(updSql);
+
+//            c = db.rawQuery("SELECT COUNT(*) " +
+//                                                "FROM " + EXPENSE_TABLE_NAME + " " +
+//                                                "WHERE " + EXPENSE_COL_CURRENCY_ID_NAME + " <> " + EXPENSE_COL_CURRENCYENTERED_ID_NAME + " " +
+//                                                        "AND COALESCE(" + EXPENSE_COL_FROMTABLE_NAME + ", 'X') <> '" + StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME + "'", null);
+//            if(c.moveToFirst() && c.getInt(0) > 0){
+//                SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+//                String updateMsg = mPreferences.getString("UpdateMsg", null);
+//                if(updateMsg != null)
+//                    updateMsg = "During the upgrade process we found foreign currencies in refuels and expenses.\n" +
+//                                                "Please review and correct the currency conversion rates in your refuels and expenses.";
+//                else
+//                    updateMsg = "During the upgrade process we found foreign currencies in expenses.\n" +
+//                                                "Please review and correct the currency conversion rates in your expenses.";
+//
+//                SharedPreferences.Editor editor = mPreferences.edit();
+//                editor.putString("UpdateMsg", updateMsg);
+//                editor.commit();
+//            }
+//            c.close();
         }
 
         private void upgradeDbTo300(SQLiteDatabase db, int oldVersion) throws SQLException {
@@ -1102,50 +1246,94 @@ public class DB {
 
         private void upgradeDbTo310(SQLiteDatabase db, int oldVersion) throws SQLException {
             String updSql = "";
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
-                            " ADD " + REFUEL_COL_AMOUNT_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
-                            " ADD " + REFUEL_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_AMOUNT_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                                " ADD " + REFUEL_COL_AMOUNT_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_AMOUNT_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME +
+                                    " * " + REFUEL_COL_PRICE_NAME;
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_AMOUNTENTERED_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                                " ADD " + REFUEL_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+                updSql = "UPDATE " + REFUEL_TABLE_NAME +
+                            " SET " +
+                                REFUEL_COL_AMOUNTENTERED_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME +
+                                    " * " + REFUEL_COL_PRICEENTERED_NAME;
+                db.execSQL(updSql);
+            }
 
-            updSql = "UPDATE " + REFUEL_TABLE_NAME +
-                        " SET " +
-                            REFUEL_COL_AMOUNT_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICE_NAME + ", " +
-                            REFUEL_COL_AMOUNTENTERED_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICEENTERED_NAME;
-            db.execSQL(updSql);
+//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
+//                        " SET " +
+//                            REFUEL_COL_AMOUNT_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICE_NAME + ", " +
+//                            REFUEL_COL_AMOUNTENTERED_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICEENTERED_NAME;
+//            db.execSQL(updSql);
         }
 
         private void upgradeDbTo330(SQLiteDatabase db, int oldVersion) throws SQLException {
             String updSql = "";
             createBPartnerTable(db);
 
-            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                            " ADD " + EXPENSE_COL_QUANTITY_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                            " ADD " + EXPENSE_COL_PRICE_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                            " ADD " + EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                            " ADD " + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL ";
-            db.execSQL(updSql);
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_QUANTITY_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_QUANTITY_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_PRICE_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_PRICE_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_PRICEENTERED_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_UOM_ID_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+            }
 
-            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                            " ADD " + EXPENSE_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
-                            " ADD " + EXPENSE_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL ";
-            db.execSQL(updSql);
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_BPARTNER_ID_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_BPARTNER_LOCATION_ID_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+            }
 
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
-                            " ADD " + REFUEL_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
-            db.execSQL(updSql);
-            updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
-                            " ADD " + REFUEL_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL ";
-            db.execSQL(updSql);
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_BPARTNER_ID_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                                " ADD " + REFUEL_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_BPARTNER_LOCATION_ID_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                                " ADD " + REFUEL_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+            }
+        }
+
+        private boolean columnExists(SQLiteDatabase db, String table, String column){
+            String testSql =
+                    "SELECT " + column +
+                    " FROM " + table +
+                    " WHERE 1=2";
+            try{
+                db.rawQuery(testSql, null);
+                return true;
+            }
+            catch(SQLiteException e){
+                return false;
+            }
         }
 
         private void createExpenseCategory(SQLiteDatabase db) throws SQLException {
