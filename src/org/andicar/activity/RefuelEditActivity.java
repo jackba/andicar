@@ -598,9 +598,9 @@ public class RefuelEditActivity extends EditActivityBase {
                 }
             }
             catch(NumberFormatException e){
-                if(isSendCrashReport)
-                    AndiCarStatistics.sendFlurryError("RefuelError",
-                            "NFE1: qtyStr = " + qtyStr + "; priceStr = " + userInputStr, this.toString());
+//                if(isSendCrashReport)
+//                    AndiCarStatistics.sendFlurryError("RefuelError",
+//                            "NFE1: qtyStr = " + qtyStr + "; priceStr = " + userInputStr, this.toString());
             }
         }
     }
