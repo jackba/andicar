@@ -76,6 +76,10 @@ public class MainDbAdapter extends DB
 
     }
 
+    public int getVersion(){
+        return mDb.getVersion();
+    }
+
     /**
      * Create a new record in the given table
      * @param tableName
