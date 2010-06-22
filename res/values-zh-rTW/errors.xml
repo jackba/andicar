@@ -60,4 +60,8 @@
     <string name="ERR_039">"此司機不能被刪除，因為仍在支出項目中被使用。"</string>
     <string name="ERR_040">"此汽車不能被刪除，因為仍在支出項目中被使用。"</string>
     <string name="ERR_041">"此支出類型不能被刪除，因為仍在支出項目中被使用。"</string>
+    <string name="ERR_042">"此搭檔不能被刪除，因為仍在燃料項目中被使用。"</string>
+    <string name="ERR_043">"此搭檔不能被刪除，因為仍在支出項目中被使用。"</string>
+    <string name="ERR_044">"此定位不能被刪除，因為仍在燃料項目中被使用。"</string>
+    <string name="ERR_045">"此定位不能被刪除，因為仍在支出項目中被使用。"</string>
 </resources>

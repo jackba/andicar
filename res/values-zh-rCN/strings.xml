@@ -59,6 +59,9 @@
     <string name="APP_Activity_GPSTrackController">"GPS 追踪控制"</string>
     <string name="APP_Activity_GPSTrackEdit">"编辑GPS追踪"</string>
     <string name="APP_Activity_GPSTrackList">"GPS 追踪"</string>
+    <string name="APP_Activity_BPartnerList">"搭档"</string>
+    <string name="APP_Activity_BPartnerEdit">"编辑搭档，位置"</string>
+    <string name="APP_Activity_BPartnerLocationEdit">"编辑位置"</string>
 
     <string name="GEN_OK">"确定"</string>
     <string name="GEN_CANCEL">"取消"</string>
@@ -88,13 +91,24 @@
     <string name="GEN_QuantityLabel">"值："</string>
     <string name="GEN_PriceLabel">"价格"</string>
     <string name="GEN_AmountLabel">"合计"</string>
-    <string name="GEN_ConvertionRateLabel">"转换率："</string>
+    <string name="GEN_ConversionRateLabel">"比率："</string>
     <string name="GEN_ConvertedAmountLabel">"转换总额 [%1]"</string>
     <string name="GEN_ConvertedPriceLabel">"价格 [%1]"</string>
     <string name="GEN_SelectedMessage">" 选中的"</string>
     <string name="GEN_CurrencyLabel">"货币"</string>
     <string name="GEN_Required">"必需的"</string>
-
+    <string name="GEN_BPartner">"产商："</string>
+    <string name="GEN_Address">"地址："</string>
+    <string name="GEN_BPartnerAdressInfo">"完整的信息位于 首选项 -&gt; 搭档"</string>
+    <string name="GEN_City">"城市："</string>
+    <string name="GEN_Region">"地区："</string>
+    <string name="GEN_Country">"国家："</string>
+    <string name="GEN_Contact">"联系人："</string>
+    <string name="GEN_Phone">"电话："</string>
+    <string name="GEN_Phone2">"电话2："</string>
+    <string name="GEN_Fax">"传真："</string>
+    <string name="GEN_Email">"Email："</string>
+    <string name="GEN_Postal">"邮寄："</string>
 
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
@@ -232,6 +246,8 @@
     <string name="GPSTrackShowOnMapMenu_MapMode">"地图模式"</string>
     <string name="GPSTrackShowOnMapMenu_SatelliteMode">"卫星模式"</string>
 
+    <string name="BPartnerEditActivity_LocationsHeaderCaption">"定位"</string>
+
     <string name="PREF_UOMCategoryTitle">"度量单位"</string>
     <string name="PREF_ExpenseCategoryTitle">"支出"</string>
     <string name="PREF_ExpenseTypeCategoryTitle">"支出类型"</string>
@@ -241,10 +257,8 @@
     <string name="PREF_CarSummary">"添加、删除、修改汽车。\n选中当前汽车。"</string>
     <string name="PREF_DriverTitle">"司机"</string>
     <string name="PREF_DriverSummary">"添加、删除、修改司机。\n选中当前司机。"</string>
-    <string name="PREF_UOMLengthTitle">"距离的度量单位"</string>
-    <string name="PREF_UOMLengthSummary">"添加、删除、修改距离的度量单位"</string>
-    <string name="PREF_UOMVolumeTitle">"容量的度量单位"</string>
-    <string name="PREF_UOMVolumeSummary">"添加、删除、修改容量的度量单位"</string>
+    <string name="PREF_UOMTitle">"度量单位"</string>
+    <string name="PREF_UOMSummary">"添加、删除、修改度量单位"</string>
     <string name="PREF_UOMConversionTitle">"度量单位转换"</string>
     <string name="PREF_UOMConversionSummary">"添加、删除、修改转换的度量单位"</string>
     <string name="PREF_CurrencyTitle">"货币"</string>
@@ -267,6 +281,10 @@
     <string name="PREF_SendCrashReportsTitle">"崩溃报告"</string>
     <string name="PREF_SendCrashReportsSummary">"匿名发送崩溃报告，以帮助开发者。"</string>
     <string name="PREF_MainScreen">"定制你的主界面"</string>
+    <string name="PREF_BPartnersCategoryTitle">"搭档和定位"</string>
+    <string name="PREF_PartnerTitle">"搭档"</string>
+    <string name="PREF_PartnerSummary">"添加、删除、修改和定位"</string>
+
     <string name="PREFMainScreen_ZonesLabel">"已存在的区域："</string>
     <string name="PREFGPSTrack_FileFormatTitle">"文件格式"</string>
     <string name="PREFGPSTrack_FileFormatSummary">"选择追踪记录要是使用的文件格式"</string>
