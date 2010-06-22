@@ -210,7 +210,6 @@
                     android:id="@+id/tvContactLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
                     android:text="@string/GEN_Contact"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
@@ -233,7 +232,6 @@
                     android:id="@+id/tvPhoneLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
                     android:text="@string/GEN_Phone"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
@@ -244,6 +242,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/white_background"
+                    android:inputType="phone"
                     />
             </LinearLayout>
             <LinearLayout
@@ -256,7 +255,6 @@
                     android:id="@+id/tvPhoneLabel2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
                     android:text="@string/GEN_Phone2"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
@@ -267,6 +265,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/white_background"
+                    android:inputType="phone"
                     />
             </LinearLayout>
             <LinearLayout
@@ -279,7 +278,6 @@
                     android:id="@+id/tvEmailLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
                     android:text="@string/GEN_Email"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
@@ -292,17 +290,46 @@
                     android:background="@drawable/white_background"
                     />
             </LinearLayout>
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <ImageButton
+                    android:id="@+id/btnCallPhone1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/btn_background_selector"
+                    android:src="@drawable/icon_phone24x24_1"
+                    />
+                <ImageButton
+                    android:id="@+id/btnCallPhone2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal ="true"
+                    android:background="@drawable/btn_background_selector"
+                    android:src="@drawable/icon_phone24x24_2"
+                    />
+                <ImageButton
+                    android:id="@+id/btnEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/btn_background_selector"
+                    android:src="@drawable/icon_mail24x24"
+                    />
+            </RelativeLayout>
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 >
                 <TextView
                     android:id="@+id/tvFaxLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
                     android:text="@string/GEN_Fax"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
@@ -313,6 +340,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/white_background"
+                    android:inputType="phone"
                     />
             </LinearLayout>
             <TextView

@@ -174,6 +174,10 @@ public class MainDbAdapter extends DB
                         content.getAsString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME));
                 expenseContent.put(MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME, StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME);
                 expenseContent.put(MainDbAdapter.EXPENSE_COL_FROMRECORD_ID_NAME, retVal);
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_BPARTNER_ID_NAME,
+                        content.getAsString(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME));
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_BPARTNER_LOCATION_ID_NAME,
+                        content.getAsString(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME));
                 mDb.insertOrThrow( MainDbAdapter.EXPENSE_TABLE_NAME, null, expenseContent);
             }
         }
@@ -323,6 +327,10 @@ public class MainDbAdapter extends DB
                             expenseContent.put(MainDbAdapter.EXPENSE_COL_DOCUMENTNO_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_NAME));
                             expenseContent.put(MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME, "Refuel");
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_BPARTNER_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_BPARTNER_LOCATION_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME));
                             mDb.update( MainDbAdapter.EXPENSE_TABLE_NAME, expenseContent, GEN_COL_ROWID_NAME + "=" + expenseId, null );
                         }
                     }

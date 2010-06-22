@@ -944,7 +944,7 @@ public class DB {
                 upgradeDbTo330(db, oldVersion);
             }
             
-//            upgradeDbTo310(db, oldVersion);
+//            upgradeDbTo330(db, oldVersion);
         }
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
@@ -1132,6 +1132,7 @@ public class DB {
             updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
                             " ADD " + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL ";
             db.execSQL(updSql);
+
             updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
                             " ADD " + EXPENSE_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
             db.execSQL(updSql);

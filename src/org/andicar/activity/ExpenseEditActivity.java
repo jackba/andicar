@@ -460,7 +460,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             llConversionRateZone.setVisibility(View.VISIBLE);
             tvConvertedAmountLabel.setText((mResource.getString(R.string.GEN_ConvertedAmountLabel))
                     .replace("[%1]", carDefaultCurrencyCode) + " = ");
-            etConversionRate.setTag(mResource.getString(R.string.GEN_ConvertionRateLabel));
+            etConversionRate.setTag(mResource.getString(R.string.GEN_ConversionRateLabel));
         }
         else{
             etConversionRate.setTag(null);
