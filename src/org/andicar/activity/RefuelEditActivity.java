@@ -632,7 +632,7 @@ public class RefuelEditActivity extends EditActivityBase {
         if(visible){
             llConversionRateZone.setVisibility(View.VISIBLE);
             etConversionRate.setVisibility(View.VISIBLE);
-            etConversionRate.setTag(mResource.getString(R.string.GEN_ConvertionRateLabel));
+            etConversionRate.setTag(mResource.getString(R.string.GEN_ConversionRateLabel));
             tvConversionRateLabel.setVisibility(View.VISIBLE);
 
         }else{

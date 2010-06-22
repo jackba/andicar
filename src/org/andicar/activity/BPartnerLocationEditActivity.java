@@ -19,13 +19,19 @@
 
 package org.andicar.activity;
 
+import android.app.PendingIntent;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.gsm.SmsManager;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
 
@@ -47,6 +53,11 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
     private AutoCompleteTextView acContact = null;
     private AutoCompleteTextView acEmail = null;
     private CheckBox ckIsActive = null;
+    private ImageButton btnCallPhone1;
+    private ImageButton btnCallPhone2;
+//    private ImageButton btnSms1;
+//    private ImageButton btnSms2;
+    private ImageButton btnEmail;
 
     private long mBPartnerId = -1;
     private ArrayAdapter<String> cityAdapter;
@@ -138,6 +149,16 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
         acCountry = (AutoCompleteTextView) findViewById( R.id.acCountry );
         acContact = (AutoCompleteTextView) findViewById( R.id.acContact );
         acEmail = (AutoCompleteTextView) findViewById( R.id.acEmail );
+        btnCallPhone1 = (ImageButton)findViewById(R.id.btnCallPhone1);
+        btnCallPhone1.setOnClickListener(onBtnClickListener);
+        btnCallPhone2 = (ImageButton)findViewById(R.id.btnCallPhone2);
+        btnCallPhone2.setOnClickListener(onBtnClickListener);
+//        btnSms1 = (ImageButton)findViewById(R.id.btnSms1);
+//        btnSms1.setOnClickListener(onBtnClickListener);
+//        btnSms2 = (ImageButton)findViewById(R.id.btnSms2);
+//        btnSms2.setOnClickListener(onBtnClickListener);
+        btnEmail = (ImageButton)findViewById(R.id.btnEmail);
+        btnEmail.setOnClickListener(onBtnClickListener);
     }
 
     private void initControls(){
@@ -248,4 +269,50 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
         setContentView(R.layout.bpartner_location_edit_activity);
     }
 
+    protected View.OnClickListener onBtnClickListener =
+            new View.OnClickListener()
+                {
+                    public void onClick( View v )
+                    {
+                        Intent actionIntent;
+                        if(v.getId() == R.id.btnCallPhone1 &&
+                                    acPhone1.getText().toString() != null && acPhone1.getText().toString().length() > 0){
+
+                            startActivity(new Intent(Intent.ACTION_CALL,
+                                    Uri.parse("tel:" + acPhone1.getText().toString())));
+                        }
+//                        else if(v.getId() == R.id.btnSms1 &&
+//                                    acPhone1.getText().toString() != null && acPhone1.getText().toString().length() > 0){
+//                            actionIntent = new Intent(Intent.ACTION_VIEW,
+//                                    Uri.parse("smsto:" + acPhone1.getText().toString()));
+//                            actionIntent.putExtra(android.content.Intent.EXTRA_PHONE_NUMBER, acPhone1.getText().toString());
+//                            startActivity(actionIntent);
+//                        }
+                        else if(v.getId() == R.id.btnCallPhone2 &&
+                                    acPhone2.getText().toString() != null && acPhone2.getText().toString().length() > 0){
+
+                            startActivity(new Intent(Intent.ACTION_CALL,
+                                    Uri.parse("tel:" + acPhone2.getText().toString())));
+                        }
+//                        else if(v.getId() == R.id.btnSms2 &&
+//                                    acPhone2.getText().toString() != null && acPhone2.getText().toString().length() > 0){
+//
+//                            startActivity(new Intent(Intent.ACTION_VIEW,
+//                                    Uri.parse("smsto:" + acPhone2.getText().toString())));
+//                        }
+                        else if(v.getId() == R.id.btnEmail &&
+                                    acEmail.getText().toString() != null && acEmail.getText().toString().length() > 0){
+                            actionIntent = new Intent(Intent.ACTION_SEND,
+                                    Uri.parse("mailto:" + acEmail.getText().toString()));
+                            actionIntent.setType("text/html");
+                            String to[] = {acEmail.getText().toString()};
+                            actionIntent.putExtra(android.content.Intent.EXTRA_EMAIL, to);
+                            actionIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                                    "\n\n\n\n--\nSent from AndiCar (http://sites.google.com/site/andicarfree/)\n" +
+                                    "Manage your cars with the power of open source.");
+                            startActivity(Intent.createChooser(actionIntent, "Send mail..."));
+                        }
+
+                    }
+                };
 }

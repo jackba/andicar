@@ -233,7 +233,15 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME) + ", " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + ", " +
                 sqlConcatTableColumn("CurrencyEntered", CURRENCY_COL_CODE_NAME) + " AS CurrencyEntered, " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYRATE_NAME) + " " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYRATE_NAME) + ", " +
+                sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS Vendor, " +
+                sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_NAME_NAME) +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_ADDRESS_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_CITY_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_REGION_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COUNTRY_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_POSTAL_NAME) + ", '') " +
+                            " AS Location " +
             " FROM " + REFUEL_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -259,6 +267,12 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CURRENCY_TABLE_NAME + " AS CurrencyEntered " +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + "=" +
                                             sqlConcatTableColumn("CurrencyEntered", GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + BPARTNER_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_BPARTNER_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + BPARTNER_LOCATION_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_BPARTNER_LOCATION_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     //used in main activity
@@ -377,7 +391,15 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + ", " +
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNTENTERED_NAME) + ", " +
                 sqlConcatTableColumn("CurrEntered", CURRENCY_COL_CODE_NAME) + " AS CurrencyEnteredCode, " +
-                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYRATE_NAME) + " " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYRATE_NAME) + ", " +
+                sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS Vendor, " +
+                sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_NAME_NAME) +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_ADDRESS_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_CITY_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_REGION_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COUNTRY_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_POSTAL_NAME) + ", '') " +
+                            " AS Location " +
             " FROM " + EXPENSE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -397,6 +419,12 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CURRENCY_TABLE_NAME + " AS CurrEntered " +
                         " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME) + "=" +
                                             sqlConcatTableColumn("CurrEntered", GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + BPARTNER_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_BPARTNER_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + BPARTNER_LOCATION_TABLE_NAME +
+                        " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_BPARTNER_LOCATION_ID_NAME) + "=" +
+                                            sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     //used in main activity (statistics)

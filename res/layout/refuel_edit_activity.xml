@@ -318,7 +318,7 @@
                     android:layout_marginLeft="5dip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/GEN_ConvertionRateLabel"
+                    android:text="@string/GEN_ConversionRateLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
