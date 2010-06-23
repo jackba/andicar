@@ -150,6 +150,12 @@ public class RefuelEditActivity extends EditActivityBase {
                     c2.close();
                 }
             }
+            else{
+                acAdress.setEnabled(false);
+                acAdress.setText(null);
+                acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                        mResource.getString(R.string.GEN_Required).replace(":", ""));
+            }
 
             try{
                 currencyConversionRate = new BigDecimal(c.getString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_POS));
@@ -192,6 +198,10 @@ public class RefuelEditActivity extends EditActivityBase {
             carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
             setInsertMode(INSERTMODE_AMOUNT);
             rbInsertModeAmount.setChecked(true);
+            acAdress.setEnabled(false);
+            acAdress.setText(null);
+            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                    mResource.getString(R.string.GEN_Required).replace(":", ""));
         }
 
         initControls();
@@ -209,6 +219,7 @@ public class RefuelEditActivity extends EditActivityBase {
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
         acBPartner = ((AutoCompleteTextView) findViewById( R.id.acBPartner ));
         acBPartner.setOnFocusChangeListener(vendorChangeListener);
+        acBPartner.addTextChangedListener(bPartnerTextWatcher);
         acAdress = ((AutoCompleteTextView) findViewById( R.id.acAdress ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
@@ -303,6 +314,16 @@ public class RefuelEditActivity extends EditActivityBase {
             setBaseUOMQtyZoneVisibility(true);
         else
             setBaseUOMQtyZoneVisibility(false);
+        if(acBPartner.getText().toString() == null || acBPartner.getText().toString().length() == 0){
+            acAdress.setEnabled(false);
+            acAdress.setText(null);
+            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                                mResource.getString(R.string.GEN_Required).replace(":", ""));
+        }
+        else{
+            acAdress.setEnabled(true);
+            acAdress.setHint(null);
+        }
 
         calculatePriceAmount();
         calculateBaseUOMQty();
@@ -519,6 +540,31 @@ public class RefuelEditActivity extends EditActivityBase {
             return false;
         }
     };
+
+    private TextWatcher bPartnerTextWatcher =
+        new TextWatcher() {
+
+            public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void afterTextChanged(Editable edtbl) {
+                if(edtbl.toString() == null || edtbl.toString().length() == 0){
+                    acAdress.setEnabled(false);
+                    acAdress.setText(null);
+                    acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                                        mResource.getString(R.string.GEN_Required).replace(":", ""));
+                }
+                else{
+                    acAdress.setEnabled(true);
+                    acAdress.setHint(null);
+                }
+            }
+        };
 
     private TextWatcher textWatcher =
         new TextWatcher() {

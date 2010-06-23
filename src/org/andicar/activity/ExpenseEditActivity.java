@@ -179,6 +179,12 @@ public class ExpenseEditActivity extends EditActivityBase {
                     c2.close();
                 }
             }
+            else{
+                acAdress.setEnabled(false);
+                acAdress.setText(null);
+                acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                        mResource.getString(R.string.GEN_Required).replace(":", ""));
+            }
             c.close();
         }
         else {
@@ -189,6 +195,10 @@ public class ExpenseEditActivity extends EditActivityBase {
             initDateTime(System.currentTimeMillis());
             setEditable((ViewGroup) findViewById(R.id.vgRoot), true);
             setConversionRateZoneVisible(false);
+            acAdress.setEnabled(false);
+            acAdress.setText(null);
+            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                    mResource.getString(R.string.GEN_Required).replace(":", ""));
         }
 
         initControls();
@@ -235,6 +245,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
         acBPartner = ((AutoCompleteTextView) findViewById( R.id.acBPartner ));
         acBPartner.setOnFocusChangeListener(vendorChangeListener);
+        acBPartner.addTextChangedListener(bPartnerTextWatcher);
         acAdress = ((AutoCompleteTextView) findViewById( R.id.acAdress ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
@@ -288,7 +299,6 @@ public class ExpenseEditActivity extends EditActivityBase {
                         mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME,
                         mBPartnerId, 0));
                 acAdress.setAdapter(addressAdapter);
-
             }
         }
     };
@@ -355,6 +365,16 @@ public class ExpenseEditActivity extends EditActivityBase {
         }
         else
             setConversionRateZoneVisible(false);
+        if(acBPartner.getText().toString() == null || acBPartner.getText().toString().length() == 0){
+            acAdress.setEnabled(false);
+            acAdress.setText(null);
+            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                                mResource.getString(R.string.GEN_Required).replace(":", ""));
+        }
+        else{
+            acAdress.setEnabled(true);
+            acAdress.setHint(null);
+        }
     }
 
     private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
@@ -416,7 +436,6 @@ public class ExpenseEditActivity extends EditActivityBase {
                     tvConvertedAmountValue.setText("");
                     if(conversionRate != null){
                         etConversionRate.append(conversionRate.toString());
-//                        calculateConvertedAmount();
                     }
 
                 }
@@ -442,8 +461,6 @@ public class ExpenseEditActivity extends EditActivityBase {
             etUserInput.setTag(mResource.getString(R.string.GEN_PriceLabel));
             etQuantity.setHint(mResource.getString(R.string.GEN_Required));
             calculateAmount();
-//            if(conversionRate != null)
-//                calculateConvertedAmount();
         }
         else{
             tvCalculatedTextLabel.setText(mResource.getString(R.string.GEN_PriceLabel) + "=");
@@ -537,8 +554,6 @@ public class ExpenseEditActivity extends EditActivityBase {
             }
 
             public void afterTextChanged(Editable edtbl) {
-//                if(etQuantity.getText().toString() != null && etQuantity.getText().toString().length() > 0
-//                        && etUserInput.getText().toString() != null && etUserInput.getText().toString().length() > 0){
                 try{
                     if(rbInsertModePrice.isChecked()){
                         price = new BigDecimal(etUserInput.getText().toString());
@@ -559,6 +574,31 @@ public class ExpenseEditActivity extends EditActivityBase {
                             calculateConvertedAmount();
                     }
                     catch(NumberFormatException e){}
+                }
+            }
+        };
+
+    private TextWatcher bPartnerTextWatcher =
+        new TextWatcher() {
+
+            public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void afterTextChanged(Editable edtbl) {
+                if(edtbl.toString() == null || edtbl.toString().length() == 0){
+                    acAdress.setEnabled(false);
+                    acAdress.setText(null);
+                    acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                                        mResource.getString(R.string.GEN_Required).replace(":", ""));
+                }
+                else{
+                    acAdress.setEnabled(true);
+                    acAdress.setHint(null);
                 }
             }
         };
