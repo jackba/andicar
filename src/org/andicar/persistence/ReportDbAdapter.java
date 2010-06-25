@@ -733,8 +733,4 @@ public class ReportDbAdapter extends MainDbAdapter{
 
     }
 
-    public Cursor query(String sql, String[] args){
-        return mDb.rawQuery(sql, args);
-    }
-
 }
