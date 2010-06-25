@@ -71,11 +71,13 @@ public class BaseActivity extends Activity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if(mDbAdapter != null){
-            mDbAdapter.close();
-            mDbAdapter = null;
-        }
+        try{
+            super.onDestroy();
+            if(mDbAdapter != null){
+                mDbAdapter.close();
+                mDbAdapter = null;
+            }
+        }catch(Exception e){}
     }
 
     @Override
