@@ -25,12 +25,6 @@ import android.widget.TextView;
 import org.andicar.activity.R;
 import org.andicar.utils.Utils;
 
-/**
- * Copiryght (C) BIT Software S.R.L. (www.bitsoftware.ro)
- * All rights reserved.
- * @author Miklos Keresztes - BIT Software (www.bitsoftware.ro)
- * @product SocrateOpen (www.socrateopen.ro)
- */
 public class GPSDataBinder implements SimpleCursorAdapter.ViewBinder {
     @Override
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {

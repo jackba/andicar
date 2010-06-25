@@ -521,7 +521,7 @@ public class RefuelEditActivity extends EditActivityBase {
                         setBaseUOMQtyZoneVisibility(false);
                     }
 
-                    uomVolumeConversionRate = mDbAdapter.getUOMConvertionRate(mUomVolumeId, carDefaultUOMVolumeId);
+                    uomVolumeConversionRate = mDbAdapter.getUOMConversionRate(mUomVolumeId, carDefaultUOMVolumeId);
                     if(uomVolumeConversionRate == null)
                         btnOk.setEnabled(false);
                     else

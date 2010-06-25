@@ -1142,7 +1142,7 @@ public class MainDbAdapter extends DB
         return retVal;
     }
 
-    public BigDecimal getUOMConvertionRate(long fromId, long toId){
+    public BigDecimal getUOMConversionRate(long fromId, long toId){
         BigDecimal retVal = null;
         String retValStr = null;
         if(fromId == toId)
@@ -1169,7 +1169,7 @@ public class MainDbAdapter extends DB
     }
 
 //    public BigDecimal getConvertedDistance(long fromId, long toId, BigDecimal distance){
-//        return distance.multiply(getUOMConvertionRate(fromId, toId)).setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
+//        return distance.multiply(getUOMConversionRate(fromId, toId)).setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
 //    }
 
     public long getCarUOMVolumeID(long carID){
@@ -1205,4 +1205,9 @@ public class MainDbAdapter extends DB
         c.close();
         return retVal;
     }
+
+    public Cursor query(String sql, String[] args){
+        return mDb.rawQuery(sql, args);
+    }
+
 }
