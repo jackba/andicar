@@ -19,10 +19,10 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.Location;
@@ -177,28 +177,38 @@ public class GPSTrackService extends Service {
 
         //create the master record
         //use direct table insert for increasing the speed of the DB operation
-        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACK_TABLE_NAME
-                    + " ( "
-                        + MainDbAdapter.GEN_COL_NAME_NAME + ", "
-                        + MainDbAdapter.GEN_COL_USER_COMMENT_NAME + ", "
-                        + MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME + ", "
-                        + MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME + ", "
-//                        + MainDbAdapter.GPSTRACK_COL_MILEAGE_ID_NAME + ", "
-                        + MainDbAdapter.GPSTRACK_COL_DATE_NAME + " "
-                    + " ) "
-                    + " VALUES ( "
-                        + " '" + sName + "', "
-                        + " '" + sUserComment + "', "
-                        + lCarId + ", "
-                        + lDriverId + ", "
-                        + (System.currentTimeMillis() / 1000) + ") ";
+        ContentValues cvData = new ContentValues();
+        cvData.put(MainDbAdapter.GEN_COL_NAME_NAME, sName);
+        cvData.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME, sUserComment);
+        cvData.put(MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME, lCarId);
+        cvData.put(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME, lDriverId);
+        cvData.put(MainDbAdapter.GPSTRACK_COL_DATE_NAME, (System.currentTimeMillis() / 1000));
+        gpsTrackId = mDbAdapter.createRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, cvData);
 
-        mDbAdapter.execSql(sqlStr);
-        sqlStr = "SELECT MAX(" + MainDbAdapter.GEN_COL_ROWID_NAME + ") FROM " + MainDbAdapter.GPSTRACK_TABLE_NAME;
-        Cursor c = mDbAdapter.execSelectSql(sqlStr);
-        c.moveToNext();
-        gpsTrackId = c.getLong(0);
-        c.close();
+//        String sqlStr;
+//        = "INSERT INTO " + MainDbAdapter.GPSTRACK_TABLE_NAME
+//                    + " ( "
+//                        + MainDbAdapter.GEN_COL_NAME_NAME + ", "
+//                        + MainDbAdapter.GEN_COL_USER_COMMENT_NAME + ", "
+//                        + MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME + ", "
+//                        + MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME + ", "
+////                        + MainDbAdapter.GPSTRACK_COL_MILEAGE_ID_NAME + ", "
+//                        + MainDbAdapter.GPSTRACK_COL_DATE_NAME + " "
+//                    + " ) "
+//                    + " VALUES ( "
+//                        + " '" + sName + "', "
+//                        + " '" + sUserComment + "', "
+//                        + lCarId + ", "
+//                        + lDriverId + ", "
+//                        + (System.currentTimeMillis() / 1000) + ") ";
+//
+//        mDbAdapter.execSql(sqlStr);
+
+//        sqlStr = "SELECT MAX(" + MainDbAdapter.GEN_COL_ROWID_NAME + ") FROM " + MainDbAdapter.GPSTRACK_TABLE_NAME;
+//        Cursor c = mDbAdapter.execSelectSql(sqlStr);
+//        c.moveToNext();
+//        gpsTrackId = c.getLong(0);
+//        c.close();
         long lMileId = mDbAdapter.getIdFromCode(MainDbAdapter.UOM_TABLE_NAME, "mi");
         long lCarUomId = mDbAdapter.getCarUOMLengthID(lCarId);
         if(lCarUomId == lMileId)
@@ -252,18 +262,23 @@ public class GPSTrackService extends Service {
                                                 "TotalTrackPointCount" + "," +
                                                 "InvalidTrackPointCount" + "," +
                                                 "IsValidPoint" + "\n");
-        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
-                + " ( "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
-                + " ) "
-                + " VALUES ( "
-                    + gpsTrackId + ", "
-                    + "'" + StaticValues.CSV_FORMAT + "', "
-                    + "'" + gpsTrackDetailCSVFile.getAbsolutePath() + "'"
-                + " ) ";
-        mDbAdapter.execSql(sqlStr);
+        ContentValues cvData = new ContentValues();
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.CSV_FORMAT);
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME, gpsTrackDetailCSVFile.getAbsolutePath());
+        mDbAdapter.createRecord(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, cvData);
+//        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
+//                + " ( "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
+//                + " ) "
+//                + " VALUES ( "
+//                    + gpsTrackId + ", "
+//                    + "'" + StaticValues.CSV_FORMAT + "', "
+//                    + "'" + gpsTrackDetailCSVFile.getAbsolutePath() + "'"
+//                + " ) ";
+//        mDbAdapter.execSql(sqlStr);
     }
 
     private void createGOPFile(String fileName) throws IOException {
@@ -272,18 +287,25 @@ public class GPSTrackService extends Service {
         //create the header
         gpsTrackDetailGOPFileWriter.append( "LatitudeE6" + "," +
                                                 "LongitudeE6" + "\n");
-        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
-                + " ( "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
-                + " ) "
-                + " VALUES ( "
-                    + gpsTrackId + ", "
-                    + "'" + StaticValues.GOP_FORMAT + "', "
-                    + "'" + gpsTrackDetailGOPFile.getAbsolutePath() + "'"
-                + " ) ";
-        mDbAdapter.execSql(sqlStr);
+
+        ContentValues cvData = new ContentValues();
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.GOP_FORMAT);
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME, gpsTrackDetailGOPFile.getAbsolutePath());
+        mDbAdapter.createRecord(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, cvData);
+
+//        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
+//                + " ( "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
+//                + " ) "
+//                + " VALUES ( "
+//                    + gpsTrackId + ", "
+//                    + "'" + StaticValues.GOP_FORMAT + "', "
+//                    + "'" + gpsTrackDetailGOPFile.getAbsolutePath() + "'"
+//                + " ) ";
+//        mDbAdapter.execSql(sqlStr);
     }
 
     private void createGPXFile(String fileName) throws IOException{
@@ -291,18 +313,24 @@ public class GPSTrackService extends Service {
         gpsTrackDetailGPXFileWriter = new FileWriter(gpsTrackDetailGPXFile);
         if(gpsTrackDetailGPXFileWriter == null)
             return;
-        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
-                + " ( "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
-                + " ) "
-                + " VALUES ( "
-                    + gpsTrackId + ", "
-                    + "'" + StaticValues.GPX_FORMAT + "', "
-                    + "'" + gpsTrackDetailGPXFile.getAbsolutePath() + "'"
-                + " ) ";
-        mDbAdapter.execSql(sqlStr);
+        ContentValues cvData = new ContentValues();
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.GPX_FORMAT);
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME, gpsTrackDetailGPXFile.getAbsolutePath());
+        mDbAdapter.createRecord(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, cvData);
+
+//        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
+//                + " ( "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
+//                + " ) "
+//                + " VALUES ( "
+//                    + gpsTrackId + ", "
+//                    + "'" + StaticValues.GPX_FORMAT + "', "
+//                    + "'" + gpsTrackDetailGPXFile.getAbsolutePath() + "'"
+//                + " ) ";
+//        mDbAdapter.execSql(sqlStr);
         gpsTrackDetailGPXFileWriter.append(
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>\n"
                 + "<?xml-stylesheet type=\"text/xsl\" href=\"details.xsl\"?>\n"
@@ -340,18 +368,24 @@ public class GPSTrackService extends Service {
             pointName = "(Part " + iFileCount + " start)";
             pointStyle = "#icon28";
         }
-        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
-                + " ( "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
-                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
-                + " ) "
-                + " VALUES ( "
-                    + gpsTrackId + ", "
-                    + "'" + StaticValues.CSV_FORMAT + "', "
-                    + "'" + gpsTrackDetailKMLFile.getAbsolutePath() + "'"
-                + " ) ";
-        mDbAdapter.execSql(sqlStr);
+        ContentValues cvData = new ContentValues();
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.KML_FORMAT);
+        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME, gpsTrackDetailKMLFile.getAbsolutePath());
+        mDbAdapter.createRecord(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, cvData);
+
+//        String sqlStr = "INSERT INTO " + MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME
+//                + " ( "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ", "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME + ", "
+//                    + MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME
+//                + " ) "
+//                + " VALUES ( "
+//                    + gpsTrackId + ", "
+//                    + "'" + StaticValues.CSV_FORMAT + "', "
+//                    + "'" + gpsTrackDetailKMLFile.getAbsolutePath() + "'"
+//                + " ) ";
+//        mDbAdapter.execSql(sqlStr);
         //initialize the file header
 
         gpsTrackDetailKMLFileWriter.append(
