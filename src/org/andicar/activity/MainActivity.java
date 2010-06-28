@@ -471,7 +471,7 @@ public class MainActivity extends Activity {
                             && !(mileageExpense.setScale(10, RoundingMode.HALF_UP)).equals(BigDecimal.ZERO)) {
                         carCurrency = listCursor.getString(8);
                         mileageExpenseStr = mileageExpense.toString() + " " + carCurrency + "/100 " + listCursor.getString(6);
-                        BigDecimal mileageEff = (new BigDecimal("100")).divide(mileageExpense, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+                        BigDecimal mileageEff = ((new BigDecimal("100")).divide(mileageExpense, 10, RoundingMode.HALF_UP)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                         mileageExpenseStr = mileageExpenseStr + "; " + mileageEff.toString() + " " + listCursor.getString(6) + "/" + carCurrency;
                     }
                 }
