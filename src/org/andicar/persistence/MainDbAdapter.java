@@ -1209,5 +1209,8 @@ public class MainDbAdapter extends DB
     public Cursor query(String sql, String[] args){
         return mDb.rawQuery(sql, args);
     }
+    public Cursor query (String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy){
+        return mDb.query (table, columns, selection, selectionArgs, groupBy, having, orderBy);
+    }
 
 }
