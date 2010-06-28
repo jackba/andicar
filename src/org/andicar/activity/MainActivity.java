@@ -443,6 +443,7 @@ public class MainActivity extends Activity {
                     }
                 }
                 catch(NumberFormatException e){}
+                catch(ArithmeticException e){}
             }
             else {
                 avgConsStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
@@ -476,6 +477,7 @@ public class MainActivity extends Activity {
                     }
                 }
                 catch(NumberFormatException e){}
+                catch(ArithmeticException e){}
             }
             tvThreeLineListStatisticsText2.setText(mRes.getString(R.string.MainActivity_StatisticsTotalExpenseLabel) + " " + totalExpensesStr + " " + carCurrency);
             tvThreeLineListStatisticsText3.setText(mRes.getString(R.string.MainActivity_StatisticsMileageExpenseLabel) + " " + mileageExpenseStr);
