@@ -285,8 +285,12 @@ public class ExpenseEditActivity extends EditActivityBase {
     private View.OnFocusChangeListener vendorChangeListener = new View.OnFocusChangeListener() {
         public void onFocusChange(View view, boolean hasFocus) {
             if(!hasFocus){
-                Cursor c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
-                            "UPPER(" + MainDbAdapter.GEN_COL_NAME_NAME + ") = '" + acBPartner.getText().toString().toUpperCase() + "'", null);
+                String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+                String[] selectionArgs = {acBPartner.getText().toString().toUpperCase()};
+                Cursor c = mDbAdapter.query(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs, 
+                        null, null, null);
+//                        fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
+//                            "UPPER(" + MainDbAdapter.GEN_COL_NAME_NAME + ") = '" + acBPartner.getText().toString().toUpperCase() + "'", null);
                 String bPartnerIdStr = null;
                 if(c.moveToFirst())
                     bPartnerIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
@@ -668,8 +672,12 @@ public class ExpenseEditActivity extends EditActivityBase {
                 etDocNo.getText().toString());
 
         if(acBPartner.getText().toString() != null && acBPartner.getText().toString().length() > 0){
-            Cursor c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
-                        "UPPER(" + MainDbAdapter.GEN_COL_NAME_NAME + ") = '" + acBPartner.getText().toString().toUpperCase() + "'", null);
+            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String[] selectionArgs = {acBPartner.getText().toString().toUpperCase()};
+            Cursor c = mDbAdapter.query(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+                    null, null, null);
+//            Cursor c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
+//                        "UPPER(" + MainDbAdapter.GEN_COL_NAME_NAME + ") = '" + acBPartner.getText().toString().toUpperCase() + "'", null);
             String bPartnerIdStr = null;
             if(c.moveToFirst())
                 bPartnerIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
