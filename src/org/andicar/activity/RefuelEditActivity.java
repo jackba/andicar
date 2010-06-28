@@ -807,10 +807,16 @@ public class RefuelEditActivity extends EditActivityBase {
             }
 
             if(acAdress.getText().toString() != null && acAdress.getText().toString().length() > 0){
-                c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
-                            MainDbAdapter.bpartnerLocationTableColNames,
-                            "UPPER(" + MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME + ") = '" + acAdress.getText().toString().toUpperCase() + "' " +
-                                "AND " + MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + "=" + mBPartnerId, null);
+                selection = "UPPER (" + MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME + ") = ? AND " +
+                                            MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + " = ?";
+                String[] selectionArgs2 = {acAdress.getText().toString().toUpperCase(), Long.toString(mBPartnerId)};
+//                {acAdress.getText().toString().toUpperCase(), Long.parseLong(mBPartnerId)};
+                c = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs2,
+                        null, null, null);
+//                c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
+//                            MainDbAdapter.bpartnerLocationTableColNames,
+//                            "UPPER(" + MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME + ") = '" + acAdress.getText().toString().toUpperCase() + "' " +
+//                                "AND " + MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + "=" + mBPartnerId, null);
                 String addressIdStr = null;
                 if(c.moveToFirst())
                     addressIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
