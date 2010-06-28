@@ -93,7 +93,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
 
 
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
                 mDriverId, false);
         initDateTime(c.getLong(MainDbAdapter.GPSTRACK_COL_DATE_POS) * 1000);
         tvDateTimeValue.setText(mResource.getString(R.string.GEN_DateTimeLabel) + " " + tvDateTimeValue.getText());
@@ -127,13 +127,18 @@ public class GPSTrackEditActivity extends EditActivityBase {
         }
         c.close();
         reportDb.close();
-        
+
+        String selection = MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=?";
+        String[] selectionArgs = {Long.toString(mRowId)};
         SimpleCursorAdapter cursorAdapter =
                 new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.oneline_list_layout_smalll,
-                                    mDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
-                                        MainDbAdapter.gpsTrackDetailTableColNames,
-                                        MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + mRowId,
-                                        MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME),
+                                    mDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+                                            MainDbAdapter.gpsTrackDetailTableColNames, selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME),
+
+//                                    fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+//                                        MainDbAdapter.gpsTrackDetailTableColNames,
+//                                        MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + mRowId,
+//                                        MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME),
                                     new String[]{MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME}, new int[]{R.id.tvOneLineListTextSmall});
 
         lvTrackFileList.setAdapter(cursorAdapter);

@@ -88,7 +88,8 @@ public class BaseActivity extends Activity {
             mDbAdapter = new MainDbAdapter(this);
     }
 
-    protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition,
+    protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from,
+            String selection, String[] selectionArgs,
             String orderBy, long selectedId, boolean addEmptyValue){
         try{
             Spinner spnCurrentSpinner = (Spinner) pSpinner;
@@ -100,13 +101,15 @@ public class BaseActivity extends Activity {
                                     " SELECT " + MainDbAdapter.GEN_COL_ROWID_NAME + ", " +
                                                 MainDbAdapter.GEN_COL_NAME_NAME +
                                     " FROM " + tableName;
-                if(whereCondition != null && whereCondition.length() > 0)
-                    selectSql = selectSql + " WHERE " + whereCondition;
+                if(selection != null && selection.length() > 0)
+                    selectSql = selectSql + " WHERE " + selection;
                 selectSql = selectSql + " ORDER BY " + MainDbAdapter.GEN_COL_NAME_NAME;
-                dbcRecordCursor = mDbAdapter.execSelectSql(selectSql);
+                dbcRecordCursor = mDbAdapter.execSelectSql(selectSql, selectionArgs);
             }
-            else
-                dbcRecordCursor = mDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
+            else{
+                dbcRecordCursor = mDbAdapter.query(tableName, columns, selection, selectionArgs, null, null, orderBy);
+//                        fetchForTable( tableName, columns, whereCondition, orderBy);
+            }
             
             startManagingCursor( dbcRecordCursor );
             int[] to = new int[]{android.R.id.text1};

@@ -43,20 +43,6 @@ public class MainDbAdapter extends DB
     }
 
     /**
-     * Fetch a cursor containing all rows from the given table than match the given where condition.
-     * The creturned cursor are NOT positioned anywhere. You most use the corsor movement methods in order to
-     * read the containing rows.
-     * @param tableName
-     * @param columns
-     * @param whereCondition
-     * @param orderByColumn
-     * @return
-     */
-    public Cursor fetchForTable(String tableName, String[] columns, String whereCondition, String orderByColumn){
-        return mDb.query( tableName, columns, whereCondition, null, null, null, orderByColumn );
-    }
-
-    /**
      * Return a Cursor positioned at the record that matches the given rowId from the given table
      *
      * @param rowId id of the record to retrieve
@@ -285,8 +271,9 @@ public class MainDbAdapter extends DB
                                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                                 "FROM " + EXPENSE_TABLE_NAME + " " +
                                 "WHERE " + EXPENSE_COL_FROMTABLE_NAME + " = 'Refuel' " +
-                                    "AND " + EXPENSE_COL_FROMRECORD_ID_NAME + " = " + rowId;
-                        Cursor c = execSelectSql(expenseIdSelect);
+                                    "AND " + EXPENSE_COL_FROMRECORD_ID_NAME + " = ?";
+                        String[] selectionArgs = {Long.toString(rowId)};
+                        Cursor c = execSelectSql(expenseIdSelect, selectionArgs);
                         if(c.moveToFirst())
                             expenseId = c.getLong(0);
                         c.close();
@@ -399,9 +386,10 @@ public class MainDbAdapter extends DB
 
         String sql = "SELECT MAX(" + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ") " +
                         " FROM " + MILEAGE_TABLE_NAME +
-                        " WHERE " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + " = " + mCarId +
+                        " WHERE " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + " = ? " +
                         " GROUP BY " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME);
-        c = execSelectSql(sql);
+        String[] selectionArgs = {Long.toString(mCarId)};
+        c = execSelectSql(sql, selectionArgs);
         if(c.moveToFirst()){
             try{
                 tmpStr = c.getString(0);
@@ -422,9 +410,11 @@ public class MainDbAdapter extends DB
 
         sql = "SELECT MAX(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + ") " +
                         " FROM " + REFUEL_TABLE_NAME +
-                        " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " = " + mCarId +
+                        " WHERE " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " = ? " +
                         " GROUP BY " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME);
-        c = execSelectSql(sql);
+
+        selectionArgs[0] = Long.toString(mCarId);
+        c = execSelectSql(sql, selectionArgs);
         if(c.moveToFirst()){
             try{
                 tmpStr = c.getString(0);
@@ -446,10 +436,11 @@ public class MainDbAdapter extends DB
 
         sql = "SELECT MAX(" + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + ") " +
                         " FROM " + EXPENSE_TABLE_NAME +
-                        " WHERE " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) + " = " + mCarId +
+                        " WHERE " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME) + " = ? " +
                                     " AND " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + " IS NOT NULL " +
                         " GROUP BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CAR_ID_NAME);
-        c = execSelectSql(sql);
+        selectionArgs[0] = Long.toString(mCarId);
+        c = execSelectSql(sql, selectionArgs);
 
         if(c.moveToFirst()){
             try{
@@ -518,7 +509,10 @@ public class MainDbAdapter extends DB
                     if(checkVal == -1)
                         updateCarCurrentIndex(carId);
                     //set null in gpstrack table col. mileage id
-                    Cursor c = fetchForTable(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, GPSTRACK_COL_MILEAGE_ID_NAME + "=" + rowId, null);
+                    String selection = GPSTRACK_COL_MILEAGE_ID_NAME + "= ?";
+                    String[] selectionArgs = {Long.toString(rowId)};
+                    Cursor c = query(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, selection, selectionArgs, null, null, null);
+//                            fetchForTable(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, GPSTRACK_COL_MILEAGE_ID_NAME + "=" + rowId, null);
                     ContentValues cv = new ContentValues();
                     cv.put(GPSTRACK_COL_MILEAGE_ID_NAME, (Long)null);
                     while(c.moveToNext()){
@@ -536,8 +530,9 @@ public class MainDbAdapter extends DB
                                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                                 "FROM " + EXPENSE_TABLE_NAME + " " +
                                 "WHERE " + EXPENSE_COL_FROMTABLE_NAME + " = 'Refuel' " +
-                                    "AND " + EXPENSE_COL_FROMRECORD_ID_NAME + " = " + rowId;
-                        Cursor c = execSelectSql(expenseIdSelect);
+                                    "AND " + EXPENSE_COL_FROMRECORD_ID_NAME + " = ? ";
+                        String[] selectionArgs = {Long.toString(rowId)};
+                        Cursor c = execSelectSql(expenseIdSelect, selectionArgs);
                         if(c.moveToFirst())
                             expenseId = c.getLong(0);
                         c.close();
@@ -557,8 +552,11 @@ public class MainDbAdapter extends DB
                 else if(tableName.equals(GPSTRACK_TABLE_NAME)){
                     //delete gps trtack details
                     String fileName = "";
-                    Cursor c = fetchForTable(GPSTRACKDETAIL_TABLE_NAME, gpsTrackDetailTableColNames,
-                            GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + rowId, null);
+                    String selection = GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "= ?";
+                    String[] selectionArgs = {Long.toString(rowId)};
+                    Cursor c = query(GPSTRACKDETAIL_TABLE_NAME, gpsTrackDetailTableColNames, selection, selectionArgs, null, null, null);
+//                    Cursor c = fetchForTable(GPSTRACKDETAIL_TABLE_NAME, gpsTrackDetailTableColNames,
+//                            GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + rowId, null);
                     while(c.moveToNext()){
                         //delete track files
                         fileName = c.getString(GPSTRACKDETAIL_COL_FILE_POS);
@@ -577,9 +575,10 @@ public class MainDbAdapter extends DB
                         String currencyRateSelect =
                                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                                 "FROM " + CURRENCYRATE_TABLE_NAME + " " +
-                                "WHERE " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + rowId +
-                                    " OR " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + rowId;
-                        Cursor c = execSelectSql(currencyRateSelect);
+                                "WHERE " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = ? " +
+                                    " OR " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = ? ";
+                        String[] selectionArgs = {Long.toString(rowId), Long.toString(rowId)};
+                        Cursor c = execSelectSql(currencyRateSelect, selectionArgs);
                         while(c.moveToNext()){
                             currRateId = c.getLong(0);
                             mDb.delete(CURRENCYRATE_TABLE_NAME, GEN_COL_ROWID_NAME + "=" + currRateId, null);
@@ -1091,8 +1090,8 @@ public class MainDbAdapter extends DB
         return retVal;
     }
 
-    public Cursor execSelectSql(String selectSql){
-        return mDb.rawQuery(selectSql, null);
+    public Cursor execSelectSql(String selectSql, String[] selectionArgs){
+        return mDb.rawQuery(selectSql, selectionArgs);
     }
 
     public void execSql(String sql){
@@ -1111,9 +1110,10 @@ public class MainDbAdapter extends DB
             selectSql = " SELECT * " +
                         " FROM " + CURRENCYRATE_TABLE_NAME +
                         " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
-                            " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + fromCurrencyId +
-                            " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + toCurrencyId;
-            selectCursor = execSelectSql(selectSql);
+                            " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = ? " +
+                            " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = ?";
+            String[] selectionArgs = {Long.toString(fromCurrencyId), Long.toString(toCurrencyId)};
+            selectCursor = execSelectSql(selectSql, selectionArgs);
             if(selectCursor.moveToFirst())
                 retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
             selectCursor.close();
@@ -1123,9 +1123,9 @@ public class MainDbAdapter extends DB
             selectSql = " SELECT * " +
                         " FROM " + CURRENCYRATE_TABLE_NAME +
                         " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
-                            " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = " + fromCurrencyId +
-                            " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = " + toCurrencyId;
-            selectCursor = execSelectSql(selectSql);
+                            " AND " + CURRENCYRATE_COL_TOCURRENCY_ID_NAME + " = ? " +
+                            " AND " + CURRENCYRATE_COL_FROMCURRENCY_ID_NAME + " = ?";
+            selectCursor = execSelectSql(selectSql, selectionArgs);
             if(selectCursor.moveToFirst())
                 retValStr = selectCursor.getString(CURRENCYRATE_COL_RATE_POS);
             selectCursor.close();
@@ -1154,9 +1154,10 @@ public class MainDbAdapter extends DB
             selectSql = " SELECT * " +
                         " FROM " + UOM_CONVERSION_TABLE_NAME +
                         " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' " +
-                            " AND " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = " + fromId +
-                            " AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = " + toId;
-            selectCursor = execSelectSql(selectSql);
+                            " AND " + UOM_CONVERSION_COL_UOMFROM_ID_NAME + " = ? " +
+                            " AND " + UOM_CONVERSION_COL_UOMTO_ID_NAME + " = ?";
+            String[] selectionArgs = {Long.toString(fromId), Long.toString(toId)};
+            selectCursor = execSelectSql(selectSql, selectionArgs);
             if(selectCursor.moveToFirst())
                 retValStr = selectCursor.getString(UOM_CONVERSION_COL_RATE_POS);
             selectCursor.close();
@@ -1198,7 +1199,10 @@ public class MainDbAdapter extends DB
     }
 
     public long getIdFromCode(String tableName, String code){
-        Cursor c = fetchForTable(tableName, genColRowId, "Code = '" + code + "'", "Code");
+        String selection = "Code = ?";
+        String[] selectionArgs = {code};
+        Cursor c = query(tableName, genColRowId, selection, selectionArgs, null, null, null);
+//                fetchForTable(tableName, genColRowId, "Code = '" + code + "'", "Code");
         long retVal = -1;
         if(c.moveToFirst())
             retVal = c.getLong(0);
@@ -1212,5 +1216,19 @@ public class MainDbAdapter extends DB
     public Cursor query (String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy){
         return mDb.query (table, columns, selection, selectionArgs, groupBy, having, orderBy);
     }
+
+    /**
+     * Fetch a cursor containing all rows from the given table than match the given where condition.
+     * The returned cursor are NOT positioned anywhere. You most use the corsor movement methods in order to
+     * read the containing rows.
+     * @param tableName
+     * @param columns
+     * @param selection
+     * @param orderByColumn
+     * @return
+     */
+//    public Cursor fetchForTable(String tableName, String[] columns, String selection, String orderByColumn){
+//        return mDb.query( tableName, columns, selection, null, null, null, orderByColumn );
+//    }
 
 }

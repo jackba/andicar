@@ -233,10 +233,15 @@ public class Utils {
         try {
             out = new ZipOutputStream(new FileOutputStream(StaticValues.TRACK_FOLDER + "trackFiles.zip"));
 
-            c = mMainDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
-                                MainDbAdapter.gpsTrackDetailTableColNames,
-                                MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + Long.toString(gpsTrackID),
-                                MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
+            String selection = MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "= ? ";
+            String[] selectionArgs = {Long.toString(gpsTrackID)};
+            c = mMainDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, MainDbAdapter.gpsTrackDetailTableColNames, 
+                    selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
+
+//                    fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
+//                                MainDbAdapter.gpsTrackDetailTableColNames,
+//                                MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + Long.toString(gpsTrackID),
+//                                MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
             while(c.moveToNext()){
                 try{
                     FileInputStream in = new FileInputStream(c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS));

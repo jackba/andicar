@@ -153,15 +153,15 @@ public class MileageEditActivity extends EditActivityBase {
 
     private void initControls(){
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME,
                 mCarId, false);
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
         initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME,
+                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
                 mExpTypeId, false);
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line,
@@ -321,13 +321,14 @@ public class MileageEditActivity extends EditActivityBase {
                 String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
                                 "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
                                 "WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y' " +
-                                    "AND " + MainDbAdapter.MILEAGE_COL_CAR_ID_NAME + " = " + mCarId + " " +
+                                    "AND " + MainDbAdapter.MILEAGE_COL_CAR_ID_NAME + " = ? " +
                               "UNION " +
                               "SELECT " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + ", 2 As Pos " +
                               "FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
-                              "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + mCarId + " " +
+                              "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ? " +
                               "ORDER BY Pos ASC";
-                Cursor c = mDbAdapter.execSelectSql(sql);
+                String[] selectionArgs = {Long.toString(mCarId), Long.toString(mCarId)};
+                Cursor c = mDbAdapter.execSelectSql(sql, selectionArgs);
                 if(c.moveToFirst()){
                     mStartIndexStr = c.getString(0);
                 }
