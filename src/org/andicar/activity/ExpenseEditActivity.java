@@ -162,8 +162,12 @@ public class ExpenseEditActivity extends EditActivityBase {
             if(c.getString(MainDbAdapter.EXPENSE_COL_BPARTNER_ID_POS) != null
                     && c.getString(MainDbAdapter.EXPENSE_COL_BPARTNER_ID_POS).length() > 0){
                 mBPartnerId = c.getLong(MainDbAdapter.EXPENSE_COL_BPARTNER_ID_POS);
-                c2 = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
-                                        MainDbAdapter.GEN_COL_ROWID_NAME + "=" + mBPartnerId, null);
+                String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+                String[] selectionArgs = {Long.toString(mBPartnerId)};
+                c2 = mDbAdapter.query(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName, 
+                            selection, selectionArgs, null, null, null);
+//                        fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
+//                                        MainDbAdapter.GEN_COL_ROWID_NAME + "=" + mBPartnerId, null);
                 if(c2.moveToFirst())
                     acBPartner.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
                 c2.close();
@@ -171,9 +175,12 @@ public class ExpenseEditActivity extends EditActivityBase {
                 if(c.getString(MainDbAdapter.EXPENSE_COL_BPARTNER_LOCATION_ID_POS) != null
                         && c.getString(MainDbAdapter.EXPENSE_COL_BPARTNER_LOCATION_ID_POS).length() > 0){
                     mAddressId = c.getLong(MainDbAdapter.EXPENSE_COL_BPARTNER_LOCATION_ID_POS);
-                    c2 = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
-                            MainDbAdapter.bpartnerLocationTableColNames,
-                            MainDbAdapter.GEN_COL_ROWID_NAME + "=" + mAddressId, null);
+                    selectionArgs[0] = Long.toString(mAddressId);
+                    c2 = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.bpartnerLocationTableColNames, 
+                            selection, selectionArgs, null, null, null);
+//                            fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
+//                            MainDbAdapter.bpartnerLocationTableColNames,
+//                            MainDbAdapter.GEN_COL_ROWID_NAME + "=" + mAddressId, null);
                     if(c2.moveToFirst())
                         acAdress.setText(c2.getString(MainDbAdapter.BPARTNER_LOCATION_ADDRESS_POS));
                     c2.close();
@@ -210,22 +217,22 @@ public class ExpenseEditActivity extends EditActivityBase {
 
     private void initControls() {
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
         initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, false);
         initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId, false);
         initSpinner(spnUOM, MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mUOMId, true);
         userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this, android.R.layout.simple_dropdown_item_1line, 
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.EXPENSE_TABLE_NAME, null,
@@ -407,7 +414,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                     if(newCarCurrencyId != mCurrencyId){
                         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
                                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                                    MainDbAdapter.isActiveCondition,
+                                    MainDbAdapter.isActiveCondition, null,
                                     MainDbAdapter.GEN_COL_NAME_NAME,
                                     newCarCurrencyId, false);
                         mCurrencyId = newCarCurrencyId;

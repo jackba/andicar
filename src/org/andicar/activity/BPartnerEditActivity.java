@@ -105,13 +105,16 @@ public class BPartnerEditActivity extends EditActivityBase {
     }
 
     private void fillData(){
-        String whereCondition = MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + "=" + mRowId;
+        String selection = MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + "= ? ";
+        String[] selectionArgs = {Long.toString(mRowId)};
         if(!showInactiveRecords)
-            whereCondition = whereCondition +
+            selection = selection +
                                 " AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\'";
 
-        cAddressCursor = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
-                MainDbAdapter.genColName, whereCondition, MainDbAdapter.GEN_COL_NAME_NAME);
+        cAddressCursor = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.genColName, 
+                selection, selectionArgs, null, null, MainDbAdapter.GEN_COL_NAME_NAME);
+//                fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
+//                    MainDbAdapter.genColName, selection, MainDbAdapter.GEN_COL_NAME_NAME);
         startManagingCursor(cAddressCursor);
 
         lvAddressList.setAdapter(null);
