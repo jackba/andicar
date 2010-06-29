@@ -321,4 +321,7 @@
     <string name="DayOfWeek_4">"Thursday"</string>
     <string name="DayOfWeek_5">"Friday"</string>
     <string name="DayOfWeek_6">"Saturday"</string>
+
+    <string name="Notif_UpdateTitle">"Update Available"</string>
+    <string name="Notif_UpdateMsg">"An update for AndiCar is available!"</string>
 </resources>

@@ -50,6 +50,7 @@ import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.service.UpdateCheck;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
@@ -258,6 +259,18 @@ public class MainActivity extends Activity {
                 AlertDialog alert = builder.create();
                 alert.show();
             }
+        }
+        //check for app update once a day
+        Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
+        if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
+            /* Save current timestamp for next Check*/  
+            lastUpdateTime = System.currentTimeMillis();              
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putLong("lastUpdateCheckTime", lastUpdateTime);
+            editor.commit();
+            //start update check
+            Intent updateCheck = new Intent(MainActivity.this, UpdateCheck.class);
+            startService(updateCheck);
         }
     }
 
