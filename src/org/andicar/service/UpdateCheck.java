@@ -34,13 +34,6 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import org.andicar.utils.StaticValues;
 
-
-/**
- * Copiryght (C) BIT Software S.R.L. (www.bitsoftware.ro)
- * All rights reserved.
- * @author Miklos Keresztes - BIT Software (www.bitsoftware.ro)
- * @product SocrateOpen (www.socrateopen.ro)
- */
 public class UpdateCheck extends Service{
     /* This Thread checks for Updates in the Background */
     @Override
