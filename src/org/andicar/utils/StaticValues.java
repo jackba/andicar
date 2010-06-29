@@ -123,4 +123,6 @@ public class StaticValues
     public static final String DAY_OF_WEEK_NAME = "DayOfWeek";
     
     public static final String FLURRY_ID = "E8C8QUTB7KS46SHMEP6V";
+
+    public static final String VERSION_FILE_URL = "http://sites.google.com/site/andicarfree/version.txt";
 }

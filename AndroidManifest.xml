@@ -38,6 +38,7 @@
     >
         <uses-library android:name="com.google.android.maps" />
         <service android:name="org.andicar.service.GPSTrackService" />
+        <service android:name="org.andicar.service.UpdateCheck" />
         
         <activity android:name="org.andicar.activity.MainActivity"
                   android:label="AndiCar"

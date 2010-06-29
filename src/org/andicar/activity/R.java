@@ -693,6 +693,8 @@ public final class R {
         public static final int MileageEditActivity_OptionIndexLabel=0x7f060103;
         public static final int MileageEditActivity_OptionMileageLabel=0x7f060104;
         public static final int MileageEditActivity_UpdateOkMessage=0x7f060106;
+        public static final int Notif_UpdateMsg=0x7f06017e;
+        public static final int Notif_UpdateTitle=0x7f06017d;
         public static final int PREFGPSTrack_AccuracySummary=0x7f06016a;
         public static final int PREFGPSTrack_AccuracyTitle=0x7f060169;
         public static final int PREFGPSTrack_AutoShutDownSummary=0x7f06016c;
