@@ -86,8 +86,7 @@ public class UpdateCheck extends Service{
                     String message = getString(R.string.Notif_UpdateMsg);
                     notification = new Notification(R.drawable.stat_sys_warning, message,
                             System.currentTimeMillis());
-                    notification.flags |= Notification.DEFAULT_LIGHTS;
-                    notification.flags |= Notification.DEFAULT_SOUND;
+                    notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
                     notification.setLatestEventInfo(UpdateCheck.this, title, message, contentIntent);
                     mNM.notify(0, notification);

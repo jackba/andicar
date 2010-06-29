@@ -124,5 +124,5 @@ public class StaticValues
     
     public static final String FLURRY_ID = "E8C8QUTB7KS46SHMEP6V";
 
-    public static final String VERSION_FILE_URL = "http://sites.google.com/site/andicarfree/version.txt";
+    public static final String VERSION_FILE_URL = "http://sites.google.com/site/andicarservices/andicarversion.txt";
 }
