@@ -263,8 +263,8 @@ public class MainActivity extends Activity {
         //check for app update once a day
         Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
         if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
-            /* Save current timestamp for next Check*/  
-            lastUpdateTime = System.currentTimeMillis();              
+            /* Save current timestamp for next Check*/
+            lastUpdateTime = System.currentTimeMillis();
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putLong("lastUpdateCheckTime", lastUpdateTime);
             editor.commit();
