@@ -215,6 +215,13 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         mainScreenPref.setSummary(mRes.getString(R.string.PREF_MainScreenCategorySummary));
         miscCategory.addPreference(mainScreenPref);
 
+        //numeric inout type
+        CheckBoxPreference useNumericInput = new CheckBoxPreference(this);
+        useNumericInput.setTitle(R.string.PREF_UseNumericInputTitle);
+        useNumericInput.setSummary(R.string.PREF_UseNumericInputSummary);
+        useNumericInput.setKey("UseNumericKeypad");
+        miscCategory.addPreference(useNumericInput);
+
         //send crash and usage statistiscs
         CheckBoxPreference sendUsagePrefCk = new CheckBoxPreference(this);
         sendUsagePrefCk.setTitle(R.string.PREF_SendUsageTitle);
