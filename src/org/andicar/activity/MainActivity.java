@@ -272,6 +272,13 @@ public class MainActivity extends Activity {
             Intent updateCheck = new Intent(MainActivity.this, UpdateCheck.class);
             startService(updateCheck);
         }
+
+        if (!mPreferences.contains("UseNumericKeypad")) {
+            SharedPreferences.Editor editor = mPreferences.edit();
+            editor.putBoolean("UseNumericKeypad", true);
+            editor.commit();
+        }
+
     }
 
     private void fillExpenseZone() {
@@ -567,6 +574,10 @@ public class MainActivity extends Activity {
         if (!mPreferences.contains("GPSTrackCreateMileage")) {
             editor.putBoolean("GPSTrackCreateMileage", true); // M: map mode; S: satellite mode
         }
+        if (!mPreferences.contains("UseNumericKeypad")) {
+            editor.putBoolean("UseNumericKeypad", true); 
+        }
+
         editor.commit();
     }
 
