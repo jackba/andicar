@@ -19,7 +19,7 @@ is divided into following sections:
 
         -->
 <project xmlns:androidproject1="http://www.netbeans.org/ns/android-project/1" basedir=".." default="default" name="AndiCar-impl">
-    <target depends="test,jar,javadoc" description="Build and test whole project." name="default"/>
+    <target depends="test,jar" description="Build and test whole project." name="default"/>
     <!-- 
                 ======================
                 INITIALIZATION SECTION 
@@ -575,7 +575,6 @@ is divided into following sections:
                 ===============
                 JAVADOC SECTION
                 ===============
-            -->
     <target depends="init" name="-javadoc-build">
         <mkdir dir="${dist.javadoc.dir}"/>
         <javadoc additionalparam="${javadoc.additionalparam}" author="${javadoc.author}" charset="UTF-8" destdir="${dist.javadoc.dir}" docencoding="UTF-8" encoding="${javadoc.encoding.used}" failonerror="true" noindex="${javadoc.noindex}" nonavbar="${javadoc.nonavbar}" notree="${javadoc.notree}" private="${javadoc.private}" source="${javac.source}" splitindex="${javadoc.splitindex}" use="${javadoc.use}" useexternalfile="true" version="${javadoc.version}" windowtitle="${javadoc.windowtitle}">
@@ -591,6 +590,7 @@ is divided into following sections:
         <nbbrowse file="${dist.javadoc.dir}/index.html"/>
     </target>
     <target depends="init,-javadoc-build,-javadoc-browse" description="Build Javadoc." name="javadoc"/>
+    -->
     <!--
                 =========================
                 JUNIT COMPILATION SECTION
