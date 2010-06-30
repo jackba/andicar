@@ -213,7 +213,11 @@ public abstract class EditActivityBase extends BaseActivity {
                             new BigDecimal(sValue);
                         }
                         catch(NumberFormatException e){
-                            return etChild.getTag().toString().replace(":", "");
+                        	if(etChild.getTag() != null && etChild.getTag().toString() != null)
+                        		return etChild.getTag().toString().replace(":", "");
+                        	else
+                        		return "";
+                        	
                         }
                     }
                }
