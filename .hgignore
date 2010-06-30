@@ -12,3 +12,6 @@
 ^AndiCar210\.apk$
 ^myEnv\.sh$
 ^AndiCarResources\.zip$
+
+syntax: regexp
+^bin$
