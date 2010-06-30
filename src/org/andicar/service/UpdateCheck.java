@@ -18,21 +18,22 @@
 
 package org.andicar.service;
 
-import android.app.NotificationManager;
-import android.app.Service;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.IBinder;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import org.apache.http.util.ByteArrayBuffer;
+
 import org.andicar.activity.R;
-import android.app.Notification;
-import android.app.PendingIntent;
 import org.andicar.utils.StaticValues;
+import org.apache.http.util.ByteArrayBuffer;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.IBinder;
 
 public class UpdateCheck extends Service{
     /* This Thread checks for Updates in the Background */
@@ -46,8 +47,6 @@ public class UpdateCheck extends Service{
         public void run() {
             try {
                 URL updateURL = new URL(StaticValues.VERSION_FILE_URL);
-                if(updateURL == null)
-                    stopSelf();
                 URLConnection conn = updateURL.openConnection();
                 if(conn == null)
                     stopSelf();
@@ -55,12 +54,7 @@ public class UpdateCheck extends Service{
                 if(is == null)
                     stopSelf();
                 BufferedInputStream bis = new BufferedInputStream(is);
-                if(bis == null)
-                    stopSelf();
                 ByteArrayBuffer baf = new ByteArrayBuffer(50);
-                if(baf == null)
-                    stopSelf();
-
                 int current = 0;
                 while((current = bis.read()) != -1){
                      baf.append((byte)current);
@@ -68,9 +62,6 @@ public class UpdateCheck extends Service{
 
                 /* Convert the Bytes read to a String. */
                 final String s = new String(baf.toByteArray());
-                if(s == null)
-                    stopSelf();
-
                 /* Get current Version Number */
                 int curVersion = getPackageManager().getPackageInfo("org.andicar.activity", 0).versionCode;
                 int newVersion = Integer.valueOf(s);

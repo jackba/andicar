@@ -19,14 +19,14 @@
 
 package org.andicar.activity;
 
+import org.andicar.persistence.MainDbAdapter;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-import org.andicar.persistence.MainDbAdapter;
 
 /**
  *

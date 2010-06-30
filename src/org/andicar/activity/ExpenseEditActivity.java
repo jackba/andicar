@@ -86,7 +86,6 @@ public class ExpenseEditActivity extends EditActivityBase {
     private BigDecimal price = null;
     private BigDecimal quantity = null;
     private BigDecimal amount = null;
-    private RadioButton rbInsertModeAmount;
     private RadioButton rbInsertModePrice;
     private boolean isActivityOnLoading = true;
 
@@ -281,7 +280,6 @@ public class ExpenseEditActivity extends EditActivityBase {
         tvConvertedAmountValue = (TextView) findViewById(R.id.tvConvertedAmountValue);
         tvConvertedAmountLabel = (TextView) findViewById(R.id.tvConvertedAmountLabel);
         rbInsertModePrice = (RadioButton) findViewById(R.id.rbInsertModePrice);
-        rbInsertModeAmount = (RadioButton) findViewById(R.id.rbInsertModeAmount);
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
         carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
@@ -306,7 +304,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                     mBPartnerId = Long.parseLong(bPartnerIdStr);
                 else
                     mBPartnerId = 0;
-                addressAdapter = new ArrayAdapter(ExpenseEditActivity.this, android.R.layout.simple_dropdown_item_1line,
+                addressAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this, android.R.layout.simple_dropdown_item_1line,
                         mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME,
                         mBPartnerId, 0));
                 acAdress.setAdapter(addressAdapter);

@@ -19,23 +19,24 @@
 
 package org.andicar.activity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.StaticValues;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.StaticValues;
 
 /**
  *
