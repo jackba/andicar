@@ -63,7 +63,8 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     AlertDialog.Builder reportOptionsDialog;
     ProgressDialog progressDialog;
 
-    protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
+    @SuppressWarnings("rawtypes")
+	protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
             String editTableName, String[] editTableColumns, String whereCondition, String orderByColumn,
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo, 
             String reportSqlName, Bundle reportParams, SimpleCursorAdapter.ViewBinder pViewBinder) {

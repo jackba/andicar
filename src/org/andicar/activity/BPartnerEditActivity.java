@@ -188,7 +188,7 @@ public class BPartnerEditActivity extends EditActivityBase {
 
     protected AdapterView.OnItemLongClickListener mItemLongClickListener =
             new AdapterView.OnItemLongClickListener() {
-                public boolean onItemLongClick(AdapterView parent, View v, int position, long id) {
+                public boolean onItemLongClick(@SuppressWarnings("rawtypes") AdapterView parent, View v, int position, long id) {
                     mLongClickId = id;
                     return false;
                 }

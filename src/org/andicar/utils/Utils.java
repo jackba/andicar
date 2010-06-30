@@ -275,8 +275,6 @@ public class Utils {
         String retVal = null;
         try{
             BigDecimal number = new BigDecimal(sNumber);
-            if(number == null)
-                return null;
             retVal = number.setScale(decimals, RoundingMode.HALF_UP).toString();
         }
         catch(NumberFormatException e){

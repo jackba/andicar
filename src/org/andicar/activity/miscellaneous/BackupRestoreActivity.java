@@ -79,7 +79,7 @@ public class BackupRestoreActivity extends BaseActivity {
             lvBackupList.setAdapter(null);
             return;
         }
-        ArrayAdapter listAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_single_choice, bkFileList);
         lvBackupList.setAdapter(listAdapter);
         lvBackupList.setItemsCanFocus(false);

@@ -434,7 +434,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     mBPartnerId = Long.parseLong(bPartnerIdStr);
                 else
                     mBPartnerId = 0;
-                addressAdapter = new ArrayAdapter(RefuelEditActivity.this, android.R.layout.simple_dropdown_item_1line,
+                addressAdapter = new ArrayAdapter<String>(RefuelEditActivity.this, android.R.layout.simple_dropdown_item_1line,
                         mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME,
                         mBPartnerId, 0));
                 acAdress.setAdapter(addressAdapter);

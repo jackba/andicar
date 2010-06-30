@@ -53,8 +53,10 @@ public class ListActivityBase extends ListActivity {
     protected long mLongClickId = -1;
     protected boolean showInactiveRecords = false;
     protected Menu optionsMenu;
-    protected Class mEditClass = null;
-    protected Class mInsertClass = null;
+    @SuppressWarnings("rawtypes")
+	protected Class mEditClass = null;
+    @SuppressWarnings("rawtypes")
+	protected Class mInsertClass = null;
     protected String mTableName = null;
     protected String[] mColumns = null;
     protected String mWhereCondition = null;
@@ -98,7 +100,8 @@ public class ListActivityBase extends ListActivity {
             AndiCarStatistics.sendFlurryEndSession(this);
     }
 
-    protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
+    @SuppressWarnings("rawtypes")
+	protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
             String tableName, String[] columns, String whereCondition, String orderByColumn,
             int pLayoutId, String[] pDbMapFrom, int[] pLayoutIdTo, SimpleCursorAdapter.ViewBinder pViewBinder) {
 
@@ -199,7 +202,7 @@ public class ListActivityBase extends ListActivity {
 
     protected AdapterView.OnItemLongClickListener mItemLongClickListener =
             new AdapterView.OnItemLongClickListener() {
-                public boolean onItemLongClick(AdapterView parent, View v, int position, long id) {
+                public boolean onItemLongClick(@SuppressWarnings("rawtypes") AdapterView parent, View v, int position, long id) {
                     mLongClickId = id;
                     return false;
                 }

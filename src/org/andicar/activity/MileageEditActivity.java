@@ -19,6 +19,12 @@
 
 package org.andicar.activity;
 
+import java.math.BigDecimal;
+
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -27,21 +33,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
-import java.math.BigDecimal;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.AndiCarStatistics;
-import org.andicar.utils.StaticValues;
-import android.view.View;
 
 
 /**
