@@ -45,6 +45,8 @@ import org.andicar.utils.StaticValues;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 
+import com.andicar.activity.preference.AddOnServices;
+
 /**
  *
  * @author miki
@@ -131,6 +133,17 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         partnersPrefScreen.setTitle(mRes.getString(R.string.PREF_PartnerTitle));
         partnersPrefScreen.setSummary(mRes.getString(R.string.PREF_PartnerSummary));
         bPartnerCategory.addPreference(partnersPrefScreen);
+
+        //AddOn Services
+        PreferenceCategory addOnCategory = new PreferenceCategory(this);
+        addOnCategory.setTitle(mRes.getString(R.string.PREF_AddOnCategoryTitle));
+        prefScreenRoot.addPreference(addOnCategory);
+        //AddOn screen
+        PreferenceScreen addOnScreen = getPreferenceManager().createPreferenceScreen(this);
+        addOnScreen.setIntent(new Intent(this, AddOnServices.class));
+        addOnScreen.setTitle(mRes.getString(R.string.PREF_AddOnServicesTitle));
+        addOnScreen.setSummary(mRes.getString(R.string.PREF_AddOnServicesSummary));
+        addOnCategory.addPreference(addOnScreen);
 
         //uom's
         PreferenceCategory uomPrefCategory = new PreferenceCategory(this);

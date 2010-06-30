@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="lib/AndiCarAddOns.jar"/>
 	<classpathentry kind="lib" path="lib/FlurryAgent.jar"/>
 	<classpathentry kind="lib" path="lib/PayPalLib.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AndiCarAddOns"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

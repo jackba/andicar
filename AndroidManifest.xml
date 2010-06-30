@@ -204,6 +204,10 @@
             android:name="org.andicar.activity.BPartnerLocationEditActivity"
             android:label="@string/APP_Activity_BPartnerLocationEdit">
         </activity>
+        <activity
+            android:name="com.andicar.activity.preference.AddOnServices"
+            android:label="@string/PREF_AddOnCategoryTitle">
+        </activity>
 
     </application>
 </manifest>

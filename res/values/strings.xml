@@ -289,6 +289,9 @@
     <string name="PREF_PartnerSummary">"Add, delete, modify partners and locations"</string>
     <string name="PREF_UseNumericInputTitle">"Use numeric keypad"</string>
     <string name="PREF_UseNumericInputSummary">"Use a simplified keypad for numeric fields."</string>
+    <string name="PREF_AddOnCategoryTitle">"AddOn Services"</string>
+    <string name="PREF_AddOnServicesTitle">"AddOn Services"</string>
+    <string name="PREF_AddOnServicesSummary">"Subscription based, payed services."</string>
 
     <string name="PREFMainScreen_ZonesLabel">"Existing zones:"</string>
     <string name="PREFGPSTrack_FileFormatTitle">"File format"</string>
