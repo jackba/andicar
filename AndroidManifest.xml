@@ -21,7 +21,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
           android:versionCode="335"
-          android:versionName="3.3.5">
+          android:versionName="3.3.6 Beta">
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -29,6 +29,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:label="AndiCar"
@@ -205,8 +206,16 @@
             android:label="@string/APP_Activity_BPartnerLocationEdit">
         </activity>
         <activity
-            android:name="com.andicar.activity.preference.AddOnServices"
+            android:name="com.andicar.addon.AddOnServicesList"
             android:label="@string/PREF_AddOnCategoryTitle">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.SubscribeToService">
+        </activity>
+<!--            android:label="@string/PREF_AddOnServicesSubscribe"> -->
+		<activity 
+			android:name="com.paypal.android.MEP.PayPalActivity"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
 
     </application>
