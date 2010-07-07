@@ -70,6 +70,9 @@ public class DB {
     public static final String BPARTNER_TABLE_NAME = "DEF_BPARTNER";
     //business partner locations table
     public static final String BPARTNER_LOCATION_TABLE_NAME = "DEF_BPARTNERLOCATION";
+    
+    //add on services
+    public static final String ADDON_TABLE_NAME = "SYS_ADDON";
 
     //column names. Some is general (GEN_) some is particular
     //generic columns must be first and must be created for ALL TABLES
@@ -624,6 +627,15 @@ public class DB {
             + BPARTNER_LOCATION_CONTACTPERSON_NAME + " TEXT NULL "
             + ");";
 
+    protected static final String ADDON_TABLE_CREATE_SQL =
+        "CREATE TABLE " + ADDON_TABLE_NAME
+        + " ( "
+	        + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+	        + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
+	        + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
+	        + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
+        + ");";
+
     protected DatabaseHelper mDbHelper = null;
     protected SQLiteDatabase mDb = null;
     protected final Context mCtx;
@@ -713,6 +725,8 @@ public class DB {
                 createGPSTrackTables(db);
                 createBPartnerTable(db);
 
+                createAddOnTable(db);
+                
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
                 if(fu.createFolders(mCtx) != -1) {
@@ -911,6 +925,11 @@ public class DB {
             db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
         }
 
+        private void createAddOnTable(SQLiteDatabase db) throws SQLException {
+            //create uom table
+            db.execSQL(ADDON_TABLE_CREATE_SQL);
+        }
+        
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //AndiCar 1.0.0
@@ -920,6 +939,7 @@ public class DB {
                 upgradeDbTo300(db, oldVersion);
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
@@ -927,21 +947,28 @@ public class DB {
                 upgradeDbTo300(db, oldVersion);
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
                 upgradeDbTo300(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 3.0.x
             else if(oldVersion == 300){
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 3.1.x
             else if(oldVersion == 310){
                 upgradeDbTo330(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
+            }
+            else if(oldVersion == 330){
+                upgradeDbTo340(db, oldVersion);
             }
             
 //            upgradeDbTo330(db, oldVersion);
@@ -1322,6 +1349,9 @@ public class DB {
             }
         }
 
+        private void upgradeDbTo340(SQLiteDatabase db, int oldVersion) throws SQLException {
+        	createAddOnTable(db);
+        }
         private boolean columnExists(SQLiteDatabase db, String table, String column){
             String testSql =
                     "SELECT " + column +

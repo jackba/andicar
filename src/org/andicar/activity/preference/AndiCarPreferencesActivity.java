@@ -45,7 +45,7 @@ import org.andicar.utils.StaticValues;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 
-import com.andicar.activity.preference.AddOnServices;
+import com.andicar.addon.AddOnServicesList;
 
 /**
  *
@@ -140,7 +140,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         prefScreenRoot.addPreference(addOnCategory);
         //AddOn screen
         PreferenceScreen addOnScreen = getPreferenceManager().createPreferenceScreen(this);
-        addOnScreen.setIntent(new Intent(this, AddOnServices.class));
+        addOnScreen.setIntent(new Intent(this, AddOnServicesList.class));
         addOnScreen.setTitle(mRes.getString(R.string.PREF_AddOnServicesTitle));
         addOnScreen.setSummary(mRes.getString(R.string.PREF_AddOnServicesSummary));
         addOnCategory.addPreference(addOnScreen);
