@@ -288,7 +288,13 @@ public class ListActivityBase extends ListActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 int deleteResult = mDbAdapter.deleteRecord(mTableName, mLongClickId);
                                 if(deleteResult != -1) {
-                                    errorAlertBuilder.setMessage(mRes.getString(deleteResult));
+                                	//issue #34
+                                	try{
+                                		errorAlertBuilder.setMessage(mRes.getString(deleteResult));
+                                	}
+                                	catch(Resources.NotFoundException e){
+                                		errorAlertBuilder.setMessage(mRes.getString(R.string.ERR_000));
+                                	}
                                     errorAlert = errorAlertBuilder.create();
                                     errorAlert.show();
                                 }
