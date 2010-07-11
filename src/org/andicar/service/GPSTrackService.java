@@ -72,7 +72,9 @@ public class GPSTrackService extends Service {
     private double lastGoodLocationAltitude = 0;
     private double dCurrentAccuracy = 0 ;
     private double dCurrentSpeed = 0;
+    private double dOldSpeed = 0;
     private long lCurrentLocationTime = 0;
+    private long lOldLocationTime = 0;
     private Calendar currentLocationDateTime = Calendar.getInstance();
     private String currentLocationDateTimeGPXStr = "";
     private float[] fDistanceArray = new float[1];
@@ -462,7 +464,6 @@ public class GPSTrackService extends Service {
                 + "<Placemark>\n"
                   + "<name><![CDATA[" + pointName + "]]></name>\n"
                   + "<description><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a>."
-                  //TODO uom conversion to car default uom
                   + "<p>Distance: " + (dDistance) + (isUseMetricUnits? " km" : " mi")
                       + "]]></description>\n"
                   + "<styleUrl>" + pointStyle + "</styleUrl>\n"
@@ -742,10 +743,6 @@ public class GPSTrackService extends Service {
     }
 
     private void updateStatistics(){
-        //TODO
-        /*
-         * convertion for distance and speed to car uom!
-         */
         long lTotalTime = (lStopTime - lStartTime) / 1000; //in seconds; lStopTime & lStartTime are in miliseconds
         if(lLastNonMovingTime != 0 && lFirstNonMovingTime != 0)
             lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
@@ -832,12 +829,14 @@ public class GPSTrackService extends Service {
                     dCurrentSpeed = loc.getSpeed();
                     dCurrentLocationBearing = loc.getBearing();
 
-                    if(isFirstPoint && iFileCount == 1)
+                    if(isFirstPoint && iFileCount == 1){
                         lStartTime = lCurrentLocationTime;
+                    	lOldLocationTime = 0;
+                    	dOldSpeed = 0;
+                    }
 
                     if(dCurrentAccuracy > iMaxAccuracy){
                         isValid = false;
-
                         //
                         if(lCurrentLocationTime - lStartTime > 30000){ //leave time for GPS initialization (30 sec)
                             dTotalSkippedTrackPoints++;
@@ -857,11 +856,19 @@ public class GPSTrackService extends Service {
                         }
                     }
                     else{
-                        isValid = true;
-                        dTotalUsedTrackPoints++;
-                        dTmpSkippedTrackPoints = 0;
-                        bNotificationShowed = false;
-
+                    	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
+                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
+                    	if(acceleration > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds
+                            isValid = false;
+                    	}
+                    	else{
+	                        isValid = true;
+	                        dTotalUsedTrackPoints++;
+	                        dTmpSkippedTrackPoints = 0;
+	                        bNotificationShowed = false;
+	                    	lOldLocationTime = lCurrentLocationTime;
+	                    	dOldSpeed = dCurrentSpeed;
+                    	}
                     }
 
                     if(isValid){
@@ -928,8 +935,9 @@ public class GPSTrackService extends Service {
                     if(dCurrentLocationAltitude > dMaxAltitude)
                         dMaxAltitude = dCurrentLocationAltitude;
 
-                    if(dCurrentSpeed > dMaxSpeed)
-                        dMaxSpeed = dCurrentSpeed;
+                    if(dCurrentSpeed > dMaxSpeed){
+                		dMaxSpeed = dCurrentSpeed;
+                    }
 
                     if(gpsTrackDetailKMLFileWriter != null && dDistanceBetweenLocations != 0)
                         appendKMLTrackPoint();
