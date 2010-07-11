@@ -18,6 +18,9 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+<!-- debug: android:apiKey="0aQTdJnsQSHfbEz5axy7VixTxQu4UkJkLgdkbjA" -->
+<!-- release: android:apiKey="0aQTdJnsQSHdoTbAJ0paNl9sntpqEw8hVG6nhRg" -->
+
 <com.google.android.maps.MapView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gpstrackmap"

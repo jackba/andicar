@@ -939,7 +939,7 @@ public class DB {
                 upgradeDbTo300(db, oldVersion);
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
-                upgradeDbTo340(db, oldVersion);
+//                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
@@ -947,29 +947,29 @@ public class DB {
                 upgradeDbTo300(db, oldVersion);
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
-                upgradeDbTo340(db, oldVersion);
+//                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
                 upgradeDbTo300(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
-                upgradeDbTo340(db, oldVersion);
+//                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 3.0.x
             else if(oldVersion == 300){
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
-                upgradeDbTo340(db, oldVersion);
+//                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 3.1.x
             else if(oldVersion == 310){
                 upgradeDbTo330(db, oldVersion);
-                upgradeDbTo340(db, oldVersion);
+//                upgradeDbTo340(db, oldVersion);
             }
-            else if(oldVersion == 330){
-                upgradeDbTo340(db, oldVersion);
-            }
+//            else if(oldVersion == 330){
+//                upgradeDbTo340(db, oldVersion);
+//            }
             
 //            upgradeDbTo330(db, oldVersion);
         }
@@ -1349,9 +1349,10 @@ public class DB {
             }
         }
 
-        private void upgradeDbTo340(SQLiteDatabase db, int oldVersion) throws SQLException {
-        	createAddOnTable(db);
-        }
+//        private void upgradeDbTo340(SQLiteDatabase db, int oldVersion) throws SQLException {
+//        	createAddOnTable(db);
+//        }
+
         private boolean columnExists(SQLiteDatabase db, String table, String column){
             String testSql =
                     "SELECT " + column +
