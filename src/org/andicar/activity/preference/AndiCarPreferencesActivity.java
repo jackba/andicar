@@ -45,7 +45,7 @@ import org.andicar.utils.StaticValues;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 
-import com.andicar.addon.AddOnServicesList;
+//import com.andicar.addon.AddOnServicesList;
 
 /**
  *

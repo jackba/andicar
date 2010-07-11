@@ -212,11 +212,11 @@
         <activity
             android:name="com.andicar.addon.SubscribeToService">
         </activity>
-<!--            android:label="@string/PREF_AddOnServicesSubscribe"> -->
+<!--  
 		<activity 
 			android:name="com.paypal.android.MEP.PayPalActivity"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
-
+-->
     </application>
 </manifest>
