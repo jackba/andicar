@@ -72,7 +72,7 @@ public class GPSTrackService extends Service {
     private double lastGoodLocationAltitude = 0;
     private double dCurrentAccuracy = 0 ;
     private double dCurrentSpeed = 0;
-    private double dOldSpeed = 0;
+//    private double dOldSpeed = 0;
     private long lCurrentLocationTime = 0;
     private long lOldLocationTime = 0;
     private Calendar currentLocationDateTime = Calendar.getInstance();
@@ -826,13 +826,14 @@ public class GPSTrackService extends Service {
                     dCurrentLocationAltitude = loc.getAltitude();
                     lCurrentLocationTime = loc.getTime();
                     dCurrentAccuracy = loc.getAccuracy();
-                    dCurrentSpeed = loc.getSpeed();
+//                    dCurrentSpeed = loc.getSpeed();
                     dCurrentLocationBearing = loc.getBearing();
 
                     if(isFirstPoint && iFileCount == 1){
                         lStartTime = lCurrentLocationTime;
-                    	lOldLocationTime = 0;
-                    	dOldSpeed = 0;
+                    	lOldLocationTime = lCurrentLocationTime;
+                    	dCurrentSpeed = 0;
+//                    	dOldSpeed = 0;
                     }
 
                     if(dCurrentAccuracy > iMaxAccuracy){
@@ -856,19 +857,18 @@ public class GPSTrackService extends Service {
                         }
                     }
                     else{
-                    	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
-                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
-                    	if(acceleration > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds
-                            isValid = false;
-                    	}
-                    	else{
+//                    	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
+//                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
+//                    	if(acceleration > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds
+//                            isValid = false;
+//                    	}
+//                    	else{
 	                        isValid = true;
 	                        dTotalUsedTrackPoints++;
 	                        dTmpSkippedTrackPoints = 0;
 	                        bNotificationShowed = false;
-	                    	lOldLocationTime = lCurrentLocationTime;
-	                    	dOldSpeed = dCurrentSpeed;
-                    	}
+//	                    	dOldSpeed = dCurrentSpeed;
+//                    	}
                     }
 
                     if(isValid){
@@ -886,6 +886,11 @@ public class GPSTrackService extends Service {
                                     dCurrentLocationLatitude, dCurrentLocationLongitude, fDistanceArray);
                             dDistanceBetweenLocations = fDistanceArray[0];
                             dDistance = dDistance + dDistanceBetweenLocations;
+                            if(lCurrentLocationTime - lOldLocationTime > 0)
+                            	dCurrentSpeed = dDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
+                            else
+                            	dCurrentSpeed = 0;
+                        	lOldLocationTime = lCurrentLocationTime;
                         }
                     }
 
