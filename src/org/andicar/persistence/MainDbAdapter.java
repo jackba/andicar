@@ -1231,4 +1231,30 @@ public class MainDbAdapter extends DB
 //        return mDb.query( tableName, columns, selection, null, null, null, orderByColumn );
 //    }
 
+    /**
+     * get the start index for a new mileage record
+     */
+    public BigDecimal getMileageStartIndex(long mCarId){
+        String mStartIndexStr = null;
+        String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
+                        "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
+                        "WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y' " +
+                            "AND " + MainDbAdapter.MILEAGE_COL_CAR_ID_NAME + " = ? " +
+                      "UNION " +
+                      "SELECT " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + ", 2 As Pos " +
+                      "FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
+                      "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ? " +
+                      "ORDER BY Pos ASC";
+        String[] selectionArgs = {Long.toString(mCarId), Long.toString(mCarId)};
+        Cursor c = execSelectSql(sql, selectionArgs);
+        if(c.moveToFirst()){
+            mStartIndexStr = c.getString(0);
+        }
+        if((mStartIndexStr == null || mStartIndexStr.length() == 0)
+                && c.moveToNext())
+            mStartIndexStr = c.getString(0);
+        if(mStartIndexStr == null || mStartIndexStr.length() == 0)
+            mStartIndexStr = "0";
+    	return new BigDecimal(mStartIndexStr);
+    }
 }

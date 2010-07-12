@@ -15,6 +15,14 @@
 
 package org.andicar.activity.miscellaneous;
 
+import java.math.BigDecimal;
+
+import org.andicar.activity.BaseActivity;
+import org.andicar.activity.R;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.service.GPSTrackService;
+import org.andicar.utils.Utils;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,14 +33,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.Toast;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
-import org.andicar.activity.BaseActivity;
-import org.andicar.activity.R;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.service.GPSTrackService;
-import org.andicar.utils.Utils;
 
 /**
  *
@@ -45,10 +52,13 @@ public class GPSTrackController extends BaseActivity {
     private ArrayAdapter<String> aaUserComment;
     private AutoCompleteTextView acUserComment;
     private EditText etName;
+    private EditText etIndexStart;
     private CheckBox ckIsUseKML;
     private CheckBox ckIsUseGPX;
     private CheckBox ckIsCreateMileage;
     private ImageButton btnGPSTrackStartStop;
+    private LinearLayout llIndexStartZone;
+    private boolean isCreateMileage = true;
     private boolean isGpsTrackOn = false;
     private ViewGroup vgRoot;
     private long mCarId;
@@ -59,7 +69,7 @@ public class GPSTrackController extends BaseActivity {
     public void onCreate(Bundle icicle) {
 
         super.onCreate(icicle);
-        setContentView(R.layout.gpstrackcontroller_activity);
+        setContentView(R.layout.gpstrack_controller_activity);
 
         mCarId = mPreferences.getLong("CurrentCar_ID", -1);
         mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
@@ -73,6 +83,8 @@ public class GPSTrackController extends BaseActivity {
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
         etName = (EditText) findViewById(R.id.etName);
+        etIndexStart = (EditText) findViewById(R.id.etIndexStart);
+        llIndexStartZone = (LinearLayout) findViewById(R.id.llIndexStartZone);
         etName.setHint(Utils.getDateStr(true, true));
         ckIsUseKML = (CheckBox) findViewById(R.id.ckIsUseKML);
         ckIsUseKML.setChecked(mPreferences.getBoolean("IsUseKMLTrack", true));
@@ -83,7 +95,14 @@ public class GPSTrackController extends BaseActivity {
         btnGPSTrackStartStop = (ImageButton) findViewById(R.id.btnStartStopGpsTrack);
         btnGPSTrackStartStop.setOnClickListener(btnGPSTrackStartStopListener);
         ckIsCreateMileage = (CheckBox) findViewById(R.id.ckIsCreateMileage);
-        ckIsCreateMileage.setChecked(mPreferences.getBoolean("GPSTrackCreateMileage", true));
+        isCreateMileage = mPreferences.getBoolean("GPSTrackCreateMileage", true);
+        ckIsCreateMileage.setChecked(isCreateMileage);
+        ckIsCreateMileage.setOnCheckedChangeListener(ckCreateMilegeOnCheckedChangeListener);
+        vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
+        if(vgRoot != null)
+        	setInputType(vgRoot);
+
+        fillStartIndex();
     }
 
     @Override
@@ -148,9 +167,11 @@ public class GPSTrackController extends BaseActivity {
         mDriverId = mPreferences.getLong("GPSTrackDriverID", mDriverId);
         etName.setText(mPreferences.getString("GPSTrackName", ""));
         acUserComment.setText(mPreferences.getString("GPSTrackComment", ""));
-        ckIsCreateMileage.setChecked(mPreferences.getBoolean("GPSTrackCreateMileage", true));
+        isCreateMileage = mPreferences.getBoolean("GPSTrackCreateMileage", true);
+        ckIsCreateMileage.setChecked(isCreateMileage);
         ckIsUseKML.setChecked(mPreferences.getBoolean("GPSTrackUseKML", true));
         ckIsUseGPX.setChecked(mPreferences.getBoolean("GPSTrackUseGPX", true));
+        etIndexStart.setText(mPreferences.getString("GPSTrackStartIndex", ""));
 //        ckIsShowOnMap.setChecked(mPreferences.getBoolean("GPSTrackShowMap", false));
     }
 
@@ -164,12 +185,38 @@ public class GPSTrackController extends BaseActivity {
            }
 
            if(!(child.getId() == R.id.ckIsCreateMileage
-                   || child.getId() == R.id.btnStartStopGpsTrack))
+                   || child.getId() == R.id.btnStartStopGpsTrack
+                   || child.getId() == R.id.etIndexStart))
                child.setEnabled(editable);
        }
    }
+   
+   private void fillStartIndex(){
+	   if(isCreateMileage){
+		   llIndexStartZone.setVisibility(View.VISIBLE);
+	       try{
+	       		BigDecimal startIndex = mDbAdapter.getMileageStartIndex(mCarId);
+	       		if(startIndex != null){
+	       			etIndexStart.setText(startIndex.toString());
+	       		}
+	       }
+	       catch(NumberFormatException e){}
+	   }
+	   else{
+		   llIndexStartZone.setVisibility(View.GONE);
+		   etIndexStart.setText(null);
+	   }
+   }
 
-    private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
+   private OnCheckedChangeListener ckCreateMilegeOnCheckedChangeListener = 
+	   new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				isCreateMileage = isChecked;
+				fillStartIndex();
+			}
+   };
+   private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     if(bIsActivityOnLoading)
@@ -182,6 +229,7 @@ public class GPSTrackController extends BaseActivity {
                     acUserComment.setAdapter(aaUserComment);
                     mCarId = spnCar.getSelectedItemId();
                     mDriverId = spnDriver.getSelectedItemId();
+                    fillStartIndex();
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -200,7 +248,9 @@ public class GPSTrackController extends BaseActivity {
         {
             Intent gpsTrackIntent = new Intent(GPSTrackController.this, GPSTrackService.class);
             if(isGpsTrackOn){
-                mPrefEditor.putBoolean("GPSTrackCreateMileage", ckIsCreateMileage.isChecked());
+                mPrefEditor.putBoolean("GPSTrackCreateMileage", isCreateMileage);
+                if(isCreateMileage)
+                	mPrefEditor.putString("GPSTrackStartIndex", etIndexStart.getText().toString());
                 mPrefEditor.commit();
                 stopService(gpsTrackIntent);
                 isGpsTrackOn = false;
@@ -213,9 +263,18 @@ public class GPSTrackController extends BaseActivity {
                 finish();
             }
             else{
+                String strRetVal = checkNumeric(vgRoot);
+                if( strRetVal != null ) {
+                    Toast toast = Toast.makeText( getApplicationContext(),
+                            mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+                    toast.show();
+                    return;
+                }
+            	
                 if(etName.getText().toString().length() == 0)
                     etName.setText(etName.getHint());
 
+               	mPrefEditor.putString("GPSTrackStartIndex", etIndexStart.getText().toString());
                 mPrefEditor.putString("GPSTrackTmp_Name", etName.getText().toString());
                 mPrefEditor.putString("GPSTrackTmp_UserComment", acUserComment.getText().toString());
                 mPrefEditor.putLong("GPSTrackTmp_CarId", mCarId);
@@ -235,4 +294,5 @@ public class GPSTrackController extends BaseActivity {
             }
         };
     };
+    
 }

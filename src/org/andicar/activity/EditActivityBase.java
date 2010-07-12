@@ -19,23 +19,23 @@
 
 package org.andicar.activity;
 
+import java.util.Calendar;
+
+import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
-import java.util.Calendar;
-import org.andicar.utils.StaticValues;
-import android.widget.TimePicker;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageButton;
-import java.math.BigDecimal;
-import org.andicar.utils.AndiCarStatistics;
-import org.andicar.utils.Utils;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 /**
  * Base class for all edit activities. Implement common functionalities:
@@ -62,8 +62,6 @@ public abstract class EditActivityBase extends BaseActivity {
     protected long mlDateTimeInSeconds;
     protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
-    protected ViewGroup vgRoot;
-    protected boolean isUseNumericInput = true;
 
     abstract void saveData();
     abstract void setLayout();
@@ -101,9 +99,9 @@ public abstract class EditActivityBase extends BaseActivity {
         if(onOkClickListener != null)
             btnOk.setOnClickListener(onOkClickListener);
             
-        isUseNumericInput = mPreferences.getBoolean("UseNumericKeypad", true);
         vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
-        setInputType(vgRoot);
+        if(vgRoot != null)
+        	setInputType(vgRoot);
 
     }
 
@@ -179,83 +177,6 @@ public abstract class EditActivityBase extends BaseActivity {
            }
        }
        return null;
-   }
-
-   /**
-    * Check numeric fields. Numeric fields are detected based on input type (TYPE_CLASS_PHONE)
-    * @return null or field tag if is empty
-    */
-   protected String checkNumeric(ViewGroup wg){
-       View vwChild;
-       EditText etChild;
-       String strRetVal;
-       if(wg == null)
-           return null;
-
-       for(int i = 0; i < wg.getChildCount(); i++)
-       {
-           vwChild = wg.getChildAt(i);
-           if(vwChild instanceof ViewGroup){
-               strRetVal = checkNumeric((ViewGroup)vwChild);
-               if(strRetVal != null)
-                   return strRetVal;
-           }
-           else if(vwChild instanceof EditText){
-               etChild = (EditText) vwChild;
-               String sValue = ((EditText)etChild).getText().toString();
-               if(etChild.getOnFocusChangeListener() == null &&
-                       (etChild.getInputType() == InputType.TYPE_CLASS_PHONE
-                            || etChild.getInputType() == InputType.TYPE_CLASS_NUMBER)) {
-                    if(sValue != null && sValue.length() > 0)
-                    {
-                        try{
-                            //check if valid number
-                            new BigDecimal(sValue);
-                        }
-                        catch(NumberFormatException e){
-                        	if(etChild.getTag() != null && etChild.getTag().toString() != null)
-                        		return etChild.getTag().toString().replace(":", "");
-                        	else
-                        		return "";
-                        	
-                        }
-                    }
-               }
-           }
-       }
-       return null;
-   }
-
-   /**
-    * set the input type associated to a numeric field
-    * on some devices the input type PHONE does not show the dot simbol
-    * see issue #29
-    * @param wg
-    */
-   protected void setInputType(ViewGroup wg){
-       if(wg == null)
-           return;
-
-       View vwChild;
-       EditText etChild;
-
-       for(int i = 0; i < wg.getChildCount(); i++)
-       {
-           vwChild = wg.getChildAt(i);
-           if(vwChild instanceof ViewGroup){
-               setInputType((ViewGroup)vwChild);
-           }
-           else if(vwChild instanceof EditText){
-               etChild = (EditText) vwChild;
-               if(etChild.getInputType() == InputType.TYPE_CLASS_PHONE
-                            || etChild.getInputType() == InputType.TYPE_CLASS_NUMBER) { //numeric field
-                    if(isUseNumericInput)
-                        etChild.setRawInputType(InputType.TYPE_CLASS_PHONE);
-                    else
-                        etChild.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-               }
-           }
-       }
    }
 
    protected void setEditable(ViewGroup vg, boolean editable){
