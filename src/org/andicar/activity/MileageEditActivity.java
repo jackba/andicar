@@ -122,7 +122,18 @@ public class MileageEditActivity extends EditActivityBase {
             mDriverId = c.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
             acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
             mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
-            mStartIndex = BigDecimal.ZERO;
+            if(mPreferences.contains("GPSTrackStartIndex") &&
+            		mPreferences.getString("GPSTrackStartIndex", null) != null){
+            	String startIndex = mPreferences.getString("GPSTrackStartIndex", "");
+            	try{
+            		mStartIndex = new BigDecimal(startIndex);
+            	}
+            	catch(Exception e){
+            		mStartIndex = BigDecimal.ZERO; 
+            	}
+            }
+            else
+            	mStartIndex = BigDecimal.ZERO;
             fillGetCurrentIndex();
             try{
                 BigDecimal stopIndex = mStartIndex.add(new BigDecimal(c.getString(MainDbAdapter.GPSTRACK_COL_DISTANCE_POS))).setScale(0, BigDecimal.ROUND_HALF_DOWN);
@@ -318,28 +329,7 @@ public class MileageEditActivity extends EditActivityBase {
     private BigDecimal fillGetCurrentIndex() throws SQLException {
         try{
             if(mStartIndex.equals(new BigDecimal("0"))){
-                String mStartIndexStr = null;
-                String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
-                                "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
-                                "WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y' " +
-                                    "AND " + MainDbAdapter.MILEAGE_COL_CAR_ID_NAME + " = ? " +
-                              "UNION " +
-                              "SELECT " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + ", 2 As Pos " +
-                              "FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
-                              "WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ? " +
-                              "ORDER BY Pos ASC";
-                String[] selectionArgs = {Long.toString(mCarId), Long.toString(mCarId)};
-                Cursor c = mDbAdapter.execSelectSql(sql, selectionArgs);
-                if(c.moveToFirst()){
-                    mStartIndexStr = c.getString(0);
-                }
-                if((mStartIndexStr == null || mStartIndexStr.length() == 0)
-                        && c.moveToNext())
-                    mStartIndexStr = c.getString(0);
-                if(mStartIndexStr == null || mStartIndexStr.length() == 0)
-                    mStartIndexStr = "0";
-                mStartIndex = new BigDecimal(mStartIndexStr);
-                c.close();
+                mStartIndex = mDbAdapter.getMileageStartIndex(mCarId);
             }
             etStartIndex.setText(mStartIndex.toString());
         }

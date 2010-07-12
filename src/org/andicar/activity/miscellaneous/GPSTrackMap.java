@@ -97,7 +97,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gps_track_map);
+        setContentView(R.layout.gpstrack_map);
         mapView = (MapView) findViewById(R.id.gpstrackmap);
 
         mapView.setBuiltInZoomControls(true);

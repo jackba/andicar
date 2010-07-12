@@ -233,6 +233,7 @@
     <string name="GPSTrackControllerActivity_StopBtnCaption">"Stop GPS Track"</string>
     <string name="GPSTrackControllerActivity_FileFormatLabel">"Track file format:"</string>
     <string name="GPSTrackControllerActivity_CreateMileageLabel">"Create mileage"</string>
+    <string name="GPSTrackControllerActivity_IndexLabel">"Start odometer:"</string>
 
     <string name="GPSTrackService_ServiceStoppedMessage">"GPS tracking stopped"</string>
     <string name="GPSTrackService_GPSDisabledMessage">"Your gps is disabled!\nPlease enable it."</string>

@@ -209,6 +209,6 @@ public class GPSTrackEditActivity extends EditActivityBase {
 
     @Override
     void setLayout() {
-        setContentView(R.layout.gpstrackedit_activity);
+        setContentView(R.layout.gpstrack_edit_activity);
     }
 }
