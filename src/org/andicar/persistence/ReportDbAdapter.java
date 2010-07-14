@@ -72,7 +72,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                         sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + ") || ' ' || " +
                         sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) +
                             " AS " + SECOND_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + 
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
+                		sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + 
                         " AS " + THIRD_LINE_LIST_NAME +
             " FROM " + MILEAGE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
@@ -87,6 +88,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CAR_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+                    	" ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_TAG_ID_NAME) + "=" +
+                                        sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     //used in exported report
@@ -129,6 +133,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CAR_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_CAR_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+                    	" ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_TAG_ID_NAME) + "=" +
+                                    sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     //used in main activity and refuel list activity
@@ -172,7 +179,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                         sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + " || ' ' || " +
                             sqlConcatTableColumn("CarLengthUOM", UOM_COL_CODE_NAME) +
                             " AS " + SECOND_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
+            			sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
                         " AS " + THIRD_LINE_LIST_NAME +
             " FROM " + REFUEL_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
@@ -199,7 +207,10 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CURRENCY_TABLE_NAME + " AS DefaultCurrency " +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn("DefaultCurrency", GEN_COL_ROWID_NAME) +
-            " WHERE 1=1 ";
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+                    	" ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_TAG_ID_NAME) + "=" +
+                                    sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " WHERE 1=1 ";
 
     //used in exported report
     public static String refuelListReportSelect =
@@ -273,6 +284,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " LEFT OUTER JOIN " + BPARTNER_LOCATION_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_BPARTNER_LOCATION_ID_NAME) + "=" +
                                             sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+                    	" ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_TAG_ID_NAME) + "=" +
+                                    sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     //used in main activity
@@ -290,7 +304,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + " || ' ' || " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
                         "AS " + SECOND_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
+                	sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
                         "AS " + THIRD_LINE_LIST_NAME +
             " FROM " + EXPENSE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
@@ -311,6 +326,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CURRENCY_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCY_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+                    	" ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_TAG_ID_NAME) + "=" +
+                                	sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE COALESCE(" + EXPENSE_COL_FROMTABLE_NAME + ", '') = '' ";
 
     //used in expense list activity
@@ -335,7 +353,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + " || ' ' || " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
                         "AS " + SECOND_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
+                	sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
                         "AS " + THIRD_LINE_LIST_NAME +
             " FROM " + EXPENSE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
@@ -359,6 +378,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CURRENCY_TABLE_NAME + " AS ec " +
                         " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME) + "=" +
                                             sqlConcatTableColumn("ec", GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+                    	" ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_TAG_ID_NAME) + "=" +
+                            	sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     //used in exported report
@@ -424,7 +446,10 @@ public class ReportDbAdapter extends MainDbAdapter{
                                             sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_ROWID_NAME) +
                     " LEFT OUTER JOIN " + BPARTNER_LOCATION_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_BPARTNER_LOCATION_ID_NAME) + "=" +
-                                            sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                        					sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+                		" ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_TAG_ID_NAME) + "=" +
+                            	sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     //used in main activity (statistics)
@@ -554,8 +579,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " END " +
 
                     " AS " + SECOND_LINE_LIST_NAME + ", " +
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
-                    sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
+			                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
+			                    sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
                         " AS " + THIRD_LINE_LIST_NAME + ", " +
                 "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTIME_NAME) + ", 2) AS " + FOURTH_LINE_LIST_NAME + ", " +
                 "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MOVINGTIME_NAME)  + ", 2) AS " + FIFTH_LINE_LIST_NAME + ", " +
@@ -570,6 +596,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " JOIN " + UOM_TABLE_NAME +
                             " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
                                                 sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+            			" ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TAG_ID_NAME) + "=" +
+                        		sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             //exclude the track in progress (the no. of trackpoints is updated after terminating the tracking)
             " WHERE " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTRACKPOINTS_NAME) + " IS NOT NULL ";
 
@@ -613,6 +642,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + CAR_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_CAR_ID_NAME) + "=" +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + TAG_TABLE_NAME +
+        				" ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TAG_ID_NAME) + "=" +
+                    						sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
 
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )

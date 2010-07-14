@@ -23,6 +23,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.Location;
@@ -91,6 +92,7 @@ public class GPSTrackService extends Service {
     /* tmp values */
     private String sName = null;
     private String sUserComment = null;
+    private String sTag = null;
     private long lCarId = -1;
     private long lDriverId = -1;
     private boolean isUseKML = false;
@@ -168,6 +170,7 @@ public class GPSTrackService extends Service {
 
         sName = mPreferences.getString("GPSTrackTmp_Name", null);
         sUserComment = mPreferences.getString("GPSTrackTmp_UserComment", null);
+        sTag = mPreferences.getString("GPSTrackTmp_Tag", null);
         lCarId = mPreferences.getLong("GPSTrackTmp_CarId", mPreferences.getLong("CurrentCar_ID", 0));
         lDriverId = mPreferences.getLong("GPSTrackTmp_DriverId", mPreferences.getLong("CurrentDriver_ID", 0));
         isUseKML = mPreferences.getBoolean("GPSTrackTmp_IsUseKML", false);
@@ -185,6 +188,31 @@ public class GPSTrackService extends Service {
         cvData.put(MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME, lCarId);
         cvData.put(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME, lDriverId);
         cvData.put(MainDbAdapter.GPSTRACK_COL_DATE_NAME, (System.currentTimeMillis() / 1000));
+        if(sTag != null && sTag.length() > 0){
+        	long mTagId = 0;
+            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String[] selectionArgs = {sTag.toUpperCase()};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+                    null, null, null);
+            String tagIdStr = null;
+            if(c.moveToFirst())
+                tagIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+            c.close();
+            if(tagIdStr != null && tagIdStr.length() > 0){
+                mTagId = Long.parseLong(tagIdStr);
+                cvData.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, mTagId);
+            }
+            else{
+                ContentValues tmpData = new ContentValues();
+                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, sTag);
+                mTagId = mDbAdapter.createRecord(MainDbAdapter.TAG_TABLE_NAME, tmpData);
+                if(mTagId >= 0)
+                	cvData.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, mTagId);
+            }
+        }
+        else
+        	cvData.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, (String)null);
+
         gpsTrackId = mDbAdapter.createRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, cvData);
 
 //        String sqlStr;
@@ -637,6 +665,7 @@ public class GPSTrackService extends Service {
             mileageInsertIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mileageInsertIntent.putExtra("Operation", "TrackToMileage");
             mileageInsertIntent.putExtra("Track_ID", gpsTrackId);
+            mileageInsertIntent.putExtra("Tag", sTag);
             startActivity(mileageInsertIntent);
         }
     }

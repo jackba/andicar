@@ -133,6 +133,29 @@
                          android:prompt="@string/GEN_ChooseOneTitle"
                          />
             </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+	            <TextView
+	                android:id="@+id/tvTagLabel"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/GEN_Tag"
+	                android:typeface="sans"
+	                android:textColor="@android:color/white"
+	                />
+	            <AutoCompleteTextView
+	                android:id="@+id/acTag"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dip"
+	                android:background="@drawable/white_background"
+	                android:hint="@string/GEN_TagHint"
+	                />
+            </LinearLayout>
 
             <TextView
                 android:layout_height="1dip"

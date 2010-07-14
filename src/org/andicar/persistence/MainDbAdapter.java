@@ -164,6 +164,8 @@ public class MainDbAdapter extends DB
                         content.getAsString(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME));
                 expenseContent.put(MainDbAdapter.EXPENSE_COL_BPARTNER_LOCATION_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME));
+                expenseContent.put(MainDbAdapter.EXPENSE_COL_TAG_ID_NAME,
+                        content.getAsString(MainDbAdapter.REFUEL_COL_TAG_ID_NAME));
                 mDb.insertOrThrow( MainDbAdapter.EXPENSE_TABLE_NAME, null, expenseContent);
             }
         }
@@ -318,6 +320,8 @@ public class MainDbAdapter extends DB
                                     content.getAsString(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME));
                             expenseContent.put(MainDbAdapter.EXPENSE_COL_BPARTNER_LOCATION_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME));
+                            expenseContent.put(MainDbAdapter.EXPENSE_COL_TAG_ID_NAME,
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_TAG_ID_NAME));
                             mDb.update( MainDbAdapter.EXPENSE_TABLE_NAME, expenseContent, GEN_COL_ROWID_NAME + "=" + expenseId, null );
                         }
                     }
@@ -888,6 +892,51 @@ public class MainDbAdapter extends DB
             }
             checkCursor.close();
         }
+        else if(tableName.equals(TAG_TABLE_NAME)){
+            checkSql = "SELECT * " +
+                        "FROM " + MILEAGE_TABLE_NAME + " " +
+                        "WHERE " + MILEAGE_COL_TAG_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_046;
+            }
+            checkCursor.close();
+            
+            checkSql = "SELECT * " +
+			            "FROM " + REFUEL_TABLE_NAME + " " +
+			            "WHERE " + REFUEL_COL_TAG_ID_NAME + " = " + rowId + " " +
+			            "LIMIT 1";
+			checkCursor = mDb.rawQuery(checkSql, null);
+			if(checkCursor.moveToFirst()){ //record exists
+			    checkCursor.close();
+			    return R.string.ERR_047;
+			}
+			checkCursor.close();
+
+            checkSql = "SELECT * " +
+                        "FROM " + EXPENSE_TABLE_NAME + " " +
+                        "WHERE " + EXPENSE_COL_TAG_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_048;
+            }
+            checkCursor.close();
+
+            checkSql = "SELECT * " +
+			            "FROM " + GPSTRACK_TABLE_NAME + " " +
+			            "WHERE " + GPSTRACK_COL_TAG_ID_NAME + " = " + rowId + " " +
+			            "LIMIT 1";
+			checkCursor = mDb.rawQuery(checkSql, null);
+			if(checkCursor.moveToFirst()){ //record exists
+			    checkCursor.close();
+			    return R.string.ERR_049;
+			}
+			checkCursor.close();
+        }
 
         return -1;
     }
@@ -1077,6 +1126,12 @@ public class MainDbAdapter extends DB
 
             selectSql = selectSql +
                             " ORDER BY " + BPARTNER_LOCATION_ADDRESS_NAME;
+        }
+        else if(fromTable.equals(TAG_TABLE_NAME)){
+            selectSql = "SELECT " + GEN_COL_NAME_NAME +
+                            " FROM " + TAG_TABLE_NAME +
+                            " WHERE " + GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
+                            " ORDER BY " + GEN_COL_NAME_NAME;
         }
         else
             return null;

@@ -25,6 +25,7 @@ import org.andicar.utils.Utils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,7 +51,9 @@ public class GPSTrackController extends BaseActivity {
     private Spinner spnDriver;
     private boolean bIsActivityOnLoading = true;
     private ArrayAdapter<String> aaUserComment;
+    private ArrayAdapter<String> tagAdapter;
     private AutoCompleteTextView acUserComment;
+    private AutoCompleteTextView acTag;
     private EditText etName;
     private EditText etIndexStart;
     private CheckBox ckIsUseKML;
@@ -63,6 +66,7 @@ public class GPSTrackController extends BaseActivity {
     private ViewGroup vgRoot;
     private long mCarId;
     private long mDriverId;
+    private long mTagId = 0;
 
     /** Called when the activity is first created. */
     @Override
@@ -82,6 +86,15 @@ public class GPSTrackController extends BaseActivity {
         spnCar.setOnTouchListener(spinnerOnTouchListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
+        aaUserComment = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
+                		mCarId, 30));
+        acUserComment.setAdapter(aaUserComment);
+        acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                0, 0));
+        acTag.setAdapter(tagAdapter);
         etName = (EditText) findViewById(R.id.etName);
         etIndexStart = (EditText) findViewById(R.id.etIndexStart);
         llIndexStartZone = (LinearLayout) findViewById(R.id.llIndexStartZone);
@@ -90,8 +103,6 @@ public class GPSTrackController extends BaseActivity {
         ckIsUseKML.setChecked(mPreferences.getBoolean("IsUseKMLTrack", true));
         ckIsUseGPX = (CheckBox) findViewById(R.id.ckIsUseGPX);
         ckIsUseGPX.setChecked(mPreferences.getBoolean("IsUseGPXTrack", true));
-//        ckIsShowOnMap = (CheckBox) findViewById(R.id.ckIsShowOnMap);
-//        ckIsShowOnMap.setChecked(mPreferences.getBoolean("IsGPSTrackOnMap", true));
         btnGPSTrackStartStop = (ImageButton) findViewById(R.id.btnStartStopGpsTrack);
         btnGPSTrackStartStop.setOnClickListener(btnGPSTrackStartStopListener);
         ckIsCreateMileage = (CheckBox) findViewById(R.id.ckIsCreateMileage);
@@ -99,6 +110,18 @@ public class GPSTrackController extends BaseActivity {
         ckIsCreateMileage.setChecked(isCreateMileage);
         ckIsCreateMileage.setOnCheckedChangeListener(ckCreateMilegeOnCheckedChangeListener);
         vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
+        //init tag
+        if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+            mTagId = mPreferences.getLong("LastTagId", 0);
+            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+            String[] selectionArgs = {Long.toString(mTagId)};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+                        selection, selectionArgs, null, null, null);
+            if(c.moveToFirst())
+                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+            c.close();
+        }
+
         if(vgRoot != null)
         	setInputType(vgRoot);
 
@@ -155,10 +178,10 @@ public class GPSTrackController extends BaseActivity {
         editor.putLong("GPSTrackDriverID", mDriverId);
         editor.putString("GPSTrackName", etName.getText().toString());
         editor.putString("GPSTrackComment", acUserComment.getText().toString());
+        editor.putString("GPSTrackTag", acTag.getText().toString());
         editor.putBoolean("GPSTrackCreateMileage", ckIsCreateMileage.isChecked());
         editor.putBoolean("GPSTrackUseKML", ckIsUseKML.isChecked());
         editor.putBoolean("GPSTrackUseGPX", ckIsUseGPX.isChecked());
-//        editor.putBoolean("GPSTrackShowMap", ckIsShowOnMap.isChecked());
         editor.commit();
     }
 
@@ -167,6 +190,7 @@ public class GPSTrackController extends BaseActivity {
         mDriverId = mPreferences.getLong("GPSTrackDriverID", mDriverId);
         etName.setText(mPreferences.getString("GPSTrackName", ""));
         acUserComment.setText(mPreferences.getString("GPSTrackComment", ""));
+        acTag.setText(mPreferences.getString("GPSTrackTag", null));
         isCreateMileage = mPreferences.getBoolean("GPSTrackCreateMileage", true);
         ckIsCreateMileage.setChecked(isCreateMileage);
         ckIsUseKML.setChecked(mPreferences.getBoolean("GPSTrackUseKML", true));
@@ -277,11 +301,11 @@ public class GPSTrackController extends BaseActivity {
                	mPrefEditor.putString("GPSTrackStartIndex", etIndexStart.getText().toString());
                 mPrefEditor.putString("GPSTrackTmp_Name", etName.getText().toString());
                 mPrefEditor.putString("GPSTrackTmp_UserComment", acUserComment.getText().toString());
+                mPrefEditor.putString("GPSTrackTmp_Tag", acTag.getText().toString());
                 mPrefEditor.putLong("GPSTrackTmp_CarId", mCarId);
                 mPrefEditor.putLong("GPSTrackTmp_DriverId", mDriverId);
                 mPrefEditor.putBoolean("GPSTrackTmp_IsUseKML", ckIsUseKML.isChecked());
                 mPrefEditor.putBoolean("GPSTrackTmp_IsUseGPX", ckIsUseGPX.isChecked());
-//                mPrefEditor.putBoolean("GPSTrackTmp_IsShowOnMap", ckIsShowOnMap.isChecked());
                 mPrefEditor.commit();
 
                 startService(gpsTrackIntent);

@@ -38,6 +38,7 @@ import org.andicar.activity.DriverListActivity;
 import org.andicar.activity.ExpenseCategoryListActivity;
 import org.andicar.activity.ExpenseTypeListActivity;
 import org.andicar.activity.R;
+import org.andicar.activity.TagListActivity;
 import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
@@ -220,6 +221,19 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         PreferenceCategory miscCategory = new PreferenceCategory(this);
         miscCategory.setTitle(mRes.getString(R.string.PREF_MiscCategoryTitle));
         prefScreenRoot.addPreference(miscCategory);
+
+        //tags
+        PreferenceScreen tagPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        tagPrefScreen.setIntent(new Intent(this, TagListActivity.class));
+        tagPrefScreen.setTitle(mRes.getString(R.string.PREF_TagCategoryTitle));
+        tagPrefScreen.setSummary(mRes.getString(R.string.PREF_TagCategorySummary));
+        miscCategory.addPreference(tagPrefScreen);
+
+        CheckBoxPreference rememberLastTag = new CheckBoxPreference(this);
+        rememberLastTag.setTitle(R.string.PREF_RememberLastTagTitle);
+        rememberLastTag.setSummary(R.string.PREF_RememberLastTagSummary);
+        rememberLastTag.setKey("RememberLastTag");
+        miscCategory.addPreference(rememberLastTag);
 
         //main screen pref
         PreferenceScreen mainScreenPref = getPreferenceManager().createPreferenceScreen(this);

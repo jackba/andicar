@@ -577,6 +577,9 @@ public class MainActivity extends Activity {
         if (!mPreferences.contains("UseNumericKeypad")) {
             editor.putBoolean("UseNumericKeypad", true); 
         }
+        if (!mPreferences.contains("RememberLastTag")) {
+            editor.putBoolean("RememberLastTag", false); 
+        }
 
         editor.commit();
     }

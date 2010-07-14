@@ -56,6 +56,7 @@ public class MileageEditActivity extends EditActivityBase {
     private long mDriverId = -1;
     private long mUOMLengthId = -1;
     private long mGpsTrackId = -1;
+    private long mTagId = 0;
     private String operationType = null;
     private long mExpTypeId = 0;
     private BigDecimal mNewIndex = new BigDecimal("0");
@@ -72,10 +73,12 @@ public class MileageEditActivity extends EditActivityBase {
     private EditText etUserInput;
     private TextView tvCalculatedContent;
     private AutoCompleteTextView acUserComment;
+    private AutoCompleteTextView acTag;
     private Spinner spnExpType;
     private Spinner spnCar;
     private Spinner spnDriver;
     ArrayAdapter<String> userCommentAdapter;
+    private ArrayAdapter<String> tagAdapter;
 
 
     /** Called when the activity is first created. */
@@ -111,6 +114,20 @@ public class MileageEditActivity extends EditActivityBase {
             mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX;
             acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
             mExpTypeId = c.getLong(MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_POS);
+            
+            //fill tag
+            if(c.getString(MainDbAdapter.MILEAGE_COL_TAG_ID_POS) != null
+                    && c.getString(MainDbAdapter.MILEAGE_COL_TAG_ID_POS).length() > 0){
+                mTagId = c.getLong(MainDbAdapter.MILEAGE_COL_TAG_ID_POS);
+                String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+                String[] selectionArgs = {Long.toString(mTagId)};
+                Cursor c2 = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+                            selection, selectionArgs, null, null, null);
+                if(c2.moveToFirst())
+                    acTag.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
+                c2.close();
+            }
+            
             initDateTime(c.getLong(MainDbAdapter.MILEAGE_COL_DATE_POS) * 1000);
             c.close();
         }
@@ -122,6 +139,20 @@ public class MileageEditActivity extends EditActivityBase {
             mDriverId = c.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
             acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
             mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
+            acTag.setText(mBundleExtras.getString("Tag"));
+
+//            //init tag
+//            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+//	            mTagId = mPreferences.getLong("LastTagId", 0);
+//	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+//	            String[] selectionArgs = {Long.toString(mTagId)};
+//	            Cursor c2 = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+//	                        selection, selectionArgs, null, null, null);
+//	            if(c2.moveToFirst())
+//	                acTag.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
+//	            c2.close();
+//            }
+
             if(mPreferences.contains("GPSTrackStartIndex") &&
             		mPreferences.getString("GPSTrackStartIndex", null) != null){
             	String startIndex = mPreferences.getString("GPSTrackStartIndex", "");
@@ -148,6 +179,17 @@ public class MileageEditActivity extends EditActivityBase {
             mDriverId = mBundleExtras.getLong("CurrentDriver_ID");
             mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
             mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
+            //init tag
+            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+	            mTagId = mPreferences.getLong("LastTagId", 0);
+	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+	            String[] selectionArgs = {Long.toString(mTagId)};
+	            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+	                        selection, selectionArgs, null, null, null);
+	            if(c.moveToFirst())
+	                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+	            c.close();
+            }
             initDateTime(System.currentTimeMillis());
             etUserInput.requestFocus();
 
@@ -179,6 +221,10 @@ public class MileageEditActivity extends EditActivityBase {
                 android.R.layout.simple_dropdown_item_1line,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null, mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                0, 0));
+        acTag.setAdapter(tagAdapter);
 
         if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX) {
             rbInsertModeIndex.setChecked(true);
@@ -210,6 +256,7 @@ public class MileageEditActivity extends EditActivityBase {
         tvCalculatedTextLabel = ((TextView) findViewById(R.id.tvCalculatedTextLabel));
         spnExpType = (Spinner)findViewById(R.id.spnExpType);
         acUserComment = (AutoCompleteTextView)findViewById(R.id.acUserComment);
+        acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
         spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
@@ -413,6 +460,33 @@ public class MileageEditActivity extends EditActivityBase {
         data.put( MainDbAdapter.MILEAGE_COL_UOMLENGTH_ID_NAME, mUOMLengthId);
         data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, spnExpType.getSelectedItemId());
         data.put( MainDbAdapter.MILEAGE_COL_GPSTRACKLOG_NAME, "");
+        if(acTag.getText().toString() != null && acTag.getText().toString().length() > 0){
+            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String[] selectionArgs = {acTag.getText().toString().toUpperCase()};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+                    null, null, null);
+            String tagIdStr = null;
+            if(c.moveToFirst())
+                tagIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+            c.close();
+            if(tagIdStr != null && tagIdStr.length() > 0){
+                mTagId = Long.parseLong(tagIdStr);
+                data.put(MainDbAdapter.MILEAGE_COL_TAG_ID_NAME, mTagId);
+            }
+            else{
+                ContentValues tmpData = new ContentValues();
+                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acTag.getText().toString());
+                mTagId = mDbAdapter.createRecord(MainDbAdapter.TAG_TABLE_NAME, tmpData);
+                if(mTagId >= 0)
+                    data.put(MainDbAdapter.MILEAGE_COL_TAG_ID_NAME, mTagId);
+            }
+        }
+        else{
+            data.put(MainDbAdapter.MILEAGE_COL_TAG_ID_NAME, (String)null);
+        }
+        
+        
+
         if(operationType.equals("N") || operationType.equals("TrackToMileage")){
             operationResult = mDbAdapter.checkIndex(-1, mCarId, mStartIndex, mNewIndex);
             if(operationResult == -1){
@@ -481,6 +555,10 @@ public class MileageEditActivity extends EditActivityBase {
             acUserComment.setText("");
             calculateMileageOrNewIndex();
         }
+    	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0){
+    		mPrefEditor.putLong("LastTagId", mTagId);
+    		mPrefEditor.commit();
+    	}
         finish();
     }
 
