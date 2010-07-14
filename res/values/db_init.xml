@@ -97,4 +97,7 @@
     <string name="DB_Curr_TRY">"Turkish lira"</string>
     <string name="DB_Curr_UAH">"Ukrainian hryvnia"</string>
     <string name="DB_Curr_AED">"United Arab Emirates dirham"</string>
+    
+    <!-- default tag -->
+    <string name="DB_Tag_Default">"Default"</string>
 </resources>
