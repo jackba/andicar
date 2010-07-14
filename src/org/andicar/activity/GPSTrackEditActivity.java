@@ -48,11 +48,14 @@ public class GPSTrackEditActivity extends EditActivityBase {
     private Spinner spnDriver;
     private EditText etName;
     private AutoCompleteTextView acUserComment;
+    private AutoCompleteTextView acTag;
     private ListView lvTrackFileList;
     private TextView tvTrackStats;
     private ImageButton btnGPSTrackShowOnMap;
     private ImageButton btnGPSTrackSendAsEmail;
     private ArrayAdapter<String> userCommentAdapter;
+    private ArrayAdapter<String> tagAdapter;
+    private long mTagId = 0;
 
     /** Called when the activity is first created. */
     @Override
@@ -91,6 +94,25 @@ public class GPSTrackEditActivity extends EditActivityBase {
         tvCarLabel.setText(mResource.getString(R.string.GEN_CarLabel) + " " +
                         mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, mCarId).getString(1));
 
+
+        
+        acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                0, 0));
+        acTag.setAdapter(tagAdapter);
+        //fill tag
+        if(c.getString(MainDbAdapter.GPSTRACK_COL_TAG_ID_POS) != null
+                && c.getString(MainDbAdapter.GPSTRACK_COL_TAG_ID_POS).length() > 0){
+            mTagId = c.getLong(MainDbAdapter.GPSTRACK_COL_TAG_ID_POS);
+            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+            String[] selectionArgs = {Long.toString(mTagId)};
+            Cursor c2 = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+                        selection, selectionArgs, null, null, null);
+            if(c2.moveToFirst())
+                acTag.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
+            c2.close();
+        }
 
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
@@ -134,11 +156,6 @@ public class GPSTrackEditActivity extends EditActivityBase {
                 new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.oneline_list_layout_smalll,
                                     mDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
                                             MainDbAdapter.gpsTrackDetailTableColNames, selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME),
-
-//                                    fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
-//                                        MainDbAdapter.gpsTrackDetailTableColNames,
-//                                        MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + mRowId,
-//                                        MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME),
                                     new String[]{MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME}, new int[]{R.id.tvOneLineListTextSmall});
 
         lvTrackFileList.setAdapter(cursorAdapter);
@@ -192,6 +209,30 @@ public class GPSTrackEditActivity extends EditActivityBase {
                 acUserComment.getText().toString() );
         data.put( MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME,
                 spnDriver.getSelectedItemId() );
+        if(acTag.getText().toString() != null && acTag.getText().toString().length() > 0){
+            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String[] selectionArgs = {acTag.getText().toString().toUpperCase()};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+                    null, null, null);
+            String tagIdStr = null;
+            if(c.moveToFirst())
+                tagIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+            c.close();
+            if(tagIdStr != null && tagIdStr.length() > 0){
+                mTagId = Long.parseLong(tagIdStr);
+                data.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, mTagId);
+            }
+            else{
+                ContentValues tmpData = new ContentValues();
+                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acTag.getText().toString());
+                mTagId = mDbAdapter.createRecord(MainDbAdapter.TAG_TABLE_NAME, tmpData);
+                if(mTagId >= 0)
+                    data.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, mTagId);
+            }
+        }
+        else{
+            data.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, (String)null);
+        }
 
         int updResult = mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, mRowId, data);
         if(updResult != -1){
@@ -203,8 +244,13 @@ public class GPSTrackEditActivity extends EditActivityBase {
             madError = madbErrorAlert.create();
             madError.show();
         }
-        else
+        else{
+        	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0){
+        		mPrefEditor.putLong("LastTagId", mTagId);
+        		mPrefEditor.commit();
+        	}
             finish();
+        }
     }
 
     @Override

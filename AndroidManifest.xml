@@ -206,6 +206,16 @@
             android:label="@string/APP_Activity_BPartnerLocationEdit">
         </activity>
         <activity
+            android:name="org.andicar.activity.TagListActivity"
+            android:label="@string/APP_Activity_TagList">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.TagEditActivity"
+            android:label="@string/APP_Activity_TagEdit">
+        </activity>
+        
+        <!-- AddOn Services -->
+        <activity
             android:name="com.andicar.addon.AddOnServicesList"
             android:label="@string/PREF_AddOnCategoryTitle">
         </activity>

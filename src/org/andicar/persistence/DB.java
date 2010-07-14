@@ -71,6 +71,9 @@ public class DB {
     //business partner locations table
     public static final String BPARTNER_LOCATION_TABLE_NAME = "DEF_BPARTNERLOCATION";
     
+    //tags locations table
+    public static final String TAG_TABLE_NAME = "DEF_TAG";
+
     //add on services
     public static final String ADDON_TABLE_NAME = "SYS_ADDON";
 
@@ -106,6 +109,7 @@ public class DB {
     public static final String MILEAGE_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME + "_Length_ID";
     public static final String MILEAGE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
     public static final String MILEAGE_COL_GPSTRACKLOG_NAME = "GPSTrackLog";
+    public static final String MILEAGE_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
     //currencies
     public static final String CURRENCY_COL_CODE_NAME = "Code";
     //refuel
@@ -131,6 +135,7 @@ public class DB {
     public static final String REFUEL_COL_AMOUNTENTERED_NAME = "AmountEntered";
     public static final String REFUEL_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
     public static final String REFUEL_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
+    public static final String REFUEL_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
 
     //expense category
     public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
@@ -155,6 +160,7 @@ public class DB {
     public static final String EXPENSE_COL_UOM_ID_NAME = UOM_TABLE_NAME + "_ID";
     public static final String EXPENSE_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
     public static final String EXPENSE_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
+    public static final String EXPENSE_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
 
     //currency rate
     public static final String CURRENCYRATE_COL_FROMCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_From_ID";
@@ -167,7 +173,6 @@ public class DB {
     public static final String GPSTRACK_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
     public static final String GPSTRACK_COL_MILEAGE_ID_NAME = MILEAGE_TABLE_NAME + "_ID";
     public static final String GPSTRACK_COL_DATE_NAME = "Date";
-    //gps statistics
     public static final String GPSTRACK_COL_MINACCURACY_NAME = "MinAccuracy";
     public static final String GPSTRACK_COL_AVGACCURACY_NAME = "AvgAccuracy";
     public static final String GPSTRACK_COL_MAXACCURACY_NAME = "MaxAccuracy";
@@ -181,6 +186,8 @@ public class DB {
     public static final String GPSTRACK_COL_AVGMOVINGSPEED_NAME = "AvgMovingSpeed";
     public static final String GPSTRACK_COL_TOTALTRACKPOINTS_NAME = "TotalTrackPoints";
     public static final String GPSTRACK_COL_INVALIDTRACKPOINTS_NAME = "InvalidTrackPoints";
+    public static final String GPSTRACK_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
+
     //gps track detail
     public static final String GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME = GPSTRACK_TABLE_NAME + "_ID";
     public static final String GPSTRACKDETAIL_COL_FILE_NAME = "File";
@@ -230,6 +237,7 @@ public class DB {
     public static final int MILEAGE_COL_UOMLENGTH_ID_POS = 9;
     public static final int MILEAGE_COL_EXPENSETYPE_ID_POS = 10;
     public static final int MILEAGE_COL_GPSTRACKLOG_POS = 11;
+    public static final int MILEAGE_COL_TAG_ID_POS = 12;
     //currencies
     public static int CURRENCY_COL_CODE_POS = 4;
     //refuel
@@ -255,6 +263,7 @@ public class DB {
     public static final int REFUEL_COL_AMOUNTENTERED_POS = 23;
     public static final int REFUEL_COL_BPARTNER_ID_POS = 24;
     public static final int REFUEL_COL_BPARTNER_LOCATION_ID_POS = 25;
+    public static final int REFUEL_COL_TAG_ID_POS = 26;
 
      //expense category
     public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
@@ -279,6 +288,7 @@ public class DB {
     public static final int EXPENSE_COL_UOM_ID_POS = 21;
     public static final int EXPENSE_COL_BPARTNER_ID_POS = 22;
     public static final int EXPENSE_COL_BPARTNER_LOCATION_ID_POS = 23;
+    public static final int EXPENSE_COL_TAG_ID_POS = 24;
 
     //currency rate
     public static final int CURRENCYRATE_COL_FROMCURRENCY_ID_POS = 4;
@@ -291,7 +301,6 @@ public class DB {
     public static final int GPSTRACK_COL_DRIVER_ID_POS = 5;
     public static final int GPSTRACK_COL_MILEAGE_ID_POS = 6;
     public static final int GPSTRACK_COL_DATE_POS = 7;
-    //gps statistics
     public static final int GPSTRACK_COL_MINACCURACY_POS = 8;
     public static final int GPSTRACK_COL_AVGACCURACY_POS = 9;
     public static final int GPSTRACK_COL_MAXACCURACY_POS = 10;
@@ -305,6 +314,7 @@ public class DB {
     public static final int GPSTRACK_COL_AVGMOVINGSPEED_POS = 18;
     public static final int GPSTRACK_COL_TOTALTRACKPOINTS_POS = 19;
     public static final int GPSTRACK_COL_INVALIDTRACKPOINTS_POS = 20;
+    public static final int GPSTRACK_COL_TAG_ID_POS = 21;
     //gps track detail
     public static final int GPSTRACKDETAIL_COL_GPSTRACK_ID_POS = 4;
     public static final int GPSTRACKDETAIL_COL_FILE_POS = 5;
@@ -340,7 +350,7 @@ public class DB {
     public static final String[] mileageTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         MILEAGE_COL_DATE_NAME, MILEAGE_COL_CAR_ID_NAME, MILEAGE_COL_DRIVER_ID_NAME,
         MILEAGE_COL_INDEXSTART_NAME, MILEAGE_COL_INDEXSTOP_NAME, MILEAGE_COL_UOMLENGTH_ID_NAME,
-        MILEAGE_COL_EXPENSETYPE_ID_NAME, MILEAGE_COL_GPSTRACKLOG_NAME};
+        MILEAGE_COL_EXPENSETYPE_ID_NAME, MILEAGE_COL_GPSTRACKLOG_NAME, MILEAGE_COL_TAG_ID_NAME};
 
     public static final String[] currencyTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         CURRENCY_COL_CODE_NAME};
@@ -351,7 +361,8 @@ public class DB {
         REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME, REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME,
         REFUEL_COL_ISFULLREFUEL_NAME, REFUEL_COL_QUANTITYENTERED_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME, 
         REFUEL_COL_PRICEENTERED_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME,
-        REFUEL_COL_AMOUNT_NAME, REFUEL_COL_AMOUNTENTERED_NAME, REFUEL_COL_BPARTNER_ID_NAME, REFUEL_COL_BPARTNER_LOCATION_ID_NAME};
+        REFUEL_COL_AMOUNT_NAME, REFUEL_COL_AMOUNTENTERED_NAME, REFUEL_COL_BPARTNER_ID_NAME, REFUEL_COL_BPARTNER_LOCATION_ID_NAME, 
+        REFUEL_COL_TAG_ID_NAME};
 
     public static final String[] expenseCategoryTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
@@ -363,7 +374,7 @@ public class DB {
         EXPENSE_COL_FROMTABLE_NAME, EXPENSE_COL_FROMRECORD_ID_NAME,
         EXPENSE_COL_AMOUNTENTERED_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME, EXPENSE_COL_CURRENCYRATE_NAME,
         EXPENSE_COL_QUANTITY_NAME, EXPENSE_COL_PRICE_NAME, EXPENSE_COL_PRICEENTERED_NAME, EXPENSE_COL_UOM_ID_NAME,
-        EXPENSE_COL_BPARTNER_ID_NAME, EXPENSE_COL_BPARTNER_LOCATION_ID_NAME};
+        EXPENSE_COL_BPARTNER_ID_NAME, EXPENSE_COL_BPARTNER_LOCATION_ID_NAME, EXPENSE_COL_TAG_ID_NAME};
 
     public static final String[] currencyRateTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         CURRENCYRATE_COL_FROMCURRENCY_ID_NAME, CURRENCYRATE_COL_TOCURRENCY_ID_NAME,
@@ -375,7 +386,7 @@ public class DB {
         GPSTRACK_COL_MAXACCURACY_NAME, GPSTRACK_COL_MINALTITUDE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME,
         GPSTRACK_COL_TOTALTIME_NAME, GPSTRACK_COL_MOVINGTIME_NAME, GPSTRACK_COL_DISTANCE_NAME,
         GPSTRACK_COL_MAXSPEED_NAME, GPSTRACK_COL_AVGSPEED_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME,
-        GPSTRACK_COL_TOTALTRACKPOINTS_NAME, GPSTRACK_COL_INVALIDTRACKPOINTS_NAME};
+        GPSTRACK_COL_TOTALTRACKPOINTS_NAME, GPSTRACK_COL_INVALIDTRACKPOINTS_NAME, GPSTRACK_COL_TAG_ID_NAME};
 
     public static final String[] gpsTrackDetailTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, GPSTRACKDETAIL_COL_FILE_NAME, GPSTRACKDETAIL_COL_FILEFORMAT_NAME};
@@ -390,6 +401,8 @@ public class DB {
         BPARTNER_LOCATION_CITY_NAME, BPARTNER_LOCATION_REGION_NAME, BPARTNER_LOCATION_COUNTRY_NAME, BPARTNER_LOCATION_PHONE_NAME,
         BPARTNER_LOCATION_PHONE2_NAME, BPARTNER_LOCATION_FAX_NAME, BPARTNER_LOCATION_EMAIL_NAME,
         BPARTNER_LOCATION_CONTACTPERSON_NAME};
+
+    public static final String[] tagTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME};
 
     public static final String[] genColName = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME};
     public static final String[] genColRowId = {GEN_COL_ROWID_NAME};
@@ -466,7 +479,8 @@ public class DB {
             + MILEAGE_COL_INDEXSTOP_NAME + " NUMERIC NOT NULL, "
             + MILEAGE_COL_UOMLENGTH_ID_NAME + " INTEGER NOT NULL, "
             + MILEAGE_COL_EXPENSETYPE_ID_NAME + " INTEGER NOT NULL, "
-            + MILEAGE_COL_GPSTRACKLOG_NAME + " TEXT NULL "
+            + MILEAGE_COL_GPSTRACKLOG_NAME + " TEXT NULL, "
+            + MILEAGE_COL_TAG_ID_NAME + " INTEGER NULL "
             + ");";
     protected static final String CURRENCY_TABLE_CREATE_SQL =
             "CREATE TABLE " + CURRENCY_TABLE_NAME
@@ -505,7 +519,8 @@ public class DB {
             + REFUEL_COL_AMOUNT_NAME + " NUMERIC NULL, "
             + REFUEL_COL_AMOUNTENTERED_NAME + " NUMERIC NULL, "
             + REFUEL_COL_BPARTNER_ID_NAME + " INTEGER NULL, "
-            + REFUEL_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL "
+            + REFUEL_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL, "
+            + REFUEL_COL_TAG_ID_NAME + " INTEGER NULL "
             + ");";
 
     protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL =
@@ -543,7 +558,8 @@ public class DB {
             + EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL, "
             + EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL, "
             + EXPENSE_COL_BPARTNER_ID_NAME + " INTEGER NULL, "
-            + EXPENSE_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL "
+            + EXPENSE_COL_BPARTNER_LOCATION_ID_NAME + " INTEGER NULL, "
+            + EXPENSE_COL_TAG_ID_NAME + " INTEGER NULL "
             + ");";
 
 
@@ -583,7 +599,8 @@ public class DB {
             + GPSTRACK_COL_AVGSPEED_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_AVGMOVINGSPEED_NAME + " NUMERIC NULL, "
             + GPSTRACK_COL_TOTALTRACKPOINTS_NAME + " INTEGER NULL, "
-            + GPSTRACK_COL_INVALIDTRACKPOINTS_NAME + " INTEGER NULL "
+            + GPSTRACK_COL_INVALIDTRACKPOINTS_NAME + " INTEGER NULL, "
+            + GPSTRACK_COL_TAG_ID_NAME + " INTEGER NULL "
             + ");";
 
     protected static final String GPSTRACKDETAIL_TABLE_CREATE_SQL =
@@ -626,6 +643,15 @@ public class DB {
             + BPARTNER_LOCATION_EMAIL_NAME + " TEXT NULL, "
             + BPARTNER_LOCATION_CONTACTPERSON_NAME + " TEXT NULL "
             + ");";
+
+    protected static final String TAG_TABLE_CREATE_SQL =
+        "CREATE TABLE " + TAG_TABLE_NAME
+        + " ( "
+        + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
+        + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
+        + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
+        + ");";
 
     protected static final String ADDON_TABLE_CREATE_SQL =
         "CREATE TABLE " + ADDON_TABLE_NAME
@@ -724,6 +750,8 @@ public class DB {
                 //gps track
                 createGPSTrackTables(db);
                 createBPartnerTable(db);
+                
+                createTagTable(db);
 
                 createAddOnTable(db);
                 
@@ -930,6 +958,10 @@ public class DB {
             db.execSQL(ADDON_TABLE_CREATE_SQL);
         }
         
+        private void createTagTable(SQLiteDatabase db) throws SQLException {
+            //business partner
+            db.execSQL(TAG_TABLE_CREATE_SQL);
+        }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //AndiCar 1.0.0
@@ -939,7 +971,7 @@ public class DB {
                 upgradeDbTo300(db, oldVersion);
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
-//                upgradeDbTo340(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
@@ -947,31 +979,32 @@ public class DB {
                 upgradeDbTo300(db, oldVersion);
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
-//                upgradeDbTo340(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
                 upgradeDbTo300(db, oldVersion); //update database to version 210 //AndiCar 2.2.0
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
-//                upgradeDbTo340(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
             //AndiCar 3.0.x
             else if(oldVersion == 300){
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
-//                upgradeDbTo340(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
-            //AndiCar 3.1.x
+            //AndiCar 3.1.x, 3.2.x
             else if(oldVersion == 310){
                 upgradeDbTo330(db, oldVersion);
-//                upgradeDbTo340(db, oldVersion);
+                upgradeDbTo340(db, oldVersion);
             }
-//            else if(oldVersion == 330){
-//                upgradeDbTo340(db, oldVersion);
-//            }
+            //AndiCar 3.3.x
+            else if(oldVersion == 330){
+                upgradeDbTo340(db, oldVersion);
+            }
             
-//            upgradeDbTo330(db, oldVersion);
+//            upgradeDbTo350(db, oldVersion);
         }
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
@@ -1293,12 +1326,6 @@ public class DB {
                                     " * " + REFUEL_COL_PRICEENTERED_NAME;
                 db.execSQL(updSql);
             }
-
-//            updSql = "UPDATE " + REFUEL_TABLE_NAME +
-//                        " SET " +
-//                            REFUEL_COL_AMOUNT_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICE_NAME + ", " +
-//                            REFUEL_COL_AMOUNTENTERED_NAME + " = " + REFUEL_COL_QUANTITYENTERED_NAME + " * " + REFUEL_COL_PRICEENTERED_NAME;
-//            db.execSQL(updSql);
         }
 
         private void upgradeDbTo330(SQLiteDatabase db, int oldVersion) throws SQLException {
@@ -1349,9 +1376,33 @@ public class DB {
             }
         }
 
-//        private void upgradeDbTo340(SQLiteDatabase db, int oldVersion) throws SQLException {
+        private void upgradeDbTo340(SQLiteDatabase db, int oldVersion) throws SQLException {
 //        	createAddOnTable(db);
-//        }
+        	createTagTable(db);
+            String updSql = "";
+            if(!columnExists(db, MILEAGE_TABLE_NAME, MILEAGE_COL_TAG_ID_NAME)){
+                updSql = "ALTER TABLE " + MILEAGE_TABLE_NAME +
+                                " ADD " + MILEAGE_COL_TAG_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_TAG_ID_NAME)){
+                updSql = "ALTER TABLE " + REFUEL_TABLE_NAME +
+                                " ADD " + REFUEL_COL_TAG_ID_NAME + " INTEGER NULL ";
+
+                db.execSQL(updSql);
+            }
+            if(!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_TAG_ID_NAME)){
+                updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME +
+                                " ADD " + EXPENSE_COL_TAG_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+
+            }
+            if(!columnExists(db, GPSTRACK_TABLE_NAME, GPSTRACK_COL_TAG_ID_NAME)){
+                updSql = "ALTER TABLE " + GPSTRACK_TABLE_NAME +
+                                " ADD " + GPSTRACK_COL_TAG_ID_NAME + " INTEGER NULL ";
+                db.execSQL(updSql);
+            }
+        }
 
         private boolean columnExists(SQLiteDatabase db, String table, String column){
             String testSql =

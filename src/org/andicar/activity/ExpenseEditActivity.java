@@ -50,6 +50,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     private AutoCompleteTextView acUserComment;
     private AutoCompleteTextView acBPartner;
     private AutoCompleteTextView acAdress;
+    private AutoCompleteTextView acTag;
     private Spinner spnCar;
     private Spinner spnDriver;
     private Spinner spnCurrency;
@@ -78,6 +79,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     private long mUOMId = -1;
     private long mBPartnerId = 0;
     private long mAddressId = 0;
+    private long mTagId = 0;
     private String carDefaultCurrencyCode = null;
     private String operationType = null;
     private BigDecimal conversionRate = BigDecimal.ONE;
@@ -92,6 +94,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     private ArrayAdapter<String> userCommentAdapter;
     private ArrayAdapter<String> bpartnerNameAdapter;
     private ArrayAdapter<String> addressAdapter;
+    private ArrayAdapter<String> tagAdapter;
     private static int INSERTMODE_PRICE = 0;
     private static int INSERTMODE_AMOUNT = 1;
 
@@ -165,8 +168,6 @@ public class ExpenseEditActivity extends EditActivityBase {
                 String[] selectionArgs = {Long.toString(mBPartnerId)};
                 c2 = mDbAdapter.query(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName, 
                             selection, selectionArgs, null, null, null);
-//                        fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
-//                                        MainDbAdapter.GEN_COL_ROWID_NAME + "=" + mBPartnerId, null);
                 if(c2.moveToFirst())
                     acBPartner.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
                 c2.close();
@@ -177,9 +178,6 @@ public class ExpenseEditActivity extends EditActivityBase {
                     selectionArgs[0] = Long.toString(mAddressId);
                     c2 = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.bpartnerLocationTableColNames, 
                             selection, selectionArgs, null, null, null);
-//                            fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
-//                            MainDbAdapter.bpartnerLocationTableColNames,
-//                            MainDbAdapter.GEN_COL_ROWID_NAME + "=" + mAddressId, null);
                     if(c2.moveToFirst())
                         acAdress.setText(c2.getString(MainDbAdapter.BPARTNER_LOCATION_ADDRESS_POS));
                     c2.close();
@@ -190,6 +188,19 @@ public class ExpenseEditActivity extends EditActivityBase {
                 acAdress.setText(null);
                 acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
                         mResource.getString(R.string.GEN_Required).replace(":", ""));
+            }
+            
+            //fill tag
+            if(c.getString(MainDbAdapter.EXPENSE_COL_TAG_ID_POS) != null
+                    && c.getString(MainDbAdapter.EXPENSE_COL_TAG_ID_POS).length() > 0){
+                mTagId = c.getLong(MainDbAdapter.EXPENSE_COL_TAG_ID_POS);
+                String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+                String[] selectionArgs = {Long.toString(mTagId)};
+                c2 = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+                            selection, selectionArgs, null, null, null);
+                if(c2.moveToFirst())
+                    acTag.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
+                c2.close();
             }
             c.close();
         }
@@ -205,6 +216,19 @@ public class ExpenseEditActivity extends EditActivityBase {
             acAdress.setText(null);
             acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
                     mResource.getString(R.string.GEN_Required).replace(":", ""));
+
+            //init tag
+            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+	            mTagId = mPreferences.getLong("LastTagId", 0);
+	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+	            String[] selectionArgs = {Long.toString(mTagId)};
+	            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+	                        selection, selectionArgs, null, null, null);
+	            if(c.moveToFirst())
+	                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+	            c.close();
+            }
+            
         }
 
         initControls();
@@ -245,6 +269,10 @@ public class ExpenseEditActivity extends EditActivityBase {
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME,
                 mBPartnerId, 0));
         acAdress.setAdapter(addressAdapter);
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                0, 0));
+        acTag.setAdapter(tagAdapter);
     }
 
     private void init() {
@@ -253,6 +281,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         acBPartner.setOnFocusChangeListener(vendorChangeListener);
         acBPartner.addTextChangedListener(bPartnerTextWatcher);
         acAdress = ((AutoCompleteTextView) findViewById( R.id.acAdress ));
+        acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
         spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
@@ -658,7 +687,6 @@ public class ExpenseEditActivity extends EditActivityBase {
                 mCurrencyId);
         data.put( MainDbAdapter.EXPENSE_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
         if(mCurrencyId == carDefaultCurrencyId){
-//            data.put( MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, etUserInput.getText().toString());
             data.put( MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, amount.toString());
             if(price != null)
                 data.put( MainDbAdapter.EXPENSE_COL_PRICE_NAME, price.toString());
@@ -681,8 +709,6 @@ public class ExpenseEditActivity extends EditActivityBase {
             String[] selectionArgs = {acBPartner.getText().toString().toUpperCase()};
             Cursor c = mDbAdapter.query(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
                     null, null, null);
-//            Cursor c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
-//                        "UPPER(" + MainDbAdapter.GEN_COL_NAME_NAME + ") = '" + acBPartner.getText().toString().toUpperCase() + "'", null);
             String bPartnerIdStr = null;
             if(c.moveToFirst())
                 bPartnerIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
@@ -703,13 +729,8 @@ public class ExpenseEditActivity extends EditActivityBase {
                 selection = "UPPER (" + MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME + ") = ? AND " +
                                             MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + " = ?";
                 String[] selectionArgs2 = {acAdress.getText().toString().toUpperCase(), Long.toString(mBPartnerId)};
-//                {acAdress.getText().toString().toUpperCase(), Long.parseLong(mBPartnerId)};
                 c = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs2,
                         null, null, null);
-//                c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
-//                            MainDbAdapter.bpartnerLocationTableColNames,
-//                            "UPPER(" + MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME + ") = '" + acAdress.getText().toString().toUpperCase() + "' " +
-//                                "AND " + MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + "=" + mBPartnerId, null);
                 String addressIdStr = null;
                 if(c.moveToFirst())
                     addressIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
@@ -734,6 +755,32 @@ public class ExpenseEditActivity extends EditActivityBase {
             data.put(MainDbAdapter.EXPENSE_COL_BPARTNER_LOCATION_ID_NAME, (String)null);
         }
 
+        if(acTag.getText().toString() != null && acTag.getText().toString().length() > 0){
+            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String[] selectionArgs = {acTag.getText().toString().toUpperCase()};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+                    null, null, null);
+            String tagIdStr = null;
+            if(c.moveToFirst())
+                tagIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+            c.close();
+            if(tagIdStr != null && tagIdStr.length() > 0){
+                mTagId = Long.parseLong(tagIdStr);
+                data.put(MainDbAdapter.EXPENSE_COL_TAG_ID_NAME, mTagId);
+            }
+            else{
+                ContentValues tmpData = new ContentValues();
+                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acTag.getText().toString());
+                mTagId = mDbAdapter.createRecord(MainDbAdapter.TAG_TABLE_NAME, tmpData);
+                if(mTagId >= 0)
+                    data.put(MainDbAdapter.EXPENSE_COL_TAG_ID_NAME, mTagId);
+            }
+        }
+        else{
+            data.put(MainDbAdapter.EXPENSE_COL_TAG_ID_NAME, (String)null);
+        }
+        
+        
         if( operationType.equals("N") ) {
             Long createResult = mDbAdapter.createRecord(MainDbAdapter.EXPENSE_TABLE_NAME, data);
             if( createResult.intValue() < 0){
@@ -744,8 +791,13 @@ public class ExpenseEditActivity extends EditActivityBase {
                 madError = madbErrorAlert.create();
                 madError.show();
             }
-            else
+            else{
+            	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0){
+            		mPrefEditor.putLong("LastTagId", mTagId);
+            		mPrefEditor.commit();
+            	}
                 finish();
+            }
         }
         else {
             int updResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSE_TABLE_NAME, mRowId, data);
@@ -758,8 +810,13 @@ public class ExpenseEditActivity extends EditActivityBase {
                 madError = madbErrorAlert.create();
                 madError.show();
             }
-            else
+            else{
+            	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0){
+            		mPrefEditor.putLong("LastTagId", mTagId);
+            		mPrefEditor.commit();
+            	}
                 finish();
+            }
         }
     }
 
