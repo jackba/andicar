@@ -65,6 +65,8 @@
     <string name="APP_Activity_BPartnerList">"Partners"</string>
     <string name="APP_Activity_BPartnerEdit">"Edit partner, location"</string>
     <string name="APP_Activity_BPartnerLocationEdit">"Edit location"</string>
+    <string name="APP_Activity_TagList">"Tags"</string>
+    <string name="APP_Activity_TagEdit">"Edit tag"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -112,6 +114,8 @@
     <string name="GEN_Fax">"Fax:"</string>
     <string name="GEN_Email">"Email:"</string>
     <string name="GEN_Postal">"Postal:"</string>
+    <string name="GEN_Tag">"Tag:"</string>
+    <string name="GEN_TagHint">"Short tag. Write comment bellow."</string>
 
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -136,7 +140,7 @@
     <string name="MainActivity_GPSTrackHeaderCaption">"Last GPS track"</string>
     <string name="MainActivity_ExpenseHeaderCaption">"Last expense"</string>
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
-    <string name="MainActivity_StatisticsListHeaderCaption">"Last know odometer: "</string>
+    <string name="MainActivity_StatisticsListHeaderCaption">"Last known odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the mileage between the first and last FULL refuel."</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"Total expenses:"</string>
@@ -290,6 +294,11 @@
     <string name="PREF_PartnerSummary">"Add, delete, modify partners and locations"</string>
     <string name="PREF_UseNumericInputTitle">"Use numeric keypad"</string>
     <string name="PREF_UseNumericInputSummary">"Use a simplified keypad for numeric fields."</string>
+    <string name="PREF_TagCategoryTitle">"Tags"</string>
+    <string name="PREF_TagCategorySummary">"Add, delete, modify tags"</string>
+    <string name="PREF_RememberLastTagTitle">"Remember last tag"</string>
+    <string name="PREF_RememberLastTagSummary">"Remember the last used tag"</string>
+
     <string name="PREF_AddOnCategoryTitle">"AddOn Services"</string>
     <string name="PREF_AddOnServicesTitle">"AddOn Services"</string>
     <string name="PREF_AddOnServicesSummary">"Subscription based, payed services."</string>
