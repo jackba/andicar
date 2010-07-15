@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import org.andicar.activity.ExpenseEditActivity;
@@ -41,13 +43,15 @@ import org.andicar.utils.Utils;
  */
 public class ExpensesListReportActivity extends ReportListActivityBase{
     private View searchView;
-    private EditText etUserCommentSearch;
-    private Spinner spnExpCategorySearch;
-    private Spinner spnExpTypeSearch;
-    private EditText etDateFromSearch;
-    private EditText etDateToSearch;
-    private Spinner spnDriverSearch;
-    private Spinner spnCarSearch;
+    private EditText etUserComment;
+    private EditText etDateFrom;
+    private EditText etDateTo;
+    private AutoCompleteTextView acTag;
+    private Spinner spnDriver;
+    private Spinner spnCar;
+    private Spinner spnExpCategory;
+    private Spinner spnExpType;
+    private ArrayAdapter<String> tagAdapter;
 
     @Override
     public void onCreate( Bundle icicle )
@@ -97,24 +101,30 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
             return super.onCreateDialog(id);
 
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
-        searchView = liLayoutFactory.inflate(R.layout.expenses_search_dialog, null);
+        searchView = liLayoutFactory.inflate(R.layout.expense_search_dialog, null);
         AlertDialog.Builder searchDialog = new AlertDialog.Builder(ExpensesListReportActivity.this);
         searchDialog.setTitle(R.string.DIALOGSearch_DialogTitle);
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
-        spnExpCategorySearch = (Spinner) searchView.findViewById(R.id.spnExpCategorySearch);
-        initSpinner(spnExpCategorySearch, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME);
-        spnExpTypeSearch = (Spinner) searchView.findViewById(R.id.spnExpTypeSearch);
-        initSpinner(spnExpTypeSearch, MainDbAdapter.EXPENSETYPE_TABLE_NAME);
-        etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
-        etUserCommentSearch.setText("%");
-        etDateFromSearch = (EditText) searchView.findViewById(R.id.etDateFromSearch);
-        etDateToSearch = (EditText) searchView.findViewById(R.id.etDateToSearch);
-        spnCarSearch = (Spinner) searchView.findViewById(R.id.spnCarSearch);
-        initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME);
-        spnDriverSearch = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
-        initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME);
+        spnExpCategory = (Spinner) searchView.findViewById(R.id.spnExpCategorySearch);
+        initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME);
+        spnExpType = (Spinner) searchView.findViewById(R.id.spnExpTypeSearch);
+        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME);
+        etUserComment = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
+        etUserComment.setText("%");
+        etDateFrom = (EditText) searchView.findViewById(R.id.etDateFromSearch);
+        etDateTo = (EditText) searchView.findViewById(R.id.etDateToSearch);
+        spnCar = (Spinner) searchView.findViewById(R.id.spnCarSearch);
+        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME);
+        spnDriver = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
+        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME);
+        acTag = ((AutoCompleteTextView) searchView.findViewById( R.id.acTag ));
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                0, 0));
+        acTag.setAdapter(tagAdapter);
+        acTag.setText("%");
         return searchDialog.create();
     }
     
@@ -124,49 +134,62 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
                 try {
                     whereConditions.clear();
-                    if (spnExpCategorySearch.getSelectedItemId() != -1) {
+                    if (spnExpCategory.getSelectedItemId() != -1) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
                                 MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_ID_NAME) + "=",
-                                String.valueOf(spnExpCategorySearch.getSelectedItemId()));
+                                String.valueOf(spnExpCategory.getSelectedItemId()));
                     }
-                    if (spnExpTypeSearch.getSelectedItemId() != -1) {
+                    if (spnExpType.getSelectedItemId() != -1) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
                                 MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_NAME) + "=",
-                                String.valueOf(spnExpTypeSearch.getSelectedItemId()));
+                                String.valueOf(spnExpType.getSelectedItemId()));
                     }
-                    if (etUserCommentSearch.getText().toString().length() > 0) {
+                    if (etUserComment.getText().toString().length() > 0) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
                                 MainDbAdapter.GEN_COL_USER_COMMENT_NAME) + " LIKE ",
-                                etUserCommentSearch.getText().toString());
+                                etUserComment.getText().toString());
                     }
-                    if (etDateFromSearch.getText().toString().length() > 0) {
+                    if (etDateFrom.getText().toString().length() > 0) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
                                 MainDbAdapter.EXPENSE_COL_DATE_NAME) + " >= ",
-                                Long.toString(Utils.decodeDateStr(etDateFromSearch.getText().toString(),
+                                Long.toString(Utils.decodeDateStr(etDateFrom.getText().toString(),
                                 StaticValues.DATE_DECODE_TO_ZERO) / 1000));
                     }
-                    if (etDateToSearch.getText().toString().length() > 0) {
+                    if (etDateTo.getText().toString().length() > 0) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
                                 MainDbAdapter.EXPENSE_COL_DATE_NAME) + " <= ",
-                                Long.toString(Utils.decodeDateStr(etDateToSearch.getText().toString(),
+                                Long.toString(Utils.decodeDateStr(etDateTo.getText().toString(),
                                 StaticValues.DATE_DECODE_TO_24) / 1000));
                     }
-                    if (spnCarSearch.getSelectedItemId() != -1) {
+                    if (spnCar.getSelectedItemId() != -1) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
                                 MainDbAdapter.EXPENSE_COL_CAR_ID_NAME) + "=",
-                                String.valueOf(spnCarSearch.getSelectedItemId()));
+                                String.valueOf(spnCar.getSelectedItemId()));
                     }
-                    if (spnDriverSearch.getSelectedItemId() != -1) {
+                    if (spnDriver.getSelectedItemId() != -1) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
                                 MainDbAdapter.EXPENSE_COL_DRIVER_ID_NAME) + "=",
-                                String.valueOf(spnDriverSearch.getSelectedItemId()));
+                                String.valueOf(spnDriver.getSelectedItemId()));
+                    }
+                    if (acTag.getText().toString() != null) {
+                    	if(acTag.getText().toString().length() == 0)
+                            whereConditions.putString(
+                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
+                                    							MainDbAdapter.EXPENSE_COL_TAG_ID_NAME) + " is ",
+                                    "null");
+                    	else
+                            whereConditions.putString(
+                            		"COALESCE( " +
+	                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TAG_TABLE_NAME,
+	                                    							MainDbAdapter.GEN_COL_NAME_NAME) + ", '') LIKE ",
+        							acTag.getText().toString());
                     }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);
                     fillData();

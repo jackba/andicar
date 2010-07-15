@@ -119,7 +119,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " - " +
                     sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + " AS Mileage, " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UomCode, " +
-                sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName " +
+                sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') AS Tag " + 
             " FROM " + MILEAGE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -252,7 +253,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_REGION_NAME) + ", '') " +
                         " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COUNTRY_NAME) + ", '') " +
                         " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_POSTAL_NAME) + ", '') " +
-                            " AS Location " +
+                            " AS Location, " +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') AS Tag " + 
             " FROM " + REFUEL_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -421,7 +423,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_REGION_NAME) + ", '') " +
                         " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COUNTRY_NAME) + ", '') " +
                         " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_POSTAL_NAME) + ", '') " +
-                            " AS Location " +
+                            " AS Location, " +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') AS Tag " + 
             " FROM " + EXPENSE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -634,7 +637,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTIME_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTRACKPOINTS_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_INVALIDTRACKPOINTS_NAME) + ", " +
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MILEAGE_ID_NAME) + 
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MILEAGE_ID_NAME) + ", " +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') AS Tag " + 
             " FROM " + GPSTRACK_TABLE_NAME +
                     " JOIN " + DRIVER_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DRIVER_ID_NAME) + "=" +
@@ -672,8 +676,12 @@ public class ReportDbAdapter extends MainDbAdapter{
         if(whereColumns != null && whereColumns.size() > 0){
             for(Iterator<String> it = whereColumns.iterator(); it.hasNext();) {
                 whereColumn = it.next();
-                whereCondition = whereCondition +
-                                " AND " + whereColumn + " '" + mSearchCondition.getString(whereColumn) + "'";
+                if(!mSearchCondition.getString(whereColumn).toUpperCase().equals("NULL"))
+	                whereCondition = whereCondition +
+	                                " AND " + whereColumn + " '" + mSearchCondition.getString(whereColumn) + "'";
+                else
+	                whereCondition = whereCondition +
+                    				" AND " + whereColumn + " " + mSearchCondition.getString(whereColumn);
             }
         }
 

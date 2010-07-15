@@ -42,6 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_UserCommentLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <EditText
                 android:id="@+id/etUserCommentSearch"
@@ -67,6 +69,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_ExpenseTypeLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <Spinner android:id="@+id/spnExpTypeSearch"
                 android:layout_width="fill_parent"
@@ -89,6 +93,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/DIALOGSearch_DateFromLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <EditText
                 android:id="@+id/etDateFromSearch"
@@ -113,6 +119,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/DIALOGSearch_DateToLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <EditText
                 android:id="@+id/etDateToSearch"
@@ -137,6 +145,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_DriverLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <Spinner android:id="@+id/spnDriverSearch"
                 android:layout_width="fill_parent"
@@ -160,6 +170,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_CarLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <Spinner android:id="@+id/spnCarSearch"
                 android:layout_width="fill_parent"
@@ -170,6 +182,28 @@
                 android:background="@color/search_dialog_spinner_bg"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dip"
+            >
+	         <TextView
+	             android:id="@+id/tvTagLabel"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:text="@string/GEN_Tag"
+	             android:typeface="sans"
+	             android:textColor="@android:color/white"
+	             />
+	         <AutoCompleteTextView
+	             android:id="@+id/acTag"
+	             android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:layout_marginLeft="5dip"
+	             android:background="@android:drawable/editbox_background"
+	             />
         </LinearLayout>
 
     </LinearLayout>
