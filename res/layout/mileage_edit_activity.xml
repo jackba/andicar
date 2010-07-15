@@ -40,6 +40,15 @@
             android:src="@drawable/icon_cancel_selector"
             />
         <ImageButton
+            android:id="@+id/btnStartStopMileageRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_record_selector"
+            
+            />
+        <ImageButton
             android:id="@android:id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,18 +66,26 @@
         />
 
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
         >
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dip"
             >
+            <TextView
+                android:id="@+id/tvMileageRecInProgress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/MileageEditActivity_RecordingInProgress"
+        		android:gravity="center"
+                android:typeface="sans"
+        		android:textStyle="bold|italic"
+                android:textColor="@android:color/white"
+                />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
