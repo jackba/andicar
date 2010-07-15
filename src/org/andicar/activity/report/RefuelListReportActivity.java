@@ -26,6 +26,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import org.andicar.activity.R;
@@ -42,11 +44,13 @@ import org.andicar.utils.Utils;
 public class RefuelListReportActivity extends ReportListActivityBase{
     private View searchView;
     private EditText etUserCommentSearch;
-    private Spinner spnExpTypeSearch;
     private EditText etDateFromSearch;
     private EditText etDateToSearch;
+    private AutoCompleteTextView acTag;
     private Spinner spnDriverSearch;
     private Spinner spnCarSearch;
+    private Spinner spnExpTypeSearch;
+    private ArrayAdapter<String> tagAdapter;
 
     @Override
     public void onCreate( Bundle icicle )
@@ -111,6 +115,12 @@ public class RefuelListReportActivity extends ReportListActivityBase{
         initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME);
         spnDriverSearch = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
         initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME);
+        acTag = ((AutoCompleteTextView) searchView.findViewById( R.id.acTag ));
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                0, 0));
+        acTag.setAdapter(tagAdapter);
+        acTag.setText("%");
         return searchDialog.create();
     }
     private DialogInterface.OnClickListener searchDialogButtonlistener = new DialogInterface.OnClickListener() {
@@ -156,6 +166,19 @@ public class RefuelListReportActivity extends ReportListActivityBase{
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
                                 MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME) + "=",
                                 String.valueOf(spnDriverSearch.getSelectedItemId()));
+                    }
+                    if (acTag.getText().toString() != null) {
+                    	if(acTag.getText().toString().length() == 0)
+                            whereConditions.putString(
+                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
+                                    							MainDbAdapter.REFUEL_COL_TAG_ID_NAME) + " is ",
+                                    "null");
+                    	else
+                            whereConditions.putString(
+                            		"COALESCE( " +
+	                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TAG_TABLE_NAME,
+	                                    							MainDbAdapter.GEN_COL_NAME_NAME) + ", '') LIKE ",
+        							acTag.getText().toString());
                     }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);
                     fillData();
