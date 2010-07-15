@@ -38,6 +38,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -64,11 +65,13 @@ public class MileageEditActivity extends EditActivityBase {
     private BigDecimal mStopIndex = null;
     private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
     private boolean isActivityOnLoading = true;
+    private boolean isRecordMileage = false;
 
     private RadioButton rbInsertModeIndex;
     private RadioButton rbInsertModeMileage;
     private TextView tvUserInputLabel;
     private TextView tvCalculatedTextLabel;
+    private TextView tvMileageRecInProgress;
     private EditText etStartIndex;
     private EditText etUserInput;
     private TextView tvCalculatedContent;
@@ -79,6 +82,7 @@ public class MileageEditActivity extends EditActivityBase {
     private Spinner spnDriver;
     ArrayAdapter<String> userCommentAdapter;
     private ArrayAdapter<String> tagAdapter;
+    protected ImageButton btnStartStopMileageRecord = null;
 
 
     /** Called when the activity is first created. */
@@ -95,6 +99,10 @@ public class MileageEditActivity extends EditActivityBase {
         init();
         
         if( operationType.equals("E") ) {
+        	tvMileageRecInProgress.setVisibility(View.GONE);
+        	btnStartStopMileageRecord.setVisibility(View.GONE);
+        	isRecordMileage = false;
+        	btnOk.setEnabled(true);
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
 
             mCarId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
@@ -132,6 +140,10 @@ public class MileageEditActivity extends EditActivityBase {
             c.close();
         }
         else if(operationType.equals("TrackToMileage")){
+        	tvMileageRecInProgress.setVisibility(View.GONE);
+        	btnStartStopMileageRecord.setVisibility(View.GONE);
+        	isRecordMileage = false;
+        	btnOk.setEnabled(true);
             mGpsTrackId = mBundleExtras.getLong("Track_ID");
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.gpsTrackTableColNames, mGpsTrackId);
             mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX;
@@ -140,18 +152,6 @@ public class MileageEditActivity extends EditActivityBase {
             acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
             mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
             acTag.setText(mBundleExtras.getString("Tag"));
-
-//            //init tag
-//            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
-//	            mTagId = mPreferences.getLong("LastTagId", 0);
-//	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
-//	            String[] selectionArgs = {Long.toString(mTagId)};
-//	            Cursor c2 = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
-//	                        selection, selectionArgs, null, null, null);
-//	            if(c2.moveToFirst())
-//	                acTag.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
-//	            c2.close();
-//            }
 
             if(mPreferences.contains("GPSTrackStartIndex") &&
             		mPreferences.getString("GPSTrackStartIndex", null) != null){
@@ -175,24 +175,57 @@ public class MileageEditActivity extends EditActivityBase {
             c.close();
         }
         else{
-            mCarId = mBundleExtras.getLong("CurrentCar_ID");
-            mDriverId = mBundleExtras.getLong("CurrentDriver_ID");
-            mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
-            mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
-            //init tag
-            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
-	            mTagId = mPreferences.getLong("LastTagId", 0);
-	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
-	            String[] selectionArgs = {Long.toString(mTagId)};
-	            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
-	                        selection, selectionArgs, null, null, null);
-	            if(c.moveToFirst())
-	                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
-	            c.close();
-            }
-            initDateTime(System.currentTimeMillis());
-            etUserInput.requestFocus();
+        	btnStartStopMileageRecord.setVisibility(View.VISIBLE);
 
+        	if(mPreferences.getBoolean("MileageRec_IsRecording", false)){ //mileage rec in progress
+        		isRecordMileage = true;
+            	tvMileageRecInProgress.setVisibility(View.VISIBLE);
+        		spnCar.setEnabled(false);
+        		spnDriver.setEnabled(false);
+        		spnExpType.setEnabled(false);
+        		acTag.setEnabled(false);
+        		rbInsertModeIndex.setEnabled(false);
+        		rbInsertModeMileage.setEnabled(false);
+        		etStartIndex.setEnabled(false);
+        		etUserInput.setEnabled(false);
+        		acUserComment.setEnabled(false);
+            	btnOk.setEnabled(false);
+                btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
+        		mCarId = mPreferences.getLong("MileageRec_CarId", mBundleExtras.getLong("CurrentCar_ID"));
+        		mDriverId = mPreferences.getLong("MileageRec_DriverId", mBundleExtras.getLong("CurrentDriver_ID"));
+        		mExpTypeId = mPreferences.getLong("MileageRec_DriverId", mBundleExtras.getLong("MileageRec_ExpenseTypeId"));
+        		mInsertMode = mPreferences.getInt("MileageRec_InsertMode", mPreferences.getInt("MileageInsertMode", 0));
+        		acTag.setText(mPreferences.getString("MileageRec_Tag", ""));
+        		etStartIndex.setText(mPreferences.getString("MileageRec_StartIndex", ""));
+        		acUserComment.setText(mPreferences.getString("MileageRec_Comment", ""));
+        		mStartIndex = new BigDecimal(mPreferences.getString("MileageRec_StartIndex", "0"));
+        		etUserInput.setEnabled(false);
+	            initDateTime(System.currentTimeMillis());
+	            acTag.requestFocus();
+        	}
+        	else{
+        		isRecordMileage = false;
+            	tvMileageRecInProgress.setVisibility(View.GONE);
+            	btnOk.setEnabled(true);
+        		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+	            mCarId = mBundleExtras.getLong("CurrentCar_ID");
+	            mDriverId = mBundleExtras.getLong("CurrentDriver_ID");
+	            mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
+	            mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
+	            //init tag
+	            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+		            mTagId = mPreferences.getLong("LastTagId", 0);
+		            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+		            String[] selectionArgs = {Long.toString(mTagId)};
+		            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+		                        selection, selectionArgs, null, null, null);
+		            if(c.moveToFirst())
+		                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+		            c.close();
+	            }
+	            initDateTime(System.currentTimeMillis());
+	            acTag.requestFocus();
+        	}
         }
 
         initControls();
@@ -200,7 +233,7 @@ public class MileageEditActivity extends EditActivityBase {
         mUOMLengthId = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                         .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
 
-        etUserInput.requestFocus();
+        acTag.requestFocus();
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent("MileageEdit", null);
     }
@@ -263,7 +296,9 @@ public class MileageEditActivity extends EditActivityBase {
         spnCar.setOnTouchListener(spinnerOnTouchListener);
         spnDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
-
+        btnStartStopMileageRecord = (ImageButton)findViewById( R.id.btnStartStopMileageRecord );
+        btnStartStopMileageRecord.setOnClickListener(onStartStopRecordClickListener);
+        tvMileageRecInProgress = (TextView) findViewById(R.id.tvMileageRecInProgress);
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgMileageInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
     }
@@ -422,6 +457,10 @@ public class MileageEditActivity extends EditActivityBase {
             }
 
             public void afterTextChanged(Editable edtbl) {
+            	if(etUserInput.getText().toString().length() > 0)
+            		btnStartStopMileageRecord.setVisibility(View.GONE);
+            	else
+            		btnStartStopMileageRecord.setVisibility(View.VISIBLE);
                 calculateMileageOrNewIndex();
             }
         };
@@ -561,6 +600,44 @@ public class MileageEditActivity extends EditActivityBase {
     	}
         finish();
     }
+
+    protected View.OnClickListener onStartStopRecordClickListener =
+        new View.OnClickListener()
+            {
+                public void onClick( View v )
+                {
+                    if(!isRecordMileage){ //start recording
+                    	isRecordMileage = true;
+                    	mPrefEditor.putBoolean("MileageRec_IsRecording", isRecordMileage);
+                    	mPrefEditor.putLong("MileageRec_CarId", mCarId);
+                    	mPrefEditor.putLong("MileageRec_DriverId", mDriverId);
+                    	mPrefEditor.putLong("MileageRec_ExpenseTypeId", mExpTypeId);
+                    	mPrefEditor.putInt("MileageRec_InsertMode", mInsertMode);
+                    	mPrefEditor.putString("MileageRec_Tag", acTag.getText().toString());
+                    	mPrefEditor.putString("MileageRec_StartIndex", etStartIndex.getText().toString());
+                    	mPrefEditor.putString("MileageRec_Comment", acUserComment.getText().toString());
+                    	mPrefEditor.commit();
+                    	finish();
+                    }
+                    else{//stop recording
+                    	isRecordMileage = false;
+                    	tvMileageRecInProgress.setVisibility(View.GONE);
+                    	mPrefEditor.putBoolean("MileageRec_IsRecording", isRecordMileage);
+                    	mPrefEditor.commit();
+                        btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+                		spnCar.setEnabled(true);
+                		spnDriver.setEnabled(true);
+                		spnExpType.setEnabled(true);
+                		acTag.setEnabled(true);
+                		rbInsertModeIndex.setEnabled(true);
+                		rbInsertModeMileage.setEnabled(true);
+                		etStartIndex.setEnabled(true);
+                		etUserInput.setEnabled(true);
+                		acUserComment.setEnabled(true);
+                    	btnOk.setEnabled(true);
+                    }
+                }
+            };
 
     private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
