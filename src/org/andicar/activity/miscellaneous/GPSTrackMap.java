@@ -35,6 +35,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -174,6 +176,14 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     
     private void drawTrack(){
         mMapController = mapView.getController();
+        
+        if(mMapController == null){ //Issue #38
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString(R.string.ERR_050), Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+        
         if(trackPoints.size() == 0){ //trackpoints are not loaded
             FileInputStream trackInputStream;
             DataInputStream trackData;
