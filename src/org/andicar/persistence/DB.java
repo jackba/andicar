@@ -753,7 +753,7 @@ public class DB {
                 
                 createTagTable(db);
 
-                createAddOnTable(db);
+//                createAddOnTable(db);
                 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
