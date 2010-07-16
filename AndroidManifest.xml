@@ -21,7 +21,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
           android:versionCode="340"
-          android:versionName="3.4.0 Beta">
+          android:versionName="3.4.0">
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -215,6 +215,7 @@
         </activity>
         
         <!-- AddOn Services -->
+<!--         
         <activity
             android:name="com.andicar.addon.AddOnServicesList"
             android:label="@string/PREF_AddOnCategoryTitle">
@@ -222,7 +223,7 @@
         <activity
             android:name="com.andicar.addon.SubscribeToService">
         </activity>
-<!--  
+  
 		<activity 
 			android:name="com.paypal.android.MEP.PayPalActivity"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar">
