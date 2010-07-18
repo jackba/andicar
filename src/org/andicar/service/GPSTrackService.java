@@ -811,27 +811,46 @@ public class GPSTrackService extends Service {
             dMaxSpeed = dMaxSpeed  * 3.6;
         }
 
-        String updateSql = "UPDATE " + MainDbAdapter.GPSTRACK_TABLE_NAME +
-                " SET "
-                    + MainDbAdapter.GPSTRACK_COL_MINACCURACY_NAME + " = " + dMinAccuracy + ", "
-                    + MainDbAdapter.GPSTRACK_COL_MAXACCURACY_NAME + " = " + dMaxAccuracy + ", "
-                    + MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME + " = " + dAvgAccuracy + ", "
-                    + MainDbAdapter.GPSTRACK_COL_MINALTITUDE_NAME + " = " + dMinAltitude + ", "
-                    + MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME + " = " + dMaxAltitude + ", "
-                    + MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME + " = " + lTotalTime + ", " //in seconds
-                    + MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME + " = " + lTotalMovingTime + ", " //in seconds
-                    + MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME + " = " + dDistance + ", "
-                    + MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME + " = " + dAvgSpeed + ", "
-                    + MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME + " = " + dAvgMovingSpeed  + ", "
-                    + MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME + " = " + dMaxSpeed + ", "
-                    + MainDbAdapter.GPSTRACK_COL_TOTALTRACKPOINTS_NAME + " = " + dTotalTrackPoints + ", "
-                    + MainDbAdapter.GPSTRACK_COL_INVALIDTRACKPOINTS_NAME + " = " + dTotalSkippedTrackPoints
-                + " WHERE "+ MainDbAdapter.GEN_COL_ROWID_NAME + " = " + gpsTrackId;
-
+        ContentValues cvData = new ContentValues();
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MINACCURACY_NAME, dMinAccuracy);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXACCURACY_NAME, dMaxAccuracy);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME, dAvgAccuracy);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MINALTITUDE_NAME, dMinAltitude);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME, dMaxAltitude);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME, lTotalTime);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME, lTotalMovingTime);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME, dDistance);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME, dAvgSpeed);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME, dAvgMovingSpeed);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME, dMaxSpeed);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTRACKPOINTS_NAME, dTotalTrackPoints);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_INVALIDTRACKPOINTS_NAME, dTotalSkippedTrackPoints);
+        
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);
-
-        mDbAdapter.execSql(updateSql);
+        mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, gpsTrackId, cvData);
+        
+//        String updateSql = "UPDATE " + MainDbAdapter.GPSTRACK_TABLE_NAME +
+//                " SET "
+//                    + MainDbAdapter.GPSTRACK_COL_MINACCURACY_NAME + " = " + dMinAccuracy + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_MAXACCURACY_NAME + " = " + dMaxAccuracy + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME + " = " + dAvgAccuracy + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_MINALTITUDE_NAME + " = " + dMinAltitude + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME + " = " + dMaxAltitude + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME + " = " + lTotalTime + ", " //in seconds
+//                    + MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME + " = " + lTotalMovingTime + ", " //in seconds
+//                    + MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME + " = " + dDistance + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME + " = " + dAvgSpeed + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME + " = " + dAvgMovingSpeed  + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME + " = " + dMaxSpeed + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_TOTALTRACKPOINTS_NAME + " = " + dTotalTrackPoints + ", "
+//                    + MainDbAdapter.GPSTRACK_COL_INVALIDTRACKPOINTS_NAME + " = " + dTotalSkippedTrackPoints
+//                + " WHERE "+ MainDbAdapter.GEN_COL_ROWID_NAME + " = " + gpsTrackId;
+//
+//        if(mDbAdapter == null)
+//            mDbAdapter = new MainDbAdapter(this);
+//
+//        mDbAdapter.execSql(updateSql);
     }
 
     private class AndiCarLocationListener implements LocationListener
