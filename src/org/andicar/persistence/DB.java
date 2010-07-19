@@ -413,7 +413,7 @@ public class DB {
      * Database creation sql statements
      */
     protected static final String DRIVER_TABLE_CREATE_SQL =
-            "CREATE TABLE " + DRIVER_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + DRIVER_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -422,7 +422,7 @@ public class DB {
             + DRIVER_COL_LICENSE_NO_NAME + " TEXT NULL "
             + ");";
     protected static final String CAR_TABLE_CREATE_SQL =
-            "CREATE TABLE " + CAR_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + CAR_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -437,7 +437,7 @@ public class DB {
             + CAR_COL_CURRENCY_ID_NAME + " INTEGER "
             + ");";
     protected static final String UOM_TABLE_CREATE_SQL =
-            "CREATE TABLE " + UOM_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + UOM_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -447,7 +447,7 @@ public class DB {
             + UOM_COL_UOMTYPE_NAME + " TEXT NOT NULL "
             + ");";
     protected static final String UOM_CONVERSION_TABLE_CREATE_SQL =
-            "CREATE TABLE " + UOM_CONVERSION_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + UOM_CONVERSION_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -458,7 +458,7 @@ public class DB {
             + UOM_CONVERSION_COL_RATE_NAME + " NUMERIC NOT NULL "
             + ");";
     protected static final String EXPENSETYPE_TABLE_CREATE_SQL =
-            "CREATE TABLE " + EXPENSETYPE_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + EXPENSETYPE_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -466,7 +466,7 @@ public class DB {
             + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
             + ");";
     protected static final String MILEAGE_TABLE_CREATE_SQL =
-            "CREATE TABLE " + MILEAGE_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + MILEAGE_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NULL, "
@@ -483,7 +483,7 @@ public class DB {
             + MILEAGE_COL_TAG_ID_NAME + " INTEGER NULL "
             + ");";
     protected static final String CURRENCY_TABLE_CREATE_SQL =
-            "CREATE TABLE " + CURRENCY_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + CURRENCY_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -492,7 +492,7 @@ public class DB {
             + CURRENCY_COL_CODE_NAME + " TEXT NOT NULL "
             + ");";
     protected static final String REFUEL_TABLE_CREATE_SQL =
-            "CREATE TABLE " + REFUEL_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + REFUEL_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NULL, "
@@ -524,7 +524,7 @@ public class DB {
             + ");";
 
     protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL =
-            "CREATE TABLE " + EXPENSECATEGORY_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + EXPENSECATEGORY_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -533,7 +533,7 @@ public class DB {
             + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " TEXT DEFAULT 'N' "
             + ");";
     protected static final String EXPENSE_TABLE_CREATE_SQL =
-            "CREATE TABLE " + EXPENSE_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + EXPENSE_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -564,7 +564,7 @@ public class DB {
 
 
     protected static final String CURRENCYRATE_TABLE_CREATE_SQL =
-            "CREATE TABLE " + CURRENCYRATE_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + CURRENCYRATE_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT, "
@@ -577,7 +577,7 @@ public class DB {
             + ");";
 
     protected static final String GPSTRACK_TABLE_CREATE_SQL =
-            "CREATE TABLE " + GPSTRACK_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + GPSTRACK_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NULL, "
@@ -604,7 +604,7 @@ public class DB {
             + ");";
 
     protected static final String GPSTRACKDETAIL_TABLE_CREATE_SQL =
-            "CREATE TABLE " + GPSTRACKDETAIL_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + GPSTRACKDETAIL_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NULL, "
@@ -616,7 +616,7 @@ public class DB {
             + ");";
 
     protected static final String BPARTNER_TABLE_CREATE_SQL =
-            "CREATE TABLE " + BPARTNER_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + BPARTNER_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -625,7 +625,7 @@ public class DB {
             + ");";
 
     protected static final String BPARTNER_LOCATION_TABLE_CREATE_SQL =
-            "CREATE TABLE " + BPARTNER_LOCATION_TABLE_NAME
+            "CREATE TABLE IF NOT EXISTS " + BPARTNER_LOCATION_TABLE_NAME
             + " ( "
             + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -645,7 +645,7 @@ public class DB {
             + ");";
 
     protected static final String TAG_TABLE_CREATE_SQL =
-        "CREATE TABLE " + TAG_TABLE_NAME
+        "CREATE TABLE IF NOT EXISTS " + TAG_TABLE_NAME
         + " ( "
         + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
         + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
@@ -654,7 +654,7 @@ public class DB {
         + ");";
 
     protected static final String ADDON_TABLE_CREATE_SQL =
-        "CREATE TABLE " + ADDON_TABLE_NAME
+        "CREATE TABLE IF NOT EXISTS " + ADDON_TABLE_NAME
         + " ( "
 	        + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 	        + GEN_COL_NAME_NAME + " TEXT NOT NULL, "

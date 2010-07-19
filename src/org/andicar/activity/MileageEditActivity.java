@@ -201,7 +201,7 @@ public class MileageEditActivity extends EditActivityBase {
         		mStartIndex = new BigDecimal(mPreferences.getString("MileageRec_StartIndex", "0"));
         		etUserInput.setEnabled(false);
 	            initDateTime(System.currentTimeMillis());
-	            acTag.requestFocus();
+	            etUserInput.requestFocus();
         	}
         	else{
         		isRecordMileage = false;
@@ -224,7 +224,7 @@ public class MileageEditActivity extends EditActivityBase {
 		            c.close();
 	            }
 	            initDateTime(System.currentTimeMillis());
-	            acTag.requestFocus();
+	            etUserInput.requestFocus();
         	}
         }
 
@@ -233,7 +233,7 @@ public class MileageEditActivity extends EditActivityBase {
         mUOMLengthId = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
                                         .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
 
-        acTag.requestFocus();
+        etUserInput.requestFocus();
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent("MileageEdit", null);
     }
