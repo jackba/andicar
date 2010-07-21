@@ -46,7 +46,7 @@
     <string name="ERR_025">"这个度量单位不能被设置为不活动的，因为它仍被用于活动汽车的定义。"</string>
     <string name="ERR_026">"这个货币不能被设置为不活动的，因为它仍被用于活动汽车的定义。"</string>
     <string name="ERR_027">"此类别不能被删除，因为仍在燃料条目中被使用。"</string>
-    <string name="ERR_028">"此类别不能被删除，因为仍在支出条目中被使用。"</string>
+    <string name="ERR_028">"此类别不能被删除，因为它仍在支出条目中被使用。"</string>
     <string name="ERR_029">"这个转换已经在货币之间被定义了。"</string>
     <string name="ERR_030">""此类别不能被删除，因为仍在燃料条目中被使用。\n你需要删除对应的燃料。"</string>
     <string name="ERR_031">"你不能为同种度量单位定义转换。"</string>
@@ -56,12 +56,17 @@
     <string name="ERR_035">"无效的报告。"</string>
     <string name="ERR_036">"路径文件未找到或为空！"</string>
     <string name="ERR_037">"未知汽车！\n如果这个错误程序发生，请到以下地方报告 https://code.google.com/p/andicar/issues/entry"</string>
-    <string name="ERR_038">"此货币不能被删除，因为仍在支出条目中被使用。"</string>
-    <string name="ERR_039">"此司机不能被删除，因为仍在支出条目中被使用。"</string>
-    <string name="ERR_040">"此汽车不能被删除，因为仍在支出条目中被使用。"</string>
-    <string name="ERR_041">"此支出类型不能被删除，因为仍在支出条目中被使用。"</string>
+    <string name="ERR_038">"此货币不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_039">"此司机不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_040">"此汽车不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_041">"此支出类型不能被删除，因为它仍在支出条目中被使用。"</string>
     <string name="ERR_042">"此搭档不能被删除，因为仍在燃料条目中被使用。"</string>
-    <string name="ERR_043">"此搭档不能被删除，因为仍在支出条目中被使用。"</string>
+    <string name="ERR_043">"此搭档不能被删除，因为它仍在支出条目中被使用。"</string>
     <string name="ERR_044">"此定位不能被删除，因为仍在燃料条目中被使用。"</string>
-    <string name="ERR_045">"此定位不能被删除，因为仍在支出条目中被使用。"</string>
+    <string name="ERR_045">"此定位不能被删除，因为它仍在支出条目中被使用。"</string>
+
+    <string name="ERR_046">"此标签不能被删除，因为它仍在里程条目中被使用。"</string>
+    <string name="ERR_047">"此标签不能被删除，因为它仍在燃料条目中被使用。"</string>
+    <string name="ERR_048">"此标签不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_049">"此标签不能被删除，因为它仍在GPS追踪条目中被使用。"</string>
 </resources>

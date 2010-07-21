@@ -62,6 +62,8 @@
     <string name="APP_Activity_BPartnerList">"搭檔"</string>
     <string name="APP_Activity_BPartnerEdit">"編輯搭檔，位置"</string>
     <string name="APP_Activity_BPartnerLocationEdit">"編輯位置"</string>
+    <string name="APP_Activity_TagList">"標籤"</string>
+    <string name="APP_Activity_TagEdit">"編輯標籤"</string>
 
     <string name="GEN_OK">"確定"</string>
     <string name="GEN_CANCEL">"取消"</string>
@@ -109,6 +111,8 @@
     <string name="GEN_Fax">"傳真："</string>
     <string name="GEN_Email">"Email："</string>
     <string name="GEN_Postal">"郵寄："</string>
+    <string name="GEN_Tag">"標籤："</string>
+    <string name="GEN_TagHint">"短標籤。在下面寫評論。"</string>
 
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
@@ -133,7 +137,7 @@
     <string name="MainActivity_GPSTrackHeaderCaption">"GPS的最後追蹤"</string>
     <string name="MainActivity_ExpenseHeaderCaption">"最僅花費"</string>
     <string name="MainActivity_StatisticsHeaderCaption">"統計已登記的 "</string>
-    <string name="MainActivity_StatisticsListHeaderCaption">"最後知道的里程： "</string>
+    <string name="MainActivity_StatisticsListHeaderCaption">"最後所知的里程表："</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"燃料平均效率： "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. 這個平均消耗是由里程數以及開始和最後燃料的總量計算出來的。"</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"總支出："</string>
@@ -181,6 +185,7 @@
     <string name="MileageEditActivity_OptionMileageLabel">"里程"</string>
     <string name="MileageEditActivity_InsertOkMessage">"已新增里程數。"</string>
     <string name="MileageEditActivity_UpdateOkMessage">"已更新里程數。"</string>
+    <string name="MileageEditActivity_RecordingInProgress">"記錄正在進行中！"</string>
 
     <string name="RefuelEditActivity_IsFullLabel">"已滿"</string>
     <string name="RefuelEditActivity_QtyInBaseUOMLabel">"基本度量單位的數量： "</string>
@@ -230,6 +235,7 @@
     <string name="GPSTrackControllerActivity_StopBtnCaption">"停止 GPS 追蹤"</string>
     <string name="GPSTrackControllerActivity_FileFormatLabel">"追蹤檔案格式："</string>
     <string name="GPSTrackControllerActivity_CreateMileageLabel">"建立行車里程"</string>
+    <string name="GPSTrackControllerActivity_IndexLabel">"開始里程表："</string>
 
     <string name="GPSTrackService_ServiceStoppedMessage">"GPS 追蹤已停止"</string>
     <string name="GPSTrackService_GPSDisabledMessage">"你的GPS是禁用的！\n請開啟它。"</string>
@@ -284,6 +290,17 @@
     <string name="PREF_BPartnersCategoryTitle">"搭檔和定位"</string>
     <string name="PREF_PartnerTitle">"搭檔"</string>
     <string name="PREF_PartnerSummary">"新增、刪除、修改和定位"</string>
+    <string name="PREF_UseNumericInputTitle">"使用數字鍵盤"</string>
+    <string name="PREF_UseNumericInputSummary">"對於需要輸入數字的區域使用一個簡單的鍵盤。"</string>
+    <string name="PREF_TagCategoryTitle">"標籤"</string>
+    <string name="PREF_TagCategorySummary">"新增，刪除，修改標籤"</string>
+    <string name="PREF_RememberLastTagTitle">"記住上次標籤"</string>
+    <string name="PREF_RememberLastTagSummary">"記住上次使用的標籤"</string>
+
+    <string name="PREF_AddOnCategoryTitle">"AddOn 服務"</string>
+    <string name="PREF_AddOnServicesTitle">"AddOn 服務"</string>
+    <string name="PREF_AddOnServicesSummary">"訂閱是一個需付費的服務。"</string>
+    <string name="PREF_AddOnServicesSubscribe">"使用 PayPal 來訂閱"</string>
 
     <string name="PREFMainScreen_ZonesLabel">"已存在的區域："</string>
     <string name="PREFGPSTrack_FileFormatTitle">"檔案格式"</string>
@@ -318,4 +335,36 @@
     <string name="DayOfWeek_4">"星期四"</string>
     <string name="DayOfWeek_5">"星期五"</string>
     <string name="DayOfWeek_6">"星期六"</string>
+
+    <string name="Month_01">"一月"</string>
+    <string name="Month_02">"二月"</string>
+    <string name="Month_03">"三月"</string>
+    <string name="Month_04">"四月"</string>
+    <string name="Month_05">"五月"</string>
+    <string name="Month_06">"六月"</string>
+    <string name="Month_07">"七月"</string>
+    <string name="Month_08">"八月"</string>
+    <string name="Month_09">"九月"</string>
+    <string name="Month_10">"十月"</string>
+    <string name="Month_11">"十一月"</string>
+    <string name="Month_12">"十二月"</string>
+
+    <string name="Notif_UpdateTitle">"有更新可用"</string>
+    <string name="Notif_UpdateMsg">"AndiCar 的一個更新版本已可用！"</string>
+    
+    <!-- AddOn Services -->
+    <string name="AddOn_PayPalWarning">"在付費過程中 **不要使用手機的返回鍵，也不要變更屏幕的顯示方向**"</string>
+    <string name="AddOn_SubscribeWaiting">"正在載入PayPal付費庫"</string>
+    <string name="AddOn_SubscriptionInfo">"直到 [%1] 後你即可以訂閱這個服務"</string>
+
+    <string name="AddOn_SecureBackupTitle">"安全備份"</string>
+    <string name="AddOn_SecureBackupDescription">"自動上傳備份到你的 Google 賬戶"</string>
+    <string name="AddOn_SecureBackupDescriptionLong">"自動上傳備份到你的 Google 賬戶，這樣哪怕手機丟了，你也可用獲取到它們"</string>
+    <string name="AddOn_SecureBackupTermOfService">"我們不對以下情況負責：由於惡劣/不存在/有缺陷的網路連接所導致的不完整/損壞的資料上傳，你的Google賬戶所擁有的儲存空間不足，從Google Docs上刪除備份檔案或是任何其他情況造成備份檔案遺失或不可用。"</string>
+    <string name="AddOn_SecureBackupRequirements">"服務要求：有效的Google 賬戶，用以存取Google Docs，網路連接"</string>
+    <string name="AddOn_SecureBackupOption1">"訂閱一個月：[%1] USD"</string>
+    <string name="AddOn_SecureBackupOption2">"訂閱六個月：[%1] USD"</string>
+    <string name="AddOn_SecureBackupOption3">"訂閱一年：[%1] USD"</string>
+    
+    
 </resources>

@@ -95,4 +95,7 @@
     <string name="DB_Curr_TRY">"土耳其里拉"</string>
     <string name="DB_Curr_UAH">"乌克兰格里夫纳"</string>
     <string name="DB_Curr_AED">"阿联酋迪拉姆"</string>
+    
+    <!-- default tag -->
+    <string name="DB_Tag_Default">"默认"</string>
 </resources>
