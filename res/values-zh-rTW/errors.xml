@@ -46,7 +46,7 @@
     <string name="ERR_025">"這個度量單位不能被設定為不活動的，因為它仍被用於活動汽車的定義。"</string>
     <string name="ERR_026">"這個貨幣不能被設定為不活動的，因為它仍被用於活動汽車的定義。"</string>
     <string name="ERR_027">"此類別不能被刪除，因為仍在燃料項目中被使用。"</string>
-    <string name="ERR_028">"此類別不能被刪除，因為仍在支出項目中被使用。"</string>
+    <string name="ERR_028">"此類別不能被刪除，因為它仍在支出項目中被使用。"</string>
     <string name="ERR_029">"這個轉換已經在貨幣之間被定義了。"</string>
     <string name="ERR_030">""此類別不能被刪除，因為仍在燃料項目中被使用。\n你需要刪除對應的燃料。"</string>
     <string name="ERR_031">"你不能為同種度量單位定義轉換。"</string>
@@ -56,12 +56,17 @@
     <string name="ERR_035">"無效的報告。"</string>
     <string name="ERR_036">"路徑檔案未找到或為空！"</string>
     <string name="ERR_037">"未知汽車！\n如果這個錯誤程式發生，請到以下地方報告 https://code.google.com/p/andicar/issues/entry"</string>
-    <string name="ERR_038">"此貨幣不能被刪除，因為仍在支出項目中被使用。"</string>
-    <string name="ERR_039">"此司機不能被刪除，因為仍在支出項目中被使用。"</string>
-    <string name="ERR_040">"此汽車不能被刪除，因為仍在支出項目中被使用。"</string>
-    <string name="ERR_041">"此支出類型不能被刪除，因為仍在支出項目中被使用。"</string>
+    <string name="ERR_038">"此貨幣不能被刪除，因為它仍在支出項目中被使用。"</string>
+    <string name="ERR_039">"此司機不能被刪除，因為它仍在支出項目中被使用。"</string>
+    <string name="ERR_040">"此汽車不能被刪除，因為它仍在支出項目中被使用。"</string>
+    <string name="ERR_041">"此支出類型不能被刪除，因為它仍在支出項目中被使用。"</string>
     <string name="ERR_042">"此搭檔不能被刪除，因為仍在燃料項目中被使用。"</string>
-    <string name="ERR_043">"此搭檔不能被刪除，因為仍在支出項目中被使用。"</string>
+    <string name="ERR_043">"此搭檔不能被刪除，因為它仍在支出項目中被使用。"</string>
     <string name="ERR_044">"此定位不能被刪除，因為仍在燃料項目中被使用。"</string>
-    <string name="ERR_045">"此定位不能被刪除，因為仍在支出項目中被使用。"</string>
+    <string name="ERR_045">"此定位不能被刪除，因為它仍在支出項目中被使用。"</string>
+
+    <string name="ERR_046">"此標籤不能被刪除，因為它仍在里程項目中被使用。"</string>
+    <string name="ERR_047">"此標籤不能被刪除，因為它仍在燃料項目中被使用。"</string>
+    <string name="ERR_048">"此標籤不能被刪除，因為它仍在支出項目中被使用。"</string>
+    <string name="ERR_049">"此標籤不能被刪除，因為它仍在GPS追蹤項目中被使用。"</string>
 </resources>
