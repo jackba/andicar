@@ -202,8 +202,8 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             int longitudeE6;
             int c1;
             boolean isFirst = true;
-            for(String trackFile : trackFiles) {
-                try{
+            try{
+            	for(String trackFile : trackFiles) {
                     trackFile = StaticValues.TRACK_FOLDER + trackFile;
                     trackInputStream = new FileInputStream(trackFile);
                     trackData = new DataInputStream(trackInputStream);
@@ -239,30 +239,34 @@ public class GPSTrackMap extends MapActivity implements Runnable{
                     trackInputStream.close();
                     trackData.close();
                     trackBufferedReader.close();
-                }
-                catch(FileNotFoundException e){}
-                catch(IOException e){}
+            	}
             }
+            catch(FileNotFoundException e){}
+            catch(IOException e){}
         }
 
-        if(trackPoints.size() >= 1){
-            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(0), R.drawable.icon_start_point, "Start"));
-            mapOverlays.add(new TrackRouteOverlay());
-            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(trackPoints.size() - 1),
-                    R.drawable.icon_stop_point, "Stop"));
-            mapView.postInvalidate();
-            mMapController.zoomToSpan(
-                          (maxLatitude - minLatitude),
-                          (maxLongitude - minLongitude));
-            // Animate to the center cluster of points
-            mMapController.animateTo(new GeoPoint(
-                           (maxLatitude + minLatitude)/2,
-                           (maxLongitude + minLongitude)/2 ));
-            if(showMode.equals("M"))
-                mapView.setSatellite(false);
-            else
-                mapView.setSatellite(true);
+        try{
+	        if(trackPoints.size() >= 1){
+	            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(0), R.drawable.icon_start_point, "Start"));
+	            mapOverlays.add(new TrackRouteOverlay());
+	            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(trackPoints.size() - 1),
+	                    R.drawable.icon_stop_point, "Stop"));
+	            mapView.postInvalidate();
+	            mMapController.zoomToSpan(
+	                          (maxLatitude - minLatitude),
+	                          (maxLongitude - minLongitude));
+	            // Animate to the center cluster of points
+	            mMapController.animateTo(new GeoPoint(
+	                           (maxLatitude + minLatitude)/2,
+	                           (maxLongitude + minLongitude)/2 ));
+	            if(showMode.equals("M"))
+	                mapView.setSatellite(false);
+	            else
+	                mapView.setSatellite(true);
+	        }
         }
+        catch(Exception e){}
+        
         handler.sendEmptyMessage(0);
     }
     
