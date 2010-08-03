@@ -657,7 +657,7 @@ public class RefuelEditActivity extends EditActivityBase {
                 && userInputStr != null && userInputStr.length() > 0) {
             try{
             	BigDecimal qtyBd = new BigDecimal(qtyStr);
-            	if(qtyBd.equals(BigDecimal.ZERO))
+            	if(qtyBd.signum() == 0)
             		return;
 
             	if(mInsertMode == INSERTMODE_PRICE){ //calculate amount

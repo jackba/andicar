@@ -555,7 +555,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             try{
                 amount = new BigDecimal(amountStr);
                 quantity = new BigDecimal(qtyStr);
-                if(!quantity.equals(BigDecimal.ZERO)){
+                if(quantity.signum() != 0){
 	                price = amount.divide(quantity, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
 	                tvCalculatedTextContent.setText(price.toString());
                 }

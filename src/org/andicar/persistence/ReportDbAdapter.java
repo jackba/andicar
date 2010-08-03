@@ -74,7 +74,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                             " AS " + SECOND_LINE_LIST_NAME + ", " +
                 " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
                 		sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + 
-                        " AS " + THIRD_LINE_LIST_NAME +
+                        " AS " + THIRD_LINE_LIST_NAME + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS gpsTrackId " +
             " FROM " + MILEAGE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -91,6 +92,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " LEFT OUTER JOIN " + TAG_TABLE_NAME +
                     	" ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_TAG_ID_NAME) + "=" +
                                         sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
+                    " LEFT OUTER JOIN " + GPSTRACK_TABLE_NAME +
+                    	" ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, GEN_COL_ROWID_NAME) + "=" +
+                                        sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MILEAGE_ID_NAME) +
             " WHERE 1=1 ";
 
     //used in exported report
