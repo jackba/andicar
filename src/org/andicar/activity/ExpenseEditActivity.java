@@ -555,8 +555,10 @@ public class ExpenseEditActivity extends EditActivityBase {
             try{
                 amount = new BigDecimal(amountStr);
                 quantity = new BigDecimal(qtyStr);
-                price = amount.divide(quantity, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
-                tvCalculatedTextContent.setText(price.toString());
+                if(!quantity.equals(BigDecimal.ZERO)){
+	                price = amount.divide(quantity, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
+	                tvCalculatedTextContent.setText(price.toString());
+                }
             }
             catch(NumberFormatException e){}
         }
