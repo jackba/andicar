@@ -37,6 +37,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 import org.andicar.activity.miscellaneous.GPSTrackMap;
 import org.andicar.activity.report.GPSTrackListReportActivity;
+import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
@@ -51,6 +52,7 @@ import org.andicar.utils.Utils;
 public class ListActivityBase extends ListActivity {
     protected Cursor recordCursor = null;
     protected long mLongClickId = -1;
+    protected long mGpsTrackId = -1;
     protected boolean showInactiveRecords = false;
     protected Menu optionsMenu;
     @SuppressWarnings("rawtypes")
@@ -222,8 +224,19 @@ public class ListActivityBase extends ListActivity {
             menu.add( 0, StaticValues.CONTEXT_MENU_SENDASEMAIL_ID, 0, mRes.getText( R.string.MENU_SendAsEmailCaption ));
             menu.add( 0, StaticValues.CONTEXT_MENU_SHOWONMAP_ID, 0, mRes.getText( R.string.MENU_ShowOnMap ));
         }
-        if(this instanceof CarListActivity || this instanceof DriverListActivity){
+        else if(this instanceof CarListActivity || this instanceof DriverListActivity){
             menu.add( 0, StaticValues.CONTEXT_MENU_SETDEFAULT_ID, 0, mRes.getText( R.string.MENU_SetDefault ));
+        }
+        else if(this instanceof MileageListReportActivity){
+            String selection = MainDbAdapter.GPSTRACK_COL_MILEAGE_ID_NAME + "= ? ";
+            String[] selectionArgs = {Long.toString(mLongClickId)};
+            Cursor c2 = mDbAdapter.query(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.genColRowId,
+                        selection, selectionArgs, null, null, null);
+            if(c2.moveToFirst()){
+            	mGpsTrackId =  c2.getLong(0);
+                menu.add( 0, StaticValues.CONTEXT_MENU_OPENGPSTRACK_ID, 0, mRes.getText( R.string.MENU_OpenGPSTrack ));
+            }
+            c2.close();
         }
     }
 
@@ -384,6 +397,13 @@ public class ListActivityBase extends ListActivity {
                     c.close();
                 }
                 finish();
+                return true;
+            case StaticValues.CONTEXT_MENU_OPENGPSTRACK_ID:
+            	if(mGpsTrackId > -1){
+	                Intent gpsTrackEditIntent = new Intent(this, GPSTrackEditActivity.class);
+	                gpsTrackEditIntent.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, mGpsTrackId);
+	                startActivity(gpsTrackEditIntent);
+            	}
                 return true;
         }
         return super.onContextItemSelected(item);

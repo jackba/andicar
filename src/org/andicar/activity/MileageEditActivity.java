@@ -26,6 +26,7 @@ import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -83,6 +84,7 @@ public class MileageEditActivity extends EditActivityBase {
     ArrayAdapter<String> userCommentAdapter;
     private ArrayAdapter<String> tagAdapter;
     protected ImageButton btnStartStopMileageRecord = null;
+    protected ImageButton btnOpenGPSTrack = null;
 
 
     /** Called when the activity is first created. */
@@ -138,10 +140,26 @@ public class MileageEditActivity extends EditActivityBase {
             
             initDateTime(c.getLong(MainDbAdapter.MILEAGE_COL_DATE_POS) * 1000);
             c.close();
+            
+            //get the gps track id (if exists)
+            String selection = MainDbAdapter.GPSTRACK_COL_MILEAGE_ID_NAME + "= ? ";
+            String[] selectionArgs = {Long.toString(mRowId)};
+            Cursor c2 = mDbAdapter.query(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.genColRowId,
+                        selection, selectionArgs, null, null, null);
+            if(c2.moveToFirst()){
+                mGpsTrackId =  c2.getLong(0);
+                btnOpenGPSTrack.setVisibility(View.VISIBLE);
+            }
+            else{
+                btnOpenGPSTrack.setVisibility(View.GONE);
+            }
+            c2.close();
+            
         }
         else if(operationType.equals("TrackToMileage")){
         	tvMileageRecInProgress.setVisibility(View.GONE);
         	btnStartStopMileageRecord.setVisibility(View.GONE);
+            btnOpenGPSTrack.setVisibility(View.GONE);
         	isRecordMileage = false;
         	btnOk.setEnabled(true);
             mGpsTrackId = mBundleExtras.getLong("Track_ID");
@@ -176,6 +194,7 @@ public class MileageEditActivity extends EditActivityBase {
         }
         else{
         	btnStartStopMileageRecord.setVisibility(View.VISIBLE);
+            btnOpenGPSTrack.setVisibility(View.GONE);
 
         	if(mPreferences.getBoolean("MileageRec_IsRecording", false)){ //mileage rec in progress
         		isRecordMileage = true;
@@ -298,6 +317,9 @@ public class MileageEditActivity extends EditActivityBase {
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         btnStartStopMileageRecord = (ImageButton)findViewById( R.id.btnStartStopMileageRecord );
         btnStartStopMileageRecord.setOnClickListener(onStartStopRecordClickListener);
+        btnOpenGPSTrack = (ImageButton)findViewById( R.id.btnOpenGPSTrack );
+        btnOpenGPSTrack.setOnClickListener(onStartStopRecordClickListener);
+
         tvMileageRecInProgress = (TextView) findViewById(R.id.tvMileageRecInProgress);
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgMileageInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
@@ -606,36 +628,43 @@ public class MileageEditActivity extends EditActivityBase {
             {
                 public void onClick( View v )
                 {
-                    if(!isRecordMileage){ //start recording
-                    	isRecordMileage = true;
-                    	mPrefEditor.putBoolean("MileageRec_IsRecording", isRecordMileage);
-                    	mPrefEditor.putLong("MileageRec_CarId", mCarId);
-                    	mPrefEditor.putLong("MileageRec_DriverId", mDriverId);
-                    	mPrefEditor.putLong("MileageRec_ExpenseTypeId", mExpTypeId);
-                    	mPrefEditor.putInt("MileageRec_InsertMode", mInsertMode);
-                    	mPrefEditor.putString("MileageRec_Tag", acTag.getText().toString());
-                    	mPrefEditor.putString("MileageRec_StartIndex", etStartIndex.getText().toString());
-                    	mPrefEditor.putString("MileageRec_Comment", acUserComment.getText().toString());
-                    	mPrefEditor.commit();
-                    	finish();
-                    }
-                    else{//stop recording
-                    	isRecordMileage = false;
-                    	tvMileageRecInProgress.setVisibility(View.GONE);
-                    	mPrefEditor.putBoolean("MileageRec_IsRecording", isRecordMileage);
-                    	mPrefEditor.commit();
-                        btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
-                		spnCar.setEnabled(true);
-                		spnDriver.setEnabled(true);
-                		spnExpType.setEnabled(true);
-                		acTag.setEnabled(true);
-                		rbInsertModeIndex.setEnabled(true);
-                		rbInsertModeMileage.setEnabled(true);
-                		etStartIndex.setEnabled(true);
-                		etUserInput.setEnabled(true);
-                		acUserComment.setEnabled(true);
-                    	btnOk.setEnabled(true);
-                    }
+                	if(v.getId() == R.id.btnStartStopMileageRecord){
+	                    if(!isRecordMileage){ //start recording
+	                    	isRecordMileage = true;
+	                    	mPrefEditor.putBoolean("MileageRec_IsRecording", isRecordMileage);
+	                    	mPrefEditor.putLong("MileageRec_CarId", mCarId);
+	                    	mPrefEditor.putLong("MileageRec_DriverId", mDriverId);
+	                    	mPrefEditor.putLong("MileageRec_ExpenseTypeId", mExpTypeId);
+	                    	mPrefEditor.putInt("MileageRec_InsertMode", mInsertMode);
+	                    	mPrefEditor.putString("MileageRec_Tag", acTag.getText().toString());
+	                    	mPrefEditor.putString("MileageRec_StartIndex", etStartIndex.getText().toString());
+	                    	mPrefEditor.putString("MileageRec_Comment", acUserComment.getText().toString());
+	                    	mPrefEditor.commit();
+	                    	finish();
+	                    }
+	                    else{//stop recording
+	                    	isRecordMileage = false;
+	                    	tvMileageRecInProgress.setVisibility(View.GONE);
+	                    	mPrefEditor.putBoolean("MileageRec_IsRecording", isRecordMileage);
+	                    	mPrefEditor.commit();
+	                        btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+	                		spnCar.setEnabled(true);
+	                		spnDriver.setEnabled(true);
+	                		spnExpType.setEnabled(true);
+	                		acTag.setEnabled(true);
+	                		rbInsertModeIndex.setEnabled(true);
+	                		rbInsertModeMileage.setEnabled(true);
+	                		etStartIndex.setEnabled(true);
+	                		etUserInput.setEnabled(true);
+	                		acUserComment.setEnabled(true);
+	                    	btnOk.setEnabled(true);
+	                    }
+                	}
+                	else if(v.getId() == R.id.btnOpenGPSTrack && mGpsTrackId > -1){
+    	                Intent gpsTrackEditIntent = new Intent(MileageEditActivity.this, GPSTrackEditActivity.class);
+    	                gpsTrackEditIntent.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, mGpsTrackId);
+    	                startActivity(gpsTrackEditIntent);
+                	}
                 }
             };
 
