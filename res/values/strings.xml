@@ -133,6 +133,7 @@
     <string name="MENU_ExpenseCaption">"Expenses"</string>
     <string name="MENU_GPSTrackCaption">"GPS Tracks"</string>
     <string name="MENU_SetDefault">"Set default"</string>
+    <string name="MENU_OpenGPSTrack">"Open GPS track"</string>
 
 
     <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
