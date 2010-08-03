@@ -656,14 +656,18 @@ public class RefuelEditActivity extends EditActivityBase {
         if(qtyStr != null && qtyStr.length() > 0
                 && userInputStr != null && userInputStr.length() > 0) {
             try{
-                if(mInsertMode == INSERTMODE_PRICE){ //calculate amount
+            	BigDecimal qtyBd = new BigDecimal(qtyStr);
+            	if(qtyBd.equals(BigDecimal.ZERO))
+            		return;
+
+            	if(mInsertMode == INSERTMODE_PRICE){ //calculate amount
                     priceEntered = new BigDecimal(userInputStr);
-                    calculatedValue = (new BigDecimal(qtyStr)).multiply(priceEntered);
+                    calculatedValue = qtyBd.multiply(priceEntered);
                     amountEntered = calculatedValue;
                 }
                 else{ //INSERTMODE_AMOUNT - calculate price
                     amountEntered = new BigDecimal(userInputStr);
-                    calculatedValue = amountEntered.divide(new BigDecimal(qtyStr), 10, RoundingMode.HALF_UP);
+                    calculatedValue = amountEntered.divide(qtyBd, 10, RoundingMode.HALF_UP);
                     priceEntered = calculatedValue;
                 }
                 calculatedValueStr = calculatedValue.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
