@@ -772,7 +772,9 @@ public class GPSTrackService extends Service {
     }
 
     private void updateStatistics(){
-        long lTotalTime = (lStopTime - lStartTime) / 1000; //in seconds; lStopTime & lStartTime are in miliseconds
+        
+    	long lTotalTime = (lStopTime - lStartTime) / 1000; //in seconds; lStopTime & lStartTime are in miliseconds
+        
         if(lLastNonMovingTime != 0 && lFirstNonMovingTime != 0)
             lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
         

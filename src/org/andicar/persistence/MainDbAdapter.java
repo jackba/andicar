@@ -465,7 +465,7 @@ public class MainDbAdapter extends DB
         if(tmpStopIndex.compareTo(newStopIndex) > 0)
             newStopIndex = tmpStopIndex;
 
-        if(newStopIndex.equals(BigDecimal.ZERO))
+        if(newStopIndex.signum() == 0)
             newStopIndex = new BigDecimal(fetchRecord(CAR_TABLE_NAME, carTableColNames, mCarId)
                                                     .getString(CAR_COL_INDEXSTART_POS));
         ContentValues content = new ContentValues();
@@ -1186,7 +1186,7 @@ public class MainDbAdapter extends DB
             selectCursor.close();
             if(retValStr != null && retValStr.length() > 0){
                 retVal = new BigDecimal(retValStr);
-                if(retVal.compareTo(BigDecimal.ZERO) != 0)
+                if(retVal.signum() != 0)
                     return BigDecimal.ONE.divide(retVal, 10, RoundingMode.HALF_UP)
                             .setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
                 else
