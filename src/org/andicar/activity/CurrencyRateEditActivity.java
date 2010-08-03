@@ -192,7 +192,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
         if(strCurrencyRate != null && strCurrencyRate.length() > 0) {
             try{
                 bdRate = new BigDecimal(strCurrencyRate);
-                if(bdRate.equals(BigDecimal.ZERO))
+                if(bdRate.signum() == 0)
                     bdInverseRate = bdRate;
                 else
                     bdInverseRate = BigDecimal.ONE.divide(bdRate, 10, RoundingMode.HALF_UP)
