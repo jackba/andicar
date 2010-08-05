@@ -678,7 +678,8 @@ public class ExpenseEditActivity extends EditActivityBase {
         data.put( MainDbAdapter.EXPENSE_COL_INDEX_NAME, etCarIndex.getText().toString());
 
 //        data.put( MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_NAME, etUserInput.getText().toString());
-        data.put( MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_NAME, amount.toString());
+        if(amount != null)
+        	data.put( MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_NAME, amount.toString());
         if(price != null)
             data.put( MainDbAdapter.EXPENSE_COL_PRICEENTERED_NAME, price.toString());
         data.put( MainDbAdapter.EXPENSE_COL_QUANTITY_NAME, etQuantity.getText().toString());
