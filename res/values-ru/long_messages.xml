@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ Translated to Russian by Andrey Demin, andde@rambler.ru
+-->
+
+<!--
+        &lt; = <
+-->
+
+<resources>
+    <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
+        AndiCar -  это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, 
+		предназначенное для устройств на платформе Android \n
+		Она лицензирована в  соответствии с GNU General Public License, версия 3.
+		Смотрите больше информации на странице О программе.\n
+		Спасибо за использование AndiCar!
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
+        &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> - это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, предназначенное для устройств на платформе Android
+		Она лицензирована в  соответствии с GNU General Public License, версия 3.&lt;br>
+        Смотрите больше информации на странице О программе.&lt;br>Copyright © 2010 Miklos Keresztes.&lt;br>
+        Спасибо за использование &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>!&lt;br>
+        Версия программы:
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML1">
+        &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> - это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, 
+		предназначенное для устройств на платформе Android. Она лицензирована в  соответствии с GNU General Public License.&lt;br>
+        *  Для получения подробной информации (как использовать, последние новости и т.д.) пожалуйста посетите домашнюю страницу проекта 
+        &lt;a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/&lt;/a>.&lt;br>
+        &lt;small> Обновите страницу в своем браузере, если вы получили сообщение "Web page not available".lt;/small>&lt;br>
+        *  Свои вопросы задайте в дискуссионной группе &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> на
+        &lt;a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar&lt;/a>.&lt;br>
+        *  Для сообщениий об ошибках  и предложений по улучшению программы, не стесняйтесь использовать справочную систему &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> на
+        &lt;a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list&lt;/a>.&lt;br>
+        *  Вы можете подписаться на новости проекта на странице
+        &lt;a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/&lt;/a>.&lt;br>
+        *  Для решения прочих вопросов вы можете отправить письмо на andicar.support@gmail.com.&lt;br>&lt;br>
+        Вы можете отблагодарить автора, если вам нравится программа &lt;b>&lt;i>AndiCar&lt;/b>&lt;/i>.
+        Благодарность можно отправить через систему PayPal.
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML2">
+        &lt;br>&lt;br>Thank you for using &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>.&lt;br>&lt;br>
+        &lt;b&gt;&lt;i&gt;Credits:&lt;/i&gt;&lt;/b&gt;&lt;br&gt;
+        *  Chinese translation by &lt;a href="http://goapk.com/"&gt;goapk.com&lt;/a&gt; &lt;br&gt;
+        &lt;br>&lt;b>&lt;i>Copyright notice&lt;/i>&lt;/b>:&lt;br>&lt;br>
+        Copyright © 2010 Miklos Keresztes (miklos.keresztes@gmail.com)&lt;br>&lt;br>
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;br>&lt;br>
+        This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+        without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+        See the GNU General Public License for more details.&lt;br>&lt;br>
+        You should have received a copy of the GNU General Public License along with this program.
+        If not, see &lt;a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses&lt;/a>.&lt;br>
+        The whole license can be found &lt;a href="http://www.gnu.org/licenses/gpl.html">here&lt;/a>.&lt;br>
+    </string>
+
+<!--        &lt;b>&lt;i>Credits:&lt;/i>&lt;/b>&lt;br>
+        *  Chinese translation by &lt;a href="http://goapk.com/">goapk.com&lt;/a> &lt;br>
+-->
+</resources>
