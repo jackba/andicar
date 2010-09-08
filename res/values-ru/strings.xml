@@ -34,7 +34,7 @@
 
 <resources>
     <string name="APP_Description">"Бесплатная программа для учета расходов на автомобили."</string>
-    <string name="APP_Motto">"Управляйте своими автомобилями мощью открытого кода."</string>
+    <string name="APP_Motto">"Управляйте своим автопарком программой с открытым кодом."</string>
     <string name="APP_Activity_DriverEdit">"Редактировать водителя"</string>
     <string name="APP_Activity_DriverList">"Водители"</string>
     <string name="APP_Activity_CarEdit">"Редактировать автомобиль"</string>
@@ -117,7 +117,7 @@
     <string name="GEN_Email">"Email:"</string>
     <string name="GEN_Postal">"Почтовый:"</string>
     <string name="GEN_Tag">"Метка:"</string>
-    <string name="GEN_TagHint">"Короткая метка."</string>
+    <string name="GEN_TagHint">"Короткая метка. Комментарий напишите ниже."</string>
 
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
@@ -162,7 +162,7 @@
     <string name="DriverEditActivity_LicenseNoLabel">"Вод. удостоверение No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">" Текущий водитель не может быть неактивным."</string>
     <string name="DriverListActivity_InactiveDriverSelectedMessage">"Неактивный водитель не может быть выбран."</string>
-    <string name="DriverListActivity_CurrentDriverDeleteMessage">"Текущий водщитель не может быть удален."</string>
+    <string name="DriverListActivity_CurrentDriverDeleteMessage">"Текущий водитель не может быть удален."</string>
 
     <string name="CarEditActivity_ModelLabel">"Модель:"</string>
     <string name="CarEditActivity_LicensePlateLabel">"Номерной знак:"</string>
@@ -186,8 +186,8 @@
 
     <string name="MileageEditActivity_IndexHeaderLabel">"Начало/окончание счетчика или поездки"</string>
     <string name="MileageEditActivity_IndexStartLabel">"Старт "</string>
-    <string name="MileageEditActivity_OptionIndexLabel">"Стоп"</string>
-    <string name="MileageEditActivity_OptionMileageLabel">"Поездка"</string>
+    <string name="MileageEditActivity_OptionIndexLabel">"Остановка"</string>
+    <string name="MileageEditActivity_OptionMileageLabel">"Расстояние"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Поездка добавлена."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Поездка обновлена."</string>
     <string name="MileageEditActivity_RecordingInProgress">"Данные записываются!"</string>
@@ -215,7 +215,7 @@
     <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Курс: 1 [%1] = "</string>
     <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
     <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Обратный курс: 1 [%1] = "</string>
-    <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Макс. кол-во знаков после зяпятой: "</string>
+    <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Макс. кол-во знаков после запятой: "</string>
 
     <string name="REPORTActivity_ReportCreatedMessage">"Ваш отчет успешно создан в папке sdcard/andicar/reports"</string>
     <string name="REPORTActivity_ProgressMessage">"Начало создания отчета. Пожалуйста подождите..."</string>
@@ -270,44 +270,50 @@
     <string name="PREF_DriverSummary">"Добавить, удалить, редактировать водителей.\nВыбрать текущего водителя."</string>
     <string name="PREF_UOMTitle">"Единицы измерения"</string>
     <string name="PREF_UOMSummary">"Добавить, удалить, редактировать единицы измерения"</string>
-    <string name="PREF_UOMConversionTitle">"Преобразование единиц измерения"</string>
-    <string name="PREF_UOMConversionSummary">"Добавить, удалить, редактировать преобразования между единицами  измерения"</string>
+    <string name="PREF_UOMConversionTitle">"Преобразование ед. изм."</string>
+    <string name="PREF_UOMConversionSummary">"Добавить, удалить, редактировать преобразования между единицами измерения"</string>
     <string name="PREF_CurrencyTitle">"Валюты"</string>
     <string name="PREF_CurrencySummary">"Добавить, удалить, редактировать валюты"</string>
     <string name="PREF_BackupRestoreCategoryTitle">"Резервное копирование / восстановление"</string>
-    <string name="PREF_BackupRestoreTitle">"Копирование или восстановление ваше базы данных"</string>
-    <string name="PREF_BackupRestoreSummary">"Создать новую копию базы данных или восстановить её из существующей копии."</string>
+    <string name="PREF_BackupRestoreTitle">"Копирование или восстановление базы данных"</string>
+    <string name="PREF_BackupRestoreSummary">"Создать новую копию базы данных или восстановить из копии."</string>
     <string name="PREF_ExpenseCategoryCategoryTitle">"Категории расходов"</string>
     <string name="PREF_ExpenseCategoryCategorySummary">"Добавить, удалить, редактировать категории расходов"</string>
     <string name="PREF_MiscCategoryTitle">"Прочее"</string>
-    <string name="PREF_MainScreenCategoryTitle">"Настройки главного экрана"</string>
+    <string name="PREF_MainScreenCategoryTitle">"Настройки старта"</string>
     <string name="PREF_MainScreenCategorySummary">"Изменить настройки вашего главного экрана"</string>
     <string name="PREF_CurrencyRateCategoryTitle">"Курсы валют"</string>
     <string name="PREF_CurrencyRateCategorySummary">"Добавить, удалить, редактировать курсы валют"</string>
     <string name="PREF_GPSTrackCategoryTitle">"Запись треков GPS"</string>
     <string name="PREF_GPSTrackTitle">"Трек GPS"</string>
     <string name="PREF_GPSTrackSummary">"Различные настройки для записи треков GPS."</string>
-    <string name="PREF_SendUsageTitle">"Статистика использования"</string>
-    <string name="PREF_SendUsageSummary">"Помоги разработчикам сделать программу лучше, отправляя анонимную статистику использования."</string>
+    <string name="PREF_SendUsageTitle">"Статистика работы ПО"</string>
+    <string name="PREF_SendUsageSummary">"Помоги сделать программу лучше, отправляя анонимную статистику работы."</string>
     <string name="PREF_SendCrashReportsTitle">"Отчет о сбоях"</string>
     <string name="PREF_SendCrashReportsSummary">"Помоги разработчикам сделать программу лучше, отправляя анонимный отчет о сбоях."</string>
     <string name="PREF_MainScreen">"Настроить ваш главный экран"</string>
     <string name="PREF_BPartnersCategoryTitle">"Партнеры и местоположения"</string>
     <string name="PREF_PartnerTitle">"Партнеры"</string>
     <string name="PREF_PartnerSummary">"Добавить, удалить, редактировать партнеров и местоположения"</string>
-    <string name="PREF_UseNumericInputTitle">"Использовать цифровую клавиатуру"</string>
-    <string name="PREF_UseNumericInputSummary">"Использовать простую клавиатуру для цифровых полей."</string>
+    <string name="PREF_UseNumericInputTitle">"Цифровая клавиатура"</string>
+    <string name="PREF_UseNumericInputSummary">"Использовать цифровую клавиатуру для числовых полей."</string>
     <string name="PREF_TagCategoryTitle">"Метки"</string>
     <string name="PREF_TagCategorySummary">"Добавить, удалить, редактировать метки"</string>
-    <string name="PREF_RememberLastTagTitle">"Запомнить последнюю метку"</string>
+    <string name="PREF_RememberLastTagTitle">"Запомнить посл. метку"</string>
     <string name="PREF_RememberLastTagSummary">"Запомнить последнюю использованную метку"</string>
+
+    <string name="PREF_MainScreen_ShowMileageZone">"Раздел поездок"</string>
+    <string name="PREF_MainScreen_ShowGPSTrackZone">"Раздел треков GPS"</string>
+    <string name="PREF_MainScreen_ShowRefuelZone">"Раздел заправок"</string>
+    <string name="PREF_MainScreen_ShowExpenseZone">"Раздел расходов"</string>
+    <string name="PREF_MainScreen_ShowStatistics">"Раздел статистики"</string>
 
     <string name="PREF_AddOnCategoryTitle">"Дополнительные услуги"</string>
     <string name="PREF_AddOnServicesTitle">"Дополнительные услуги"</string>
     <string name="PREF_AddOnServicesSummary">"Подписки, основанные на платных услугах."</string>
     <string name="PREF_AddOnServicesSubscribe">"Подписаться с помощью PayPal"</string>
 
-    <string name="PREFMainScreen_ZonesLabel">"Существующие зоны:"</string>
+    <string name="PREFMainScreen_ZonesLabel">"возможные разделы:"</string>
     <string name="PREFGPSTrack_FileFormatTitle">"Формат файла"</string>
     <string name="PREFGPSTrack_FileFormatSummary">"Выберите формат файла, используемый для записи треков GPS"</string>
     <string name="PREFGPSTrack_CSVFileFormatMessage">"CSV используется всегда"</string>
@@ -319,10 +325,10 @@
     <string name="PREFGPSTrack_MinimumTimeSummary">"Минимальное время между двумя записями вашей позиции"</string>
     <string name="PREFGPSTrack_AccuracyTitle">"Точность"</string>
     <string name="PREFGPSTrack_AccuracySummary">"Минимальная точность для достоверности точки трека. Используется для записи треков в форматах KML и GPX."</string>
-    <string name="PREFGPSTrack_AutoShutDownTitle">"Граница самостоятельной остановки"</string>
-    <string name="PREFGPSTrack_AutoShutDownSummary">"Остановить запись трека, если доля (в процентах) пропущенных точек больше чем это значение."</string>
+    <string name="PREFGPSTrack_AutoShutDownTitle">"Граница автоостановки"</string>
+    <string name="PREFGPSTrack_AutoShutDownSummary">"Остановить запись трека, если доля пропущенных точек больше чем это значение."</string>
     <string name="PREFGPSTrack_FileSplitTitle">"Разделение файлов треков GPS"</string>
-    <string name="PREFGPSTrack_FileSplitSummary">"Разделить файл трека GPS и начать новый после каждых N точек трека. Установите 0 для запрещения разделения."</string>
+    <string name="PREFGPSTrack_FileSplitSummary">"Разделить файл и начать новый после каждых N точек трека. 0 - для отмены разделения."</string>
     <string name="PREFGPSTrack_FileLocationMessage">"Ваши треки находятся в папке SDCARD/andicar/gpstrack"</string>
 
     <string name="DIALOGSearch_DialogTitle">"Введите критерий"</string>

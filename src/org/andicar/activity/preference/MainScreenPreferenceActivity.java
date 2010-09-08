@@ -19,6 +19,7 @@
 
 package org.andicar.activity.preference;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -40,11 +41,13 @@ import org.andicar.utils.AndiCarStatistics;
 public class MainScreenPreferenceActivity extends BaseActivity {
 
     private ListView lvZones;
+    Resources mResource;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mPrefEditor = mPreferences.edit();
+        mResource = getResources();
         setContentView( R.layout.main_screen_preference_activity );
         fillZonesList();
     }
@@ -52,11 +55,11 @@ public class MainScreenPreferenceActivity extends BaseActivity {
     private void fillZonesList() {
         ArrayList<String> mainScreenZones = new ArrayList<String>();
 
-        mainScreenZones.add("Show mileage zone");
-        mainScreenZones.add("Show GPS track zone");
-        mainScreenZones.add("Show refuel zone");
-        mainScreenZones.add("Show expense zone");
-        mainScreenZones.add("Show statistics");
+        mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowMileageZone));
+        mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowGPSTrackZone));
+        mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowRefuelZone));
+        mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowExpenseZone));
+        mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowStatistics));
         ArrayAdapter<String> listAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, mainScreenZones);
 
