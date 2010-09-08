@@ -301,6 +301,12 @@
     <string name="PREF_RememberLastTagTitle">"Remember last tag"</string>
     <string name="PREF_RememberLastTagSummary">"Remember the last used tag"</string>
 
+    <string name="PREF_MainScreen_ShowMileageZone">"Show mileage zone"</string>
+    <string name="PREF_MainScreen_ShowGPSTrackZone">"Show GPS track zone"</string>
+    <string name="PREF_MainScreen_ShowRefuelZone">"Show refuel zone"</string>
+    <string name="PREF_MainScreen_ShowExpenseZone">"Show expense zone"</string>
+    <string name="PREF_MainScreen_ShowStatistics">"Show statistics"</string>
+
     <string name="PREF_AddOnCategoryTitle">"AddOn Services"</string>
     <string name="PREF_AddOnServicesTitle">"AddOn Services"</string>
     <string name="PREF_AddOnServicesSummary">"Subscription based, payed services."</string>
