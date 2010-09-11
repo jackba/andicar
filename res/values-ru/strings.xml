@@ -275,7 +275,7 @@
     <string name="PREF_CurrencyTitle">"Валюты"</string>
     <string name="PREF_CurrencySummary">"Добавить, удалить, редактировать валюты"</string>
     <string name="PREF_BackupRestoreCategoryTitle">"Резервное копирование / восстановление"</string>
-    <string name="PREF_BackupRestoreTitle">"Копирование или восстановление базы данных"</string>
+    <string name="PREF_BackupRestoreTitle">"Сохранение и восстановление"</string>
     <string name="PREF_BackupRestoreSummary">"Создать новую копию базы данных или восстановить из копии."</string>
     <string name="PREF_ExpenseCategoryCategoryTitle">"Категории расходов"</string>
     <string name="PREF_ExpenseCategoryCategorySummary">"Добавить, удалить, редактировать категории расходов"</string>
