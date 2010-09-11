@@ -297,6 +297,12 @@
     <string name="PREF_RememberLastTagTitle">"记住上次标签"</string>
     <string name="PREF_RememberLastTagSummary">"记住上次使用的标签"</string>
 
+	<string name="PREF_MainScreen_ShowMileageZone">"显示里程区域"</string>
+	<string name="PREF_MainScreen_ShowGPSTrackZone">"显示GPS追踪区域"</string>
+	<string name="PREF_MainScreen_ShowRefuelZone">"显示燃料区域"</string>
+	<string name="PREF_MainScreen_ShowExpenseZone">"显示支出区域"</string>
+	<string name="PREF_MainScreen_ShowStatistics">"显示数据统计"</string>
+
     <string name="PREF_AddOnCategoryTitle">"AddOn 服务"</string>
     <string name="PREF_AddOnServicesTitle">"AddOn 服务"</string>
     <string name="PREF_AddOnServicesSummary">"订阅是一个需付费的服务。"</string>
