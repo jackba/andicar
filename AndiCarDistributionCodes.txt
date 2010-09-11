@@ -1,3 +1,6 @@
 1. A -> Advanced Mobile Solutions - Metaflow Marketplace
 2. C -> Chinese (goapk.com)
 3. H -> Handmark
+4. R -> Handster
+5. S -> SlideME
+6. F -> Android Freeware
