@@ -134,6 +134,7 @@
     <string name="MENU_GPSTrackCaption">"GPS Tracks"</string>
     <string name="MENU_SetDefault">"Set default"</string>
     <string name="MENU_OpenGPSTrack">"Open GPS track"</string>
+    <string name="MENU_RateCommentCaption">"Rate/Comment"</string>
 
 
     <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
@@ -144,6 +145,7 @@
     <string name="MainActivity_StatisticsListHeaderCaption">"Last known odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the mileage between the first and last FULL refuel."</string>
+    <string name="MainActivity_StatisticsLastConsLabel">"Last fuel eff.: "</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"Total expenses:"</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"Mileage exp.:"</string>
     <string name="MainActivity_MileageNoDataText">"No mileage for this car"</string>
@@ -157,6 +159,7 @@
     <string name="MainActivity_BackupExistMessage">"Backup files exist.\nDo you want to restore one?"</string>
     <string name="MainActivity_UpdateMessage">"Update message"</string>
     <string name="MainActivity_GPSTrackZoneNoDataText">"No tracks."</string>
+    <string name="MainActivity_NoMarketAccessMsg">"Cannot open Android Market!"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>
