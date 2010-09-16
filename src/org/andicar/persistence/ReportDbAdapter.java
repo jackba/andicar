@@ -228,6 +228,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + ", " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME) + ", " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UOMCode, " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " +
                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS CurrencyCode, " +
@@ -502,8 +503,63 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
                         " AND " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) + " = " +
                                             sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
-                "  ) AS LastFullRefuelIndex " + //#10
-                
+                "  ) AS LastFullRefuelIndex, " + //#10
+                //second last full refuel date
+                " (SELECT " +
+                	" SUM( " + sqlConcatTableColumn("QtySumLast2Ref", REFUEL_COL_QUANTITY_NAME) + ") " +
+            	" FROM " + REFUEL_TABLE_NAME + " AS QtySumLast2Ref" +
+            	" WHERE " +
+		        		sqlConcatTableColumn("QtySumLast2Ref", GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+		        		" AND " + sqlConcatTableColumn("QtySumLast2Ref", REFUEL_COL_CAR_ID_NAME) + " = " +
+		                				sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+						" AND " + sqlConcatTableColumn("QtySumLast2Ref", REFUEL_COL_DATE_NAME) + " > " +
+				                " (SELECT " + 
+			                		"MAX( " + sqlConcatTableColumn("SecondRefuel", REFUEL_COL_DATE_NAME) + ") " +
+//				                	"MAX( DATETIME(" + sqlConcatTableColumn("SecondRefuel", REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime') ) " +
+				                " FROM " + REFUEL_TABLE_NAME + " AS SecondRefuel" +
+				                " WHERE " + 
+				                		sqlConcatTableColumn("SecondRefuel", REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
+				                		" AND " + sqlConcatTableColumn("SecondRefuel", GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+				                		" AND " + sqlConcatTableColumn("SecondRefuel", REFUEL_COL_CAR_ID_NAME) + " = " +
+				                        				sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+				        				" AND " + sqlConcatTableColumn("SecondRefuel", REFUEL_COL_DATE_NAME) + " < " +
+				        					" (SELECT " +
+				                                    " MAX( " + sqlConcatTableColumn("ThirdRefuel", REFUEL_COL_DATE_NAME) + ") " +
+				                                " FROM " + REFUEL_TABLE_NAME + " AS ThirdRefuel " +
+				                                " WHERE " + sqlConcatTableColumn("ThirdRefuel", GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+				                                        " AND " + sqlConcatTableColumn("ThirdRefuel", REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
+				                                		" AND " + sqlConcatTableColumn("ThirdRefuel", REFUEL_COL_CAR_ID_NAME) + " = " +
+				                        						sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " ) " +
+								" ) " +
+						" AND " + sqlConcatTableColumn("QtySumLast2Ref", REFUEL_COL_DATE_NAME) + " <= " +
+		    					" (SELECT " +
+		                        	" MAX( " + sqlConcatTableColumn("LastFullRefuel", REFUEL_COL_DATE_NAME) + ") " +
+			                    " FROM " + REFUEL_TABLE_NAME + " AS LastFullRefuel " +
+			                    " WHERE " + sqlConcatTableColumn("LastFullRefuel", GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+			                            " AND " + sqlConcatTableColumn("LastFullRefuel", REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
+			                    		" AND " + sqlConcatTableColumn("LastFullRefuel", REFUEL_COL_CAR_ID_NAME) + " = " +
+			            						sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " ) " +
+								") AS TotalQtyLast2Ref, " + //#11
+		                " (SELECT " + 
+	                		sqlConcatTableColumn("SecondLastRefuel", REFUEL_COL_INDEX_NAME) + 
+		                " FROM " + REFUEL_TABLE_NAME + " AS SecondLastRefuel" +
+		                " WHERE " + 
+		                		sqlConcatTableColumn("SecondLastRefuel", REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
+		                		" AND " + sqlConcatTableColumn("SecondLastRefuel", GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+		                		" AND " + sqlConcatTableColumn("SecondLastRefuel", REFUEL_COL_CAR_ID_NAME) + " = " +
+		                        				sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) +
+		        				" AND " + sqlConcatTableColumn("SecondLastRefuel", REFUEL_COL_DATE_NAME) + " < " +
+		        					" (SELECT " +
+		                                    " MAX( " + sqlConcatTableColumn("ThirdRefuel", REFUEL_COL_DATE_NAME) + ") " +
+		                                " FROM " + REFUEL_TABLE_NAME + " AS ThirdRefuel " +
+		                                " WHERE " + sqlConcatTableColumn("ThirdRefuel", GEN_COL_ISACTIVE_NAME) + " = 'Y' " +
+		                                        " AND " + sqlConcatTableColumn("ThirdRefuel", REFUEL_COL_ISFULLREFUEL_NAME) + " = 'Y' " +
+		                                		" AND " + sqlConcatTableColumn("ThirdRefuel", REFUEL_COL_CAR_ID_NAME) + " = " +
+		                        						sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME) + " ) " +
+						" ORDER BY " + sqlConcatTableColumn("SecondLastRefuel", REFUEL_COL_DATE_NAME) + " DESC " +
+						" LIMIT 1 " +
+						") AS SecondLastFullRefuelIndex" + //#12
+
             " FROM " + CAR_TABLE_NAME +
                         " JOIN " + UOM_TABLE_NAME +
                             " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + "=" +
@@ -514,7 +570,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " JOIN " + CURRENCY_TABLE_NAME +
                             " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_CURRENCY_ID_NAME) + "=" +
                                                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, GEN_COL_ROWID_NAME) +
-                        //full refuels
+                        //first & last full refuels
                         " LEFT OUTER JOIN ( " +
                                 " SELECT " +
                                     " MIN( " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ") AS FirstFullRefuel, " +

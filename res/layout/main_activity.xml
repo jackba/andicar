@@ -436,7 +436,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView android:id="@+id/tvThreeLineListCarReportHdr"
+                    <TextView android:id="@+id/tvStatisticsHdr"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
@@ -445,7 +445,7 @@
                               android:layout_height="wrap_content"
                               android:text="@string/MainActivity_StatisticsListHeaderCaption"
                               />
-                    <TextView android:id="@+id/tvThreeLineListStatisticsText1"
+                    <TextView android:id="@+id/tvStatisticsLine1"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
@@ -453,7 +453,7 @@
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
 
-                    <TextView android:id="@+id/tvThreeLineListStatisticsText2"
+                    <TextView android:id="@+id/tvStatisticsLine2"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
@@ -461,7 +461,14 @@
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
 
-                    <TextView android:id="@+id/tvThreeLineListStatisticsText3"
+                    <TextView android:id="@+id/tvStatisticsLine3"
+                              android:textSize="14sp"
+                              android:textStyle="italic"
+                              android:typeface="sans"
+                              android:textColor="@android:color/white"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"/>
+                    <TextView android:id="@+id/tvStatisticsLine4"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
