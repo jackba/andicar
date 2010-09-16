@@ -106,7 +106,7 @@ public class BackupRestoreActivity extends BaseActivity {
                     if(isSendStatistics){
                         Map<String, String> parameters = new HashMap<String, String>();
                         parameters.put("Operation", "Backup");
-                        AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                        AndiCarStatistics.sendFlurryEvent(BackupRestoreActivity.this, "BackupRestore", parameters);
                     }
                 }
                 else{
@@ -137,7 +137,7 @@ public class BackupRestoreActivity extends BaseActivity {
                                     if(isSendStatistics){
                                         Map<String, String> parameters = new HashMap<String, String>();
                                         parameters.put("Operation", "Restore");
-                                        AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                                        AndiCarStatistics.sendFlurryEvent(BackupRestoreActivity.this, "BackupRestore", parameters);
                                     }
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);

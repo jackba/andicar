@@ -161,7 +161,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
         lvTrackFileList.setAdapter(cursorAdapter);
 
         if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent("GPSTrackEdit", null);
+            AndiCarStatistics.sendFlurryEvent(this, "GPSTrackEdit", null);
     }
 
     private View.OnClickListener mBtnSendAsEmailListener =

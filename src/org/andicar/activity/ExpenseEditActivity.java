@@ -235,7 +235,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         setInsertMode(INSERTMODE_AMOUNT);
         calculatePrice();
         if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent("ExpenseEdit", null);
+            AndiCarStatistics.sendFlurryEvent(this, "ExpenseEdit", null);
     }
 
     private void initControls() {

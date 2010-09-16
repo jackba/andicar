@@ -19,6 +19,8 @@
 package org.andicar.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.flurry.android.FlurryAgent;
 import java.util.Map;
 
@@ -26,24 +28,28 @@ import java.util.Map;
  */
 public class AndiCarStatistics {
     public static void sendFlurryStartSession(Context ctx){
-        if(ReleaseVersion.isReleaseVersion){
+    	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        if(!mPreferences.getBoolean("IsBeta", false)){
             FlurryAgent.setReportLocation(false);
             FlurryAgent.onStartSession(ctx, StaticValues.FLURRY_ID);
         }
     }
     public static void sendFlurryEndSession(Context ctx){
-        if(ReleaseVersion.isReleaseVersion){
+    	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        if(!mPreferences.getBoolean("IsBeta", false)){
             FlurryAgent.onEndSession(ctx);
         }
     }
-    public static void sendFlurryEvent(String event, Map<String, String> parameters){
-        if(ReleaseVersion.isReleaseVersion){
+    public static void sendFlurryEvent(Context ctx, String event, Map<String, String> parameters){
+    	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        if(!mPreferences.getBoolean("IsBeta", false)){
             FlurryAgent.onEvent(event, parameters);
         }
     }
 
-    public static void sendFlurryError(String errorId, String message, String errorClass){
-        if(ReleaseVersion.isReleaseVersion){
+    public static void sendFlurryError(Context ctx, String errorId, String message, String errorClass){
+    	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        if(!mPreferences.getBoolean("IsBeta", false)){
             FlurryAgent.onError(errorId, message, errorClass);
         }
     }

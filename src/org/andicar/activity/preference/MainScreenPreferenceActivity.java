@@ -19,6 +19,11 @@
 
 package org.andicar.activity.preference;
 
+import java.util.ArrayList;
+
+import org.andicar.activity.BaseActivity;
+import org.andicar.activity.R;
+
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -26,12 +31,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import org.andicar.activity.BaseActivity;
-import org.andicar.activity.R;
-import org.andicar.utils.AndiCarStatistics;
 
 
 /**
@@ -100,20 +99,6 @@ public class MainScreenPreferenceActivity extends BaseActivity {
                     mPrefEditor.putBoolean("MainActivityShowStatistics", false);
                 
                 mPrefEditor.commit();
-                if(isSendStatistics){
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("MainActivityShowMileage", 
-                            (checkedItems.valueAt(0) ? "True" : "False"));
-                    parameters.put("MainActivityShowGPSTrack",
-                            (checkedItems.valueAt(1) ? "True" : "False"));
-                    parameters.put("MainActivityShowRefuel",
-                            (checkedItems.valueAt(2) ? "True" : "False"));
-                    parameters.put("MainActivityShowExpense",
-                            (checkedItems.valueAt(3) ? "True" : "False"));
-                    parameters.put("MainActivityShowStatistics",
-                            (checkedItems.valueAt(4) ? "True" : "False"));
-                    AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
-                }
             }
         };
 

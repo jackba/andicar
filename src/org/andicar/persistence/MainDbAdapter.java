@@ -34,10 +34,12 @@ public class MainDbAdapter extends DB
 {
     SharedPreferences mPref;
     boolean isSendCrashReport = true;
+    private Context mCtx;
 
     public MainDbAdapter( Context ctx )
     {
         super(ctx);
+        mCtx = ctx;
         mPref = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         isSendCrashReport = mPref.getBoolean("SendCrashReport", true);
     }
@@ -402,7 +404,7 @@ public class MainDbAdapter extends DB
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
                 if(isSendCrashReport)
-                    AndiCarStatistics.sendFlurryError("DB Error - updateCarCurrentIndex", "NFE1: c.getString(0) = " + c.getString(0), this.toString());
+                    AndiCarStatistics.sendFlurryError(mCtx, "DB Error - updateCarCurrentIndex", "NFE1: c.getString(0) = " + c.getString(0), this.toString());
             }
         }
         if(tmpStopIndex == null)
@@ -427,7 +429,7 @@ public class MainDbAdapter extends DB
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
                 if(isSendCrashReport)
-                    AndiCarStatistics.sendFlurryError("DB Error - updateCarCurrentIndex", "NFE2: c.getString(0) = " + c.getString(0), this.toString());
+                    AndiCarStatistics.sendFlurryError(mCtx, "DB Error - updateCarCurrentIndex", "NFE2: c.getString(0) = " + c.getString(0), this.toString());
             }
         }
         if(tmpStopIndex == null)
@@ -454,7 +456,7 @@ public class MainDbAdapter extends DB
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
                 if(isSendCrashReport)
-                    AndiCarStatistics.sendFlurryError("DB Error - updateCarCurrentIndex", "NFE3: c.getString(0) = " + c.getString(0), this.toString());
+                    AndiCarStatistics.sendFlurryError(mCtx, "DB Error - updateCarCurrentIndex", "NFE3: c.getString(0) = " + c.getString(0), this.toString());
             }
         }
         if(tmpStopIndex == null)

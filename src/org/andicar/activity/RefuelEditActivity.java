@@ -243,7 +243,7 @@ public class RefuelEditActivity extends EditActivityBase {
         }
 
         if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent("RefuelEdit", null);
+            AndiCarStatistics.sendFlurryEvent(this, "RefuelEdit", null);
     }
 
     private void init() {
