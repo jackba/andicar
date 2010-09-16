@@ -33,6 +33,7 @@ import org.andicar.utils.StaticValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -144,6 +145,13 @@ public class MainActivity extends Activity {
 
         try {
             appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        	SharedPreferences.Editor editor = mPreferences.edit();
+            if(appVersion != null && appVersion.contains("Beta"))
+                editor.putBoolean("IsBeta", true); // no flurry statistics are send for beta versions
+            else
+                editor.putBoolean("IsBeta", false);
+            editor.commit();
+            	
             dbVersion = reportDb.getVersion() + "";
 
         }
@@ -880,6 +888,8 @@ public class MainActivity extends Activity {
                 mRes.getText(R.string.MENU_PreferencesCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_preferences));
         menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
                 mRes.getText(R.string.MENU_AboutCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
+        menu.add(0, StaticValues.MENU_RATE_COMMENT_ID, 0,
+                mRes.getText(R.string.MENU_RateCommentCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_star));
         return true;
     }
 
@@ -900,6 +910,24 @@ public class MainActivity extends Activity {
             startActivity(new Intent(this, ExpensesListReportActivity.class));
         } else if (item.getItemId() == StaticValues.MENU_GPSTRACK_ID) {
             startActivity(new Intent(this, GPSTrackListReportActivity.class));
+        } else if (item.getItemId() == StaticValues.MENU_RATE_COMMENT_ID) {
+        	//Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:org.andicar.activity"));
+        	try{
+        		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:org.andicar.activity")));
+        	}
+        	catch(Exception e){
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage(mRes.getString(R.string.MainActivity_NoMarketAccessMsg));
+                builder.setCancelable(false);
+                builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+        	}
         }
         return false;
     }

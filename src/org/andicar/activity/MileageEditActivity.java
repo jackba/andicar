@@ -254,7 +254,7 @@ public class MileageEditActivity extends EditActivityBase {
 
         etUserInput.requestFocus();
         if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent("MileageEdit", null);
+            AndiCarStatistics.sendFlurryEvent(this, "MileageEdit", null);
     }
 
     private void initControls(){

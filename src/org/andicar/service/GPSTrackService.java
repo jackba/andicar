@@ -269,7 +269,7 @@ public class GPSTrackService extends Service {
         }
 
         if(isSendCrashReport)
-            AndiCarStatistics.sendFlurryEvent("GPSTrack", null);
+            AndiCarStatistics.sendFlurryEvent(this, "GPSTrack", null);
     }
 
     private void createCSVFile(String fileName) throws IOException {

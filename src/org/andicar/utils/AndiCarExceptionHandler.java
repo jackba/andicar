@@ -18,6 +18,7 @@
 package org.andicar.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  */
@@ -33,7 +34,8 @@ public class AndiCarExceptionHandler
     }
 
     public void uncaughtException(Thread thread, Throwable thrwbl) {
-        if(ReleaseVersion.isReleaseVersion){
+    	SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        if(!mPreferences.getBoolean("IsBeta", false)){
             Throwable cause = thrwbl.getCause();
             StackTraceElement[] stackTrace;
             if(cause != null)
@@ -51,7 +53,7 @@ public class AndiCarExceptionHandler
                 }
             }
             AndiCarStatistics.sendFlurryStartSession(mCtx);
-            AndiCarStatistics.sendFlurryError("AndiCarError", stackStr, thrwbl.getClass().toString() + ": " + thrwbl.getMessage());
+            AndiCarStatistics.sendFlurryError(mCtx, "AndiCarError", stackStr, thrwbl.getClass().toString() + ": " + thrwbl.getMessage());
         }
         mPreviousHandler.uncaughtException(thread, thrwbl);
     }

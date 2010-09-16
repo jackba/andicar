@@ -92,7 +92,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
                 AndiCarStatistics.sendFlurryStartSession(this);
             Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("SendStatisticsChanged", "From " + isSendStatistics + " to " + mPreferences.getBoolean("SendUsageStatistics", true));
-            AndiCarStatistics.sendFlurryEvent("SendStatistics", parameters);
+            AndiCarStatistics.sendFlurryEvent(this, "SendStatistics", parameters);
             if(!isSendStatistics)
                 AndiCarStatistics.sendFlurryEndSession(this);
         }
