@@ -135,7 +135,7 @@
     <string name="MENU_ExpenseCaption">"Расходы"</string>
     <string name="MENU_GPSTrackCaption">"Треки GPS"</string>
     <string name="MENU_SetDefault">"Установить по умолчанию"</string>
-
+	<string name="MENU_RateCommentCaption">"Рейтинг/Комментарий"</string>
 
     <string name="MainActivity_MileageHeaderCaption">"Последняя поездка"</string>
     <string name="MainActivity_RefuelHeaderCaption">"Последняя заправка"</string>
@@ -145,6 +145,7 @@
     <string name="MainActivity_StatisticsListHeaderCaption">"Последнее показание счетчика: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Ср. расход топл.: "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. Средний расход топлива вычисляется между первой и последней ПОЛНОЙ заправкой."</string>
+    <string name="MainActivity_StatisticsLastConsLabel">"Посл. расход: "</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"Общие расходы:"</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"Затраты на пробег:"</string>
     <string name="MainActivity_MileageNoDataText">"Нет поездок для этого автомобиля"</string>
@@ -158,6 +159,7 @@
     <string name="MainActivity_BackupExistMessage">"Резервная копия уже есть.\nВы хотите восстановить резервную копию?"</string>
     <string name="MainActivity_UpdateMessage">"Обновление сообщения"</string>
     <string name="MainActivity_GPSTrackZoneNoDataText">"Нет треков."</string>
+    <string name="MainActivity_NoMarketAccessMsg">"Не открывается Android маркет!"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"Вод. удостоверение No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">" Текущий водитель не может быть неактивным."</string>
