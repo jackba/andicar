@@ -414,7 +414,7 @@ public class MainActivity extends Activity {
             tvHdrText.setText(mRes.getString(R.string.MainActivity_StatisticsListHeaderCaption) + listCursor.getString(1));
             String avgConsUom = listCursor.getString(5);
             if(avgConsUom == null) {
-                avgConsUom = " N/A ";
+                avgConsUom = "";
             }
             else {
                 avgConsUom = avgConsUom + " / 100 " + listCursor.getString(6);
@@ -516,27 +516,27 @@ public class MainActivity extends Activity {
                         }
                     }
                     else {
-                        fuelEffStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
+                        fuelEffStr = "";
                     }
                 }
                 catch(NumberFormatException e){}
                 catch(ArithmeticException e){}
             }
             else {
-                fuelEffStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
+                fuelEffStr = "";
             }
             tvStatisticsLine2.setText(mRes.getString(R.string.MainActivity_StatisticsLastConsLabel) + fuelEffStr);
 
             //total/mileage expenses
             String totalExpensesStr = listCursor.getString(7);
-            String mileageExpenseStr = "N/A";
+            String mileageExpenseStr = "";
             String carCurrency = "";
             BigDecimal totalExpenses;
             BigDecimal mileageExpense;
             if(totalExpensesStr == null || totalExpensesStr.length() == 0 || mileage == null ||
                     mileage.signum() == 0) {
-                mileageExpenseStr = "N/A";
-                totalExpensesStr = "N/A";
+                mileageExpenseStr = "";
+                totalExpensesStr = "";
             }
             else {
                 try{
