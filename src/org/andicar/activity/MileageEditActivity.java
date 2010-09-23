@@ -217,7 +217,12 @@ public class MileageEditActivity extends EditActivityBase {
         		acTag.setText(mPreferences.getString("MileageRec_Tag", ""));
         		etStartIndex.setText(mPreferences.getString("MileageRec_StartIndex", ""));
         		acUserComment.setText(mPreferences.getString("MileageRec_Comment", ""));
-        		mStartIndex = new BigDecimal(mPreferences.getString("MileageRec_StartIndex", "0"));
+        		try{
+        			mStartIndex = new BigDecimal(mPreferences.getString("MileageRec_StartIndex", "0"));
+        		}
+        		catch(NumberFormatException e){
+        			mStartIndex = BigDecimal.ZERO;
+        		}
         		etUserInput.setEnabled(false);
 	            initDateTime(System.currentTimeMillis());
 	            etUserInput.requestFocus();
