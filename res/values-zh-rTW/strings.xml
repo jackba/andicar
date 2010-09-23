@@ -130,7 +130,7 @@
     <string name="MENU_ExpenseCaption">"支出"</string>
     <string name="MENU_GPSTrackCaption">"GPS 追蹤"</string>
     <string name="MENU_SetDefault">"設定預設"</string>
-
+	<string name="MENU_RateCommentCaption">"評分/評論"</string>
 
     <string name="MainActivity_MileageHeaderCaption">"最後里程"</string>
     <string name="MainActivity_RefuelHeaderCaption">"上次加油"</string>
@@ -140,6 +140,7 @@
     <string name="MainActivity_StatisticsListHeaderCaption">"最後所知的里程表："</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"燃料平均效率： "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. 這個平均消耗是由里程數以及開始和最後燃料的總量計算出來的。"</string>
+    <string name="MainActivity_StatisticsLastConsLabel">"燃料的最近效率："</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"總支出："</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"里程費用："</string>
     <string name="MainActivity_MileageNoDataText">"沒有這輛車的里程記錄"</string>
@@ -153,6 +154,7 @@
     <string name="MainActivity_BackupExistMessage">"備份檔案存在\n你是否要用它進行還原？"</string>
     <string name="MainActivity_UpdateMessage">"更新訊息"</string>
     <string name="MainActivity_GPSTrackZoneNoDataText">"無追蹤。"</string>
+    <string name="MainActivity_NoMarketAccessMsg">"無法開啟Android市場！"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"執照號碼："</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"不能阻止目前司機的活動。"</string>
