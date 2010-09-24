@@ -954,7 +954,7 @@ public class DB {
         }
 
         private void createAddOnTable(SQLiteDatabase db) throws SQLException {
-            //create uom table
+            //create addon table
             db.execSQL(ADDON_TABLE_CREATE_SQL);
         }
         
@@ -1402,6 +1402,10 @@ public class DB {
                                 " ADD " + GPSTRACK_COL_TAG_ID_NAME + " INTEGER NULL ";
                 db.execSQL(updSql);
             }
+        }
+
+        private void upgradeDbTo350(SQLiteDatabase db, int oldVersion) throws SQLException {
+        	createAddOnTable(db);
         }
 
         private boolean columnExists(SQLiteDatabase db, String table, String column){
