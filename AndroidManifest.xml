@@ -21,7 +21,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
           android:versionCode="345" 
-          android:versionName="3.4.5">
+          android:versionName="3.4.6 Beta">
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -30,7 +30,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+	
     <application
         android:label="AndiCar"
         android:description="@string/APP_Description"
@@ -215,6 +216,17 @@
         </activity>
         
         <!-- AddOn Services -->
+        
+        <receiver android:name="com.andicar.services.Booter">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
+			</intent-filter>
+		</receiver>
+		
+        <service android:name="com.andicar.services.BackupService" 
+			android:label="AndiCarBackupService"
+			android:process="com.andicar.services">
+		</service>
 <!--         
         <activity
             android:name="com.andicar.addon.AddOnServicesList"

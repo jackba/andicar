@@ -47,7 +47,7 @@ public class AndiCarExceptionHandler
             String stackStr = "";
             for(int i = 0; i < stackTrace.length; i++) {
                 stackTraceElement = stackTrace[i];
-                if(stackTraceElement.getClassName().contains("org.andicar")) {
+                if(stackTraceElement.getClassName().contains("andicar")) {
                     stackStr = stackStr + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " +
                             stackTraceElement.getLineNumber() + "\n";
                 }
