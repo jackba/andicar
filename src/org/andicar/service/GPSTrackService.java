@@ -865,6 +865,7 @@ public class GPSTrackService extends Service {
                 Toast.makeText(GPSTrackService.this, "No File Writer!", Toast.LENGTH_LONG).show();
                 isErrorStop = true;
                 stopSelf();
+                return;
             }
 //            Log.w("GPSTrackServuce", "onLocationChanged: dTotalTrackPoints = " + dTotalTrackPoints);
 
