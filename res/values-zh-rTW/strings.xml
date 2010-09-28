@@ -131,6 +131,7 @@
     <string name="MENU_GPSTrackCaption">"GPS 追蹤"</string>
     <string name="MENU_SetDefault">"設定預設"</string>
 	<string name="MENU_RateCommentCaption">"評分/評論"</string>
+    <string name="MENU_AddOnServicesCaption">"AddOn 服務"</string>
 
     <string name="MainActivity_MileageHeaderCaption">"最後里程"</string>
     <string name="MainActivity_RefuelHeaderCaption">"上次加油"</string>
@@ -365,14 +366,14 @@
     <string name="AddOn_SubscribeWaiting">"正在載入PayPal付費庫"</string>
     <string name="AddOn_SubscriptionInfo">"直到 [%1] 後你即可以訂閱這個服務"</string>
 
-    <string name="AddOn_SecureBackupTitle">"安全備份"</string>
-    <string name="AddOn_SecureBackupDescription">"自動上傳備份到你的 Google 賬戶"</string>
-    <string name="AddOn_SecureBackupDescriptionLong">"自動上傳備份到你的 Google 賬戶，這樣哪怕手機丟了，你也可用獲取到它們"</string>
-    <string name="AddOn_SecureBackupTermOfService">"我們不對以下情況負責：由於惡劣/不存在/有缺陷的網路連接所導致的不完整/損壞的資料上傳，你的Google賬戶所擁有的儲存空間不足，從Google Docs上刪除備份檔案或是任何其他情況造成備份檔案遺失或不可用。"</string>
-    <string name="AddOn_SecureBackupRequirements">"服務要求：有效的Google 賬戶，用以存取Google Docs，網路連接"</string>
-    <string name="AddOn_SecureBackupOption1">"訂閱一個月：[%1] USD"</string>
-    <string name="AddOn_SecureBackupOption2">"訂閱六個月：[%1] USD"</string>
-    <string name="AddOn_SecureBackupOption3">"訂閱一年：[%1] USD"</string>
+    <string name="AddOn_SecureBackup_Title">"安全備份"</string>
+    <string name="AddOn_SecureBackup_Description">"自動上傳備份到你的 Google 賬戶"</string>
+    <string name="AddOn_SecureBackup_LongDescription">"自動上傳備份到你的 Google 賬戶，這樣哪怕手機丟了，你也可用獲取到它們"</string>
+    <string name="AddOn_SecureBackup_TermOfService">"我們不對以下情況負責：由於惡劣/不存在/有缺陷的網路連接所導致的不完整/損壞的資料上傳，你的Google賬戶所擁有的儲存空間不足，從Google Docs上刪除備份檔案或是任何其他情況造成備份檔案遺失或不可用。"</string>
+    <string name="AddOn_SecureBackup_Requirements">"服務要求：有效的Google 賬戶，用以存取Google Docs，網路連接"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"訂閱一個月：[%1] USD"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"訂閱六個月：[%1] USD"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"訂閱一年：[%1] USD"</string>
     
     
 </resources>
