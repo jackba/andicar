@@ -135,6 +135,7 @@
     <string name="MENU_SetDefault">"Set default"</string>
     <string name="MENU_OpenGPSTrack">"Open GPS track"</string>
     <string name="MENU_RateCommentCaption">"Rate/Comment"</string>
+    <string name="MENU_AddOnServicesCaption">"AddOn Services"</string>
 
 
     <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
@@ -370,14 +371,14 @@
     <string name="AddOn_SubscribeWaiting">"Loading PayPal Payment Library"</string>
     <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until [%1]"</string>
 
-    <string name="AddOn_SecureBackupTitle">"Secure Backup"</string>
-    <string name="AddOn_SecureBackupDescription">"Automatically upload your backups to your Google account"</string>
-    <string name="AddOn_SecureBackupDescriptionLong">"Automatically upload your database backups to your Google account so you can access them even if you lose your phone"</string>
-    <string name="AddOn_SecureBackupTermOfService">"We are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data uploads, insufficient storage space on your Google account, deletion of backup files from Google Docs or any other event which cause lose or unusable backup files."</string>
-    <string name="AddOn_SecureBackupRequirements">"Service requirements: valid Google account with Google Docs access, Internet connectivity"</string>
-    <string name="AddOn_SecureBackupOption1">"One month subscription: [%1] USD"</string>
-    <string name="AddOn_SecureBackupOption2">"Six month subscription: [%1] USD"</string>
-    <string name="AddOn_SecureBackupOption3">"One year subscription: [%1] USD"</string>
+    <string name="AddOn_SecureBackup_Title">"Secure Backup"</string>
+    <string name="AddOn_SecureBackup_Description">"Automatically upload your backups to your Google account"</string>
+    <string name="AddOn_SecureBackup_LongDescription">"Automatically upload your database backups to your Google account so you can access them even if you lose your phone"</string>
+    <string name="AddOn_SecureBackup_TermOfService">"We are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data uploads, insufficient storage space on your Google account, deletion of backup files from Google Docs or any other event which cause lose or unusable backup files."</string>
+    <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid Google account with Google Docs access, Internet connectivity"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"One month subscription: [%1] USD"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"Six month subscription: [%1] USD"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [%1] USD"</string>
     
     
 </resources>

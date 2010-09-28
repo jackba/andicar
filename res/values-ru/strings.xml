@@ -136,6 +136,7 @@
     <string name="MENU_GPSTrackCaption">"Треки GPS"</string>
     <string name="MENU_SetDefault">"Установить по умолчанию"</string>
 	<string name="MENU_RateCommentCaption">"Рейтинг/Комментарий"</string>
+    <string name="MENU_AddOnServicesCaption">"Дополнительные услуги"</string>
 
     <string name="MainActivity_MileageHeaderCaption">"Последняя поездка"</string>
     <string name="MainActivity_RefuelHeaderCaption">"Последняя заправка"</string>
@@ -370,15 +371,14 @@
     <string name="AddOn_SubscribeWaiting">"Загружаю платежные библиотеки PayPal Payment"</string>
     <string name="AddOn_SubscriptionInfo">"Вы подписаны на этот сервис до [%1]"</string>
 
-    <string name="AddOn_SecureBackupTitle">"Безопасное копирование"</string>
-    <string name="AddOn_SecureBackupDescription">"Автоматическая загрузка ваших копий "</string>
-    <string name="AddOn_SecureBackupDescriptionLong">"Автоматическая загрузка ваших копий баз данных  позволит вам иметь доступ к данным даже в случае утери телефона"</string>
-    <string name="AddOn_SecureBackupTermOfService">"Мы не несем ответственности за: плохое / несуществующее или поврежденное подключение к Интернету, что приведет к неполному или сбойному добавлению данных, недостаточное место на вашей учетной записи Google, удаление файлов резервных копий с документов Google или любое другое событие, которое вызывает потери или делает непригодным использование файлов резервного копирования."</string>
-    
-	<string name="AddOn_SecureBackupRequirements">"Требования: действительная учетная запись Google с доступом к службе Google Docs, соединение с интернетом"</string>
-    <string name="AddOn_SecureBackupOption1">"Месячная подписка: [%1] USD"</string>
-    <string name="AddOn_SecureBackupOption2">"Полугодовая подписка: [%1] USD"</string>
-    <string name="AddOn_SecureBackupOption3">"Годовая подписка: [%1] USD"</string>
+    <string name="AddOn_SecureBackup_Title">"Безопасное копирование"</string>
+    <string name="AddOn_SecureBackup_Description">"Автоматическая загрузка ваших копий "</string>
+    <string name="AddOn_SecureBackup_LongDescription">"Автоматическая загрузка ваших копий баз данных  позволит вам иметь доступ к данным даже в случае утери телефона"</string>
+    <string name="AddOn_SecureBackup_TermOfService">"Мы не несем ответственности за: плохое / несуществующее или поврежденное подключение к Интернету, что приведет к неполному или сбойному добавлению данных, недостаточное место на вашей учетной записи Google, удаление файлов резервных копий с документов Google или любое другое событие, которое вызывает потери или делает непригодным использование файлов резервного копирования."</string>
+	<string name="AddOn_SecureBackup_Requirements">"Требования: действительная учетная запись Google с доступом к службе Google Docs, соединение с интернетом"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"Месячная подписка: [%1] USD"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"Полугодовая подписка: [%1] USD"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"Годовая подписка: [%1] USD"</string>
     
     
 </resources>
