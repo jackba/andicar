@@ -56,6 +56,8 @@ import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
 
+import com.andicar.addon.activity.AddOnServicesList;
+
 /**
  *
  * @author miki
@@ -940,6 +942,8 @@ public class MainActivity extends Activity {
                 mRes.getText(R.string.MENU_AboutCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
         menu.add(0, StaticValues.MENU_RATE_COMMENT_ID, 0,
                 mRes.getText(R.string.MENU_RateCommentCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_star));
+        menu.add(0, StaticValues.MENU_ADDON_ID, 0,
+                mRes.getText(R.string.MENU_AddOnServicesCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_star));
         return true;
     }
 
@@ -978,9 +982,22 @@ public class MainActivity extends Activity {
                 AlertDialog alert = builder.create();
                 alert.show();
         	}
+        } else if (item.getItemId() == StaticValues.MENU_ADDON_ID) {
+            startActivity(new Intent(this, AddOnServicesList.class));
         }
         return false;
     }
+//  //AddOn Services
+//  PreferenceCategory addOnCategory = new PreferenceCategory(this);
+//  addOnCategory.setTitle(mRes.getString(R.string.PREF_AddOnCategoryTitle));
+//  prefScreenRoot.addPreference(addOnCategory);
+//  //AddOn screen
+//  PreferenceScreen addOnScreen = getPreferenceManager().createPreferenceScreen(this);
+//  addOnScreen.setIntent(new Intent(this, AddOnServicesList.class));
+//  addOnScreen.setTitle(mRes.getString(R.string.PREF_AddOnServicesTitle));
+//  addOnScreen.setSummary(mRes.getString(R.string.PREF_AddOnServicesSummary));
+//  addOnCategory.addPreference(addOnScreen);
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {

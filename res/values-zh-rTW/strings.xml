@@ -371,9 +371,9 @@
     <string name="AddOn_SecureBackup_LongDescription">"自動上傳備份到你的 Google 賬戶，這樣哪怕手機丟了，你也可用獲取到它們"</string>
     <string name="AddOn_SecureBackup_TermOfService">"我們不對以下情況負責：由於惡劣/不存在/有缺陷的網路連接所導致的不完整/損壞的資料上傳，你的Google賬戶所擁有的儲存空間不足，從Google Docs上刪除備份檔案或是任何其他情況造成備份檔案遺失或不可用。"</string>
     <string name="AddOn_SecureBackup_Requirements">"服務要求：有效的Google 賬戶，用以存取Google Docs，網路連接"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"訂閱一個月：[%1] USD"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption2">"訂閱六個月：[%1] USD"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption3">"訂閱一年：[%1] USD"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"訂閱一個月：[%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"訂閱六個月：[%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"訂閱一年：[%1] [%2]"</string>
     
     
 </resources>

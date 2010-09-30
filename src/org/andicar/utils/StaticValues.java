@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 340;
+    public static final int DATABASE_VERSION = 342;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     
@@ -41,6 +41,7 @@ public class StaticValues
     public static final int MENU_EXPENSES_ID = 16;
     public static final int MENU_GPSTRACK_ID = 17;
     public static final int MENU_RATE_COMMENT_ID = 18;
+    public static final int MENU_ADDON_ID = 19;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
