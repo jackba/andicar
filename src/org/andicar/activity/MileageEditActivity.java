@@ -390,7 +390,7 @@ public class MileageEditActivity extends EditActivityBase {
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.mileage_edit_activity);
     }
 
@@ -493,7 +493,7 @@ public class MileageEditActivity extends EditActivityBase {
         };
 
     @Override
-    void saveData() {
+    protected void saveData() {
         //check mandatory fileds & index preconditions
         calculateMileageOrNewIndex();
         String strRetVal = checkMandatory(vgRoot);

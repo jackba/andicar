@@ -63,8 +63,8 @@ public abstract class EditActivityBase extends BaseActivity {
     protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
 
-    abstract void saveData();
-    abstract void setLayout();
+    abstract protected void saveData();
+    abstract protected void setLayout();
     
     @Override
     protected void onStart()
