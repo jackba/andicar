@@ -393,7 +393,14 @@
     <string name="AddOn_AutoBackupService_Requirements">"Service requirements: free space on the SDCARD depending on your database size and the number of existing backups."</string>
     <string name="AddOn_AutoBackupService_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
     <string name="AddOn_AutoBackupService_SubscriptionOption2">"Life time subscription: [%1] [%2]"</string>
-    <string name="AddOn_AutoBackupServiceSchedule_Title">"Backup Service Schedule"</string>
+    <string name="AddOn_AutoBackupService_ScheduleTitle">"Backup Service Schedule"</string>
+    <string name="AddOn_AutoBackupService_ScheduleFrequency">"Frequency:"</string>
+    <string name="AddOn_AutoBackupService_ScheduleHour">"Hour:"</string>
+    <string name="AddOn_AutoBackupService_NoOfBackups1">"Keep only the last"</string>
+    <string name="AddOn_AutoBackupService_NoOfBackups2">"backups."</string>
+    <string name="AddOn_AutoBackupService_NotifyIfSuccess">"Notify on success"</string>
+    <string name="AddOn_AutoBackupService_NotifyIfFailure">"Notify on failure"</string>
+    <string name="AddOn_AutoBackupService_NoDaySelectedMsg">"At least one day must be selected!"</string>
     <!-- 
     <string name="AddOn_AutoBackupService_SubscriptionOption3">"One year subscription: [%1] USD"</string>
 	 -->

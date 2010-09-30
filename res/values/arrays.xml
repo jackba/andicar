@@ -103,5 +103,10 @@
         <item>Volume</item>
         <item>Other</item>
     </string-array>
+
+    <string-array name="ao_bk_schedule_type_entries">
+        <item>Daily</item>
+        <item>Weekly</item>
+    </string-array>
 </resources>
 

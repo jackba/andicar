@@ -62,6 +62,7 @@ public abstract class EditActivityBase extends BaseActivity {
     protected long mlDateTimeInSeconds;
     protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
+    protected boolean initTimeOnly = false;
 
     abstract protected void saveData();
     abstract protected void setLayout();
@@ -202,7 +203,10 @@ public abstract class EditActivityBase extends BaseActivity {
         mMinute = mcalDateTime.get(Calendar.MINUTE);
 
         tvDateTimeValue = (TextView) findViewById(R.id.tvDateTimeValue);
-        updateDateTime();
+        if(initTimeOnly)
+        	updateTime();
+        else
+        	updateDateTime();
 
         ImageButton btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
         if(btnPickDate != null)
@@ -220,7 +224,8 @@ public abstract class EditActivityBase extends BaseActivity {
                 }
             });
    }
-    @Override
+
+   @Override
     protected Dialog onCreateDialog(int id) {
         switch(id) {
             case StaticValues.TIME_DIALOG_ID:
@@ -253,7 +258,10 @@ public abstract class EditActivityBase extends BaseActivity {
                     mYear = year;
                     mMonth = monthOfYear;
                     mDay = dayOfMonth;
-                    updateDateTime();
+                    if(initTimeOnly)
+                    	updateTime();
+                    else
+                    	updateDateTime();
                 }
             };
             
@@ -262,7 +270,10 @@ public abstract class EditActivityBase extends BaseActivity {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     mHour = hourOfDay;
                     mMinute = minute;
-                    updateDateTime();
+                    if(initTimeOnly)
+                    	updateTime();
+                    else
+                    	updateDateTime();
                 }
             };
 
@@ -277,4 +288,11 @@ public abstract class EditActivityBase extends BaseActivity {
                 .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
     }
 
+    private void updateTime() {
+        mcalDateTime.set(2000, Calendar.JANUARY, 1, mHour, mMinute, 0);
+        mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
+        tvDateTimeValue.setText(
+                new StringBuilder() // Month is 0 based so add 1
+                .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
+    }
 }

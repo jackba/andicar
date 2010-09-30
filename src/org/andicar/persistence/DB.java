@@ -31,6 +31,7 @@ import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 import org.andicar.activity.R;
+import com.andicar.addon.utils.AddOnDBObjectDef;
 
 /**
  * Database object names and database creation/update
@@ -73,9 +74,6 @@ public class DB {
     
     //tags locations table
     public static final String TAG_TABLE_NAME = "DEF_TAG";
-
-    //add on services
-    public static final String ADDON_TABLE_NAME = "SYS_ADDON";
 
     //column names. Some is general (GEN_) some is particular
     //generic columns must be first and must be created for ALL TABLES
@@ -653,15 +651,6 @@ public class DB {
         + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
         + ");";
 
-    protected static final String ADDON_TABLE_CREATE_SQL =
-        "CREATE TABLE IF NOT EXISTS " + ADDON_TABLE_NAME
-        + " ( "
-	        + GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-	        + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-	        + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-	        + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
-        + ");";
-
     protected DatabaseHelper mDbHelper = null;
     protected SQLiteDatabase mDb = null;
     protected final Context mCtx;
@@ -955,9 +944,14 @@ public class DB {
 
         private void createAddOnTable(SQLiteDatabase db) throws SQLException {
             //create addon table
-            db.execSQL(ADDON_TABLE_CREATE_SQL);
+            db.execSQL(AddOnDBObjectDef.ADDON_TABLE_CREATE_SQL);
         }
         
+        private void createAddOnBKScheduleTable(SQLiteDatabase db) throws SQLException {
+            //create addon table
+            db.execSQL(AddOnDBObjectDef.ADDON_BK_SCHEDULE_TABLE_CREATE_SQL);
+        }
+
         private void createTagTable(SQLiteDatabase db) throws SQLException {
             //business partner
             db.execSQL(TAG_TABLE_CREATE_SQL);
@@ -1004,7 +998,7 @@ public class DB {
                 upgradeDbTo340(db, oldVersion);
             }
             
-//            upgradeDbTo350(db, oldVersion);
+            upgradeDbTo350(db, oldVersion);
         }
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
@@ -1406,6 +1400,7 @@ public class DB {
 
         private void upgradeDbTo350(SQLiteDatabase db, int oldVersion) throws SQLException {
         	createAddOnTable(db);
+        	createAddOnBKScheduleTable(db);
         }
 
         private boolean columnExists(SQLiteDatabase db, String table, String column){
