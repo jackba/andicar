@@ -116,6 +116,7 @@
     <string name="GEN_Postal">"Postal:"</string>
     <string name="GEN_Tag">"Tag:"</string>
     <string name="GEN_TagHint">"Short tag. Write comment bellow."</string>
+    <string name="GEN_LifeTime">"Life time"</string>
 
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -369,16 +370,31 @@
     <!-- AddOn Services -->
     <string name="AddOn_PayPalWarning">"During the payment process **DO NOT USE THE PHONE BACK KEY AND DO NOT CHANGE YOUR SCREEN ORIENTATION**"</string>
     <string name="AddOn_SubscribeWaiting">"Loading PayPal Payment Library"</string>
-    <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until [%1]"</string>
+    <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until: [%1]"</string>
+    <string name="AddOn_BtnTryCaption">"Start FREE evaluation"</string>
+    <string name="AddOn_BtnConfigureServiceCaption">"Configure service"</string>
+    <string name="AddOn_PreferencesTitle">"Configure AddOn services"</string>
+    <string name="AddOn_PreferencesSummary">"Configure your AddOn services"</string>
+    <string name="AddOn_PreferencesCategoryTitle">"AddOn services"</string>
 
     <string name="AddOn_SecureBackup_Title">"Secure Backup"</string>
     <string name="AddOn_SecureBackup_Description">"Automatically upload your backups to your Google account"</string>
     <string name="AddOn_SecureBackup_LongDescription">"Automatically upload your database backups to your Google account so you can access them even if you lose your phone"</string>
     <string name="AddOn_SecureBackup_TermOfService">"We are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data uploads, insufficient storage space on your Google account, deletion of backup files from Google Docs or any other event which cause lose or unusable backup files."</string>
     <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid Google account with Google Docs access, Internet connectivity"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"One month subscription: [%1] USD"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption2">"Six month subscription: [%1] USD"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [%1] USD"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"One month subscription: [%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"Six month subscription: [%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [%1] [%2]"</string>
     
-    
+    <string name="AddOn_AutoBackupService_Title">"Backup Service"</string>
+    <string name="AddOn_AutoBackupService_Description">"Create scheduled automatic backups."</string>
+    <string name="AddOn_AutoBackupService_LongDescription">"Schedule an automatic daily/weekly database backup job in order to ensure you are able to restore your data in case of database damage/loss."</string>
+    <string name="AddOn_AutoBackupService_TermOfService">""</string>
+    <string name="AddOn_AutoBackupService_Requirements">"Service requirements: free space on the SDCARD depending on your database size and the number of existing backups."</string>
+    <string name="AddOn_AutoBackupService_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
+    <string name="AddOn_AutoBackupService_SubscriptionOption2">"Life time subscription: [%1] [%2]"</string>
+    <string name="AddOn_AutoBackupServiceSchedule_Title">"Backup Service Schedule"</string>
+    <!-- 
+    <string name="AddOn_AutoBackupService_SubscriptionOption3">"One year subscription: [%1] USD"</string>
+	 -->
 </resources>

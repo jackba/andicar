@@ -30,7 +30,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></uses-permission>
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 	
     <application
         android:label="AndiCar"
@@ -217,29 +217,36 @@
         
         <!-- AddOn Services -->
         
-        <receiver android:name="com.andicar.services.Booter">
+        <receiver android:name="com.andicar.addon.services.Booter">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
 			</intent-filter>
 		</receiver>
 		
-        <service android:name="com.andicar.services.BackupService" 
+        <service android:name="com.andicar.addon.services.BackupService" 
 			android:label="AndiCarBackupService"
 			android:process="com.andicar.services">
 		</service>
-<!--         
+
         <activity
-            android:name="com.andicar.addon.AddOnServicesList"
+            android:name="com.andicar.addon.activity.AddOnServicesList"
             android:label="@string/PREF_AddOnCategoryTitle">
         </activity>
         <activity
-            android:name="com.andicar.addon.SubscribeToService">
+            android:name="com.andicar.addon.activity.SubscribeToService">
         </activity>
   
 		<activity 
 			android:name="com.paypal.android.MEP.PayPalActivity"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
--->
+        <activity
+            android:name="com.andicar.addon.activity.AddOnPreferences"
+            android:label="@string/AddOn_PreferencesTitle">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.BackupSchedule"
+            android:label="@string/AddOn_AutoBackupServiceSchedule_Title">
+        </activity>
     </application>
 </manifest>
