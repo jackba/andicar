@@ -246,7 +246,7 @@
         </activity>
         <activity
             android:name="com.andicar.addon.activity.BackupSchedule"
-            android:label="@string/AddOn_AutoBackupServiceSchedule_Title">
+            android:label="@string/AddOn_AutoBackupService_ScheduleTitle">
         </activity>
     </application>
 </manifest>

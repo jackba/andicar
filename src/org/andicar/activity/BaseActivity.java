@@ -153,9 +153,10 @@ public class BaseActivity extends Activity {
 
     /**
      * Check numeric fields. Numeric fields are detected based on input type (TYPE_CLASS_PHONE)
+     * @param integerOnly TODO
      * @return null or field tag if is empty
      */
-    protected String checkNumeric(ViewGroup wg){
+    protected String checkNumeric(ViewGroup wg, boolean integerOnly){
         View vwChild;
         EditText etChild;
         String strRetVal;
@@ -166,7 +167,7 @@ public class BaseActivity extends Activity {
         {
             vwChild = wg.getChildAt(i);
             if(vwChild instanceof ViewGroup){
-                strRetVal = checkNumeric((ViewGroup)vwChild);
+                strRetVal = checkNumeric((ViewGroup)vwChild, integerOnly);
                 if(strRetVal != null)
                     return strRetVal;
             }
@@ -180,7 +181,10 @@ public class BaseActivity extends Activity {
                      {
                          try{
                              //check if valid number
-                             new BigDecimal(sValue);
+                        	 if(integerOnly)
+                        		 Integer.parseInt(sValue);
+                        	 else
+                        		 new BigDecimal(sValue);
                          }
                          catch(NumberFormatException e){
                          	if(etChild.getTag() != null && etChild.getTag().toString() != null)

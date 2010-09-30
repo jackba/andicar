@@ -91,7 +91,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             return;
         }
 
-        strRetVal = checkNumeric(vgRoot);
+        strRetVal = checkNumeric(vgRoot, false);
         if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
                     mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
