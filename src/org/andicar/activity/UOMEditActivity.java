@@ -96,7 +96,7 @@ public class UOMEditActivity extends EditActivityBase {
     }
 
     @Override
-    void saveData() {
+    protected void saveData() {
         //check mandatory fields
         String strRetVal = checkMandatory(vgRoot);
         if( strRetVal != null ) {
@@ -151,7 +151,7 @@ public class UOMEditActivity extends EditActivityBase {
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.uom_edit_activity);
     }
 

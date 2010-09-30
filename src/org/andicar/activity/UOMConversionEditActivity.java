@@ -128,7 +128,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
                 };
 
     @Override
-    void saveData() {
+    protected void saveData() {
         //check mandatory fields
         String convRateStr = etConversionRate.getText().toString();
         String strRetVal = checkMandatory(vgRoot);
@@ -190,7 +190,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.uomconversion_edit_activity);
     }
 

@@ -76,7 +76,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     }
 
     @Override
-    void saveData() {
+    protected void saveData() {
         String strRetVal = checkMandatory(vgRoot);
         if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
@@ -122,7 +122,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.expensetype_edit_activity);
     }
 

@@ -46,6 +46,8 @@ import org.andicar.utils.StaticValues;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 
+import com.andicar.addon.activity.AddOnPreferences;
+
 //import com.andicar.addon.AddOnServicesList;
 
 /**
@@ -135,17 +137,6 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         partnersPrefScreen.setSummary(mRes.getString(R.string.PREF_PartnerSummary));
         bPartnerCategory.addPreference(partnersPrefScreen);
 
-//        //AddOn Services
-//        PreferenceCategory addOnCategory = new PreferenceCategory(this);
-//        addOnCategory.setTitle(mRes.getString(R.string.PREF_AddOnCategoryTitle));
-//        prefScreenRoot.addPreference(addOnCategory);
-//        //AddOn screen
-//        PreferenceScreen addOnScreen = getPreferenceManager().createPreferenceScreen(this);
-//        addOnScreen.setIntent(new Intent(this, AddOnServicesList.class));
-//        addOnScreen.setTitle(mRes.getString(R.string.PREF_AddOnServicesTitle));
-//        addOnScreen.setSummary(mRes.getString(R.string.PREF_AddOnServicesSummary));
-//        addOnCategory.addPreference(addOnScreen);
-
         //uom's
         PreferenceCategory uomPrefCategory = new PreferenceCategory(this);
         uomPrefCategory.setTitle(mRes.getString( R.string.PREF_UOMCategoryTitle ));
@@ -205,6 +196,18 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         currencyRatePrefScreen.setTitle(mRes.getString(R.string.PREF_CurrencyRateCategoryTitle));
         currencyRatePrefScreen.setSummary(mRes.getString(R.string.PREF_CurrencyRateCategorySummary));
         expenseCategory.addPreference(currencyRatePrefScreen);
+
+
+        //AddOn preferences
+        PreferenceCategory addOnCategory = new PreferenceCategory(this);
+        addOnCategory.setTitle(mRes.getString(R.string.AddOn_PreferencesCategoryTitle));
+        prefScreenRoot.addPreference(addOnCategory);
+        //gps
+        PreferenceScreen addOnPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+        addOnPreferenceScreen.setIntent(new Intent(this, AddOnPreferences.class));
+        addOnPreferenceScreen.setTitle(mRes.getString(R.string.AddOn_PreferencesTitle));
+        addOnPreferenceScreen.setSummary(mRes.getString(R.string.AddOn_PreferencesSummary));
+        addOnCategory.addPreference(addOnPreferenceScreen);
 
         //gps track
         PreferenceCategory gpsTrackCategory = new PreferenceCategory(this);

@@ -95,7 +95,7 @@ public class DriverEditActivity extends EditActivityBase {
     }
 
     @Override
-    void saveData() {
+    protected void saveData() {
         String strRetVal = checkMandatory(vgRoot);
         if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
@@ -142,7 +142,7 @@ public class DriverEditActivity extends EditActivityBase {
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.driver_edit_activity);
     }
 
