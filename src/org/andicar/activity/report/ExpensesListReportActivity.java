@@ -132,6 +132,8 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
 
         public void onClick(DialogInterface dialog, int whichButton) {
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
+            	if(whereConditions == null)
+            		whereConditions = new Bundle();
                 try {
                     whereConditions.clear();
                     if (spnExpCategory.getSelectedItemId() != -1) {
