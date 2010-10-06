@@ -373,9 +373,13 @@
     <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until: [%1]"</string>
     <string name="AddOn_BtnTryCaption">"Start FREE evaluation"</string>
     <string name="AddOn_BtnConfigureServiceCaption">"Configure service"</string>
+    <string name="AddOn_BtnRenewSubscriptionCaption">"Renew subscription"</string>
     <string name="AddOn_PreferencesTitle">"Configure AddOn services"</string>
     <string name="AddOn_PreferencesSummary">"Configure your AddOn services"</string>
     <string name="AddOn_PreferencesCategoryTitle">"AddOn services"</string>
+    <string name="AddOn_SubscriptionExpireWarning">"Your subscription to the [%1] AddOn will expire in [%2] days"</string>
+    <string name="AddOn_SubscriptionExpired">"Your subscription to the [%1] AddOn is expired."</string>
+    <string name="AddOn_RenewSubscriptionPeriodInfo">"The selected period will be added to the current subscription"</string>
 
     <string name="AddOn_SecureBackup_Title">"Secure Backup"</string>
     <string name="AddOn_SecureBackup_Description">"Automatically upload your backups to your Google account"</string>
@@ -388,7 +392,6 @@
     
     <string name="AddOn_AutoBackupService_Title">"Backup Service"</string>
     <string name="AddOn_AutoBackupService_Description">"Create scheduled automatic backups."</string>
-    <string name="AddOn_AutoBackupService_LongDescription">"Schedule an automatic daily/weekly database backup job in order to ensure you are able to restore your data in case of database damage/loss."</string>
     <string name="AddOn_AutoBackupService_TermOfService">""</string>
     <string name="AddOn_AutoBackupService_Requirements">"Service requirements: free space on the SDCARD depending on your database size and the number of existing backups."</string>
     <string name="AddOn_AutoBackupService_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
@@ -401,6 +404,9 @@
     <string name="AddOn_AutoBackupService_NotifyIfSuccess">"Notify on success"</string>
     <string name="AddOn_AutoBackupService_NotifyIfFailure">"Notify on failure"</string>
     <string name="AddOn_AutoBackupService_NoDaySelectedMsg">"At least one day must be selected!"</string>
+    <string name="AddOn_AutoBackupService_BackupSucceeded">"The backup was created with success"</string>
+    <string name="AddOn_AutoBackupService_BackupFailed">"The backup failed! Check your SDCARD."</string>
+
     <!-- 
     <string name="AddOn_AutoBackupService_SubscriptionOption3">"One year subscription: [%1] USD"</string>
 	 -->
