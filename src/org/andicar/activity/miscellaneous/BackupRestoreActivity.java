@@ -97,7 +97,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
     private View.OnClickListener btnBkClickListener =  new View.OnClickListener() {
             public void onClick(View arg0) {
-                if(mDbAdapter.backupDb(null)){
+                if(mDbAdapter.backupDb(null, null)){
                     Toast toast = Toast.
                             makeText( getApplicationContext(),
                             mResource.getString( R.string.BackupRestoreEditActivity_BackupCreatedMessage ), Toast.LENGTH_SHORT);

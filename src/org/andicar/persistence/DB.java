@@ -942,15 +942,15 @@ public class DB {
             db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
         }
 
-        private void createAddOnTable(SQLiteDatabase db) throws SQLException {
-            //create addon table
-            db.execSQL(AddOnDBObjectDef.ADDON_TABLE_CREATE_SQL);
-        }
-        
-        private void createAddOnBKScheduleTable(SQLiteDatabase db) throws SQLException {
-            //create addon table
-            db.execSQL(AddOnDBObjectDef.ADDON_BK_SCHEDULE_TABLE_CREATE_SQL);
-        }
+//        private void createAddOnTable(SQLiteDatabase db) throws SQLException {
+//            //create addon table
+//            db.execSQL(AddOnDBObjectDef.ADDON_TABLE_CREATE_SQL);
+//        }
+//        
+//        private void createAddOnBKScheduleTable(SQLiteDatabase db) throws SQLException {
+//            //create addon table
+//            db.execSQL(AddOnDBObjectDef.ADDON_BK_SCHEDULE_TABLE_CREATE_SQL);
+//        }
 
         private void createTagTable(SQLiteDatabase db) throws SQLException {
             //business partner
@@ -1399,8 +1399,8 @@ public class DB {
         }
 
         private void upgradeDbTo350(SQLiteDatabase db, int oldVersion) throws SQLException {
-        	createAddOnTable(db);
-        	createAddOnBKScheduleTable(db);
+        	AddOnDBObjectDef.createAddOnTable(db);
+        	AddOnDBObjectDef.createAddOnBKScheduleTable(db);
         }
 
         private boolean columnExists(SQLiteDatabase db, String table, String column){
@@ -1726,12 +1726,15 @@ public class DB {
         }
     }
 
-    public boolean backupDb(String bkName) {
+    public boolean backupDb(String bkName, String bkPrefix) {
         boolean retVal;
         String fromFile = mDb.getPath();
         String toFile = StaticValues.BACKUP_FOLDER;
         if(bkName == null)
-            toFile = toFile + Utils.appendDateTime(StaticValues.BACKUP_PREFIX, true, true, true)
+            toFile = toFile + 
+            		Utils.appendDateTime(
+            				bkPrefix == null ? StaticValues.BACKUP_PREFIX : bkPrefix, 
+            				true, true, true)
                 + StaticValues.BACKUP_SUFIX;
         else
             toFile = toFile + bkName + StaticValues.BACKUP_SUFIX;
