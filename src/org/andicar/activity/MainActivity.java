@@ -146,22 +146,6 @@ public class MainActivity extends Activity {
         mainContext = this;
         reportDb = new ReportDbAdapter(mainContext, null, null);
 
-        try {
-            appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-        	SharedPreferences.Editor editor = mPreferences.edit();
-            if(appVersion != null && appVersion.contains("Beta"))
-                editor.putBoolean("IsBeta", true); // no flurry statistics are send for beta versions
-            else
-                editor.putBoolean("IsBeta", false);
-            editor.commit();
-            	
-            dbVersion = reportDb.getVersion() + "";
-
-        }
-        catch(NameNotFoundException ex) {
-            appVersion = "N/A";
-        }
-
         String updateMsg = mPreferences.getString("UpdateMsg", null);
         if(updateMsg != null){
             if(!updateMsg.equals("VersionChanged")){
@@ -226,7 +210,8 @@ public class MainActivity extends Activity {
         if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
             exitResume = true;
             //test if backups exists
-            if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null && !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null).isEmpty()) {
+            if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null 
+            		&& !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null).isEmpty()) {
                 initPreferenceValues(); //version update => init (new) preference values
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
@@ -272,6 +257,23 @@ public class MainActivity extends Activity {
                 alert.show();
             }
         }
+
+        try {
+            appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        	SharedPreferences.Editor editor = mPreferences.edit();
+            if(appVersion != null && appVersion.contains("Beta"))
+                editor.putBoolean("IsBeta", true); // no flurry statistics are send for beta versions
+            else
+                editor.putBoolean("IsBeta", false);
+            editor.commit();
+            	
+            dbVersion = reportDb.getVersion() + "";
+
+        }
+        catch(NameNotFoundException ex) {
+            appVersion = "N/A";
+        }
+
         //check for app update once a day
         Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
         if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
