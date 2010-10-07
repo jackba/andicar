@@ -295,6 +295,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
                 >
+<!-- 
                 <ImageButton
                     android:id="@+id/btnCallPhone1"
                     android:layout_width="wrap_content"
@@ -311,11 +312,12 @@
                     android:background="@drawable/btn_background_selector"
                     android:src="@drawable/icon_phone24x24_2"
                     />
+ -->                    
                 <ImageButton
                     android:id="@+id/btnEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
                     android:background="@drawable/btn_background_selector"
                     android:src="@drawable/icon_mail24x24"
                     />
