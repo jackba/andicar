@@ -118,7 +118,8 @@
     <string name="GEN_Postal">"Почтовый:"</string>
     <string name="GEN_Tag">"Метка:"</string>
     <string name="GEN_TagHint">"Короткая метка. Комментарий напишите ниже."</string>
-
+	<string name="GEN_LifeTime">"Срок подписки"</string>
+	
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
     <string name="MENU_DeleteCaption">"Удалить"</string>
@@ -136,8 +137,8 @@
     <string name="MENU_GPSTrackCaption">"Треки GPS"</string>
     <string name="MENU_SetDefault">"Установить по умолчанию"</string>
 	<string name="MENU_RateCommentCaption">"Рейтинг/Комментарий"</string>
-    <string name="MENU_AddOnServicesCaption">"Дополнительные услуги"</string>
-
+	<string name="MENU_AddOnServicesCaption">"Доп. услуги"</string>
+	
     <string name="MainActivity_MileageHeaderCaption">"Последняя поездка"</string>
     <string name="MainActivity_RefuelHeaderCaption">"Последняя заправка"</string>
     <string name="MainActivity_GPSTrackHeaderCaption">"Последний трек GPS"</string>
@@ -370,6 +371,15 @@
     <string name="AddOn_PayPalWarning">"В период осуществления платежа ** НЕ ИСПОЛЬЗУЙТЕ НА ТЕЛЕФОНЕ КЛАВИШУ ВОЗВРАТА И НЕ ИЗМЕНЯЙТЕ ОРИЕНТАЦИЮ ЭКРАНА ТЕЛЕФОНА**"</string>
     <string name="AddOn_SubscribeWaiting">"Загружаю платежные библиотеки PayPal Payment"</string>
     <string name="AddOn_SubscriptionInfo">"Вы подписаны на этот сервис до: [%1]"</string>
+ 	<string name="AddOn_BtnTryCaption">"Попробуйте БЕСПЛАТНО"</string>
+ 	<string name="AddOn_BtnConfigureServiceCaption">"Настройка услуги"</string>
+ 	<string name="AddOn_BtnRenewSubscriptionCaption">"Обновить подписку"</string>
+ 	<string name="AddOn_PreferencesTitle">"Настроить доп.услуги"</string>
+ 	<string name="AddOn_PreferencesSummary">"Настроить ваши доп.услуги"</string>
+ 	<string name="AddOn_PreferencesCategoryTitle">"Доп. услуги"</string>
+ 	<string name="AddOn_SubscriptionExpireWarning">"Ваша подписка на доп. услугу [%1] закончится через [%2] дней"</string>
+ 	<string name="AddOn_SubscriptionExpired">"Ваша подписка на доп.услугу [%1] закончилась."</string>
+ 	<string name="AddOn_RenewSubscriptionPeriodInfo">"Выбранный период добавится к текущей подписке"</string>
 
     <string name="AddOn_SecureBackup_Title">"Безопасное копирование"</string>
     <string name="AddOn_SecureBackup_Description">"Автоматическая загрузка ваших копий "</string>
@@ -380,5 +390,19 @@
     <string name="AddOn_SecureBackup_SubscriptionOption2">"Полугодовая подписка: [%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"Годовая подписка: [%1] [%2]"</string>
     
-    
+    <string name="AddOn_AutoBackupService_Title">"Услуга резервного копирования"</string>
+	<string name="AddOn_AutoBackupService_Description">"Создать автоматическое резервное копирование по расписанию."</string>
+	<string name="AddOn_AutoBackupService_Requirements">"Требования: свободное место на карте SD в зависимости от  размера вашей базы данных и количества существующих резервных копий."</string>
+	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
+	<string name="AddOn_AutoBackupService_SubscriptionOption2">"Срок подписки: [%1] [%2]"</string>
+	<string name="AddOn_AutoBackupService_ScheduleTitle">"Расписание услуги резервного копирования"</string>
+ 	<string name="AddOn_AutoBackupService_ScheduleFrequency">"Частота:"</string>
+	<string name="AddOn_AutoBackupService_ScheduleHour">"Час:"</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups1">"Оставлять только последнюю"</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups2">"резервные копии."</string>
+	<string name="AddOn_AutoBackupService_NotifyIfSuccess">"Сообщить об успехе"</string>
+	<string name="AddOn_AutoBackupService_NotifyIfFailure">"Сообщить о неудаче"</string>
+	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"По крайней мере, один день должен быть выбран!"</string>
+	<string name="AddOn_AutoBackupService_BackupSucceeded">"Резервная копия создана успешно"</string>
+	<string name="AddOn_AutoBackupService_BackupFailed">"Неудача резервного копирования! Проверьте свою карту SD."</string>
 </resources>

@@ -942,16 +942,6 @@ public class DB {
             db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
         }
 
-//        private void createAddOnTable(SQLiteDatabase db) throws SQLException {
-//            //create addon table
-//            db.execSQL(AddOnDBObjectDef.ADDON_TABLE_CREATE_SQL);
-//        }
-//        
-//        private void createAddOnBKScheduleTable(SQLiteDatabase db) throws SQLException {
-//            //create addon table
-//            db.execSQL(AddOnDBObjectDef.ADDON_BK_SCHEDULE_TABLE_CREATE_SQL);
-//        }
-
         private void createTagTable(SQLiteDatabase db) throws SQLException {
             //business partner
             db.execSQL(TAG_TABLE_CREATE_SQL);
@@ -966,6 +956,7 @@ public class DB {
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
+                upgradeDbTo350(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
@@ -974,6 +965,7 @@ public class DB {
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
+                upgradeDbTo350(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
@@ -981,24 +973,30 @@ public class DB {
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
+                upgradeDbTo350(db, oldVersion);
             }
             //AndiCar 3.0.x
             else if(oldVersion == 300){
                 upgradeDbTo310(db, oldVersion);
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
+                upgradeDbTo350(db, oldVersion);
             }
             //AndiCar 3.1.x, 3.2.x
             else if(oldVersion == 310){
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
+                upgradeDbTo350(db, oldVersion);
             }
             //AndiCar 3.3.x
             else if(oldVersion == 330){
                 upgradeDbTo340(db, oldVersion);
+                upgradeDbTo350(db, oldVersion);
             }
-            
-            upgradeDbTo350(db, oldVersion);
+            //AndiCar 3.4.x
+            else if(oldVersion == 340){
+                upgradeDbTo350(db, oldVersion);
+            }
         }
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
