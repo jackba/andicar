@@ -20,16 +20,19 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
-          android:versionCode="345" 
-          android:versionName="3.4.6 Beta">
+          android:versionCode="350" 
+          android:versionName="3.5.0">
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" />  -->
+    
+    <!-- required by PayPal activity -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 	
     <application
@@ -216,17 +219,21 @@
         </activity>
         
         <!-- AddOn Services -->
-        
         <receiver android:name="com.andicar.addon.services.Booter">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
 			</intent-filter>
 		</receiver>
-		
+		 
         <service android:name="com.andicar.addon.services.BackupService" 
 			android:label="AndiCarBackupService"
-			android:process="com.andicar.services">
-		</service>
+			android:process="com.andicar.addon.services">
+ 		</service>
+
+        <service android:name="com.andicar.addon.services.CheckSubscriptions" 
+			android:label="AndiCarCheckSubscription"
+			android:process="com.andicar.addon.services">
+ 		</service>
 
         <activity
             android:name="com.andicar.addon.activity.AddOnServicesList"
