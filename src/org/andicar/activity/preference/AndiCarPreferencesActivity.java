@@ -126,6 +126,26 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         driverPrefScreen.setSummary(mRes.getString(R.string.PREF_DriverSummary));
         carDriverCategory.addPreference(driverPrefScreen);
 
+        //Backup/Restore
+        PreferenceCategory bkRestoreCategory = new PreferenceCategory(this);
+        bkRestoreCategory.setTitle(mRes.getString(R.string.PREF_BackupRestoreCategoryTitle));
+        prefScreenRoot.addPreference(bkRestoreCategory);
+        PreferenceScreen bkRestorePrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        bkRestorePrefScreen.setIntent(new Intent(this, BackupRestoreActivity.class));
+        bkRestorePrefScreen.setTitle(mRes.getString(R.string.PREF_BackupRestoreTitle));
+        bkRestorePrefScreen.setSummary(mRes.getString(R.string.PREF_BackupRestoreSummary));
+        bkRestoreCategory.addPreference(bkRestorePrefScreen);
+
+        //AddOn preferences
+        PreferenceCategory addOnCategory = new PreferenceCategory(this);
+        addOnCategory.setTitle(mRes.getString(R.string.AddOn_PreferencesCategoryTitle));
+        prefScreenRoot.addPreference(addOnCategory);
+        PreferenceScreen addOnPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+        addOnPreferenceScreen.setIntent(new Intent(this, AddOnPreferences.class));
+        addOnPreferenceScreen.setTitle(mRes.getString(R.string.AddOn_PreferencesTitle));
+        addOnPreferenceScreen.setSummary(mRes.getString(R.string.AddOn_PreferencesSummary));
+        addOnCategory.addPreference(addOnPreferenceScreen);
+
         //business partners
         PreferenceCategory bPartnerCategory = new PreferenceCategory(this);
         bPartnerCategory.setTitle(mRes.getString(R.string.PREF_BPartnersCategoryTitle));
@@ -154,16 +174,6 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         uomConversionPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMConversionTitle));
         uomConversionPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMConversionSummary));
         uomPrefCategory.addPreference(uomConversionPrefScreen);
-
-        //Backup/Restore
-        PreferenceCategory bkRestoreCategory = new PreferenceCategory(this);
-        bkRestoreCategory.setTitle(mRes.getString(R.string.PREF_BackupRestoreCategoryTitle));
-        prefScreenRoot.addPreference(bkRestoreCategory);
-        PreferenceScreen bkRestorePrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        bkRestorePrefScreen.setIntent(new Intent(this, BackupRestoreActivity.class));
-        bkRestorePrefScreen.setTitle(mRes.getString(R.string.PREF_BackupRestoreTitle));
-        bkRestorePrefScreen.setSummary(mRes.getString(R.string.PREF_BackupRestoreSummary));
-        bkRestoreCategory.addPreference(bkRestorePrefScreen);
 
         //Expenses settings
         PreferenceCategory expenseCategory = new PreferenceCategory(this);
@@ -196,18 +206,6 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         currencyRatePrefScreen.setTitle(mRes.getString(R.string.PREF_CurrencyRateCategoryTitle));
         currencyRatePrefScreen.setSummary(mRes.getString(R.string.PREF_CurrencyRateCategorySummary));
         expenseCategory.addPreference(currencyRatePrefScreen);
-
-
-        //AddOn preferences
-        PreferenceCategory addOnCategory = new PreferenceCategory(this);
-        addOnCategory.setTitle(mRes.getString(R.string.AddOn_PreferencesCategoryTitle));
-        prefScreenRoot.addPreference(addOnCategory);
-        //gps
-        PreferenceScreen addOnPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
-        addOnPreferenceScreen.setIntent(new Intent(this, AddOnPreferences.class));
-        addOnPreferenceScreen.setTitle(mRes.getString(R.string.AddOn_PreferencesTitle));
-        addOnPreferenceScreen.setSummary(mRes.getString(R.string.AddOn_PreferencesSummary));
-        addOnCategory.addPreference(addOnPreferenceScreen);
 
         //gps track
         PreferenceCategory gpsTrackCategory = new PreferenceCategory(this);
