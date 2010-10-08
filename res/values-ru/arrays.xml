@@ -100,15 +100,15 @@
     </string-array>
 
     <string-array name="uom_type_entries">
-        <!--  It need to be translated ? -->
-		<item>Length</item>
-        <item>Volume</item>
-        <item>Other</item>
-		<!-- If yes, theh:
 		<item>Длина</item>
         <item>Объем</item>
         <item>Другое</item>
-		-->
     </string-array>
+
+    <string-array name="ao_bk_schedule_type_entries">
+		<item>Ежедневно</item>
+        <item>Еженедельно</item>
+    </string-array>
+
 </resources>
 

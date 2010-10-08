@@ -75,7 +75,7 @@ public class UpdateCheck extends Service{
 
                     CharSequence title = getText(R.string.Notif_UpdateTitle);
                     String message = getString(R.string.Notif_UpdateMsg);
-                    notification = new Notification(R.drawable.stat_sys_warning, message,
+                    notification = new Notification(R.drawable.stat_sys_info, message,
                             System.currentTimeMillis());
                     notification.flags |= Notification.FLAG_AUTO_CANCEL;
 

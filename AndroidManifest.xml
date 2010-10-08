@@ -53,7 +53,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+<!-- 
+        <receiver android:name="org.andicar.activity.miscellaneous.AndiCarUpgradeReceiver">
+			<intent-filter>
+				<action android:name="android.intent.action.PACKAGE_REPLACED"></action>
+			</intent-filter>
+		</receiver>
+ -->
         <activity
             android:name="org.andicar.activity.DriverListActivity"
             android:label="@string/APP_Activity_DriverList">
@@ -219,7 +225,7 @@
         </activity>
         
         <!-- AddOn Services -->
-        <receiver android:name="com.andicar.addon.services.Booter">
+        <receiver android:name="com.andicar.addon.services.AndiCarBootReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
 			</intent-filter>

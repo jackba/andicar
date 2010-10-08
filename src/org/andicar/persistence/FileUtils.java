@@ -33,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.andicar.activity.R;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
@@ -203,6 +206,9 @@ public class FileUtils {
     public static ArrayList<String> getFileNames(String folder, String fileNameFilterPattern){
         ArrayList<String> myData = new ArrayList<String>();
         File fileDir = new File(folder);
+        Pattern p = null;
+        Matcher m = null;
+        
         if(!fileDir.exists() || !fileDir.isDirectory()){
             return null;
         }
@@ -212,10 +218,18 @@ public class FileUtils {
         if(files.length == 0){
             return null;
         }
+
+        if(fileNameFilterPattern != null)
+        	p = Pattern.compile(fileNameFilterPattern);
+
         for (int i = 0; i < files.length; i++) {
-            if(fileNameFilterPattern == null ||
-                    files[i].matches(fileNameFilterPattern))
-            myData.add(files[i]);
+            if(fileNameFilterPattern == null)
+            	myData.add(files[i]);
+            else{
+            	 m = p.matcher(files[i]);
+            	 if(m.matches())
+               		myData.add(files[i]);
+            }
         }
         return myData;
     }
