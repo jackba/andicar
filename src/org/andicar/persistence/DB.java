@@ -741,9 +741,9 @@ public class DB {
                 createBPartnerTable(db);
                 
                 createTagTable(db);
+            	AddOnDBObjectDef.createAddOnTable(db);
+            	AddOnDBObjectDef.createAddOnBKScheduleTable(db);
 
-//                createAddOnTable(db);
-                
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
                 if(fu.createFolders(mCtx) != -1) {
@@ -948,6 +948,9 @@ public class DB {
         }
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        	
+        	//!!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
+        	
             //AndiCar 1.0.0
             if(oldVersion == 1) {
                 upgradeDbTo200(db); //update database to version 200 //AndiCar 2.0.0
@@ -994,7 +997,8 @@ public class DB {
                 upgradeDbTo350(db, oldVersion);
             }
             //AndiCar 3.4.x
-            else if(oldVersion == 340){
+            else if(oldVersion == 340 || 
+            		oldVersion == 350){ //upgrade again because on fresh 350 install addon tables was not created
                 upgradeDbTo350(db, oldVersion);
             }
         }

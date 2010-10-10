@@ -212,7 +212,7 @@
 
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"исключить из расчета стоимости поездки"</string>
 
-    <string name="ExpenseEditActivity_CreatedFromWarning">"Эти расходы созданы на основе [%1].\nРедактируйте соответсвующую [%1]."</string>
+    <string name="ExpenseEditActivity_CreatedFromWarning">"Эти расходы созданы на основе [%1].\nРедактируйте соответствующую [%1]."</string>
 
     <string name="CurrencyRateEditActivity_CurrencyFromLabel">"Из валюты "</string>
     <string name="CurrencyRateEditActivity_CurrencyToLabel">"В валюту "</string>
@@ -398,8 +398,8 @@
 	<string name="AddOn_AutoBackupService_ScheduleTitle">"Расписание услуги резервного копирования"</string>
  	<string name="AddOn_AutoBackupService_ScheduleFrequency">"Частота:"</string>
 	<string name="AddOn_AutoBackupService_ScheduleHour">"Час:"</string>
-	<string name="AddOn_AutoBackupService_NoOfBackups1">"Оставлять только последнюю"</string>
-	<string name="AddOn_AutoBackupService_NoOfBackups2">"резервные копии."</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups1">"Оставлять только посл."</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups2">"коп."</string>
 	<string name="AddOn_AutoBackupService_NotifyIfSuccess">"Сообщить об успехе"</string>
 	<string name="AddOn_AutoBackupService_NotifyIfFailure">"Сообщить о неудаче"</string>
 	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"По крайней мере, один день должен быть выбран!"</string>

@@ -57,6 +57,7 @@ import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
 
 import com.andicar.addon.activity.AddOnServicesList;
+import com.andicar.addon.services.AndiCarBootReceiver;
 
 /**
  *
@@ -268,6 +269,14 @@ public class MainActivity extends Activity {
             editor.commit();
             	
             dbVersion = reportDb.getVersion() + "";
+            int appVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+            if(!mPreferences.contains("appVersionCode")
+            		|| mPreferences.getInt("appVersionCode", 0) < appVersionCode){
+            	AndiCarBootReceiver.startServices(this);
+            	editor.putInt("appVersionCode", appVersionCode);
+            	editor.commit();
+            	
+            }
 
         }
         catch(NameNotFoundException ex) {
