@@ -113,6 +113,7 @@
     <string name="GEN_Postal">"郵寄："</string>
     <string name="GEN_Tag">"標籤："</string>
     <string name="GEN_TagHint">"短標籤。在下面寫評論。"</string>
+	<string name="GEN_LifeTime">"使用期限"</string>
 
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
@@ -131,7 +132,7 @@
     <string name="MENU_GPSTrackCaption">"GPS 追蹤"</string>
     <string name="MENU_SetDefault">"設定預設"</string>
 	<string name="MENU_RateCommentCaption">"評分/評論"</string>
-    <string name="MENU_AddOnServicesCaption">"AddOn 服務"</string>
+	<string name="MENU_AddOnServicesCaption">"附加服務"</string>
 
     <string name="MainActivity_MileageHeaderCaption">"最後里程"</string>
     <string name="MainActivity_RefuelHeaderCaption">"上次加油"</string>
@@ -365,6 +366,15 @@
     <string name="AddOn_PayPalWarning">"在付費過程中 **不要使用手機的返回鍵，也不要變更屏幕的顯示方向**"</string>
     <string name="AddOn_SubscribeWaiting">"正在載入PayPal付費庫"</string>
     <string name="AddOn_SubscriptionInfo">"直到 [%1] 後你即可以訂閱這個服務"</string>
+	<string name="AddOn_BtnTryCaption">"開始免費評估"</string>
+	<string name="AddOn_BtnConfigureServiceCaption">"設定服務"</string>
+	<string name="AddOn_BtnRenewSubscriptionCaption">"續訂"</string>
+	<string name="AddOn_PreferencesTitle">"設定附加服務"</string>
+	<string name="AddOn_PreferencesSummary">"設定你的附加服務"</string>
+	<string name="AddOn_PreferencesCategoryTitle">"附加服務"</string>
+	<string name="AddOn_SubscriptionExpireWarning">"你對 [%1] 的訂閱將在 [%2] 天後到期"</string>
+	<string name="AddOn_SubscriptionExpired">"你對 [%1] 的訂閱已過期。"</string>
+	<string name="AddOn_RenewSubscriptionPeriodInfo">"選擇的時間將被新增到目前訂閱"</string>
 
     <string name="AddOn_SecureBackup_Title">"安全備份"</string>
     <string name="AddOn_SecureBackup_Description">"自動上傳備份到你的 Google 賬戶"</string>
@@ -375,5 +385,20 @@
     <string name="AddOn_SecureBackup_SubscriptionOption2">"訂閱六個月：[%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"訂閱一年：[%1] [%2]"</string>
     
-    
+	<string name="AddOn_AutoBackupService_Title">"備份服務"</string>
+	<string name="AddOn_AutoBackupService_Description">"建立定時自動備份。"</string>
+	<string name="AddOn_AutoBackupService_TermOfService">""</string>
+	<string name="AddOn_AutoBackupService_Requirements">"服務需要：SD卡上有足夠的剩餘空間，所需空間的大小取決於你資料庫的大小以及現有的備份數量。"</string>
+	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15天免費的訂閱評估。"</string>
+	<string name="AddOn_AutoBackupService_SubscriptionOption2">"訂閱的使用期限：[%1] [%2]"</string>
+	<string name="AddOn_AutoBackupService_ScheduleTitle">"備份服務時間表"</string>
+	<string name="AddOn_AutoBackupService_ScheduleFrequency">"頻率："</string>
+	<string name="AddOn_AutoBackupService_ScheduleHour">"小時："</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups1">"僅保留最新的"</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups2">"備份。"</string>
+	<string name="AddOn_AutoBackupService_NotifyIfSuccess">"成功時進行通知"</string>
+	<string name="AddOn_AutoBackupService_NotifyIfFailure">"失敗時進行通知"</string>
+	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"至少需要選取一天！"</string>
+	<string name="AddOn_AutoBackupService_BackupSucceeded">"備份檔案建立成功"</string>
+	<string name="AddOn_AutoBackupService_BackupFailed">"備份失敗！請檢查你的SD卡。"</string>
 </resources>
