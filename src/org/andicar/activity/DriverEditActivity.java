@@ -24,8 +24,6 @@ import org.andicar.persistence.MainDbAdapter;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -72,20 +70,6 @@ public class DriverEditActivity extends EditActivityBase {
             }
             if (strUserComment != null) {
                 etUserComment.setText( strUserComment );
-            }
-
-            //cannot be inactivated if is the current driver
-            if (mBundleExtras.getLong("CurrentDriver_ID") == mRowId) {
-                ckIsActive.setClickable( false );
-                ckIsActive.setOnTouchListener( new View.OnTouchListener() {
-                    public boolean onTouch( View arg0, MotionEvent arg1 )
-                    {
-                        Toast toast = Toast.makeText( getApplicationContext(),
-                                mResource.getString(R.string.DriverEditActivity_CurrentDriverInactivateMessage), Toast.LENGTH_SHORT );
-                        toast.show();
-                        return false;
-                    }
-                });
             }
             c.close();
         } else {
@@ -136,8 +120,9 @@ public class DriverEditActivity extends EditActivityBase {
                 madError = madbErrorAlert.create();
                 madError.show();
             }
-            else
+            else{
                 finish();
+            }
         }
     }
 

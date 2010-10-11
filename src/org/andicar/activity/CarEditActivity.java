@@ -27,8 +27,6 @@ import org.andicar.utils.StaticValues;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -116,21 +114,6 @@ public class CarEditActivity extends EditActivityBase
             }
             if( bdStartIndex != null ) {
                 etIndexStart.setText( bdStartIndex.toString() );
-            }
-
-            //cannot be inactivated if is the current car
-            if( mBundleExtras.getLong( "CurrentCar_ID" ) == mRowId ) {
-                ckIsActive.setClickable( false );
-                ckIsActive.setOnTouchListener( new View.OnTouchListener()
-                {
-                    public boolean onTouch( View arg0, MotionEvent arg1 )
-                    {
-                        Toast toast = Toast.makeText( getApplicationContext(),
-                                mResource.getString( R.string.CarEditActivity_CurrentCarInactivateMessage ), Toast.LENGTH_SHORT );
-                        toast.show();
-                        return false;
-                    }
-                } );
             }
             c.close();
         }
@@ -221,8 +204,15 @@ public class CarEditActivity extends EditActivityBase
                 madError = madbErrorAlert.create();
                 madError.show();
             }
-            else
+            else{
+            	//if the selected car in the main activity is inactivated, invalidate it
+            	if(mRowId == mPreferences.getLong("CurrentCar_ID", -1)
+            			&& !ckIsActive.isChecked()){
+            		mPrefEditor.putLong("CurrentCar_ID", -1);
+                    mPrefEditor.commit();
+            	}
                 finish();
+            }
         }
     }
 

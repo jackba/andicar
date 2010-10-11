@@ -64,8 +64,6 @@ public class GPSTrackController extends BaseActivity {
     private boolean isCreateMileage = true;
     private boolean isGpsTrackOn = false;
     private ViewGroup vgRoot;
-    private long mCarId;
-    private long mDriverId;
     private long mTagId = 0;
 
     /** Called when the activity is first created. */
@@ -76,7 +74,7 @@ public class GPSTrackController extends BaseActivity {
         setContentView(R.layout.gpstrack_controller_activity);
 
         mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-        mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
+        mDriverId = mPreferences.getLong("LastDriver_ID", -1);
 
         vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
         spnCar = (Spinner)findViewById(R.id.spnCar);
@@ -147,7 +145,7 @@ public class GPSTrackController extends BaseActivity {
         }
         else{
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-            mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
+//            mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
             btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
             setEditable(vgRoot, true);
         }

@@ -54,8 +54,6 @@ import android.widget.Toast;
 public class MileageEditActivity extends EditActivityBase {
     //mileage insert mode: 0 = new index; 1 = mileage
     private int mInsertMode = 0;
-    private long mCarId = -1;
-    private long mDriverId = -1;
     private long mUOMLengthId = -1;
     private long mGpsTrackId = -1;
     private long mTagId = 0;
@@ -212,7 +210,7 @@ public class MileageEditActivity extends EditActivityBase {
                 btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
         		mCarId = mPreferences.getLong("MileageRec_CarId", mBundleExtras.getLong("CurrentCar_ID"));
         		mDriverId = mPreferences.getLong("MileageRec_DriverId", mBundleExtras.getLong("CurrentDriver_ID"));
-        		mExpTypeId = mPreferences.getLong("MileageRec_DriverId", mBundleExtras.getLong("MileageRec_ExpenseTypeId"));
+        		mExpTypeId = mPreferences.getLong("MileageRec_ExpenseTypeId", mBundleExtras.getLong("MileageRec_ExpenseTypeId"));
         		mInsertMode = mPreferences.getInt("MileageRec_InsertMode", mPreferences.getInt("MileageInsertMode", 0));
         		acTag.setText(mPreferences.getString("MileageRec_Tag", ""));
         		etStartIndex.setText(mPreferences.getString("MileageRec_StartIndex", ""));
@@ -233,7 +231,7 @@ public class MileageEditActivity extends EditActivityBase {
             	btnOk.setEnabled(true);
         		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
 	            mCarId = mBundleExtras.getLong("CurrentCar_ID");
-	            mDriverId = mBundleExtras.getLong("CurrentDriver_ID");
+	            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
 	            mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
 	            mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
 	            //init tag
@@ -621,11 +619,14 @@ public class MileageEditActivity extends EditActivityBase {
             acUserComment.setText("");
             calculateMileageOrNewIndex();
         }
-    	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0){
+
+        if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0)
     		mPrefEditor.putLong("LastTagId", mTagId);
-    		mPrefEditor.commit();
-    	}
-        finish();
+
+    	mPrefEditor.putLong("LastDriver_ID", mDriverId);
+		mPrefEditor.commit();
+        
+		finish();
     }
 
     protected View.OnClickListener onStartStopRecordClickListener =

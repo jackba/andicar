@@ -132,7 +132,7 @@ public class BackupRestoreActivity extends BaseActivity {
                                     SharedPreferences.Editor editor = mPreferences.edit();
                                     editor.putBoolean("MustClose", true);
                                     editor.putLong( "CurrentCar_ID", -1);
-                                    editor.putLong( "CurrentDriver_ID", -1);
+//                                    editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
                                     if(isSendStatistics){
                                         Map<String, String> parameters = new HashMap<String, String>();

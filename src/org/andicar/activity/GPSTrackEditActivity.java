@@ -60,8 +60,6 @@ public class GPSTrackEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
-        long mCarId;
-        long mDriverId;
 
         super.onCreate(icicle);
         

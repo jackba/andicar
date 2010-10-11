@@ -53,6 +53,8 @@ public class BaseActivity extends Activity {
     protected SharedPreferences.Editor mPrefEditor;
     protected ViewGroup vgRoot;
     protected boolean isUseNumericInput = true;
+    protected long mCarId = -1;
+    protected long mDriverId = -1;
 
     /** Called when the activity is first created. */
     @Override
@@ -153,7 +155,7 @@ public class BaseActivity extends Activity {
 
     /**
      * Check numeric fields. Numeric fields are detected based on input type (TYPE_CLASS_PHONE)
-     * @param integerOnly TODO
+     * @param integerOnly just integer allowed
      * @return null or field tag if is empty
      */
     protected String checkNumeric(ViewGroup wg, boolean integerOnly){
@@ -242,6 +244,13 @@ public class BaseActivity extends Activity {
                     else if(BaseActivity.this instanceof MileageEditActivity){
                         if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
                             mPrefEditor.putLong("MileageInsertExpenseType_ID", arg3);
+                            mPrefEditor.commit();
+                        }
+                    }
+                    else if(BaseActivity.this instanceof MainActivity){
+                        if( ((Spinner)arg0).equals(findViewById(R.id.spnCar))){
+                        	mCarId = arg3;
+                            mPrefEditor.putLong("CurrentCar_ID", arg3);
                             mPrefEditor.commit();
                         }
                     }

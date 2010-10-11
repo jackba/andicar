@@ -79,8 +79,6 @@ public class RefuelEditActivity extends EditActivityBase {
 
     private long mCurrencyId = 0;
     private long carDefaultCurrencyId = 0;
-    private long mCarId = 0;
-    private long mDriverId = 0;
     private long mExpCategoryId = 0;
     private long mExpTypeId = 0;
     private long carDefaultUOMVolumeId = 0;
@@ -205,7 +203,7 @@ public class RefuelEditActivity extends EditActivityBase {
         }
         else {
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-            mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
+            mDriverId = mPreferences.getLong("LastDriver_ID", -1);
             mExpCategoryId = mPreferences.getLong("RefuelExpenseCategory_ID", 1);
             mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", -1);
             mUomVolumeId = mPreferences.getLong("CarUOMVolume_ID", -1);
@@ -909,13 +907,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
                 madError = madbErrorAlert.create();
                 madError.show();
-            }
-            else{
-            	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0){
-            		mPrefEditor.putLong("LastTagId", mTagId);
-            		mPrefEditor.commit();
-            	}
-                finish();
+                return;
             }
         }
         else {
@@ -928,15 +920,17 @@ public class RefuelEditActivity extends EditActivityBase {
                 madbErrorAlert.setMessage(errMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
-            }
-            else{
-            	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0){
-            		mPrefEditor.putLong("LastTagId", mTagId);
-            		mPrefEditor.commit();
-            	}
-                finish();
+                return;
             }
         }
+        
+    	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0)
+    		mPrefEditor.putLong("LastTagId", mTagId);
+    	
+    	mPrefEditor.putLong("LastDriver_ID", mDriverId);
+		mPrefEditor.commit();
+    	
+        finish();
     }
 
     @Override
