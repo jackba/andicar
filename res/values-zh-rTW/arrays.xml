@@ -100,4 +100,9 @@
         <item>容量</item>
         <item>其它</item>
     </string-array>
+
+    <string-array name="ao_bk_schedule_type_entries">
+		<item>每天</item>
+		<item>每週</item>
+    </string-array>
 </resources>

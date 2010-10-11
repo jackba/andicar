@@ -64,6 +64,15 @@
         许可证全部内容见 &lt;a href="http://www.gnu.org/licenses/gpl.html">&lt;/a>。&lt;br>
     </string>
 
+	<string name="AddOn_SubscriptionValidity">
+		这个订阅对于你当前的或从处理订阅后创建的备份中还原的数据库来说是有效的。
+		&lt;br&gt;你应该在处理这个订阅后立即进行备份！
+	</string>
+	<string name="AddOn_AutoBackupService_LongDescription">
+		所记录的信息(里程数，支出，总用油)对于你来说是很有价值的财产。为了在数据丢失的情况下还原最近的备份，这是一种很有用的方式。
+		&lt;br&gt;&lt;br&gt;这项服务将帮助你安排每天/每周的自动备份任务。
+	</string>
+
 <!--        <b><i>Credits:</i></b><br>
         *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> <br>
 -->
