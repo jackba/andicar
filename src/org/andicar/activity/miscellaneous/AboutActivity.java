@@ -26,7 +26,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.andicar.paypal.GetPayPalActivity;
+
 import org.andicar.activity.R;
 import android.os.Vibrator;
 import android.content.Context;
@@ -34,6 +34,8 @@ import java.util.HashMap;
 import java.util.Map;
 import org.andicar.activity.BaseActivity;
 import org.andicar.utils.AndiCarStatistics;
+
+import com.andicar.addon.activity.GetPayPalActivityForAboutDonate;
 
 
 /**
@@ -92,7 +94,7 @@ public class AboutActivity extends BaseActivity{
             }
             Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(100);
-            GetPayPalActivity ppa = new GetPayPalActivity();
+            GetPayPalActivityForAboutDonate ppa = new GetPayPalActivityForAboutDonate();
             Intent i = ppa.getPayPalIntent(payPalCurrency);
             startActivity(i);
         }
