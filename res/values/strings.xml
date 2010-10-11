@@ -154,8 +154,8 @@
     <string name="MainActivity_RefuelNoDataText">"No refuel for this car"</string>
     <string name="MainActivity_ExpenseNoDataText">"No expense for this car"</string>
     <string name="MainActivity_ExpenseNoDataAditionalText">"This zone does not show the expenses created conjunctively with other records (refuels, etc.)"</string>
-    <string name="MainActivity_NoCurrentCarMessage">"No car selected. In the following page you can select / define one."</string>
-    <string name="MainActivity_NoCurrentDriverMessage">"No driver selected. In the following page you can select / define one."</string>
+    <string name="MainActivity_NoCurrentCarMessage">"No car defined. At least one car must be created."</string>
+    <string name="MainActivity_NoCurrentDriverMessage">"No driver defined. At least one driver must be created."</string>
     <string name="MainActivity_WellcomeMessage">"Wellcome to AndiCar."</string>
     <string name="MainActivity_WellcomeBackMessage">"Welcome back!"</string>
     <string name="MainActivity_BackupExistMessage">"Backup files exist.\nDo you want to restore one?"</string>

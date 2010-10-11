@@ -18,6 +18,15 @@
  */
 package org.andicar.activity;
 
+import org.andicar.activity.miscellaneous.GPSTrackMap;
+import org.andicar.activity.report.GPSTrackListReportActivity;
+import org.andicar.activity.report.MileageListReportActivity;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarExceptionHandler;
+import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -34,15 +43,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
-import org.andicar.activity.miscellaneous.GPSTrackMap;
-import org.andicar.activity.report.GPSTrackListReportActivity;
-import org.andicar.activity.report.MileageListReportActivity;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.AndiCarExceptionHandler;
-import org.andicar.utils.AndiCarStatistics;
-import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
 
 
 /**
@@ -154,21 +154,20 @@ public class ListActivityBase extends ListActivity {
 
         fillData();
 
-        if(/*!(this instanceof GPSTrackListReportActivity)
-                &&*/ (getListAdapter() == null || getListAdapter().getCount() == 0)
-                && mInsertClass != null) {
-            long currentDriverID = mPreferences.getLong("CurrentDriver_ID", -1);
-            String currentDriverName = mPreferences.getString("CurrentDriver_Name", "");
+        if((getListAdapter() == null || getListAdapter().getCount() == 0)
+                	&& mInsertClass != null) {
+//            long currentDriverID = mPreferences.getLong("CurrentDriver_ID", -1);
+//            String currentDriverName = mPreferences.getString("CurrentDriver_Name", "");
             long currentCarID = mPreferences.getLong("CurrentCar_ID", -1);
-            String currentCarName = mPreferences.getString("CurrentCar_Name", "");
+//            String currentCarName = mPreferences.getString("CurrentCar_Name", "");
             
             Intent i = new Intent(this, mInsertClass);
             i.putExtra("Operation", "N");
             if(mInsertClass.equals(MileageEditActivity.class)){
-                i.putExtra("CurrentDriver_ID", currentDriverID);
+//                i.putExtra("CurrentDriver_ID", currentDriverID);
                 i.putExtra("CurrentCar_ID", currentCarID);
-                i.putExtra("CurrentDriver_Name", currentDriverName);
-                i.putExtra("CurrentCar_Name", currentCarName);
+//                i.putExtra("CurrentDriver_Name", currentDriverName);
+//                i.putExtra("CurrentCar_Name", currentCarName);
             }
             startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
         }
@@ -224,9 +223,6 @@ public class ListActivityBase extends ListActivity {
             menu.add( 0, StaticValues.CONTEXT_MENU_SENDASEMAIL_ID, 0, mRes.getText( R.string.MENU_SendAsEmailCaption ));
             menu.add( 0, StaticValues.CONTEXT_MENU_SHOWONMAP_ID, 0, mRes.getText( R.string.MENU_ShowOnMap ));
         }
-        else if(this instanceof CarListActivity || this instanceof DriverListActivity){
-            menu.add( 0, StaticValues.CONTEXT_MENU_SETDEFAULT_ID, 0, mRes.getText( R.string.MENU_SetDefault ));
-        }
         else if(this instanceof MileageListReportActivity){
             String selection = MainDbAdapter.GPSTRACK_COL_MILEAGE_ID_NAME + "= ? ";
             String[] selectionArgs = {Long.toString(mLongClickId)};
@@ -261,9 +257,9 @@ public class ListActivityBase extends ListActivity {
         if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
             i.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
         }
-        else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-            i.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-        }
+//        else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
+//            i.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+//        }
         i.putExtra("Operation", "E");
 
         startActivityForResult(i, StaticValues.ACTIVITY_EDIT_REQUEST_CODE);
@@ -284,15 +280,15 @@ public class ListActivityBase extends ListActivity {
                     errorAlert.show();
                     return true;
                 }
-                else {
-                    if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)
-                            && mPreferences.getLong("CurrentDriver_ID", -1) == mLongClickId) {
-                        errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_CurrentDriverDeleteMessage));
-                        errorAlert = errorAlertBuilder.create();
-                        errorAlert.show();
-                        return true;
-                    }
-                }
+//                else {
+//                    if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)
+//                            && mPreferences.getLong("CurrentDriver_ID", -1) == mLongClickId) {
+//                        errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_CurrentDriverDeleteMessage));
+//                        errorAlert = errorAlertBuilder.create();
+//                        errorAlert.show();
+//                        return true;
+//                    }
+//                }
                 AlertDialog.Builder builder = new AlertDialog.Builder(ListActivityBase.this);
                 builder.setMessage(mRes.getString(R.string.GEN_DeleteConfirmation));
                 builder.setCancelable(false);
@@ -329,15 +325,15 @@ public class ListActivityBase extends ListActivity {
                 Intent insertIntent = new Intent(this, mInsertClass);
                 if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
-                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
+//                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+//                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
+//                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
                 }
                 else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
-                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
+//                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+//                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
+//                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
                 }
                 insertIntent.putExtra("Operation", "N");
 
@@ -351,52 +347,6 @@ public class ListActivityBase extends ListActivity {
                 Intent gpstrackShowMapIntent = new Intent(this, GPSTrackMap.class);
                 gpstrackShowMapIntent.putExtra("gpsTrackId", Long.toString(mLongClickId));
                 startActivity(gpstrackShowMapIntent);
-                return true;
-            case StaticValues.CONTEXT_MENU_SETDEFAULT_ID:
-                if(this instanceof CarListActivity){
-                    Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME,
-                            MainDbAdapter.carTableColNames, mLongClickId);
-                    //car is actve?
-                    if( c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
-                        mPrefEditor.putLong( "CurrentCar_ID", mLongClickId );
-                        mPrefEditor.putString( "CurrentCar_Name", c.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
-                        mPrefEditor.putLong("CarUOMLength_ID", c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
-                        mPrefEditor.putLong("CarUOMVolume_ID", c.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
-                        mPrefEditor.putLong("CarCurrency_ID", c.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
-                        mPrefEditor.commit();
-                        Toast toast = Toast.makeText( getApplicationContext(),
-                                c.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
-                        toast.show();
-                        c.close();
-                    }
-                    else //inactive car selected
-                    {
-                        errorAlertBuilder.setMessage(mRes.getString(R.string.CarListActivity_InactiveCarSelectedMessage));
-                        errorAlert = errorAlertBuilder.create();
-                        errorAlert.show();
-                    }
-                }
-                else if(this instanceof DriverListActivity){
-                    Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
-                            MainDbAdapter.driverTableColNames, mLongClickId);
-                    //driver is actve?
-                    if( c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
-                        mPrefEditor.putLong( "CurrentDriver_ID", mLongClickId );
-                        mPrefEditor.putString( "CurrentDriver_Name", c.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
-                        mPrefEditor.commit();
-                        Toast toast = Toast.makeText( getApplicationContext(),
-                                c.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
-                        toast.show();
-                    }
-                    else //inactive driver selected
-                    {
-                        errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_InactiveDriverSelectedMessage));
-                        errorAlert = errorAlertBuilder.create();
-                        errorAlert.show();
-                    }
-                    c.close();
-                }
-                finish();
                 return true;
             case StaticValues.CONTEXT_MENU_OPENGPSTRACK_ID:
             	if(mGpsTrackId > -1){
@@ -446,39 +396,39 @@ public class ListActivityBase extends ListActivity {
             listCursorAdapter.setViewBinder(mViewBinder);
         setListAdapter(listCursorAdapter);
 
-        if(getListAdapter() != null && getListAdapter().getCount() == 1) {
-            if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
-                //if just one car defined set the current variables to that car details
-                Cursor c = mDbAdapter.query(mTableName, MainDbAdapter.carTableColNames, null, null, null, null, null);
-
-//                        fetchForTable(mTableName, MainDbAdapter.carTableColNames,null, null);
-                c.moveToFirst();
-                SharedPreferences.Editor editor = mPreferences.edit();
-                editor.putLong("CurrentCar_ID", c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
-                editor.putString("CurrentCar_Name", c.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
-                editor.putLong("CarUOMLength_ID", c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
-                editor.putLong("CarUOMVolume_ID", c.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
-                editor.putLong("CarCurrency_ID", c.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
-                editor.commit();
-                c.close();
-            }
-            else {
-                if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-                    //if just one driver defined set the current variables to that driver details
-                    Cursor c = mDbAdapter.query(mTableName, MainDbAdapter.driverTableColNames, null, null, null, null, null);
-//                    Cursor c = mDbAdapter.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
-//                            null, null);
-                    c.moveToFirst();
-                    SharedPreferences.Editor editor = mPreferences.edit();
-                    editor.putLong("CurrentDriver_ID", c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
-                    editor.putString("CurrentDriver_Name", c.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
-                    editor.commit();
-                    c.close();
-                }
-            }
-
-            //|| mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)){
-        }
+//        if(getListAdapter() != null && getListAdapter().getCount() == 1) {
+//            if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
+//                //if just one car defined set the current variables to that car details
+//                Cursor c = mDbAdapter.query(mTableName, MainDbAdapter.carTableColNames, null, null, null, null, null);
+//
+////                        fetchForTable(mTableName, MainDbAdapter.carTableColNames,null, null);
+//                c.moveToFirst();
+//                SharedPreferences.Editor editor = mPreferences.edit();
+//                editor.putLong("CurrentCar_ID", c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
+//                editor.putString("CurrentCar_Name", c.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
+//                editor.putLong("CarUOMLength_ID", c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
+//                editor.putLong("CarUOMVolume_ID", c.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
+//                editor.putLong("CarCurrency_ID", c.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
+//                editor.commit();
+//                c.close();
+//            }
+//            else {
+//                if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
+//                    //if just one driver defined set the current variables to that driver details
+//                    Cursor c = mDbAdapter.query(mTableName, MainDbAdapter.driverTableColNames, null, null, null, null, null);
+////                    Cursor c = mDbAdapter.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
+////                            null, null);
+//                    c.moveToFirst();
+//                    SharedPreferences.Editor editor = mPreferences.edit();
+//                    editor.putLong("CurrentDriver_ID", c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
+//                    editor.putString("CurrentDriver_Name", c.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
+//                    editor.commit();
+//                    c.close();
+//                }
+//            }
+//
+//            //|| mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)){
+//        }
 
     }
 
@@ -489,19 +439,19 @@ public class ListActivityBase extends ListActivity {
                 Intent insertIntent = new Intent(this, mInsertClass);
                 if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
-                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
+//                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+//                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
+//                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
                 }
                 else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
-                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
+//                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+//                    insertIntent.putExtra("CurrentDriver_Name", mPreferences.getString("CurrentDriver_Name", ""));
+//                    insertIntent.putExtra("CurrentCar_Name", mPreferences.getString("CurrentCar_Name", ""));
                 }
                 else if(mTableName.equals(MainDbAdapter.EXPENSE_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
-                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
+//                    insertIntent.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
                 }
                 insertIntent.putExtra("Operation", "N");
                 startActivityForResult(insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
