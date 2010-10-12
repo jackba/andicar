@@ -52,6 +52,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -116,7 +117,8 @@ public class MainActivity extends BaseActivity {
 	private boolean showRefuelZone = true;
 	private boolean showExpenseZone = true;
 	private boolean showStatistcsZone = true;
-
+	private boolean isActivityOnLoading = true;
+	
 	private boolean isSendStatistics = true;
 	private boolean isSendCrashReport;
 	private long gpsTrackId = -1;
@@ -143,6 +145,8 @@ public class MainActivity extends BaseActivity {
 
 		mRes = getResources();
 
+		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+		
 		setContentView(R.layout.main_activity);
 		mainContext = this;
 		reportDb = new ReportDbAdapter(mainContext, null, null);
@@ -172,6 +176,7 @@ public class MainActivity extends BaseActivity {
 
 		spnCar = (Spinner)findViewById(R.id.spnCar);
 		spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
+		spnCar.setOnTouchListener(spinnerOnTouchListener);
 		initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
 				new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
 				MainDbAdapter.GEN_COL_NAME_NAME,
@@ -669,6 +674,7 @@ public class MainActivity extends BaseActivity {
 		super.onResume();
 		if(exitResume)
 			return;
+		isActivityOnLoading = true;
 		isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
 		if (mPreferences.getBoolean("MustClose", false)) {
 			SharedPreferences.Editor editor = mPreferences.edit();
@@ -676,7 +682,9 @@ public class MainActivity extends BaseActivity {
 			editor.commit();
 			finish();
 		}
-
+		
+		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+		
 		if(reportDb == null)
 			reportDb = new ReportDbAdapter(mainContext, null, null);
 
@@ -772,6 +780,10 @@ public class MainActivity extends BaseActivity {
     protected AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener =
         new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+            	if(isActivityOnLoading)
+                    return;
+
             	mCarId = arg3;
                 mPrefEditor.putLong("CurrentCar_ID", arg3);
                 mPrefEditor.putLong("CarCurrency_ID", mDbAdapter.getCarCurrencyID(arg3));
@@ -785,7 +797,14 @@ public class MainActivity extends BaseActivity {
             }
         };
 
-	private OnClickListener btnMileageListClickListener = new OnClickListener() {
+    private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
+        public boolean onTouch(View view, MotionEvent me) {
+            isActivityOnLoading = false;
+            return false;
+        }
+    };
+
+    private OnClickListener btnMileageListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent mileageReportIntent = new Intent(mainContext, MileageListReportActivity.class);
