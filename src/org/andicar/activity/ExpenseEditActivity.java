@@ -688,6 +688,16 @@ public class ExpenseEditActivity extends EditActivityBase {
                 mCurrencyId);
         data.put( MainDbAdapter.EXPENSE_COL_CURRENCY_ID_NAME, carDefaultCurrencyId);
         if(mCurrencyId == carDefaultCurrencyId){
+        	if(amount == null){
+        		calculateAmount();
+        		//check again
+        		if(amount == null){ //notify the user
+                    Toast toast = Toast.makeText( getApplicationContext(),
+                            mResource.getString( R.string.GEN_AmountLabel ) + " ?", Toast.LENGTH_LONG );
+                    toast.show();
+                    return;
+        		}
+        	}
             data.put( MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, amount.toString());
             if(price != null)
                 data.put( MainDbAdapter.EXPENSE_COL_PRICE_NAME, price.toString());
