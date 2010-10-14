@@ -225,7 +225,7 @@
         </activity>
         
         <!-- AddOn Services -->
-        <receiver android:name="com.andicar.addon.services.AndiCarBootReceiver">
+        <receiver android:name="com.andicar.addon.services.AndiCarServiceStarter">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
 			</intent-filter>
@@ -236,7 +236,7 @@
 			android:process="com.andicar.addon.services">
  		</service>
 
-        <service android:name="com.andicar.addon.services.CheckSubscriptions" 
+        <service android:name="com.andicar.addon.services.CheckSubscriptionsService" 
 			android:label="AndiCarCheckSubscription"
 			android:process="com.andicar.addon.services">
  		</service>
