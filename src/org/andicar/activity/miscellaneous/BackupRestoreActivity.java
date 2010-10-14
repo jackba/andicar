@@ -38,6 +38,8 @@ import org.andicar.persistence.FileUtils;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
+import com.andicar.addon.services.AndiCarServiceStarter;
+
 
 /**
  *
@@ -134,6 +136,7 @@ public class BackupRestoreActivity extends BaseActivity {
                                     editor.putLong( "CurrentCar_ID", -1);
 //                                    editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
+                                    AndiCarServiceStarter.startServices(BackupRestoreActivity.this);
                                     if(isSendStatistics){
                                         Map<String, String> parameters = new HashMap<String, String>();
                                         parameters.put("Operation", "Restore");

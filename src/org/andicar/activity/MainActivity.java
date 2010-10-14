@@ -61,7 +61,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andicar.addon.activity.AddOnServicesList;
-import com.andicar.addon.services.AndiCarBootReceiver;
+import com.andicar.addon.services.AndiCarServiceStarter;
 
 /**
  *
@@ -283,7 +283,7 @@ public class MainActivity extends BaseActivity {
 			int appVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
 			if(!mPreferences.contains("appVersionCode")
 					|| mPreferences.getInt("appVersionCode", 0) < appVersionCode){
-				AndiCarBootReceiver.startServices(this);
+				AndiCarServiceStarter.startServices(this);
 				editor.putInt("appVersionCode", appVersionCode);
 				editor.commit();
 
