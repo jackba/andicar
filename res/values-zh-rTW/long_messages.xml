@@ -31,50 +31,50 @@
     </string>
 
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
-        &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>是一個ANDROID設備上免費而且開源的汽車管理程式。
-        授權遵循GNU公共授權第3版的條款。&lt;br>
-        在關於頁面有更多訊息 &lt;br>版權所有 c 2010 Miklos Keresztes.&lt;br>
-        感謝使用&lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>!&lt;br>
+        <b><i>AndiCar</i></b>是一個ANDROID設備上免費而且開源的汽車管理程式。
+        授權遵循GNU公共授權第3版的條款。<br/>
+        在關於頁面有更多訊息 <br/>版權所有 c 2010 Miklos Keresztes.<br/>
+        感謝使用<b><i>AndiCar</i></b>!<br/>
         程式版本：
     </string>
 
     <string name="LM_COPYRIGHT_HTML1">
-        &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> 是一個ANDROID設備上免費而且開源的汽車管理程式。授權遵循GNU公共授權第3版的條款。&lt;br>
-        *  更多訊息（怎麼使用，最新新聞）請拜訪項目首頁：        &lt;a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/&lt;/a>.&lt;br>
-        &lt;small>如果你的瀏覽器出現了"目前頁面不可用"想新，請更新此頁。&lt;/small>&lt;br>
-        *  如有任何問題關於&lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> 歡迎到小組討論：
-        &lt;a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar&lt;/a>.&lt;br>
-        *  錯誤報告或 改進要求，請用 &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>問題系統：        &lt;a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list&lt;/a>.&lt;br>
+        <b><i>AndiCar</i></b> 是一個ANDROID設備上免費而且開源的汽車管理程式。授權遵循GNU公共授權第3版的條款。<br/>
+        *  更多訊息（怎麼使用，最新新聞）請拜訪項目首頁：        <a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/</a>.<br/>
+        <small>如果你的瀏覽器出現了"目前頁面不可用"想新，請更新此頁。</small><br/>
+        *  如有任何問題關於<b><i>AndiCar</i></b> 歡迎到小組討論：
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.<br/>
+        *  錯誤報告或 改進要求，請用 <b><i>AndiCar</i></b>問題系統：        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.<br/>
         *  你可以在以下以上訂閱關於專案的更新訊息：
-        &lt;a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/&lt;/a>.&lt;br>
-        *  如有任何其他的問題，可以發Email到 andicar.support@gmail.com.&lt;br>&lt;br>
-        如果你喜歡 &lt;b>&lt;i>AndiCar&lt;/b>&lt;/i>，請考慮為我們做一個捐贈。
+        <a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/</a>.<br/>
+        *  如有任何其他的問題，可以發Email到 andicar.support@gmail.com.<br/><br/>
+        如果你喜歡 <b><i>AndiCar</i></b>，請考慮為我們做一個捐贈。
         所有的捐贈均可使用一個PayPal賬戶。
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
-        &lt;br>&lt;br>感謝使用&lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>.&lt;br>&lt;br>
-        &lt;b>&lt;i>Credits:&lt;/i>&lt;/b>&lt;br>
-        *  中文化 &lt;a href="http://goapk.com/">goapk.com&lt;/a> &lt;br>
-        &lt;br>&lt;b>&lt;i>版權須知&lt;/i>&lt;/b>:&lt;br>&lt;br>
-        版權所有 c 2010 Miklos Keresztes (miklos.keresztes@gmail.com)&lt;br>&lt;br>
-        這一程式是自由軟體，你可以遵照自由軟體基金會出版的GNU通用公共授權條款來修改和重新發佈這一程式。或者用授權的第三版，或者（根據你的選取）用任何更新的版本。&lt;br>&lt;br>
-        發佈這一程式的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的的隱含的擔保。更細節的情況請參閱GNU通用公共授權。&lt;br>&lt;br>
-        你應該已經和程式一起收到一份GNU通用公共授權的副本。如果還沒有，參照&lt;a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses&lt;/a>。&lt;br>
-        授權全部內容見 &lt;a href="http://www.gnu.org/licenses/gpl.html">&lt;/a>。&lt;br>
+        <br/><br/>感謝使用<b><i>AndiCar</i></b>.<br/><br/>
+        <b><i>Credits:</i></b><br/>
+        *  中文化 <a href="http://goapk.com/">goapk.com</a> <br/>
+        <br/><b><i>版權須知</i></b>:<br/><br/>
+        版權所有 c 2010 Miklos Keresztes (miklos.keresztes@gmail.com)<br/><br/>
+        這一程式是自由軟體，你可以遵照自由軟體基金會出版的GNU通用公共授權條款來修改和重新發佈這一程式。或者用授權的第三版，或者（根據你的選取）用任何更新的版本。<br/><br/>
+        發佈這一程式的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的的隱含的擔保。更細節的情況請參閱GNU通用公共授權。<br/><br/>
+        你應該已經和程式一起收到一份GNU通用公共授權的副本。如果還沒有，參照<a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>。<br/>
+        授權全部內容見 <a href="http://www.gnu.org/licenses/gpl.html"></a>。<br/>
     </string>
 
 	<string name="AddOn_SubscriptionValidity">
 		這個訂閱對於你目前的或從處理訂閱後建立的備份中還原的資料庫來說是有效的。
-		&lt;br&gt;你應該在處理這個訂閱後立即進行備份！
+		<br/>你應該在處理這個訂閱後立即進行備份！
 	</string>
 	<string name="AddOn_AutoBackupService_LongDescription">
 		所記錄的訊息(里程數，支出，總用油)對於你來說是很有價值的財產。為了在資料遺失的情況下還原最近的備份，這是一種很有用的方式。
-		&lt;br&gt;&lt;br&gt;這項服務將協助你安排每天/每週的自動備份工作。
+		<br/><br/>這項服務將協助你安排每天/每週的自動備份工作。
 	</string>
 
 
-<!--        <b><i>Credits:</i></b><br>
-        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> <br>
+<!--        <b><i>Credits:</i></b><br/>
+        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> <br/>
 -->
 </resources>
