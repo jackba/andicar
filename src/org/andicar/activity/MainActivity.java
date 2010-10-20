@@ -221,53 +221,53 @@ public class MainActivity extends BaseActivity {
 
 		if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
 			exitResume = true;
-		//test if backups exists
-		if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null 
-				&& !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null).isEmpty()) {
-			initPreferenceValues(); //version update => init (new) preference values
-			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-			builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
-			builder.setMessage(mRes.getString(R.string.MainActivity_BackupExistMessage));
-			builder.setCancelable(false);
-			builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
-					new DialogInterface.OnClickListener() {
-
-				public void onClick(DialogInterface dialog, int id) {
-					Intent i = new Intent(MainActivity.this, BackupRestoreActivity.class);
-					startActivity(i);
-					exitResume = false;
-				}
-			});
-			builder.setNegativeButton(mRes.getString(R.string.GEN_NO),
-					new DialogInterface.OnClickListener() {
-
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-					exitResume = false;
-					onResume();
-				}
-			});
-			AlertDialog alert = builder.create();
-			alert.show();
-
-		} else {
-			exitResume = true;
-			initPreferenceValues(); //version update => init (new) preference values
-			AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-			builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeMessage));
-			builder.setMessage(mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
-			builder.setCancelable(false);
-			builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
-					new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int id) {
-					dialog.cancel();
-					exitResume = false;
-					onResume();
-				}
-			});
-			AlertDialog alert = builder.create();
-			alert.show();
-		}
+			//test if backups exists
+			if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null 
+					&& !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null).isEmpty()) {
+				initPreferenceValues(); //version update => init (new) preference values
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
+				builder.setMessage(mRes.getString(R.string.MainActivity_BackupExistMessage));
+				builder.setCancelable(false);
+				builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
+						new DialogInterface.OnClickListener() {
+	
+					public void onClick(DialogInterface dialog, int id) {
+						Intent i = new Intent(MainActivity.this, BackupRestoreActivity.class);
+						startActivity(i);
+						exitResume = false;
+					}
+				});
+				builder.setNegativeButton(mRes.getString(R.string.GEN_NO),
+						new DialogInterface.OnClickListener() {
+	
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						exitResume = false;
+						onResume();
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+	
+			} else {
+				exitResume = true;
+				initPreferenceValues(); //version update => init (new) preference values
+				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+				builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeMessage));
+				builder.setMessage(mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
+				builder.setCancelable(false);
+				builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
+						new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.cancel();
+						exitResume = false;
+						onResume();
+					}
+				});
+				AlertDialog alert = builder.create();
+				alert.show();
+			}
 		}
 
 		try {
@@ -900,6 +900,11 @@ public class MainActivity extends BaseActivity {
 						MainDbAdapter.GEN_COL_NAME_NAME,
 						mCarId, false);
 				c.close();
+                mPrefEditor.putLong("CurrentCar_ID", mCarId);
+                mPrefEditor.putLong("CarCurrency_ID", mDbAdapter.getCarCurrencyID(mCarId));
+                mPrefEditor.putLong("CarUOMVolume_ID", mDbAdapter.getCarUOMVolumeID(mCarId));
+                mPrefEditor.putLong("CarUOMLength_ID", mDbAdapter.getCarUOMLengthID(mCarId));
+                mPrefEditor.commit();
 			}
 			else{
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);

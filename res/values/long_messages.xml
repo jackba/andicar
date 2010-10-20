@@ -34,7 +34,7 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices.
         It is licensed under the terms of the GNU General Public License, version 3.<br/>
-        See the About page for more details.<br/>Copyright © 2010 Miklos Keresztes.<br/>
+        See the About page for more details.<br/> Copyright © 2010 Miklos Keresztes. <br/>
         Thank you for using <b><i>AndiCar</i></b>!<br/>
         Application version:
     </string>

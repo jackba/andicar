@@ -154,8 +154,8 @@
     <string name="MainActivity_RefuelNoDataText">"Нет заправок для этого автомобиля"</string>
     <string name="MainActivity_ExpenseNoDataText">"Нет расходов для этого автомобиля"</string>
     <string name="MainActivity_ExpenseNoDataAditionalText">" В этой зоне не отражаются расходы, созданные совместно с другими записями (например с заправкой)"</string>
-    <string name="MainActivity_NoCurrentCarMessage">"Автомобиль не выбран. На следующей странице вы должны выбрать или создать автомобиль."</string>
-    <string name="MainActivity_NoCurrentDriverMessage">"Водитель не выбран.  На следующей странице вы должны выбрать или создать водителя."</string>
+    <string name="MainActivity_NoCurrentCarMessage">"Автомобиль не определен. По крайней мере один автомобиль должен быть создан."</string>
+    <string name="MainActivity_NoCurrentDriverMessage">"Водитель не определен. По крайней мере один водитель должен быть создан."</string>
     <string name="MainActivity_WellcomeMessage">"Добро пожаловать в AndiCar."</string>
     <string name="MainActivity_WellcomeBackMessage">"Добро пожаловать!"</string>
     <string name="MainActivity_BackupExistMessage">"Резервная копия уже есть.\nВы хотите восстановить резервную копию?"</string>
@@ -369,6 +369,7 @@
     
     <!-- AddOn Services -->
     <string name="AddOn_PayPalWarning">"В период осуществления платежа ** НЕ ИСПОЛЬЗУЙТЕ НА ТЕЛЕФОНЕ КЛАВИШУ ВОЗВРАТА И НЕ ИЗМЕНЯЙТЕ ОРИЕНТАЦИЮ ЭКРАНА ТЕЛЕФОНА**"</string>
+    <string name="AddOn_PayPalTransactionID">"Номер транзакции PayPal"</string>
     <string name="AddOn_SubscribeWaiting">"Загружаю платежные библиотеки PayPal Payment"</string>
     <string name="AddOn_SubscriptionInfo">"Вы подписаны на этот сервис до: [%1]"</string>
  	<string name="AddOn_BtnTryCaption">"Попробуйте БЕСПЛАТНО"</string>
