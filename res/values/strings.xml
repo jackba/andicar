@@ -89,7 +89,7 @@
     <string name="GEN_CarLabel">"Car:"</string>
     <string name="GEN_DriverLabel">"Driver:"</string>
     <string name="GEN_ExpenseCategoryLabel">"Exp. category:"</string>
-    <string name="GEN_ExpenseTypeLabel">"Expense type:"</string>
+    <string name="GEN_ExpenseTypeLabel">"Type:"</string>
     <string name="GEN_TypeLabel">"Type:"</string>
     <string name="GEN_DocumentNoLabel">"Document no.:"</string>
     <string name="GEN_IndexLabel">"Odometer:"</string>

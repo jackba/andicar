@@ -960,6 +960,7 @@ public class DB {
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
+                AddOnDBObjectDef.upgradeTo353(db);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
@@ -969,6 +970,7 @@ public class DB {
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
+                AddOnDBObjectDef.upgradeTo353(db);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
@@ -977,6 +979,7 @@ public class DB {
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
+                AddOnDBObjectDef.upgradeTo353(db);
             }
             //AndiCar 3.0.x
             else if(oldVersion == 300){
@@ -984,23 +987,33 @@ public class DB {
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
+                AddOnDBObjectDef.upgradeTo353(db);
             }
             //AndiCar 3.1.x, 3.2.x
             else if(oldVersion == 310){
                 upgradeDbTo330(db, oldVersion);
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
+                AddOnDBObjectDef.upgradeTo353(db);
             }
             //AndiCar 3.3.x
             else if(oldVersion == 330){
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
+                AddOnDBObjectDef.upgradeTo353(db);
             }
             //AndiCar 3.4.x
             else if(oldVersion == 340 || 
             		oldVersion == 350){ //upgrade again because on fresh 350 install addon tables was not created
                 upgradeDbTo350(db, oldVersion);
+                AddOnDBObjectDef.upgradeTo353(db);
             }
+            else if(oldVersion == 351){
+                AddOnDBObjectDef.upgradeTo353(db);
+            }
+
+            //!!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
+        	
         }
 
         private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
