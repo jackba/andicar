@@ -33,55 +33,54 @@
 
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices.
-        It is licensed under the terms of the GNU General Public License, version 3.<br/>
-        See the About page for more details.<br/> Copyright © 2010 Miklos Keresztes. <br/>
-        Thank you for using <b><i>AndiCar</i></b>!<br/>
-        Application version:
+        It is licensed under the terms of the GNU General Public License, version 3.\n
+        See the About page for more details.\nCopyright © 2010 Miklos Keresztes.\n
+        Thank you for using <b><i>AndiCar</i></b>!
     </string>
 
     <string name="LM_COPYRIGHT_HTML1">
         <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices. 
-        It is licensed under the terms of the GNU General Public License.<br/>
+        It is licensed under the terms of the GNU General Public License.\n
         *  For more information (how tos, latest news, etc.) please visit the project home page at
-        <a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/</a>.<br/>
-        <small>Refresh the page in your browser if you get a "Web page not available" message.</small><br/>
+        <a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/</a>.\n
+        <small>Refresh the page in your browser if you get a \"Web page not available\" message.</small>\n
         *  For questions you are welcome to the <b><i>AndiCar</i></b> discussion list at
-        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.<br/>
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
         *  For bug reports or enhancement requests do not hesitate to use the <b><i>AndiCar</i></b> issue system at
-        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.<br/>
+        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
         *  You can subscribe for the project news at
-        <a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/</a>.<br/>
-        *  For other things you can send an email to andicar.support@gmail.com.<br/><br/>
+        <a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/</a>.\n
+        *  For other things you can send an email to andicar.support@gmail.com.\n\n
         You can make a donation if you enjoy using <b><i>AndiCar</i></b>.
         All donations can be made using a PayPal account.
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
-        <br/><br/>Thank you for using <b><i>AndiCar</i></b>.<br/><br/>
-        <b><i>Credits:</i></b><br/>
-        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> <br/>
-        *  Russian translation by Andrey Demin - andde@rambler.ru<br/>
-        <br/><b><i>Copyright notice</i></b>:<br/><br/>
-        Copyright © 2010 Miklos Keresztes (miklos.keresztes@gmail.com)<br/><br/>
+        \n\nThank you for using <b><i>AndiCar</i></b>.\n\n
+        <b><i>Credits:</i></b>\n
+        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
+        *  Russian translation by Andrey Demin - andde@rambler.ru\n
+        \n<b><i>Copyright notice</i></b>:\n\n
+        Copyright © 2010 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or (at your option) any later version.<br/><br/>
+        the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n
         This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
         without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-        See the GNU General Public License for more details.<br/><br/>
+        See the GNU General Public License for more details.\n\n
         You should have received a copy of the GNU General Public License along with this program.
-        If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.<br/>
-        The whole license can be found <a href="http://www.gnu.org/licenses/gpl.html">here</a>.<br/>
+        If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n
+        The whole license can be found <a href="http://www.gnu.org/licenses/gpl.html">here</a>.\n
     </string>
 
     <string name="AddOn_SubscriptionValidity">
     	The subscription is valid for your current database instance or 
     	for a database restored from a backup created AFTER the subscription process.
-    	<br/>You should create a backup immediately after the subscription process!     
+    	\nYou should create a backup immediately after the subscription process!     
     </string>
     <string name="AddOn_AutoBackupService_LongDescription">
     	The recorded informations (mileages, expenses, fill ups) are the most important assets for you. In case of database loss the only way to ensure the availability of these data is a recent backup.
-    	<br/><br/>This service will help you to schedule a daily/weekly automatic backup task.
+    	\n\nThis service will help you to schedule a daily/weekly automatic backup task.
    	</string>
 
 </resources>

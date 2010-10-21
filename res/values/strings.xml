@@ -144,7 +144,7 @@
     <string name="MainActivity_GPSTrackHeaderCaption">"Last GPS track"</string>
     <string name="MainActivity_ExpenseHeaderCaption">"Last expense"</string>
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
-    <string name="MainActivity_StatisticsListHeaderCaption">"Last known odometer: "</string>
+    <string name="MainActivity_StatisticsListLastOdoLabel">"Last known odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the mileage between the first and last FULL refuel."</string>
     <string name="MainActivity_StatisticsLastConsLabel">"Last fuel eff.: "</string>
@@ -162,6 +162,7 @@
     <string name="MainActivity_UpdateMessage">"Update message"</string>
     <string name="MainActivity_GPSTrackZoneNoDataText">"No tracks."</string>
     <string name="MainActivity_NoMarketAccessMsg">"Cannot open Android Market!"</string>
+    <string name="MainActivity_AppVersion">"Application version:"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>

@@ -41,6 +41,7 @@
             android:gravity="fill"
             android:typeface="sans"
             android:textColor="@android:color/white"
+            android:text="@string/LM_COPYRIGHT_HTML1"
             />
         <TableLayout
             android:layout_width="fill_parent"
@@ -80,6 +81,7 @@
             android:gravity="fill"
             android:typeface="sans"
             android:textColor="@android:color/white"
+            android:text="@string/LM_COPYRIGHT_HTML2"
             />
     </LinearLayout>
 </ScrollView>
