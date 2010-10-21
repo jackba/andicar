@@ -208,8 +208,8 @@ public class MileageEditActivity extends EditActivityBase {
         		acUserComment.setEnabled(false);
             	btnOk.setEnabled(false);
                 btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
-        		mCarId = mPreferences.getLong("MileageRec_CarId", mBundleExtras.getLong("CurrentCar_ID"));
-        		mDriverId = mPreferences.getLong("MileageRec_DriverId", mBundleExtras.getLong("CurrentDriver_ID"));
+        		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+        		mDriverId = mPreferences.getLong("LastDriver_ID", -1);
         		mExpTypeId = mPreferences.getLong("MileageRec_ExpenseTypeId", mBundleExtras.getLong("MileageRec_ExpenseTypeId"));
         		mInsertMode = mPreferences.getInt("MileageRec_InsertMode", mPreferences.getInt("MileageInsertMode", 0));
         		acTag.setText(mPreferences.getString("MileageRec_Tag", ""));
@@ -230,8 +230,8 @@ public class MileageEditActivity extends EditActivityBase {
             	tvMileageRecInProgress.setVisibility(View.GONE);
             	btnOk.setEnabled(true);
         		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
-	            mCarId = mBundleExtras.getLong("CurrentCar_ID");
-	            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
+	            mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+	            mDriverId = mPreferences.getLong("LastDriver_ID", -1);
 	            mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
 	            mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
 	            //init tag

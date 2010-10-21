@@ -34,57 +34,56 @@
 
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
     	<b><i>AndiCar</i></b> - это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, предназначенная для устройств на платформе Android
-        Она лицензирована в  соответствии с GNU General Public License, версия 3.<br/>
-        Смотрите больше информации на странице О программе.<br/>Copyright © 2010 Miklos Keresztes.<br/>
-        Спасибо за использование <b><i>AndiCar</i></b>!<br/>
-        Версия программы:
+        Она лицензирована в  соответствии с GNU General Public License, версия 3.\n
+        Смотрите больше информации на странице О программе.\nCopyright © 2010 Miklos Keresztes.\n
+        Спасибо за использование <b><i>AndiCar</i></b>!
     </string>
 
     <string name="LM_COPYRIGHT_HTML1">
         <b><i>AndiCar</i></b> - это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, 
-		предназначенное для устройств на платформе Android. Она лицензирована в  соответствии с GNU General Public License.<br/>
+		предназначенное для устройств на платформе Android. Она лицензирована в  соответствии с GNU General Public License.\n
         *  Для получения подробной информации (как использовать, последние новости и т.д.) пожалуйста посетите домашнюю страницу проекта 
-        <a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/</a>.<br/>
-        <small> Обновите страницу в своем браузере, если вы получили сообщение "Web page not available".</small><br/>
+        <a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/</a>\n
+        <small> Обновите страницу в своем браузере, если вы получили сообщение "Web page not available".</small>\n
         *  Свои вопросы задайте в дискуссионной группе <b><i>AndiCar</i></b> на
-        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.<br/>
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
         *  Для сообщениий об ошибках  и предложений по улучшению программы, не стесняйтесь использовать справочную систему <b><i>AndiCar</i></b> на
-        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.<br/>
+        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
         *  Вы можете подписаться на новости проекта на странице
-        <a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/</a>.<br/>
-        *  Для решения прочих вопросов вы можете отправить письмо на andicar.support@gmail.com.<br/><br/>
+        <a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/</a>.\n
+        *  Для решения прочих вопросов вы можете отправить письмо на andicar.support@gmail.com.\n\n
         Вы можете отблагодарить автора, если вам нравится программа <b><i>AndiCar</i></b>.
         Благодарность можно отправить через систему PayPal.
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
-        <br/><br/>Thank you for using <b><i>AndiCar</i></b>.<br/><br/>
-        <b><i>Credits:</i></b><br/>
-        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> <br/>
-        *  Russian translation by Andrey Demin - andde@rambler.ru<br/>
-        <br/><b><i>Copyright notice</i></b>:<br/><br/>
-        Copyright © 2010 Miklos Keresztes (miklos.keresztes@gmail.com)<br/><br/>
+        \n\nThank you for using <b><i>AndiCar</i></b>.\n\n
+        <b><i>Credits:</i></b>\n
+        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
+        *  Russian translation by Andrey Demin - andde@rambler.ru\n
+        \n<b><i>Copyright notice</i></b>:\n\n
+        Copyright © 2010 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or (at your option) any later version.<br/><br/>
+        the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n
         This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
         without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-        See the GNU General Public License for more details.<br/><br/>
+        See the GNU General Public License for more details.\n\n
         You should have received a copy of the GNU General Public License along with this program.
-        If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.<br/>
-        The whole license can be found <a href="http://www.gnu.org/licenses/gpl.html">here</a>.<br/>
+        If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n
+        The whole license can be found <a href="http://www.gnu.org/licenses/gpl.html">here</a>.\n
     </string>
 
     <string name="AddOn_SubscriptionValidity">
 		Подписка действует для текущего экземпляра базы данных или для базы
 		данных, восстановленной из резервной копии, созданной ПОСЛЕ процесса подписки
-        <br/> Вы должны создать резервную копию сразу после процесса подписки!
+        \n Вы должны создать резервную копию сразу после процесса подписки!
     </string>
     <string name="AddOn_AutoBackupService_LongDescription">
         Записанная информация (пробег, расходы, заправки) является наиболее
 		ценной для вас. В случае потери базы данных единственный способ обеспечить
 		доступность этих данных - это восстановление из последней резервной копии.
-        <br/><br/> Эта услуга поможет вам планировать
+        \n\n Эта услуга поможет вам планировать
 		ежедневные/еженедельные задачи автоматического резервного копирования.
 	</string>
 </resources>

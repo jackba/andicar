@@ -139,7 +139,7 @@
     <string name="MainActivity_GPSTrackHeaderCaption">"GPS的最后追踪"</string>
     <string name="MainActivity_ExpenseHeaderCaption">"最仅花费"</string>
     <string name="MainActivity_StatisticsHeaderCaption">"统计已登记的 "</string>
-    <string name="MainActivity_StatisticsListHeaderCaption">"最后所知的里程表："</string>
+    <string name="MainActivity_StatisticsListLastOdoLabel">"最后所知的里程表："</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"燃料平均效率： "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. 这个平均消耗是由里程数以及起始和最后燃料的总量计算出来的。"</string>
     <string name="MainActivity_StatisticsLastConsLabel">"燃料的最近效率："</string>
@@ -157,6 +157,7 @@
     <string name="MainActivity_UpdateMessage">"更新消息"</string>
     <string name="MainActivity_GPSTrackZoneNoDataText">"无追踪。"</string>
     <string name="MainActivity_NoMarketAccessMsg">"无法打开Android市场！"</string>
+    <string name="MainActivity_AppVersion">"程序版本："</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"执照号码："</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"不能阻止当前司机的活动。"</string>

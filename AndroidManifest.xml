@@ -39,7 +39,7 @@
         android:label="AndiCar"
         android:description="@string/APP_Description"
         android:icon="@drawable/car2"
-        android:debuggable="true"
+        android:debuggable="false"
     >
         <uses-library android:name="com.google.android.maps" />
         <service android:name="org.andicar.service.GPSTrackService" />

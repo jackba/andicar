@@ -453,16 +453,16 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView android:id="@+id/tvStatisticsHdr"
+                    <TextView android:id="@+id/tvStatisticsLastKnownOdometer"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
                               android:textColor="@android:color/white"
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"
-                              android:text="@string/MainActivity_StatisticsListHeaderCaption"
+                              android:text="@string/MainActivity_StatisticsListLastOdoLabel"
                               />
-                    <TextView android:id="@+id/tvStatisticsLine1"
+                    <TextView android:id="@+id/tvStatisticsAvgFuelEff"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
@@ -470,7 +470,7 @@
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
 
-                    <TextView android:id="@+id/tvStatisticsLine2"
+                    <TextView android:id="@+id/tvStatisticsLastFuelEff"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
@@ -478,14 +478,15 @@
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
 
-                    <TextView android:id="@+id/tvStatisticsLine3"
+                    <TextView android:id="@+id/tvStatisticsTotalExpenses"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
                               android:textColor="@android:color/white"
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
-                    <TextView android:id="@+id/tvStatisticsLine4"
+                              
+                    <TextView android:id="@+id/tvStatisticsMileageExpense"
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
@@ -508,6 +509,15 @@
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal|bottom"
                 android:layout_marginTop="5dip"
+                android:textSize="12sp"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                />
+            <TextView
+                android:id="@+id/tvShortAboutAppVersion"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal|bottom"
                 android:textSize="12sp"
                 android:typeface="sans"
                 android:textColor="@android:color/white"
