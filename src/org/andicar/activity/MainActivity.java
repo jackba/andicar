@@ -585,10 +585,13 @@ public class MainActivity extends BaseActivity {
 						" LIMIT 1";
 					c = reportDb.execSelectSql(sql, null);
 					if(c.moveToFirst()){
-						if(tmpFullRefuelIndexStr.equals(c.getString(0))) //just two full refuels exists => the avg. fuel eff. = last fuel eff.
+						if(tmpFullRefuelIndexStr.equals(c.getString(0))){ //just two full refuels exists => the avg. fuel eff. = last fuel eff.
 							lastFuelEffStr = fuelEffStr;
+							c.close();
+						}
 						else{
 							tmpFullRefuelIndexStr = c.getString(0);
+							c.close();
 							//get the total fuel qty between the last two full refuels
 							sql = 
 								"SELECT SUM(" + MainDbAdapter.REFUEL_COL_QUANTITY_NAME + ") " +
