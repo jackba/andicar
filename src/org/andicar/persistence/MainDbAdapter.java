@@ -1231,28 +1231,49 @@ public class MainDbAdapter extends DB
 //    }
 
     public long getCarUOMVolumeID(long carID){
-        return fetchRecord(CAR_TABLE_NAME, carTableColNames, carID)
-                .getLong(CAR_COL_UOMVOLUME_ID_POS);
+    	Cursor c = fetchRecord(CAR_TABLE_NAME, carTableColNames, carID);
+    	long retVal = -1;
+    	if(c != null)
+    		retVal = c.getLong(CAR_COL_UOMVOLUME_ID_POS);
+    	c.close();
+    	return retVal;
+                
     }
 
     public long getCarUOMLengthID(long carID){
-        return fetchRecord(CAR_TABLE_NAME, carTableColNames, carID)
-                .getLong(CAR_COL_UOMLENGTH_ID_POS);
+    	Cursor c = fetchRecord(CAR_TABLE_NAME, carTableColNames, carID);
+    	long retVal = -1;
+    	if(c != null)
+    		retVal = c.getLong(CAR_COL_UOMLENGTH_ID_POS);
+    	c.close();
+    	return retVal;
     }
 
     public long getCarCurrencyID(long carID){
-        return fetchRecord(CAR_TABLE_NAME, carTableColNames, carID)
-                .getLong(CAR_COL_CURRENCY_ID_POS);
+    	Cursor c = fetchRecord(CAR_TABLE_NAME, carTableColNames, carID);
+    	long retVal = -1;
+    	if(c != null)
+    		retVal = c.getLong(CAR_COL_CURRENCY_ID_POS);
+    	c.close();
+    	return retVal;
     }
 
     public String getCurrencyCode(long currencyID){
-        return fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, currencyID)
-                .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);    
+    	Cursor c = fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, currencyID);
+    	String retVal = null;
+    	if(c != null)
+    		retVal = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+    	c.close();
+    	return retVal;
     }
 
     public String getUOMCode(long uomID){
-        return fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames,
-                    uomID).getString(MainDbAdapter.UOM_COL_CODE_POS);
+    	Cursor c = fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomID);
+    	String retVal = null;
+    	if(c != null)
+    		retVal = c.getString(MainDbAdapter.UOM_COL_CODE_POS);
+    	c.close();
+    	return retVal;
     }
 
     public long getIdFromCode(String tableName, String code){
