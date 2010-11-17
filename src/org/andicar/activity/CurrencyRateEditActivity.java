@@ -231,12 +231,30 @@ public class CurrencyRateEditActivity extends EditActivityBase
         }
 
         ContentValues cvData = new ContentValues();
-        String strCurrFromCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+        
+/*
+        	mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
                 MainDbAdapter.currencyTableColNames, spnCurrencyFromSpinner.getSelectedItemId())
                     .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-        String strCurrToCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.currencyTableColNames, spnCurrencyToSpinner.getSelectedItemId())
-                    .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+ */
+        String strCurrFromCode = null;
+        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+                MainDbAdapter.currencyTableColNames, spnCurrencyFromSpinner.getSelectedItemId());
+        if(c != null){
+        	strCurrFromCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        	c.close();
+        }
+        
+//        String strCurrToCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+//                MainDbAdapter.currencyTableColNames, spnCurrencyToSpinner.getSelectedItemId())
+//                    .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        String strCurrToCode = null;
+        c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+              MainDbAdapter.currencyTableColNames, spnCurrencyToSpinner.getSelectedItemId());
+        if(c != null){
+        	strCurrToCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        	c.close();
+        }
         cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
                 strCurrFromCode + " <-> " + strCurrToCode);
         cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
