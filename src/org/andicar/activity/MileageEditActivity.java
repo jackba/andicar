@@ -249,6 +249,13 @@ public class MileageEditActivity extends EditActivityBase {
 	            etUserInput.requestFocus();
         	}
         }
+        
+        if(mCarId == -1){
+            madbErrorAlert.setMessage(mResource.getString(R.string.ERR_051));
+            madError = madbErrorAlert.create();
+            madError.show();
+            return;
+        }
 
         initControls();
 

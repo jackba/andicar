@@ -73,4 +73,5 @@
     <string name="ERR_049">"This tag can not be deleted because it is used in gps track(s)."</string>
 
     <string name="ERR_050">"Map error!"</string>
+    <string name="ERR_051">"No car selected!\nPlease chose a car in the main screen."</string>
 </resources>
