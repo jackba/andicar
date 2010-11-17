@@ -145,8 +145,6 @@ public class MainActivity extends BaseActivity {
 
 		mRes = getResources();
 
-		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-		
 		setContentView(R.layout.main_activity);
 		mainContext = this;
 		reportDb = new ReportDbAdapter(mainContext, null, null);
@@ -177,11 +175,6 @@ public class MainActivity extends BaseActivity {
 		spnCar = (Spinner)findViewById(R.id.spnCar);
 		spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
 		spnCar.setOnTouchListener(spinnerOnTouchListener);
-		initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-				new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-				MainDbAdapter.GEN_COL_NAME_NAME,
-				mCarId, false);
-
 		btnMileageList = (ImageButton) findViewById(R.id.btnMileageList);
 		btnMileageList.setOnClickListener(btnMileageListClickListener);
 		btnMileageInsert = (ImageButton) findViewById(R.id.btnMileageInsert);
@@ -253,7 +246,7 @@ public class MainActivity extends BaseActivity {
 	
 			} else {
 				exitResume = true;
-				initPreferenceValues(); //version update => init (new) preference values
+				initPreferenceValues(); //init preference values
 				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 				builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeMessage));
 				builder.setMessage(mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
@@ -270,6 +263,12 @@ public class MainActivity extends BaseActivity {
 				alert.show();
 			}
 		}
+		
+		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+		initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+				new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+				MainDbAdapter.GEN_COL_NAME_NAME,
+				mCarId, false);
 
 		try {
 			appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
