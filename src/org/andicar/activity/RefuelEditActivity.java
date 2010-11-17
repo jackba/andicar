@@ -288,7 +288,7 @@ public class RefuelEditActivity extends EditActivityBase {
         tvBaseUOMQtyLabel.setText(mResource.getString(R.string.RefuelEditActivity_QtyInBaseUOMLabel));
         tvBaseUOMQtyValue = (TextView) findViewById(R.id.tvBaseUOMQtyValue);
         setBaseUOMQtyZoneVisibility(false);
-        carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
+        carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", mDbAdapter.getCarCurrencyID(mCarId));
         carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
         currencyCode = carDefaultCurrencyCode;
         currencyConversionRate = BigDecimal.ONE;
