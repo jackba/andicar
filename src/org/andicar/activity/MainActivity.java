@@ -568,66 +568,66 @@ public class MainActivity extends BaseActivity {
 								fuelEffStr = fuelEffStr + "; " + avgEff.toString() + " " + carUOMLengthCode + "/" + carUOMVolumeCode;
 							}
 						}
-					}
 					
-					//calculate the last fuel eff (for the last two full refuels)
-					
-					//get the second last full refuel
-					sql = 
-						"SELECT " + MainDbAdapter.REFUEL_COL_INDEX_NAME +
-						" FROM " + MainDbAdapter.REFUEL_TABLE_NAME +
-						" WHERE " + 
-								MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
-								" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
-								" AND " + MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME + " = \'Y\' " +
-								" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " < " + lastFullRefuelIndexStr +
-						" ORDER BY " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " DESC " + 
-						" LIMIT 1";
-					c = reportDb.execSelectSql(sql, null);
-					if(c.moveToFirst()){
-						if(tmpFullRefuelIndexStr.equals(c.getString(0))){ //just two full refuels exists => the avg. fuel eff. = last fuel eff.
-							lastFuelEffStr = fuelEffStr;
-							c.close();
-						}
-						else{
-							tmpFullRefuelIndexStr = c.getString(0);
-							c.close();
-							//get the total fuel qty between the last two full refuels
-							sql = 
-								"SELECT SUM(" + MainDbAdapter.REFUEL_COL_QUANTITY_NAME + ") " +
-								" FROM " + MainDbAdapter.REFUEL_TABLE_NAME +
-								" WHERE " + 
-										MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
-										" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
-										" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " > " + tmpFullRefuelIndexStr +
-										" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " <= " + lastFullRefuelIndexStr ;
-							c = reportDb.execSelectSql(sql, null);
-							if(c.moveToFirst())
-								totalFuelQty = new BigDecimal(c.getString(0));
-							c.close();
-							if(totalFuelQty != null){
-								//calculate the avg cons and fuel eff.
-								try{
-									tmpFullRefuelIndex = new BigDecimal(tmpFullRefuelIndexStr);
-									lastFullRefuelIndex = new BigDecimal(lastFullRefuelIndexStr);
-								}
-								catch(NumberFormatException e){}
-								BigDecimal avgCons = BigDecimal.ZERO;
-								avgCons = totalFuelQty.multiply(new BigDecimal("100"));
-								avgCons = avgCons.divide(lastFullRefuelIndex.subtract(tmpFullRefuelIndex), 10, RoundingMode.HALF_UP).
-												setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-								lastFuelEffStr = avgCons.toString() + " " + carUOMVolumeCode + "/100" + carUOMLengthCode;
-//								//efficiency: x uom length (km or mi) / uom volume (l or galon)
-								if(avgCons != null && avgCons.signum() != 0){
-									BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-									lastFuelEffStr = lastFuelEffStr + "; " + avgEff.toString() + " " + carUOMLengthCode + "/" + carUOMVolumeCode;
+						//calculate the last fuel eff (for the last two full refuels)
+						
+						//get the second last full refuel
+						sql = 
+							"SELECT " + MainDbAdapter.REFUEL_COL_INDEX_NAME +
+							" FROM " + MainDbAdapter.REFUEL_TABLE_NAME +
+							" WHERE " + 
+									MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
+									" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
+									" AND " + MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME + " = \'Y\' " +
+									" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " < " + lastFullRefuelIndexStr +
+							" ORDER BY " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " DESC " + 
+							" LIMIT 1";
+						c = reportDb.execSelectSql(sql, null);
+						if(c.moveToFirst()){
+							if(tmpFullRefuelIndexStr.equals(c.getString(0))){ //just two full refuels exists => the avg. fuel eff. = last fuel eff.
+								lastFuelEffStr = fuelEffStr;
+								c.close();
+							}
+							else{
+								tmpFullRefuelIndexStr = c.getString(0);
+								c.close();
+								//get the total fuel qty between the last two full refuels
+								sql = 
+									"SELECT SUM(" + MainDbAdapter.REFUEL_COL_QUANTITY_NAME + ") " +
+									" FROM " + MainDbAdapter.REFUEL_TABLE_NAME +
+									" WHERE " + 
+											MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
+											" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
+											" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " > " + tmpFullRefuelIndexStr +
+											" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " <= " + lastFullRefuelIndexStr ;
+								c = reportDb.execSelectSql(sql, null);
+								if(c.moveToFirst())
+									totalFuelQty = new BigDecimal(c.getString(0));
+								c.close();
+								if(totalFuelQty != null){
+									//calculate the avg cons and fuel eff.
+									try{
+										tmpFullRefuelIndex = new BigDecimal(tmpFullRefuelIndexStr);
+										lastFullRefuelIndex = new BigDecimal(lastFullRefuelIndexStr);
+									}
+									catch(NumberFormatException e){}
+									BigDecimal avgCons = BigDecimal.ZERO;
+									avgCons = totalFuelQty.multiply(new BigDecimal("100"));
+									avgCons = avgCons.divide(lastFullRefuelIndex.subtract(tmpFullRefuelIndex), 10, RoundingMode.HALF_UP).
+													setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+									lastFuelEffStr = avgCons.toString() + " " + carUOMVolumeCode + "/100" + carUOMLengthCode;
+	//								//efficiency: x uom length (km or mi) / uom volume (l or galon)
+									if(avgCons != null && avgCons.signum() != 0){
+										BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+										lastFuelEffStr = lastFuelEffStr + "; " + avgEff.toString() + " " + carUOMLengthCode + "/" + carUOMVolumeCode;
+									}
 								}
 							}
+							c.close();
 						}
-						c.close();
+						else
+							c.close();
 					}
-					else
-						c.close();
 				}
 				else
 					c.close(); //no last full refuel => no 2 full refuels => cannot calculate fuel eff.
