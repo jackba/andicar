@@ -21,3 +21,5 @@ syntax: regexp
 ^dist$
 syntax: regexp
 \.apk$
+syntax: regexp
+\.db$
