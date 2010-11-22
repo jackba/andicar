@@ -19,26 +19,33 @@ package org.andicar.persistence;
 
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import org.andicar.activity.R;
 import org.andicar.utils.Utils;
 
-public class GPSDataBinder implements SimpleCursorAdapter.ViewBinder {
+public class GPSTrackListDataBinder implements SimpleCursorAdapter.ViewBinder {
     @Override
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-        if(columnIndex == cursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)) {
+        if(columnIndex == 1){
+            ((TextView) view).setText(cursor.getString(1)
+            		.replace("[%1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
+            				.format(cursor.getLong(7) * 1000)));
+            return true;
+        }
+        else if(columnIndex == 2){
             Resources mRes = view.getResources();
-            ((TextView) view).setText(cursor.getString(cursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
+            ((TextView) view).setText(cursor.getString(2)
                     .replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
                     .replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
                     .replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
                     .replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
                     .replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
-                            Utils.getTimeString(cursor.getLong(cursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
+                            Utils.getTimeString(cursor.getLong(4), false))
                     .replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
-                            Utils.getTimeString(cursor.getLong(cursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+                            Utils.getTimeString(cursor.getLong(5), false))
                     .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                     .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                     .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))

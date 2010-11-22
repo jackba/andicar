@@ -32,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -271,15 +272,47 @@ public class Utils {
         mMainDbAdapter.close();
     }
 
-    public String roundStringNumber(String sNumber, int decimals){
-        String retVal = null;
-        try{
-            BigDecimal number = new BigDecimal(sNumber);
-            retVal = number.setScale(decimals, RoundingMode.HALF_UP).toString();
-        }
-        catch(NumberFormatException e){
-            return null;
-        }
-        return retVal;
+//    public static String roundStringNumber(String sNumber, int decimals){
+//        String retVal = null;
+//        try{
+//            BigDecimal number = new BigDecimal(sNumber);
+//            retVal = number.setScale(decimals, RoundingMode.HALF_UP).toString();
+//        }
+//        catch(NumberFormatException e){
+//            return null;
+//        }
+//        return retVal;
+//    }
+    
+    /**
+     * @param number: the number which will be converted to string
+     * @param localeFormat: also format the returned string according to locale formats
+     * @return the string representation of the number
+     */
+    public static String numberToString(Object number, boolean localeFormat, int scale, RoundingMode roundingMode){
+//    	String retVal = null;
+    	BigDecimal bdNumber = null;
+    	
+    	if(number instanceof Double)
+    		bdNumber = new BigDecimal((Double)number);
+    	else if(number instanceof Float)
+    		bdNumber = new BigDecimal((Float)number);
+    	else if(number instanceof Float)
+    		bdNumber = new BigDecimal((Float)number);
+    	else if(number instanceof Integer)
+    		bdNumber = new BigDecimal((Integer)number);
+    	else if(number instanceof Long)
+    		bdNumber = new BigDecimal((Long)number);
+    	else if(number instanceof Short)
+    		bdNumber = new BigDecimal((Short)number);
+    	else if(number instanceof BigDecimal)
+    		bdNumber = (BigDecimal)number;
+    	
+    	bdNumber = bdNumber.setScale(scale, roundingMode);
+    	bdNumber = bdNumber.stripTrailingZeros();
+    	if(localeFormat)
+    		return NumberFormat.getInstance().format(bdNumber);
+
+    	return bdNumber.toPlainString();
     }
 }

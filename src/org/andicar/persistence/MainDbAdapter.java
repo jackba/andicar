@@ -1313,7 +1313,7 @@ public class MainDbAdapter extends DB
      * get the start index for a new mileage record
      */
     public BigDecimal getMileageStartIndex(long mCarId){
-        String mStartIndexStr = null;
+        Double mStartIndexStr = null;
         String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
                         "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
                         "WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y' " +
@@ -1326,13 +1326,13 @@ public class MainDbAdapter extends DB
         String[] selectionArgs = {Long.toString(mCarId), Long.toString(mCarId)};
         Cursor c = execSelectSql(sql, selectionArgs);
         if(c.moveToFirst()){
-            mStartIndexStr = c.getString(0);
+            mStartIndexStr = c.getDouble(0);
         }
-        if((mStartIndexStr == null || mStartIndexStr.length() == 0)
+        if((mStartIndexStr == null)
                 && c.moveToNext())
-            mStartIndexStr = c.getString(0);
-        if(mStartIndexStr == null || mStartIndexStr.length() == 0)
-            mStartIndexStr = "0";
-    	return new BigDecimal(mStartIndexStr);
+            mStartIndexStr = c.getDouble(0);
+        if(mStartIndexStr == null)
+            mStartIndexStr = new Double("0");
+    	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
     }
 }

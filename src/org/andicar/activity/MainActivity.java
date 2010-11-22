@@ -49,6 +49,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -136,200 +137,240 @@ public class MainActivity extends BaseActivity {
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-		mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-		isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-		isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
-		if(isSendCrashReport)
-			Thread.setDefaultUncaughtExceptionHandler(
-					new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
-
-		mRes = getResources();
-
-		setContentView(R.layout.main_activity);
-		mainContext = this;
-		reportDb = new ReportDbAdapter(mainContext, null, null);
-
-		String updateMsg = mPreferences.getString("UpdateMsg", null);
-		if(updateMsg != null){
-			if(!updateMsg.equals("VersionChanged")){
-				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-				builder.setTitle(mRes.getString(R.string.MainActivity_UpdateMessage));
-				builder.setMessage(updateMsg);
-				builder.setCancelable(false);
-				builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
-						new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-					}
-				});
-				AlertDialog alert = builder.create();
-				alert.show();
-				SharedPreferences.Editor editor = mPreferences.edit();
-				editor.remove("UpdateMsg");
-				editor.commit();
-			}
-			else
-				initPreferenceValues(); //version update => init (new) preference values
-		}
-
-		spnCar = (Spinner)findViewById(R.id.spnCar);
-		spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
-		spnCar.setOnTouchListener(spinnerOnTouchListener);
-		btnMileageList = (ImageButton) findViewById(R.id.btnMileageList);
-		btnMileageList.setOnClickListener(btnMileageListClickListener);
-		btnMileageInsert = (ImageButton) findViewById(R.id.btnMileageInsert);
-		btnMileageInsert.setOnClickListener(btnInsertMileageClickListener);
-		btnRefuelList = (ImageButton) findViewById(R.id.btnRefuelList);
-		btnRefuelList.setOnClickListener(btnRefuelListClickListener);
-		btnRefuelInsert = (ImageButton) findViewById(R.id.btnRefuelInsert);
-		btnRefuelInsert.setOnClickListener(btnInsertRefuelClickListener);
-		btnExpenseList = (ImageButton) findViewById(R.id.btnExpenseList);
-		btnExpenseList.setOnClickListener(btnExpenseListClickListener);
-		btnExpenseInsert = (ImageButton) findViewById(R.id.btnExpenseInsert);
-		btnExpenseInsert.setOnClickListener(btnInsertExpenseClickListener);
-		btnGPSTrackInsert = (ImageButton) findViewById(R.id.btnGPSTrackInsert);
-		btnGPSTrackInsert.setOnClickListener(btnGPSTrackInsertClickListener);
-		btnGPSTrackList = (ImageButton) findViewById(R.id.btnGPSTrackList);
-		btnGPSTrackList.setOnClickListener(btnGPSTrackListClickListener);
-		btnGPSTrackShowOnMap = (ImageButton) findViewById(R.id.btnGPSTrackShowOnMap);
-		btnGPSTrackShowOnMap.setOnClickListener(btnGPSTrackShowClickListener);
-
-		tvThreeLineListMileageText1 = (TextView) findViewById(R.id.tvThreeLineListMileageText1);
-		tvThreeLineListMileageText2 = (TextView) findViewById(R.id.tvThreeLineListMileageText2);
-		tvThreeLineListMileageText3 = (TextView) findViewById(R.id.tvThreeLineListMileageText3);
-		tvThreeLineListGPSTrackText1 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText1);
-		tvThreeLineListGPSTrackText2 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText2);
-		tvThreeLineListGPSTrackText3 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText3);
-		tvThreeLineListRefuelText1 = (TextView) findViewById(R.id.tvThreeLineListRefuelText1);
-		tvThreeLineListRefuelText2 = (TextView) findViewById(R.id.tvThreeLineListRefuelText2);
-		tvThreeLineListRefuelText3 = (TextView) findViewById(R.id.tvThreeLineListRefuelText3);
-		tvThreeLineListExpenseText1 = (TextView) findViewById(R.id.tvThreeLineListExpenseText1);
-		tvThreeLineListExpenseText2 = (TextView) findViewById(R.id.tvThreeLineListExpenseText2);
-		tvThreeLineListExpenseText3 = (TextView) findViewById(R.id.tvThreeLineListExpenseText3);
-		tvStatisticsHdr = (TextView) findViewById(R.id.tvStatisticsHdr);
-		tvStatisticsLastKnownOdometer = (TextView) findViewById(R.id.tvStatisticsLastKnownOdometer);
-		tvStatisticsAvgFuelEff = (TextView) findViewById(R.id.tvStatisticsAvgFuelEff);
-		tvStatisticsLastFuelEff = (TextView) findViewById(R.id.tvStatisticsLastFuelEff);
-		tvStatisticsTotalExpenses = (TextView) findViewById(R.id.tvStatisticsTotalExpenses);
-		tvStatisticsMileageExpense = (TextView) findViewById(R.id.tvStatisticsMileageExpense);
-
-		if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
-			exitResume = true;
-			//test if backups exists
-			if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null 
-					&& !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null).isEmpty()) {
-				initPreferenceValues(); //version update => init (new) preference values
-				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-				builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
-				builder.setMessage(mRes.getString(R.string.MainActivity_BackupExistMessage));
-				builder.setCancelable(false);
-				builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
-						new DialogInterface.OnClickListener() {
-	
-					public void onClick(DialogInterface dialog, int id) {
-						Intent i = new Intent(MainActivity.this, BackupRestoreActivity.class);
-						startActivity(i);
-						exitResume = false;
-					}
-				});
-				builder.setNegativeButton(mRes.getString(R.string.GEN_NO),
-						new DialogInterface.OnClickListener() {
-	
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-						exitResume = false;
-						onResume();
-					}
-				});
-				AlertDialog alert = builder.create();
-				alert.show();
-	
-			} else {
-				exitResume = true;
-				initPreferenceValues(); //init preference values
-				AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-				builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeMessage));
-				builder.setMessage(mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
-				builder.setCancelable(false);
-				builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
-						new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int id) {
-						dialog.cancel();
-						exitResume = false;
-						onResume();
-					}
-				});
-				AlertDialog alert = builder.create();
-				alert.show();
-			}
-		}
+		try{
+			
+//	        FileUtils fu = new FileUtils(this);
+//	        fu.copyFile(this, "/data/data/org.andicar.activity/databases/AndiCar.db", 
+//        		StaticValues.BASE_FOLDER + "debug.db", true);
 		
-		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-		initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-				new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-				MainDbAdapter.GEN_COL_NAME_NAME,
-				mCarId, false);
-
-		try {
-			appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-			SharedPreferences.Editor editor = mPreferences.edit();
-			if(appVersion != null && appVersion.contains("Beta"))
-				editor.putBoolean("IsBeta", true); // no flurry statistics are send for beta versions
-			else
-				editor.putBoolean("IsBeta", false);
-			editor.commit();
-
-			dbVersion = reportDb.getVersion() + "";
-			int appVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
-			if(!mPreferences.contains("appVersionCode")
-					|| mPreferences.getInt("appVersionCode", 0) < appVersionCode){
-				AndiCarServiceStarter.startServices(this);
-				editor.putInt("appVersionCode", appVersionCode);
-				editor.commit();
-
+			mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+			isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+			isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
+			if(isSendCrashReport)
+				Thread.setDefaultUncaughtExceptionHandler(
+						new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+	
+			mRes = getResources();
+	
+			setContentView(R.layout.main_activity);
+			mainContext = this;
+			reportDb = new ReportDbAdapter(mainContext, null, null);
+	
+			String updateMsg = mPreferences.getString("UpdateMsg", null);
+			if(updateMsg != null){
+				if(!updateMsg.equals("VersionChanged")){
+					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+					builder.setTitle(mRes.getString(R.string.MainActivity_UpdateMessage));
+					builder.setMessage(updateMsg);
+					builder.setCancelable(false);
+					builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+						}
+					});
+					AlertDialog alert = builder.create();
+					alert.show();
+					SharedPreferences.Editor editor = mPreferences.edit();
+					editor.remove("UpdateMsg");
+					editor.commit();
+				}
+				else
+					initPreferenceValues(); //version update => init (new) preference values
 			}
-
+	
+			spnCar = (Spinner)findViewById(R.id.spnCar);
+			spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
+			spnCar.setOnTouchListener(spinnerOnTouchListener);
+			btnMileageList = (ImageButton) findViewById(R.id.btnMileageList);
+			btnMileageList.setOnClickListener(btnMileageListClickListener);
+			btnMileageInsert = (ImageButton) findViewById(R.id.btnMileageInsert);
+			btnMileageInsert.setOnClickListener(btnInsertMileageClickListener);
+			btnRefuelList = (ImageButton) findViewById(R.id.btnRefuelList);
+			btnRefuelList.setOnClickListener(btnRefuelListClickListener);
+			btnRefuelInsert = (ImageButton) findViewById(R.id.btnRefuelInsert);
+			btnRefuelInsert.setOnClickListener(btnInsertRefuelClickListener);
+			btnExpenseList = (ImageButton) findViewById(R.id.btnExpenseList);
+			btnExpenseList.setOnClickListener(btnExpenseListClickListener);
+			btnExpenseInsert = (ImageButton) findViewById(R.id.btnExpenseInsert);
+			btnExpenseInsert.setOnClickListener(btnInsertExpenseClickListener);
+			btnGPSTrackInsert = (ImageButton) findViewById(R.id.btnGPSTrackInsert);
+			btnGPSTrackInsert.setOnClickListener(btnGPSTrackInsertClickListener);
+			btnGPSTrackList = (ImageButton) findViewById(R.id.btnGPSTrackList);
+			btnGPSTrackList.setOnClickListener(btnGPSTrackListClickListener);
+			btnGPSTrackShowOnMap = (ImageButton) findViewById(R.id.btnGPSTrackShowOnMap);
+			btnGPSTrackShowOnMap.setOnClickListener(btnGPSTrackShowClickListener);
+	
+			tvThreeLineListMileageText1 = (TextView) findViewById(R.id.tvThreeLineListMileageText1);
+			tvThreeLineListMileageText2 = (TextView) findViewById(R.id.tvThreeLineListMileageText2);
+			tvThreeLineListMileageText3 = (TextView) findViewById(R.id.tvThreeLineListMileageText3);
+			tvThreeLineListGPSTrackText1 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText1);
+			tvThreeLineListGPSTrackText2 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText2);
+			tvThreeLineListGPSTrackText3 = (TextView) findViewById(R.id.tvThreeLineListGPSTrackText3);
+			tvThreeLineListRefuelText1 = (TextView) findViewById(R.id.tvThreeLineListRefuelText1);
+			tvThreeLineListRefuelText2 = (TextView) findViewById(R.id.tvThreeLineListRefuelText2);
+			tvThreeLineListRefuelText3 = (TextView) findViewById(R.id.tvThreeLineListRefuelText3);
+			tvThreeLineListExpenseText1 = (TextView) findViewById(R.id.tvThreeLineListExpenseText1);
+			tvThreeLineListExpenseText2 = (TextView) findViewById(R.id.tvThreeLineListExpenseText2);
+			tvThreeLineListExpenseText3 = (TextView) findViewById(R.id.tvThreeLineListExpenseText3);
+			tvStatisticsHdr = (TextView) findViewById(R.id.tvStatisticsHdr);
+			tvStatisticsLastKnownOdometer = (TextView) findViewById(R.id.tvStatisticsLastKnownOdometer);
+			tvStatisticsAvgFuelEff = (TextView) findViewById(R.id.tvStatisticsAvgFuelEff);
+			tvStatisticsLastFuelEff = (TextView) findViewById(R.id.tvStatisticsLastFuelEff);
+			tvStatisticsTotalExpenses = (TextView) findViewById(R.id.tvStatisticsTotalExpenses);
+			tvStatisticsMileageExpense = (TextView) findViewById(R.id.tvStatisticsMileageExpense);
+	
+			if (mPreferences == null || mPreferences.getAll().isEmpty()) { //fresh install
+				exitResume = true;
+				//test if backups exists
+				if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null 
+						&& !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null).isEmpty()) {
+					initPreferenceValues(); //version update => init (new) preference values
+					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+					builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeBackMessage));
+					builder.setMessage(mRes.getString(R.string.MainActivity_BackupExistMessage));
+					builder.setCancelable(false);
+					builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
+							new DialogInterface.OnClickListener() {
+		
+						public void onClick(DialogInterface dialog, int id) {
+							Intent i = new Intent(MainActivity.this, BackupRestoreActivity.class);
+							startActivity(i);
+							exitResume = false;
+						}
+					});
+					builder.setNegativeButton(mRes.getString(R.string.GEN_NO),
+							new DialogInterface.OnClickListener() {
+		
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+							exitResume = false;
+							onResume();
+						}
+					});
+					AlertDialog alert = builder.create();
+					alert.show();
+		
+				} else {
+					exitResume = true;
+					initPreferenceValues(); //init preference values
+					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+					builder.setTitle(mRes.getString(R.string.MainActivity_WellcomeMessage));
+					builder.setMessage(mRes.getString(R.string.LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2));
+					builder.setCancelable(false);
+					builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
+							new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+							exitResume = false;
+							onResume();
+						}
+					});
+					AlertDialog alert = builder.create();
+					alert.show();
+				}
+			}
+			
+			mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+			initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+					new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+					MainDbAdapter.GEN_COL_NAME_NAME,
+					mCarId, false);
+	
+			try {
+				appVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+				SharedPreferences.Editor editor = mPreferences.edit();
+				if(appVersion != null && appVersion.contains("Beta"))
+					editor.putBoolean("IsBeta", true); // no flurry statistics are send for beta versions
+				else
+					editor.putBoolean("IsBeta", false);
+				editor.commit();
+	
+				dbVersion = reportDb.getVersion() + "";
+				int appVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+				if(!mPreferences.contains("appVersionCode")
+						|| mPreferences.getInt("appVersionCode", 0) < appVersionCode){
+					AndiCarServiceStarter.startServices(this);
+					editor.putInt("appVersionCode", appVersionCode);
+					editor.commit();
+	
+				}
+	
+			}
+			catch(NameNotFoundException ex) {
+				appVersion = "N/A";
+			}
+	
+			//check for app update once a day
+			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
+			if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
+				/* Save current timestamp for next Check*/
+				lastUpdateTime = System.currentTimeMillis();
+				SharedPreferences.Editor editor = mPreferences.edit();
+				editor.putLong("lastUpdateCheckTime", lastUpdateTime);
+				editor.commit();
+				//start update check
+				Intent updateCheck = new Intent(MainActivity.this, UpdateCheck.class);
+				startService(updateCheck);
+			}
+	
+			if (!mPreferences.contains("UseNumericKeypad")) {
+				SharedPreferences.Editor editor = mPreferences.edit();
+				editor.putBoolean("UseNumericKeypad", true);
+				editor.commit();
+			}
 		}
-		catch(NameNotFoundException ex) {
-			appVersion = "N/A";
-		}
+		catch(Exception e){
+			
+			String logFile = "startup.log";
+			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
+			FileUtils fu = new FileUtils(mainContext);
+            Throwable cause = e.getCause();
+            StackTraceElement[] stackTrace;
+            if(cause != null)
+                stackTrace = cause.getStackTrace();
+            else
+                stackTrace = e.getStackTrace();
 
-		//check for app update once a day
-		Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
-		if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
-			/* Save current timestamp for next Check*/
-			lastUpdateTime = System.currentTimeMillis();
-			SharedPreferences.Editor editor = mPreferences.edit();
-			editor.putLong("lastUpdateCheckTime", lastUpdateTime);
-			editor.commit();
-			//start update check
-			Intent updateCheck = new Intent(MainActivity.this, UpdateCheck.class);
-			startService(updateCheck);
+            StackTraceElement stackTraceElement;
+            String stackStr = e.getMessage();
+            for(int i = 0; i < stackTrace.length; i++) {
+                stackTraceElement = stackTrace[i];
+                    stackStr = stackStr + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " +
+                            stackTraceElement.getLineNumber() + "  ";
+            }
+			fu.writeToLogFile(stackStr, logFile);
+            
+	        madbErrorAlert.setMessage(e.getMessage());
+	        madError = madbErrorAlert.create();
+	        madError.show();
 		}
-
-		if (!mPreferences.contains("UseNumericKeypad")) {
-			SharedPreferences.Editor editor = mPreferences.edit();
-			editor.putBoolean("UseNumericKeypad", true);
-			editor.commit();
-		}
-
 	}
 
 	private void fillExpenseZone() {
 		listCursor = null;
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME, MainDbAdapter.EXPENSE_COL_CAR_ID_NAME) + "=", String.valueOf(mCarId));
+//		whereConditions.putString("COALESCE(" + MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME + ", '') = ", "''"); 
 		reportDb.setReportSql("reportExpensesListMainViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if(listCursor != null && listCursor.moveToFirst()) {
-			tvThreeLineListExpenseText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-			tvThreeLineListExpenseText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+			tvThreeLineListExpenseText1.setText(listCursor.getString(1)
+					.replace("[%1]", DateFormat.getDateFormat(getApplicationContext())
+							.format(listCursor.getLong(4) * 1000)));
+			
+			tvThreeLineListExpenseText2.setText(listCursor.getString(2)
+					.replace("[%1]", Utils.numberToString(listCursor.getDouble(5) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+					.replace("[%2]", Utils.numberToString(listCursor.getDouble(6) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+					.replace("[%3]", Utils.numberToString(listCursor.getDouble(7) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+					);
 			tvThreeLineListExpenseText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
 			btnExpenseList.setEnabled(true);
 		}
 		else {
 			tvThreeLineListExpenseText1.setText(mRes.getString(R.string.MainActivity_ExpenseNoDataText));
-			tvThreeLineListExpenseText2.setText(mRes.getString(R.string.MainActivity_ExpenseNoDataAditionalText));
+			tvThreeLineListExpenseText2.setText("");
+//			tvThreeLineListExpenseText2.setText(mRes.getString(R.string.MainActivity_ExpenseNoDataAditionalText));
 			tvThreeLineListExpenseText3.setText("");
 			btnExpenseList.setEnabled(false);
 		}
@@ -348,19 +389,22 @@ public class MainActivity extends BaseActivity {
 		listCursor = reportDb.fetchReport(1);
 		gpsTrackId = -1;
 		if (listCursor != null && listCursor.moveToFirst()) {
-			gpsTrackId = listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.GEN_COL_ROWID_NAME));
+			gpsTrackId = listCursor.getLong(0);
 			tvThreeLineListGPSTrackText1.setText(
-					listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
+					listCursor.getString(1)
+						.replace("[%1]", DateFormat.getDateFormat(getApplicationContext())
+				 				.format(listCursor.getLong(7) * 1000))
+					);
 			tvThreeLineListGPSTrackText2.setText(
-					listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
+					listCursor.getString(2)
 					.replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
 					.replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
 					.replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
 					.replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
 					.replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
-							Utils.getTimeString(listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
+							Utils.getTimeString(listCursor.getLong(4), false))
 							.replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
-									Utils.getTimeString(listCursor.getLong(listCursor.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+									Utils.getTimeString(listCursor.getLong(5), false))
 									.replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
 									.replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
 									.replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
@@ -368,7 +412,7 @@ public class MainActivity extends BaseActivity {
 									.replace("[%11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
 
 			);
-			tvThreeLineListGPSTrackText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+			tvThreeLineListGPSTrackText3.setText(listCursor.getString(3));
 			btnGPSTrackList.setEnabled(true);
 			btnGPSTrackShowOnMap.setEnabled(true);
 		} else {
@@ -388,12 +432,25 @@ public class MainActivity extends BaseActivity {
 		whereConditions = new Bundle();
 		whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, 
 				MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=", String.valueOf(mCarId));
+
 		reportDb.setReportSql("reportMileageListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if(listCursor != null && listCursor.moveToFirst()) {
-			tvThreeLineListMileageText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-			tvThreeLineListMileageText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
-			tvThreeLineListMileageText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+			tvThreeLineListMileageText1.setText(
+					listCursor.getString(1)
+	    					.replace("[%1]", DateFormat.getDateFormat(getApplicationContext())
+					 				.format(listCursor.getLong(5) * 1000))
+				);
+			tvThreeLineListMileageText2.setText(
+					listCursor.getString(2)
+					.replace("[%1]", Utils.numberToString(listCursor.getDouble(6) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+					.replace("[%2]", Utils.numberToString(listCursor.getDouble(7) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+					.replace("[%3]", Utils.numberToString(listCursor.getDouble(8) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+
+				);
+			tvThreeLineListMileageText3.setText(
+					listCursor.getString(3) 
+				);
 			btnMileageList.setEnabled(true);
 		}
 		else {
@@ -414,8 +471,18 @@ public class MainActivity extends BaseActivity {
 		reportDb.setReportSql("reportRefuelListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if(listCursor != null && listCursor.moveToFirst()) {
-			tvThreeLineListRefuelText1.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)));
-			tvThreeLineListRefuelText2.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME)));
+			tvThreeLineListRefuelText1.setText(listCursor.getString(1)
+					.replace("[%1]", DateFormat.getDateFormat(getApplicationContext())
+									.format(listCursor.getLong(4) * 1000)));
+			tvThreeLineListRefuelText2.setText(listCursor.getString(2)
+					.replace("[%1]", Utils.numberToString(listCursor.getDouble(5) , true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
+					.replace("[%2]", Utils.numberToString(listCursor.getDouble(6) , true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
+					.replace("[%3]", Utils.numberToString(listCursor.getDouble(7) , true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
+					.replace("[%4]", Utils.numberToString(listCursor.getDouble(8) , true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
+					.replace("[%5]", Utils.numberToString(listCursor.getDouble(9) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+					.replace("[%6]", Utils.numberToString(listCursor.getDouble(10) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+					.replace("[%7]", Utils.numberToString(listCursor.getDouble(11) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+			);
 			tvThreeLineListRefuelText3.setText(listCursor.getString(listCursor.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
 			btnRefuelList.setEnabled(true);
 		}
@@ -440,9 +507,14 @@ public class MainActivity extends BaseActivity {
 			BigDecimal startIndex = null;
 			BigDecimal currentIndex = null;
 			BigDecimal mileage = null;
+			BigDecimal expenses = null; 
 			try{
-				startIndex = new BigDecimal(listCursor.getString(1));
-				currentIndex = new BigDecimal(listCursor.getString(2));
+				startIndex = new BigDecimal(listCursor.getDouble(1)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
+//						listCursor.getString(1));
+				currentIndex = new BigDecimal(listCursor.getDouble(2)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH); 
+//					new BigDecimal(listCursor.getString(2));
+				expenses = new BigDecimal(listCursor.getDouble(4)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT); 
+
 			}
 			catch(NumberFormatException e){}
 			String carUOMLengthCode = listCursor.getString(3);
@@ -455,34 +527,37 @@ public class MainActivity extends BaseActivity {
 				mileage = BigDecimal.ZERO;
 			
 			tvStatisticsHdr.setText(mRes.getString(R.string.MainActivity_StatisticsHeaderCaption) + " " + 
-					mileage.toString() + " " + carUOMLengthCode); 
+					Utils.numberToString(mileage, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH) 
+					+ " " + carUOMLengthCode); 
 			tvStatisticsLastKnownOdometer.setText(mRes.getString(R.string.MainActivity_StatisticsListLastOdoLabel) + 
-					listCursor.getString(2) + " " + carUOMLengthCode);
+					Utils.numberToString(currentIndex, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH) 
+					+ " " + carUOMLengthCode);
 			tvStatisticsTotalExpenses.setText(mRes.getString(R.string.MainActivity_StatisticsTotalExpenseLabel) + " " +
-					(listCursor.getString(4) != null ? listCursor.getString(4) : "0" ) + " " + carCurrencyCode);
+					(expenses != null ? Utils.numberToString(expenses, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT) : "0" ) + " " + carCurrencyCode);
 			
 			//mileage expense
-			BigDecimal totalMileageExpense = null; 
 			BigDecimal mileageExpense = null;
 			BigDecimal mileageEff = null;
 			String mileageExpenseStr = null;
 			if(listCursor.getString(5) != null){
 				try{
-					totalMileageExpense = new BigDecimal(listCursor.getString(5));
+					expenses = new BigDecimal(listCursor.getDouble(5)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
 				}
 				catch(NumberFormatException e){}
 			}
-			if(totalMileageExpense != null && mileage != null && mileage.signum() != 0){
-				mileageExpense = totalMileageExpense.multiply(new BigDecimal("100"));
+			if(expenses != null && mileage != null && mileage.signum() != 0){
+				mileageExpense = expenses.multiply(new BigDecimal("100"));
 				mileageExpense = mileageExpense.divide(mileage, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
 				if(mileageExpense != null 
 						&& (mileageExpense.setScale(10, RoundingMode.HALF_UP)).signum() != 0) {
-					mileageExpenseStr = mileageExpense.toString() + " " + carCurrencyCode + "/100 " + carUOMLengthCode;
+					mileageExpenseStr = Utils.numberToString(mileageExpense, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT) 
+						+ " " + carCurrencyCode + "/100 " + carUOMLengthCode;
 					if(mileageExpense.signum() != 0){
 						mileageEff = ((new BigDecimal("100")).
 								divide(mileageExpense, 10, RoundingMode.HALF_UP)).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
 						if(mileageEff != null)
-							mileageExpenseStr = mileageExpenseStr + "; " + mileageEff.toString() + " " + carUOMLengthCode + "/" + carCurrencyCode;
+							mileageExpenseStr = mileageExpenseStr + "; " + Utils.numberToString(mileageEff, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT) 
+								+ " " + carUOMLengthCode + "/" + carCurrencyCode;
 					}
 				}
 			}
@@ -494,8 +569,6 @@ public class MainActivity extends BaseActivity {
 			String fuelEffStr = mRes.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
 			String lastFuelEffStr = "N/A";
 			String sql = "";
-			String tmpFullRefuelIndexStr = null;
-			String lastFullRefuelIndexStr = null;
 			BigDecimal tmpFullRefuelIndex = null;
 			BigDecimal lastFullRefuelIndex = null;
 			BigDecimal totalFuelQty = null;
@@ -513,7 +586,8 @@ public class MainActivity extends BaseActivity {
 			c = reportDb.execSelectSql(sql, null);
 			
 			if(c.moveToFirst()){
-				tmpFullRefuelIndexStr = c.getString(0);
+				tmpFullRefuelIndex = new BigDecimal(c.getDouble(0)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH); 
+					
 				c.close();
 				//get the last full refuel index
 				sql = 
@@ -523,14 +597,14 @@ public class MainActivity extends BaseActivity {
 							MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
 							" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
 							" AND " + MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME + " = \'Y\' " +
-							" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " <> " + tmpFullRefuelIndexStr +
+							" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " <> " + tmpFullRefuelIndex.toPlainString() + //convert from xxxe+10 => xxxxxxxxxx...
 					" ORDER BY " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " DESC " + 
 					" LIMIT 1";
 				c = reportDb.execSelectSql(sql, null);
 				if(c.moveToFirst()){
-					lastFullRefuelIndexStr = c.getString(0);
+					lastFullRefuelIndex = new BigDecimal(c.getDouble(0)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
 					c.close();
-					if(tmpFullRefuelIndexStr != null && lastFullRefuelIndexStr != null){
+					if(tmpFullRefuelIndex != null && lastFullRefuelIndex != null){
 						//get the total fuel quantity between the first and last refuels
 						sql = 
 							"SELECT SUM(" + MainDbAdapter.REFUEL_COL_QUANTITY_NAME + ") " +
@@ -538,12 +612,13 @@ public class MainActivity extends BaseActivity {
 							" WHERE " + 
 									MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
 									" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
-									" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " > " + tmpFullRefuelIndexStr +
-									" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " <= " + lastFullRefuelIndexStr ;
+									" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " > " + tmpFullRefuelIndex.toPlainString() +
+									" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " <= " + lastFullRefuelIndex.toPlainString() ;
 						c = reportDb.execSelectSql(sql, null);
 						if(c.moveToFirst()){
 							try{
-								totalFuelQty = new BigDecimal(c.getString(0));
+								totalFuelQty = new BigDecimal(c.getDouble(0)).setScale(StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME); 
+//									new BigDecimal(c.getString(0));
 							}
 							catch(NumberFormatException e){}
 						}
@@ -551,20 +626,17 @@ public class MainActivity extends BaseActivity {
 						c.close();
 						if(totalFuelQty != null){
 							//calculate the avg cons and fuel eff.
-							try{
-								tmpFullRefuelIndex = new BigDecimal(tmpFullRefuelIndexStr);
-								lastFullRefuelIndex = new BigDecimal(lastFullRefuelIndexStr);
-							}
-							catch(NumberFormatException e){}
 							BigDecimal avgCons = BigDecimal.ZERO;
 							avgCons = totalFuelQty.multiply(new BigDecimal("100"));
 							avgCons = avgCons.divide(lastFullRefuelIndex.subtract(tmpFullRefuelIndex), 10, RoundingMode.HALF_UP).
 											setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-							fuelEffStr = avgCons.toString() + " " + carUOMVolumeCode + "/100" + carUOMLengthCode;
+							fuelEffStr = Utils.numberToString(avgCons, true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME) 
+								+ " " + carUOMVolumeCode + "/100" + carUOMLengthCode;
 //							//efficiency: x uom length (km or mi) / uom volume (l or galon)
 							if(avgCons != null && avgCons.signum() != 0){
-								BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-								fuelEffStr = fuelEffStr + "; " + avgEff.toString() + " " + carUOMLengthCode + "/" + carUOMVolumeCode;
+								BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME);
+								fuelEffStr = fuelEffStr + "; " + Utils.numberToString(avgEff, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH) 
+									+ " " + carUOMLengthCode + "/" + carUOMVolumeCode;
 							}
 						}
 					
@@ -578,48 +650,43 @@ public class MainActivity extends BaseActivity {
 									MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
 									" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
 									" AND " + MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME + " = \'Y\' " +
-									" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " < " + lastFullRefuelIndexStr +
+									" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " < " + lastFullRefuelIndex.toPlainString() +
 							" ORDER BY " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " DESC " + 
 							" LIMIT 1";
 						c = reportDb.execSelectSql(sql, null);
 						if(c.moveToFirst()){
-							if(tmpFullRefuelIndexStr.equals(c.getString(0))){ //just two full refuels exists => the avg. fuel eff. = last fuel eff.
-								lastFuelEffStr = fuelEffStr;
-								c.close();
-							}
-							else{
-								tmpFullRefuelIndexStr = c.getString(0);
-								c.close();
-								//get the total fuel qty between the last two full refuels
-								sql = 
-									"SELECT SUM(" + MainDbAdapter.REFUEL_COL_QUANTITY_NAME + ") " +
-									" FROM " + MainDbAdapter.REFUEL_TABLE_NAME +
-									" WHERE " + 
-											MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
-											" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
-											" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " > " + tmpFullRefuelIndexStr +
-											" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " <= " + lastFullRefuelIndexStr ;
-								c = reportDb.execSelectSql(sql, null);
-								if(c.moveToFirst())
+							tmpFullRefuelIndex = (new BigDecimal(c.getDouble(0)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH)); 
+							c.close();
+							//get the total fuel qty between the last two full refuels
+							sql = 
+								"SELECT SUM(" + MainDbAdapter.REFUEL_COL_QUANTITY_NAME + ") " +
+								" FROM " + MainDbAdapter.REFUEL_TABLE_NAME +
+								" WHERE " + 
+										MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId + " " +
+										" AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' " +
+										" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " > " + tmpFullRefuelIndex.toPlainString() +
+										" AND " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " <= " + lastFullRefuelIndex.toPlainString() ;
+							c = reportDb.execSelectSql(sql, null);
+							if(c.moveToFirst()){
+								if(c.getString(0) != null)
 									totalFuelQty = new BigDecimal(c.getString(0));
-								c.close();
-								if(totalFuelQty != null){
-									//calculate the avg cons and fuel eff.
-									try{
-										tmpFullRefuelIndex = new BigDecimal(tmpFullRefuelIndexStr);
-										lastFullRefuelIndex = new BigDecimal(lastFullRefuelIndexStr);
-									}
-									catch(NumberFormatException e){}
-									BigDecimal avgCons = BigDecimal.ZERO;
-									avgCons = totalFuelQty.multiply(new BigDecimal("100"));
-									avgCons = avgCons.divide(lastFullRefuelIndex.subtract(tmpFullRefuelIndex), 10, RoundingMode.HALF_UP).
-													setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-									lastFuelEffStr = avgCons.toString() + " " + carUOMVolumeCode + "/100" + carUOMLengthCode;
-	//								//efficiency: x uom length (km or mi) / uom volume (l or galon)
-									if(avgCons != null && avgCons.signum() != 0){
-										BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-										lastFuelEffStr = lastFuelEffStr + "; " + avgEff.toString() + " " + carUOMLengthCode + "/" + carUOMVolumeCode;
-									}
+								else
+									totalFuelQty = null;
+							}
+							c.close();
+							if(totalFuelQty != null){
+								//calculate the avg cons and fuel eff.
+								BigDecimal avgCons = BigDecimal.ZERO;
+								avgCons = totalFuelQty.multiply(new BigDecimal("100"));
+								avgCons = avgCons.divide(lastFullRefuelIndex.subtract(tmpFullRefuelIndex), 10, RoundingMode.HALF_UP).
+												setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+								lastFuelEffStr = Utils.numberToString(avgCons, true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME) 
+									+ " " + carUOMVolumeCode + "/100" + carUOMLengthCode;
+//								//efficiency: x uom length (km or mi) / uom volume (l or galon)
+								if(avgCons != null && avgCons.signum() != 0){
+									BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10, RoundingMode.HALF_UP).setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+									lastFuelEffStr = lastFuelEffStr + "; " + Utils.numberToString(avgEff, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH) 
+										+ " " + carUOMLengthCode + "/" + carUOMVolumeCode;
 								}
 							}
 							c.close();
@@ -724,37 +791,64 @@ public class MainActivity extends BaseActivity {
 		super.onResume();
 		if(exitResume)
 			return;
-		isActivityOnLoading = true;
-		isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-		if (mPreferences.getBoolean("MustClose", false)) {
-			SharedPreferences.Editor editor = mPreferences.edit();
-			editor.putBoolean("MustClose", false);
-			editor.commit();
-			finish();
-		}
-		
-		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-		
-		if(reportDb == null)
-			reportDb = new ReportDbAdapter(mainContext, null, null);
-
-		showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
-		showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
-		showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
-		showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
-		showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
-
-		CharSequence abt = mRes.getText(R.string.LM_MAIN_ACTIVITY_SHORTABOUT);
-		String versionInfo = " " + appVersion + " (DBv: " + dbVersion + ")";
-
-		((TextView)findViewById(R.id.tvShortAboutLbl)).setText(abt);
-		((TextView)findViewById(R.id.tvShortAboutAppVersion)).setText(
-				mRes.getText(R.string.MainActivity_AppVersion) + versionInfo);
-
-		fillDriverCar();
-		initZones();
-
-		listCursor = null;
+//		try{
+			isActivityOnLoading = true;
+			isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+			if (mPreferences.getBoolean("MustClose", false)) {
+				SharedPreferences.Editor editor = mPreferences.edit();
+				editor.putBoolean("MustClose", false);
+				editor.commit();
+				finish();
+			}
+			
+			mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+			
+			if(reportDb == null)
+				reportDb = new ReportDbAdapter(mainContext, null, null);
+	
+			showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
+			showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
+			showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
+			showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
+			showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
+	
+			CharSequence abt = mRes.getText(R.string.LM_MAIN_ACTIVITY_SHORTABOUT);
+			String versionInfo = " " + appVersion + " (DBv: " + dbVersion + ")";
+	
+			((TextView)findViewById(R.id.tvShortAboutLbl)).setText(abt);
+			((TextView)findViewById(R.id.tvShortAboutAppVersion)).setText(
+					mRes.getText(R.string.MainActivity_AppVersion) + versionInfo);
+	
+			fillDriverCar();
+			initZones();
+	
+			listCursor = null;
+//		}
+//		catch(Exception e){
+//			
+//			String logFile = StaticValues.BASE_FOLDER + "startup.log";
+//			FileUtils fu = new FileUtils(this);
+//			fu.writeToLogFile(e.getMessage(), logFile);
+//            Throwable cause = e.getCause();
+//            StackTraceElement[] stackTrace;
+//            if(cause != null)
+//                stackTrace = cause.getStackTrace();
+//            else
+//                stackTrace = e.getStackTrace();
+//
+//            StackTraceElement stackTraceElement;
+//            String stackStr = "";
+//            for(int i = 0; i < stackTrace.length; i++) {
+//                stackTraceElement = stackTrace[i];
+//                    stackStr = stackStr + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " +
+//                            stackTraceElement.getLineNumber() + "  ";
+//            }
+//			fu.writeToLogFile(stackStr, logFile);
+//            
+//            madbErrorAlert.setMessage(e.getMessage());
+//            madError = madbErrorAlert.create();
+//            madError.show();
+//		}
 	}
 
 	private void initZones() {

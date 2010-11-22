@@ -112,10 +112,16 @@ public class MileageEditActivity extends EditActivityBase {
                                 .getLong(MainDbAdapter.MILEAGE_COL_DRIVER_ID_POS);
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
             try{
-                mStartIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
-                etStartIndex.setText(mStartIndex.toString());
-                mStopIndex = new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
-                etUserInput.setText(mStopIndex.toString());
+                mStartIndex = (new BigDecimal(c.getDouble(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS))
+                				.setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+                	
+//                	new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
+                etStartIndex.setText(mStartIndex.toPlainString());
+                mStopIndex = (new BigDecimal(c.getDouble(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS))
+            					.setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH)); 
+                	
+//                	new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
+                etUserInput.setText(mStopIndex.toPlainString());
             }
             catch(NumberFormatException e){}
             rbInsertModeIndex.setChecked(true);
@@ -445,7 +451,7 @@ public class MileageEditActivity extends EditActivityBase {
             if(mStartIndex.equals(new BigDecimal("0"))){
                 mStartIndex = mDbAdapter.getMileageStartIndex(mCarId);
             }
-            etStartIndex.setText(mStartIndex.toString());
+            etStartIndex.setText(mStartIndex.toPlainString());
         }
         catch(NumberFormatException e){}
         return mStartIndex;
