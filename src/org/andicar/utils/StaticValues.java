@@ -62,7 +62,12 @@ public class StaticValues
     public static final int ACTIVITY_NEW_REQUEST_CODE = 0;
     public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;
 
-    //no. of decimals when converting uom's to/from base uom
+    public static final int NUMBERTYPE_VOLUME = 1;
+    public static final int NUMBERTYPE_LENGTH = 2;
+    public static final int NUMBERTYPE_AMOUNT = 3;
+    public static final int NUMBERTYPE_CONVERSION = 4;
+    public static final int NUMBERTYPE_PRICE = 5;
+    //no. of decimals & rounding modes
     public static final int DECIMALS_VOLUME = 2;
     public static final RoundingMode ROUNDING_MODE_VOLUME = RoundingMode.HALF_UP;
     public static final int DECIMALS_LENGTH = 2;
@@ -73,7 +78,6 @@ public class StaticValues
     public static final RoundingMode ROUNDING_MODE_CONVERSIONS = RoundingMode.HALF_UP;
     public static final int DECIMALS_PRICE = 3;
     public static final RoundingMode ROUNDING_MODE_PRICE = RoundingMode.HALF_UP;
-
 
     public static final String UOM_LENGTH_TYPE_CODE = "L";
     public static final String UOM_VOLUME_TYPE_CODE = "V";
@@ -102,6 +106,7 @@ public class StaticValues
     public static int DIALOG_LOCAL_SEARCH = 0;
     public static int DIALOG_REPORT_OPTIONS = 1;
 
+    public static final String BASE_FOLDER = "/sdcard/andicar/";
     public static final String REPORT_FOLDER = "/sdcard/andicar/reports/";
     public static final String BACKUP_FOLDER = "/sdcard/andicar/backups/";
     public static final String TRACK_FOLDER = "/sdcard/andicar/gpstrack/";

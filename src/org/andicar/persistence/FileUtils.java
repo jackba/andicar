@@ -124,6 +124,26 @@ public class FileUtils {
         return -1;
     }
 
+    public int writeToLogFile(String content, String fileName){
+        try
+        {
+            lastError = null;
+            File file = new File(StaticValues.BASE_FOLDER + fileName);
+            if(!file.createNewFile())
+                return R.string.ERR_022;
+            FileWriter fw = new FileWriter(file);
+            fw.append(content);
+            fw.flush();
+            fw.close();
+        }
+        catch (IOException e)
+        {
+            lastError = e.getMessage();
+            return R.string.ERR_023;
+        }
+        return -1;
+    }
+
     public int writeToFile(String content, String fileName){
         try
         {

@@ -381,7 +381,6 @@ public class ListActivityBase extends ListActivity {
             }
         }
         recordCursor = mDbAdapter.query(mTableName, mColumns, tmpWhere, null, null, null, mOrderByColumn);
-//                fetchForTable(mTableName, mColumns, tmpWhere, mOrderByColumn);
         startManagingCursor(recordCursor);
 
         setListAdapter(null);
@@ -395,40 +394,6 @@ public class ListActivityBase extends ListActivity {
         if(mViewBinder != null)
             listCursorAdapter.setViewBinder(mViewBinder);
         setListAdapter(listCursorAdapter);
-
-//        if(getListAdapter() != null && getListAdapter().getCount() == 1) {
-//            if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
-//                //if just one car defined set the current variables to that car details
-//                Cursor c = mDbAdapter.query(mTableName, MainDbAdapter.carTableColNames, null, null, null, null, null);
-//
-////                        fetchForTable(mTableName, MainDbAdapter.carTableColNames,null, null);
-//                c.moveToFirst();
-//                SharedPreferences.Editor editor = mPreferences.edit();
-//                editor.putLong("CurrentCar_ID", c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
-//                editor.putString("CurrentCar_Name", c.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
-//                editor.putLong("CarUOMLength_ID", c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
-//                editor.putLong("CarUOMVolume_ID", c.getLong(MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS));
-//                editor.putLong("CarCurrency_ID", c.getLong(MainDbAdapter.CAR_COL_CURRENCY_ID_POS));
-//                editor.commit();
-//                c.close();
-//            }
-//            else {
-//                if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-//                    //if just one driver defined set the current variables to that driver details
-//                    Cursor c = mDbAdapter.query(mTableName, MainDbAdapter.driverTableColNames, null, null, null, null, null);
-////                    Cursor c = mDbAdapter.fetchForTable(mTableName, MainDbAdapter.driverTableColNames,
-////                            null, null);
-//                    c.moveToFirst();
-//                    SharedPreferences.Editor editor = mPreferences.edit();
-//                    editor.putLong("CurrentDriver_ID", c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
-//                    editor.putString("CurrentDriver_Name", c.getString(MainDbAdapter.GEN_COL_NAME_POS).trim());
-//                    editor.commit();
-//                    c.close();
-//                }
-//            }
-//
-//            //|| mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)){
-//        }
 
     }
 

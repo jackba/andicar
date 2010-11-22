@@ -180,7 +180,9 @@ public class RefuelEditActivity extends EditActivityBase {
             catch(NumberFormatException e){}
             etConversionRate.setText(currencyConversionRate.toString());
             initDateTime(c.getLong(MainDbAdapter.REFUEL_COL_DATE_POS) * 1000);
-            etCarIndex.setText(c.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
+            etCarIndex.setText(
+            		(new BigDecimal(c.getDouble(MainDbAdapter.REFUEL_COL_INDEX_POS)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH)).toPlainString());
+//            		c.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
             etQty.setText(c.getString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_POS));
             etUserInput.setText(c.getString(MainDbAdapter.REFUEL_COL_PRICEENTERED_POS));
             etDocNo.setText(c.getString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_POS));
