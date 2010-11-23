@@ -142,14 +142,14 @@ public class GPSTrackController extends BaseActivity {
         isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
 
         if(isGpsTrackOn){
-            btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
+            btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_stop_24x24));
             restoreState();
             setEditable(vgRoot, false);
         }
         else{
             mCarId = mPreferences.getLong("CurrentCar_ID", -1);
 //            mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
-            btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+            btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_start_24x24));
             setEditable(vgRoot, true);
         }
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
@@ -285,7 +285,7 @@ public class GPSTrackController extends BaseActivity {
 		        		DateFormat.getDateFormat(getApplicationContext()).format(System.currentTimeMillis()) + " " +
 						DateFormat.getTimeFormat(getApplicationContext()).format(System.currentTimeMillis())
 		         		);
-                btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+                btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_start_24x24));
                 mPrefEditor.putBoolean("isGpsTrackOn", false);
                 mPrefEditor.commit();
                 finish();
@@ -317,7 +317,7 @@ public class GPSTrackController extends BaseActivity {
                 setEditable(vgRoot, false);
 //                startActivity(new Intent(GPSTrackController.this, GPSTrackMap.class));
                 if(isGpsTrackOn)
-                    btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
+                    btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_stop_24x24));
                 finish();
             }
         };

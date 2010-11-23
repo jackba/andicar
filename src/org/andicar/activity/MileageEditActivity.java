@@ -217,7 +217,7 @@ public class MileageEditActivity extends EditActivityBase {
         		etUserInput.setEnabled(false);
         		acUserComment.setEnabled(false);
             	btnOk.setEnabled(false);
-                btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
+                btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_stop_record_24x24));
         		mCarId = mPreferences.getLong("MileageRec_CarId", mBundleExtras.getLong("MileageRec_CarId"));
         		mDriverId = mPreferences.getLong("MileageRec_DriverId", mBundleExtras.getLong("MileageRec_DriverId"));
         		mExpTypeId = mPreferences.getLong("MileageRec_ExpenseTypeId", mBundleExtras.getLong("MileageRec_ExpenseTypeId"));
@@ -239,8 +239,8 @@ public class MileageEditActivity extends EditActivityBase {
         		isRecordMileage = false;
             	tvMileageRecInProgress.setVisibility(View.GONE);
             	btnOk.setEnabled(true);
-        		spnCar.setEnabled(false);
-        		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+        		spnCar.setEnabled(true);
+        		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_start_record_24x24));
 	            mCarId = mPreferences.getLong("CurrentCar_ID", -1);
 	            mDriverId = mPreferences.getLong("LastDriver_ID", -1);
 	            mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
@@ -404,13 +404,13 @@ public class MileageEditActivity extends EditActivityBase {
             		etUserInput.setEnabled(false);
             		acUserComment.setEnabled(false);
                 	btnOk.setEnabled(false);
-                    btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
+                    btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_stop_record_24x24));
             	}
             	else{
             		isRecordMileage = false;
                 	tvMileageRecInProgress.setVisibility(View.GONE);
                 	btnOk.setEnabled(true);
-            		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+            		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_start_record_24x24));
             	}
             }
             initDateTime(mlDateTimeInSeconds * 1000);
@@ -714,7 +714,7 @@ public class MileageEditActivity extends EditActivityBase {
 	                    	tvMileageRecInProgress.setVisibility(View.GONE);
 	                    	mPrefEditor.putBoolean("MileageRec_IsRecording", isRecordMileage);
 	                    	mPrefEditor.commit();
-	                        btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+	                        btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_start_record_24x24));
 	                		spnCar.setEnabled(true);
 	                		spnDriver.setEnabled(true);
 	                		spnExpType.setEnabled(true);
