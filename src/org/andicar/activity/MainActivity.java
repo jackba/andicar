@@ -351,7 +351,7 @@ public class MainActivity extends BaseActivity {
 		listCursor = null;
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME, MainDbAdapter.EXPENSE_COL_CAR_ID_NAME) + "=", String.valueOf(mCarId));
-//		whereConditions.putString("COALESCE(" + MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME + ", '') = ", "''"); 
+		whereConditions.putString("COALESCE(" + MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME + ", '') = ", ""); 
 		reportDb.setReportSql("reportExpensesListMainViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if(listCursor != null && listCursor.moveToFirst()) {

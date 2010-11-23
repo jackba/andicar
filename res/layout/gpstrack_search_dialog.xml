@@ -38,6 +38,126 @@
             android:layout_height="wrap_content"
             >
             <TextView
+                android:id="@+id/tvDriverLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_DriverLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <Spinner android:id="@+id/spnDriverSearch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:background="@color/search_dialog_spinner_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvCarLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_CarLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <Spinner android:id="@+id/spnCarSearch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:background="@color/search_dialog_spinner_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvDateFromLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/DIALOGSearch_DateFromLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <EditText
+                android:id="@+id/etDateFromSearch"
+                android:layout_width="140dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:scrollHorizontally="true"
+                android:autoText="false"
+                android:capitalize="none"
+                android:gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background"
+                />
+            <ImageButton android:id="@+id/btnPickDateFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="@drawable/btn_background_selector"
+                    android:src="@drawable/icon_calendar_selector"
+                    />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvDateToLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/DIALOGSearch_DateToLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <EditText
+                android:id="@+id/etDateToSearch"
+                android:layout_width="140dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="2dip"
+                android:scrollHorizontally="true"
+                android:autoText="false"
+                android:capitalize="none"
+                android:gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background"
+                />
+            <ImageButton android:id="@+id/btnPickDateTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="@drawable/btn_background_selector"
+                    android:src="@drawable/icon_calendar_selector"
+                    />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
                 android:id="@+id/tvUserCommentLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,131 +183,7 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            >
-            <TextView
-                android:id="@+id/tvExpTypeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/GEN_ExpenseTypeLabel"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-                />
-            <Spinner android:id="@+id/spnExpTypeSearch"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="2dip"
-                android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                android:id="@+id/tvDateFromLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/DIALOGSearch_DateFromLabel"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-                />
-            <EditText
-                android:id="@+id/etDateFromSearch"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="2dip"
-                android:scrollHorizontally="true"
-                android:autoText="false"
-                android:capitalize="none"
-                android:gravity="fill_horizontal"
-                android:background="@android:drawable/editbox_background"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                android:id="@+id/tvDateToLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/DIALOGSearch_DateToLabel"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-                />
-            <EditText
-                android:id="@+id/etDateToSearch"
-                android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="2dip"
-                android:scrollHorizontally="true"
-                android:autoText="false"
-                android:capitalize="none"
-                android:gravity="fill_horizontal"
-                android:background="@android:drawable/editbox_background"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                android:id="@+id/tvDriverLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/GEN_DriverLabel"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-                />
-            <Spinner android:id="@+id/spnDriverSearch"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="2dip"
-                android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dip"
-            >
-            <TextView
-                android:id="@+id/tvCarLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/GEN_CarLabel"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-                />
-            <Spinner android:id="@+id/spnCarSearch"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="2dip"
-                android:layout_marginRight="2dip"
-                android:background="@color/search_dialog_spinner_bg"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dip"
+            android:layout_marginTop="5dip"
             >
 	         <TextView
 	             android:id="@+id/tvTagLabel"

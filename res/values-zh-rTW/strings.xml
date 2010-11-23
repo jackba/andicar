@@ -85,7 +85,7 @@
     <string name="GEN_Refuel">"補給燃料"</string>
     <string name="GEN_CarLabel">"汽車："</string>
     <string name="GEN_DriverLabel">"司機："</string>
-    <string name="GEN_ExpenseCategoryLabel">"支出類別："</string>
+    <!-- <string name="GEN_ExpenseCategoryLabel">"支出類別："</string>  -->
     <string name="GEN_ExpenseTypeLabel">"支出類型："</string>
     <string name="GEN_TypeLabel">"類型："</string>
     <string name="GEN_DocumentNoLabel">"文件編號："</string>
@@ -332,8 +332,8 @@
     <string name="PREFGPSTrack_FileLocationMessage">"你的追蹤記錄檔案位於/SDCARD/andicar/gpstrack folder"</string>
 
     <string name="DIALOGSearch_DialogTitle">"輸入標準"</string>
-    <string name="DIALOGSearch_DateFromLabel">"從 (YYYY-MM-DD)"</string>
-    <string name="DIALOGSearch_DateToLabel">"到 (YYYY-MM-DD)"</string>
+    <string name="DIALOGSearch_DateFromLabel">"從"</string>
+    <string name="DIALOGSearch_DateToLabel">"到"</string>
 
     <string name="DIALOGReport_DialogTitle">"報告選項"</string>
     <string name="DIALOGReport_SendEmailLabel">"  作為Email附加傳送"</string>

@@ -23,12 +23,12 @@ import java.util.Calendar;
 
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -212,7 +212,7 @@ public abstract class EditActivityBase extends BaseActivity {
         if(btnPickDate != null)
             btnPickDate.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
-                    showDialog(StaticValues.DATE_DIALOG_ID);
+                    showDialog(StaticValues.DIALOG_DATE_PICKER);
                 }
             });
 
@@ -220,7 +220,7 @@ public abstract class EditActivityBase extends BaseActivity {
         if(btnPickTime != null)
             btnPickTime.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
-                    showDialog(StaticValues.TIME_DIALOG_ID);
+                    showDialog(StaticValues.DIALOG_TIME_PICKER);
                 }
             });
    }
@@ -228,10 +228,10 @@ public abstract class EditActivityBase extends BaseActivity {
    @Override
     protected Dialog onCreateDialog(int id) {
         switch(id) {
-            case StaticValues.TIME_DIALOG_ID:
+            case StaticValues.DIALOG_TIME_PICKER:
                 return new TimePickerDialog(this,
                         onTimeSetListener, mHour, mMinute, false);
-            case StaticValues.DATE_DIALOG_ID:
+            case StaticValues.DIALOG_DATE_PICKER:
                 return new DatePickerDialog(this,
                         onDateSetListener,
                         mYear, mMonth, mDay);
@@ -242,10 +242,10 @@ public abstract class EditActivityBase extends BaseActivity {
     @Override
     protected void onPrepareDialog(int id, Dialog dialog) {
         switch(id) {
-            case StaticValues.TIME_DIALOG_ID:
+            case StaticValues.DIALOG_TIME_PICKER:
                 ((TimePickerDialog) dialog).updateTime(mHour, mMinute);
                 break;
-            case StaticValues.DATE_DIALOG_ID:
+            case StaticValues.DIALOG_DATE_PICKER:
                 ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
                 break;
         }
@@ -281,18 +281,17 @@ public abstract class EditActivityBase extends BaseActivity {
         mcalDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
         tvDateTimeValue.setText(
-                new StringBuilder() // Month is 0 based so add 1
-                .append(Utils.pad(mMonth + 1, 2)).append("-")
-                .append(Utils.pad(mDay, 2)).append("-")
-                .append(mYear).append(" ")
-                .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
+        		DateFormat.getDateFormat(getApplicationContext()).format(mcalDateTime.getTime()) + " " +
+					DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime())
+        );
     }
 
     private void updateTime() {
         mcalDateTime.set(2000, Calendar.JANUARY, 1, mHour, mMinute, 0);
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
         tvDateTimeValue.setText(
-                new StringBuilder() // Month is 0 based so add 1
-                .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
+				DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime()));
+//                new StringBuilder() // Month is 0 based so add 1
+//                .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
     }
 }

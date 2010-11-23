@@ -90,7 +90,7 @@
     <string name="GEN_Refuel">"Заправка"</string>
     <string name="GEN_CarLabel">"Авто:"</string>
     <string name="GEN_DriverLabel">"Водитель:"</string>
-    <string name="GEN_ExpenseCategoryLabel">"Расх. категория:"</string>
+    <!-- <string name="GEN_ExpenseCategoryLabel">"Расх. категория:"</string> -->
     <string name="GEN_ExpenseTypeLabel">"Тип расходов:"</string>
     <string name="GEN_TypeLabel">"Тип:"</string>
     <string name="GEN_DocumentNoLabel">"Документ no.:"</string>
@@ -119,6 +119,8 @@
     <string name="GEN_Tag">"Метка:"</string>
     <string name="GEN_TagHint">"Короткая метка. Комментарий напишите ниже."</string>
 	<string name="GEN_LifeTime">"Срок подписки"</string>
+    <string name="GEN_Category">"Категория:"</string>
+    <string name="GEN_UOM">"Ед.изм.:"</string>
 	
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
@@ -337,8 +339,8 @@
     <string name="PREFGPSTrack_FileLocationMessage">"Ваши треки находятся в папке SDCARD/andicar/gpstrack"</string>
 
     <string name="DIALOGSearch_DialogTitle">"Введите критерий"</string>
-    <string name="DIALOGSearch_DateFromLabel">"От (YYYY-MM-DD)"</string>
-    <string name="DIALOGSearch_DateToLabel">"До (YYYY-MM-DD)"</string>
+    <string name="DIALOGSearch_DateFromLabel">"От"</string>
+    <string name="DIALOGSearch_DateToLabel">"До"</string>
 
     <string name="DIALOGReport_DialogTitle">"Опции отчета"</string>
     <string name="DIALOGReport_SendEmailLabel">"  отправить как вложение по email"</string>

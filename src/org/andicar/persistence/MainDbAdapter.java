@@ -1325,11 +1325,11 @@ public class MainDbAdapter extends DB
                       "ORDER BY Pos ASC";
         String[] selectionArgs = {Long.toString(mCarId), Long.toString(mCarId)};
         Cursor c = execSelectSql(sql, selectionArgs);
-        if(c.moveToFirst()){
+        if(c.moveToFirst() && c.getString(0) != null){
             mStartIndexStr = c.getDouble(0);
         }
         if((mStartIndexStr == null)
-                && c.moveToNext())
+                && c.moveToNext() && c.getString(0) != null)
             mStartIndexStr = c.getDouble(0);
         if(mStartIndexStr == null)
             mStartIndexStr = new Double("0");

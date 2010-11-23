@@ -137,6 +137,7 @@ public class DB {
 
     //expense category
     public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
+    public static final String EXPENSECATEGORY_COL_ISFUEL_NAME = "IsFuel";
     //car expenses
     public static final String EXPENSE_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
     public static final String EXPENSE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
@@ -265,6 +266,7 @@ public class DB {
 
      //expense category
     public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
+    public static final int EXPENSECATEGORY_COL_ISFUEL_POS = 5;
     //car expenses
     public static final int EXPENSE_COL_CAR_ID_POS = 4;
     public static final int EXPENSE_COL_DRIVER_ID_POS = 5;
@@ -363,7 +365,7 @@ public class DB {
         REFUEL_COL_TAG_ID_NAME};
 
     public static final String[] expenseCategoryTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-        EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME};
+        EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME, EXPENSECATEGORY_COL_ISFUEL_NAME};
 
     public static final String[] expenseTableColNames = {GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
         EXPENSE_COL_CAR_ID_NAME, EXPENSE_COL_DRIVER_ID_NAME, EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
@@ -528,7 +530,8 @@ public class DB {
             + GEN_COL_NAME_NAME + " TEXT NOT NULL, "
             + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
             + GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
-            + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " TEXT DEFAULT 'N' "
+            + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " TEXT DEFAULT 'N', "
+            + EXPENSECATEGORY_COL_ISFUEL_NAME + " TEXT DEFAULT 'N' "
             + ");";
     protected static final String EXPENSE_TABLE_CREATE_SQL =
             "CREATE TABLE IF NOT EXISTS " + EXPENSE_TABLE_NAME
@@ -961,6 +964,7 @@ public class DB {
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
+                upgradeDbTo355(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
@@ -971,6 +975,7 @@ public class DB {
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
+                upgradeDbTo355(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
@@ -980,6 +985,7 @@ public class DB {
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
+                upgradeDbTo355(db, oldVersion);
             }
             //AndiCar 3.0.x
             else if(oldVersion == 300){
@@ -988,6 +994,7 @@ public class DB {
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
+                upgradeDbTo355(db, oldVersion);
             }
             //AndiCar 3.1.x, 3.2.x
             else if(oldVersion == 310){
@@ -995,22 +1002,30 @@ public class DB {
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
+                upgradeDbTo355(db, oldVersion);
             }
             //AndiCar 3.3.x
             else if(oldVersion == 330){
                 upgradeDbTo340(db, oldVersion);
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
+                upgradeDbTo355(db, oldVersion);
             }
             //AndiCar 3.4.x
             else if(oldVersion == 340 || 
             		oldVersion == 350){ //upgrade again because on fresh 350 install addon tables was not created
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
+                upgradeDbTo355(db, oldVersion);
             }
             else if(oldVersion == 351){
                 AddOnDBObjectDef.upgradeTo353(db);
+                upgradeDbTo355(db, oldVersion);
             }
+            else if(oldVersion == 353){
+                upgradeDbTo355(db, oldVersion);
+            }
+//            upgradeDbTo355(db, oldVersion);
 
             //!!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
         	
@@ -1418,6 +1433,21 @@ public class DB {
         	AddOnDBObjectDef.createAddOnBKScheduleTable(db);
         }
 
+        private void upgradeDbTo355(SQLiteDatabase db, int oldVersion) throws SQLException {
+        	String updSql = null;
+            if(!columnExists(db, EXPENSECATEGORY_TABLE_NAME, EXPENSECATEGORY_COL_ISFUEL_NAME)){
+                updSql = "ALTER TABLE " + EXPENSECATEGORY_TABLE_NAME +
+                                " ADD " + EXPENSECATEGORY_COL_ISFUEL_NAME + " TEXT DEFAULT 'N' ";
+                db.execSQL(updSql);
+                
+                updSql = "UPDATE " + EXPENSECATEGORY_TABLE_NAME +
+                		" SET " + EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'Y' " +
+            			" WHERE " + GEN_COL_ROWID_NAME + " = 1";
+                    
+                db.execSQL(updSql);
+            }
+        }
+
         private boolean columnExists(SQLiteDatabase db, String table, String column){
             String testSql =
                     "SELECT " + column +
@@ -1440,26 +1470,27 @@ public class DB {
                     + GEN_COL_NAME_NAME + ", "
                     + GEN_COL_ISACTIVE_NAME + ", "
                     + GEN_COL_USER_COMMENT_NAME + ", "
-                    + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " "
+                    + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + ", "
+                    + EXPENSECATEGORY_COL_ISFUEL_NAME + " "
                     + ") ";
             db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_ExpCat_FuelName) + "', " +
                         "'Y', " +
                         "'" + mResource.getString(R.string.DB_ExpCat_FuelComment) + "', " +
-                        "'N' )");
+                        "'N', 'Y' )");
             db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_ExpCat_ServiceName) + "', " +
                     "'Y', " +
                         "'" + mResource.getString(R.string.DB_ExpCat_ServiceComment) + "', " +
-                    "'N' )");
+                    "'N', 'N' )");
             db.execSQL(colPart +
                     "VALUES ( " +
                         "'" + mResource.getString(R.string.DB_ExpCat_InsuranceName) + "', " +
                         "'Y', " +
                         "'" + mResource.getString(R.string.DB_ExpCat_InsuranceComment) + "', " +
-                        "'N' )");
+                        "'N', 'N' )");
         }
 
         private void createExpenses(SQLiteDatabase db, boolean isUpdate) throws SQLException {
