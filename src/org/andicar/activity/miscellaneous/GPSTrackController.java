@@ -21,12 +21,12 @@ import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;
-import org.andicar.utils.Utils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,12 +35,12 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 /**
  *
@@ -96,7 +96,10 @@ public class GPSTrackController extends BaseActivity {
         etName = (EditText) findViewById(R.id.etName);
         etIndexStart = (EditText) findViewById(R.id.etIndexStart);
         llIndexStartZone = (LinearLayout) findViewById(R.id.llIndexStartZone);
-        etName.setHint(Utils.getDateStr(true, true));
+        etName.setHint(mResource.getString(R.string.GEN_CreatedOn) + " " +
+				        		DateFormat.getDateFormat(getApplicationContext()).format(System.currentTimeMillis()) + " " +
+								DateFormat.getTimeFormat(getApplicationContext()).format(System.currentTimeMillis())
+				         		);
         ckIsUseKML = (CheckBox) findViewById(R.id.ckIsUseKML);
         ckIsUseKML.setChecked(mPreferences.getBoolean("IsUseKMLTrack", true));
         ckIsUseGPX = (CheckBox) findViewById(R.id.ckIsUseGPX);
@@ -278,7 +281,10 @@ public class GPSTrackController extends BaseActivity {
                 isGpsTrackOn = false;
                 setEditable(vgRoot, true);
                 etName.setText("");
-                etName.setHint(Utils.getDateStr(true, true));
+                etName.setHint(mResource.getString(R.string.GEN_CreatedOn) + " " +
+		        		DateFormat.getDateFormat(getApplicationContext()).format(System.currentTimeMillis()) + " " +
+						DateFormat.getTimeFormat(getApplicationContext()).format(System.currentTimeMillis())
+		         		);
                 btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
                 mPrefEditor.putBoolean("isGpsTrackOn", false);
                 mPrefEditor.commit();

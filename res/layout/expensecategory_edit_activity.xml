@@ -114,6 +114,16 @@
                 android:button="@drawable/checkbox_selector"
                 />
 
+            <CheckBox
+                android:id="@+id/ckIsFuel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ExpenseCategoryEditActivity_IsFuel"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                android:button="@drawable/checkbox_selector"
+                />
+
             <TextView
                 android:id="@+id/tvUserCommentLabel"
                 android:layout_width="fill_parent"

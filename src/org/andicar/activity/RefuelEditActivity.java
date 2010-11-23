@@ -29,6 +29,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -181,7 +183,8 @@ public class RefuelEditActivity extends EditActivityBase {
             etConversionRate.setText(currencyConversionRate.toString());
             initDateTime(c.getLong(MainDbAdapter.REFUEL_COL_DATE_POS) * 1000);
             etCarIndex.setText(
-            		(new BigDecimal(c.getDouble(MainDbAdapter.REFUEL_COL_INDEX_POS)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH)).toPlainString());
+            		Utils.numberToString(c.getDouble(MainDbAdapter.REFUEL_COL_INDEX_POS), false, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+//            		(new BigDecimal(c.getDouble(MainDbAdapter.REFUEL_COL_INDEX_POS)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH)).toPlainString());
 //            		c.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
             etQty.setText(c.getString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_POS));
             etUserInput.setText(c.getString(MainDbAdapter.REFUEL_COL_PRICEENTERED_POS));
@@ -192,7 +195,10 @@ public class RefuelEditActivity extends EditActivityBase {
             carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
             carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
             if(carDefaultUOMVolumeId != mUomVolumeId){
-                tvBaseUOMQtyValue.setText(c.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS) +
+                tvBaseUOMQtyValue.setText(
+                		Utils.numberToString(c.getDouble(MainDbAdapter.REFUEL_COL_QUANTITY_POS), true, 
+                				StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME) +
+//                		c.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS) +
                         " " + carDefaultUOMVolumeCode);
                 setBaseUOMQtyZoneVisibility(true);
             }
@@ -310,7 +316,8 @@ public class RefuelEditActivity extends EditActivityBase {
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, false);
         initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
+                MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'Y'", null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
         initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition, null,
@@ -671,8 +678,10 @@ public class RefuelEditActivity extends EditActivityBase {
                     calculatedValue = amountEntered.divide(qtyBd, 10, RoundingMode.HALF_UP);
                     priceEntered = calculatedValue;
                 }
-                calculatedValueStr = calculatedValue.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
-                            .toString() + " " + currencyCode;
+                calculatedValueStr =
+                	Utils.numberToString(calculatedValue, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
+//                	calculatedValue.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString() 
+                            + " " + currencyCode;
                 tvCalculatedTextContent.setText(calculatedValueStr);
                 if(carDefaultCurrencyId != mCurrencyId && currencyConversionRate != null){
                     amountConverted = amountEntered.multiply(currencyConversionRate);
@@ -680,11 +689,12 @@ public class RefuelEditActivity extends EditActivityBase {
 
                     calculatedValueStr =
                             (mResource.getString(R.string.GEN_ConvertedPriceLabel)).replace("[%1]", carDefaultCurrencyCode) + " = " +
-                                priceConverted.
-                                    setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString() + "; " +
+                        		Utils.numberToString(priceConverted, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
+//                                priceConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString() 
+                                    + "; " +
                             (mResource.getString(R.string.GEN_ConvertedAmountLabel)).replace("[%1]", carDefaultCurrencyCode) + " = " +
-                                amountConverted.
-                                    setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
+                    			Utils.numberToString(amountConverted, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+//                                amountConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
                     tvConvertedAmountLabel.setText(calculatedValueStr);
                 }
             }
@@ -710,8 +720,10 @@ public class RefuelEditActivity extends EditActivityBase {
         if(qtyStr != null && qtyStr.length() > 0) {
             try{
                 baseUomQty = (new BigDecimal(qtyStr)).multiply(uomVolumeConversionRate);
-                amountStr = baseUomQty.setScale(StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME)
-                                .toString() + " " + carDefaultUOMVolumeCode;
+                amountStr = 
+        			Utils.numberToString(baseUomQty, true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME)
+//                	baseUomQty.setScale(StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME).toString() 
+                		+ " " + carDefaultUOMVolumeCode;
 
                 tvBaseUOMQtyValue.setText(amountStr);
             }

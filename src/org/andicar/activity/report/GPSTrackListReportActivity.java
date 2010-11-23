@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import org.andicar.activity.GPSTrackEditActivity;
 import org.andicar.activity.miscellaneous.GPSTrackController;
@@ -53,12 +54,13 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
     private Spinner spnDriverSearch;
     private Spinner spnCarSearch;
     private ArrayAdapter<String> tagAdapter;
+    private Long mCarId;
 
     @Override
     public void onCreate( Bundle icicle )
     {
         reportSelectName = "gpsTrackListViewSelect";
-        Long mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
+        mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
         if(icicle == null){
             whereConditions = new Bundle();
             whereConditions.putString(
@@ -110,17 +112,36 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
         etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
         etUserCommentSearch.setText("%");
         etDateFromSearch = (EditText) searchView.findViewById(R.id.etDateFromSearch);
+        etDateFromSearch.setEnabled(false);
         etDateToSearch = (EditText) searchView.findViewById(R.id.etDateToSearch);
+        etDateToSearch.setEnabled(false);
         spnCarSearch = (Spinner) searchView.findViewById(R.id.spnCarSearch);
-        initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME);
+        initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME, null, null, mCarId);
         spnDriverSearch = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
-        initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME);
+        initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME, null, null, -1);
         acTag = ((AutoCompleteTextView) searchView.findViewById( R.id.acTag ));
         tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
         acTag.setText("%");
+
+        ImageButton btnPickDateFrom = (ImageButton) searchView.findViewById(R.id.btnPickDateFrom);
+        if(btnPickDateFrom != null)
+            btnPickDateFrom.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    showDialog(StaticValues.DIALOG_DATE_FROM_PICKER);
+                }
+            });
+        
+        ImageButton btnPickDateTo = (ImageButton) searchView.findViewById(R.id.btnPickDateTo);
+        if(btnPickDateTo != null)
+            btnPickDateTo.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    showDialog(StaticValues.DIALOG_DATE_TO_PICKER);
+                }
+            });
+
         return searchDialog.create();
     }
     private DialogInterface.OnClickListener searchDialogButtonlistener = new DialogInterface.OnClickListener() {
@@ -190,5 +211,18 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
             }
         };
     };
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.report.ReportListActivityBase#updateDate(int)
+	 */
+	@Override
+	protected void updateDate(int what) {
+		if(what == 1){ //date from
+			etDateFromSearch.setText(mYearFrom + "-" + Utils.pad((mMonthFrom + 1), 2) + "-" + Utils.pad(mDayFrom, 2));
+		}
+		else{ //date to
+			etDateToSearch.setText(mYearTo + "-" + Utils.pad((mMonthTo + 1), 2) + "-" + Utils.pad(mDayTo, 2));
+		}
+	}
 
 }

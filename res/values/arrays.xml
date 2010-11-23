@@ -108,5 +108,12 @@
         <item>Daily</item>
         <item>Weekly</item>
     </string-array>
+
+    <string-array name="isactive_values">
+        <item>All</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
 </resources>
 

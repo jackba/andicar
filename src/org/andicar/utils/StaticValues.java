@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 353;
+    public static final int DATABASE_VERSION = 354;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     
@@ -87,8 +87,13 @@ public class StaticValues
     public static int MILEAGE_INSERTMODE_INDEX = 0;
     public static int MILEAGE_INSERTMODE_MILEAGE = 1;
 
-    public static final int TIME_DIALOG_ID = 0;
-    public static final int DATE_DIALOG_ID = 1;
+    public static final int DIALOG_TIME_PICKER = 0;
+    public static final int DIALOG_DATE_PICKER = 1;
+    public static final int DIALOG_LOCAL_SEARCH = 2;
+    public static final int DIALOG_REPORT_OPTIONS = 3;
+    public static final int DIALOG_DATE_FROM_PICKER = 4;
+    public static final int DIALOG_DATE_TO_PICKER = 5;
+
 
     /**
      * 
@@ -102,9 +107,6 @@ public class StaticValues
      * leave the hour unchanged
      */
     public static String DATE_DECODE_NO_CHANGE = "12";
-
-    public static int DIALOG_LOCAL_SEARCH = 0;
-    public static int DIALOG_REPORT_OPTIONS = 1;
 
     public static final String BASE_FOLDER = "/sdcard/andicar/";
     public static final String REPORT_FOLDER = "/sdcard/andicar/reports/";

@@ -120,14 +120,14 @@ public class ReportDbAdapter extends MainDbAdapter{
 
                     sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
-                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + ", " +
-                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ", " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + " AS " + MILEAGE_COL_INDEXSTART_NAME + "_DTypeN, " +
+                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " AS " + MILEAGE_COL_INDEXSTOP_NAME + "_DTypeN, " +
                 sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + " - " +
-                    sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + " AS Mileage, " +
+                    sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTART_NAME) + " AS Mileage_DTypeN, " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UomCode, " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
-                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') AS Tag, " +
-                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) + " AS Seconds " +
+                " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') AS Tag " +
+//                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) + " AS Seconds " +
             " FROM " + MILEAGE_TABLE_NAME +
                     " JOIN " + EXPENSETYPE_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_EXPENSETYPE_ID_NAME) + "=" +
@@ -231,11 +231,11 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
                 sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseCategoryName, " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + ", " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + " AS " + REFUEL_COL_INDEX_NAME + "_DTypeN, " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITY_NAME) + " AS " + REFUEL_COL_QUANTITY_NAME + "_DTypeN, " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME) + ", " +
                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " AS UOMCode, " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + " AS " + REFUEL_COL_PRICE_NAME + "_DTypeN, " +
                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS CurrencyCode, " +
                 "DATETIME(" + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) + ", 'unixepoch', 'localtime') AS Date, " +
 
@@ -250,12 +250,12 @@ public class ReportDbAdapter extends MainDbAdapter{
                     "WHEN \"6\" THEN '[%d6]' " +
                 "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + " AS " + REFUEL_COL_QUANTITYENTERED_NAME + "_DTypeN, " +
                 sqlConcatTableColumn("UomVolEntered", UOM_COL_CODE_NAME) + " AS UomEntered, " +
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLCONVERSIONRATE_NAME) + ", " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICEENTERED_NAME) + " AS " + REFUEL_COL_PRICEENTERED_NAME + "_DTypeN, " +
                 sqlConcatTableColumn("CurrencyEntered", CURRENCY_COL_CODE_NAME) + " AS CurrencyEntered, " +
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYRATE_NAME) + ", " +
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYRATE_NAME) + " AS " + REFUEL_COL_CURRENCYRATE_NAME + "_DTypeN, " +
                 sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS Vendor, " +
                 sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_NAME_NAME) +
                         " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_ADDRESS_NAME) + ", '') " +
@@ -431,16 +431,16 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DOCUMENTNO_NAME) + ", " +
                 sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseCategoryName, " +
                 sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS ExpenseTypeName, " +
-                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNT_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNT_NAME) + " AS " + EXPENSE_COL_AMOUNT_NAME + "_DTypeN, " +
                 sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " AS CurrencyCode, " +
                 sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS DriverName, " +
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + ", " +
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_FROMTABLE_NAME) + " AS BaseExpense, " +
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_FROMRECORD_ID_NAME) + " AS BaseExpenseId, " +
-                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + ", " +
-                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNTENTERED_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + " AS " + EXPENSE_COL_INDEX_NAME + "_DTypeN, " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_AMOUNTENTERED_NAME) + " AS " + EXPENSE_COL_AMOUNTENTERED_NAME + "_DTypeN, " +
                 sqlConcatTableColumn("CurrEntered", CURRENCY_COL_CODE_NAME) + " AS CurrencyEnteredCode, " +
-                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYRATE_NAME) + ", " +
+                sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYRATE_NAME) + " AS " + EXPENSE_COL_CURRENCYRATE_NAME + "_DTypeN, " +
                 sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS Vendor, " +
                 sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_NAME_NAME) +
                         " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_ADDRESS_NAME) + ", '') " +

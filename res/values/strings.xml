@@ -88,7 +88,7 @@
     <string name="GEN_Refuel">"Refuel"</string>
     <string name="GEN_CarLabel">"Car:"</string>
     <string name="GEN_DriverLabel">"Driver:"</string>
-    <string name="GEN_ExpenseCategoryLabel">"Exp. category:"</string>
+    <!-- <string name="GEN_ExpenseCategoryLabel">"Exp. category:"</string> -->
     <string name="GEN_ExpenseTypeLabel">"Type:"</string>
     <string name="GEN_TypeLabel">"Type:"</string>
     <string name="GEN_DocumentNoLabel">"Document no.:"</string>
@@ -104,7 +104,7 @@
     <string name="GEN_Required">"Required"</string>
     <string name="GEN_BPartner">"Vendor:"</string>
     <string name="GEN_Address">"Address:"</string>
-    <string name="GEN_BPartnerAdressInfo">"Complete details in Preferences -> Partners"</string>
+    <string name="GEN_BPartnerAdressInfo">"Enter more details in Preferences -> Partners"</string>
     <string name="GEN_City">"City:"</string>
     <string name="GEN_Region">"Region:"</string>
     <string name="GEN_Country">"Country:"</string>
@@ -117,6 +117,9 @@
     <string name="GEN_Tag">"Tag:"</string>
     <string name="GEN_TagHint">"Short tag. Write comment bellow."</string>
     <string name="GEN_LifeTime">"Life time"</string>
+    <string name="GEN_CreatedOn">"Created on"</string>
+    <string name="GEN_Category">"Category:"</string>
+    <string name="GEN_UOM">"UOM:"</string>
 
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -195,7 +198,7 @@
     <string name="MileageEditActivity_OptionMileageLabel">"Mileage"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Mileage added."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Mileage updated."</string>
-    <string name="MileageEditActivity_RecordingInProgress">"Recording in progress!"</string>
+    <string name="MileageEditActivity_RecordingInProgress">"Two phase recording in progress. Press STOP to finalize."</string>
 
     <string name="RefuelEditActivity_IsFullLabel">"Is full"</string>
     <string name="RefuelEditActivity_QtyInBaseUOMLabel">"Quantity in base UOM: "</string>
@@ -212,6 +215,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Your database was restored. The application will be closed."</string>
 
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Exclude from mileage cost calculation"</string>
+    <string name="ExpenseCategoryEditActivity_IsFuel">"Is fuel"</string>
 
     <string name="ExpenseEditActivity_CreatedFromWarning">"This expense was created from [%1].\nEdit the coresponding [%1]."</string>
 
@@ -337,8 +341,8 @@
     <string name="PREFGPSTrack_FileLocationMessage">"Your track files are located in SDCARD/andicar/gpstrack folder"</string>
 
     <string name="DIALOGSearch_DialogTitle">"Enter criteria"</string>
-    <string name="DIALOGSearch_DateFromLabel">"From (YYYY-MM-DD)"</string>
-    <string name="DIALOGSearch_DateToLabel">"To (YYYY-MM-DD)"</string>
+    <string name="DIALOGSearch_DateFromLabel">"From"</string>
+    <string name="DIALOGSearch_DateToLabel">"To"</string>
 
     <string name="DIALOGReport_DialogTitle">"Report options"</string>
     <string name="DIALOGReport_SendEmailLabel">"  send as email attachment"</string>

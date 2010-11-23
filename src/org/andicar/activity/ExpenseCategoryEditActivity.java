@@ -38,6 +38,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
     private EditText etUserComment = null;
     private CheckBox ckIsActive = null;
     private CheckBox ckIsExcludeFromMileageCost = null;
+    private CheckBox ckIsFuel = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -49,6 +50,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
         ckIsExcludeFromMileageCost = (CheckBox) findViewById( R.id.ckIsExcludeFromMileageCost );
+        ckIsFuel = (CheckBox) findViewById( R.id.ckIsFuel );
 
         String strOperationType = mBundleExtras.getString("Operation"); //E = edit, N = new
 
@@ -60,6 +62,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
             String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
             String strExpCatIsExcludeFromMileageCostCheck = c.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS );
+            String strExpCatIsFuel = c.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_POS );
 
             if( strName != null ) {
                 etName.setText( strName );
@@ -72,6 +75,9 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             }
             if( strExpCatIsExcludeFromMileageCostCheck != null ) {
                 ckIsExcludeFromMileageCost.setChecked( strExpCatIsExcludeFromMileageCostCheck.equals( "Y" ) );
+            }
+            if( strExpCatIsFuel != null ) {
+                ckIsFuel.setChecked( strExpCatIsFuel.equals( "Y" ) );
             }
             c.close();
         }
@@ -108,6 +114,8 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
                 etUserComment.getText().toString() );
         cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME,
                 (ckIsExcludeFromMileageCost.isChecked() ? "Y" : "N") );
+        cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME,
+                (ckIsFuel.isChecked() ? "Y" : "N") );
 
         if( mRowId == -1 ) {
             mDbAdapter.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, cvData);

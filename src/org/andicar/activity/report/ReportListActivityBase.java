@@ -19,7 +19,18 @@
 
 package org.andicar.activity.report;
 
+import java.util.Calendar;
+
+import org.andicar.activity.ListActivityBase;
+import org.andicar.activity.R;
+import org.andicar.persistence.FileUtils;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -29,6 +40,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.method.MetaKeyKeyListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,22 +48,16 @@ import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.StaticValues;
-import org.andicar.activity.ListActivityBase;
-import org.andicar.activity.R;
-import org.andicar.persistence.FileUtils;
-import org.andicar.utils.Utils;
 
 /**
  *
  * @author miki
  */
-public class ReportListActivityBase extends ListActivityBase implements Runnable{
+public abstract class ReportListActivityBase extends ListActivityBase implements Runnable{
     protected ReportDbAdapter mListDbHelper = null;
     protected ReportDbAdapter mReportDbHelper = null;
     protected String reportSelectName = null;
@@ -59,9 +65,21 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
     private View reportDialogView;
     private CheckBox ckIsSendEmail;
     private Spinner spnReportFormat;
+    protected int mYearFrom = 2010;
+    protected int mMonthFrom = 11;
+    protected int mDayFrom = 1;
+    protected int mYearTo = 2010;
+    protected int mMonthTo = 11;
+    protected int mDayTo = 1;
     
     AlertDialog.Builder reportOptionsDialog;
     ProgressDialog progressDialog;
+
+    /**
+     * 
+     * @param what 1 = DateFrom; 2 = DateTo
+     */
+    abstract protected void updateDate(int what);
 
     @SuppressWarnings("rawtypes")
 	protected void onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass, Class insertClass,
@@ -74,6 +92,14 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
 
         super.onCreate(icicle, mItemClickListener, editClass, insertClass, editTableName, editTableColumns,
                 whereCondition, orderByColumn, pLayoutId, pDbMapFrom, pLayoutIdTo, pViewBinder);
+
+        Calendar cal = Calendar.getInstance();
+        mYearFrom = cal.get(Calendar.YEAR);
+        mMonthFrom = cal.get(Calendar.MONTH);
+        mDayFrom = 1;
+        mYearTo = cal.get(Calendar.YEAR);
+        mMonthTo = cal.get(Calendar.MONTH);
+        mDayTo = cal.get(Calendar.DAY_OF_MONTH);
     }
 
     @Override
@@ -137,20 +163,22 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
         return true;
     }
 
-    protected void initSpinner(View pSpinner, String tableName){
-        try{
+    protected void initSpinner(View pSpinner, String tableName, String selection, String[] selectionArgs, long selectedId){
+    	try{
             String selectSql = "";
 
-            selectSql = "SELECT '<All>' AS " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
+            selectSql = "SELECT 'All' AS " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
                                  "-1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME +
                         " UNION " +
                         " SELECT " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
                                     MainDbAdapter.GEN_COL_ROWID_NAME +
-                        " FROM " + tableName +
-                        " ORDER BY " + MainDbAdapter.GEN_COL_ROWID_NAME;
+                        " FROM " + tableName;
+            if(selection != null)
+            	selectSql = selectSql + " WHERE " + selection;
+            selectSql = selectSql + " ORDER BY " + MainDbAdapter.GEN_COL_ROWID_NAME;
 
             Spinner spinner = (Spinner) pSpinner;
-            Cursor c = mListDbHelper.query(selectSql, null);
+            Cursor c = mListDbHelper.query(selectSql, selectionArgs);
             startManagingCursor( c );
             int[] to = new int[]{android.R.id.text1};
             SimpleCursorAdapter mCursorAdapter =
@@ -158,6 +186,17 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             new String[] {MainDbAdapter.GEN_COL_NAME_NAME}, to);
             mCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(mCursorAdapter);
+            if(selectedId >= 0){
+                //set the spinner to the selectedId
+                    c.moveToFirst();
+                    for( int i = 0; i < c.getCount(); i++ ) {
+                        if( c.getLong( 1 ) == selectedId) {
+                        	spinner.setSelection( i );
+                            break;
+                        }
+                        c.moveToNext();
+                    }
+                }
         }
         catch(Exception e){}
 
@@ -165,23 +204,57 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        LayoutInflater liLayoutFactory = LayoutInflater.from(this);
-        reportDialogView = liLayoutFactory.inflate(R.layout.report_options_dialog, null);
-        spnReportFormat = (Spinner)reportDialogView.findViewById(R.id.spnReportOptionsFormat);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this, R.array.report_formats, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnReportFormat.setAdapter(adapter);
-
-        ckIsSendEmail = (CheckBox)reportDialogView.findViewById(R.id.ckIsSendEmail);
-
-        reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
-        reportOptionsDialog.setTitle(R.string.DIALOGReport_DialogTitle);
-        reportOptionsDialog.setView(reportDialogView);
-        reportOptionsDialog.setPositiveButton(R.string.GEN_OK, reportDialogButtonlistener);
-        reportOptionsDialog.setNegativeButton(R.string.GEN_CANCEL, reportDialogButtonlistener);
-        return reportOptionsDialog.create();
+        switch(id) {
+		    case StaticValues.DIALOG_DATE_FROM_PICKER:
+		        return new DatePickerDialog(this,
+		                onDateFromSetListener,
+		                mYearFrom, mMonthFrom, mDayFrom);
+		    case StaticValues.DIALOG_DATE_TO_PICKER:
+		        return new DatePickerDialog(this,
+		                onDateToSetListener,
+		                mYearTo, mMonthTo, mDayTo);
+		    case StaticValues.DIALOG_REPORT_OPTIONS:
+		        LayoutInflater liLayoutFactory = LayoutInflater.from(this);
+		        reportDialogView = liLayoutFactory.inflate(R.layout.report_options_dialog, null);
+		        spnReportFormat = (Spinner)reportDialogView.findViewById(R.id.spnReportOptionsFormat);
+		        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+		                this, R.array.report_formats, android.R.layout.simple_spinner_item);
+		        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		        spnReportFormat.setAdapter(adapter);
+		
+		        ckIsSendEmail = (CheckBox)reportDialogView.findViewById(R.id.ckIsSendEmail);
+		
+		        reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
+		        reportOptionsDialog.setTitle(R.string.DIALOGReport_DialogTitle);
+		        reportOptionsDialog.setView(reportDialogView);
+		        reportOptionsDialog.setPositiveButton(R.string.GEN_OK, reportDialogButtonlistener);
+		        reportOptionsDialog.setNegativeButton(R.string.GEN_CANCEL, reportDialogButtonlistener);
+		        return reportOptionsDialog.create();
+        }
+        return null;
     }
+
+    private DatePickerDialog.OnDateSetListener onDateFromSetListener =
+        new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                    int dayOfMonth) {
+                mYearFrom = year;
+                mMonthFrom = monthOfYear;
+                mDayFrom = dayOfMonth;
+               	updateDate(1);
+            }
+        };
+        
+    private DatePickerDialog.OnDateSetListener onDateToSetListener =
+        new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                    int dayOfMonth) {
+                mYearTo = year;
+                mMonthTo = monthOfYear;
+                mDayTo = dayOfMonth;
+               	updateDate(2);
+            }
+        };
 
     private DialogInterface.OnClickListener reportDialogButtonlistener =
             new DialogInterface.OnClickListener() {
@@ -294,18 +367,24 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
 
     public String createCSVContent(Cursor reportCursor){
         String reportContent = "";
+        String colVal;
         int i;
+
+        //create header row
         for(i = 0; i< reportCursor.getColumnCount(); i++){
             if(i > 0)
                 reportContent = reportContent + ",";
-            reportContent = reportContent + reportCursor.getColumnName(i);
+            reportContent = reportContent + reportCursor.getColumnName(i).replaceAll("_DTypeN", "");
         }
         reportContent = reportContent + "\n";
         while(reportCursor != null && reportCursor.moveToNext()){
             for(i = 0; i< reportCursor.getColumnCount(); i++){
                 if(i > 0)
                     reportContent = reportContent + ",";
-                String colVal = reportCursor.getString(i);
+                if(reportCursor.getColumnName(i).contains("_DTypeN"))
+                	colVal = Utils.numberToString(reportCursor.getDouble(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
+                else
+                	colVal = reportCursor.getString(i);
                 if(colVal == null)
                     colVal = "";
                 reportContent = reportContent  + 
@@ -335,9 +414,11 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
                         "<table  WIDTH=100% BORDER=1 BORDERCOLOR=\"#000000\" CELLPADDING=4 CELLSPACING=0>\n" +
                             "<TR VALIGN=TOP>\n"; //table header
         int i;
+        String colVal;
+        //create table header
         for(i = 0; i< reportCursor.getColumnCount(); i++){
             reportContent = reportContent +
-                                "<TH>" + reportCursor.getColumnName(i) + "</TH>\n";
+                                "<TH>" + reportCursor.getColumnName(i).replaceAll("_DTypeN", "") + "</TH>\n";
         }
         reportContent = reportContent +
                             "</TR>\n"; //end table header
@@ -346,7 +427,10 @@ public class ReportListActivityBase extends ListActivityBase implements Runnable
             reportContent = reportContent +
                             "<TR VALIGN=TOP>\n";
             for(i = 0; i< reportCursor.getColumnCount(); i++){
-                String colVal = reportCursor.getString(i);
+                if(reportCursor.getColumnName(i).contains("_DTypeN"))
+                	colVal = Utils.numberToString(reportCursor.getDouble(i), true, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
+                else
+                	colVal = reportCursor.getString(i);
                 if(colVal == null)
                     colVal = "";
                 reportContent = reportContent +

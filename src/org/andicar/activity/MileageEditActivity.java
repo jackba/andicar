@@ -24,6 +24,7 @@ import java.math.BigDecimal;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -103,6 +104,7 @@ public class MileageEditActivity extends EditActivityBase {
         	btnStartStopMileageRecord.setVisibility(View.GONE);
         	isRecordMileage = false;
         	btnOk.setEnabled(true);
+    		spnCar.setEnabled(false);
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
 
             mCarId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
@@ -116,12 +118,14 @@ public class MileageEditActivity extends EditActivityBase {
                 				.setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
                 	
 //                	new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS));
-                etStartIndex.setText(mStartIndex.toPlainString());
+                etStartIndex.setText(Utils.numberToString(mStartIndex, false, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+                //mStartIndex.toPlainString());
                 mStopIndex = (new BigDecimal(c.getDouble(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS))
             					.setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH)); 
                 	
 //                	new BigDecimal(c.getString(MainDbAdapter.MILEAGE_COL_INDEXSTOP_POS));
-                etUserInput.setText(mStopIndex.toPlainString());
+                etUserInput.setText(Utils.numberToString(mStopIndex, false, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+                		//mStopIndex.toPlainString());
             }
             catch(NumberFormatException e){}
             rbInsertModeIndex.setChecked(true);
@@ -214,8 +218,8 @@ public class MileageEditActivity extends EditActivityBase {
         		acUserComment.setEnabled(false);
             	btnOk.setEnabled(false);
                 btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
-        		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-        		mDriverId = mPreferences.getLong("LastDriver_ID", -1);
+        		mCarId = mPreferences.getLong("MileageRec_CarId", mBundleExtras.getLong("MileageRec_CarId"));
+        		mDriverId = mPreferences.getLong("MileageRec_DriverId", mBundleExtras.getLong("MileageRec_DriverId"));
         		mExpTypeId = mPreferences.getLong("MileageRec_ExpenseTypeId", mBundleExtras.getLong("MileageRec_ExpenseTypeId"));
         		mInsertMode = mPreferences.getInt("MileageRec_InsertMode", mPreferences.getInt("MileageInsertMode", 0));
         		acTag.setText(mPreferences.getString("MileageRec_Tag", ""));
@@ -235,6 +239,7 @@ public class MileageEditActivity extends EditActivityBase {
         		isRecordMileage = false;
             	tvMileageRecInProgress.setVisibility(View.GONE);
             	btnOk.setEnabled(true);
+        		spnCar.setEnabled(false);
         		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
 	            mCarId = mPreferences.getLong("CurrentCar_ID", -1);
 	            mDriverId = mPreferences.getLong("LastDriver_ID", -1);
@@ -364,7 +369,50 @@ public class MileageEditActivity extends EditActivityBase {
                 mEntryMileageValue = new BigDecimal(savedInstanceState.getString("mEntryMileageValue"));
 
             initControls();
-//            calculateMileageOrNewIndex();
+            if( operationType.equals("E") ) {
+            	tvMileageRecInProgress.setVisibility(View.GONE);
+            	btnStartStopMileageRecord.setVisibility(View.GONE);
+            	isRecordMileage = false;
+            	btnOk.setEnabled(true);
+        		spnCar.setEnabled(false);
+        		if(mGpsTrackId > -1)
+                    btnOpenGPSTrack.setVisibility(View.VISIBLE);
+        		else
+                    btnOpenGPSTrack.setVisibility(View.GONE);
+            }
+            else if(operationType.equals("TrackToMileage")){
+            	tvMileageRecInProgress.setVisibility(View.GONE);
+            	btnStartStopMileageRecord.setVisibility(View.GONE);
+                btnOpenGPSTrack.setVisibility(View.GONE);
+            	isRecordMileage = false;
+            	btnOk.setEnabled(true);
+            }
+            else{
+            	btnStartStopMileageRecord.setVisibility(View.VISIBLE);
+                btnOpenGPSTrack.setVisibility(View.GONE);
+
+            	if(mPreferences.getBoolean("MileageRec_IsRecording", false)){ //mileage rec in progress
+            		isRecordMileage = true;
+                	tvMileageRecInProgress.setVisibility(View.VISIBLE);
+            		spnCar.setEnabled(false);
+            		spnDriver.setEnabled(false);
+            		spnExpType.setEnabled(false);
+            		acTag.setEnabled(false);
+            		rbInsertModeIndex.setEnabled(false);
+            		rbInsertModeMileage.setEnabled(false);
+            		etStartIndex.setEnabled(false);
+            		etUserInput.setEnabled(false);
+            		acUserComment.setEnabled(false);
+                	btnOk.setEnabled(false);
+                    btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_stop24x24));
+            	}
+            	else{
+            		isRecordMileage = false;
+                	tvMileageRecInProgress.setVisibility(View.GONE);
+                	btnOk.setEnabled(true);
+            		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_record24x24));
+            	}
+            }
             initDateTime(mlDateTimeInSeconds * 1000);
         }
         catch(NumberFormatException e){}
@@ -430,12 +478,12 @@ public class MileageEditActivity extends EditActivityBase {
                 }
                 else {
                     BigDecimal mileage = pNewIndex.subtract(pStartIndex);
-                    tvCalculatedContent.setText(mileage.toString());
+                    tvCalculatedContent.setText(Utils.numberToString(mileage, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
                 }
             }
             else { //mileage
                 pNewIndex = mStartIndex.add(pEntryMileageValue);
-                tvCalculatedContent.setText(pNewIndex.toString());
+                tvCalculatedContent.setText(Utils.numberToString(pNewIndex, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
             }
             mNewIndex = pNewIndex;
         }
@@ -451,7 +499,7 @@ public class MileageEditActivity extends EditActivityBase {
             if(mStartIndex.equals(new BigDecimal("0"))){
                 mStartIndex = mDbAdapter.getMileageStartIndex(mCarId);
             }
-            etStartIndex.setText(mStartIndex.toPlainString());
+            etStartIndex.setText(Utils.numberToString(mStartIndex, false, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
         }
         catch(NumberFormatException e){}
         return mStartIndex;
