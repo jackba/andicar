@@ -1025,7 +1025,6 @@ public class DB {
             else if(oldVersion == 353){
                 upgradeDbTo355(db, oldVersion);
             }
-//            upgradeDbTo355(db, oldVersion);
 
             //!!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
         	
