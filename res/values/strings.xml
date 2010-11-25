@@ -310,6 +310,8 @@
     <string name="PREF_TagCategorySummary">"Add, delete, modify tags"</string>
     <string name="PREF_RememberLastTagTitle">"Remember last tag"</string>
     <string name="PREF_RememberLastTagSummary">"Remember the last used tag"</string>
+    <string name="PREF_AutoUpdateCheckTitle">"Check for updates"</string>
+    <string name="PREF_AutoUpdateCheckSummary">"Check and notify me if a new version of AndiCar was published"</string>
 
     <string name="PREF_MainScreen_ShowMileageZone">"Show mileage zone"</string>
     <string name="PREF_MainScreen_ShowGPSTrackZone">"Show GPS track zone"</string>

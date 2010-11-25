@@ -33,7 +33,6 @@ import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.service.UpdateCheck;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -44,7 +43,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -176,8 +174,6 @@ public class MainActivity extends BaseActivity {
 					editor.remove("UpdateMsg");
 					editor.commit();
 				}
-				else
-					initPreferenceValues(); //version update => init (new) preference values
 			}
 	
 			spnCar = (Spinner)findViewById(R.id.spnCar);
@@ -288,38 +284,36 @@ public class MainActivity extends BaseActivity {
 				editor.commit();
 	
 				dbVersion = reportDb.getVersion() + "";
+				
+				//check if upgrade occurred. if yes init preference values & restart the background services (auto backup, update check, etc.)
 				int appVersionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
 				if(!mPreferences.contains("appVersionCode")
-						|| mPreferences.getInt("appVersionCode", 0) < appVersionCode){
+						|| mPreferences.getInt("appVersionCode", 0) < appVersionCode
+						|| appVersion.endsWith("Beta")){ //for beta testing
+					
+					initPreferenceValues(); //version update => init (new) preference values
+
 					AndiCarServiceStarter.startServices(this);
 					editor.putInt("appVersionCode", appVersionCode);
 					editor.commit();
-	
 				}
-	
 			}
 			catch(NameNotFoundException ex) {
 				appVersion = "N/A";
 			}
 	
-			//check for app update once a day
-			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
-			if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
-				/* Save current timestamp for next Check*/
-				lastUpdateTime = System.currentTimeMillis();
-				SharedPreferences.Editor editor = mPreferences.edit();
-				editor.putLong("lastUpdateCheckTime", lastUpdateTime);
-				editor.commit();
-				//start update check
-				Intent updateCheck = new Intent(MainActivity.this, UpdateCheck.class);
-				startService(updateCheck);
-			}
-	
-			if (!mPreferences.contains("UseNumericKeypad")) {
-				SharedPreferences.Editor editor = mPreferences.edit();
-				editor.putBoolean("UseNumericKeypad", true);
-				editor.commit();
-			}
+//			//check for app update once a day
+//			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
+//			if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
+//				/* Save current timestamp for next Check*/
+//				lastUpdateTime = System.currentTimeMillis();
+//				SharedPreferences.Editor editor = mPreferences.edit();
+//				editor.putLong("lastUpdateCheckTime", lastUpdateTime);
+//				editor.commit();
+//				//start update check
+//				Intent updateCheck = new Intent(MainActivity.this, UpdateCheck.class);
+//				startService(updateCheck);
+//			}
 		}
 		catch(Exception e){
 			
@@ -782,6 +776,12 @@ public class MainActivity extends BaseActivity {
 		}
 		if (!mPreferences.contains("RememberLastTag")) {
 			editor.putBoolean("RememberLastTag", false); 
+		}
+		if (!mPreferences.contains("UseNumericKeypad")) {
+			editor.putBoolean("UseNumericKeypad", true);
+		}
+		if (!mPreferences.contains("AutoUpdateCheck")) {
+			editor.putBoolean("AutoUpdateCheck", true); 
 		}
 
 		editor.commit();
