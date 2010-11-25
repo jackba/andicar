@@ -263,6 +263,13 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         sendCrashPrefCk.setKey("SendCrashReport");
         miscCategory.addPreference(sendCrashPrefCk);
 
+        //preference for automatic version update check
+        CheckBoxPreference ckUpdateCheck = new CheckBoxPreference(this);
+        ckUpdateCheck.setTitle(R.string.PREF_AutoUpdateCheckTitle);
+        ckUpdateCheck.setSummary(R.string.PREF_AutoUpdateCheckSummary);
+        ckUpdateCheck.setKey("AutoUpdateCheck");
+        miscCategory.addPreference(ckUpdateCheck);
+
         return prefScreenRoot;
     }
 
