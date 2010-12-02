@@ -1233,9 +1233,10 @@ public class MainDbAdapter extends DB
     public long getCarUOMVolumeID(long carID){
     	Cursor c = fetchRecord(CAR_TABLE_NAME, carTableColNames, carID);
     	long retVal = -1;
-    	if(c != null)
+    	if(c != null){
     		retVal = c.getLong(CAR_COL_UOMVOLUME_ID_POS);
-    	c.close();
+        	c.close();
+    	}
     	return retVal;
                 
     }
@@ -1243,36 +1244,40 @@ public class MainDbAdapter extends DB
     public long getCarUOMLengthID(long carID){
     	Cursor c = fetchRecord(CAR_TABLE_NAME, carTableColNames, carID);
     	long retVal = -1;
-    	if(c != null)
+    	if(c != null){
     		retVal = c.getLong(CAR_COL_UOMLENGTH_ID_POS);
-    	c.close();
+        	c.close();
+    	}
     	return retVal;
     }
 
     public long getCarCurrencyID(long carID){
     	Cursor c = fetchRecord(CAR_TABLE_NAME, carTableColNames, carID);
     	long retVal = -1;
-    	if(c != null)
+    	if(c != null){
     		retVal = c.getLong(CAR_COL_CURRENCY_ID_POS);
-    	c.close();
+        	c.close();
+    	}
     	return retVal;
     }
 
     public String getCurrencyCode(long currencyID){
     	Cursor c = fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, currencyID);
     	String retVal = null;
-    	if(c != null)
+    	if(c != null){
     		retVal = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-    	c.close();
+        	c.close();
+    	}
     	return retVal;
     }
 
     public String getUOMCode(long uomID){
     	Cursor c = fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomID);
     	String retVal = null;
-    	if(c != null)
+    	if(c != null){
     		retVal = c.getString(MainDbAdapter.UOM_COL_CODE_POS);
-    	c.close();
+        	c.close();
+    	}
     	return retVal;
     }
 
