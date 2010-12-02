@@ -33,6 +33,7 @@ import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.service.UpdateCheckService;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -302,18 +303,26 @@ public class MainActivity extends BaseActivity {
 				appVersion = "N/A";
 			}
 	
-//			//check for app update once a day
-//			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
-//			if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
-//				/* Save current timestamp for next Check*/
-//				lastUpdateTime = System.currentTimeMillis();
-//				SharedPreferences.Editor editor = mPreferences.edit();
-//				editor.putLong("lastUpdateCheckTime", lastUpdateTime);
-//				editor.commit();
-//				//start update check
-//				Intent updateCheck = new Intent(MainActivity.this, UpdateCheck.class);
-//				startService(updateCheck);
-//			}
+			//check for app update once a day
+			if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("AutoUpdateCheck", true)){
+				Thread t = new Thread() {
+		            public void run() {
+		    			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
+		    			Long currentTime = System.currentTimeMillis();
+		    			if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < currentTime) {
+		    				/* Save current timestamp for next Check*/
+		    				lastUpdateTime = currentTime;
+		    				SharedPreferences.Editor editor = mPreferences.edit();
+		    				editor.putLong("lastUpdateCheckTime", lastUpdateTime);
+		    				editor.commit();
+		    				//start update check
+		    				Intent updateCheck = new Intent(MainActivity.this, UpdateCheckService.class);
+		    				startService(updateCheck);
+		    			}
+		            }
+		        };
+		        t.start();
+			}
 		}
 		catch(Exception e){
 			
