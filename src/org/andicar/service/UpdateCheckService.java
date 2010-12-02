@@ -34,6 +34,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.IBinder;
+import android.util.Log;
 
 public class UpdateCheckService extends Service{
     NotificationManager mNM = null;
@@ -47,11 +48,8 @@ public class UpdateCheckService extends Service{
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		
-		if(!getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("AutoUpdateCheck", true))
-			return;
 
-		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+//		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         try {
             URL updateURL = new URL(StaticValues.VERSION_FILE_URL);
             URLConnection conn = updateURL.openConnection();
@@ -82,7 +80,7 @@ public class UpdateCheckService extends Service{
 
                 CharSequence title = getText(R.string.Notif_UpdateTitle);
                 String message = getString(R.string.Notif_UpdateMsg);
-                notification = new Notification(R.drawable.stat_sys_info, message,
+                notification = new Notification(R.drawable.stat_sys_info_2, message,
                         System.currentTimeMillis());
 		        notification.flags |= Notification.DEFAULT_LIGHTS;
 		        notification.flags |= Notification.DEFAULT_SOUND;
@@ -90,6 +88,9 @@ public class UpdateCheckService extends Service{
                 notification.setLatestEventInfo(UpdateCheckService.this, title, message, contentIntent);
                 mNM.notify(0, notification);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+    		Log.i("UpdateService", "Service failed.");
+        	e.printStackTrace();
+        }
 	}
 }
