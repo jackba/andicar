@@ -74,4 +74,11 @@
 
     <string name="ERR_050">"Map error!"</string>
     <string name="ERR_051">"No car selected!\nPlease chose a car in the main screen."</string>
+
+    <string name="ERR_052">"SMTP autentication not configured (no username)!"</string>
+    <string name="ERR_053">"SMTP autentication not configured (no password)!"</string>
+    <string name="ERR_054">"SMTP autentication not configured (no destination email)!"</string>
+    <string name="ERR_055">"Failed to send mail."</string>
+    <string name="ERR_056">"Unknow error."</string>
+    
 </resources>

@@ -38,14 +38,11 @@ public class MessageActivity extends Activity {
 		setContentView(R.layout.message_activity);
 		Bundle bundle = getIntent().getExtras();
 
-		TextView tvMessageTitle = (TextView)findViewById(R.id.tvMessageTitle); 
-		TextView tvMessageBody1 = (TextView)findViewById(R.id.tvMessageBody1);
-		tvMessageTitle.setText(bundle.getString("MessageTitle"));
-		tvMessageBody1.setText(bundle.getString("MessageBody"));
+		((TextView)findViewById(R.id.tvMessageTitle)).setText(bundle.getString("MessageTitle"));
+		((TextView)findViewById(R.id.tvMessageBody1)).setText(bundle.getString("MessageBody"));
 		int lMessageId = bundle.getInt("LongMessageID");
 		if(lMessageId != -1){
-			TextView tvMessageBody2 = (TextView)findViewById(R.id.tvMessageBody2);
-			tvMessageBody2.setText(lMessageId);
+			((TextView)findViewById(R.id.tvMessageBody2)).setText(lMessageId);
 		}
 	}
 	

@@ -31,6 +31,8 @@ import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 import org.andicar.activity.R;
+
+import com.andicar.addon.services.FileMailer;
 import com.andicar.addon.utils.AddOnDBObjectDef;
 
 /**
@@ -40,6 +42,13 @@ import com.andicar.addon.utils.AddOnDBObjectDef;
 public class DB {
     public String lastErrorMessage = null;
     public Exception lasteException;
+    protected DatabaseHelper mDbHelper = null;
+    protected SQLiteDatabase mDb = null;
+    protected final Context mCtx;
+    protected String bkFolder = null;
+    protected String bkFileName = null;
+
+
     protected static final String TAG = "MainDbAdapter";
     //drivers
     public static final String DRIVER_TABLE_NAME = "DEF_DRIVER";
@@ -653,10 +662,6 @@ public class DB {
         + GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
         + GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
         + ");";
-
-    protected DatabaseHelper mDbHelper = null;
-    protected SQLiteDatabase mDb = null;
-    protected final Context mCtx;
 
     /**
      * Constructor - takes the context to allow the database to be
@@ -1774,21 +1779,31 @@ public class DB {
     public boolean backupDb(String bkName, String bkPrefix) {
         boolean retVal;
         String fromFile = mDb.getPath();
-        String toFile = StaticValues.BACKUP_FOLDER;
+        bkFolder = StaticValues.BACKUP_FOLDER;
+        bkFileName = Utils.appendDateTime(
+				bkPrefix == null ? StaticValues.BACKUP_PREFIX : bkPrefix, 
+        				true, true, true) + StaticValues.BACKUP_SUFIX; 
         if(bkName == null)
-            toFile = toFile + 
-            		Utils.appendDateTime(
-            				bkPrefix == null ? StaticValues.BACKUP_PREFIX : bkPrefix, 
-            				true, true, true)
-                + StaticValues.BACKUP_SUFIX;
+            bkFolder = bkFolder + bkFileName;
         else
-            toFile = toFile + bkName + StaticValues.BACKUP_SUFIX;
+            bkFolder = bkFolder + bkName + StaticValues.BACKUP_SUFIX;
         
         mDb.close();
         FileUtils fu = new FileUtils(mCtx);
-        retVal = fu.copyFile(mCtx, fromFile, toFile, false);
+        retVal = fu.copyFile(mCtx, fromFile, bkFolder, false);
         if(retVal == false) {
             lastErrorMessage = fu.lastError;
+        }
+        else{ //send backup file as email att.
+        	Thread t = new Thread(){
+        		public void run() {
+        			SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        			String toEmailAddress = mPreferences.getString("bkFileToEmailAddress", "");
+        				String to[] = {toEmailAddress};
+        				(new FileMailer(mCtx)).sendFileInEmail(bkFolder, bkFileName, to);
+        		}
+        	};
+        	t.run();
         }
         open();
         return retVal;

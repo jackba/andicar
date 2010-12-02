@@ -64,13 +64,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-<!-- 
-        <receiver android:name="org.andicar.activity.miscellaneous.AndiCarUpgradeReceiver">
-			<intent-filter>
-				<action android:name="android.intent.action.PACKAGE_REPLACED"></action>
-			</intent-filter>
-		</receiver>
- -->
+
         <activity
             android:name="org.andicar.activity.DriverListActivity"
             android:label="@string/APP_Activity_DriverList">
@@ -234,7 +228,12 @@
             android:name="org.andicar.activity.TagEditActivity"
             android:label="@string/APP_Activity_TagEdit">
         </activity>
+        <activity
+            android:name="org.andicar.activity.miscellaneous.MessageActivity"
+            android:label="@string/APP_Activity_Message">
+        </activity>
         
+
         <!-- AddOn Services -->
         <receiver android:name="com.andicar.addon.services.AndiCarServiceStarter">
 			<intent-filter>
@@ -273,6 +272,11 @@
         <activity
             android:name="com.andicar.addon.activity.BackupSchedule"
             android:label="@string/AddOn_AutoBackupService_ScheduleTitle">
+        </activity>
+
+        <activity
+            android:name="com.andicar.addon.activity.SecureBackupConfig"
+            android:label="@string/AddOn_SecureBackup_Title">
         </activity>
     </application>
 </manifest>
