@@ -210,12 +210,12 @@ public class RefuelEditActivity extends EditActivityBase {
             rbInsertModePrice.setChecked(true);
         }
         else {
-            mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-            mDriverId = mPreferences.getLong("LastDriver_ID", -1);
+            mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
             mExpCategoryId = mPreferences.getLong("RefuelExpenseCategory_ID", 1);
-            mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", -1);
-            mUomVolumeId = mPreferences.getLong("CarUOMVolume_ID", -1);
-            mCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
+            mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", 1);
+            mUomVolumeId = mPreferences.getLong("CarUOMVolume_ID", 1);
+            mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
             initDateTime(System.currentTimeMillis());
             ckIsFullRefuel.setChecked(false);
             carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
