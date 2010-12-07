@@ -751,6 +751,7 @@ public class DB {
                 createTagTable(db);
             	AddOnDBObjectDef.createAddOnTable(db);
             	AddOnDBObjectDef.createAddOnBKScheduleTable(db);
+            	AddOnDBObjectDef.createAddOnSecureBKSettingsTable(db);
 
                 //create the report folder on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
@@ -970,6 +971,7 @@ public class DB {
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
             //AndiCar 2.0.x
             else if(oldVersion == 200){
@@ -981,6 +983,7 @@ public class DB {
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
             //AndiCar 2.1.x
             else if(oldVersion == 210){
@@ -991,6 +994,7 @@ public class DB {
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
             //AndiCar 3.0.x
             else if(oldVersion == 300){
@@ -1000,6 +1004,7 @@ public class DB {
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
             //AndiCar 3.1.x, 3.2.x
             else if(oldVersion == 310){
@@ -1008,6 +1013,7 @@ public class DB {
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
             //AndiCar 3.3.x
             else if(oldVersion == 330){
@@ -1015,6 +1021,7 @@ public class DB {
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
             //AndiCar 3.4.x
             else if(oldVersion == 340 || 
@@ -1022,15 +1029,21 @@ public class DB {
                 upgradeDbTo350(db, oldVersion);
                 AddOnDBObjectDef.upgradeTo353(db);
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
             else if(oldVersion == 351){
                 AddOnDBObjectDef.upgradeTo353(db);
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
             else if(oldVersion == 353){
                 upgradeDbTo355(db, oldVersion);
+                upgradeDbTo356(db, oldVersion);
             }
-
+            else if(oldVersion == 355){
+            	upgradeDbTo356(db, oldVersion);
+            }
+//            upgradeDbTo356(db, oldVersion);
             //!!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
         	
         }
@@ -1450,6 +1463,10 @@ public class DB {
                     
                 db.execSQL(updSql);
             }
+        }
+
+        private void upgradeDbTo356(SQLiteDatabase db, int oldVersion) throws SQLException {
+        	AddOnDBObjectDef.createAddOnSecureBKSettingsTable(db);
         }
 
         private boolean columnExists(SQLiteDatabase db, String table, String column){
