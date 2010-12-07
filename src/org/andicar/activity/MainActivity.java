@@ -1,4 +1,4 @@
-/*
+/**
  *  AndiCar - a car management software for Android powered devices.
  *
  *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
@@ -1188,27 +1188,9 @@ public class MainActivity extends BaseActivity {
 		}
 		return false;
 	}
-	//  //AddOn Services
-	//  PreferenceCategory addOnCategory = new PreferenceCategory(this);
-	//  addOnCategory.setTitle(mRes.getString(R.string.PREF_AddOnCategoryTitle));
-	//  prefScreenRoot.addPreference(addOnCategory);
-	//  //AddOn screen
-	//  PreferenceScreen addOnScreen = getPreferenceManager().createPreferenceScreen(this);
-	//  addOnScreen.setIntent(new Intent(this, AddOnServicesList.class));
-	//  addOnScreen.setTitle(mRes.getString(R.string.PREF_AddOnServicesTitle));
-	//  addOnScreen.setSummary(mRes.getString(R.string.PREF_AddOnServicesSummary));
-	//  addOnCategory.addPreference(addOnScreen);
-
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
-		//		Bundle extras = intent.getExtras();
-
-		//        switch( requestCode ) {
-		//            case SETTINGS_ACTIVITY_REQUEST_CODE:
-		//                fillDriverCar();
-		//                break;
-		//        }
 	}
 }
