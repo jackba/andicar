@@ -241,10 +241,10 @@ public class MileageEditActivity extends EditActivityBase {
             	btnOk.setEnabled(true);
         		spnCar.setEnabled(true);
         		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_start_record_24x24));
-	            mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-	            mDriverId = mPreferences.getLong("LastDriver_ID", -1);
+	            mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+	            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
 	            mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
-	            mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
+	            mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", 1);
 	            //init tag
 	            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
 		            mTagId = mPreferences.getLong("LastTagId", 0);

@@ -211,9 +211,9 @@ public class ExpenseEditActivity extends EditActivityBase {
         }
         else {
             tvWarningLabel.setText("");
-            mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-            mDriverId = mPreferences.getLong("LastDriver_ID", -1);
-            mCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
+            mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
+            mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
             initDateTime(System.currentTimeMillis());
             setEditable((ViewGroup) findViewById(R.id.vgRoot), true);
             setConversionRateZoneVisible(false);
