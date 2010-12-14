@@ -109,9 +109,11 @@ public class StaticValues
     public static String DATE_DECODE_NO_CHANGE = "12";
 
     public static final String BASE_FOLDER = "/sdcard/andicar/";
-    public static final String REPORT_FOLDER = "/sdcard/andicar/reports/";
-    public static final String BACKUP_FOLDER = "/sdcard/andicar/backups/";
-    public static final String TRACK_FOLDER = "/sdcard/andicar/gpstrack/";
+    public static final String REPORT_FOLDER = BASE_FOLDER + "reports/";
+    public static final String BACKUP_FOLDER = BASE_FOLDER + "backups/";
+    public static final String TRACK_FOLDER = BASE_FOLDER + "gpstrack/";
+    public static final String TEMP_FOLDER = BASE_FOLDER + "temp/";
+    
     public static final String BACKUP_PREFIX = "bk";
     public static final String BACKUP_SUFIX = ".db";
 

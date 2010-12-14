@@ -19,28 +19,24 @@
 
 package org.andicar.utils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Calendar;
+
+import org.andicar.activity.R;
+import org.andicar.persistence.FileUtils;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.ReportDbAdapter;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+
 import com.google.android.maps.GeoPoint;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.NumberFormat;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.activity.R;
 
 /**
  *
@@ -227,63 +223,29 @@ public class Utils {
 
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText + "\nSent by AndiCar (http://sites.google.com/site/andicarfree/)");
         }
+
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
-        //attach the trackfiles
-        byte[] buf = new byte[1024];
-        ZipOutputStream out = null;
-        try {
-            out = new ZipOutputStream(new FileOutputStream(StaticValues.TRACK_FOLDER + "trackFiles.zip"));
-
-            String selection = MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "= ? ";
-            String[] selectionArgs = {Long.toString(gpsTrackID)};
-            c = mMainDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, MainDbAdapter.gpsTrackDetailTableColNames, 
-                    selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
-
-//                    fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
-//                                MainDbAdapter.gpsTrackDetailTableColNames,
-//                                MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + Long.toString(gpsTrackID),
-//                                MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
-            while(c.moveToNext()){
-                try{
-                    FileInputStream in = new FileInputStream(c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS));
-                    //zip entry name
-                    String entryName = c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS).replace(StaticValues.TRACK_FOLDER, "");
-                    out.putNextEntry(new ZipEntry(entryName));
-                    // Transfer bytes from the file to the ZIP file
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                            out.write(buf, 0, len);
-                    }
-                    // Complete the entry
-                    out.closeEntry();
-                    in.close();
-                }
-                catch(FileNotFoundException ex){}
-            }
-            out.close();
-            c.close();
-            Uri trackFile = Uri.parse("file://" + StaticValues.TRACK_FOLDER + "trackFiles.zip");
-            if(trackFile != null)
-                emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, trackFile);
-        } catch (IOException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        
+        //get the track files
+        String selection = MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "= ? ";
+        String[] selectionArgs = {Long.toString(gpsTrackID)};
+        c = mMainDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, MainDbAdapter.gpsTrackDetailTableColNames, 
+                selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
+        
+        Bundle trackFiles = new Bundle();
+        String trackFile = "";
+        while(c.moveToNext()){
+        	trackFile = c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS);
+        	trackFiles.putString(trackFile.replace(StaticValues.TRACK_FOLDER, ""), trackFile);
         }
+        
+        //create the zip file
+        Uri trackFileZip = FileUtils.zipFiles(trackFiles, StaticValues.TRACK_FOLDER + "AndiCarGPSTrack.zip");
+        if(trackFileZip != null)
+            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, trackFileZip);
         ctx.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-        mMainDbAdapter.close();
     }
 
-//    public static String roundStringNumber(String sNumber, int decimals){
-//        String retVal = null;
-//        try{
-//            BigDecimal number = new BigDecimal(sNumber);
-//            retVal = number.setScale(decimals, RoundingMode.HALF_UP).toString();
-//        }
-//        catch(NumberFormatException e){
-//            return null;
-//        }
-//        return retVal;
-//    }
-    
     /**
      * @param number: the number which will be converted to string
      * @param localeFormat: also format the returned string according to locale formats
