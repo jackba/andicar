@@ -167,9 +167,9 @@ public class MainActivity extends BaseActivity {
 					builder.setCancelable(false);
 					builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
 							new DialogInterface.OnClickListener() {
-						public void onClick(DialogInterface dialog, int id) {
-							dialog.cancel();
-						}
+								public void onClick(DialogInterface dialog, int id) {
+									dialog.cancel();
+								}
 					});
 					AlertDialog alert = builder.create();
 					alert.show();
@@ -232,21 +232,19 @@ public class MainActivity extends BaseActivity {
 					builder.setCancelable(false);
 					builder.setPositiveButton(mRes.getString(R.string.GEN_YES),
 							new DialogInterface.OnClickListener() {
-		
-						public void onClick(DialogInterface dialog, int id) {
-							Intent i = new Intent(MainActivity.this, BackupRestoreActivity.class);
-							startActivity(i);
-							exitResume = false;
-						}
+								public void onClick(DialogInterface dialog, int id) {
+									Intent i = new Intent(MainActivity.this, BackupRestoreActivity.class);
+									startActivity(i);
+									exitResume = false;
+								}
 					});
 					builder.setNegativeButton(mRes.getString(R.string.GEN_NO),
 							new DialogInterface.OnClickListener() {
-		
-						public void onClick(DialogInterface dialog, int id) {
-							dialog.cancel();
-							exitResume = false;
-							onResume();
-						}
+								public void onClick(DialogInterface dialog, int id) {
+									dialog.cancel();
+									exitResume = false;
+									onResume();
+								}
 					});
 					AlertDialog alert = builder.create();
 					alert.show();
@@ -304,13 +302,13 @@ public class MainActivity extends BaseActivity {
 				appVersion = "N/A";
 			}
 	
-			//recreate missing folders (if need)
-			FileUtils fu = new FileUtils(mainContext);
-			fu.createFolders(mainContext);
-			fu = null;
-			
+//			//recreate missing folders (if need)
+//			FileUtils fu = new FileUtils(mainContext);
+//			fu.createFolders(mainContext);
+//			fu = null;
+//			
 			//check for app update once a day
-			if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("AutoUpdateCheck", true)){
+			if(mPreferences.getBoolean("AutoUpdateCheck", true)){
     			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
     			Long currentTime = System.currentTimeMillis();
     			if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < currentTime) {
@@ -325,7 +323,6 @@ public class MainActivity extends BaseActivity {
 			}
 		}
 		catch(Exception e){
-			
 			String logFile = "startup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
 			FileUtils fu = new FileUtils(mainContext);
@@ -1168,7 +1165,6 @@ public class MainActivity extends BaseActivity {
 		} else if (item.getItemId() == StaticValues.MENU_GPSTRACK_ID) {
 			startActivity(new Intent(this, GPSTrackListReportActivity.class));
 		} else if (item.getItemId() == StaticValues.MENU_RATE_COMMENT_ID) {
-			//Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:org.andicar.activity"));
 			try{
 				startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:org.andicar.activity")));
 			}

@@ -256,7 +256,7 @@
             android:label="@string/PREF_AddOnCategoryTitle">
         </activity>
         <activity
-            android:name="com.andicar.addon.activity.SubscribeToService">
+            android:name="com.andicar.addon.activity.ServiceSubscription">
         </activity>
   
 		<activity 
@@ -278,5 +278,10 @@
             android:name="com.andicar.addon.activity.SecureBackupConfig"
             android:label="@string/AddOn_SecureBackup_Title">
         </activity>
+        <service android:name="com.andicar.addon.services.FileMailer" 
+			android:label="AndiCarFileMailer"
+			android:process="com.andicar.addon.services">
+ 		</service>
+
     </application>
 </manifest>

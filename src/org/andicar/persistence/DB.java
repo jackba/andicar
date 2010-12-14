@@ -1837,7 +1837,7 @@ public class DB {
 					intent.putExtra("attachName", bkFileName);
 					intent.putExtra("toEmailAddress", toEmailAddress);
 					PendingIntent pIntent = PendingIntent.getService(mCtx, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-					am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pIntent);
+					am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000, pIntent);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
