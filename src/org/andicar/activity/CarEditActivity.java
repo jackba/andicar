@@ -1,5 +1,5 @@
 /*
- *  AndiCar - a car management software for Android powered devices.
+*  AndiCar - a car management software for Android powered devices.
  *
  *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
  *
@@ -25,10 +25,13 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,6 +50,7 @@ public class CarEditActivity extends EditActivityBase
     private EditText etUserComment = null;
     private EditText etIndexStart = null;
     private CheckBox ckIsActive = null;
+    private ImageButton btnNewCurrency = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -63,7 +67,9 @@ public class CarEditActivity extends EditActivityBase
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         etIndexStart = (EditText) findViewById( R.id.etIndexStart );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
-
+        btnNewCurrency = (ImageButton) findViewById( R.id.btnNewCurrency );
+        btnNewCurrency.setOnClickListener(onNewCurrClickListener);
+        
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
         BigDecimal bdStartIndex = null;
 
@@ -220,5 +226,31 @@ public class CarEditActivity extends EditActivityBase
     protected void setLayout() {
         setContentView(R.layout.car_edit_activity);
     }
+
+    protected View.OnClickListener onNewCurrClickListener =
+        new View.OnClickListener(){
+            public void onClick( View v )
+            {
+				Intent i = new Intent(CarEditActivity.this, CurrencyEditActivity.class);
+				i.putExtra("Operation", "N");
+				startActivityForResult(i, 0);
+            }
+        };
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		long newId = 0;
+		if(data != null)
+			newId =	data.getLongExtra("mRowId", 0);
+			
+        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
+                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, newId, false);
+	}
+
+        
 
 }

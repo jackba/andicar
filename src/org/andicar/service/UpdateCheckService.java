@@ -80,13 +80,13 @@ public class UpdateCheckService extends Service{
 
                 CharSequence title = getText(R.string.Notif_UpdateTitle);
                 String message = getString(R.string.Notif_UpdateMsg);
-                notification = new Notification(R.drawable.stat_sys_info_2, message,
+                notification = new Notification(R.drawable.icon_sys_info, message,
                         System.currentTimeMillis());
 		        notification.flags |= Notification.DEFAULT_LIGHTS;
 		        notification.flags |= Notification.DEFAULT_SOUND;
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
                 notification.setLatestEventInfo(UpdateCheckService.this, title, message, contentIntent);
-                mNM.notify(0, notification);
+                mNM.notify(StaticValues.NOTIF_UPDATECHECK_ID, notification);
             }
         } catch (Exception e) {
     		Log.i("UpdateService", "Service failed.");

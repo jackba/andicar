@@ -22,6 +22,7 @@ package org.andicar.activity;
 import org.andicar.persistence.MainDbAdapter;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.CheckBox;
@@ -106,8 +107,18 @@ public class CurrencyEditActivity extends EditActivityBase {
                 etCode.getText().toString());
 
         if (mRowId == -1) {
-            mDbAdapter.createRecord(MainDbAdapter.CURRENCY_TABLE_NAME, cvData);
-            finish();
+            long newId = mDbAdapter.createRecord(MainDbAdapter.CURRENCY_TABLE_NAME, cvData);
+            if(newId < 0){
+            	newId = -1 * newId;
+                String strErrMsg = mResource.getString((int) newId);
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+            }
+            else{
+	            setResult(RESULT_OK, (new Intent()).putExtra("mRowId", newId));
+	            finish();
+            }
         } else {
             int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CURRENCY_TABLE_NAME, mRowId, cvData);
             if(iUpdateResult != -1){
@@ -128,5 +139,4 @@ public class CurrencyEditActivity extends EditActivityBase {
     protected void setLayout() {
         setContentView( R.layout.currency_edit_activity);
     }
-
 }

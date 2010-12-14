@@ -229,6 +229,19 @@ public class MainDbAdapter extends DB
                     content.getAsLong(UOM_CONVERSION_COL_UOMTO_ID_NAME))
                 return R.string.ERR_031;
         }
+        else if(tableName.equals(CURRENCY_TABLE_NAME)){
+            String expenseIdSelect =
+                "SELECT " + GEN_COL_ROWID_NAME + " " +
+                "FROM " + CURRENCY_TABLE_NAME + " " +
+                "WHERE " + CURRENCY_COL_CODE_NAME + " = ? ";
+	        String[] selectionArgs = {content.getAsString((CURRENCY_COL_CODE_NAME))};
+	        Cursor c = execSelectSql(expenseIdSelect, selectionArgs);
+	        if(c.moveToFirst()){ //duplicate currency code
+	            c.close();
+	            return R.string.ERR_059;
+            }
+	        c.close();
+        }
         return -1;
     }
 

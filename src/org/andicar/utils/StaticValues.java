@@ -95,6 +95,19 @@ public class StaticValues
     public static final int DIALOG_DATE_FROM_PICKER = 4;
     public static final int DIALOG_DATE_TO_PICKER = 5;
 
+    public static final int NOTIF_UPDATECHECK_ID = 0;
+    public static final int NOTIF_GPS_TRACK_STARTED_ID = 1;
+    public static final int NOTIF_GPS_ACCURACY_WARNING_ID = 2;
+    public static final int NOTIF_FILESYSTEM_ERROR_ID = 3;
+    public static final int NOTIF_GPS_ACCURACY_SHUTDOWN_ID = 4;
+    public static final int NOTIF_GPS_DISABLED_ID = 5;
+    public static final int NOTIF_GPS_OUTOFSERVICE_ID = 6;
+    public static final int NOTIF_BACKUP_SERVICE_EXCEPTION_ID = 7;
+    public static final int NOTIF_BACKUP_SERVICE_INFO_ID = 8;
+    public static final int NOTIF_BACKUP_SERVICE_ERROR_ID = 9;
+    public static final int NOTIF_BACKUP_SERVICE_EXPIRE_ID = 10;
+    public static final int NOTIF_SECURE_BACKUP_EXPIRE_ID = 11;
+    public static final int NOTIF_SECURE_BACKUP_ID = 12;
 
     /**
      * 
@@ -124,13 +137,6 @@ public class StaticValues
     public static final String GOP_FORMAT = "gop"; //geopoint coordinates. Used to draw the track on the map
 
     public static final String EXPENSES_COL_FROMREFUEL_TABLE_NAME = "Refuel";
-    
-    public static int NOTIF_TYPE_GPS_TRACK_STARTED_ID = 1;
-    public static int NOTIF_TYPE_GPS_ACCURACY_WARNING_ID = 2;
-    public static int NOTIF_TYPE_FILESYSTEM_ERROR_ID = 3;
-    public static int NOTIF_TYPE_GPS_ACCURACY_SHUTDOWN_ID = 4;
-    public static int NOTIF_TYPE_GPS_DISABLED_ID = 5;
-    public static int NOTIF_TYPE_GPS_OUTOFSERVICE_ID = 6;
     
     public static final String DAY_OF_WEEK_NAME = "DayOfWeek";
     

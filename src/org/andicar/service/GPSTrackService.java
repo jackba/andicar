@@ -227,14 +227,14 @@ public class GPSTrackService extends Service {
             createFiles();
 
             // Display a notification about us starting.  We put an icon in the status bar.
-            showNotification(StaticValues.NOTIF_TYPE_GPS_TRACK_STARTED_ID, false);
+            showNotification(StaticValues.NOTIF_GPS_TRACK_STARTED_ID, false);
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putBoolean("isGpsTrackOn", true);
             editor.commit();
         }
         catch(IOException ex) {
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
-            showNotification(StaticValues.NOTIF_TYPE_FILESYSTEM_ERROR_ID, true);
+            showNotification(StaticValues.NOTIF_FILESYSTEM_ERROR_ID, true);
             isErrorStop = true;
             stopSelf();
         }
@@ -566,7 +566,7 @@ public class GPSTrackService extends Service {
         }
         catch(IOException ex) {
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
-            showNotification(StaticValues.NOTIF_TYPE_FILESYSTEM_ERROR_ID, true);
+            showNotification(StaticValues.NOTIF_FILESYSTEM_ERROR_ID, true);
         }
     }
 
@@ -618,7 +618,7 @@ public class GPSTrackService extends Service {
         contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, GPSTrackController.class), 0);
 
-        if(what == StaticValues.NOTIF_TYPE_GPS_TRACK_STARTED_ID){
+        if(what == StaticValues.NOTIF_GPS_TRACK_STARTED_ID){
             title = getText(R.string.GPSTrackService_TrackInProgressTitle);
             message = getString(R.string.GPSTrackService_TrackInProgressMessage);
 
@@ -628,11 +628,11 @@ public class GPSTrackService extends Service {
 
             notification.setLatestEventInfo(this, title, message, contentIntent); 
         }
-        else if(what == StaticValues.NOTIF_TYPE_GPS_ACCURACY_WARNING_ID){
+        else if(what == StaticValues.NOTIF_GPS_ACCURACY_WARNING_ID){
             title = getText(R.string.GPSTrackService_AccuracyProblemTitle);
             message = getString(R.string.GPSTrackService_AccuracyProblemMessage);
 
-            notification = new Notification(R.drawable.stat_sys_warning, message,
+            notification = new Notification(R.drawable.icon_sys_warning, message,
                     System.currentTimeMillis());
             notification.flags |= Notification.DEFAULT_LIGHTS;
             notification.flags |= Notification.DEFAULT_SOUND;
@@ -641,18 +641,18 @@ public class GPSTrackService extends Service {
             if(showToast)
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
-        else if(what == StaticValues.NOTIF_TYPE_FILESYSTEM_ERROR_ID){
+        else if(what == StaticValues.NOTIF_FILESYSTEM_ERROR_ID){
             title = getText(R.string.GPSTrackService_FileSystemErrorTitle);
             message = getString(R.string.ERR_034);
 
-            notification = new Notification(R.drawable.stat_sys_error, message,
+            notification = new Notification(R.drawable.icon_sys_error, message,
                     System.currentTimeMillis());
 
             notification.setLatestEventInfo(this, title, message, contentIntent);
             if(showToast)
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
-        else if(what == StaticValues.NOTIF_TYPE_GPS_ACCURACY_SHUTDOWN_ID){
+        else if(what == StaticValues.NOTIF_GPS_ACCURACY_SHUTDOWN_ID){
             try{
                 title = getText(R.string.GPSTrackService_AutoShutDownTitle);
                 message = getString(R.string.GPSTrackService_AutoShutDownMessage);
@@ -660,7 +660,7 @@ public class GPSTrackService extends Service {
                 message = message.replace("[%1]",  bdSkippedPointPercentage.toString() + "%").
                         replace("[%2]", iMaxAccuracyShutdownLimit + "%");
 
-                notification = new Notification(R.drawable.stat_sys_error, message,
+                notification = new Notification(R.drawable.icon_sys_error, message,
                         System.currentTimeMillis());
                 notification.flags |= Notification.DEFAULT_LIGHTS;
                 notification.flags |= Notification.DEFAULT_SOUND;
@@ -671,10 +671,10 @@ public class GPSTrackService extends Service {
             }
             catch(NumberFormatException e){}
         }
-        else if(what == StaticValues.NOTIF_TYPE_GPS_DISABLED_ID){
+        else if(what == StaticValues.NOTIF_GPS_DISABLED_ID){
             title = getText(R.string.GPSTrackService_AutoShutDownTitle);
             message = getString(R.string.GPSTrackService_GPSDisabledMessage);
-            notification = new Notification(R.drawable.stat_sys_error, message,
+            notification = new Notification(R.drawable.icon_sys_error, message,
                     System.currentTimeMillis());
             notification.flags |= Notification.DEFAULT_LIGHTS;
             notification.flags |= Notification.DEFAULT_SOUND;
@@ -683,10 +683,10 @@ public class GPSTrackService extends Service {
             if(showToast)
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
-        else if(what == StaticValues.NOTIF_TYPE_GPS_OUTOFSERVICE_ID){
+        else if(what == StaticValues.NOTIF_GPS_OUTOFSERVICE_ID){
             title = getText(R.string.GPSTrackService_AutoShutDownTitle);
             message = getString(R.string.GPSTrackService_GPSOutOfService);
-            notification = new Notification(R.drawable.stat_sys_error, message,
+            notification = new Notification(R.drawable.icon_sys_error, message,
                     System.currentTimeMillis());
             notification.flags |= Notification.DEFAULT_LIGHTS;
             notification.flags |= Notification.DEFAULT_SOUND;
@@ -803,13 +803,13 @@ public class GPSTrackService extends Service {
                         }
                         if(dTmpSkippedTrackPoints > 10 && !bNotificationShowed){
                             //notify the user
-                            showNotification(StaticValues.NOTIF_TYPE_GPS_ACCURACY_WARNING_ID, true);
+                            showNotification(StaticValues.NOTIF_GPS_ACCURACY_WARNING_ID, true);
                             bNotificationShowed = true;
 
                         }
                         skippedPointPercentage = (dTotalSkippedTrackPoints / dTotalTrackPoints) * 100;
                         if(skippedPointPercentage > iMaxAccuracyShutdownLimit){
-                            showNotification(StaticValues.NOTIF_TYPE_GPS_ACCURACY_SHUTDOWN_ID, true);
+                            showNotification(StaticValues.NOTIF_GPS_ACCURACY_SHUTDOWN_ID, true);
                             isErrorStop = true;
                             stopSelf();
                         }
@@ -941,21 +941,21 @@ public class GPSTrackService extends Service {
         @Override
         public void onProviderDisabled(String provider) {
             if(provider.equals(LocationManager.GPS_PROVIDER)){
-                showNotification(StaticValues.NOTIF_TYPE_GPS_DISABLED_ID, false);
+                showNotification(StaticValues.NOTIF_GPS_DISABLED_ID, false);
 //                stopSelf();
             }
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-            mNM.cancel(StaticValues.NOTIF_TYPE_GPS_DISABLED_ID);
+            mNM.cancel(StaticValues.NOTIF_GPS_DISABLED_ID);
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
             if(provider.equals(LocationManager.GPS_PROVIDER)
                     && status == LocationProvider.OUT_OF_SERVICE){
-                showNotification(StaticValues.NOTIF_TYPE_GPS_OUTOFSERVICE_ID, false);
+                showNotification(StaticValues.NOTIF_GPS_OUTOFSERVICE_ID, false);
 //                stopSelf();
             }
         }
