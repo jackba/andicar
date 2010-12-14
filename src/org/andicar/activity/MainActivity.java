@@ -1145,6 +1145,8 @@ public class MainActivity extends BaseActivity {
 				mRes.getText(R.string.MENU_AboutCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_info_details));
 		menu.add(0, StaticValues.MENU_RATE_COMMENT_ID, 0,
 				mRes.getText(R.string.MENU_RateCommentCaption)).setIcon(mRes.getDrawable(R.drawable.ic_menu_star));
+		menu.add(0, StaticValues.MENU_LOCALIZE_ID, 0,
+				mRes.getText(R.string.MENU_LocalizeAndiCar)).setIcon(mRes.getDrawable(R.drawable.ic_menu_edit));
 		return true;
 	}
 
@@ -1185,6 +1187,8 @@ public class MainActivity extends BaseActivity {
 			}
 		} else if (item.getItemId() == StaticValues.MENU_ADDON_ID) {
 			startActivity(new Intent(this, AddOnServicesList.class));
+		} else if (item.getItemId() == StaticValues.MENU_LOCALIZE_ID) {
+			startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://sites.google.com/site/andicarfree/localizing-andicar")));
 		}
 		return false;
 	}

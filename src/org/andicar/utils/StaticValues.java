@@ -42,6 +42,7 @@ public class StaticValues
     public static final int MENU_GPSTRACK_ID = 17;
     public static final int MENU_RATE_COMMENT_ID = 18;
     public static final int MENU_ADDON_ID = 19;
+    public static final int MENU_LOCALIZE_ID = 20;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
