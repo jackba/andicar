@@ -78,9 +78,8 @@
     	for a database restored from a backup created AFTER the subscription process.
     	\nYou should create a backup immediately after the subscription process!     
     </string>
-    <string name="AddOn_AutoBackupService_LongDescription">
-    	The recorded informations (mileages, expenses, fill ups) are the most important assets for you. In case of database loss the only way to ensure the availability of these data is a recent backup.
-    	\n\nThis service will help you to schedule a daily/weekly automatic backup task.
+    <string name="AddOn_Backup_LongDescription">
+    	The recorded informations (mileages, expenses, fill ups) are the most valuable assets for you. In case of database/phone loss, the only way to ensure the availability of these data is a more recent backup.    	
    	</string>
 
 </resources>

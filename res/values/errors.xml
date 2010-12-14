@@ -80,5 +80,8 @@
     <string name="ERR_054">"SMTP autentication not configured (no destination email)!"</string>
     <string name="ERR_055">"Failed to send mail."</string>
     <string name="ERR_056">"Unknow error."</string>
+    <string name="ERR_057">"Failed to compress the database backup!"</string>
+
+    <string name="ERR_058">"Temporary folder (/sdcard/andicar/temp) can not be created. You can not use the SecureBecup service until you create this folder on your device."</string>
     
 </resources>

@@ -394,21 +394,21 @@
     <string name="AddOn_RenewSubscriptionPeriodInfo">"The selected period will be added to the current subscription"</string>
 
     <string name="AddOn_SecureBackup_Title">"Secure Backup"</string>
-    <string name="AddOn_SecureBackup_Description">"Automatically send your backups as email attachment to a preconfigured address."</string>
-    <string name="AddOn_SecureBackup_LongDescription">"Automatically send your database backups to your Google account so you can access them even if you lose your phone"</string>
+    <string name="AddOn_SecureBackup_Description">"Every time a database backup is created, this service automatically send it as an email attachment to a preconfigured email address. In this way your recorded data will be available even if you lose your phone. Combined with the Backup Service AddOn is the definitive solution for your data safety."</string>
     <string name="AddOn_SecureBackup_TermOfService">"We are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data, insufficient storage space on your Google account, deletion of backup files from Google Mail or any other event which cause lose or unusable backup files."</string>
-    <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid Google Mail account, Internet connectivity, mobile data transfer."</string>
+    <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid GMail account, Internet connectivity, mobile data transfer."</string>
     <!--  Check the pricing in your agreement with your mobile provider for data transfer. -->
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"One month subscription: [%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
     <string name="AddOn_SecureBackup_SubscriptionOption2">"Six month subscription: [%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [%1] [%2]"</string>
     <string name="AddOn_SecureBackup_Configure">"Go to the SecureBackup configuration in order to enter the missing information."</string>
-    <string name="AddOn_SecureBackup_SMTPUserFrom">"From email (used for autentication in Google Mail for sending the backup):"</string>
+    <string name="AddOn_SecureBackup_SMTPUserFrom">"From email (GMail account required):"</string>
     <string name="AddOn_SecureBackup_SMTPEmailTo">"Send to email:"</string>
     <string name="AddOn_SecureBackup_IncludeGPSTrack">"Include GPS track files"</string>
+    <string name="AddOn_SecureBackup_IncludeReports">"Include generated reports"</string>
     
     <string name="AddOn_AutoBackupService_Title">"Backup Service"</string>
-    <string name="AddOn_AutoBackupService_Description">"Create scheduled automatic backups."</string>
+    <string name="AddOn_AutoBackupService_Description">"This service allow you to schedule a daily/weekly automatic database backup task. Combined with the Secure Backup AddOn is the definitive solution for your data safety."</string>
     <string name="AddOn_AutoBackupService_TermOfService">""</string>
     <string name="AddOn_AutoBackupService_Requirements">"Service requirements: free space on the SDCARD depending on your database size and the number of existing backups."</string>
     <string name="AddOn_AutoBackupService_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
