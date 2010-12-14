@@ -18,7 +18,15 @@
  */
 package org.andicar.persistence;
 
+import org.andicar.activity.R;
+import org.andicar.utils.AndiCarExceptionHandler;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -27,13 +35,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import org.andicar.utils.AndiCarExceptionHandler;
-import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
-import org.andicar.activity.R;
 
+import com.andicar.addon.activity.ServiceSubscription;
 import com.andicar.addon.services.FileMailer;
 import com.andicar.addon.utils.AddOnDBObjectDef;
+import com.andicar.addon.utils.AddOnStaticValues;
 
 /**
  * Database object names and database creation/update
@@ -753,7 +759,7 @@ public class DB {
             	AddOnDBObjectDef.createAddOnBKScheduleTable(db);
             	AddOnDBObjectDef.createAddOnSecureBKSettingsTable(db);
 
-                //create the report folder on SDCARD
+                //create the folders on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
                 if(fu.createFolders(mCtx) != -1) {
                     Log.e(TAG, fu.lastError);
@@ -1045,6 +1051,12 @@ public class DB {
             }
 //            upgradeDbTo356(db, oldVersion);
             //!!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
+          
+            //create the missing folders on SDCARD
+            FileUtils fu = new FileUtils(mCtx);
+            if(fu.createFolders(mCtx) != -1) {
+                Log.e(TAG, fu.lastError);
+            }
         	
         }
 
@@ -1811,16 +1823,25 @@ public class DB {
         if(retVal == false) {
             lastErrorMessage = fu.lastError;
         }
-        else{ //send backup file as email att.
-        	Thread t = new Thread(){
-        		public void run() {
+        else{ //send backup file as email att. if secure backup subscription exists
+			try {
+				MainDbAdapter db = new MainDbAdapter(mCtx);
+				boolean subsValid = ServiceSubscription.isSubscriptionValid(db, AddOnStaticValues.SECURE_BACKUP_ID);
+				db.close();
+				if(subsValid){
         			SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
         			String toEmailAddress = mPreferences.getString("bkFileToEmailAddress", "");
-        				String to[] = {toEmailAddress};
-        				(new FileMailer(mCtx)).sendFileInEmail(bkFolder, bkFileName, to);
-        		}
-        	};
-        	t.run();
+					AlarmManager am = (AlarmManager)mCtx.getSystemService(Context.ALARM_SERVICE);
+					Intent intent = new Intent(mCtx, FileMailer.class);
+					intent.putExtra("bkFile", bkFolder);
+					intent.putExtra("attachName", bkFileName);
+					intent.putExtra("toEmailAddress", toEmailAddress);
+					PendingIntent pIntent = PendingIntent.getService(mCtx, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+					am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pIntent);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
         }
         open();
         return retVal;
