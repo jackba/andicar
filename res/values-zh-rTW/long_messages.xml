@@ -69,9 +69,8 @@
 		這個訂閱對於你目前的或從處理訂閱後建立的備份中還原的資料庫來說是有效的。
 		\n你應該在處理這個訂閱後立即進行備份！
 	</string>
-	<string name="AddOn_AutoBackupService_LongDescription">
+	<string name="AddOn_Backup_LongDescription">
 		所記錄的訊息(里程數，支出，總用油)對於你來說是很有價值的財產。為了在資料遺失的情況下還原最近的備份，這是一種很有用的方式。
-		\n\n這項服務將協助你安排每天/每週的自動備份工作。
 	</string>
 
 

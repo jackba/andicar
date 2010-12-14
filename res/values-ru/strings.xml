@@ -390,12 +390,12 @@
     <string name="AddOn_SecureBackup_LongDescription">"Автоматическая загрузка ваших копий баз данных  позволит вам иметь доступ к данным даже в случае утери телефона"</string>
     <string name="AddOn_SecureBackup_TermOfService">"Мы не несем ответственности за: плохое / несуществующее или поврежденное подключение к Интернету, что приведет к неполному или сбойному добавлению данных, недостаточное место на вашей учетной записи Google, удаление файлов резервных копий с документов Google или любое другое событие, которое вызывает потери или делает непригодным использование файлов резервного копирования."</string>
 	<string name="AddOn_SecureBackup_Requirements">"Требования: действительная учетная запись Google с доступом к службе Google Docs, соединение с интернетом"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"Месячная подписка: [%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
     <string name="AddOn_SecureBackup_SubscriptionOption2">"Полугодовая подписка: [%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"Годовая подписка: [%1] [%2]"</string>
     
     <string name="AddOn_AutoBackupService_Title">"Услуга резервного копирования"</string>
-	<string name="AddOn_AutoBackupService_Description">"Создать автоматическое резервное копирование по расписанию."</string>
+	<string name="AddOn_AutoBackupService_Description">"Эта услуга поможет вам планировать ежедневные/еженедельные задачи автоматического резервного копирования."</string>
 	<string name="AddOn_AutoBackupService_Requirements">"Требования: свободное место на карте SD в зависимости от  размера вашей базы данных и количества существующих резервных копий."</string>
 	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
 	<string name="AddOn_AutoBackupService_SubscriptionOption2">"Срок подписки: [%1] [%2]"</string>

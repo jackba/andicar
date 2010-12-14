@@ -141,7 +141,7 @@
 		        />
 		        
             <CheckBox
-                android:id="@+id/ckIncludeGPSTrack"
+                android:id="@+id/ckIsIncludeGPSTrack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/AddOn_SecureBackup_IncludeGPSTrack"
@@ -152,14 +152,33 @@
                 />
 
             <CheckBox
-                android:id="@+id/ckShowNotification"
+                android:id="@+id/ckIsIncludeReports"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AddOn_SecureBackup_IncludeReports"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                android:button="@drawable/checkbox_selector"
+                />
+
+            <CheckBox
+                android:id="@+id/ckIsShowNotification"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_ShowNotification"
                 android:typeface="sans"
                 android:textColor="@android:color/white"
                 android:button="@drawable/checkbox_selector"
-		        android:layout_marginTop="10dip"
+                />
+
+            <CheckBox
+                android:id="@+id/ckIsActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_IsActiveLabel"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                android:button="@drawable/checkbox_selector"
                 />
 
         </LinearLayout>
