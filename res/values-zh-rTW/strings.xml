@@ -382,12 +382,12 @@
     <string name="AddOn_SecureBackup_LongDescription">"自動上傳備份到你的 Google 賬戶，這樣哪怕手機丟了，你也可用獲取到它們"</string>
     <string name="AddOn_SecureBackup_TermOfService">"我們不對以下情況負責：由於惡劣/不存在/有缺陷的網路連接所導致的不完整/損壞的資料上傳，你的Google賬戶所擁有的儲存空間不足，從Google Docs上刪除備份檔案或是任何其他情況造成備份檔案遺失或不可用。"</string>
     <string name="AddOn_SecureBackup_Requirements">"服務要求：有效的Google 賬戶，用以存取Google Docs，網路連接"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"訂閱一個月：[%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"15天免費的訂閱評估。"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption2">"訂閱六個月：[%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"訂閱一年：[%1] [%2]"</string>
     
 	<string name="AddOn_AutoBackupService_Title">"備份服務"</string>
-	<string name="AddOn_AutoBackupService_Description">"建立定時自動備份。"</string>
+	<string name="AddOn_AutoBackupService_Description">"這項服務將協助你安排每天/每週的自動備份工作。"</string>
 	<string name="AddOn_AutoBackupService_TermOfService">""</string>
 	<string name="AddOn_AutoBackupService_Requirements">"服務需要：SD卡上有足夠的剩餘空間，所需空間的大小取決於你資料庫的大小以及現有的備份數量。"</string>
 	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15天免費的訂閱評估。"</string>

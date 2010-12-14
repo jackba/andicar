@@ -382,12 +382,12 @@
     <string name="AddOn_SecureBackup_LongDescription">"自动上传备份到你的 Google 账户，这样哪怕手机丢了，你也可用获取到它们"</string>
     <string name="AddOn_SecureBackup_TermOfService">"我们不对以下情况负责：由于恶劣/不存在/有缺陷的网络连接所导致的不完整/损坏的数据上传，你的Google账户所拥有的储存空间不足，从Google Docs上删除备份文件或是任何其他情况造成备份文件丢失或不可用。"</string>
     <string name="AddOn_SecureBackup_Requirements">"服务要求：有效的Google 账户，用以访问Google Docs，网络连接"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"订阅一个月：[%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"15天免费的订阅评估。"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption2">"订阅六个月：[%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"订阅一年：[%1] [%2]"</string>
     
 	<string name="AddOn_AutoBackupService_Title">"备份服务"</string>
-	<string name="AddOn_AutoBackupService_Description">"创建定时自动备份。"</string>
+	<string name="AddOn_AutoBackupService_Description">"这项服务将帮助你安排每天/每周的自动备份任务。"</string>
 	<string name="AddOn_AutoBackupService_TermOfService">""</string>
 	<string name="AddOn_AutoBackupService_Requirements">"服务需要：SD卡上有足够的剩余空间，所需空间的大小取决于你数据库的大小以及现有的备份数量。"</string>
 	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15天免费的订阅评估。"</string>

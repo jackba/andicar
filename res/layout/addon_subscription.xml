@@ -17,7 +17,15 @@
             android:layout_marginRight="5dip"
             >
 			<TextView  
-			    android:id="@+id/tvAddOnDescription"
+			    android:id="@+id/tvAddOnDescription1"
+			    android:layout_width="fill_parent" 
+			    android:layout_height="wrap_content" 
+			   	android:layout_marginTop="5dip" 
+		        android:typeface="sans"
+		        android:textColor="@android:color/white"
+			    />
+			<TextView  
+			    android:id="@+id/tvAddOnDescription2"
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
 			   	android:layout_marginTop="5dip" 
