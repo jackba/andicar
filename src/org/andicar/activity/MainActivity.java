@@ -39,7 +39,9 @@ import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -293,7 +295,6 @@ public class MainActivity extends BaseActivity {
 						|| appVersion.endsWith("Beta")){ //for beta testing
 					
 					initPreferenceValues(); //version update => init (new) preference values
-
 					AndiCarServiceStarter.startServices(this);
 					editor.putInt("appVersionCode", appVersionCode);
 					editor.commit();
@@ -303,25 +304,24 @@ public class MainActivity extends BaseActivity {
 				appVersion = "N/A";
 			}
 	
+			//recreate missing folders (if need)
+			FileUtils fu = new FileUtils(mainContext);
+			fu.createFolders(mainContext);
+			fu = null;
+			
 			//check for app update once a day
 			if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("AutoUpdateCheck", true)){
-				Thread t = new Thread() {
-		            public void run() {
-		    			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
-		    			Long currentTime = System.currentTimeMillis();
-		    			if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < currentTime) {
-		    				/* Save current timestamp for next Check*/
-		    				lastUpdateTime = currentTime;
-		    				SharedPreferences.Editor editor = mPreferences.edit();
-		    				editor.putLong("lastUpdateCheckTime", lastUpdateTime);
-		    				editor.commit();
-		    				//start update check
-		    				Intent updateCheck = new Intent(MainActivity.this, UpdateCheckService.class);
-		    				startService(updateCheck);
-		    			}
-		            }
-		        };
-		        t.start();
+    			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
+    			Long currentTime = System.currentTimeMillis();
+    			if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < currentTime) {
+					AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+					Intent intent = new Intent(this, UpdateCheckService.class);
+					PendingIntent pIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+					am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pIntent);
+					SharedPreferences.Editor editor = mPreferences.edit();
+					editor.putLong("lastUpdateCheckTime", lastUpdateTime);
+					editor.commit();
+    			}
 			}
 		}
 		catch(Exception e){
