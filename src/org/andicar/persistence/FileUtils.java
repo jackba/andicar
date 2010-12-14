@@ -19,11 +19,9 @@
 
 package org.andicar.persistence;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.res.Resources;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -31,14 +29,25 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.andicar.activity.R;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.res.Resources;
+import android.net.Uri;
+import android.os.Bundle;
 
 /**
  *
@@ -85,6 +94,7 @@ public class FileUtils {
                     return R.string.ERR_021;
                 }
             }
+            
             file = new File(StaticValues.BACKUP_FOLDER);
             if(!file.exists()){
                 if(!file.mkdirs()){
@@ -98,6 +108,7 @@ public class FileUtils {
                     return R.string.ERR_024;
                 }
             }
+
             file = new File(StaticValues.TRACK_FOLDER);
             if(!file.exists()){
                 if(!file.mkdirs()){
@@ -109,6 +120,20 @@ public class FileUtils {
                     exceptionAlert = exceptionAlertBuilder.create();
                     exceptionAlert.show();
                     return R.string.ERR_033;
+                }
+            }
+
+            file = new File(StaticValues.TEMP_FOLDER);
+            if(!file.exists()){
+                if(!file.mkdirs()){
+                    lastError = "Temporary folder " +  StaticValues.TEMP_FOLDER + " cannot be created.";
+                    exceptionAlertBuilder = new AlertDialog.Builder(ctx);
+                    exceptionAlertBuilder.setCancelable( false );
+                    exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
+                    exceptionAlertBuilder.setMessage(mRes.getString(R.string.ERR_058));
+                    exceptionAlert = exceptionAlertBuilder.create();
+                    exceptionAlert.show();
+                    return R.string.ERR_058;
                 }
             }
         }
@@ -288,4 +313,43 @@ public class FileUtils {
         return -1;
     }
 
+    /**
+     * Return an Uri to the zip file created
+     * @param inputFiles a list of files to be zipped
+     * @param zipFile the destination file name
+     * @return the zip file Uri
+     */
+    public static Uri zipFiles(Bundle inputFiles, String zipFile){
+        byte[] buf = new byte[1024];
+        ZipOutputStream out = null;
+        try {
+            out = new ZipOutputStream(new FileOutputStream(zipFile));
+            Set<String> inputFileNames = inputFiles.keySet();
+            String inputFileKey;
+            for(Iterator<String> it = inputFileNames.iterator(); it.hasNext();) {
+            	inputFileKey = it.next();
+                try{
+                    FileInputStream in = new FileInputStream(inputFiles.getString(inputFileKey));
+                    //zip entry name
+                    String entryName = inputFileKey;
+                    out.putNextEntry(new ZipEntry(entryName));
+                    // Transfer bytes from the file to the ZIP file
+                    int len;
+                    while ((len = in.read(buf)) > 0) {
+                            out.write(buf, 0, len);
+                    }
+                    // Complete the entry
+                    out.closeEntry();
+                    in.close();
+                }
+                catch(FileNotFoundException ex){}
+            }
+            
+            out.close();
+            return Uri.parse("file://" + zipFile);
+        } catch (IOException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 }
