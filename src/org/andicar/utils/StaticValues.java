@@ -107,7 +107,8 @@ public class StaticValues
     public static final int NOTIF_BACKUP_SERVICE_ERROR_ID = 9;
     public static final int NOTIF_BACKUP_SERVICE_EXPIRE_ID = 10;
     public static final int NOTIF_SECURE_BACKUP_EXPIRE_ID = 11;
-    public static final int NOTIF_SECURE_BACKUP_ID = 12;
+    public static final int NOTIF_SECURE_BACKUP_INFO_ID = 12;
+    public static final int NOTIF_SECURE_BACKUP_ERROR_ID = 13;
 
     /**
      * 

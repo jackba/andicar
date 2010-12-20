@@ -154,8 +154,10 @@ public class FileUtils {
         {
             lastError = null;
             File file = new File(StaticValues.BASE_FOLDER + fileName);
-            if(!file.createNewFile())
-                return R.string.ERR_022;
+            if(!file.exists()){
+            	if(!file.createNewFile())
+            		return R.string.ERR_022;
+            }
             FileWriter fw = new FileWriter(file);
             fw.append(content);
             fw.flush();

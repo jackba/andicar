@@ -108,9 +108,10 @@ public class Utils {
 
     /**
      *
+     * @param appendSecond TODO
      * @return the current date in the form of yyyy-mm-dd
      */
-    public static String getDateStr(boolean appendHour, boolean appendMinute){
+    public static String getDateStr(boolean appendHour, boolean appendMinute, boolean appendSecond){
         Calendar cal = Calendar.getInstance();
         String retVal = cal.get(Calendar.YEAR) + "-" +
                     pad(cal.get(Calendar.MONTH) + 1, 2) + "-" +
@@ -126,6 +127,10 @@ public class Utils {
             else
                 retVal = retVal + " " +
                         pad(cal.get(Calendar.MINUTE), 2);
+        }
+        if(appendSecond){
+        	retVal = retVal + " " +
+            		pad(cal.get(Calendar.SECOND), 2);
         }
         return retVal;
 
