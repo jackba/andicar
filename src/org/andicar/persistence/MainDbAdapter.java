@@ -230,12 +230,12 @@ public class MainDbAdapter extends DB
                 return R.string.ERR_031;
         }
         else if(tableName.equals(CURRENCY_TABLE_NAME)){
-            String expenseIdSelect =
+            String checkSelect =
                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                 "FROM " + CURRENCY_TABLE_NAME + " " +
-                "WHERE " + CURRENCY_COL_CODE_NAME + " = ? ";
-	        String[] selectionArgs = {content.getAsString((CURRENCY_COL_CODE_NAME))};
-	        Cursor c = execSelectSql(expenseIdSelect, selectionArgs);
+                "WHERE UPPER( " + CURRENCY_COL_CODE_NAME + ") = ? ";
+	        String[] selectionArgs = {content.getAsString(CURRENCY_COL_CODE_NAME).toUpperCase()};
+	        Cursor c = execSelectSql(checkSelect, selectionArgs);
 	        if(c.moveToFirst()){ //duplicate currency code
 	            c.close();
 	            return R.string.ERR_059;
