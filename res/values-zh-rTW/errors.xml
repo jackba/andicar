@@ -69,4 +69,13 @@
     <string name="ERR_047">"此標籤不能被刪除，因為它仍在燃料項目中被使用。"</string>
     <string name="ERR_048">"此標籤不能被刪除，因為它仍在支出項目中被使用。"</string>
     <string name="ERR_049">"此標籤不能被刪除，因為它仍在GPS追蹤項目中被使用。"</string>
+    
+	<string name="ERR_052">"未設定 SMTP 驗證(無使用者名)！"</string>
+	<string name="ERR_053">"未設定 SMTP 驗證(無密碼)！"</string>
+	<string name="ERR_054">"未設定 SMTP 驗證(無目標Email)！"</string>
+	<string name="ERR_055">"郵件傳送失敗。"</string>
+	<string name="ERR_056">"未知錯誤。"</string>
+	<string name="ERR_057">"無法壓縮資料庫備份！"</string>
+	<string name="ERR_058">"無法建立臨時資料夾 (/sdcard/andicar/temp)。在你與 設備上建立該資料夾之前你將無法使用安全備份服務。"</string>
+    
 </resources>

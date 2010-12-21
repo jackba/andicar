@@ -69,4 +69,13 @@
     <string name="ERR_047">"此标签不能被删除，因为它仍在燃料条目中被使用。"</string>
     <string name="ERR_048">"此标签不能被删除，因为它仍在支出条目中被使用。"</string>
     <string name="ERR_049">"此标签不能被删除，因为它仍在GPS追踪条目中被使用。"</string>
+    
+	<string name="ERR_052">"未配置 SMTP 验证(无用户名)！"</string>
+	<string name="ERR_053">"未配置 SMTP 验证(无密码)！"</string>
+	<string name="ERR_054">"未配置 SMTP 验证(无目标Email)！"</string>
+	<string name="ERR_055">"邮件发送失败。"</string>
+	<string name="ERR_056">"未知错误。"</string>
+	<string name="ERR_057">"无法压缩数据库备份！"</string>
+	<string name="ERR_058">"无法创建临时文件夹 (/sdcard/andicar/temp)。在你与 设备上创建该文件夹之前你将无法使用安全备份服务。"</string>
+    
 </resources>

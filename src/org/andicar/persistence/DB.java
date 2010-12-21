@@ -548,6 +548,7 @@ public class DB {
             + EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + " TEXT DEFAULT 'N', "
             + EXPENSECATEGORY_COL_ISFUEL_NAME + " TEXT DEFAULT 'N' "
             + ");";
+    
     protected static final String EXPENSE_TABLE_CREATE_SQL =
             "CREATE TABLE IF NOT EXISTS " + EXPENSE_TABLE_NAME
             + " ( "
@@ -759,9 +760,12 @@ public class DB {
             	AddOnDBObjectDef.createAddOnBKScheduleTable(db);
             	AddOnDBObjectDef.createAddOnSecureBKSettingsTable(db);
 
+            	//create indexes
+            	createIndexes(db);
+            	
                 //create the folders on SDCARD
                 FileUtils fu = new FileUtils(mCtx);
-                if(fu.createFolders(mCtx) != -1) {
+                if(fu.createFolderIfNotExists(0) != -1) {
                     Log.e(TAG, fu.lastError);
                 }
 
@@ -780,17 +784,7 @@ public class DB {
 
         private void createGPSTrackTables(SQLiteDatabase db) throws SQLException {
             db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
-            db.execSQL("CREATE INDEX " + GPSTRACK_TABLE_NAME + "_IX1 " +
-                    "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_CAR_ID_NAME + ")");
-            db.execSQL("CREATE INDEX " + GPSTRACK_TABLE_NAME + "_IX2 " +
-                    "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_DRIVER_ID_NAME + ")");
-            db.execSQL("CREATE INDEX " + GPSTRACK_TABLE_NAME + "_IX3 " +
-                    "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_MILEAGE_ID_NAME + " DESC )");
-            db.execSQL("CREATE INDEX " + GPSTRACK_TABLE_NAME + "_IX4 " +
-                    "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_DATE_NAME + " DESC )");
             db.execSQL(GPSTRACKDETAIL_TABLE_CREATE_SQL);
-            db.execSQL("CREATE INDEX " + GPSTRACKDETAIL_TABLE_NAME + "_IX1 " +
-                    "ON " + GPSTRACKDETAIL_TABLE_NAME + " (" + GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ")");
         }
 
         private void createUOMTable(SQLiteDatabase db) throws SQLException {
@@ -941,20 +935,10 @@ public class DB {
         private void createMileageTable(SQLiteDatabase db) throws SQLException {
             //create mileage table
             db.execSQL(MILEAGE_TABLE_CREATE_SQL);
-            //create indexes on mileage table
-            db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX1 " + "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_CAR_ID_NAME + ")");
-            db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX2 " + "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DRIVER_ID_NAME + ")");
-            db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX3 " + "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
-            db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX4 " + "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_INDEXSTOP_NAME + " DESC )");
-            db.execSQL("CREATE INDEX " + MILEAGE_TABLE_NAME + "_IX5 " + "ON " + MILEAGE_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
         }
 
         private void createRefuelTable(SQLiteDatabase db) throws SQLException {
             db.execSQL(REFUEL_TABLE_CREATE_SQL);
-            db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX1 " + "ON " + REFUEL_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
-            db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX2 " + "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
-            db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX3 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
-            db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " + "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
         }
 
         private void createTagTable(SQLiteDatabase db) throws SQLException {
@@ -1052,9 +1036,11 @@ public class DB {
 //            upgradeDbTo356(db, oldVersion);
             //!!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
           
+            //create indexes
+            createIndexes(db);
             //create the missing folders on SDCARD
             FileUtils fu = new FileUtils(mCtx);
-            if(fu.createFolders(mCtx) != -1) {
+            if(fu.createFolderIfNotExists(0) != -1) {
                 Log.e(TAG, fu.lastError);
             }
         	
@@ -1074,11 +1060,7 @@ public class DB {
             if(!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME)){
                 db.execSQL("ALTER TABLE " + REFUEL_TABLE_NAME +
                         " ADD " + REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N' ");
-                db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX3 " +
-                        "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
             }
-            db.execSQL("CREATE INDEX " + REFUEL_TABLE_NAME + "_IX4 " +
-                    "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
             createExpenses(db, true);
         }
 
@@ -1350,7 +1332,7 @@ public class DB {
             createGPSTrackTables(db);
 
             FileUtils fu = new FileUtils(mCtx);
-            fu.updateTo220(mCtx);
+            fu.updateTo220();
             SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putString("UpdateMsg", "VersionChanged");
@@ -1804,6 +1786,39 @@ public class DB {
             db.execSQL(CURRENCYRATE_TABLE_CREATE_SQL);
         }
     }
+    
+    private void createIndexes(SQLiteDatabase db){
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACK_TABLE_NAME + "_IX1 " +
+                "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_CAR_ID_NAME + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACK_TABLE_NAME + "_IX2 " +
+                "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_DRIVER_ID_NAME + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACK_TABLE_NAME + "_IX3 " +
+                "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_MILEAGE_ID_NAME + " DESC )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACK_TABLE_NAME + "_IX4 " +
+                "ON " + GPSTRACK_TABLE_NAME + " (" + GPSTRACK_COL_DATE_NAME + " DESC )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACKDETAIL_TABLE_NAME + "_IX1 " +
+                "ON " + GPSTRACKDETAIL_TABLE_NAME + " (" + GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ")");
+        //create indexes on mileage table
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX1 " + 
+        		"ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_CAR_ID_NAME + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX2 " + 
+        		"ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DRIVER_ID_NAME + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX3 " + 
+        		"ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX4 " + 
+        		"ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_INDEXSTOP_NAME + " DESC )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX5 " + 
+        		"ON " + MILEAGE_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
+
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX1 " + 
+        		"ON " + REFUEL_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME + " DESC )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX2 " + 
+        		"ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX3 " + 
+        		"ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_ISFULLREFUEL_NAME + ")");
+        db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX4 " + 
+        		"ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME + ")");
+    }
 
     public boolean backupDb(String bkName, String bkPrefix) {
         boolean retVal;
@@ -1819,7 +1834,8 @@ public class DB {
         
         mDb.close();
         FileUtils fu = new FileUtils(mCtx);
-        retVal = fu.copyFile(mCtx, fromFile, bkFolder, false);
+        fu.createFolderIfNotExists(FileUtils.BACKUP_FOLDER);
+        retVal = fu.copyFile(fromFile, bkFolder, false);
         if(retVal == false) {
             lastErrorMessage = fu.lastError;
         }
@@ -1852,7 +1868,7 @@ public class DB {
         String toFile = mDb.getPath();
         mDb.close();
         FileUtils fu = new FileUtils(mCtx);
-        retVal = fu.copyFile(mCtx, StaticValues.BACKUP_FOLDER + restoreFile, toFile, true);
+        retVal = fu.copyFile(StaticValues.BACKUP_FOLDER + restoreFile, toFile, true);
         if(retVal == false) {
             lastErrorMessage = fu.lastError;
         }

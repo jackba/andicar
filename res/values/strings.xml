@@ -398,7 +398,6 @@
     <string name="AddOn_SecureBackup_Description">"Every time a database backup is created, this service automatically send it as an email attachment to a preconfigured email address. In this way your recorded data will be available even if you lose your phone. Combined with the Backup Service AddOn is the definitive solution for your data safety."</string>
     <string name="AddOn_SecureBackup_TermOfService">"We are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data, insufficient storage space on your Google account, deletion of backup files from Google Mail or any other event which cause lose or unusable backup files."</string>
     <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid GMail account, Internet connectivity, mobile data transfer."</string>
-    <!--  Check the pricing in your agreement with your mobile provider for data transfer. -->
     <string name="AddOn_SecureBackup_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
     <string name="AddOn_SecureBackup_SubscriptionOption2">"Six month subscription: [%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [%1] [%2]"</string>

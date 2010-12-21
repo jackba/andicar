@@ -64,6 +64,7 @@
     <string name="APP_Activity_BPartnerLocationEdit">"编辑位置"</string>
     <string name="APP_Activity_TagList">"标签"</string>
     <string name="APP_Activity_TagEdit">"编辑标签"</string>
+    <string name="APP_Activity_Message">"AndiCar 信息"</string>
 
     <string name="GEN_OK">"确定"</string>
     <string name="GEN_CANCEL">"取消"</string>
@@ -114,6 +115,9 @@
     <string name="GEN_Tag">"标签："</string>
     <string name="GEN_TagHint">"短标签。在下面写评论。"</string>
 	<string name="GEN_LifeTime">"使用期限"</string>
+	<string name="GEN_MailSent">"邮件已发送"</string>
+	<string name="GEN_Password">"密码"</string>
+	<string name="GEN_ShowNotification">"显示通知"</string>
 
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
@@ -301,6 +305,8 @@
     <string name="PREF_TagCategorySummary">"添加，删除，修改标签"</string>
     <string name="PREF_RememberLastTagTitle">"记住上次标签"</string>
     <string name="PREF_RememberLastTagSummary">"记住上次使用的标签"</string>
+    <string name="PREF_AutoUpdateCheckTitle">"检查更新"</string>
+	<string name="PREF_AutoUpdateCheckSummary">"检查并在有新版本的 AndiCar 发布时通知我"</string>
 
 	<string name="PREF_MainScreen_ShowMileageZone">"显示里程区域"</string>
 	<string name="PREF_MainScreen_ShowGPSTrackZone">"显示GPS追踪区域"</string>
@@ -378,16 +384,22 @@
 	<string name="AddOn_RenewSubscriptionPeriodInfo">"选定的时间将被添加到当前订阅"</string>
 
     <string name="AddOn_SecureBackup_Title">"安全备份"</string>
-    <string name="AddOn_SecureBackup_Description">"自动上传备份到你的 Google 账户"</string>
+    <string name="AddOn_SecureBackup_Description">"每完成一次数据库备份，此服务都会自动的将其作为邮件的附件发送到预先配置好的Email地址。通过这样的方法，你的记录数据能在哪怕手机都丢了的情况下都可用。结合安全备份插件，彻底解决你的数据安全问题。"</string>
     <string name="AddOn_SecureBackup_LongDescription">"自动上传备份到你的 Google 账户，这样哪怕手机丢了，你也可用获取到它们"</string>
-    <string name="AddOn_SecureBackup_TermOfService">"我们不对以下情况负责：由于恶劣/不存在/有缺陷的网络连接所导致的不完整/损坏的数据上传，你的Google账户所拥有的储存空间不足，从Google Docs上删除备份文件或是任何其他情况造成备份文件丢失或不可用。"</string>
-    <string name="AddOn_SecureBackup_Requirements">"服务要求：有效的Google 账户，用以访问Google Docs，网络连接"</string>
+    <string name="AddOn_SecureBackup_TermOfService">"我们不对以下情况负责：极差/不存在/有问题的网络连接所导致的数据备份不完整/损坏、您的 Google 账户所拥有的储存空间不足、从Google 邮箱删除文件或是其他的方式导致备份文件丢失或不可用。"</string>
+    <string name="AddOn_SecureBackup_Requirements">"服务要求：有效的 GMail 账户，网络连接，移动数据传输"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption1">"15天免费的订阅评估。"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption2">"订阅六个月：[%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"订阅一年：[%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_Configure">"转至安全备份配置以输入缺失的信息。"</string>
+	<string name="AddOn_SecureBackup_SMTPUserFrom">"来自 Email (需要 GMail 账户)："</string>
+	<string name="AddOn_SecureBackup_SMTPEmailTo">"发送到 Email："</string>
+	<string name="AddOn_SecureBackup_IncludeGPSTrack">"包括 GPS 轨迹文件"</string>
+	<string name="AddOn_SecureBackup_IncludeReports">"包括生成的报告"</string>
+    
     
 	<string name="AddOn_AutoBackupService_Title">"备份服务"</string>
-	<string name="AddOn_AutoBackupService_Description">"这项服务将帮助你安排每天/每周的自动备份任务。"</string>
+	<string name="AddOn_AutoBackupService_Description">"此服务允许你计划性的设置每天/每周自动的进行数据库备份。结合安全备份插件，彻底解决你的数据安全问题。"</string>
 	<string name="AddOn_AutoBackupService_TermOfService">""</string>
 	<string name="AddOn_AutoBackupService_Requirements">"服务需要：SD卡上有足够的剩余空间，所需空间的大小取决于你数据库的大小以及现有的备份数量。"</string>
 	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15天免费的订阅评估。"</string>
