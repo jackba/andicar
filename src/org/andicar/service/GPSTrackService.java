@@ -171,8 +171,8 @@ public class GPSTrackService extends Service {
         sName = mPreferences.getString("GPSTrackTmp_Name", null);
         sUserComment = mPreferences.getString("GPSTrackTmp_UserComment", null);
         sTag = mPreferences.getString("GPSTrackTmp_Tag", null);
-        mCarId = mPreferences.getLong("GPSTrackTmp_CarId", mPreferences.getLong("CurrentCar_ID", 0));
-        mDriverId = mPreferences.getLong("GPSTrackTmp_DriverId", mPreferences.getLong("LastDriver_ID", 0));
+        mCarId = mPreferences.getLong("GPSTrackTmp_CarId", mPreferences.getLong("CurrentCar_ID", 1));
+        mDriverId = mPreferences.getLong("GPSTrackTmp_DriverId", mPreferences.getLong("LastDriver_ID", 1));
         isUseKML = mPreferences.getBoolean("GPSTrackTmp_IsUseKML", false);
         isUseGPX = mPreferences.getBoolean("GPSTrackTmp_IsUseGPX", false);
         iMaxAccuracy = Integer.parseInt(mPreferences.getString("GPSTrackMaxAccuracy", "20"));
@@ -522,6 +522,13 @@ public class GPSTrackService extends Service {
     }
 
     private void createFiles() throws IOException {
+    	
+    	if(iFileCount == 1){
+    		FileUtils fu = new FileUtils(this);
+    		fu.createFolderIfNotExists(FileUtils.TRACK_FOLDER);
+    		fu = null;
+    	}
+    	
         String fileName = gpsTrackId + "_" + Utils.pad(iFileCount, 3);
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);

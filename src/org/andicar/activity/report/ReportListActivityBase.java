@@ -345,7 +345,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
         c.close();
 
         FileUtils fu = new FileUtils(this);
-        i = fu.writeToFile(reportContent, reportFileName);
+        i = fu.writeReportFile(reportContent, reportFileName);
         if(i != -1){ //error
             handler.sendEmptyMessage(R.string.ERR_034);
             return false;

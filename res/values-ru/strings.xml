@@ -69,6 +69,7 @@
     <string name="APP_Activity_BPartnerLocationEdit">"Редактировать местоположение"</string>
     <string name="APP_Activity_TagList">"Метки"</string>
     <string name="APP_Activity_TagEdit">"Редактировать метку"</string>
+    <string name="APP_Activity_Message">"Сообщение AndiCar"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Отмена"</string>
@@ -121,6 +122,9 @@
 	<string name="GEN_LifeTime">"Срок подписки"</string>
     <string name="GEN_Category">"Категория:"</string>
     <string name="GEN_UOM">"Ед.изм.:"</string>
+    <string name="GEN_MailSent">"Почта отправлена"</string>
+	<string name="GEN_Password">"Пароль"</string>
+	<string name="GEN_ShowNotification">"Показать уведомление"</string>
 	
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
@@ -308,6 +312,8 @@
     <string name="PREF_TagCategorySummary">"Добавить, удалить, редактировать метки"</string>
     <string name="PREF_RememberLastTagTitle">"Запомнить посл. метку"</string>
     <string name="PREF_RememberLastTagSummary">"Запомнить последнюю использованную метку"</string>
+	<string name="PREF_AutoUpdateCheckTitle">"Проверить обновления"</string>
+	<string name="PREF_AutoUpdateCheckSummary">"Проверить и сообщить мне, если опубликована новая версия AndiCar"</string>
 
     <string name="PREF_MainScreen_ShowMileageZone">"Раздел поездок"</string>
     <string name="PREF_MainScreen_ShowGPSTrackZone">"Раздел треков GPS"</string>
@@ -386,16 +392,21 @@
  	<string name="AddOn_RenewSubscriptionPeriodInfo">"Выбранный период добавится к текущей подписке"</string>
 
     <string name="AddOn_SecureBackup_Title">"Безопасное копирование"</string>
-    <string name="AddOn_SecureBackup_Description">"Автоматическая загрузка ваших копий "</string>
+    <string name="AddOn_SecureBackup_Description">"Каждый раз, когда создается резервная копия базы данных, эта служба автоматически отправляет  резервную копию в качестве вложения электронной почты, на предварительно  указанный адрес электронной почты. Таким образом, записанные данные будут доступны, даже если вы потеряете свой телефон. В сочетании с резервным копированием этот модуль представляет собой законченное решение для безопасности ваших данных."</string>
     <string name="AddOn_SecureBackup_LongDescription">"Автоматическая загрузка ваших копий баз данных  позволит вам иметь доступ к данным даже в случае утери телефона"</string>
-    <string name="AddOn_SecureBackup_TermOfService">"Мы не несем ответственности за: плохое / несуществующее или поврежденное подключение к Интернету, что приведет к неполному или сбойному добавлению данных, недостаточное место на вашей учетной записи Google, удаление файлов резервных копий с документов Google или любое другое событие, которое вызывает потери или делает непригодным использование файлов резервного копирования."</string>
-	<string name="AddOn_SecureBackup_Requirements">"Требования: действительная учетная запись Google с доступом к службе Google Docs, соединение с интернетом"</string>
+    <string name="AddOn_SecureBackup_TermOfService">" Мы не несем ответственности за: плохое / несуществующее / дефектное подключение к Интернету приводящее к неполным / поврежденным данным, недостаточное место для хранения  почты на вашей учетной записи Google, удаление файлов резервных копий с Google Mail или любые другие события, которые вызывают потери или делают непригодными  файлы резервного копирования."</string>
+	<string name="AddOn_SecureBackup_Requirements">"Системные требования службы: действующая учетная запись GMail, подключение к Интернету,  разрешение мобильной передачи данных"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
     <string name="AddOn_SecureBackup_SubscriptionOption2">"Полугодовая подписка: [%1] [%2]"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption3">"Годовая подписка: [%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_Configure">"Перейдите  в конфигурацию безопасного копирования, чтобы ввести недостающую информацию."</string>
+    <string name="AddOn_SecureBackup_SMTPUserFrom">"С адреса (требуется учетная запись GMail):"</string>
+	<string name="AddOn_SecureBackup_SMTPEmailTo">"Отправить на адрес:"</string>
+	<string name="AddOn_SecureBackup_IncludeGPSTrack">"Включить  файлы треков GPS "</string>
+	<string name="AddOn_SecureBackup_IncludeReports">"Включить сгенерированные отчеты"</string>
     
     <string name="AddOn_AutoBackupService_Title">"Услуга резервного копирования"</string>
-	<string name="AddOn_AutoBackupService_Description">"Эта услуга поможет вам планировать ежедневные/еженедельные задачи автоматического резервного копирования."</string>
+	<string name="AddOn_AutoBackupService_Description">" Эта услуга позволяет вам планировать ежедневные / еженедельные автоматические задачи резервного копирования баз данных. В сочетании с модулем резервного копирования она  представляет собой законченное решение для безопасности ваших данных."</string>
 	<string name="AddOn_AutoBackupService_Requirements">"Требования: свободное место на карте SD в зависимости от  размера вашей базы данных и количества существующих резервных копий."</string>
 	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
 	<string name="AddOn_AutoBackupService_SubscriptionOption2">"Срок подписки: [%1] [%2]"</string>

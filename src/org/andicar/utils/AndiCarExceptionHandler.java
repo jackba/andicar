@@ -35,26 +35,32 @@ public class AndiCarExceptionHandler
 
     public void uncaughtException(Thread thread, Throwable thrwbl) {
     	SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        if(!mPreferences.getBoolean("IsBeta", false)){
-            Throwable cause = thrwbl.getCause();
-            StackTraceElement[] stackTrace;
-            if(cause != null)
-                stackTrace = cause.getStackTrace();
-            else
-                stackTrace = thrwbl.getStackTrace();
+    	boolean isPayPal = false;
+        Throwable cause = thrwbl.getCause();
+        StackTraceElement[] stackTrace;
+        if(cause != null)
+            stackTrace = cause.getStackTrace();
+        else
+            stackTrace = thrwbl.getStackTrace();
 
-            StackTraceElement stackTraceElement;
-            String stackStr = "";
-            for(int i = 0; i < stackTrace.length; i++) {
-                stackTraceElement = stackTrace[i];
-                if(stackTraceElement.getClassName().contains("andicar")) {
-                    stackStr = stackStr + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " +
-                            stackTraceElement.getLineNumber() + "\n";
-                }
+        StackTraceElement stackTraceElement;
+        String stackStr = "";
+        for(int i = 0; i < stackTrace.length; i++) {
+            stackTraceElement = stackTrace[i];
+            if(stackTraceElement.getClassName().contains("andicar")) {
+                stackStr = stackStr + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " +
+                        stackTraceElement.getLineNumber() + "\n";
             }
+            
+            if(stackTraceElement.getClassName().contains("com.paypal.android")) {
+            	isPayPal = true;
+            }
+        }
+        if(!mPreferences.getBoolean("IsBeta", false)){
             AndiCarStatistics.sendFlurryStartSession(mCtx);
             AndiCarStatistics.sendFlurryError(mCtx, "AndiCarError", stackStr, thrwbl.getClass().toString() + ": " + thrwbl.getMessage());
         }
-        mPreviousHandler.uncaughtException(thread, thrwbl);
+        if(!isPayPal)
+        	mPreviousHandler.uncaughtException(thread, thrwbl);
     }
 }

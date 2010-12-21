@@ -302,11 +302,6 @@ public class MainActivity extends BaseActivity {
 				appVersion = "N/A";
 			}
 	
-//			//recreate missing folders (if need)
-//			FileUtils fu = new FileUtils(mainContext);
-//			fu.createFolders(mainContext);
-//			fu = null;
-//			
 			//check for app update once a day
 			if(mPreferences.getBoolean("AutoUpdateCheck", true)){
     			Long lastUpdateTime =  mPreferences.getLong("lastUpdateCheckTime", 0);
@@ -605,7 +600,7 @@ public class MainActivity extends BaseActivity {
 				if(c.moveToFirst()){
 					lastFullRefuelIndex = new BigDecimal(c.getDouble(0)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
 					c.close();
-					if(tmpFullRefuelIndex != null && lastFullRefuelIndex != null){
+					if(tmpFullRefuelIndex != null && lastFullRefuelIndex != null && lastFullRefuelIndex.subtract(tmpFullRefuelIndex).signum() != 0){
 						//get the total fuel quantity between the first and last refuels
 						sql = 
 							"SELECT SUM(" + MainDbAdapter.REFUEL_COL_QUANTITY_NAME + ") " +

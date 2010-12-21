@@ -783,6 +783,10 @@ public class RefuelEditActivity extends EditActivityBase {
             toast.show();
             return;
         }
+        
+        //final calculations
+        calculatePriceAmount();
+        calculateBaseUOMQty();
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
