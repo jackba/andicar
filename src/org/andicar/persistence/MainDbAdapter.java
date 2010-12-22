@@ -522,15 +522,16 @@ public class MainDbAdapter extends DB
             // 1 -> -1
             if(checkVal == -1){
                 if(tableName.equals(MILEAGE_TABLE_NAME)){ // update the car curent index
-                    long carId = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId)
-                                    .getLong(MILEAGE_COL_CAR_ID_POS);
+                	Cursor c = fetchRecord(MILEAGE_TABLE_NAME, mileageTableColNames, rowId);
+                    long carId = c.getLong(MILEAGE_COL_CAR_ID_POS);
+                    c.close();
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                     if(checkVal == -1)
                         updateCarCurrentIndex(carId);
                     //set null in gpstrack table col. mileage id
                     String selection = GPSTRACK_COL_MILEAGE_ID_NAME + "= ?";
                     String[] selectionArgs = {Long.toString(rowId)};
-                    Cursor c = query(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, selection, selectionArgs, null, null, null);
+                    c = query(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, selection, selectionArgs, null, null, null);
 //                            fetchForTable(GPSTRACK_TABLE_NAME, gpsTrackTableColNames, GPSTRACK_COL_MILEAGE_ID_NAME + "=" + rowId, null);
                     ContentValues cv = new ContentValues();
                     cv.put(GPSTRACK_COL_MILEAGE_ID_NAME, (Long)null);
@@ -1312,20 +1313,6 @@ public class MainDbAdapter extends DB
     public Cursor query (String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy){
         return mDb.query (table, columns, selection, selectionArgs, groupBy, having, orderBy);
     }
-
-    /**
-     * Fetch a cursor containing all rows from the given table than match the given where condition.
-     * The returned cursor are NOT positioned anywhere. You most use the corsor movement methods in order to
-     * read the containing rows.
-     * @param tableName
-     * @param columns
-     * @param selection
-     * @param orderByColumn
-     * @return
-     */
-//    public Cursor fetchForTable(String tableName, String[] columns, String selection, String orderByColumn){
-//        return mDb.query( tableName, columns, selection, null, null, null, orderByColumn );
-//    }
 
     /**
      * get the start index for a new mileage record
