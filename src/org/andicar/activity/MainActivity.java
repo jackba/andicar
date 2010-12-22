@@ -963,7 +963,7 @@ public class MainActivity extends BaseActivity {
 
 		public void onClick(View arg0) {
 			Intent mileageInsertIntent = new Intent(mainContext, MileageEditActivity.class);
-			mileageInsertIntent.putExtra("CurrentCar_ID", mCarId);
+//			mileageInsertIntent.putExtra("CurrentCar_ID", mCarId);
 			mileageInsertIntent.putExtra("Operation", "N");
 			startActivityForResult(mileageInsertIntent, ACTIVITY_MILEAGEINSERT_REQUEST_CODE);
 		}
@@ -973,7 +973,7 @@ public class MainActivity extends BaseActivity {
 
 		public void onClick(View arg0) {
 			Intent gpsTrackInsertIntent = new Intent(mainContext, GPSTrackController.class);
-			gpsTrackInsertIntent.putExtra("CurrentCar_ID", mCarId);
+//			gpsTrackInsertIntent.putExtra("CurrentCar_ID", mCarId);
 			gpsTrackInsertIntent.putExtra("Operation", "N");
 			startActivity(gpsTrackInsertIntent);
 		}
@@ -991,7 +991,7 @@ public class MainActivity extends BaseActivity {
 
 		public void onClick(View arg0) {
 			Intent refuelInsertIntent = new Intent(mainContext, RefuelEditActivity.class);
-			refuelInsertIntent.putExtra("CurrentCar_ID", mCarId);
+//			refuelInsertIntent.putExtra("CurrentCar_ID", mCarId);
 			refuelInsertIntent.putExtra("Operation", "N");
 			startActivityForResult(refuelInsertIntent, ACTIVITY_REFUELINSERT_REQUEST_CODE);
 		}
@@ -1009,7 +1009,7 @@ public class MainActivity extends BaseActivity {
 
 		public void onClick(View arg0) {
 			Intent refuelInsertIntent = new Intent(mainContext, ExpenseEditActivity.class);
-			refuelInsertIntent.putExtra("CurrentCar_ID", mCarId);
+//			refuelInsertIntent.putExtra("CurrentCar_ID", mCarId);
 			refuelInsertIntent.putExtra("Operation", "N");
 			startActivityForResult(refuelInsertIntent, ACTIVITY_EXPENSEINSERT_REQUEST_CODE);
 		}
