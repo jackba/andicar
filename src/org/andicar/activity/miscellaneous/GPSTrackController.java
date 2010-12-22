@@ -75,8 +75,8 @@ public class GPSTrackController extends BaseActivity {
         super.onCreate(icicle);
         setContentView(R.layout.gpstrack_controller_activity);
 
-        mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-        mDriverId = mPreferences.getLong("LastDriver_ID", -1);
+        mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+        mDriverId = mPreferences.getLong("LastDriver_ID", 1);
 
         vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
         spnCar = (Spinner)findViewById(R.id.spnCar);
