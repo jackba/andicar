@@ -21,7 +21,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
           android:versionCode="355" 
-          android:versionName="3.5.6 Beta">
+          android:versionName="3.5.6 Beta"
+          android:installLocation="internalOnly">
+<!-- 
+	internalOnly becouse:
+		-services
+		-BOOT_COMPLETED broadcast receiver
+	See http://developer.android.com/guide/appendix/install-location.html
+ -->          
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />

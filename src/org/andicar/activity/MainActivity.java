@@ -140,22 +140,21 @@ public class MainActivity extends BaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		try{
+			setContentView(R.layout.main_activity);
+			mainContext = this;
+			mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+			mRes = getResources();
 			
 //	        FileUtils fu = new FileUtils(this);
 //	        fu.copyFile(this, "/data/data/org.andicar.activity/databases/AndiCar.db", 
 //        		StaticValues.BASE_FOLDER + "debug.db", true);
 		
-			mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 			isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
 			isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
 			if(isSendCrashReport)
 				Thread.setDefaultUncaughtExceptionHandler(
 						new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
-	
-			mRes = getResources();
-	
-			setContentView(R.layout.main_activity);
-			mainContext = this;
+
 			reportDb = new ReportDbAdapter(mainContext, null, null);
 	
 			String updateMsg = mPreferences.getString("UpdateMsg", null);
