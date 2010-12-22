@@ -106,13 +106,14 @@ public class MileageEditActivity extends EditActivityBase {
         	btnOk.setEnabled(true);
     		spnCar.setEnabled(false);
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-
-            mCarId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
-                                .getLong(MainDbAdapter.MILEAGE_COL_CAR_ID_POS);
             
-            mDriverId = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId)
-                                .getLong(MainDbAdapter.MILEAGE_COL_DRIVER_ID_POS);
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
+            mCarId = c.getLong(MainDbAdapter.MILEAGE_COL_CAR_ID_POS);
+            c.close();
+            c = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
+            mDriverId = c.getLong(MainDbAdapter.MILEAGE_COL_DRIVER_ID_POS);
+            c.close();
+            c = mDbAdapter.fetchRecord(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.mileageTableColNames, mRowId);
             try{
                 mStartIndex = (new BigDecimal(c.getDouble(MainDbAdapter.MILEAGE_COL_INDEXSTART_POS))
                 				.setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));

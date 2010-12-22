@@ -114,9 +114,10 @@ public class UOMConversionEditActivity extends EditActivityBase {
                 new OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                         setSpinnerTextToCode(arg0, arg3, arg1);
-                        uomFromType = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, arg3)
-                            .getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
-
+                        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, arg3);
+                        uomFromType = c.getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
+                        c.close();
+                        
                         initSpinner(spnUomTo, MainDbAdapter.UOM_TABLE_NAME,
                                 MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + uomFromType + "' " +
