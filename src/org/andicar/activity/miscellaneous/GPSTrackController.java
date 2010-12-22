@@ -21,6 +21,8 @@ import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -222,7 +224,7 @@ public class GPSTrackController extends BaseActivity {
 	       try{
 	       		BigDecimal startIndex = mDbAdapter.getMileageStartIndex(mCarId);
 	       		if(startIndex != null){
-	       			etIndexStart.setText(startIndex.toString());
+	       			etIndexStart.setText(Utils.numberToString(startIndex, false, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
 	       		}
 	       }
 	       catch(NumberFormatException e){}
