@@ -180,6 +180,17 @@ public class ReportDbAdapter extends MainDbAdapter{
                         " END " +
                             " || ' at [%7] ' || " +
                             sqlConcatTableColumn("CarLengthUOM", UOM_COL_CODE_NAME) +
+//                            " || ' (' || (" +
+//                            //mileage from the last refuel
+//                            		sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + " - " +
+//                            		" COALESCE((SELECT ref2." + REFUEL_COL_INDEX_NAME + 
+//                            		" FROM " + REFUEL_TABLE_NAME + " AS ref2 " +
+//                    				" WHERE ref2." + REFUEL_COL_INDEX_NAME + " < " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) +
+//                    						" AND ref2." + REFUEL_COL_CAR_ID_NAME + " = " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
+//            						" ORDER BY ref2." + REFUEL_COL_INDEX_NAME + " DESC " + 
+//            						" LIMIT 1 " +
+//                            		" ), 0)" +
+//                            ") || ' ' || " + sqlConcatTableColumn("CarLengthUOM", UOM_COL_CODE_NAME) + " || ')' " +
                             " AS " + SECOND_LINE_LIST_NAME + ", " + //#2
                 " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
             			sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
