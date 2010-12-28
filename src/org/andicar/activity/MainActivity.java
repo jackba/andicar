@@ -64,7 +64,6 @@ import android.widget.TextView;
 
 import com.andicar.addon.activity.AddOnServicesList;
 import com.andicar.addon.services.AndiCarServiceStarter;
-import com.andicar.addon.services.CheckSubscriptionsService;
 
 /**
  *
