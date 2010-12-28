@@ -608,7 +608,7 @@ public class MainDbAdapter extends DB
                 }
                 else if(tableName.equals(BPARTNER_TABLE_NAME)){
                     //also delete the locations
-                    mDb.delete(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_BPARTNER_ID_NAME + "=" + rowId, null);
+                    mDb.delete(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_BPARTNER_ID_NAME + "=" + rowId, null);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 }
                 else
@@ -1138,10 +1138,10 @@ public class MainDbAdapter extends DB
                             " WHERE " + GEN_COL_ISACTIVE_NAME + " = \'Y\' ";
             if(whereId != -1)
                 selectSql = selectSql +
-                                " AND " + BPARTNER_LOCATION_BPARTNER_ID_NAME + " = " + whereId;
+                                " AND " + BPARTNER_LOCATION_COL_BPARTNER_ID_NAME + " = " + whereId;
 
             selectSql = selectSql +
-                            " ORDER BY " + BPARTNER_LOCATION_ADDRESS_NAME;
+                            " ORDER BY " + BPARTNER_LOCATION_COL_ADDRESS_NAME;
         }
         else if(fromTable.equals(TAG_TABLE_NAME)){
             selectSql = "SELECT " + GEN_COL_NAME_NAME +

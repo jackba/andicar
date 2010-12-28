@@ -39,6 +39,8 @@ import org.andicar.activity.ExpenseCategoryListActivity;
 import org.andicar.activity.ExpenseTypeListActivity;
 import org.andicar.activity.R;
 import org.andicar.activity.TagListActivity;
+import org.andicar.activity.TaskListActivity;
+import org.andicar.activity.TaskTypeListActivity;
 import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
@@ -145,6 +147,21 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         addOnPreferenceScreen.setTitle(mRes.getString(R.string.AddOn_PreferencesTitle));
         addOnPreferenceScreen.setSummary(mRes.getString(R.string.AddOn_PreferencesSummary));
         addOnCategory.addPreference(addOnPreferenceScreen);
+
+        //Tasks/Reminders
+        PreferenceCategory taskReminderCategory = new PreferenceCategory(this);
+        taskReminderCategory.setTitle(mRes.getString(R.string.PREF_TaskReminderCategoryTitle));
+        prefScreenRoot.addPreference(taskReminderCategory);
+        PreferenceScreen taskTypePreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+        taskTypePreferenceScreen.setIntent(new Intent(this, TaskTypeListActivity.class));
+        taskTypePreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTypeTitle));
+        taskTypePreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskTypeSummary));
+        taskReminderCategory.addPreference(taskTypePreferenceScreen);
+        PreferenceScreen taskPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+        taskPreferenceScreen.setIntent(new Intent(this, TaskListActivity.class));
+        taskPreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTitle));
+        taskPreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskSummary));
+        taskReminderCategory.addPreference(taskPreferenceScreen);
 
         //business partners
         PreferenceCategory bPartnerCategory = new PreferenceCategory(this);

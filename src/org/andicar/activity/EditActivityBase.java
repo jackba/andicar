@@ -63,6 +63,7 @@ public abstract class EditActivityBase extends BaseActivity {
     protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
     protected boolean initTimeOnly = false;
+    protected boolean initDateOnly = false;
 
     abstract protected void saveData();
     abstract protected void setLayout();
@@ -203,10 +204,14 @@ public abstract class EditActivityBase extends BaseActivity {
         mMinute = mcalDateTime.get(Calendar.MINUTE);
 
         tvDateTimeValue = (TextView) findViewById(R.id.tvDateTimeValue);
-        if(initTimeOnly)
-        	updateTime();
-        else
-        	updateDateTime();
+        if(dateTimeInMiliseconds > 0){
+	        if(initTimeOnly)
+	        	updateTime();
+            else if(initDateOnly)
+            	updateDate();
+	        else
+	        	updateDateTime();
+        }
 
         ImageButton btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
         if(btnPickDate != null)
@@ -239,17 +244,17 @@ public abstract class EditActivityBase extends BaseActivity {
         return null;
     }
 
-    @Override
-    protected void onPrepareDialog(int id, Dialog dialog) {
-        switch(id) {
-            case StaticValues.DIALOG_TIME_PICKER:
-                ((TimePickerDialog) dialog).updateTime(mHour, mMinute);
-                break;
-            case StaticValues.DIALOG_DATE_PICKER:
-                ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
-                break;
-        }
-    }
+//    @Override
+//    protected void onPrepareDialog(int id, Dialog dialog) {
+//        switch(id) {
+//            case StaticValues.DIALOG_TIME_PICKER:
+//                ((TimePickerDialog) dialog).updateTime(mHour, mMinute);
+//                break;
+//            case StaticValues.DIALOG_DATE_PICKER:
+//                ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
+//                break;
+//        }
+//    }
 
     private DatePickerDialog.OnDateSetListener onDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
@@ -260,6 +265,8 @@ public abstract class EditActivityBase extends BaseActivity {
                     mDay = dayOfMonth;
                     if(initTimeOnly)
                     	updateTime();
+                    else if(initDateOnly)
+                    	updateDate();
                     else
                     	updateDateTime();
                 }
@@ -272,6 +279,8 @@ public abstract class EditActivityBase extends BaseActivity {
                     mMinute = minute;
                     if(initTimeOnly)
                     	updateTime();
+                    else if(initDateOnly)
+                    	updateDate();
                     else
                     	updateDateTime();
                 }
@@ -284,6 +293,15 @@ public abstract class EditActivityBase extends BaseActivity {
         		DateFormat.getDateFormat(getApplicationContext()).format(mcalDateTime.getTime()) + " " +
 					DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime())
         );
+    }
+
+    private void updateDate() {
+    	mHour = 0;
+    	mMinute = 0;
+        mcalDateTime.set(mYear, mMonth, mDay, 0, 0, 0);
+        mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
+        tvDateTimeValue.setText(
+        		DateFormat.getDateFormat(getApplicationContext()).format(mcalDateTime.getTime()));
     }
 
     private void updateTime() {

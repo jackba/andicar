@@ -105,7 +105,7 @@ public class BPartnerEditActivity extends EditActivityBase {
     }
 
     private void fillData(){
-        String selection = MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + "= ? ";
+        String selection = MainDbAdapter.BPARTNER_LOCATION_COL_BPARTNER_ID_NAME + "= ? ";
         String[] selectionArgs = {Long.toString(mRowId)};
         if(!showInactiveRecords)
             selection = selection +

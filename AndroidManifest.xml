@@ -245,11 +245,29 @@
             android:label="@string/APP_Activity_Message">
         </activity>
         
+        <activity 
+            android:name="org.andicar.activity.TaskTypeListActivity"
+            android:label="@string/APP_Activity_TaskTypeList">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.TaskTypeEditActivity"
+            android:label="@string/APP_Activity_TaskTypeEdit">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.TaskListActivity"
+            android:label="@string/APP_Activity_TaskList">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.TaskEditActivity"
+            android:label="@string/APP_Activity_TaskEdit">
+        </activity>
 
         <!-- AddOn Services -->
         <receiver android:name="com.andicar.addon.services.AndiCarServiceStarter">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
+				<action android:name="android.intent.action.USER_PRESENT"></action>
 			</intent-filter>
 		</receiver>
 		 

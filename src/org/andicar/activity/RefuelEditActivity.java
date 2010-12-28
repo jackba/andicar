@@ -151,7 +151,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     c2 = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.bpartnerLocationTableColNames,
                             selection, selectionArgs, null, null, null);
                     if(c2.moveToFirst())
-                        acAdress.setText(c2.getString(MainDbAdapter.BPARTNER_LOCATION_ADDRESS_POS));
+                        acAdress.setText(c2.getString(MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_POS));
                     c2.close();
                 }
             }
@@ -335,7 +335,7 @@ public class RefuelEditActivity extends EditActivityBase {
                 0, 0));
         acBPartner.setAdapter(bpartnerNameAdapter);
         addressAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME,
                 mBPartnerId, 0));
         acAdress.setAdapter(addressAdapter);
         tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
@@ -472,7 +472,7 @@ public class RefuelEditActivity extends EditActivityBase {
                 else
                     mBPartnerId = 0;
                 addressAdapter = new ArrayAdapter<String>(RefuelEditActivity.this, android.R.layout.simple_dropdown_item_1line,
-                        mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME,
+                        mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME,
                         mBPartnerId, 0));
                 acAdress.setAdapter(addressAdapter);
                 
@@ -862,8 +862,8 @@ public class RefuelEditActivity extends EditActivityBase {
             }
 
             if(acAdress.getText().toString() != null && acAdress.getText().toString().length() > 0){
-                selection = "UPPER (" + MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME + ") = ? AND " +
-                                            MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME + " = ?";
+                selection = "UPPER (" + MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME + ") = ? AND " +
+                                            MainDbAdapter.BPARTNER_LOCATION_COL_BPARTNER_ID_NAME + " = ?";
                 String[] selectionArgs2 = {acAdress.getText().toString().toUpperCase(), Long.toString(mBPartnerId)};
                 c = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs2,
                         null, null, null);
@@ -875,9 +875,9 @@ public class RefuelEditActivity extends EditActivityBase {
                     data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, Long.parseLong(addressIdStr));
                 else{
                     ContentValues tmpData = new ContentValues();
-                    tmpData.put(MainDbAdapter.BPARTNER_LOCATION_BPARTNER_ID_NAME, mBPartnerId);
+                    tmpData.put(MainDbAdapter.BPARTNER_LOCATION_COL_BPARTNER_ID_NAME, mBPartnerId);
                     tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acAdress.getText().toString());
-                    tmpData.put(MainDbAdapter.BPARTNER_LOCATION_ADDRESS_NAME, acAdress.getText().toString());
+                    tmpData.put(MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME, acAdress.getText().toString());
                     long newAddressId = mDbAdapter.createRecord(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, tmpData);
                     if(newAddressId >= 0)
                         data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, newAddressId);
