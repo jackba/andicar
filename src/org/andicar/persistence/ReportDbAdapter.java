@@ -269,11 +269,11 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYRATE_NAME) + " AS " + REFUEL_COL_CURRENCYRATE_NAME + "_DTypeN, " +
                 sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS Vendor, " +
                 sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_NAME_NAME) +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_ADDRESS_NAME) + ", '') " +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_CITY_NAME) + ", '') " +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_REGION_NAME) + ", '') " +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COUNTRY_NAME) + ", '') " +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_POSTAL_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_ADDRESS_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_CITY_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_REGION_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_COUNTRY_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_POSTAL_NAME) + ", '') " +
                             " AS Location, " +
                 " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') AS Tag " + 
             " FROM " + REFUEL_TABLE_NAME +
@@ -403,11 +403,11 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYRATE_NAME) + " AS " + EXPENSE_COL_CURRENCYRATE_NAME + "_DTypeN, " +
                 sqlConcatTableColumn(BPARTNER_TABLE_NAME, GEN_COL_NAME_NAME) + " AS Vendor, " +
                 sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, GEN_COL_NAME_NAME) +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_ADDRESS_NAME) + ", '') " +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_CITY_NAME) + ", '') " +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_REGION_NAME) + ", '') " +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COUNTRY_NAME) + ", '') " +
-                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_POSTAL_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_ADDRESS_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_CITY_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_REGION_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_COUNTRY_NAME) + ", '') " +
+                        " || COALESCE( '; ' || " + sqlConcatTableColumn(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_POSTAL_NAME) + ", '') " +
                             " AS Location, " +
                 " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') AS Tag " + 
             " FROM " + EXPENSE_TABLE_NAME +

@@ -64,6 +64,7 @@ import android.widget.TextView;
 
 import com.andicar.addon.activity.AddOnServicesList;
 import com.andicar.addon.services.AndiCarServiceStarter;
+import com.andicar.addon.services.CheckSubscriptionsService;
 
 /**
  *
@@ -963,7 +964,7 @@ public class MainActivity extends BaseActivity {
 
 		public void onClick(View arg0) {
 			Intent mileageInsertIntent = new Intent(mainContext, MileageEditActivity.class);
-//			mileageInsertIntent.putExtra("CurrentCar_ID", mCarId);
+//			Intent mileageInsertIntent = new Intent(mainContext, TaskEditActivity.class);
 			mileageInsertIntent.putExtra("Operation", "N");
 			startActivityForResult(mileageInsertIntent, ACTIVITY_MILEAGEINSERT_REQUEST_CODE);
 		}
@@ -973,7 +974,6 @@ public class MainActivity extends BaseActivity {
 
 		public void onClick(View arg0) {
 			Intent gpsTrackInsertIntent = new Intent(mainContext, GPSTrackController.class);
-//			gpsTrackInsertIntent.putExtra("CurrentCar_ID", mCarId);
 			gpsTrackInsertIntent.putExtra("Operation", "N");
 			startActivity(gpsTrackInsertIntent);
 		}

@@ -68,6 +68,10 @@
     <string name="APP_Activity_TagList">"Tags"</string>
     <string name="APP_Activity_TagEdit">"Edit tag"</string>
     <string name="APP_Activity_Message">"AndiCar Message"</string>
+    <string name="APP_Activity_TaskTypeList">"Task/reminder types"</string>
+    <string name="APP_Activity_TaskTypeEdit">"Edit task type"</string>
+    <string name="APP_Activity_TaskList">"Tasks"</string>
+    <string name="APP_Activity_TaskEdit">"Edit task"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -124,6 +128,11 @@
     <string name="GEN_MailSent">"Mail sent"</string>
     <string name="GEN_Password">"Password"</string>
     <string name="GEN_ShowNotification">"Show notification"</string>
+    <string name="GEN_TaskTypeLabel">"Task type:"</string>
+    <string name="GEN_RepeatingHdr">"Repeating"</string>
+    <string name="GEN_SetDate">"Set date/time"</string>
+    <string name="GEN_On">"on"</string> <!-- ex. on Monday -->
+    <string name="GEN_At">"at"</string> <!-- ex. on Monday at 1 PM -->
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -273,6 +282,11 @@
 
     <string name="BPartnerEditActivity_LocationsHeaderCaption">"Locations"</string>
 
+    <string name="TaskEditActivity_OneTime">"One time at"</string>
+    <string name="TaskEditActivity_Recurent">"Recurent"</string>
+    <string name="TaskEditActivity_RecurentEveryLabel">"Every"</string>
+    <string name="TaskEditActivity_RecurentfrequencyLabel">"Frequency"</string>
+
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>
     <string name="PREF_ExpenseTypeCategoryTitle">"Expense types"</string>
@@ -317,6 +331,11 @@
     <string name="PREF_RememberLastTagSummary">"Remember the last used tag"</string>
     <string name="PREF_AutoUpdateCheckTitle">"Check for updates"</string>
     <string name="PREF_AutoUpdateCheckSummary">"Check and notify me if a new version of AndiCar was published"</string>
+    <string name="PREF_TaskReminderCategoryTitle">"Tasks / reminders"</string>
+    <string name="PREF_TaskTypeTitle">"Task types"</string>
+    <string name="PREF_TaskTypeSummary">"Add, delete, modify task types"</string>
+    <string name="PREF_TaskTitle">"Tasks"</string>
+    <string name="PREF_TaskSummary">"Add, delete, modify tasks"</string>
 
     <string name="PREF_MainScreen_ShowMileageZone">"Show mileage zone"</string>
     <string name="PREF_MainScreen_ShowGPSTrackZone">"Show GPS track zone"</string>

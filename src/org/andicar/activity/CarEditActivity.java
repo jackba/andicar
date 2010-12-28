@@ -251,6 +251,4 @@ public class CarEditActivity extends EditActivityBase
                 MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, newId, false);
 	}
 
-        
-
 }

@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 356;
+    public static final int DATABASE_VERSION = 358;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     
@@ -109,6 +109,11 @@ public class StaticValues
     public static final int NOTIF_SECURE_BACKUP_EXPIRE_ID = 11;
     public static final int NOTIF_SECURE_BACKUP_INFO_ID = 12;
     public static final int NOTIF_SECURE_BACKUP_ERROR_ID = 13;
+    
+    //used for notification PendingIntents
+    public static final int ACTIVITY_REQUEST_CODE_FILEMAILER = 10;
+    public static final int ACTIVITY_REQUEST_CODE_BACKUPSERVICE_EXPIRE = 20;
+    public static final int ACTIVITY_REQUEST_CODE_SECUREBACKUP_EXPIRE = 30;
 
     /**
      * 
