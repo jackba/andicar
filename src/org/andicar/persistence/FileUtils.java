@@ -185,7 +185,6 @@ public class FileUtils {
         try
         {
             lastError = null;
-        	createFolderIfNotExists(REPORT_FOLDER);
             File file = new File(StaticValues.REPORT_FOLDER + fileName);
             if(!file.createNewFile())
                 return R.string.ERR_022;

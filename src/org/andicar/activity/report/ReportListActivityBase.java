@@ -259,6 +259,11 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
             new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int whichButton) {
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
+            	//recreate the report folder if not exists
+            	FileUtils fu = new FileUtils(ReportListActivityBase.this);
+            	fu.createFolderIfNotExists(FileUtils.REPORT_FOLDER);
+            	fu = null;
+
                 progressDialog = ProgressDialog.show(ReportListActivityBase.this, "",
                     mRes.getString(R.string.REPORTActivity_ProgressMessage), true);
 //                createReport(true, ckSendEmail.isChecked(), formatSpinner.getSelectedItemId());
