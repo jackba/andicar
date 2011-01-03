@@ -19,11 +19,13 @@ import java.math.BigDecimal;
 
 import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
+import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -67,6 +69,7 @@ public class GPSTrackController extends BaseActivity {
     private boolean isGpsTrackOn = false;
     private ViewGroup vgRoot;
     private long mTagId = 0;
+    private Context mCtx = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -75,6 +78,7 @@ public class GPSTrackController extends BaseActivity {
         super.onCreate(icicle);
         setContentView(R.layout.gpstrack_controller_activity);
 
+        mCtx = this;
         mCarId = mPreferences.getLong("CurrentCar_ID", 1);
         mDriverId = mPreferences.getLong("LastDriver_ID", 1);
 
@@ -313,6 +317,10 @@ public class GPSTrackController extends BaseActivity {
                 mPrefEditor.putBoolean("GPSTrackTmp_IsUseKML", ckIsUseKML.isChecked());
                 mPrefEditor.putBoolean("GPSTrackTmp_IsUseGPX", ckIsUseGPX.isChecked());
                 mPrefEditor.commit();
+
+                FileUtils fu = new FileUtils(mCtx);
+        		fu.createFolderIfNotExists(FileUtils.TRACK_FOLDER);
+        		fu = null;
 
                 startService(gpsTrackIntent);
                 isGpsTrackOn = true; 
