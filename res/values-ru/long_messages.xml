@@ -35,7 +35,7 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
     	<b><i>AndiCar</i></b> - это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, предназначенная для устройств на платформе Android
         Она лицензирована в  соответствии с GNU General Public License, версия 3.\n
-        Смотрите больше информации на странице О программе.\nCopyright © 2010 Miklos Keresztes.\n
+        Смотрите больше информации на странице О программе.\nCopyright © 2010-2011 Miklos Keresztes.\n
         Спасибо за использование <b><i>AndiCar</i></b>!
     </string>
 
@@ -62,7 +62,7 @@
         *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
         *  Russian translation by Andrey Demin - andde@rambler.ru\n
         \n<b><i>Copyright notice</i></b>:\n\n
-        Copyright © 2010 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
+        Copyright © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n

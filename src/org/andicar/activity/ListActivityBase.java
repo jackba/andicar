@@ -75,6 +75,7 @@ public class ListActivityBase extends ListActivity {
     protected AlertDialog errorAlert;
     protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport = true;
+    protected boolean isExitAfterInsert = false;
     protected ListView lvBaseList = null;
     protected SimpleCursorAdapter.ViewBinder mViewBinder;
 
@@ -123,6 +124,9 @@ public class ListActivityBase extends ListActivity {
 
         if(extras == null) {
             extras = getIntent().getExtras();
+            
+            if(extras != null && extras.containsKey("ExitAfterInsert"))
+            	isExitAfterInsert = extras.getBoolean("ExitAfterInsert");
         }
 
         lvBaseList = getListView();
@@ -156,18 +160,12 @@ public class ListActivityBase extends ListActivity {
 
         if((getListAdapter() == null || getListAdapter().getCount() == 0)
                 	&& mInsertClass != null) {
-//            long currentDriverID = mPreferences.getLong("CurrentDriver_ID", -1);
-//            String currentDriverName = mPreferences.getString("CurrentDriver_Name", "");
             long currentCarID = mPreferences.getLong("CurrentCar_ID", -1);
-//            String currentCarName = mPreferences.getString("CurrentCar_Name", "");
             
             Intent i = new Intent(this, mInsertClass);
             i.putExtra("Operation", "N");
             if(mInsertClass.equals(MileageEditActivity.class)){
-//                i.putExtra("CurrentDriver_ID", currentDriverID);
                 i.putExtra("CurrentCar_ID", currentCarID);
-//                i.putExtra("CurrentDriver_Name", currentDriverName);
-//                i.putExtra("CurrentCar_Name", currentCarName);
             }
             startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
         }
@@ -362,7 +360,9 @@ public class ListActivityBase extends ListActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-
+        if(isExitAfterInsert)
+        	finish();
+        
         switch(requestCode) {
             case StaticValues.ACTIVITY_NEW_REQUEST_CODE:
                 fillData();

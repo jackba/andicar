@@ -1744,7 +1744,7 @@ public class DB {
 		}
 
 		private void upgradeDbTo357(SQLiteDatabase db, int oldVersion) {
-			createTaskTables(db);
+//			createTaskTables(db);
 		}
 
 		private boolean columnExists(SQLiteDatabase db, String table,

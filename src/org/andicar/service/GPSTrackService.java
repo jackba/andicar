@@ -523,12 +523,6 @@ public class GPSTrackService extends Service {
 
     private void createFiles() throws IOException {
     	
-    	if(iFileCount == 1){
-    		FileUtils fu = new FileUtils(this);
-    		fu.createFolderIfNotExists(FileUtils.TRACK_FOLDER);
-    		fu = null;
-    	}
-    	
         String fileName = gpsTrackId + "_" + Utils.pad(iFileCount, 3);
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);
