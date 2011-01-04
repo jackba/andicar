@@ -206,19 +206,19 @@ public class Utils {
             String emailText =
                     c.getString(c.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)) + "\n" +
                     c.getString(c.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
-                        .replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
-                        .replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
-                        .replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
-                        .replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
-                        .replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
+                        .replace("[#1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
+                        .replace("[#2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+                        .replace("[#3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+                        .replace("[#4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+                        .replace("[#5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
                                 Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
-                        .replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
+                        .replace("[#6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
                                 Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
-                        .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
-                        .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
-                        .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
-                        .replace("[%10]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
-                        .replace("[%11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
+                        .replace("[#7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+                        .replace("[#8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+                        .replace("[#9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                        .replace("[#10]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
+                        .replace("[#11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
                     + "\n" +
                     c.getString(c.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
             emailSubject = emailSubject + " - " +

@@ -159,8 +159,8 @@ public class ExpenseEditActivity extends EditActivityBase {
                 if(fromTable.equals("Refuel")){
                     tvWarningLabel.setText(
                             mResource.getString(R.string.ExpenseEditActivity_CreatedFromWarning)
-                                .replace("[%1]", mResource.getString(R.string.GEN_Refuel).toLowerCase())
-                                .replace("[%1]", mResource.getString(R.string.GEN_Refuel).toLowerCase())+ "\n");
+                                .replace("[#1]", mResource.getString(R.string.GEN_Refuel).toLowerCase())
+                                .replace("[#1]", mResource.getString(R.string.GEN_Refuel).toLowerCase())+ "\n");
                 }
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), false);
             }
@@ -522,7 +522,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             llConversionRateZone1.setVisibility(View.VISIBLE);
             llConversionRateZone2.setVisibility(View.VISIBLE);
             tvConvertedAmountLabel.setText((mResource.getString(R.string.GEN_ConvertedAmountLabel))
-                    .replace("[%1]", carDefaultCurrencyCode) + " = ");
+                    .replace("[#1]", carDefaultCurrencyCode) + " = ");
             etConversionRate.setTag(mResource.getString(R.string.GEN_ConversionRateLabel));
         }
         else{

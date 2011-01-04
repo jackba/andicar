@@ -688,11 +688,11 @@ public class RefuelEditActivity extends EditActivityBase {
                     priceConverted = priceEntered.multiply(currencyConversionRate);
 
                     calculatedValueStr =
-                            (mResource.getString(R.string.GEN_ConvertedPriceLabel)).replace("[%1]", carDefaultCurrencyCode) + " = " +
+                            (mResource.getString(R.string.GEN_ConvertedPriceLabel)).replace("[#1]", carDefaultCurrencyCode) + " = " +
                         		Utils.numberToString(priceConverted, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
 //                                priceConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString() 
                                     + "; " +
-                            (mResource.getString(R.string.GEN_ConvertedAmountLabel)).replace("[%1]", carDefaultCurrencyCode) + " = " +
+                            (mResource.getString(R.string.GEN_ConvertedAmountLabel)).replace("[#1]", carDefaultCurrencyCode) + " = " +
                     			Utils.numberToString(amountConverted, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
 //                                amountConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
                     tvConvertedAmountLabel.setText(calculatedValueStr);

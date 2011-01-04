@@ -19,7 +19,7 @@
 -->
 <!-- UI labels and messages-->
 <!--
-    Some strings contains one or more "variables". These looks like [%No] (for example [%1], [%2]).
+    Some strings contains one or more "variables". These looks like [#No] (for example [#1], [#2]).
     These variables are parsed in the application and are replaced with a string value (a currency code, an UOM code, etc)
 
     !!!For translators!!!:
@@ -95,8 +95,8 @@
     <string name="GEN_PriceLabel">"價格"</string>
     <string name="GEN_AmountLabel">"合計"</string>
     <string name="GEN_ConversionRateLabel">"比率："</string>
-    <string name="GEN_ConvertedAmountLabel">"轉換總額 [%1]"</string>
-    <string name="GEN_ConvertedPriceLabel">"價格 [%1]"</string>
+    <string name="GEN_ConvertedAmountLabel">"轉換總額 [#1]"</string>
+    <string name="GEN_ConvertedPriceLabel">"價格 [#1]"</string>
     <string name="GEN_SelectedMessage">" 選取的"</string>
     <string name="GEN_CurrencyLabel">"貨幣"</string>
     <string name="GEN_Required">"必需的"</string>
@@ -211,14 +211,13 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"你的資料庫已被還原。此程式即將關閉。"</string>
 
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"計算排除里程費用"</string>
-
-    <string name="ExpenseEditActivity_CreatedFromWarning">"這個費用是由 [%1] 建立。\n編輯與之相對應的 [%1]."</string>
+    <string name="ExpenseEditActivity_CreatedFromWarning">"這個費用是由 [#1] 建立。\n編輯與之相對應的 [#1]."</string>
 
     <string name="CurrencyRateEditActivity_CurrencyFromLabel">"從貨幣 "</string>
     <string name="CurrencyRateEditActivity_CurrencyToLabel">"到貨幣 "</string>
-    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"匯率： 1 [%1] = "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"匯率： 1 [#1] = "</string>
     <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
-    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"逆匯率： 1 [%1] = "</string>
+    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"逆匯率： 1 [#1] = "</string>
     <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"最大允許的十進位數： "</string>
 
     <string name="REPORTActivity_ReportCreatedMessage">"你的報告已經成功建立到 sdcard/andicar/reports"</string>
@@ -254,7 +253,8 @@
     <string name="GPSTrackService_AccuracyProblemTitle">"AndiCar GPS 警告！"</string>
     <string name="GPSTrackService_AccuracyProblemMessage">"精確度超過了限制！"</string>
     <string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS 已停止！"</string>
-    <string name="GPSTrackService_AutoShutDownMessage">"GPS追蹤已被停止，因為跳躍點百分比([%1])超過了限制([%2])!\n你可以在 首選項-&gt;自停止限制 中調整這個限制。"</string>
+    <string name="GPSTrackService_AutoShutDownMessage">"GPS追蹤已被停止，因為跳躍點百分比([#1])超過了限制([#2])!\n你可以在 首選項-&gt;自停止限制 中調整這個限制。"</string>
+
     <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar 檔案系統錯誤！"</string>
 
     <string name="GPSTrackShowOnMap_ProgressMessage">"正在進行繪圖。\n請稍等..."</string>
@@ -372,15 +372,16 @@
     <!-- AddOn Services -->
     <string name="AddOn_PayPalWarning">"在付費過程中 **不要使用手機的返回鍵，也不要變更屏幕的顯示方向**"</string>
     <string name="AddOn_SubscribeWaiting">"正在載入PayPal付費庫"</string>
-    <string name="AddOn_SubscriptionInfo">"直到 [%1] 後你即可以訂閱這個服務"</string>
+    <string name="AddOn_SubscriptionInfo">"直到 [#1] 後你即可以訂閱這個服務"</string>
 	<string name="AddOn_BtnTryCaption">"開始免費評估"</string>
 	<string name="AddOn_BtnConfigureServiceCaption">"設定服務"</string>
 	<string name="AddOn_BtnRenewSubscriptionCaption">"續訂"</string>
 	<string name="AddOn_PreferencesTitle">"設定附加服務"</string>
 	<string name="AddOn_PreferencesSummary">"設定你的附加服務"</string>
 	<string name="AddOn_PreferencesCategoryTitle">"附加服務"</string>
-	<string name="AddOn_SubscriptionExpireWarning">"你對 [%1] 的訂閱將在 [%2] 天後到期"</string>
-	<string name="AddOn_SubscriptionExpired">"你對 [%1] 的訂閱已過期。"</string>
+	<string name="AddOn_SubscriptionExpireWarning">"你對 [#1] 的訂閱將在 [#2] 天後到期"</string>
+
+	<string name="AddOn_SubscriptionExpired">"你對 [#1] 的訂閱已過期。"</string>
 	<string name="AddOn_RenewSubscriptionPeriodInfo">"選擇的時間將被新增到目前訂閱"</string>
 
     <string name="AddOn_SecureBackup_Title">"安全備份"</string>
@@ -389,8 +390,9 @@
     <string name="AddOn_SecureBackup_TermOfService">"我們不對以下情況負責：極差/不存在/有問題的網路連接所導致的資料備份不完整/損壞、您的 Google 賬戶所擁有的儲存空間不足、從Google 郵箱刪除檔案或是其他的方式導致備份檔案遺失或不可用。"</string>
     <string name="AddOn_SecureBackup_Requirements">"服務要求：有效的 GMail 賬戶，網路連接，移動資料傳輸"</string>
     <string name="AddOn_SecureBackup_SubscriptionOption1">"15天免費的訂閱評估。"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption2">"訂閱六個月：[%1] [%2]"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption3">"訂閱一年：[%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"訂閱六個月：[#1] [#2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"訂閱一年：[#1] [#2]"</string>
+
 	<string name="AddOn_SecureBackup_Configure">"轉至安全備份設定以輸入缺失的訊息。"</string>
 	<string name="AddOn_SecureBackup_SMTPUserFrom">"來自 Email (需要 GMail 賬戶)："</string>
 	<string name="AddOn_SecureBackup_SMTPEmailTo">"傳送到 Email："</string>
@@ -402,7 +404,8 @@
 	<string name="AddOn_AutoBackupService_TermOfService">""</string>
 	<string name="AddOn_AutoBackupService_Requirements">"服務需要：SD卡上有足夠的剩餘空間，所需空間的大小取決於你資料庫的大小以及現有的備份數量。"</string>
 	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15天免費的訂閱評估。"</string>
-	<string name="AddOn_AutoBackupService_SubscriptionOption2">"訂閱的使用期限：[%1] [%2]"</string>
+	<string name="AddOn_AutoBackupService_SubscriptionOption2">"訂閱的使用期限：[#1] [#2]"</string>
+
 	<string name="AddOn_AutoBackupService_ScheduleTitle">"備份服務時間表"</string>
 	<string name="AddOn_AutoBackupService_ScheduleFrequency">"頻率："</string>
 	<string name="AddOn_AutoBackupService_ScheduleHour">"小時："</string>

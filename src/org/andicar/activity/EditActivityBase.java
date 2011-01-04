@@ -301,7 +301,9 @@ public abstract class EditActivityBase extends BaseActivity {
         mcalDateTime.set(mYear, mMonth, mDay, 0, 0, 0);
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
         tvDateTimeValue.setText(
-        		DateFormat.getDateFormat(getApplicationContext()).format(mcalDateTime.getTime()));
+        		DateFormat.getDateFormat(getApplicationContext()).format(mcalDateTime.getTime()) + " " +
+					DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime())
+				);
     }
 
     private void updateTime() {

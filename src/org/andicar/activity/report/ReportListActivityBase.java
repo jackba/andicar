@@ -393,13 +393,13 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                     colVal = "";
                 reportContent = reportContent  + 
                         colVal.replace(",", " ")
-                            .replace("[%d0]", mRes.getString(R.string.DayOfWeek_0))
-                            .replace("[%d1]", mRes.getString(R.string.DayOfWeek_1))
-                            .replace("[%d2]", mRes.getString(R.string.DayOfWeek_2))
-                            .replace("[%d3]", mRes.getString(R.string.DayOfWeek_3))
-                            .replace("[%d4]", mRes.getString(R.string.DayOfWeek_4))
-                            .replace("[%d5]", mRes.getString(R.string.DayOfWeek_5))
-                            .replace("[%d6]", mRes.getString(R.string.DayOfWeek_6))
+                            .replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
+                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
+                            .replace("[#d2]", mRes.getString(R.string.DayOfWeek_2))
+                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
+                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
+                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
+                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6))
                             ;
             }
             reportContent = reportContent + "\n";
@@ -439,13 +439,13 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                     colVal = "";
                 reportContent = reportContent +
                                 "<TD>" + colVal
-                                            .replace("[%d0]", mRes.getString(R.string.DayOfWeek_0))
-                                            .replace("[%d1]", mRes.getString(R.string.DayOfWeek_1))
-                                            .replace("[%d2]", mRes.getString(R.string.DayOfWeek_2))
-                                            .replace("[%d3]", mRes.getString(R.string.DayOfWeek_3))
-                                            .replace("[%d4]", mRes.getString(R.string.DayOfWeek_4))
-                                            .replace("[%d5]", mRes.getString(R.string.DayOfWeek_5))
-                                            .replace("[%d6]", mRes.getString(R.string.DayOfWeek_6))
+                                            .replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
+                                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
+                                            .replace("[#d2]", mRes.getString(R.string.DayOfWeek_2))
+                                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
+                                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
+                                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
+                                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6))
                                 + "</TD>\n";
             }
             reportContent = reportContent +
