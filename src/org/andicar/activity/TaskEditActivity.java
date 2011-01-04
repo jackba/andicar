@@ -31,7 +31,9 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -51,16 +53,27 @@ public class TaskEditActivity extends EditActivityBase {
 	private EditText etUserComment = null;
 	private CheckBox ckIsActive = null;
 	private Spinner spnTaskType = null;
+	private Spinner spnScheduleFrequency = null;
+	private Spinner spnDaysOfWeek = null;
 	private ImageButton btnNewTaskType = null;
-	private RadioButton rbOneTime;
-	private RadioButton rbRecurent;
-	private LinearLayout llOneTimeSettings;
-	private LinearLayout llRecurentSettings;
-
+	private RadioButton rbOneTime = null;
+	private RadioButton rbRecurent = null;
+	private LinearLayout llOneTimeSettings = null;
+	private LinearLayout llRecurentTimeSettings = null;
+	private LinearLayout llMoreExact = null;
+	private CheckBox ckFirstRunFCar = null;
+	private TextView tvOnDay = null;
+	private EditText etOnDay = null;
+	private CheckBox ckOnLastDay = null;
+	
+	private Spinner spnMonthsOfYear = null;
+	
 	private Calendar mcalDateTime2 = Calendar.getInstance();
 	private int mHour2;
 	private int mMinute2;
-	private TextView tvDateTimeValue2;
+	private TextView tvDateTimeValue2 = null;
+	private long mRecurencyId = -1;
+	protected boolean mFirstRunFCar = true;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -75,12 +88,27 @@ public class TaskEditActivity extends EditActivityBase {
 		btnNewTaskType.setOnClickListener(onNewTaskTypeClickListener);
 		rbOneTime = (RadioButton) findViewById(R.id.rbOneTime);
 		rbRecurent = (RadioButton) findViewById(R.id.rbRecurent);
+		llMoreExact = (LinearLayout) findViewById(R.id.llMoreExact);
+		ckFirstRunFCar = (CheckBox) findViewById(R.id.ckFirstRunFCar);
+		ckFirstRunFCar.setOnCheckedChangeListener(ckFirstRunFCarCheckedChange);
 		llOneTimeSettings = (LinearLayout) findViewById(R.id.llOneTimeSettings);
-		llRecurentSettings = (LinearLayout) findViewById(R.id.llRecurentSettings);
+		llRecurentTimeSettings = (LinearLayout) findViewById(R.id.llRecurentTimeSettings);
 
 		RadioGroup rg = (RadioGroup) findViewById(R.id.rgRepeating);
 		rg.setOnCheckedChangeListener(rgRepeatingOnCheckedChangeListener);
 
+		spnScheduleFrequency = (Spinner) findViewById(R.id.spnScheduleFrequency);
+		spnScheduleFrequency.setOnItemSelectedListener(spnScheduleFrequencyOnItemSelectedListener);
+		
+		spnDaysOfWeek = (Spinner) findViewById(R.id.spnDaysOfWeek);
+
+		tvOnDay = (TextView)findViewById(R.id.tvOnDay);
+		etOnDay = (EditText)findViewById(R.id.etOnDay);
+		ckOnLastDay = (CheckBox)findViewById(R.id.ckOnLastDay);
+		ckOnLastDay.setOnCheckedChangeListener(ckOnLastDayChecked);
+		
+		spnMonthsOfYear = (Spinner) findViewById(R.id.spnMonthsOfYear);
+		
 		String operation = mBundleExtras.getString("Operation"); // E = edit, N
 																	// = new
 
@@ -121,7 +149,7 @@ public class TaskEditActivity extends EditActivityBase {
 					MainDbAdapter.GEN_COL_NAME_NAME, 0, false);
 			rbRecurent.setChecked(true);
 			llOneTimeSettings.setVisibility(View.GONE);
-			llRecurentSettings.setVisibility(View.VISIBLE);
+			llRecurentTimeSettings.setVisibility(View.VISIBLE);
 			initDateOnly = true;
 			initDateTime(System.currentTimeMillis());
 			initDateOnly = false;
@@ -207,23 +235,32 @@ public class TaskEditActivity extends EditActivityBase {
 		public void onCheckedChanged(RadioGroup arg0, int checkedId) {
 			if (checkedId == rbOneTime.getId()) {
 				llOneTimeSettings.setVisibility(View.VISIBLE);
-				llRecurentSettings.setVisibility(View.GONE);
+				llRecurentTimeSettings.setVisibility(View.GONE);
+				ckFirstRunFCar.setVisibility(View.GONE);
 			} else {
 				llOneTimeSettings.setVisibility(View.GONE);
-				llRecurentSettings.setVisibility(View.VISIBLE);
+				llRecurentTimeSettings.setVisibility(View.VISIBLE);
+				ckFirstRunFCar.setVisibility(View.VISIBLE);
 			}
 		}
 	};
 
 	protected void initTime2(long dateTimeInMiliseconds) {
 		mcalDateTime2.setTimeInMillis(dateTimeInMiliseconds);
-		mHour2 = mcalDateTime2.get(Calendar.HOUR_OF_DAY);
-		mMinute2 = mcalDateTime2.get(Calendar.MINUTE);
-
-		tvDateTimeValue2 = (TextView) findViewById(R.id.tvDateTimeValue2);
-		if (dateTimeInMiliseconds > 0) {
-			updateTime2();
+		if(dateTimeInMiliseconds != 0){
+			mHour2 = mcalDateTime2.get(Calendar.HOUR_OF_DAY);
+			mMinute2 = mcalDateTime2.get(Calendar.MINUTE);
 		}
+		else{
+			//avoid time zone influence
+			mHour2 = 0;
+			mMinute2 = 0;
+			mcalDateTime2.set(Calendar.HOUR_OF_DAY, 0);
+			mcalDateTime2.set(Calendar.MINUTE, 0);
+		}
+			
+		tvDateTimeValue2 = (TextView) findViewById(R.id.tvDateTimeValue2);
+		updateTime2();
 
 		ImageButton btnPickTime2 = (ImageButton) findViewById(R.id.btnPickTime2);
 		if (btnPickTime2 != null)
@@ -242,26 +279,88 @@ public class TaskEditActivity extends EditActivityBase {
 		}
 	};
 
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		if (id < 3)
-			return super.onCreateDialog(id);
-		else
-			return new TimePickerDialog(this, onTime2SetListener, mHour2, mMinute2, false);
-	}
-
-//	@Override
-//	protected void onPrepareDialog(int id, Dialog dialog) {
-//		if (id < 3)
-//			super.onPrepareDialog(id, dialog);
-//		else
-//			((TimePickerDialog) dialog).updateTime(mHour2, mMinute2);
-//	}
-
 	private void updateTime2() {
-		mcalDateTime2.set(2000, Calendar.JANUARY, 1, mHour2, mMinute2, 0);
+//		mcalDateTime2.set(2000, Calendar.JANUARY, 1, mHour2, mMinute2, 0);
+		mcalDateTime2.set(Calendar.HOUR_OF_DAY, mHour2);
+		mcalDateTime2.set(Calendar.MINUTE, mMinute2);
+		mcalDateTime2.set(Calendar.SECOND, 0);
 		// mlDateTimeInSeconds2 = mcalDateTime2.getTimeInMillis() / 1000;
 		tvDateTimeValue2.setText(DateFormat.getTimeFormat(
 				getApplicationContext()).format(mcalDateTime2.getTime()));
+	}
+
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		if(id < 3)
+			return super.onCreateDialog(id);
+		else //if(id == 3)
+			return new TimePickerDialog(this, onTime2SetListener, mHour2, mMinute2, false);
+	}
+
+	protected AdapterView.OnItemSelectedListener spnScheduleFrequencyOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+
+//			if (isActivityOnLoading)
+//				return;
+			mRecurencyId = arg3;
+			setRecurencySpecificLayout();
+		}
+
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}
+	};
+	
+	protected CheckBox.OnCheckedChangeListener ckOnLastDayChecked = new CheckBox.OnCheckedChangeListener() {
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			if(mRecurencyId != 1)
+				return; //invalid
+			else
+				setRecurencySpecificLayout();
+		}
+	};
+	
+	protected CheckBox.OnCheckedChangeListener ckFirstRunFCarCheckedChange = new CheckBox.OnCheckedChangeListener() {
+		@Override
+		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			mFirstRunFCar = isChecked;
+			setRecurencySpecificLayout();
+		}
+	};
+	
+	private void setRecurencySpecificLayout(){
+		if(mRecurencyId == 0){ //wekly
+			spnDaysOfWeek.setVisibility(View.VISIBLE);
+			tvOnDay.setVisibility(View.GONE);
+			etOnDay.setVisibility(View.GONE);
+			ckOnLastDay.setVisibility(View.GONE);
+			spnMonthsOfYear.setVisibility(View.GONE);
+		}
+		else if(mRecurencyId == 1){ //monthly
+			spnDaysOfWeek.setVisibility(View.GONE);
+			spnMonthsOfYear.setVisibility(View.GONE);
+			if(ckOnLastDay.isChecked()){
+				tvOnDay.setVisibility(View.GONE);
+				etOnDay.setVisibility(View.GONE);
+			}
+			else{
+				tvOnDay.setVisibility(View.VISIBLE);
+				etOnDay.setVisibility(View.VISIBLE);
+			}
+			ckOnLastDay.setVisibility(View.VISIBLE);
+		}
+		else{ //yearly
+			spnDaysOfWeek.setVisibility(View.GONE);
+			ckOnLastDay.setChecked(false);
+			ckOnLastDay.setVisibility(View.GONE);
+			spnMonthsOfYear.setVisibility(View.VISIBLE);
+			tvOnDay.setVisibility(View.VISIBLE);
+			etOnDay.setVisibility(View.VISIBLE);
+		}
+		if(mFirstRunFCar)
+			llMoreExact.setVisibility(View.GONE);
+		else
+			llMoreExact.setVisibility(View.VISIBLE);
 	}
 }
