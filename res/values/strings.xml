@@ -21,7 +21,7 @@
 
 <!-- UI labels and messages-->
 <!--
-    Some strings contains one or more "variables". These looks like [%No] (for example [%1], [%2]).
+    Some strings contains one or more "variables". These looks like [#No] (for example [#1], [#2]).
     These variables are parsed in the application and are replaced with a string value (a currency code, an UOM code, etc)
 
     !!!For translators!!!:
@@ -102,8 +102,8 @@
     <string name="GEN_PriceLabel">"Price"</string>
     <string name="GEN_AmountLabel">"Amt"</string>
     <string name="GEN_ConversionRateLabel">"Rate:"</string>
-    <string name="GEN_ConvertedAmountLabel">"Amt. [%1]"</string>
-    <string name="GEN_ConvertedPriceLabel">"Price [%1]"</string>
+    <string name="GEN_ConvertedAmountLabel">"Amt. [#1]"</string>
+    <string name="GEN_ConvertedPriceLabel">"Price [#1]"</string>
     <string name="GEN_SelectedMessage">" selected"</string>
     <string name="GEN_CurrencyLabel">"Currency"</string>
     <string name="GEN_Required">"Required"</string>
@@ -133,6 +133,8 @@
     <string name="GEN_SetDate">"Set date/time"</string>
     <string name="GEN_On">"on"</string> <!-- ex. on Monday -->
     <string name="GEN_At">"at"</string> <!-- ex. on Monday at 1 PM -->
+    <string name="GEN_Day">"day"</string>
+    <string name="GEN_LastDay">"last day"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -231,13 +233,13 @@
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Exclude from mileage cost calculation"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"Is fuel"</string>
 
-    <string name="ExpenseEditActivity_CreatedFromWarning">"This expense was created from [%1].\nEdit the coresponding [%1]."</string>
+    <string name="ExpenseEditActivity_CreatedFromWarning">"This expense was created from [#1]. Edit the coresponding [#1]."</string>
 
     <string name="CurrencyRateEditActivity_CurrencyFromLabel">"From currency "</string>
     <string name="CurrencyRateEditActivity_CurrencyToLabel">"To currency "</string>
-    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Rate: 1 [%1] = "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Rate: 1 [#1] = "</string>
     <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
-    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Inverse rate: 1 [%1] = "</string>
+    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Inverse rate: 1 [#1] = "</string>
     <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Max. allowed decimals: "</string>
 
     <string name="REPORTActivity_ReportCreatedMessage">"Your report was created successfully to sdcard/andicar/reports"</string>
@@ -273,7 +275,7 @@
     <string name="GPSTrackService_AccuracyProblemTitle">"AndiCar GPS Warning!"</string>
     <string name="GPSTrackService_AccuracyProblemMessage">"Accuracy is over the limit!"</string>
     <string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS Stopped!"</string>
-    <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent ([%1]) is over the limit ([%2])!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
+    <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent ([#1]) is over the limit ([#2])!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
     <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar File System Error!"</string>
 
     <string name="GPSTrackShowOnMap_ProgressMessage">"Drawing in progress.\nPlease wait..."</string>
@@ -286,6 +288,7 @@
     <string name="TaskEditActivity_Recurent">"Recurent"</string>
     <string name="TaskEditActivity_RecurentEveryLabel">"Every"</string>
     <string name="TaskEditActivity_RecurentfrequencyLabel">"Frequency"</string>
+    <string name="TaskEditActivity_MoreExact">"more exact"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>
@@ -402,15 +405,15 @@
     <string name="AddOn_PayPalWarning">"During the payment process **DO NOT USE THE PHONE BACK KEY AND DO NOT CHANGE YOUR SCREEN ORIENTATION**"</string>
     <string name="AddOn_PayPalTransactionID">"PayPal Transaction ID"</string>
     <string name="AddOn_SubscribeWaiting">"Loading PayPal Payment Library"</string>
-    <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until: [%1]"</string>
+    <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until: [#1]"</string>
     <string name="AddOn_BtnTryCaption">"Start FREE evaluation"</string>
     <string name="AddOn_BtnConfigureServiceCaption">"Configure service"</string>
     <string name="AddOn_BtnRenewSubscriptionCaption">"Renew subscription"</string>
     <string name="AddOn_PreferencesTitle">"Configure AddOn services"</string>
     <string name="AddOn_PreferencesSummary">"Configure your AddOn services"</string>
     <string name="AddOn_PreferencesCategoryTitle">"AddOn services"</string>
-    <string name="AddOn_SubscriptionExpireWarning">"Your subscription to the [%1] AddOn will expire in [%2] days"</string>
-    <string name="AddOn_SubscriptionExpired">"Your subscription to the [%1] AddOn is expired."</string>
+    <string name="AddOn_SubscriptionExpireWarning">"Your subscription to the [#1] AddOn will expire in [#2] days"</string>
+    <string name="AddOn_SubscriptionExpired">"Your subscription to the [#1] AddOn is expired."</string>
     <string name="AddOn_RenewSubscriptionPeriodInfo">"The selected period will be added to the current subscription"</string>
 
     <string name="AddOn_SecureBackup_Title">"Secure Backup"</string>
@@ -418,8 +421,9 @@
     <string name="AddOn_SecureBackup_TermOfService">"We are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data, insufficient storage space on your Google account, deletion of backup files from Google Mail or any other event which cause lose or unusable backup files."</string>
     <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid GMail account, Internet connectivity, mobile data transfer."</string>
     <string name="AddOn_SecureBackup_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption2">"Six month subscription: [%1] [%2]"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [%1] [%2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"Six month subscription: [#1] [#2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [#1] [#2]"</string>
+
     <string name="AddOn_SecureBackup_Configure">"Go to the SecureBackup configuration in order to enter the missing information."</string>
     <string name="AddOn_SecureBackup_SMTPUserFrom">"From email (GMail account required):"</string>
     <string name="AddOn_SecureBackup_SMTPEmailTo">"Send to email:"</string>
@@ -431,7 +435,8 @@
     <string name="AddOn_AutoBackupService_TermOfService">""</string>
     <string name="AddOn_AutoBackupService_Requirements">"Service requirements: free space on the SDCARD depending on your database size and the number of existing backups."</string>
     <string name="AddOn_AutoBackupService_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
-    <string name="AddOn_AutoBackupService_SubscriptionOption2">"Life time subscription: [%1] [%2]"</string>
+    <string name="AddOn_AutoBackupService_SubscriptionOption2">"Life time subscription: [#1] [#2]"</string>
+
     <string name="AddOn_AutoBackupService_ScheduleTitle">"Backup Service Schedule"</string>
     <string name="AddOn_AutoBackupService_ScheduleFrequency">"Frequency:"</string>
     <string name="AddOn_AutoBackupService_ScheduleHour">"Hour:"</string>
@@ -442,7 +447,4 @@
     <string name="AddOn_AutoBackupService_BackupSucceeded">"The backup was created with success"</string>
     <string name="AddOn_AutoBackupService_BackupFailed">"The backup failed! Check your SDCARD."</string>
 
-    <!-- 
-    <string name="AddOn_AutoBackupService_SubscriptionOption3">"One year subscription: [%1] USD"</string>
-	 -->
 </resources>

@@ -186,12 +186,12 @@ public class CurrencyRateEditActivity extends EditActivityBase
     		c.close();
     	}
         tvCurrencyRateLabel.setText(mResource.getString(R.string.CurrencyRateEditActivity_CurrencyRateLabel).
-                replace("[%1]", strCurrencyFromCode));
+                replace("[#1]", strCurrencyFromCode));
         tvCurrencyRateToLabel.setText(strCurrencyToCode);
 
         tvInverseRateLabel.setText(
                 mResource.getString(R.string.CurrencyRateEditActivity_InverseCurrencyRateLabel)
-                    .replace("[%1]", strCurrencyToCode));
+                    .replace("[#1]", strCurrencyToCode));
         tvInverseRateToLabel.setText(strCurrencyFromCode);
     }
 

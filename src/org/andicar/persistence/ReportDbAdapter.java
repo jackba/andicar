@@ -64,8 +64,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " + 
                 	sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                     sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME)  + " || '; ' || " +
-                    " '[%1]' AS " + FIRST_LINE_LIST_NAME + ", " + //#1
-                " '[%1] -> [%2] = [%3] ' || " +
+                    " '[#1]' AS " + FIRST_LINE_LIST_NAME + ", " + //#1
+                " '[#1] -> [#2] = [#3] ' || " +
                         sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) +
                             " AS " + SECOND_LINE_LIST_NAME + ", " + //#2
                 " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
@@ -109,13 +109,13 @@ public class ReportDbAdapter extends MainDbAdapter{
 
                 "CASE strftime(\"%w\", " + sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) +
                     ", 'unixepoch', 'localtime') " +
-                    "WHEN \"0\" THEN '[%d0]' " +
-                    "WHEN \"1\" THEN '[%d1]' " +
-                    "WHEN \"2\" THEN '[%d2]' " +
-                    "WHEN \"3\" THEN '[%d3]' " +
-                    "WHEN \"4\" THEN '[%d4]' " +
-                    "WHEN \"5\" THEN '[%d5]' " +
-                    "WHEN \"6\" THEN '[%d6]' " +
+                    "WHEN \"0\" THEN '[#d0]' " +
+                    "WHEN \"1\" THEN '[#d1]' " +
+                    "WHEN \"2\" THEN '[#d2]' " +
+                    "WHEN \"3\" THEN '[#d3]' " +
+                    "WHEN \"4\" THEN '[#d4]' " +
+                    "WHEN \"5\" THEN '[#d5]' " +
+                    "WHEN \"6\" THEN '[#d6]' " +
                 "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
                     sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " +
@@ -152,33 +152,33 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " + //#0
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 	sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
-                    sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME)  + " || '; [%1]'" +
+                    sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME)  + " || '; [#1]'" +
                         " AS " + FIRST_LINE_LIST_NAME + ", " + //#1
-                 "'[%1] ' || " +
+                 "'[#1] ' || " +
                         sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || " +
                 " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUME_ID_NAME) + " <> " +
                                     sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_UOMVOLUMEENTERED_ID_NAME) + " " +
-                        " THEN " + "' ([%2]'" +
+                        " THEN " + "' ([#2]'" +
                                     " || ' ' || " + sqlConcatTableColumn("DefaultVolumeUOM", UOM_COL_CODE_NAME) + " || ')' " +
                         " ELSE " + "'' " +
                 " END " +
-                        " || ' x [%3] ' || " +
+                        " || ' x [#3] ' || " +
                         	sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
                         " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + " <> " +
                                             sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + " " +
-                                " THEN " + "' ([%4] ' || " + sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
+                                " THEN " + "' ([#4] ' || " + sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
                                 " ELSE " + "'' " +
                         " END " +
 
-                        " || ' = [%5] ' || " +
+                        " || ' = [#5] ' || " +
                             sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
                         " CASE WHEN " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCY_ID_NAME) + " <> " +
                                             sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CURRENCYENTERED_ID_NAME) + " " +
-                                " THEN " + "' ([%6] ' || " +
+                                " THEN " + "' ([#6] ' || " +
                                                         sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
                                 " ELSE " + "'' " +
                         " END " +
-                            " || ' at [%7] ' || " +
+                            " || ' at [#7] ' || " +
                             sqlConcatTableColumn("CarLengthUOM", UOM_COL_CODE_NAME) +
 //                            " || ' (' || (" +
 //                            //mileage from the last refuel
@@ -252,13 +252,13 @@ public class ReportDbAdapter extends MainDbAdapter{
 
                 "CASE strftime(\"%w\", " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_DATE_NAME) +
                     ", 'unixepoch', 'localtime') " +
-                    "WHEN \"0\" THEN '[%d0]' " +
-                    "WHEN \"1\" THEN '[%d1]' " +
-                    "WHEN \"2\" THEN '[%d2]' " +
-                    "WHEN \"3\" THEN '[%d3]' " +
-                    "WHEN \"4\" THEN '[%d4]' " +
-                    "WHEN \"5\" THEN '[%d5]' " +
-                    "WHEN \"6\" THEN '[%d6]' " +
+                    "WHEN \"0\" THEN '[#d0]' " +
+                    "WHEN \"1\" THEN '[#d1]' " +
+                    "WHEN \"2\" THEN '[#d2]' " +
+                    "WHEN \"3\" THEN '[#d3]' " +
+                    "WHEN \"4\" THEN '[#d4]' " +
+                    "WHEN \"5\" THEN '[#d5]' " +
+                    "WHEN \"6\" THEN '[#d6]' " +
                 "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_QUANTITYENTERED_NAME) + " AS " + REFUEL_COL_QUANTITYENTERED_NAME + "_DTypeN, " +
@@ -318,19 +318,19 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " + //#0
                 sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
                 	sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || " +
-                	sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; [%1]'" +
+                	sqlConcatTableColumn(EXPENSETYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; [#1]'" +
                         	" AS " + FIRST_LINE_LIST_NAME + ", " + //#1
-                sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; [%1] ' || " +
+                sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; [#1] ' || " +
                 	sqlConcatTableColumn(CURRENCY_TABLE_NAME, CURRENCY_COL_CODE_NAME) + " || " +
                     " CASE WHEN " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCY_ID_NAME) + " <> " +
                     	sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_CURRENCYENTERED_ID_NAME) + " " +
-                    	" THEN " + "' ([%2] ' || " +
+                    	" THEN " + "' ([#2] ' || " +
                                 sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
                         " ELSE " + "'' " +
                     " END " 
                 	
                 	
-                		+ " || ' at [%3] ' || " +
+                		+ " || ' at [#3] ' || " +
                 	sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
                         "AS " + SECOND_LINE_LIST_NAME + ", " + //#2
                     " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
@@ -379,13 +379,13 @@ public class ReportDbAdapter extends MainDbAdapter{
 
                 "CASE strftime(\"%w\", " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) +
                     ", 'unixepoch', 'localtime') " +
-                    "WHEN \"0\" THEN '[%d0]' " +
-                    "WHEN \"1\" THEN '[%d1]' " +
-                    "WHEN \"2\" THEN '[%d2]' " +
-                    "WHEN \"3\" THEN '[%d3]' " +
-                    "WHEN \"4\" THEN '[%d4]' " +
-                    "WHEN \"5\" THEN '[%d5]' " +
-                    "WHEN \"6\" THEN '[%d6]' " +
+                    "WHEN \"0\" THEN '[#d0]' " +
+                    "WHEN \"1\" THEN '[#d1]' " +
+                    "WHEN \"2\" THEN '[#d2]' " +
+                    "WHEN \"3\" THEN '[#d3]' " +
+                    "WHEN \"4\" THEN '[#d4]' " +
+                    "WHEN \"5\" THEN '[#d5]' " +
+                    "WHEN \"6\" THEN '[#d6]' " +
                 "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
                 sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DOCUMENTNO_NAME) + ", " +
@@ -491,39 +491,39 @@ public class ReportDbAdapter extends MainDbAdapter{
             "SELECT " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " + //#0
                 sqlConcatTableColumn(CAR_TABLE_NAME,  GEN_COL_NAME_NAME) + " || '; ' || " +
-                        sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || '[%1]'" +
+                        sqlConcatTableColumn(DRIVER_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ' || '[#1]'" +
                         " AS " + FIRST_LINE_LIST_NAME + ", " +  //#1
-                "'[%1]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", " + StaticValues.DECIMALS_LENGTH + ") || ' ' || " +
+                "'[#1]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", " + StaticValues.DECIMALS_LENGTH + ") || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '; ' || " +
-                    "'[%2]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", 2) || ' ' || " +
+                    "'[#2]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
-                    "'[%3]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGSPEED_NAME) + ", 2) || ' ' || " +
+                    "'[#3]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGSPEED_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
-                    "'[%4]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME) + ", 2) || ' ' || " +
+                    "'[#4]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME) + ", 2) || ' ' || " +
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
-                    "'[%5]' || '; ' || " +
-                    "'[%6]' || '; ' || " +
-                    "'[%7]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", 2) || " +
+                    "'[#5]' || '; ' || " +
+                    "'[#6]' || '; ' || " +
+                    "'[#7]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", 2) || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
                                 " THEN " + "' m; ' " +
                                 " ELSE " + "' yd; ' " +
                         " END || " +
-                    "'[%8]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", 2) || " +
+                    "'[#8]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", 2) || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
                                 " THEN " + "' m; ' " +
                                 " ELSE " + "' yd; ' " +
                         " END || " +
-                    "'[%9]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGACCURACY_NAME) + ", 2) || " +
+                    "'[#9]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGACCURACY_NAME) + ", 2) || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
                                 " THEN " + "' m; ' " +
                                 " ELSE " + "' yd; ' " +
                         " END || " +
-                    "'[%10]' || " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINALTITUDE_NAME) + " || " +
+                    "'[#10]' || " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINALTITUDE_NAME) + " || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
                                 " THEN " + "' m; ' " +
                                 " ELSE " + "' yd; ' " +
                         " END || " +
-                    "'[%11]' || " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME) + " || " +
+                    "'[#11]' || " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME) + " || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
                                 " THEN " + "' m; ' " +
                                 " ELSE " + "' yd; ' " +
@@ -564,13 +564,13 @@ public class ReportDbAdapter extends MainDbAdapter{
 
                 "CASE strftime(\"%w\", " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) +
                     ", 'unixepoch', 'localtime') " +
-                    "WHEN \"0\" THEN '[%d0]' " +
-                    "WHEN \"1\" THEN '[%d1]' " +
-                    "WHEN \"2\" THEN '[%d2]' " +
-                    "WHEN \"3\" THEN '[%d3]' " +
-                    "WHEN \"4\" THEN '[%d4]' " +
-                    "WHEN \"5\" THEN '[%d5]' " +
-                    "WHEN \"6\" THEN '[%d6]' " +
+                    "WHEN \"0\" THEN '[#d0]' " +
+                    "WHEN \"1\" THEN '[#d1]' " +
+                    "WHEN \"2\" THEN '[#d2]' " +
+                    "WHEN \"3\" THEN '[#d3]' " +
+                    "WHEN \"4\" THEN '[#d4]' " +
+                    "WHEN \"5\" THEN '[#d5]' " +
+                    "WHEN \"6\" THEN '[#d6]' " +
                 "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", " +

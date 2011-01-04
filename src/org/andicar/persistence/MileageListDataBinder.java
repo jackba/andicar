@@ -32,7 +32,7 @@ public class MileageListDataBinder implements SimpleCursorAdapter.ViewBinder {
     	if(columnIndex == 1) {
     		((TextView) view).setText(
     				cursor.getString(1)
-    					.replace("[%1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
+    					.replace("[#1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
 				 				.format(cursor.getLong(5) * 1000))
 			 );
     		return true;
@@ -40,9 +40,9 @@ public class MileageListDataBinder implements SimpleCursorAdapter.ViewBinder {
     	else if(columnIndex == 2){
     		((TextView) view).setText(
     				cursor.getString(2)
-    					.replace("[%1]", Utils.numberToString(cursor.getDouble(6) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
-    					.replace("[%2]", Utils.numberToString(cursor.getDouble(7) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
-    					.replace("[%3]", Utils.numberToString(cursor.getDouble(8) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+    					.replace("[#1]", Utils.numberToString(cursor.getDouble(6) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+    					.replace("[#2]", Utils.numberToString(cursor.getDouble(7) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+    					.replace("[#3]", Utils.numberToString(cursor.getDouble(8) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
 			 );
     		return true;
     	}

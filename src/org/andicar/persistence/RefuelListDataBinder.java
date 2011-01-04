@@ -32,7 +32,7 @@ public class RefuelListDataBinder implements SimpleCursorAdapter.ViewBinder {
     	if(columnIndex == 1) {
     		((TextView) view).setText(
     				cursor.getString(1)
-    					.replace("[%1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
+    					.replace("[#1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
 				 				.format(cursor.getLong(4) * 1000))
 			 );
     		return true;
@@ -40,13 +40,13 @@ public class RefuelListDataBinder implements SimpleCursorAdapter.ViewBinder {
     	else if(columnIndex == 2){
     		((TextView) view).setText(
     				cursor.getString(2)
-						.replace("[%1]", Utils.numberToString(cursor.getDouble(5) , true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
-						.replace("[%2]", Utils.numberToString(cursor.getDouble(6) , true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
-						.replace("[%3]", Utils.numberToString(cursor.getDouble(7) , true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
-						.replace("[%4]", Utils.numberToString(cursor.getDouble(8) , true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
-						.replace("[%5]", Utils.numberToString(cursor.getDouble(9) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
-						.replace("[%6]", Utils.numberToString(cursor.getDouble(10) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
-						.replace("[%7]", Utils.numberToString(cursor.getDouble(11) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+						.replace("[#1]", Utils.numberToString(cursor.getDouble(5) , true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
+						.replace("[#2]", Utils.numberToString(cursor.getDouble(6) , true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
+						.replace("[#3]", Utils.numberToString(cursor.getDouble(7) , true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
+						.replace("[#4]", Utils.numberToString(cursor.getDouble(8) , true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
+						.replace("[#5]", Utils.numberToString(cursor.getDouble(9) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+						.replace("[#6]", Utils.numberToString(cursor.getDouble(10) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+						.replace("[#7]", Utils.numberToString(cursor.getDouble(11) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
 			 );
     		return true;
     	}

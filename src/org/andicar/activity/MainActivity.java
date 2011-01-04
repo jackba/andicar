@@ -390,24 +390,24 @@ public class MainActivity extends BaseActivity {
 		if (listCursor != null && listCursor.moveToFirst()) {
 			tvThreeLineListExpenseText1.setText(listCursor.getString(1)
 					.replace(
-							"[%1]",
+							"[#1]",
 							DateFormat.getDateFormat(getApplicationContext())
 									.format(listCursor.getLong(4) * 1000)));
 
 			tvThreeLineListExpenseText2.setText(listCursor
 					.getString(2)
 					.replace(
-							"[%1]",
+							"[#1]",
 							Utils.numberToString(listCursor.getDouble(5), true,
 									StaticValues.DECIMALS_AMOUNT,
 									StaticValues.ROUNDING_MODE_AMOUNT))
 					.replace(
-							"[%2]",
+							"[#2]",
 							Utils.numberToString(listCursor.getDouble(6), true,
 									StaticValues.DECIMALS_AMOUNT,
 									StaticValues.ROUNDING_MODE_AMOUNT))
 					.replace(
-							"[%3]",
+							"[#3]",
 							Utils.numberToString(listCursor.getDouble(7), true,
 									StaticValues.DECIMALS_LENGTH,
 									StaticValues.ROUNDING_MODE_LENGTH)));
@@ -442,50 +442,50 @@ public class MainActivity extends BaseActivity {
 			gpsTrackId = listCursor.getLong(0);
 			tvThreeLineListGPSTrackText1.setText(listCursor.getString(1)
 					.replace(
-							"[%1]",
+							"[#1]",
 							DateFormat.getDateFormat(getApplicationContext())
 									.format(listCursor.getLong(7) * 1000)));
 			tvThreeLineListGPSTrackText2
 					.setText(listCursor
 							.getString(2)
 							.replace(
-									"[%1]",
+									"[#1]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
 							.replace(
-									"[%2]",
+									"[#2]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
 							.replace(
-									"[%3]",
+									"[#3]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
 							.replace(
-									"[%4]",
+									"[#4]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
 							.replace(
-									"[%5]",
+									"[#5]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5)
 											+ Utils.getTimeString(
 													listCursor.getLong(4),
 													false))
 							.replace(
-									"[%6]",
+									"[#6]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6)
 											+ Utils.getTimeString(
 													listCursor.getLong(5),
 													false))
 							.replace(
-									"[%7]",
+									"[#7]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
 							.replace(
-									"[%8]",
+									"[#8]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
 							.replace(
-									"[%9]",
+									"[#9]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
 							.replace(
-									"[%10]",
+									"[#10]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
 							.replace(
-									"[%11]",
+									"[#11]",
 									mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
 
 					);
@@ -519,23 +519,23 @@ public class MainActivity extends BaseActivity {
 		if (listCursor != null && listCursor.moveToFirst()) {
 			tvThreeLineListMileageText1.setText(listCursor.getString(1)
 					.replace(
-							"[%1]",
+							"[#1]",
 							DateFormat.getDateFormat(getApplicationContext())
 									.format(listCursor.getLong(5) * 1000)));
 			tvThreeLineListMileageText2.setText(listCursor
 					.getString(2)
 					.replace(
-							"[%1]",
+							"[#1]",
 							Utils.numberToString(listCursor.getDouble(6), true,
 									StaticValues.DECIMALS_LENGTH,
 									StaticValues.ROUNDING_MODE_LENGTH))
 					.replace(
-							"[%2]",
+							"[#2]",
 							Utils.numberToString(listCursor.getDouble(7), true,
 									StaticValues.DECIMALS_LENGTH,
 									StaticValues.ROUNDING_MODE_LENGTH))
 					.replace(
-							"[%3]",
+							"[#3]",
 							Utils.numberToString(listCursor.getDouble(8), true,
 									StaticValues.DECIMALS_LENGTH,
 									StaticValues.ROUNDING_MODE_LENGTH))
@@ -566,43 +566,43 @@ public class MainActivity extends BaseActivity {
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
 			tvThreeLineListRefuelText1.setText(listCursor.getString(1).replace(
-					"[%1]",
+					"[#1]",
 					DateFormat.getDateFormat(getApplicationContext()).format(
 							listCursor.getLong(4) * 1000)));
 			tvThreeLineListRefuelText2.setText(listCursor
 					.getString(2)
 					.replace(
-							"[%1]",
+							"[#1]",
 							Utils.numberToString(listCursor.getDouble(5), true,
 									StaticValues.DECIMALS_VOLUME,
 									StaticValues.ROUNDING_MODE_VOLUME))
 					.replace(
-							"[%2]",
+							"[#2]",
 							Utils.numberToString(listCursor.getDouble(6), true,
 									StaticValues.DECIMALS_VOLUME,
 									StaticValues.ROUNDING_MODE_VOLUME))
 					.replace(
-							"[%3]",
+							"[#3]",
 							Utils.numberToString(listCursor.getDouble(7), true,
 									StaticValues.DECIMALS_PRICE,
 									StaticValues.ROUNDING_MODE_PRICE))
 					.replace(
-							"[%4]",
+							"[#4]",
 							Utils.numberToString(listCursor.getDouble(8), true,
 									StaticValues.DECIMALS_PRICE,
 									StaticValues.ROUNDING_MODE_PRICE))
 					.replace(
-							"[%5]",
+							"[#5]",
 							Utils.numberToString(listCursor.getDouble(9), true,
 									StaticValues.DECIMALS_AMOUNT,
 									StaticValues.ROUNDING_MODE_AMOUNT))
 					.replace(
-							"[%6]",
+							"[#6]",
 							Utils.numberToString(listCursor.getDouble(10),
 									true, StaticValues.DECIMALS_AMOUNT,
 									StaticValues.ROUNDING_MODE_AMOUNT))
 					.replace(
-							"[%7]",
+							"[#7]",
 							Utils.numberToString(listCursor.getDouble(11),
 									true, StaticValues.DECIMALS_LENGTH,
 									StaticValues.ROUNDING_MODE_LENGTH)));

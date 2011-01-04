@@ -131,7 +131,7 @@
     	<item>Saturday</item>
     </string-array>
 
-    <string-array name="months">
+    <string-array name="months_of_year">
 	    <item>January</item>
 	    <item>February</item>
 	    <item>March</item>

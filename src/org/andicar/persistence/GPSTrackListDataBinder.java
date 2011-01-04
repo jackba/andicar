@@ -31,26 +31,26 @@ public class GPSTrackListDataBinder implements SimpleCursorAdapter.ViewBinder {
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
         if(columnIndex == 1){
             ((TextView) view).setText(cursor.getString(1)
-            		.replace("[%1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
+            		.replace("[#1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
             				.format(cursor.getLong(7) * 1000)));
             return true;
         }
         else if(columnIndex == 2){
             Resources mRes = view.getResources();
             ((TextView) view).setText(cursor.getString(2)
-                    .replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
-                    .replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
-                    .replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
-                    .replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
-                    .replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
+                    .replace("[#1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
+                    .replace("[#2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+                    .replace("[#3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+                    .replace("[#4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+                    .replace("[#5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
                             Utils.getTimeString(cursor.getLong(4), false))
-                    .replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
+                    .replace("[#6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
                             Utils.getTimeString(cursor.getLong(5), false))
-                    .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
-                    .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
-                    .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
-                    .replace("[%10]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
-                    .replace("[%11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
+                    .replace("[#7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+                    .replace("[#8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+                    .replace("[#9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                    .replace("[#10]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
+                    .replace("[#11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
                     );
             return true;
         }
