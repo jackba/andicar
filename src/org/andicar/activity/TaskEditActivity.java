@@ -22,6 +22,7 @@ package org.andicar.activity;
 import java.util.Calendar;
 
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.StaticValues;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -58,22 +59,29 @@ public class TaskEditActivity extends EditActivityBase {
 	private ImageButton btnNewTaskType = null;
 	private RadioButton rbOneTime = null;
 	private RadioButton rbRecurent = null;
+	private LinearLayout llTimingZone = null;
 	private LinearLayout llOneTimeSettings = null;
 	private LinearLayout llRecurentTimeSettings = null;
 	private LinearLayout llMoreExact = null;
+	private LinearLayout llMileageZone = null;
+	private TextView tvMileageLabelEvery = null;
 	private CheckBox ckFirstRunFCar = null;
+	private TextView tvFirstRunExplanation = null;
 	private TextView tvOnDay = null;
 	private EditText etOnDay = null;
 	private CheckBox ckOnLastDay = null;
-	
+
 	private Spinner spnMonthsOfYear = null;
+	private Spinner spnMileageUOM = null;
 	
 	private Calendar mcalDateTime2 = Calendar.getInstance();
 	private int mHour2;
 	private int mMinute2;
 	private TextView tvDateTimeValue2 = null;
 	private long mRecurencyId = -1;
-	protected boolean mFirstRunFCar = true;
+	protected boolean isFirstRunFCar = true;
+	protected boolean isTimingEnabled = true;
+	protected boolean isMileageEnabled = true;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -91,9 +99,19 @@ public class TaskEditActivity extends EditActivityBase {
 		llMoreExact = (LinearLayout) findViewById(R.id.llMoreExact);
 		ckFirstRunFCar = (CheckBox) findViewById(R.id.ckFirstRunFCar);
 		ckFirstRunFCar.setOnCheckedChangeListener(ckFirstRunFCarCheckedChange);
+		llTimingZone = (LinearLayout) findViewById(R.id.llTimingZone);
 		llOneTimeSettings = (LinearLayout) findViewById(R.id.llOneTimeSettings);
 		llRecurentTimeSettings = (LinearLayout) findViewById(R.id.llRecurentTimeSettings);
-
+		llMileageZone = (LinearLayout)findViewById(R.id.llMileageZone);
+		tvMileageLabelEvery = (TextView)findViewById(R.id.tvMileageLabelEvery);
+		tvFirstRunExplanation = (TextView)findViewById(R.id.tvFirstRunExplanation);
+		spnMileageUOM = (Spinner)findViewById(R.id.spnMileageUOM);
+		initSpinner(spnMileageUOM, MainDbAdapter.UOM_TABLE_NAME,
+                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
+                    MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, 
+                    mPreferences.getLong("CarUOMLength_ID", 1), false);
+		
 		RadioGroup rg = (RadioGroup) findViewById(R.id.rgRepeating);
 		rg.setOnCheckedChangeListener(rgRepeatingOnCheckedChangeListener);
 
@@ -106,6 +124,9 @@ public class TaskEditActivity extends EditActivityBase {
 		etOnDay = (EditText)findViewById(R.id.etOnDay);
 		ckOnLastDay = (CheckBox)findViewById(R.id.ckOnLastDay);
 		ckOnLastDay.setOnCheckedChangeListener(ckOnLastDayChecked);
+		
+		RadioGroup rgDriving = (RadioGroup) findViewById(R.id.rgDriving);
+		rgDriving.setOnCheckedChangeListener(rgTimingMileageEnabledChecked);
 		
 		spnMonthsOfYear = (Spinner) findViewById(R.id.spnMonthsOfYear);
 		
@@ -237,11 +258,31 @@ public class TaskEditActivity extends EditActivityBase {
 				llOneTimeSettings.setVisibility(View.VISIBLE);
 				llRecurentTimeSettings.setVisibility(View.GONE);
 				ckFirstRunFCar.setVisibility(View.GONE);
+				tvMileageLabelEvery.setVisibility(View.GONE);
 			} else {
 				llOneTimeSettings.setVisibility(View.GONE);
 				llRecurentTimeSettings.setVisibility(View.VISIBLE);
 				ckFirstRunFCar.setVisibility(View.VISIBLE);
+				tvMileageLabelEvery.setVisibility(View.VISIBLE);
 			}
+		}
+	};
+	
+	private RadioGroup.OnCheckedChangeListener rgTimingMileageEnabledChecked = new RadioGroup.OnCheckedChangeListener() {
+		public void onCheckedChanged(RadioGroup arg0, int checkedId) {
+			if (checkedId == R.id.rbTimeDriven) {
+				isTimingEnabled = true;
+				isMileageEnabled = false;
+			} 
+			else if (checkedId == R.id.rbMileageDriven) {
+				isTimingEnabled = false;
+				isMileageEnabled = true;
+			}
+			else if (checkedId == R.id.rbTimeAndMileageDriven) {
+				isTimingEnabled = true;
+				isMileageEnabled = true;
+			}
+			setSpecificLayout();
 		}
 	};
 
@@ -304,7 +345,7 @@ public class TaskEditActivity extends EditActivityBase {
 //			if (isActivityOnLoading)
 //				return;
 			mRecurencyId = arg3;
-			setRecurencySpecificLayout();
+			setSpecificLayout();
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {
@@ -317,50 +358,71 @@ public class TaskEditActivity extends EditActivityBase {
 			if(mRecurencyId != 1)
 				return; //invalid
 			else
-				setRecurencySpecificLayout();
+				setSpecificLayout();
 		}
 	};
+	
 	
 	protected CheckBox.OnCheckedChangeListener ckFirstRunFCarCheckedChange = new CheckBox.OnCheckedChangeListener() {
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-			mFirstRunFCar = isChecked;
-			setRecurencySpecificLayout();
+			isFirstRunFCar = isChecked;
+			setSpecificLayout();
 		}
 	};
 	
-	private void setRecurencySpecificLayout(){
-		if(mRecurencyId == 0){ //wekly
-			spnDaysOfWeek.setVisibility(View.VISIBLE);
-			tvOnDay.setVisibility(View.GONE);
-			etOnDay.setVisibility(View.GONE);
-			ckOnLastDay.setVisibility(View.GONE);
-			spnMonthsOfYear.setVisibility(View.GONE);
-		}
-		else if(mRecurencyId == 1){ //monthly
-			spnDaysOfWeek.setVisibility(View.GONE);
-			spnMonthsOfYear.setVisibility(View.GONE);
-			if(ckOnLastDay.isChecked()){
+	private void setSpecificLayout(){
+		if(isTimingEnabled){
+			
+			llTimingZone.setVisibility(View.VISIBLE);
+
+			if(mRecurencyId == 0){ //wekly
+				spnDaysOfWeek.setVisibility(View.VISIBLE);
 				tvOnDay.setVisibility(View.GONE);
 				etOnDay.setVisibility(View.GONE);
+				ckOnLastDay.setVisibility(View.GONE);
+				spnMonthsOfYear.setVisibility(View.GONE);
 			}
-			else{
+			else if(mRecurencyId == 1){ //monthly
+				spnDaysOfWeek.setVisibility(View.GONE);
+				spnMonthsOfYear.setVisibility(View.GONE);
+				if(ckOnLastDay.isChecked()){
+					tvOnDay.setVisibility(View.GONE);
+					etOnDay.setVisibility(View.GONE);
+				}
+				else{
+					tvOnDay.setVisibility(View.VISIBLE);
+					etOnDay.setVisibility(View.VISIBLE);
+				}
+				ckOnLastDay.setVisibility(View.VISIBLE);
+			}
+			else{ //yearly
+				spnDaysOfWeek.setVisibility(View.GONE);
+				ckOnLastDay.setChecked(false);
+				ckOnLastDay.setVisibility(View.GONE);
+				spnMonthsOfYear.setVisibility(View.VISIBLE);
 				tvOnDay.setVisibility(View.VISIBLE);
 				etOnDay.setVisibility(View.VISIBLE);
 			}
-			ckOnLastDay.setVisibility(View.VISIBLE);
+			if(isFirstRunFCar){
+				tvFirstRunExplanation.setVisibility(View.VISIBLE);
+				llMoreExact.setVisibility(View.GONE);
+			}
+			else{
+				llMoreExact.setVisibility(View.VISIBLE);
+				tvFirstRunExplanation.setVisibility(View.GONE);
+			}
 		}
-		else{ //yearly
-			spnDaysOfWeek.setVisibility(View.GONE);
-			ckOnLastDay.setChecked(false);
-			ckOnLastDay.setVisibility(View.GONE);
-			spnMonthsOfYear.setVisibility(View.VISIBLE);
-			tvOnDay.setVisibility(View.VISIBLE);
-			etOnDay.setVisibility(View.VISIBLE);
+		else{
+			llTimingZone.setVisibility(View.GONE);
 		}
-		if(mFirstRunFCar)
-			llMoreExact.setVisibility(View.GONE);
-		else
-			llMoreExact.setVisibility(View.VISIBLE);
+		
+		if(isMileageEnabled){
+			llMileageZone.setVisibility(View.VISIBLE);
+		}
+		else{
+			llMileageZone.setVisibility(View.GONE);
+		}
+		
 	}
 }

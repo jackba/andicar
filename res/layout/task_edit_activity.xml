@@ -140,7 +140,7 @@
                 android:id="@+id/tvUserCommentLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/GEN_UserCommentLabel"
+                android:text="@string/GEN_Description"
                 android:typeface="sans"
                 android:textColor="@android:color/white"
                 />
@@ -152,24 +152,6 @@
                 android:background="@drawable/white_background"
                 />
 
-		    <TextView
-		        android:layout_height="1dip"
-		        android:layout_width="fill_parent"
-		        android:background="@color/separator_bg"
-		        android:layout_marginTop="10dip"
-		        />
-<!-- 
-            <TextView
-                android:id="@+id/tvRepeating"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/GEN_RepeatingHdr"
-                android:typeface="sans"
-        		android:textStyle="bold|italic"
-                android:textColor="@android:color/white"
-                android:layout_marginTop="10dip"
-                />
- -->
             <RadioGroup
                 android:id="@+id/rgRepeating"
                 android:layout_width="fill_parent"
@@ -197,37 +179,76 @@
                     android:layout_marginLeft="40dip"
                     />
             </RadioGroup>
-			<CheckBox
-				android:id="@+id/ckFirstRunFCar"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:text="@string/TaskEditActivity_FirstRunDependOnCar"
-				android:typeface="sans"
-				android:textColor="@android:color/white"
-				android:button="@drawable/checkbox_selector"
-				android:layout_marginLeft="10dip"
-				android:checked="true"
-			/>
-            
+
+		    <TextView
+		        android:layout_height="2dip"
+		        android:layout_width="fill_parent"
+		        android:background="@color/separator_bg"
+		        android:layout_marginTop="10dip"
+		        />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                android:background="@color/header_bg"
+                android:gravity="center_vertical"
+                android:text="@string/TaskEditActivity_Scheduled"
+                />
+
+            <RadioGroup
+                android:id="@+id/rgDriving"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:checkedButton="@+id/rbTimeAndMileageDriven"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_marginTop="10dip"
+                >
+                <RadioButton
+                    android:id="@+id/rbTimeDriven"
+                    android:text="@string/TaskEditActivity_TimeDriven"
+                    style="?android:attr/textAppearanceSmall"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/rb_selector"
+                    />
+                <RadioButton
+                    android:id="@+id/rbMileageDriven"
+                    android:text="@string/TaskEditActivity_MileageDriven"
+                    style="?android:attr/textAppearanceSmall"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/rb_selector"
+                    android:layout_marginLeft="10dip"
+                    />
+                <RadioButton
+                    android:id="@+id/rbTimeAndMileageDriven"
+                    android:text="@string/TaskEditActivity_BothDriven"
+                    style="?android:attr/textAppearanceSmall"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/rb_selector"
+                    android:layout_marginLeft="10dip"
+                    />
+            </RadioGroup>
+
+		    <TextView
+		        android:layout_height="1dip"
+		        android:layout_width="fill_parent"
+		        android:background="@color/separator_bg"
+		        android:layout_marginTop="10dip"
+		        />
             <LinearLayout
+            	android:id="@+id/llTimingZone"
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dip"
                 android:gravity="center_vertical|right"
                 >
-				<CheckBox
-					android:id="@+id/ckOneTimeTimingEnabled"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:text="@string/TaskEditActivity_TimeDriven"
-					android:typeface="sans"
-					android:textColor="@android:color/white"
-					android:button="@drawable/checkbox_selector"
-					android:layout_marginLeft="10dip"
-	                android:layout_marginTop="5dip"
-					android:checked="true"
-				/>
 	            <LinearLayout
                 	android:id="@+id/llOneTimeSettings"
 	                android:orientation="horizontal"
@@ -260,168 +281,225 @@
 	                        android:src="@drawable/icon_clock_selector"
 	                        />
 	            </LinearLayout>
+				<CheckBox
+					android:id="@+id/ckFirstRunFCar"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:text="@string/TaskEditActivity_FirstRunDependOnCar"
+					android:typeface="sans"
+					android:textColor="@android:color/white"
+					style="?android:attr/textAppearanceSmall"
+					android:button="@drawable/checkbox_selector"
+					android:checked="true"
+				/>
+	            <LinearLayout
+	                android:id="@+id/llRecurentTimeSettings"
+	                android:orientation="vertical"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="5dip"
+	                >
+		            <LinearLayout
+		                android:orientation="horizontal"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:gravity="center_vertical|center_horizontal"
+		                >
+		                <TextView
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:typeface="sans"
+		                    android:textColor="@android:color/white"
+		                    android:text="@string/TaskEditActivity_RecurentEveryLabel"
+		                    />
+		                <EditText
+		                    android:id="@+id/etFrequency"
+		                    android:layout_marginLeft="10dip"
+		                    android:layout_width="50dip"
+		                    android:layout_height="wrap_content"
+		                    android:numeric="integer"
+	                    	android:digits="1234567890"
+		                    android:inputType="phone"
+		                    android:tag="@string/TaskEditActivity_RecurentfrequencyLabel"
+		                    android:text="1"
+		                    android:background="@drawable/white_background"
+		                    />
+				        <Spinner android:id="@+id/spnScheduleFrequency"
+				            android:layout_marginLeft="10dip"
+				            android:layout_width="100dip"
+				            android:layout_height="wrap_content"
+				            android:drawSelectorOnTop="true"
+				            android:background="@drawable/white_background"
+				            android:prompt="@string/GEN_ChooseOneTitle"
+				            android:entries="@array/recurency_periods"
+				        />
+		            </LinearLayout>
+	
+	                <TextView
+		            	android:id="@+id/tvFirstRunExplanation"
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:typeface="sans"
+	                    android:textColor="@android:color/white"
+	                    android:text="@string/TaskEditActivity_FirstRunExplanation"
+	                    android:gravity="center_horizontal"
+	                    />
+
+		            <LinearLayout
+		            	android:id="@+id/llMoreExact"
+		                android:orientation="horizontal"
+		                android:layout_width="fill_parent"
+		                android:layout_height="wrap_content"
+		                android:gravity="center_vertical|center_horizontal"
+			            android:layout_marginTop="5dip"
+		                >
+		                <TextView
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:typeface="sans"
+		                    android:textColor="@android:color/white"
+		                    android:text="@string/GEN_On"
+		                    />
+		                <!-- weekly settings -->
+				        <Spinner android:id="@+id/spnDaysOfWeek"
+				            android:layout_marginLeft="10dip"
+				            android:layout_width="100dip"
+				            android:layout_height="wrap_content"
+				            android:drawSelectorOnTop="true"
+				            android:background="@drawable/white_background"
+				            android:prompt="@string/GEN_ChooseOneTitle"
+				            android:entries="@array/days_of_week"
+				        />
+				        
+		                <!-- yearly settings -->
+				        <Spinner android:id="@+id/spnMonthsOfYear"
+				            android:layout_marginLeft="5dip"
+				            android:layout_width="80dip"
+				            android:layout_height="wrap_content"
+				            android:drawSelectorOnTop="true"
+				            android:background="@drawable/white_background"
+				            android:prompt="@string/GEN_ChooseOneTitle"
+				            android:entries="@array/months_of_year"
+				        />
+				        
+		                <!-- monthly settings -->
+		                <TextView
+		                	android:id="@+id/tvOnDay"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:typeface="sans"
+		                    android:textColor="@android:color/white"
+		                    android:text="@string/GEN_Day"
+				            android:layout_marginLeft="5dip"
+		                    />
+		                <EditText
+		                    android:id="@+id/etOnDay"
+		                    android:layout_marginLeft="10dip"
+		                    android:layout_width="25dip"
+		                    android:layout_height="wrap_content"
+		                    android:numeric="integer"
+	                    	android:digits="1234567890"
+		                    android:inputType="phone"
+		                    android:text="1"
+		                    android:background="@drawable/white_background"
+		                    />
+			            <CheckBox
+			                android:id="@+id/ckOnLastDay"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:text="@string/GEN_LastDay"
+			                android:typeface="sans"
+			                android:textColor="@android:color/white"
+			                android:button="@drawable/checkbox_selector"
+				            android:layout_marginLeft="10dip"
+			                />
+	
+		                <TextView
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:typeface="sans"
+		                    android:textColor="@android:color/white"
+		                    android:text="@string/GEN_At"
+				            android:layout_marginLeft="10dip"
+		                    />
+		                <TextView
+		                	android:id="@+id/tvDateTimeValue2"
+		                    android:layout_width="wrap_content"
+		                    android:layout_height="wrap_content"
+		                    android:typeface="sans"
+		                    android:textColor="@android:color/white"
+				            android:layout_marginLeft="5dip"
+		                    />
+		                <ImageButton android:id="@+id/btnPickTime2"
+		                        android:layout_width="wrap_content"
+		                        android:layout_height="wrap_content"
+		                        android:layout_marginLeft="10dip"
+		                        android:background="@drawable/btn_background_selector"
+		                        android:src="@drawable/icon_clock_selector"
+		                        />
+		            </LinearLayout>
+            	</LinearLayout>
+			    <TextView
+			        android:layout_height="1dip"
+			        android:layout_width="fill_parent"
+			        android:background="@color/separator_bg"
+                	android:layout_marginTop="10dip"
+			        />
             </LinearLayout>
+
             <LinearLayout
-                android:id="@+id/llRecurentTimeSettings"
+            	android:id="@+id/llMileageZone"
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 >
 	            <LinearLayout
+                	android:id="@+id/llMileageSettings"
 	                android:orientation="horizontal"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
+	                android:layout_marginTop="5dip"
 	                android:gravity="center_vertical|center_horizontal"
 	                >
 	                <TextView
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:typeface="sans"
-	                    android:textColor="@android:color/white"
-	                    android:text="@string/TaskEditActivity_RecurentEveryLabel"
-	                    />
-	                <EditText
-	                    android:id="@+id/etFrequency"
-	                    android:layout_marginLeft="10dip"
-	                    android:layout_width="50dip"
-	                    android:layout_height="wrap_content"
-	                    android:numeric="integer"
-                    	android:digits="1234567890"
-	                    android:inputType="phone"
-	                    android:tag="@string/TaskEditActivity_RecurentfrequencyLabel"
-	                    android:text="1"
-	                    android:background="@drawable/white_background"
-	                    />
-			        <Spinner android:id="@+id/spnScheduleFrequency"
-			            android:layout_marginLeft="10dip"
-			            android:layout_width="100dip"
-			            android:layout_height="wrap_content"
-			            android:drawSelectorOnTop="true"
-			            android:background="@drawable/white_background"
-			            android:prompt="@string/GEN_ChooseOneTitle"
-			            android:entries="@array/recurency_periods"
-			        />
-	            </LinearLayout>
-
-	            <LinearLayout
-	            	android:id="@+id/llMoreExact"
-	                android:orientation="horizontal"
-	                android:layout_width="fill_parent"
-	                android:layout_height="wrap_content"
-	                android:gravity="center_vertical|center_horizontal"
-		            android:layout_marginTop="5dip"
-	                >
-	                <TextView
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:typeface="sans"
-	                    android:textColor="@android:color/white"
-	                    android:text="@string/GEN_On"
-	                    />
-	                <!-- weekly settings -->
-			        <Spinner android:id="@+id/spnDaysOfWeek"
-			            android:layout_marginLeft="10dip"
-			            android:layout_width="100dip"
-			            android:layout_height="wrap_content"
-			            android:drawSelectorOnTop="true"
-			            android:background="@drawable/white_background"
-			            android:prompt="@string/GEN_ChooseOneTitle"
-			            android:entries="@array/days_of_week"
-			        />
-			        
-	                <!-- yearly settings -->
-			        <Spinner android:id="@+id/spnMonthsOfYear"
-			            android:layout_marginLeft="5dip"
-			            android:layout_width="100dip"
-			            android:layout_height="wrap_content"
-			            android:drawSelectorOnTop="true"
-			            android:background="@drawable/white_background"
-			            android:prompt="@string/GEN_ChooseOneTitle"
-			            android:entries="@array/months_of_year"
-			        />
-			        
-	                <!-- monthly settings -->
-	                <TextView
-	                	android:id="@+id/tvOnDay"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:typeface="sans"
-	                    android:textColor="@android:color/white"
-	                    android:text="@string/GEN_Day"
-			            android:layout_marginLeft="5dip"
-	                    />
-	                <EditText
-	                    android:id="@+id/etOnDay"
-	                    android:layout_marginLeft="10dip"
-	                    android:layout_width="25dip"
-	                    android:layout_height="wrap_content"
-	                    android:numeric="integer"
-                    	android:digits="1234567890"
-	                    android:inputType="phone"
-	                    android:text="1"
-	                    android:background="@drawable/white_background"
-	                    />
-		            <CheckBox
-		                android:id="@+id/ckOnLastDay"
-		                android:layout_width="wrap_content"
-		                android:layout_height="wrap_content"
-		                android:text="@string/GEN_LastDay"
-		                android:typeface="sans"
-		                android:textColor="@android:color/white"
-		                android:button="@drawable/checkbox_selector"
-			            android:layout_marginLeft="10dip"
-		                />
-
-	                <TextView
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:typeface="sans"
-	                    android:textColor="@android:color/white"
-	                    android:text="@string/GEN_At"
-			            android:layout_marginLeft="10dip"
-	                    />
-	                <TextView
-	                	android:id="@+id/tvDateTimeValue2"
-	                    android:layout_width="wrap_content"
-	                    android:layout_height="wrap_content"
-	                    android:typeface="sans"
-	                    android:textColor="@android:color/white"
-			            android:layout_marginLeft="5dip"
-	                    />
-	                <ImageButton android:id="@+id/btnPickTime2"
-	                        android:layout_width="wrap_content"
-	                        android:layout_height="wrap_content"
-	                        android:layout_marginLeft="10dip"
-	                        android:background="@drawable/btn_background_selector"
-	                        android:src="@drawable/icon_clock_selector"
-	                        />
-	            </LinearLayout>
-	                <!-- 
-	                <TextView
-	                    android:id="@+id/tvDateTimeValue"
+	                    android:id="@+id/tvMileageLabelOn"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:typeface="sans"
 	                    android:textColor="@android:color/white"
 	                    android:gravity="center_vertical"
-	                    android:text="@string/GEN_SetDate"
+	                    android:text="@string/GEN_On"
 	                    />
-	                <ImageButton android:id="@+id/btnPickDate"
-	                        android:layout_width="wrap_content"
-	                        android:layout_height="wrap_content"
-	                        android:layout_marginLeft="10dip"
-	                        android:background="@drawable/btn_background_selector"
-	                        android:src="@drawable/icon_calendar_selector"
-	                        />
-	                <ImageButton android:id="@+id/btnPickTime"
-	                        android:layout_width="wrap_content"
-	                        android:layout_height="wrap_content"
-	                        android:layout_marginLeft="10dip"
-	                        android:background="@drawable/btn_background_selector"
-	                        android:src="@drawable/icon_clock_selector"
-	                        />
-	                -->
+	                <TextView
+	                    android:id="@+id/tvMileageLabelEvery"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:typeface="sans"
+	                    android:textColor="@android:color/white"
+	                    android:gravity="center_vertical"
+	                    android:text="@string/TaskEditActivity_RecurentEveryLabel"
+	                	android:layout_marginLeft="5dip"
+	                    />
+	                <EditText
+	                    android:id="@+id/etMileage"
+	                    android:layout_marginLeft="10dip"
+	                    android:layout_width="100dip"
+	                    android:layout_height="wrap_content"
+	                    android:numeric="integer"
+                    	android:digits="1234567890."
+	                    android:inputType="phone"
+	                    android:background="@drawable/white_background"
+	                    />
+			        <Spinner android:id="@+id/spnMileageUOM"
+			            android:layout_marginLeft="10dip"
+			            android:layout_width="100dip"
+			            android:layout_height="wrap_content"
+			            android:drawSelectorOnTop="true"
+			            android:background="@drawable/white_background"
+			            android:prompt="@string/GEN_ChooseOneTitle"
+			        />
+	            </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
