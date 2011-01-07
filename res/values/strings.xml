@@ -131,10 +131,11 @@
     <string name="GEN_TaskTypeLabel">"Task type:"</string>
     <string name="GEN_RepeatingHdr">"Repeating"</string>
     <string name="GEN_SetDate">"Set date/time"</string>
-    <string name="GEN_On">"on"</string> <!-- ex. on Monday -->
+    <string name="GEN_On">"On"</string> <!-- ex. on Monday -->
     <string name="GEN_At">"at"</string> <!-- ex. on Monday at 1 PM -->
     <string name="GEN_Day">"day"</string>
     <string name="GEN_LastDay">"last day"</string>
+    <string name="GEN_Description">"Description"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -288,8 +289,12 @@
     <string name="TaskEditActivity_Recurent">"Recurent"</string>
     <string name="TaskEditActivity_RecurentEveryLabel">"Every"</string>
     <string name="TaskEditActivity_RecurentfrequencyLabel">"Frequency"</string>
-    <string name="TaskEditActivity_FirstRunDependOnCar">"Different first run for each linked car"</string>
-    <string name="TaskEditActivity_TimeDriven">"Time driven"</string>
+    <string name="TaskEditActivity_FirstRunDependOnCar">"Different starting time for each linked car"</string>
+    <string name="TaskEditActivity_TimeDriven">"Time"</string>
+    <string name="TaskEditActivity_Scheduled">"Scheduled for:"</string>
+    <string name="TaskEditActivity_MileageDriven">"Mileage"</string>
+    <string name="TaskEditActivity_BothDriven">"Both"</string>
+    <string name="TaskEditActivity_FirstRunExplanation">"The starting time will be specified for each linked car"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>
