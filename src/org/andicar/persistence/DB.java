@@ -325,10 +325,6 @@ public class DB {
 	 */
 	public static final String TASK_COL_RUNMILEAGE_NAME = "RunMileage";
 	/**
-	 * UOM for mileage: km or mi
-	 */
-	public static final String TASK_COL_MILEAGEUOM_ID_NAME = "MileageUom_ID";
-	/**
 	 * No. of km|mi to start reminders
 	 */
 	public static final String TASK_COL_REMINDERMILEAGES_NAME = "ReminderMileages";
@@ -478,8 +474,7 @@ public class DB {
 	public static final int TASK_COL_RUNTIME_POS = 12;
 	public static final int TASK_COL_REMINDERDAYS_POS = 13;
 	public static final int TASK_COL_RUNMILEAGE_POS = 14;
-	public static final int TASK_COL_MILEAGEUOM_ID_POS = 15;
-	public static final int TASK_COL_REMINDERMILEAGES_POS = 16;
+	public static final int TASK_COL_REMINDERMILEAGES_POS = 15;
 
 	public static final int TASK_CAR_COL_TASK_ID_POS = 4;
 	public static final int TASK_CAR_COL_CAR_ID_POS = 5;
@@ -609,7 +604,7 @@ public class DB {
 			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME, TASK_COL_ISRECURENT_NAME,
 			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, TASK_COL_TIMEFREQUENCY_NAME,
 			TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_RUNDAY_NAME, TASK_COL_RUNMONTH_NAME, TASK_COL_RUNTIME_NAME,
-			TASK_COL_REMINDERDAYS_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEUOM_ID_NAME, TASK_COL_REMINDERMILEAGES_NAME};
+			TASK_COL_REMINDERDAYS_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_REMINDERMILEAGES_NAME};
 	public static final String[] taskCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
 			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
 
@@ -1061,8 +1056,6 @@ public class DB {
 			+ " INTEGER NULL, "
 			+ TASK_COL_RUNMILEAGE_NAME
 			+ " INTEGER NULL, "
-			+ TASK_COL_MILEAGEUOM_ID_NAME
-			+ " INTEGER NULL, "
 			+ TASK_COL_REMINDERMILEAGES_NAME
 			+ " INTEGER NULL "
 			+ ");";
@@ -1203,11 +1196,10 @@ public class DB {
 		}
 
 		private void createTaskTables(SQLiteDatabase db) {
-			return;
 			// create task/reminder
-//			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
-//			db.execSQL(TASK_TABLE_CREATE_SQL);
-//			db.execSQL(TASK_CAR_TABLE_CREATE_SQL);
+			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
+			db.execSQL(TASK_TABLE_CREATE_SQL);
+			db.execSQL(TASK_CAR_TABLE_CREATE_SQL);
 		}
 
 		private void createBPartnerTable(SQLiteDatabase db) throws SQLException {
