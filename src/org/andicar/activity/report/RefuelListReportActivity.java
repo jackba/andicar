@@ -19,7 +19,15 @@
 
 package org.andicar.activity.report;
 
-import android.app.AlertDialog;
+import org.andicar.activity.R;
+import org.andicar.activity.RefuelEditActivity;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.RefuelListDataBinder;
+import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -31,13 +39,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import org.andicar.activity.R;
-import org.andicar.activity.RefuelEditActivity;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.persistence.RefuelListDataBinder;
-import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
 
 /**
  *
@@ -107,8 +108,8 @@ public class RefuelListReportActivity extends ReportListActivityBase{
 
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
         searchView = liLayoutFactory.inflate(R.layout.refuel_search_dialog, null);
-        AlertDialog.Builder searchDialog = new AlertDialog.Builder(RefuelListReportActivity.this);
-        searchDialog.setTitle(R.string.DIALOGSearch_DialogTitle);
+        AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(RefuelListReportActivity.this, 
+        		AndiCarDialogBuilder.DIALOGTYPE_SEARCH, mRes.getString(R.string.DIALOGSearch_DialogTitle));
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);

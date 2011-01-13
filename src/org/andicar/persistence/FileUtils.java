@@ -39,6 +39,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.andicar.activity.R;
+import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -54,7 +55,7 @@ import android.os.Bundle;
  * @author miki
  */
 public class FileUtils {
-    private AlertDialog.Builder exceptionAlertBuilder;
+    private AndiCarDialogBuilder exceptionAlertBuilder;
     private AlertDialog exceptionAlert;
     private Resources mRes;
     private Context mCtx;
@@ -132,7 +133,8 @@ public class FileUtils {
             }
             
             if(retVal != -1){
-                exceptionAlertBuilder = new AlertDialog.Builder(mCtx);
+    	        exceptionAlertBuilder = new AndiCarDialogBuilder(mCtx, 
+    	        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mRes.getString(R.string.GEN_Error));
                 exceptionAlertBuilder.setCancelable( false );
                 exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
                 exceptionAlertBuilder.setMessage(mRes.getString(retVal));
@@ -142,7 +144,8 @@ public class FileUtils {
             }
         }
         catch(SecurityException e){
-            exceptionAlertBuilder = new AlertDialog.Builder(mCtx);
+	        exceptionAlertBuilder = new AndiCarDialogBuilder(mCtx, 
+	        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mRes.getString(R.string.GEN_Error));
             exceptionAlertBuilder.setCancelable( false );
             exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
             exceptionAlertBuilder.setMessage(e.getMessage());
@@ -240,7 +243,8 @@ public class FileUtils {
         } 
         catch(IOException e){
             lastError = e.getMessage();
-            exceptionAlertBuilder = new AlertDialog.Builder(mCtx);
+	        exceptionAlertBuilder = new AndiCarDialogBuilder(mCtx, 
+	        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mRes.getString(R.string.GEN_Error));
             exceptionAlertBuilder.setCancelable( false );
             exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
             exceptionAlertBuilder.setMessage(e.getMessage());
@@ -312,7 +316,8 @@ public class FileUtils {
             if(!file.exists()){
                 if(!file.mkdirs()){
                     lastError = "GPS track folder " +  StaticValues.TRACK_FOLDER + " cannot be created.";
-                    exceptionAlertBuilder = new AlertDialog.Builder(mCtx);
+        	        exceptionAlertBuilder = new AndiCarDialogBuilder(mCtx, 
+        	        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mRes.getString(R.string.GEN_Error));
                     exceptionAlertBuilder.setCancelable( false );
                     exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
                     exceptionAlertBuilder.setMessage(mRes.getString(R.string.ERR_033));

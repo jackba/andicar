@@ -22,6 +22,7 @@ import org.andicar.activity.miscellaneous.GPSTrackMap;
 import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -71,7 +72,7 @@ public class ListActivityBase extends ListActivity {
     protected SharedPreferences.Editor mPrefEditor;
     protected MainDbAdapter mDbAdapter = null;
     protected Bundle extras = null;
-    protected AlertDialog.Builder errorAlertBuilder;
+    protected AndiCarDialogBuilder errorAlertBuilder;
     protected AlertDialog errorAlert;
     protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport = true;
@@ -131,7 +132,8 @@ public class ListActivityBase extends ListActivity {
 
         lvBaseList = getListView();
         
-        errorAlertBuilder = new AlertDialog.Builder(this);
+        errorAlertBuilder = new AndiCarDialogBuilder(ListActivityBase.this, 
+        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mRes.getString(R.string.GEN_Error));
         errorAlertBuilder.setCancelable(false);
         errorAlertBuilder.setPositiveButton(mRes.getString(R.string.GEN_OK), null);
 
@@ -287,7 +289,8 @@ public class ListActivityBase extends ListActivity {
 //                        return true;
 //                    }
 //                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(ListActivityBase.this);
+                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(ListActivityBase.this, 
+                		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mRes.getString(R.string.GEN_Confirm));
                 builder.setMessage(mRes.getString(R.string.GEN_DeleteConfirmation));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mRes.getString(R.string.GEN_YES),

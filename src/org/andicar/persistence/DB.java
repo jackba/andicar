@@ -93,6 +93,7 @@ public class DB {
 	// tasks/reminders tables
 	public static final String TASKTYPE_TABLE_NAME = "DEF_TASKTYPE";
 	public static final String TASK_TABLE_NAME = "DEF_TASK";
+	public static final String TASK_CAR_TABLE_NAME = "TASK_CAR";
 
 	// column names. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
@@ -268,8 +269,75 @@ public class DB {
 	public static final String BPARTNER_LOCATION_COL_EMAIL_NAME = "Email";
 	public static final String BPARTNER_LOCATION_COL_CONTACTPERSON_NAME = "ContactPerson";
 
-	public static final String TASK_COL_TASKTYPE_ID_NAME = TASKTYPE_TABLE_NAME
-			+ "_ID";
+	public static final String TASK_COL_TASKTYPE_ID_NAME = TASKTYPE_TABLE_NAME + "_ID";
+	/**
+	 * this task is a recurent task? {Y|N}
+	 */
+	public static final String TASK_COL_ISRECURENT_NAME = "IsRecurent";
+	/**
+	 * Time|Mileage|Both (StaticValues.TASK_SCHEDULED_FOR_...)
+	 */
+	public static final String TASK_COL_SCHEDULEDFOR_NAME = "ScheduledFor";
+	public static final String TASK_COL_ISDIFFERENTSTARTINGTIME_NAME = "IsDifferentSTime";
+	/**
+	 * no of days/weeks/years
+	 */
+	public static final String TASK_COL_TIMEFREQUENCY_NAME = "TimeFrequency";
+	/**
+	 * Type integer<br>
+	 * Frequency type: 0 = Week, 1 = Month, 2 = Year (StaticValues.TASK_SCHEDULED_FREQTYPE_...
+	 */
+	public static final String TASK_COL_TIMEFREQUENCYTYPE_NAME = "TimeFrequencyType";
+	
+	/**
+	 * run on a specified day when IsDifferentSTime = 'N' 
+	 * <li>if TimeFrequencyType is week: 0 Sunday - 6 Saturday <br>
+	 * <li>if TimeFrequencyType is month: 1 - 32. 32 for last day of the month
+	 * <li>if TimeFrequencyType is year: 1 - 31
+	 */
+	public static final String TASK_COL_RUNDAY_NAME = "RunDay";
+
+	/**
+	 * run on a specified month when IsDifferentSTime = 'N' and TimeFrequencyType is year <br>
+	 *  <li> 0 = January
+	 *  <li> ...
+	 *  <li> 11 = December
+	 */
+	public static final String TASK_COL_RUNMONTH_NAME = "RunMonth";
+	/**
+	 * Type Date<br><br>
+	 * If IsRecurent = 'Y':
+	 * <li>1970-01-01 hh:mm. Just the hh:mm part are considered<br><br>
+	 * If IsRecurent = 'N':
+	 * <li>Datetime
+	 */
+	public static final String TASK_COL_RUNTIME_NAME = "RunTime";
+	/**
+	 * Type integer
+	 * No. of days to start reminders
+	 */
+	public static final String TASK_COL_REMINDERDAYS_NAME = "ReminderDays";
+	/**
+	 * If IsRecurent = 'Y':
+	 * <li>Run on every mileage<br>
+	 * else
+	 * <li>Run on mileage
+	 */
+	public static final String TASK_COL_RUNMILEAGE_NAME = "RunMileage";
+	/**
+	 * UOM for mileage: km or mi
+	 */
+	public static final String TASK_COL_MILEAGEUOM_ID_NAME = "MileageUom_ID";
+	/**
+	 * No. of km|mi to start reminders
+	 */
+	public static final String TASK_COL_REMINDERMILEAGES_NAME = "ReminderMileages";
+
+	
+	public static final String TASK_CAR_COL_TASK_ID_NAME = TASK_TABLE_NAME + "_ID";
+	public static final String TASK_CAR_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
+	public static final String TASK_CAR_COL_FIRSTRUN_DATE_NAME = "FirstRunDate";
+	public static final String TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME = "FirstRunMileage";
 
 	// column positions. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
@@ -400,6 +468,23 @@ public class DB {
 	public static final int BPARTNER_LOCATION_COL_CONTACTPERSON_POS = 14;
 
 	public static final int TASK_COL_TASKTYPE_ID_POS = 4;
+	public static final int TASK_COL_ISRECURENT_POS = 5;
+	public static final int TASK_COL_SCHEDULEDFOR_POS = 6;
+	public static final int TASK_COL_ISDIFFERENTSTARTINGTIME_POS = 7;
+	public static final int TASK_COL_TIMEFREQUENCY_POS = 8;
+	public static final int TASK_COL_TIMEFREQUENCYTYPE_POS = 9;
+	public static final int TASK_COL_RUNDAY_POS = 10;
+	public static final int TASK_COL_RUNMONTH_POS = 11;
+	public static final int TASK_COL_RUNTIME_POS = 12;
+	public static final int TASK_COL_REMINDERDAYS_POS = 13;
+	public static final int TASK_COL_RUNMILEAGE_POS = 14;
+	public static final int TASK_COL_MILEAGEUOM_ID_POS = 15;
+	public static final int TASK_COL_REMINDERMILEAGES_POS = 16;
+
+	public static final int TASK_CAR_COL_TASK_ID_POS = 4;
+	public static final int TASK_CAR_COL_CAR_ID_POS = 5;
+	public static final int TASK_CAR_COL_FIRSTRUN_DATE_POS = 6;
+	public static final int TASK_CAR_COL_FIRSTRUN_MILEAGE_POS = 7;
 
 	public static final String[] driverTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
@@ -521,7 +606,12 @@ public class DB {
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME };
 	public static final String[] taskTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME };
+			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME, TASK_COL_ISRECURENT_NAME,
+			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, TASK_COL_TIMEFREQUENCY_NAME,
+			TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_RUNDAY_NAME, TASK_COL_RUNMONTH_NAME, TASK_COL_RUNTIME_NAME,
+			TASK_COL_REMINDERDAYS_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEUOM_ID_NAME, TASK_COL_REMINDERMILEAGES_NAME};
+	public static final String[] taskCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
+			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
 
 	public static final String[] genColName = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME };
@@ -950,8 +1040,53 @@ public class DB {
 			+ GEN_COL_USER_COMMENT_NAME
 			+ " TEXT NULL, "
 			+ TASK_COL_TASKTYPE_ID_NAME
-			+ " INTEGER NOT NULL "
+			+ " INTEGER NOT NULL, "
+			+ TASK_COL_ISRECURENT_NAME 
+			+ " TEXT DEFAULT 'Y', "
+			+ TASK_COL_SCHEDULEDFOR_NAME
+			+ " TEXT NULL, "
+			+ TASK_COL_ISDIFFERENTSTARTINGTIME_NAME
+			+ " TEXT NULL, "
+			+ TASK_COL_TIMEFREQUENCY_NAME
+			+ " INTEGER NULL, "
+			+ TASK_COL_TIMEFREQUENCYTYPE_NAME
+			+ " INTEGER NULL, "
+			+ TASK_COL_RUNDAY_NAME
+			+ " INTEGER NULL, "
+			+ TASK_COL_RUNMONTH_NAME
+			+ " INTEGER NULL, "
+			+ TASK_COL_RUNTIME_NAME
+			+ " DATE NULL, "
+			+ TASK_COL_REMINDERDAYS_NAME
+			+ " INTEGER NULL, "
+			+ TASK_COL_RUNMILEAGE_NAME
+			+ " INTEGER NULL, "
+			+ TASK_COL_MILEAGEUOM_ID_NAME
+			+ " INTEGER NULL, "
+			+ TASK_COL_REMINDERMILEAGES_NAME
+			+ " INTEGER NULL "
 			+ ");";
+
+	protected static final String TASK_CAR_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
+		+ TASK_CAR_TABLE_NAME
+		+ " ( "
+		+ GEN_COL_ROWID_NAME
+		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+		+ GEN_COL_NAME_NAME
+		+ " TEXT NOT NULL, "
+		+ GEN_COL_ISACTIVE_NAME
+		+ " TEXT DEFAULT 'Y', "
+		+ GEN_COL_USER_COMMENT_NAME
+		+ " TEXT NULL, "
+		+ TASK_CAR_COL_TASK_ID_NAME
+		+ " INTEGER NOT NULL, "
+		+ TASK_CAR_COL_CAR_ID_NAME
+		+ " INTEGER NOT NULL, "
+		+ TASK_CAR_COL_FIRSTRUN_DATE_NAME 
+		+ " DATE NULL, "
+		+ TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME
+		+ " INTEGER NULL "
+		+ ");";
 
 	/**
 	 * Constructor - takes the context to allow the database to be
@@ -1049,7 +1184,7 @@ public class DB {
 			AddOnDBObjectDef.createAddOnBKScheduleTable(db);
 			AddOnDBObjectDef.createAddOnSecureBKSettingsTable(db);
 
-//			createTaskTables(db);
+			createTaskTables(db);
 
 			// create indexes
 			createIndexes(db);
@@ -1068,9 +1203,11 @@ public class DB {
 		}
 
 		private void createTaskTables(SQLiteDatabase db) {
+			return;
 			// create task/reminder
-			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
-			db.execSQL(TASK_TABLE_CREATE_SQL);
+//			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
+//			db.execSQL(TASK_TABLE_CREATE_SQL);
+//			db.execSQL(TASK_CAR_TABLE_CREATE_SQL);
 		}
 
 		private void createBPartnerTable(SQLiteDatabase db) throws SQLException {
@@ -1311,7 +1448,7 @@ public class DB {
 			} else if (oldVersion == 356) {
 				upgradeDbTo357(db, oldVersion);
 			}
-			 upgradeDbTo357(db, oldVersion);
+//			 upgradeDbTo357(db, oldVersion);
 			// !!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
 
 			// create indexes
@@ -1743,7 +1880,7 @@ public class DB {
 			AddOnDBObjectDef.createAddOnSecureBKSettingsTable(db);
 		}
 
-		private void upgradeDbTo357(SQLiteDatabase db, int oldVersion) {
+		private void upgradeDbTo357(SQLiteDatabase db, int oldVersion) throws SQLException {
 			createTaskTables(db);
 		}
 

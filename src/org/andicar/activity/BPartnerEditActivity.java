@@ -19,6 +19,10 @@
 
 package org.andicar.activity;
 
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.utils.StaticValues;
+
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -35,8 +39,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -261,8 +263,8 @@ public class BPartnerEditActivity extends EditActivityBase {
                 startActivityForResult(insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
                 return true;
             case StaticValues.CONTEXT_MENU_DELETE_ID:
-                //check if the car is the selected car. If yes it cannot be deleted.
-                AlertDialog.Builder builder = new AlertDialog.Builder(BPartnerEditActivity.this);
+                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(BPartnerEditActivity.this, 
+                		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.GEN_Confirm));
                 builder.setMessage(mResource.getString(R.string.GEN_DeleteConfirmation));
                 builder.setCancelable(false);
                 builder.setPositiveButton(mResource.getString(R.string.GEN_YES),

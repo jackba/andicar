@@ -680,28 +680,24 @@ public class RefuelEditActivity extends EditActivityBase {
                 }
                 calculatedValueStr =
                 	Utils.numberToString(calculatedValue, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
-//                	calculatedValue.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString() 
                             + " " + currencyCode;
                 tvCalculatedTextContent.setText(calculatedValueStr);
                 if(carDefaultCurrencyId != mCurrencyId && currencyConversionRate != null){
                     amountConverted = amountEntered.multiply(currencyConversionRate);
                     priceConverted = priceEntered.multiply(currencyConversionRate);
 
+                    if(carDefaultCurrencyCode == null)
+                    	carDefaultCurrencyCode = "";
                     calculatedValueStr =
                             (mResource.getString(R.string.GEN_ConvertedPriceLabel)).replace("[#1]", carDefaultCurrencyCode) + " = " +
                         		Utils.numberToString(priceConverted, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
-//                                priceConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString() 
                                     + "; " +
                             (mResource.getString(R.string.GEN_ConvertedAmountLabel)).replace("[#1]", carDefaultCurrencyCode) + " = " +
                     			Utils.numberToString(amountConverted, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-//                                amountConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
                     tvConvertedAmountLabel.setText(calculatedValueStr);
                 }
             }
             catch(NumberFormatException e){
-//                if(isSendCrashReport)
-//                    AndiCarStatistics.sendFlurryError("RefuelError",
-//                            "NFE1: qtyStr = " + qtyStr + "; priceStr = " + userInputStr, this.toString());
             }
         }
     }
@@ -722,7 +718,6 @@ public class RefuelEditActivity extends EditActivityBase {
                 baseUomQty = (new BigDecimal(qtyStr)).multiply(uomVolumeConversionRate);
                 amountStr = 
         			Utils.numberToString(baseUomQty, true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME)
-//                	baseUomQty.setScale(StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME).toString() 
                 		+ " " + carDefaultUOMVolumeCode;
 
                 tvBaseUOMQtyValue.setText(amountStr);

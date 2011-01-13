@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 357;
+    public static final int DATABASE_VERSION = 356;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     
@@ -43,6 +43,7 @@ public class StaticValues
     public static final int MENU_RATE_COMMENT_ID = 18;
     public static final int MENU_ADDON_ID = 19;
     public static final int MENU_LOCALIZE_ID = 20;
+    public static final int MENU_TASKREMINDER_ID = 21;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
@@ -94,6 +95,8 @@ public class StaticValues
     public static final int DIALOG_REPORT_OPTIONS = 3;
     public static final int DIALOG_DATE_FROM_PICKER = 4;
     public static final int DIALOG_DATE_TO_PICKER = 5;
+    public static final int DIALOG_TIME_PICKER2 = 6;
+    public static final int DIALOG_TASK_CAR_LINK = 7;
 
     public static final int NOTIF_UPDATECHECK_ID = 0;
     public static final int NOTIF_GPS_TRACK_STARTED_ID = 1;
@@ -149,4 +152,12 @@ public class StaticValues
     public static final String FLURRY_ID = "E8C8QUTB7KS46SHMEP6V";
 
     public static final String VERSION_FILE_URL = "http://sites.google.com/site/andicarservices/andicarversion.txt";
+    
+    //used in task definition
+    public static final String TASK_SCHEDULED_FOR_TIME = "T";
+    public static final String TASK_SCHEDULED_FOR_MILEAGE = "M";
+    public static final String TASK_SCHEDULED_FOR_BOTH = "B";
+    public static final int TASK_SCHEDULED_FREQTYPE_WEEK = 0;
+    public static final int TASK_SCHEDULED_FREQTYPE_MONTH = 1;
+    public static final int TASK_SCHEDULED_FREQTYPE_YEAR = 2;
 }

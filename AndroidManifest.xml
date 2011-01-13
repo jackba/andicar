@@ -20,8 +20,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
-          android:versionCode="3561" 
-          android:versionName="3.5.7 Beta"
+          android:versionCode="3562" 
+          android:versionName="3.5.6.2"
           android:installLocation="internalOnly">
 <!-- 
 	internalOnly becouse:
@@ -65,6 +65,13 @@
         android:debuggable="false"
     >
         <uses-library android:name="com.google.android.maps" />
+
+        <receiver android:name="org.andicar.service.AndiCarServiceStarter">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
+			</intent-filter>
+		</receiver>
+		 
         <service android:name="org.andicar.service.GPSTrackService" />
         <service android:name="org.andicar.service.UpdateCheckService" />
         
@@ -264,13 +271,6 @@
         </activity>
 
         <!-- AddOn Services -->
-        <receiver android:name="com.andicar.addon.services.AndiCarServiceStarter">
-			<intent-filter>
-				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
-				<action android:name="android.intent.action.USER_PRESENT"></action>
-			</intent-filter>
-		</receiver>
-		 
         <service android:name="com.andicar.addon.services.BackupService" 
 			android:label="AndiCarBackupService"
 			android:process="com.andicar.addon.services">

@@ -521,6 +521,8 @@ public class ExpenseEditActivity extends EditActivityBase {
         if(isVisible){
             llConversionRateZone1.setVisibility(View.VISIBLE);
             llConversionRateZone2.setVisibility(View.VISIBLE);
+            if(carDefaultCurrencyCode == null)
+            	carDefaultCurrencyCode = "";
             tvConvertedAmountLabel.setText((mResource.getString(R.string.GEN_ConvertedAmountLabel))
                     .replace("[#1]", carDefaultCurrencyCode) + " = ");
             etConversionRate.setTag(mResource.getString(R.string.GEN_ConversionRateLabel));
@@ -546,8 +548,6 @@ public class ExpenseEditActivity extends EditActivityBase {
                         setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                 convertedAmountStr = 
             		Utils.numberToString(convertedAmount, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-//                	convertedAmount.toString() 
-//                	+ " " + carDefaultCurrencyCode;
                 tvConvertedAmountValue.setText(convertedAmountStr);
             }
             if(price != null) {

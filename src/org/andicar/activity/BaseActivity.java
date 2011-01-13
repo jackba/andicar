@@ -20,6 +20,11 @@ package org.andicar.activity;
 
 import java.math.BigDecimal;
 
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.utils.AndiCarExceptionHandler;
+import org.andicar.utils.StaticValues;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
@@ -34,9 +39,6 @@ import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.AndiCarExceptionHandler;
-import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -46,7 +48,7 @@ public class BaseActivity extends Activity {
     protected MainDbAdapter mDbAdapter = null;
     protected Resources mResource = null;
     protected SharedPreferences mPreferences;
-    protected AlertDialog.Builder madbErrorAlert;
+    protected AndiCarDialogBuilder madbErrorAlert;
     protected AlertDialog madError;
     protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport;
@@ -72,7 +74,7 @@ public class BaseActivity extends Activity {
         mDbAdapter = new MainDbAdapter(this);
         mResource = getResources();
 
-        madbErrorAlert = new AlertDialog.Builder( this );
+        madbErrorAlert = new AndiCarDialogBuilder(BaseActivity.this, AndiCarDialogBuilder.DIALOGTYPE_ERROR, mResource.getString(R.string.GEN_Error));
         madbErrorAlert.setCancelable( false );
         madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
 

@@ -125,7 +125,11 @@
     <string name="GEN_MailSent">"Почта отправлена"</string>
 	<string name="GEN_Password">"Пароль"</string>
 	<string name="GEN_ShowNotification">"Показать уведомление"</string>
-	
+	<string name="GEN_Error">"Ошибка"</string>
+	<string name="GEN_Confirm">"Подтверждение"</string>
+	<string name="GEN_Info">"Информация"</string>
+	<string name="GEN_Warning">"Предупреждение"</string>
+
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
     <string name="MENU_DeleteCaption">"Удалить"</string>
@@ -169,6 +173,8 @@
     <string name="MainActivity_GPSTrackZoneNoDataText">"Нет треков."</string>
     <string name="MainActivity_NoMarketAccessMsg">"Не открывается Android маркет!"</string>
     <string name="MainActivity_AppVersion">"Версия программы:"</string>
+	<string name="MainActivity_DidYouKnow">"Вы знаете?"</string>
+	<string name="MainActivity_AddOnMessage">"В программе AndiCar есть некоторые полезные дополнительные услуги. Работу дополнений можно попробовать бесплатно. \n\nВы хотите увидеть список доступных дополнений?"</string>	
 
     <string name="DriverEditActivity_LicenseNoLabel">"Вод. удостоверение No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">" Текущий водитель не может быть неактивным."</string>
