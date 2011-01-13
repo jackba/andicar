@@ -39,7 +39,6 @@ import org.andicar.activity.ExpenseCategoryListActivity;
 import org.andicar.activity.ExpenseTypeListActivity;
 import org.andicar.activity.R;
 import org.andicar.activity.TagListActivity;
-//import org.andicar.activity.TaskListActivity;
 import org.andicar.activity.TaskTypeListActivity;
 import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
@@ -148,19 +147,19 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         addOnCategory.addPreference(addOnPreferenceScreen);
 
         //Tasks/Reminders
-//        PreferenceCategory taskReminderCategory = new PreferenceCategory(this);
-//        taskReminderCategory.setTitle(mRes.getString(R.string.PREF_TaskReminderCategoryTitle));
-//        prefScreenRoot.addPreference(taskReminderCategory);
-////        PreferenceScreen taskPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
-////        taskPreferenceScreen.setIntent(new Intent(this, TaskListActivity.class));
-////        taskPreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTitle));
-////        taskPreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskSummary));
-////        taskReminderCategory.addPreference(taskPreferenceScreen);
-//        PreferenceScreen taskTypePreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
-//        taskTypePreferenceScreen.setIntent(new Intent(this, TaskTypeListActivity.class));
-//        taskTypePreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTypeTitle));
-//        taskTypePreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskTypeSummary));
-//        taskReminderCategory.addPreference(taskTypePreferenceScreen);
+        PreferenceCategory taskReminderCategory = new PreferenceCategory(this);
+        taskReminderCategory.setTitle(mRes.getString(R.string.PREF_TaskReminderCategoryTitle));
+        prefScreenRoot.addPreference(taskReminderCategory);
+//        PreferenceScreen taskPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+//        taskPreferenceScreen.setIntent(new Intent(this, TaskListActivity.class));
+//        taskPreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTitle));
+//        taskPreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskSummary));
+//        taskReminderCategory.addPreference(taskPreferenceScreen);
+        PreferenceScreen taskTypePreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+        taskTypePreferenceScreen.setIntent(new Intent(this, TaskTypeListActivity.class));
+        taskTypePreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTypeTitle));
+        taskTypePreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskTypeSummary));
+        taskReminderCategory.addPreference(taskTypePreferenceScreen);
 
         //business partners
         PreferenceCategory bPartnerCategory = new PreferenceCategory(this);

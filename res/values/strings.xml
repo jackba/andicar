@@ -308,6 +308,9 @@
     <string name="TaskEditActivity_FirstMileageRunExplanation">"The starting mileage will be specified for each linked car"</string>
     <string name="TaskEditActivity_ReminderStartLabel">"Start reminder before"</string>
     <string name="TaskEditActivity_LinkedCarsLabel">"Linked cars"</string>
+    <string name="TaskEditActivity_MileageUOMText">"mi or km (depending on car)"</string>
+    <string name="TaskEditActivity_FillMileage">"Fill mileage!"</string>
+    <string name="TaskEditActivity_FillFrequency">"Fill frequency!"</string>
     
     <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
     <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>

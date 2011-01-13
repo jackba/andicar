@@ -1473,9 +1473,9 @@ public class MainActivity extends BaseActivity {
 		menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
 				mRes.getText(R.string.MENU_PreferencesCaption)).setIcon(
 				mRes.getDrawable(R.drawable.ic_menu_preferences));
-//		menu.add(0, StaticValues.MENU_TASKREMINDER_ID, 0,
-//				mRes.getText(R.string.MENU_TaskReminderCaption)).setIcon(
-//				mRes.getDrawable(R.drawable.ic_menu_task));
+		menu.add(0, StaticValues.MENU_TASKREMINDER_ID, 0,
+				mRes.getText(R.string.MENU_TaskReminderCaption)).setIcon(
+				mRes.getDrawable(R.drawable.ic_menu_task));
 		menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
 				mRes.getText(R.string.MENU_AboutCaption)).setIcon(
 				mRes.getDrawable(R.drawable.ic_menu_info_details));
