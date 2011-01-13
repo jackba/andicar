@@ -53,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
+import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
 /**
@@ -63,7 +64,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private Bundle mExtras;
     private SharedPreferences mPreferences;
     protected Resources mResource = null;
-    protected AlertDialog.Builder madbErrorAlert;
+    protected AndiCarDialogBuilder madbErrorAlert;
     protected AlertDialog madError;
     protected ArrayList<GeoPoint> trackPoints;
     protected Projection projection;
@@ -145,7 +146,8 @@ public class GPSTrackMap extends MapActivity implements Runnable{
                         progressDialog.dismiss();
                     else{
                         progressDialog.dismiss();
-                        madbErrorAlert = new AlertDialog.Builder( GPSTrackMap.this );
+                        madbErrorAlert = new AndiCarDialogBuilder(GPSTrackMap.this, 
+                        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mResource.getString(R.string.GEN_Error));
                         madbErrorAlert.setCancelable( false );
                         madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
                         madbErrorAlert.setMessage(mResource.getString(msg.what));

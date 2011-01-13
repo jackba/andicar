@@ -26,10 +26,10 @@ import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -71,7 +71,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     protected int mMonthTo = 11;
     protected int mDayTo = 1;
     
-    AlertDialog.Builder reportOptionsDialog;
+    AndiCarDialogBuilder reportOptionsDialog;
     ProgressDialog progressDialog;
 
     /**
@@ -223,8 +223,8 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
 		
 		        ckIsSendEmail = (CheckBox)reportDialogView.findViewById(R.id.ckIsSendEmail);
 		
-		        reportOptionsDialog = new AlertDialog.Builder(ReportListActivityBase.this);
-		        reportOptionsDialog.setTitle(R.string.DIALOGReport_DialogTitle);
+		        reportOptionsDialog = new AndiCarDialogBuilder(ReportListActivityBase.this, 
+		        		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mRes.getString(R.string.DIALOGReport_DialogTitle));
 		        reportOptionsDialog.setView(reportDialogView);
 		        reportOptionsDialog.setPositiveButton(R.string.GEN_OK, reportDialogButtonlistener);
 		        reportOptionsDialog.setNegativeButton(R.string.GEN_CANCEL, reportDialogButtonlistener);

@@ -19,6 +19,17 @@
 
 package org.andicar.activity.miscellaneous;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.andicar.activity.BaseActivity;
+import org.andicar.activity.R;
+import org.andicar.persistence.FileUtils;
+import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -29,16 +40,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import org.andicar.activity.BaseActivity;
-import org.andicar.activity.R;
-import org.andicar.persistence.FileUtils;
-import org.andicar.utils.AndiCarStatistics;
-import org.andicar.utils.StaticValues;
 
-import com.andicar.addon.services.AndiCarServiceStarter;
+import com.andicar.addon.services.AndiCarAddOnServiceStarter;
 
 
 /**
@@ -124,7 +127,8 @@ public class BackupRestoreActivity extends BaseActivity {
 
     private View.OnClickListener btnRestoreClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
+            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(BackupRestoreActivity.this, 
+            		AndiCarDialogBuilder.DIALOGTYPE_WARNING, mResource.getString(R.string.GEN_Confirm));
             builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_RestoreConfirmation));
             builder.setCancelable(false);
             builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
@@ -136,14 +140,15 @@ public class BackupRestoreActivity extends BaseActivity {
                                     editor.putLong( "CurrentCar_ID", -1);
 //                                    editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
-                                    AndiCarServiceStarter.startServices(BackupRestoreActivity.this);
+                                    AndiCarAddOnServiceStarter.startServices(BackupRestoreActivity.this);
                                     if(isSendStatistics){
                                         Map<String, String> parameters = new HashMap<String, String>();
                                         parameters.put("Operation", "Restore");
                                         AndiCarStatistics.sendFlurryEvent(BackupRestoreActivity.this, "BackupRestore", parameters);
                                     }
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
+                                    AndiCarDialogBuilder builder = new AndiCarDialogBuilder(BackupRestoreActivity.this, 
+                                    		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.GEN_Info));
                                     builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_RestoreOKMessage));
                                     builder.setCancelable(false);
                                     builder.setPositiveButton(mResource.getString(R.string.GEN_OK),
@@ -172,12 +177,13 @@ public class BackupRestoreActivity extends BaseActivity {
                         });
             AlertDialog alert = builder.create();
             alert.show();
-            }
+        }
     };
 
     private View.OnClickListener btnDeleteBkClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
+            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(BackupRestoreActivity.this, 
+            		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.GEN_Confirm));
             builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_BackupDeleteConfirmation));
             builder.setCancelable(false);
             builder.setPositiveButton(mResource.getString(R.string.GEN_YES),

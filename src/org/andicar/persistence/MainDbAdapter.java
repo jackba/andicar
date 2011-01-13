@@ -953,6 +953,18 @@ public class MainDbAdapter extends DB
 			}
 			checkCursor.close();
         }
+        else if(tableName.equals(TASKTYPE_TABLE_NAME)){
+            checkSql = "SELECT * " +
+                        "FROM " + TASK_TABLE_NAME + " " +
+                        "WHERE " + TASK_COL_TASKTYPE_ID_NAME + " = " + rowId + " " +
+                        "LIMIT 1";
+            checkCursor = mDb.rawQuery(checkSql, null);
+            if(checkCursor.moveToFirst()){ //record exists
+                checkCursor.close();
+                return R.string.ERR_060;
+            }
+            checkCursor.close();
+        }
 
         return -1;
     }

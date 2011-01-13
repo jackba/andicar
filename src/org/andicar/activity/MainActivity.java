@@ -34,6 +34,7 @@ import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.service.UpdateCheckService;
+import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -51,6 +52,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,7 +65,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andicar.addon.activity.AddOnServicesList;
-import com.andicar.addon.services.AndiCarServiceStarter;
+import com.andicar.addon.activity.ServiceSubscription;
+import com.andicar.addon.services.AndiCarAddOnServiceStarter;
 
 /**
  * 
@@ -124,6 +127,7 @@ public class MainActivity extends BaseActivity {
 
 	private boolean isSendStatistics = true;
 	private boolean isSendCrashReport;
+	private boolean isJustInstalled = false;
 	private long gpsTrackId = -1;
 
 	@Override
@@ -144,6 +148,9 @@ public class MainActivity extends BaseActivity {
 			mainContext = this;
 			mPreferences = getSharedPreferences(
 					StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+			if(mPreferences.getAll().size() == 0)
+				isJustInstalled = true;
+			
 			mRes = getResources();
 
 			// FileUtils fu = new FileUtils(this);
@@ -164,10 +171,8 @@ public class MainActivity extends BaseActivity {
 			String updateMsg = mPreferences.getString("UpdateMsg", null);
 			if (updateMsg != null) {
 				if (!updateMsg.equals("VersionChanged")) {
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							MainActivity.this);
-					builder.setTitle(mRes
-							.getString(R.string.MainActivity_UpdateMessage));
+	                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
+	                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mRes.getString(R.string.MainActivity_UpdateMessage));
 					builder.setMessage(updateMsg);
 					builder.setCancelable(false);
 					builder.setPositiveButton(mRes.getString(R.string.GEN_OK),
@@ -228,8 +233,7 @@ public class MainActivity extends BaseActivity {
 			tvStatisticsTotalExpenses = (TextView) findViewById(R.id.tvStatisticsTotalExpenses);
 			tvStatisticsMileageExpense = (TextView) findViewById(R.id.tvStatisticsMileageExpense);
 
-			if (mPreferences == null || mPreferences.getAll().isEmpty()) { // fresh
-																			// install
+			if (isJustInstalled) {
 				exitResume = true;
 				// test if backups exists
 				if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null
@@ -237,10 +241,8 @@ public class MainActivity extends BaseActivity {
 								null).isEmpty()) {
 					initPreferenceValues(); // version update => init (new)
 											// preference values
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							MainActivity.this);
-					builder.setTitle(mRes
-							.getString(R.string.MainActivity_WellcomeBackMessage));
+	                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
+	                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mRes.getString(R.string.MainActivity_WellcomeBackMessage));
 					builder.setMessage(mRes
 							.getString(R.string.MainActivity_BackupExistMessage));
 					builder.setCancelable(false);
@@ -269,8 +271,8 @@ public class MainActivity extends BaseActivity {
 				} else {
 					exitResume = true;
 					initPreferenceValues(); // init preference values
-					AlertDialog.Builder builder = new AlertDialog.Builder(
-							MainActivity.this);
+	                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
+	                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mRes.getString(R.string.MainActivity_WellcomeMessage));
 					builder.setTitle(mRes
 							.getString(R.string.MainActivity_WellcomeMessage));
 					builder.setMessage(mRes
@@ -300,8 +302,12 @@ public class MainActivity extends BaseActivity {
 			try {
 				appVersion = getPackageManager().getPackageInfo(
 						getPackageName(), 0).versionName;
+				
+				String deviceId = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId(); 
 				SharedPreferences.Editor editor = mPreferences.edit();
-				if (appVersion != null && appVersion.contains("Beta"))
+				
+				if (appVersion == null || appVersion.contains("Beta")
+						|| deviceId == null || deviceId.equals("000000000000000")) //emulator
 					editor.putBoolean("IsBeta", true); // no flurry statistics
 														// are send for beta
 														// versions
@@ -322,7 +328,7 @@ public class MainActivity extends BaseActivity {
 
 					initPreferenceValues(); // version update => init (new)
 											// preference values
-					AndiCarServiceStarter.startServices(this);
+					AndiCarAddOnServiceStarter.startServices(this);
 					editor.putInt("appVersionCode", appVersionCode);
 					editor.commit();
 				}
@@ -331,22 +337,58 @@ public class MainActivity extends BaseActivity {
 			}
 
 			// check for app update once a day
+			Long currentTime = System.currentTimeMillis();
+			Long lastTime = mPreferences.getLong("lastUpdateCheckTime", 0);
+			SharedPreferences.Editor editor = mPreferences.edit();
+			long oneDayInMilis = 86400000; //(24 * 60 * 60 * 1000);
 			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
-				Long lastUpdateTime = mPreferences.getLong(
-						"lastUpdateCheckTime", 0);
-				Long currentTime = System.currentTimeMillis();
-				if ((lastUpdateTime + (24 * 60 * 60 * 1000)) < currentTime) {
+				if ((lastTime + oneDayInMilis) < currentTime) {
 					AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 					Intent intent = new Intent(this, UpdateCheckService.class);
 					PendingIntent pIntent = PendingIntent.getService(this, 0,
 							intent, PendingIntent.FLAG_CANCEL_CURRENT);
 					am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
 							pIntent);
-					SharedPreferences.Editor editor = mPreferences.edit();
-					editor.putLong("lastUpdateCheckTime", lastUpdateTime);
+					editor.putLong("lastUpdateCheckTime", lastTime);
 					editor.commit();
 				}
 			}
+			
+			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
+//			if(lastTime + (30 * oneDayInMilis) < currentTime){
+			if(isJustInstalled){
+				//show the question above 10 days 
+				editor.putLong("lastAddOnCheckTime", currentTime - (5 * oneDayInMilis));
+				editor.commit();
+			}
+			else{
+				if(lastTime + (15 * oneDayInMilis) < currentTime && 
+						!ServiceSubscription.isAddOnsUsed(mDbAdapter)){
+					editor.putLong("lastAddOnCheckTime", currentTime);
+					editor.commit();
+					
+					AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
+							AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.MainActivity_DidYouKnow));
+		            builder.setMessage(mResource.getString(R.string.MainActivity_AddOnMessage));
+		            builder.setCancelable(false);
+		            builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
+		                       new DialogInterface.OnClickListener() {
+		                           public void onClick(DialogInterface dialog, int id) {
+		                        	   startActivity(new Intent(MainActivity.this, AddOnServicesList.class));
+		                        	   dialog.cancel();
+		                           }
+		                       });
+		            builder.setNegativeButton(mResource.getString(R.string.GEN_NO),
+		                        new DialogInterface.OnClickListener() {
+		                           public void onClick(DialogInterface dialog, int id) {
+		                                dialog.cancel();
+		                           }
+		                        });
+		            AlertDialog alert = builder.create();
+		            alert.show();
+				}
+			}
+			
 		} catch (Exception e) {
 			String logFile = "startup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
@@ -1337,8 +1379,8 @@ public class MainActivity extends BaseActivity {
 						mDbAdapter.getCarUOMLengthID(mCarId));
 				mPrefEditor.commit();
 			} else {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						MainActivity.this);
+                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
+                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mRes.getString(R.string.GEN_Info));
 				builder.setMessage(mRes
 						.getString(R.string.MainActivity_NoCurrentCarMessage));
 				builder.setCancelable(false);
@@ -1369,8 +1411,8 @@ public class MainActivity extends BaseActivity {
 				MainDbAdapter.genColName, MainDbAdapter.GEN_COL_ISACTIVE_NAME
 						+ " = \'Y\'", null, null, null, null);
 		if (!c.moveToFirst()) { // no active driver exist
-			AlertDialog.Builder builder = new AlertDialog.Builder(
-					MainActivity.this);
+            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
+            		AndiCarDialogBuilder.DIALOGTYPE_INFO, mRes.getString(R.string.GEN_Info));
 			builder.setMessage(mRes
 					.getString(R.string.MainActivity_NoCurrentDriverMessage));
 			builder.setCancelable(false);
@@ -1431,6 +1473,9 @@ public class MainActivity extends BaseActivity {
 		menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
 				mRes.getText(R.string.MENU_PreferencesCaption)).setIcon(
 				mRes.getDrawable(R.drawable.ic_menu_preferences));
+//		menu.add(0, StaticValues.MENU_TASKREMINDER_ID, 0,
+//				mRes.getText(R.string.MENU_TaskReminderCaption)).setIcon(
+//				mRes.getDrawable(R.drawable.ic_menu_task));
 		menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
 				mRes.getText(R.string.MENU_AboutCaption)).setIcon(
 				mRes.getDrawable(R.drawable.ic_menu_info_details));
@@ -1466,8 +1511,8 @@ public class MainActivity extends BaseActivity {
 						Intent.ACTION_VIEW,
 						Uri.parse("market://search?q=pname:org.andicar.activity")));
 			} catch (Exception e) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(
-						MainActivity.this);
+	            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
+	            		AndiCarDialogBuilder.DIALOGTYPE_WARNING, mRes.getString(R.string.GEN_Warning));
 				builder.setMessage(mRes
 						.getString(R.string.MainActivity_NoMarketAccessMsg));
 				builder.setCancelable(false);
@@ -1487,7 +1532,10 @@ public class MainActivity extends BaseActivity {
 					Intent.ACTION_VIEW,
 					Uri.parse("http://sites.google.com/site/andicarfree/localizing-andicar")));
 		}
-		return false;
+		else if (item.getItemId() == StaticValues.MENU_TASKREMINDER_ID) {
+			startActivity(new Intent(this, TaskListActivity.class));
+		}
+			return false;
 	}
 
 	@Override
