@@ -134,8 +134,15 @@
     <string name="GEN_On">"On"</string> <!-- ex. on Monday -->
     <string name="GEN_At">"at"</string> <!-- ex. on Monday at 1 PM -->
     <string name="GEN_Day">"day"</string>
+    <string name="GEN_Days">"days"</string>
     <string name="GEN_LastDay">"last day"</string>
     <string name="GEN_Description">"Description"</string>
+    <string name="GEN_Or">"Or:"</string>
+    <string name="GEN_Error">"Error"</string>
+    <string name="GEN_Confirm">"Confirmation"</string>
+    <string name="GEN_Info">"Info"</string>
+    <string name="GEN_Warning">"Warning"</string>
+    <string name="GEN_TaskLabel">"Task:"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -155,8 +162,9 @@
     <string name="MENU_SetDefault">"Set default"</string>
     <string name="MENU_OpenGPSTrack">"Open GPS track"</string>
     <string name="MENU_RateCommentCaption">"Rate/Comment"</string>
-    <string name="MENU_AddOnServicesCaption">"AddOn Services"</string>
+    <string name="MENU_AddOnServicesCaption">"Add-On Services"</string>
     <string name="MENU_LocalizeAndiCar">"Localize AndiCar"</string>
+    <string name="MENU_TaskReminderCaption">"Task/Reminder"</string>
 
 
     <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
@@ -174,8 +182,8 @@
     <string name="MainActivity_RefuelNoDataText">"No refuel for this car"</string>
     <string name="MainActivity_ExpenseNoDataText">"No expense for this car"</string>
     <string name="MainActivity_ExpenseNoDataAditionalText">"This zone does not show the expenses created conjunctively with other records (refuels, etc.)"</string>
-    <string name="MainActivity_NoCurrentCarMessage">"No car defined. At least one car must be created."</string>
-    <string name="MainActivity_NoCurrentDriverMessage">"No driver defined. At least one driver must be created."</string>
+    <string name="MainActivity_NoCurrentCarMessage">"At least one car must be created in order to work with AndiCar.\nIn the following screen you can create one.\nMore cars can be created later from Preference -> Cars.\n\nPlease pay attention when you choose the currency and the measurement units for your car(s)."</string>
+    <string name="MainActivity_NoCurrentDriverMessage">"At least one driver must be created in order to work with AndiCar.\nIn the following screen you can create one.\nMore drivers can be created later from Preference -> Drivers."</string>
     <string name="MainActivity_WellcomeMessage">"Wellcome to AndiCar."</string>
     <string name="MainActivity_WellcomeBackMessage">"Welcome back!"</string>
     <string name="MainActivity_BackupExistMessage">"Backup files exist.\nDo you want to restore one?"</string>
@@ -183,6 +191,8 @@
     <string name="MainActivity_GPSTrackZoneNoDataText">"No tracks."</string>
     <string name="MainActivity_NoMarketAccessMsg">"Cannot open Android Market!"</string>
     <string name="MainActivity_AppVersion">"Application version:"</string>
+    <string name="MainActivity_DidYouKnow">"Did you know?"</string>
+    <string name="MainActivity_AddOnMessage">"AndiCar have some useful add-on services.\nThese add-ons can be tried for free, without any limitations of missing features for up to 15 days.\n\nDo you want to see the list of available add-ons?"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>
@@ -294,7 +304,14 @@
     <string name="TaskEditActivity_Scheduled">"Scheduled for:"</string>
     <string name="TaskEditActivity_MileageDriven">"Mileage"</string>
     <string name="TaskEditActivity_BothDriven">"Both"</string>
-    <string name="TaskEditActivity_FirstRunExplanation">"The starting time will be specified for each linked car"</string>
+    <string name="TaskEditActivity_FirstTimeRunExplanation">"The starting time will be specified for each linked car"</string>
+    <string name="TaskEditActivity_FirstMileageRunExplanation">"The starting mileage will be specified for each linked car"</string>
+    <string name="TaskEditActivity_ReminderStartLabel">"Start reminder before"</string>
+    <string name="TaskEditActivity_LinkedCarsLabel">"Linked cars"</string>
+    
+    <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
+    <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>
+    <string name="TaskCarDialogActivity_Title">"Link car to task"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>
@@ -352,8 +369,8 @@
     <string name="PREF_MainScreen_ShowExpenseZone">"Show expense zone"</string>
     <string name="PREF_MainScreen_ShowStatistics">"Show statistics"</string>
 
-    <string name="PREF_AddOnCategoryTitle">"AddOn Services"</string>
-    <string name="PREF_AddOnServicesTitle">"AddOn Services"</string>
+    <string name="PREF_AddOnCategoryTitle">"Add-On Services"</string>
+    <string name="PREF_AddOnServicesTitle">"Add-On Services"</string>
     <string name="PREF_AddOnServicesSummary">"Subscription based, payed services."</string>
     <string name="PREF_AddOnServicesSubscribe">"Subscribe with PayPal"</string>
 
@@ -415,15 +432,15 @@
     <string name="AddOn_BtnTryCaption">"Start FREE evaluation"</string>
     <string name="AddOn_BtnConfigureServiceCaption">"Configure service"</string>
     <string name="AddOn_BtnRenewSubscriptionCaption">"Renew subscription"</string>
-    <string name="AddOn_PreferencesTitle">"Configure AddOn services"</string>
-    <string name="AddOn_PreferencesSummary">"Configure your AddOn services"</string>
-    <string name="AddOn_PreferencesCategoryTitle">"AddOn services"</string>
-    <string name="AddOn_SubscriptionExpireWarning">"Your subscription to the [#1] AddOn will expire in [#2] days"</string>
-    <string name="AddOn_SubscriptionExpired">"Your subscription to the [#1] AddOn is expired."</string>
+    <string name="AddOn_PreferencesTitle">"Configure Add-On services"</string>
+    <string name="AddOn_PreferencesSummary">"Configure your Add-On services"</string>
+    <string name="AddOn_PreferencesCategoryTitle">"Add-On services"</string>
+    <string name="AddOn_SubscriptionExpireWarning">"Your subscription to the [#1] Add-On will expire in [#2] days"</string>
+    <string name="AddOn_SubscriptionExpired">"Your subscription to the [#1] Add-On is expired."</string>
     <string name="AddOn_RenewSubscriptionPeriodInfo">"The selected period will be added to the current subscription"</string>
 
     <string name="AddOn_SecureBackup_Title">"Secure Backup"</string>
-    <string name="AddOn_SecureBackup_Description">"Every time a database backup is created, this service automatically send it as an email attachment to a preconfigured email address. In this way your recorded data will be available even if you lose your phone. Combined with the Backup Service AddOn is the definitive solution for your data safety."</string>
+    <string name="AddOn_SecureBackup_Description">"Every time a database backup is created, this service automatically send it as an email attachment to a preconfigured email address. In this way your recorded data will be available even if you lose your phone. Combined with the Backup Service Add-On is the definitive solution for your data safety."</string>
     <string name="AddOn_SecureBackup_TermOfService">"We are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data, insufficient storage space on your Google account, deletion of backup files from Google Mail or any other event which cause lose or unusable backup files."</string>
     <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid GMail account, Internet connectivity, mobile data transfer."</string>
     <string name="AddOn_SecureBackup_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
@@ -437,7 +454,7 @@
     <string name="AddOn_SecureBackup_IncludeReports">"Include generated reports"</string>
     
     <string name="AddOn_AutoBackupService_Title">"Backup Service"</string>
-    <string name="AddOn_AutoBackupService_Description">"This service allow you to schedule a daily/weekly automatic database backup task. Combined with the Secure Backup AddOn is the definitive solution for your data safety."</string>
+    <string name="AddOn_AutoBackupService_Description">"This service allow you to schedule a daily/weekly automatic database backup task. Combined with the Secure Backup Add-On is the definitive solution for your data safety."</string>
     <string name="AddOn_AutoBackupService_TermOfService">""</string>
     <string name="AddOn_AutoBackupService_Requirements">"Service requirements: free space on the SDCARD depending on your database size and the number of existing backups."</string>
     <string name="AddOn_AutoBackupService_SubscriptionOption1">"15 day FREE evaluation subscription."</string>

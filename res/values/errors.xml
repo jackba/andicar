@@ -84,4 +84,5 @@
 
     <string name="ERR_058">"Temporary folder (/sdcard/andicar/temp) can not be created. You can not use the SecureBecup service until you create this folder on your device."</string>
     <string name="ERR_059">"Duplicate record."</string>
+    <string name="ERR_060">"This type can not be deleted because it is used in task(s)."</string>
 </resources>
