@@ -36,6 +36,7 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -43,8 +44,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -62,6 +65,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private EditText etReminderDays = null;
 	private EditText etMileage = null;
 	private EditText etReminderMileage = null;
+	private EditText etLinkedCarIndexStart = null;
 
 	private CheckBox ckIsActive = null;
 	private CheckBox ckIsDifferentStartingTime = null;
@@ -83,7 +87,11 @@ public class TaskEditActivity extends EditActivityBase {
 
 	private ImageButton btnNewTaskType = null;
 	private ImageButton btnLinkCar = null;
+	private ImageButton btnDeleteCarLink = null;
 
+	private RadioGroup rgRepeating = null;
+	private RadioGroup rgScheduleType = null;
+	
 	private RadioButton rbOneTime = null;
 	private RadioButton rbRecurent = null;
 	private RadioButton rbTimeDriven = null;
@@ -97,96 +105,42 @@ public class TaskEditActivity extends EditActivityBase {
 	private LinearLayout llMileageZone = null;
 	private LinearLayout llLinkedCarsZone = null;
 	
+	//used in link dialog
+	private LinearLayout llDialogStartingDateZone = null;
+	private LinearLayout llDialogStartingMileageZone = null;
+
+    private ListView lvLinkedCarsList = null;
+	
     private View linkView;
 
     private Calendar mcalDateTime2 = Calendar.getInstance();
+	private Calendar mLinkDialogStartingDateTimeCal;
+
 	private int mHour2;
 	private int mMinute2;
+	private int mLinkDialogStartingYear;
+	private int mLinkDialogStartingMonth;
+	private int mLinkDialogStartingDay;
+	private int mLinkDialogStartingHour;
+	private int mLinkDialogStartingMinute;
+
 	private long mRecurencyTypeId = -1;
+	private long mlStartingDateTimeInSeconds;
 	private boolean isDiffStartingTime = true;
 	private boolean isTimingEnabled = true;
 	private boolean isMileageEnabled = true;
 	private boolean isRecurent = true;
+	private boolean isFinishAfterSave = true;
 	private String mScheduledFor = StaticValues.TASK_SCHEDULED_FOR_BOTH;
 
-	protected int mStartingYear;
-	protected int mStartingMonth;
-	protected int mStartingDay;
-	protected int mStartingHour;
-	protected int mStartingMinute;
-	private Calendar mCalStartingDateTime;
-	private long mlStartingDateTimeInSeconds;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
-		etName = (EditText) findViewById(R.id.etName);
-		etUserComment = (EditText) findViewById(R.id.etUserComment);
-		ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
-		spnTaskType = (Spinner) findViewById(R.id.spnTaskType);
-		btnNewTaskType = (ImageButton) findViewById(R.id.btnNewTaskType);
-		btnNewTaskType.setOnClickListener(onNewTaskTypeClickListener);
-		btnLinkCar = (ImageButton) findViewById(R.id.btnLinkCar);
-		btnLinkCar.setOnClickListener(onLinkCarClickListener);
-		
-		rbOneTime = (RadioButton) findViewById(R.id.rbOneTime);
-		rbRecurent = (RadioButton) findViewById(R.id.rbRecurent);
-		llMoreExact = (LinearLayout) findViewById(R.id.llMoreExact);
-		ckIsDifferentStartingTime = (CheckBox) findViewById(R.id.ckIsDifferentStartingTime);
-		ckIsDifferentStartingTime.setOnCheckedChangeListener(ckIsDifferentStartingTimeCheckedChange);
-		llTimingZone = (LinearLayout) findViewById(R.id.llTimingZone);
-		llOneTimeSettings = (LinearLayout) findViewById(R.id.llOneTimeSettings);
-		llRecurentTimeSettings = (LinearLayout) findViewById(R.id.llRecurentTimeSettings);
-		llMileageZone = (LinearLayout)findViewById(R.id.llMileageZone);
-		tvMileageLabelEvery = (TextView)findViewById(R.id.tvMileageLabelEvery);
-		tvFirstTimeRunExplanation = (TextView)findViewById(R.id.tvFirstTimeRunExplanation);
-		tvFirstMileageRunExplanation = (TextView)findViewById(R.id.tvFirstMileageRunExplanation);
-		llLinkedCarsZone = (LinearLayout)findViewById(R.id.llLinkedCarsZone);
-		
-		RadioGroup rg = (RadioGroup) findViewById(R.id.rgRepeating);
-		rg.setOnCheckedChangeListener(rgRepeatingOnCheckedChangeListener);
+		String operation = mBundleExtras.getString("Operation"); // E = edit, N = new
 
-		spnScheduleFrequency = (Spinner) findViewById(R.id.spnScheduleFrequency);
-		spnScheduleFrequency.setOnItemSelectedListener(spnScheduleFrequencyOnItemSelectedListener);
-		
-		spnDaysOfWeek = (Spinner) findViewById(R.id.spnDaysOfWeek);
-
-		tvOnDay = (TextView)findViewById(R.id.tvOnDay);
-		etOnDay = (EditText)findViewById(R.id.etOnDay);
-		ckOnLastDay = (CheckBox)findViewById(R.id.ckOnLastDay);
-		ckOnLastDay.setOnCheckedChangeListener(ckOnLastDayChecked);
-		
-		RadioGroup rgScheduleType = (RadioGroup) findViewById(R.id.rgScheduleType);
-		rgScheduleType.setOnCheckedChangeListener(rgTimingMileageEnabledChecked);
-		
-		spnMonthsOfYear = (Spinner) findViewById(R.id.spnMonthsOfYear);
-		
-		etFrequency = (EditText)findViewById(R.id.etFrequency);
-		etReminderDays = (EditText)findViewById(R.id.etReminderDays);
-		etMileage = (EditText)findViewById(R.id.etMileage);
-		etReminderMileage = (EditText)findViewById(R.id.etReminderMileage);
-
-		rbTimeDriven = (RadioButton) findViewById(R.id.rbTimeDriven);
-		rbMileageDriven = (RadioButton) findViewById(R.id.rbMileageDriven);
-		rbTimeAndMileageDriven = (RadioButton) findViewById(R.id.rbTimeAndMileageDriven);
-		tvOr = (TextView)findViewById(R.id.tvOr);
-		
-		String operation = mBundleExtras.getString("Operation"); // E = edit, N
-																	// = new
-
-		//used in link car dialog
-		mCalStartingDateTime = Calendar.getInstance();
-		mCalStartingDateTime.add(Calendar.HOUR_OF_DAY, 1);
-		mCalStartingDateTime.set(Calendar.MINUTE, 0);
-		mCalStartingDateTime.set(Calendar.SECOND, 0);
-		mCalStartingDateTime.set(Calendar.MILLISECOND, 0);
-		mStartingYear = mCalStartingDateTime.get(Calendar.YEAR);
-		mStartingMonth = mCalStartingDateTime.get(Calendar.MONTH);
-		mStartingDay = mCalStartingDateTime.get(Calendar.DAY_OF_MONTH);
-		mStartingHour = mCalStartingDateTime.get(Calendar.HOUR_OF_DAY);
-		mStartingMinute = mCalStartingDateTime.get(Calendar.MINUTE);
-		
+		init();
 
 		if (operation.equals("E")) {
 			mRowId = mBundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
@@ -296,8 +250,115 @@ public class TaskEditActivity extends EditActivityBase {
 			initDateOnly = false;
 			initTime2(0);
 		}
+
 		setSpecificLayout();
+
+		initControls();
+		fillData();	
 	}
+
+	private void init() {
+		etName = (EditText) findViewById(R.id.etName);
+		etUserComment = (EditText) findViewById(R.id.etUserComment);
+		ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
+		spnTaskType = (Spinner) findViewById(R.id.spnTaskType);
+		btnNewTaskType = (ImageButton) findViewById(R.id.btnNewTaskType);
+		btnNewTaskType.setOnClickListener(onNewTaskTypeClickListener);
+		btnLinkCar = (ImageButton) findViewById(R.id.btnLinkCar);
+		btnLinkCar.setOnClickListener(onLinkCarClickListener);
+		
+		rbOneTime = (RadioButton) findViewById(R.id.rbOneTime);
+		rbRecurent = (RadioButton) findViewById(R.id.rbRecurent);
+		llMoreExact = (LinearLayout) findViewById(R.id.llMoreExact);
+		ckIsDifferentStartingTime = (CheckBox) findViewById(R.id.ckIsDifferentStartingTime);
+		ckIsDifferentStartingTime.setOnCheckedChangeListener(ckIsDifferentStartingTimeCheckedChange);
+		llTimingZone = (LinearLayout) findViewById(R.id.llTimingZone);
+		llOneTimeSettings = (LinearLayout) findViewById(R.id.llOneTimeSettings);
+		llRecurentTimeSettings = (LinearLayout) findViewById(R.id.llRecurentTimeSettings);
+		llMileageZone = (LinearLayout)findViewById(R.id.llMileageZone);
+		tvMileageLabelEvery = (TextView)findViewById(R.id.tvMileageLabelEvery);
+		tvFirstTimeRunExplanation = (TextView)findViewById(R.id.tvFirstTimeRunExplanation);
+		tvFirstMileageRunExplanation = (TextView)findViewById(R.id.tvFirstMileageRunExplanation);
+		
+		llLinkedCarsZone = (LinearLayout)findViewById(R.id.llLinkedCarsZone);
+
+		rgRepeating = (RadioGroup) findViewById(R.id.rgRepeating);
+
+		spnScheduleFrequency = (Spinner) findViewById(R.id.spnScheduleFrequency);
+		spnScheduleFrequency.setOnItemSelectedListener(spnScheduleFrequencyOnItemSelectedListener);
+		
+		spnDaysOfWeek = (Spinner) findViewById(R.id.spnDaysOfWeek);
+		spnMonthsOfYear = (Spinner) findViewById(R.id.spnMonthsOfYear);
+
+		tvOnDay = (TextView)findViewById(R.id.tvOnDay);
+		etOnDay = (EditText)findViewById(R.id.etOnDay);
+		ckOnLastDay = (CheckBox)findViewById(R.id.ckOnLastDay);
+
+		rgScheduleType = (RadioGroup) findViewById(R.id.rgScheduleType);
+		etFrequency = (EditText)findViewById(R.id.etFrequency);
+		etReminderDays = (EditText)findViewById(R.id.etReminderDays);
+		etMileage = (EditText)findViewById(R.id.etMileage);
+		etReminderMileage = (EditText)findViewById(R.id.etReminderMileage);
+
+		rbTimeDriven = (RadioButton) findViewById(R.id.rbTimeDriven);
+		rbMileageDriven = (RadioButton) findViewById(R.id.rbMileageDriven);
+		rbTimeAndMileageDriven = (RadioButton) findViewById(R.id.rbTimeAndMileageDriven);
+		tvOr = (TextView)findViewById(R.id.tvOr);
+		
+		lvLinkedCarsList = (ListView)findViewById(R.id.lvLinkedCarsList);
+	}
+
+	private void initControls() {
+		lvLinkedCarsList.setOnItemClickListener(mLinkedCarListItemClickListener);
+		rgRepeating.setOnCheckedChangeListener(rgRepeatingOnCheckedChangeListener);
+		ckOnLastDay.setOnCheckedChangeListener(ckOnLastDayChecked);
+		rgScheduleType.setOnCheckedChangeListener(rgTimingMileageEnabledChecked);
+	}
+
+    private void fillData(){
+        String selection = MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + "=?";
+        String[] selectionArgs = {Long.toString(mRowId)};
+        SimpleCursorAdapter cursorAdapter =
+//            new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2,
+//            		mDbAdapter.query(MainDbAdapter.TASK_CAR_TABLE_NAME,
+//                          MainDbAdapter.taskCarTableColNames, selection, selectionArgs, null, null, 
+//                          MainDbAdapter.GEN_COL_NAME_NAME), 
+//                          new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME}, 
+//                          new int[]{android.R.id.text1, android.R.id.text2}
+
+        	new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.twoline_list2_activity,
+                                    mDbAdapter.query(MainDbAdapter.TASK_CAR_TABLE_NAME,
+                                            MainDbAdapter.taskCarTableColNames, selection, selectionArgs, null, null, 
+                                            MainDbAdapter.GEN_COL_NAME_NAME),
+                                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME}, 
+                                    new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}
+                );
+
+        lvLinkedCarsList.setAdapter(cursorAdapter);
+    }
+
+    protected AdapterView.OnItemClickListener mLinkedCarListItemClickListener =
+        new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> av, View view, int position, long id) {
+    			isFinishAfterSave = false;
+    			saveData();
+    			isFinishAfterSave = true;
+    			mPrefEditor.putLong("TaskCarLinkId", id);
+    			mPrefEditor.commit();
+                showDialog(StaticValues.DIALOG_TASK_CAR_LINK);
+            }
+    };
+
+	
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		fillData();
+	}
+
 
 	@Override
 	protected void saveData() {
@@ -377,8 +438,9 @@ public class TaskEditActivity extends EditActivityBase {
 		data.put(MainDbAdapter.TASK_COL_REMINDERMILEAGES_NAME, etReminderMileage.getText().toString());
 		
 		if (mRowId == -1) {
-			mDbAdapter.createRecord(MainDbAdapter.TASK_TABLE_NAME, data);
-			finish();
+			mRowId = mDbAdapter.createRecord(MainDbAdapter.TASK_TABLE_NAME, data);
+			if(isFinishAfterSave)
+				finish();
 		} else {
 			int updResult = mDbAdapter.updateRecord(
 					MainDbAdapter.TASK_TABLE_NAME, mRowId, data);
@@ -390,8 +452,10 @@ public class TaskEditActivity extends EditActivityBase {
 				madbErrorAlert.setMessage(errMsg);
 				madError = madbErrorAlert.create();
 				madError.show();
-			} else
-				finish();
+			} else{
+				if(isFinishAfterSave)
+					finish();
+			}
 		}
 	}
 
@@ -411,6 +475,11 @@ public class TaskEditActivity extends EditActivityBase {
 
 	protected View.OnClickListener onLinkCarClickListener = new View.OnClickListener() {
 		public void onClick(View v) {
+			isFinishAfterSave = false;
+			saveData();
+			isFinishAfterSave = true;
+			mPrefEditor.putLong("TaskCarLinkId", -1);
+			mPrefEditor.commit();
             showDialog(StaticValues.DIALOG_TASK_CAR_LINK);
 		}
 	};
@@ -517,17 +586,75 @@ public class TaskEditActivity extends EditActivityBase {
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		super.onPrepareDialog(id, dialog);
-        LinearLayout llStartingDateZone = (LinearLayout) linkView.findViewById(R.id.llStartingDateZone);
-        LinearLayout llStartingMileageZone = (LinearLayout) linkView.findViewById(R.id.llStartingMileageZone);
+		if(id != StaticValues.DIALOG_TASK_CAR_LINK)
+			return;
+		
+        initDialog();
+		long linkId = mPreferences.getLong("TaskCarLinkId", -1);
+		if(linkId != -1){
+			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.taskCarTableColNames, linkId);
+	        initDialogControls(c.getLong(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS));
+	        long linkedCarStartDate = c.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000;
+	        mLinkDialogStartingDateTimeCal = Calendar.getInstance();
+	        mLinkDialogStartingDateTimeCal.setTimeInMillis(linkedCarStartDate);
+	        mLinkDialogStartingYear = mLinkDialogStartingDateTimeCal.get(Calendar.YEAR);
+	        mLinkDialogStartingMonth = mLinkDialogStartingDateTimeCal.get(Calendar.MONTH);
+	        mLinkDialogStartingDay = mLinkDialogStartingDateTimeCal.get(Calendar.DAY_OF_MONTH);
+	        mLinkDialogStartingHour = mLinkDialogStartingDateTimeCal.get(Calendar.HOUR_OF_DAY);
+	        mLinkDialogStartingMinute = mLinkDialogStartingDateTimeCal.get(Calendar.MINUTE);
+	        updateLinkDialogStartingDateTime();
+	        etLinkedCarIndexStart.setText(c.getString(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS));
+	        c.close();
+		}
+		else{
+			initDialogControls(-1);
+			mLinkDialogStartingDateTimeCal = Calendar.getInstance();
+			mLinkDialogStartingDateTimeCal.add(Calendar.HOUR_OF_DAY, 1);
+			mLinkDialogStartingDateTimeCal.set(Calendar.MINUTE, 0);
+			mLinkDialogStartingDateTimeCal.set(Calendar.SECOND, 0);
+			mLinkDialogStartingDateTimeCal.set(Calendar.MILLISECOND, 0);
+			mLinkDialogStartingYear = mLinkDialogStartingDateTimeCal.get(Calendar.YEAR);
+			mLinkDialogStartingMonth = mLinkDialogStartingDateTimeCal.get(Calendar.MONTH);
+			mLinkDialogStartingDay = mLinkDialogStartingDateTimeCal.get(Calendar.DAY_OF_MONTH);
+			mLinkDialogStartingHour = mLinkDialogStartingDateTimeCal.get(Calendar.HOUR_OF_DAY);
+			mLinkDialogStartingMinute = mLinkDialogStartingDateTimeCal.get(Calendar.MINUTE);
+	        updateLinkDialogStartingDateTime();
+	        etLinkedCarIndexStart.setText("0");
+		}
+	}
+
+	private void initDialog() {
+		llDialogStartingDateZone = (LinearLayout) linkView.findViewById(R.id.llStartingDateZone);
+        llDialogStartingMileageZone = (LinearLayout) linkView.findViewById(R.id.llStartingMileageZone);
         if(isTimingEnabled && isDiffStartingTime)
-        	llStartingDateZone.setVisibility(View.VISIBLE);
+        	llDialogStartingDateZone.setVisibility(View.VISIBLE);
         else
-        	llStartingDateZone.setVisibility(View.GONE);
+        	llDialogStartingDateZone.setVisibility(View.GONE);
 
         if(isMileageEnabled)
-        	llStartingMileageZone.setVisibility(View.VISIBLE);
+        	llDialogStartingMileageZone.setVisibility(View.VISIBLE);
         else
-        	llStartingMileageZone.setVisibility(View.GONE);
+        	llDialogStartingMileageZone.setVisibility(View.GONE);
+	}
+
+	private void initDialogControls(long carId) {
+		
+		String carSelectCondition = MainDbAdapter.isActiveCondition;
+		if(carId == -1) //new car link
+			carSelectCondition  = carSelectCondition  + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + 
+											" NOT IN (SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + 
+													" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " )";
+		
+		initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
+			MainDbAdapter.genColName,
+			new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
+			carSelectCondition, null,
+			MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
+		
+		if(carId != -1)
+			spnLinkDialogCar.setEnabled(false);
+		else
+			spnLinkDialogCar.setEnabled(true);
 	}
 
 	@Override
@@ -539,12 +666,12 @@ public class TaskEditActivity extends EditActivityBase {
 		//date part
 		else if(id == StaticValues.DIALOG_DATE_FROM_PICKER){
 	        return new DatePickerDialog(this,
-	        		onStartingDateSetListener, mStartingYear, mStartingMonth, mStartingDay);
+	        		onStartingDateSetListener, mLinkDialogStartingYear, mLinkDialogStartingMonth, mLinkDialogStartingDay);
 		}
 		//time part
 		else if(id == StaticValues.DIALOG_DATE_TO_PICKER){
 	        return new TimePickerDialog(this,
-	        		onStartingTimeSetListener, mStartingHour, mStartingMinute, false);
+	        		onStartingTimeSetListener, mLinkDialogStartingHour, mLinkDialogStartingMinute, false);
 		}
 		else if(id == StaticValues.DIALOG_TASK_CAR_LINK){
 			LayoutInflater liLayoutFactory = LayoutInflater.from(this);
@@ -556,14 +683,8 @@ public class TaskEditActivity extends EditActivityBase {
 	        linkDialog.setNegativeButton(R.string.GEN_CANCEL, linkDialogButtonlistener);
 	        spnLinkDialogCar = (Spinner) linkView.findViewById(R.id.spnCar);
 	        tvLinkCarDialogFirstRunDate = (TextView) linkView.findViewById(R.id.tvFirstRunDate);
-	        	
-	        updateStartingDateTime();
-			initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
-					MainDbAdapter.genColName,
-					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-					MainDbAdapter.isActiveCondition, null,
-					MainDbAdapter.GEN_COL_NAME_NAME, mPreferences.getLong("CurrentCar_ID", 1), false);
-
+	        etLinkedCarIndexStart = (EditText) linkView.findViewById(R.id.etIndexStart);
+	        
 			//we don't need here the task selection zone.
 			((LinearLayout) linkView.findViewById(R.id.llTaskZone)).setVisibility(View.GONE);
 //			spnLinkDialogTask = (Spinner) linkView.findViewById(R.id.spnTask);
@@ -598,35 +719,92 @@ public class TaskEditActivity extends EditActivityBase {
         new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                     int dayOfMonth) {
-                mStartingYear = year;
-                mStartingMonth = monthOfYear;
-                mStartingDay = dayOfMonth;
-            	updateStartingDateTime();
+                mLinkDialogStartingYear = year;
+                mLinkDialogStartingMonth = monthOfYear;
+                mLinkDialogStartingDay = dayOfMonth;
+            	updateLinkDialogStartingDateTime();
             }
         };
         
     private TimePickerDialog.OnTimeSetListener onStartingTimeSetListener =
         new TimePickerDialog.OnTimeSetListener() {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                mStartingHour = hourOfDay;
-                mStartingMinute = minute;
-               	updateStartingDateTime();
+                mLinkDialogStartingHour = hourOfDay;
+                mLinkDialogStartingMinute = minute;
+               	updateLinkDialogStartingDateTime();
             }
         };
 
-    private void updateStartingDateTime() {
-        mCalStartingDateTime.set(mStartingYear, mStartingMonth, mStartingDay, mStartingHour, mStartingMinute, 0);
-        mlStartingDateTimeInSeconds = mCalStartingDateTime.getTimeInMillis() / 1000;
+    private void updateLinkDialogStartingDateTime() {
+        mLinkDialogStartingDateTimeCal.set(mLinkDialogStartingYear, mLinkDialogStartingMonth, mLinkDialogStartingDay, mLinkDialogStartingHour, mLinkDialogStartingMinute, 0);
+        mlStartingDateTimeInSeconds = mLinkDialogStartingDateTimeCal.getTimeInMillis() / 1000;
         tvLinkCarDialogFirstRunDate.setText(
-        		DateFormat.getDateFormat(getApplicationContext()).format(mCalStartingDateTime.getTime()) + " " +
-					DateFormat.getTimeFormat(getApplicationContext()).format(mCalStartingDateTime.getTime())
+        		DateFormat.getDateFormat(getApplicationContext()).format(mLinkDialogStartingDateTimeCal.getTime()) + " " +
+					DateFormat.getTimeFormat(getApplicationContext()).format(mLinkDialogStartingDateTimeCal.getTime())
         );
     }
 
     private DialogInterface.OnClickListener linkDialogButtonlistener = new DialogInterface.OnClickListener() {
 	    public void onClick(DialogInterface dialog, int whichButton) {
 	        if (whichButton == DialogInterface.BUTTON_POSITIVE) {
+
+	        	if(isMileageEnabled && etLinkedCarIndexStart.getText().toString().length() == 0){
+	    			Toast toast = Toast.makeText(getApplicationContext(),
+	    					mResource.getString(R.string.TaskEditActivity_FillMileage), Toast.LENGTH_SHORT);
+	    			toast.show();
+	    			return;
+	        	}
+	        	long selectedCarId = spnLinkDialogCar.getSelectedItemId();
+	        	String selectedCarName = "";
+	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+	            String[] selectionArgs = {Long.toString(selectedCarId)};
+	            
+	        	Cursor c = mDbAdapter.query(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, 
+	        			selection, selectionArgs, null, null, null);
+	        	if(c.moveToNext())
+	        		selectedCarName = c.getString(1);
+	        	c.close();
 	        	
+	    		ContentValues data = new ContentValues();
+	    		//name = task name <-> car name
+	    		data.put(MainDbAdapter.GEN_COL_NAME_NAME, etName.getText().toString() + " <-> " + selectedCarName);
+	    		data.put(MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
+	    		data.put(MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME, mRowId);
+	    		data.put(MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME, selectedCarId);
+	    		data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, mlStartingDateTimeInSeconds);
+	    		data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, etLinkedCarIndexStart.getText().toString());
+
+	    		long linkId = mPreferences.getLong("TaskCarLinkId", -1);
+	    		if(linkId == -1){ //new link
+		    		long retVal = mDbAdapter.createRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, data);
+		    		if(retVal < 0){
+		    			String errorMessage;
+		    			if(retVal == -1)
+		    				errorMessage = mDbAdapter.lastErrorMessage;
+		    			else{
+		    				int errCode = -1 * ((Long)retVal).intValue();
+		    				errorMessage = mResource.getString(errCode);
+		    			}
+						madbErrorAlert.setMessage(errorMessage);
+						madError = madbErrorAlert.create();
+						madError.show();
+		    		}
+	    		}
+	    		else{
+		    		long retVal = mDbAdapter.updateRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, linkId, data);
+		    		if(retVal > -1){
+		    			String errorMessage;
+		    			if(retVal == -1)
+		    				errorMessage = mDbAdapter.lastErrorMessage;
+		    			else{
+		    				int errCode = -1 * ((Long)retVal).intValue();
+		    				errorMessage = mResource.getString(errCode);
+		    			}
+						madbErrorAlert.setMessage(errorMessage);
+						madError = madbErrorAlert.create();
+						madError.show();
+		    		}
+	    		}
 	        }
     }
     };

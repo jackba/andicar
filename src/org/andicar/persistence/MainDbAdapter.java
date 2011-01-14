@@ -242,6 +242,21 @@ public class MainDbAdapter extends DB
             }
 	        c.close();
         }
+        else if(tableName.equals(TASK_CAR_TABLE_NAME)){
+            String checkSelect =
+                "SELECT " + GEN_COL_ROWID_NAME + " " +
+                "FROM " + TASK_CAR_TABLE_NAME + " " +
+                "WHERE " + TASK_CAR_COL_CAR_ID_NAME + " = ? " +
+                			" AND " + TASK_CAR_COL_TASK_ID_NAME + " = ? ";
+	        String[] selectionArgs = {content.getAsString(TASK_CAR_COL_CAR_ID_NAME), 
+	        							content.getAsString(TASK_CAR_COL_TASK_ID_NAME)};
+	        Cursor c = execSelectSql(checkSelect, selectionArgs);
+	        if(c.moveToFirst()){ //duplicate record
+	            c.close();
+	            return R.string.ERR_059;
+            }
+	        c.close();
+        }
         return -1;
     }
 
