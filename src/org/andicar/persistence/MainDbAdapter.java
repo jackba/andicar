@@ -626,6 +626,16 @@ public class MainDbAdapter extends DB
                     mDb.delete(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_BPARTNER_ID_NAME + "=" + rowId, null);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 }
+                else if(tableName.equals(CAR_TABLE_NAME)){
+                    //also delete the locations
+                    mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_CAR_ID_NAME + "=" + rowId, null);
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                }
+                else if(tableName.equals(TASK_TABLE_NAME)){
+                    //also delete the locations
+                    mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_TASK_ID_NAME + "=" + rowId, null);
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                }
                 else
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
             }
