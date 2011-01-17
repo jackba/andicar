@@ -1057,7 +1057,8 @@ public class DB {
 			+ TASK_COL_RUNMILEAGE_NAME
 			+ " INTEGER NULL, "
 			+ TASK_COL_REMINDERMILEAGES_NAME
-			+ " INTEGER NULL "
+			+ " INTEGER NULL, "
+			+ " FOREIGN KEY(" + TASK_COL_TASKTYPE_ID_NAME + ") REFERENCES " + TASKTYPE_TABLE_NAME + "(" + GEN_COL_ROWID_NAME + ")"
 			+ ");";
 
 	protected static final String TASK_CAR_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
@@ -2156,6 +2157,9 @@ public class DB {
 		db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX4 "
 				+ "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME
 				+ ")");
+		
+		db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS " + TASK_CAR_TABLE_NAME + "_UK1 "
+				+ "ON " + TASK_CAR_TABLE_NAME + " (" + TASK_CAR_COL_CAR_ID_NAME + ", " + TASK_CAR_COL_TASK_ID_NAME + ")");
 	}
 
 	public boolean backupDb(String bkName, String bkPrefix) {

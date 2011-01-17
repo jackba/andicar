@@ -637,15 +637,34 @@
 			        android:layout_marginTop="5dip"
 			        />
         	</LinearLayout>
-        	<!-- 
-	            android:layout_height="1000dip"
-	         -->
+            <LinearLayout
+                android:id="@+id/llLinkedCarsHelp"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+		        android:layout_marginTop="10dip"
+                >
+		        <TextView
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:typeface="sans"
+		            android:textColor="@android:color/white"
+		            android:text="@string/TaskEditActivity_LinkedCarsOptionsHelp"
+	            	android:gravity="center_horizontal"
+		            />
+			    <TextView
+			        android:layout_height="1dip"
+			        android:layout_width="fill_parent"
+			        android:background="@color/separator_bg"
+			        android:layout_marginTop="5dip"
+			        />
+	        </LinearLayout>
 	        <LinearLayout
 	            android:id="@+id/llLinkedCarsList"
 	            android:orientation="vertical"
 	            android:layout_width="fill_parent"
 	            android:layout_height="400dip"
-	            android:layout_marginTop="5dip"
+	            android:layout_marginTop="10dip"
 	            >
 	
 	            <ListView 

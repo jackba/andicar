@@ -295,7 +295,7 @@
 
     <string name="BPartnerEditActivity_LocationsHeaderCaption">"Locations"</string>
 
-    <string name="TaskEditActivity_OneTime">"One time at"</string>
+    <string name="TaskEditActivity_OneTime">"One time"</string>
     <string name="TaskEditActivity_Recurent">"Recurent"</string>
     <string name="TaskEditActivity_RecurentEveryLabel">"Every"</string>
     <string name="TaskEditActivity_RecurentfrequencyLabel">"Frequency"</string>
@@ -311,6 +311,8 @@
     <string name="TaskEditActivity_MileageUOMText">"mi or km (depending on car)"</string>
     <string name="TaskEditActivity_FillMileage">"Fill mileage!"</string>
     <string name="TaskEditActivity_FillFrequency">"Fill frequency!"</string>
+    <string name="TaskEditActivity_LinkedCarsOptionsHelp">"Long press on a car for more options"</string>
+    <string name="TaskEditActivity_AllCarsLinkedMsg">"All active cars are linked to this task."</string>
     
     <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
     <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>

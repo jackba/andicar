@@ -21,7 +21,9 @@ package org.andicar.activity;
 
 import java.util.Calendar;
 
+import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.TaskCarLinkDataBinder;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
@@ -105,6 +107,8 @@ public class TaskEditActivity extends EditActivityBase {
 	private LinearLayout llMoreExact = null;
 	private LinearLayout llMileageZone = null;
 	private LinearLayout llLinkedCarsZone = null;
+	private LinearLayout llLinkedCarsHelp = null;
+	private LinearLayout llLinkedCarsList = null;
 	
 	//used in link dialog
 	private LinearLayout llDialogStartingDateZone = null;
@@ -133,6 +137,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private boolean isMileageEnabled = true;
 	private boolean isRecurent = true;
 	private boolean isFinishAfterSave = true;
+	private boolean saveSuccess = true;
 	private String mScheduledFor = StaticValues.TASK_SCHEDULED_FOR_BOTH;
 
 	/** Called when the activity is first created. */
@@ -256,7 +261,7 @@ public class TaskEditActivity extends EditActivityBase {
 		setSpecificLayout();
 
 		initControls();
-		fillData();	
+		fillLinkedCarsData();	
 	}
 
 	private void init() {
@@ -283,6 +288,7 @@ public class TaskEditActivity extends EditActivityBase {
 		tvFirstMileageRunExplanation = (TextView)findViewById(R.id.tvFirstMileageRunExplanation);
 		
 		llLinkedCarsZone = (LinearLayout)findViewById(R.id.llLinkedCarsZone);
+		llLinkedCarsHelp = (LinearLayout)findViewById(R.id.llLinkedCarsHelp);
 
 		rgRepeating = (RadioGroup) findViewById(R.id.rgRepeating);
 
@@ -307,6 +313,7 @@ public class TaskEditActivity extends EditActivityBase {
 		rbTimeAndMileageDriven = (RadioButton) findViewById(R.id.rbTimeAndMileageDriven);
 		tvOr = (TextView)findViewById(R.id.tvOr);
 		
+		llLinkedCarsList = (LinearLayout)findViewById(R.id.llLinkedCarsList);
 		lvLinkedCarsList = (ListView)findViewById(R.id.lvLinkedCarsList);
 	}
 
@@ -319,24 +326,69 @@ public class TaskEditActivity extends EditActivityBase {
 		rgScheduleType.setOnCheckedChangeListener(rgTimingMileageEnabledChecked);
 	}
 
-    private void fillData(){
-        String selection = MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + "=?";
+    private void fillLinkedCarsData(){
+//        String selection = MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + "=?";
+    	String firstRun = ""; 
+    	if(isRecurent){
+			if(isTimingEnabled && isDiffStartingTime){
+				firstRun = "'" + mResource.getString(R.string.TaskCarEditActivity_StartDate) + " ' || " +
+						" '[#1]'";
+			}
+			if(isMileageEnabled){
+				if(firstRun.length() > 0)
+					firstRun = firstRun + " || '; " + mResource.getString(R.string.TaskCarEditActivity_StartMileage) + " ' || " + 
+						DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME) + 
+							" || ' ' || " + 
+						DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.UOM_COL_CODE_NAME);
+				else
+					firstRun = "'" + mResource.getString(R.string.TaskCarEditActivity_StartMileage) + " ' || " + 
+						DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME) + 
+							" || ' ' || " + 
+						DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.UOM_COL_CODE_NAME);
+			}
+    	}
+    	else{
+			 firstRun = "''";
+    	}
+		
+		if(firstRun.length() == 0)
+			return;
+		
+		firstRun = firstRun + " AS FirstRun, ";
+    	
         String[] selectionArgs = {Long.toString(mRowId)};
-        SimpleCursorAdapter cursorAdapter =
-//            new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2,
-//            		mDbAdapter.query(MainDbAdapter.TASK_CAR_TABLE_NAME,
-//                          MainDbAdapter.taskCarTableColNames, selection, selectionArgs, null, null, 
-//                          MainDbAdapter.GEN_COL_NAME_NAME), 
-//                          new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME}, 
-//                          new int[]{android.R.id.text1, android.R.id.text2}
+    	String selectSql = 
+    		"SELECT " + 
+				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + ", " + //#0
+				DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_NAME_NAME) + ", " + //#1
+				firstRun +
+//				"'" + mResource.getString(R.string.TaskCarEditActivity_StartMileage) + " ' || " + 
+//						DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME) + 
+//						" || ' ' || " + 
+//						DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.UOM_COL_CODE_NAME) +  " || '; " +
+//						mResource.getString(R.string.TaskCarEditActivity_StartDate) + " ' || " +
+//							" '[#1]' AS FirstRun, " + //#2
+				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME) + " " + //#3
+			" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
+				" JOIN " + MainDbAdapter.CAR_TABLE_NAME + " ON " + 
+					DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME) + " = " +
+					DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + 
+					" JOIN " + MainDbAdapter.UOM_TABLE_NAME + " ON " + 
+                		DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME) + "=" +
+                                        	DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) +
+			" WHERE " + 
+				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME) + " = ? " +
+			" ORDER BY " + 
+				DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_NAME_NAME);
 
-        	new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.twoline_list2_activity,
-                                    mDbAdapter.query(MainDbAdapter.TASK_CAR_TABLE_NAME,
-                                            MainDbAdapter.taskCarTableColNames, selection, selectionArgs, null, null, 
-                                            MainDbAdapter.GEN_COL_NAME_NAME),
-                                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME}, 
+        SimpleCursorAdapter cursorAdapter =
+        	new SimpleCursorAdapter(this, R.layout.twoline_list2_activity,
+        							mDbAdapter.execSelectSql(selectSql, selectionArgs),
+                                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, "FirstRun"}, 
                                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}
                 );
+        cursorAdapter.setViewBinder(new TaskCarLinkDataBinder());
+        
 
         lvLinkedCarsList.setAdapter(cursorAdapter);
     }
@@ -360,7 +412,7 @@ public class TaskEditActivity extends EditActivityBase {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		fillData();
+		fillLinkedCarsData();
 	}
 
 
@@ -372,6 +424,7 @@ public class TaskEditActivity extends EditActivityBase {
 					mResource.getString(R.string.GEN_FillMandatory) + ": "
 							+ strRetVal, Toast.LENGTH_SHORT);
 			toast.show();
+			saveSuccess = false;
 			return;
 		}
 
@@ -381,6 +434,7 @@ public class TaskEditActivity extends EditActivityBase {
 					mResource.getString(R.string.GEN_NumberFormatException)
 							+ ": " + strRetVal, Toast.LENGTH_SHORT);
 			toast.show();
+			saveSuccess = false;
 			return;
 		}
 		
@@ -390,6 +444,7 @@ public class TaskEditActivity extends EditActivityBase {
 					mResource.getString(R.string.TaskEditActivity_FillMileage), Toast.LENGTH_SHORT);
 			toast.show();
 			etMileage.requestFocus();
+			saveSuccess = false;
 			return;
 		}
 
@@ -399,6 +454,7 @@ public class TaskEditActivity extends EditActivityBase {
 					mResource.getString(R.string.TaskEditActivity_FillFrequency), Toast.LENGTH_SHORT);
 			toast.show();
 			etFrequency.requestFocus();
+			saveSuccess = false;
 			return;
 		}
 
@@ -443,12 +499,17 @@ public class TaskEditActivity extends EditActivityBase {
 		
 		if (mRowId == -1) {
 			mRowId = mDbAdapter.createRecord(MainDbAdapter.TASK_TABLE_NAME, data);
+			if(mRowId > 0)
+				saveSuccess = true;
+			else
+				saveSuccess = false;
 			if(isFinishAfterSave)
 				finish();
 		} else {
 			int updResult = mDbAdapter.updateRecord(
 					MainDbAdapter.TASK_TABLE_NAME, mRowId, data);
 			if (updResult != -1) {
+				saveSuccess = false;
 				String errMsg = "";
 				errMsg = mResource.getString(updResult);
 				if (updResult == R.string.ERR_000)
@@ -457,6 +518,7 @@ public class TaskEditActivity extends EditActivityBase {
 				madError = madbErrorAlert.create();
 				madError.show();
 			} else{
+				saveSuccess = true;
 				if(isFinishAfterSave)
 					finish();
 			}
@@ -484,7 +546,38 @@ public class TaskEditActivity extends EditActivityBase {
 			isFinishAfterSave = true;
 			mPrefEditor.putLong("TaskCarLinkId", -1);
 			mPrefEditor.commit();
-            showDialog(StaticValues.DIALOG_TASK_CAR_LINK);
+			if(!saveSuccess)
+				return;
+			//check if unlinked cars exists.
+			String checkSQL = "SELECT * " +
+								" FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
+								" WHERE IsActive = 'Y' " +
+										" AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " NOT IN ( " +
+												" SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + " " +
+												" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
+												" WHERE " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = " + mRowId + " )";
+			Cursor c = mDbAdapter.query(checkSQL, null);
+			
+			if(!c.moveToNext()){//no record exist
+				c.close();
+	            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(TaskEditActivity.this, 
+	            		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.GEN_Info));
+	            builder.setMessage(mResource.getString(R.string.TaskEditActivity_AllCarsLinkedMsg));
+	            builder.setCancelable(false);
+	            
+	            builder.setPositiveButton(mResource.getString(R.string.GEN_OK),
+	                    new DialogInterface.OnClickListener() {
+		                    public void onClick(DialogInterface dialog, int id) {
+		                    };
+	            		});
+	            AlertDialog alert = builder.create();
+	            alert.show();
+	            
+			}
+			else{
+				c.close();
+				showDialog(StaticValues.DIALOG_TASK_CAR_LINK);
+			}
 		}
 	};
 
@@ -514,6 +607,7 @@ public class TaskEditActivity extends EditActivityBase {
 				isRecurent = true;
 			}
 			setSpecificLayout();
+			fillLinkedCarsData();
 		}
 	};
 	
@@ -535,6 +629,7 @@ public class TaskEditActivity extends EditActivityBase {
 				mScheduledFor = StaticValues.TASK_SCHEDULED_FOR_BOTH;
 			}
 			setSpecificLayout();
+			fillLinkedCarsData();
 		}
 	};
 
@@ -612,6 +707,9 @@ public class TaskEditActivity extends EditActivityBase {
 		}
 		else{
 			initDialogControls(-1);
+			if(spnLinkDialogCar.getCount() == 0){
+			}
+				
 			mLinkDialogStartingDateTimeCal = Calendar.getInstance();
 			mLinkDialogStartingDateTimeCal.add(Calendar.HOUR_OF_DAY, 1);
 			mLinkDialogStartingDateTimeCal.set(Calendar.MINUTE, 0);
@@ -809,7 +907,7 @@ public class TaskEditActivity extends EditActivityBase {
 						madError.show();
 		    		}
 	    		}
-	    		fillData();
+	    		fillLinkedCarsData();
 	        }
 	    }
     };
@@ -844,6 +942,7 @@ public class TaskEditActivity extends EditActivityBase {
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 			isDiffStartingTime = isChecked;
 			setSpecificLayout();
+			fillLinkedCarsData();
 		}
 	};
 	
@@ -868,10 +967,16 @@ public class TaskEditActivity extends EditActivityBase {
 		else
 			tvOr.setVisibility(View.GONE);
 		
-		if(isTimingEnabled && !isMileageEnabled && !isDiffStartingTime)
+		if(isTimingEnabled && !isMileageEnabled && !isDiffStartingTime){
 			llLinkedCarsZone.setVisibility(View.GONE);
-		else
+			llLinkedCarsHelp.setVisibility(View.GONE);
+			llLinkedCarsList.setVisibility(View.GONE);
+		}
+		else{
 			llLinkedCarsZone.setVisibility(View.VISIBLE);
+			llLinkedCarsHelp.setVisibility(View.VISIBLE);
+			llLinkedCarsList.setVisibility(View.VISIBLE);
+		}
 
 		if(isTimingEnabled){
 			
@@ -952,7 +1057,8 @@ public class TaskEditActivity extends EditActivityBase {
     			isFinishAfterSave = true;
     			mPrefEditor.putLong("TaskCarLinkId", mLongClickId);
     			mPrefEditor.commit();
-                showDialog(StaticValues.DIALOG_TASK_CAR_LINK);
+    			if(saveSuccess)
+    				showDialog(StaticValues.DIALOG_TASK_CAR_LINK);
                 return true;
             case StaticValues.CONTEXT_MENU_DELETE_ID:
                 AndiCarDialogBuilder builder = new AndiCarDialogBuilder(TaskEditActivity.this, 
@@ -969,7 +1075,7 @@ public class TaskEditActivity extends EditActivityBase {
                                     madError.show();
                                 }
                                 else {
-                                    fillData();
+                                    fillLinkedCarsData();
                                 }
                             }
                         });
