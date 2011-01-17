@@ -25,6 +25,7 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -34,9 +35,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -87,7 +89,6 @@ public class TaskEditActivity extends EditActivityBase {
 
 	private ImageButton btnNewTaskType = null;
 	private ImageButton btnLinkCar = null;
-	private ImageButton btnDeleteCarLink = null;
 
 	private RadioGroup rgRepeating = null;
 	private RadioGroup rgScheduleType = null;
@@ -126,6 +127,7 @@ public class TaskEditActivity extends EditActivityBase {
 
 	private long mRecurencyTypeId = -1;
 	private long mlStartingDateTimeInSeconds;
+	private long mLongClickId;
 	private boolean isDiffStartingTime = true;
 	private boolean isTimingEnabled = true;
 	private boolean isMileageEnabled = true;
@@ -310,6 +312,8 @@ public class TaskEditActivity extends EditActivityBase {
 
 	private void initControls() {
 		lvLinkedCarsList.setOnItemClickListener(mLinkedCarListItemClickListener);
+		lvLinkedCarsList.setOnItemLongClickListener(mItemLongClickListener);
+		lvLinkedCarsList.setOnCreateContextMenuListener(this);
 		rgRepeating.setOnCheckedChangeListener(rgRepeatingOnCheckedChangeListener);
 		ckOnLastDay.setOnCheckedChangeListener(ckOnLastDayChecked);
 		rgScheduleType.setOnCheckedChangeListener(rgTimingMileageEnabledChecked);
@@ -805,8 +809,9 @@ public class TaskEditActivity extends EditActivityBase {
 						madError.show();
 		    		}
 	    		}
+	    		fillData();
 	        }
-    }
+	    }
     };
 	
 	protected AdapterView.OnItemSelectedListener spnScheduleFrequencyOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
@@ -919,6 +924,65 @@ public class TaskEditActivity extends EditActivityBase {
 		else{
 			llMileageZone.setVisibility(View.GONE);
 		}
-		
 	}
+	
+    protected AdapterView.OnItemLongClickListener mItemLongClickListener =
+        new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(@SuppressWarnings("rawtypes") AdapterView parent, View v, int position, long id) {
+                mLongClickId = id;
+                return false;
+            }
+        };
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+            ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        menu.add(0, StaticValues.CONTEXT_MENU_EDIT_ID, 0, mResource.getString(R.string.MENU_EditCaption));
+        menu.add(0, StaticValues.CONTEXT_MENU_DELETE_ID, 0, mResource.getString(R.string.MENU_DeleteCaption));
+    }
+    
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case StaticValues.CONTEXT_MENU_EDIT_ID:
+    			isFinishAfterSave = false;
+    			saveData();
+    			isFinishAfterSave = true;
+    			mPrefEditor.putLong("TaskCarLinkId", mLongClickId);
+    			mPrefEditor.commit();
+                showDialog(StaticValues.DIALOG_TASK_CAR_LINK);
+                return true;
+            case StaticValues.CONTEXT_MENU_DELETE_ID:
+                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(TaskEditActivity.this, 
+                		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.GEN_Confirm));
+                builder.setMessage(mResource.getString(R.string.GEN_DeleteConfirmation));
+                builder.setCancelable(false);
+                builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                int deleteResult = mDbAdapter.deleteRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, mLongClickId);
+                                if(deleteResult != -1) {
+                                    madbErrorAlert.setMessage(mResource.getString(deleteResult));
+                                    madError = madbErrorAlert.create();
+                                    madError.show();
+                                }
+                                else {
+                                    fillData();
+                                }
+                            }
+                        });
+                builder.setNegativeButton(mResource.getString(R.string.GEN_NO),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
 }
