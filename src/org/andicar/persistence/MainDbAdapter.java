@@ -524,6 +524,30 @@ public class MainDbAdapter extends DB
     }
 
     /**
+     * 
+     * @param tableName
+     * @param selection
+     * @param selectionArgs
+     * @return TODO return values on error (eg. record cannot be deleted)
+     */
+    public int deleteRecords( String tableName, String selection, String[] selectionArgs)
+    {
+//    	int checkVal;
+    	String checkSql =
+    		"SELECT * " +
+    		" FROM " + tableName;
+    	if(selection != null)
+    		checkSql = checkSql +
+    				" WHERE " + selection;
+    	Cursor c = query(checkSql, selectionArgs);
+    	while(c.moveToNext()){
+    		deleteRecord(tableName, c.getLong(GEN_COL_ROWID_POS));
+    	}
+    	c.close();
+    	return 1;
+    }
+
+    /**
      * Delete the record with rowId from tableName
      * @param tableName
      * @param rowId

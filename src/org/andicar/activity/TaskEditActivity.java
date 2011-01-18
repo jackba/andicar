@@ -138,6 +138,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private boolean isRecurent = true;
 	private boolean isFinishAfterSave = true;
 	private boolean saveSuccess = true;
+	private boolean isDeleteLinkedCarsOnSave = false;
 	private String mScheduledFor = StaticValues.TASK_SCHEDULED_FOR_BOTH;
 
 	/** Called when the activity is first created. */
@@ -362,12 +363,6 @@ public class TaskEditActivity extends EditActivityBase {
 				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + ", " + //#0
 				DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_NAME_NAME) + ", " + //#1
 				firstRun +
-//				"'" + mResource.getString(R.string.TaskCarEditActivity_StartMileage) + " ' || " + 
-//						DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME) + 
-//						" || ' ' || " + 
-//						DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.UOM_COL_CODE_NAME) +  " || '; " +
-//						mResource.getString(R.string.TaskCarEditActivity_StartDate) + " ' || " +
-//							" '[#1]' AS FirstRun, " + //#2
 				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME) + " " + //#3
 			" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
 				" JOIN " + MainDbAdapter.CAR_TABLE_NAME + " ON " + 
@@ -388,8 +383,6 @@ public class TaskEditActivity extends EditActivityBase {
                                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}
                 );
         cursorAdapter.setViewBinder(new TaskCarLinkDataBinder());
-        
-
         lvLinkedCarsList.setAdapter(cursorAdapter);
     }
 
@@ -458,6 +451,16 @@ public class TaskEditActivity extends EditActivityBase {
 			return;
 		}
 
+		//at least one linked car required
+		if( isFinishAfterSave && !isDeleteLinkedCarsOnSave){
+			if(lvLinkedCarsList.getCount() == 0){ //no linked car
+				Toast toast = Toast.makeText(getApplicationContext(),
+						mResource.getString(R.string.TaskEditActivity_NoLinkedCarsMsg), Toast.LENGTH_SHORT);
+				toast.show();
+				return;
+			}
+		}
+		
 		ContentValues data = new ContentValues();
 		data.put(MainDbAdapter.GEN_COL_NAME_NAME, etName.getText().toString());
 		data.put(MainDbAdapter.GEN_COL_ISACTIVE_NAME,
@@ -522,6 +525,12 @@ public class TaskEditActivity extends EditActivityBase {
 				if(isFinishAfterSave)
 					finish();
 			}
+		}
+		//delete existent linked cars if the configuration not support linked cars
+		if(isFinishAfterSave && isDeleteLinkedCarsOnSave){
+			String[] selectionArgs = {Long.toString(mRowId)};
+			mDbAdapter.deleteRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, 
+						MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + "= ?", selectionArgs);
 		}
 	}
 
@@ -745,12 +754,14 @@ public class TaskEditActivity extends EditActivityBase {
 		if(carId == -1) //new car link
 			carSelectCondition  = carSelectCondition  + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + 
 											" NOT IN (SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + 
-													" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " )";
-		
+													" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
+													" WHERE " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?" +
+													")";
+		String[] selectionArgs = {Long.toString(mRowId)};
 		initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
 			MainDbAdapter.genColName,
 			new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-			carSelectCondition, null,
+			carSelectCondition, selectionArgs,
 			MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
 		
 		if(carId != -1)
@@ -967,15 +978,18 @@ public class TaskEditActivity extends EditActivityBase {
 		else
 			tvOr.setVisibility(View.GONE);
 		
-		if(isTimingEnabled && !isMileageEnabled && !isDiffStartingTime){
+		if((isTimingEnabled && !isMileageEnabled && !isDiffStartingTime) ||
+				(!isRecurent && !isMileageEnabled)){
 			llLinkedCarsZone.setVisibility(View.GONE);
 			llLinkedCarsHelp.setVisibility(View.GONE);
 			llLinkedCarsList.setVisibility(View.GONE);
+			isDeleteLinkedCarsOnSave = true;
 		}
 		else{
 			llLinkedCarsZone.setVisibility(View.VISIBLE);
 			llLinkedCarsHelp.setVisibility(View.VISIBLE);
 			llLinkedCarsList.setVisibility(View.VISIBLE);
+			isDeleteLinkedCarsOnSave = false;
 		}
 
 		if(isTimingEnabled){
