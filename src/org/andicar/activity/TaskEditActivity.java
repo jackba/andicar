@@ -373,6 +373,7 @@ public class TaskEditActivity extends EditActivityBase {
                                         	DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) +
 			" WHERE " + 
 				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME) + " = ? " +
+				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.GEN_COL_ISACTIVE_NAME) + " = 'Y'" +
 			" ORDER BY " + 
 				DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_NAME_NAME);
 
@@ -716,8 +717,6 @@ public class TaskEditActivity extends EditActivityBase {
 		}
 		else{
 			initDialogControls(-1);
-			if(spnLinkDialogCar.getCount() == 0){
-			}
 				
 			mLinkDialogStartingDateTimeCal = Calendar.getInstance();
 			mLinkDialogStartingDateTimeCal.add(Calendar.HOUR_OF_DAY, 1);
@@ -751,18 +750,26 @@ public class TaskEditActivity extends EditActivityBase {
 	private void initDialogControls(long carId) {
 		
 		String carSelectCondition = MainDbAdapter.isActiveCondition;
-		if(carId == -1) //new car link
+		if(carId == -1){ //new car link
 			carSelectCondition  = carSelectCondition  + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + 
 											" NOT IN (SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + 
 													" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
 													" WHERE " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?" +
 													")";
-		String[] selectionArgs = {Long.toString(mRowId)};
-		initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
-			MainDbAdapter.genColName,
-			new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-			carSelectCondition, selectionArgs,
-			MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
+			String[] selectionArgs = {Long.toString(mRowId)};
+			initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
+					MainDbAdapter.genColName,
+					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
+					carSelectCondition, selectionArgs,
+					MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
+		}
+		else{
+			initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
+				MainDbAdapter.genColName,
+				new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
+				carSelectCondition, null,
+				MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
+		}
 		
 		if(carId != -1)
 			spnLinkDialogCar.setEnabled(false);

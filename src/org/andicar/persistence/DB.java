@@ -90,11 +90,12 @@ public class DB {
 	// tags table
 	public static final String TAG_TABLE_NAME = "DEF_TAG";
 
-	// tasks/reminders tables
+	// tasks/reminders/todo tables
 	public static final String TASKTYPE_TABLE_NAME = "DEF_TASKTYPE";
 	public static final String TASK_TABLE_NAME = "DEF_TASK";
 	public static final String TASK_CAR_TABLE_NAME = "TASK_CAR";
-
+	public static final String TODO_TABLE_NAME = "TASK_TODO";
+	
 	// column names. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
 	public static final String GEN_COL_ROWID_NAME = "_id";
@@ -328,7 +329,40 @@ public class DB {
 	 * No. of km|mi to start reminders
 	 */
 	public static final String TASK_COL_REMINDERMILEAGES_NAME = "ReminderMileages";
-
+	
+	
+	/**
+	 * the task from where this todo come
+	 */
+	public static final String TODO_COL_TASK_ID_NAME = TASK_TABLE_NAME + "_ID";
+	/**
+	 * the linked car to the task (if exist) 
+	 */
+	public static final String TODO_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
+	/**
+	 * the due date based on start time and recurency settings
+	 */
+	public static final String TODO_COL_DUEDATE_NAME = "DueDate";
+	/**
+	 * the due mileage based on starting mileage and recurency mileage
+	 */
+	public static final String TODO_COL_DUEMILAGE_NAME = "DueMilage";
+	/**
+	 * postpone the next reminder until this date 
+	 */
+	public static final String TODO_COL_POSTPONEUNTIL_NAME = "PostponeUntil";
+	/**
+	 * if this todo is done {Y|N}
+	 */
+	public static final String TODO_COL_ISDONE_NAME = "IsDone";
+	/**
+	 * the date when this todo was done
+	 */
+	public static final String TODO_COL_DONEDATE_NAME = "DoneDate";
+	/**
+	 * stop the notification for this todo, even if is not done
+	 */
+	public static final String TODO_COL_ISSTOPNOTIFICATION_NAME = "IsStopNotification";
 	
 	public static final String TASK_CAR_COL_TASK_ID_NAME = TASK_TABLE_NAME + "_ID";
 	public static final String TASK_CAR_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
@@ -480,6 +514,16 @@ public class DB {
 	public static final int TASK_CAR_COL_CAR_ID_POS = 5;
 	public static final int TASK_CAR_COL_FIRSTRUN_DATE_POS = 6;
 	public static final int TASK_CAR_COL_FIRSTRUN_MILEAGE_POS = 7;
+	
+	public static final int TODO_COL_TASK_ID_POS = 4;
+	public static final int TODO_COL_CAR_ID_POS = 5;
+	public static final int TODO_COL_DUEDATE_POS = 6;
+	public static final int TODO_COL_DUEMILAGE_POS = 7;
+	public static final int TODO_COL_POSTPONEUNTI_POS = 8;
+	public static final int TODO_COL_ISDONE_POS = 9;
+	public static final int TODO_COL_DONEDATE_POS = 10;
+	public static final int TODO_COL_ISSTOPNOTIFICATION_POS = 11;
+
 
 	public static final String[] driverTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
@@ -607,6 +651,10 @@ public class DB {
 			TASK_COL_REMINDERDAYS_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_REMINDERMILEAGES_NAME};
 	public static final String[] taskCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
 			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
+
+	public static final String[] todoCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
+		TODO_COL_TASK_ID_NAME, TODO_COL_CAR_ID_NAME, TODO_COL_DUEDATE_NAME, TODO_COL_DUEMILAGE_NAME, TODO_COL_POSTPONEUNTIL_NAME, 
+		TODO_COL_ISDONE_NAME, TODO_COL_DONEDATE_NAME, TODO_COL_ISSTOPNOTIFICATION_NAME};
 
 	public static final String[] genColName = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME };
@@ -1082,6 +1130,35 @@ public class DB {
 		+ " INTEGER NULL "
 		+ ");";
 
+	protected static final String TODO_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
+		+ TODO_TABLE_NAME
+		+ " ( "
+		+ GEN_COL_ROWID_NAME
+		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+		+ GEN_COL_NAME_NAME
+		+ " TEXT NOT NULL, "
+		+ GEN_COL_ISACTIVE_NAME
+		+ " TEXT DEFAULT 'Y', "
+		+ GEN_COL_USER_COMMENT_NAME
+		+ " TEXT NULL, "
+		+ TODO_COL_TASK_ID_NAME 
+		+ " INTEGER NOT NULL, "
+		+ TODO_COL_CAR_ID_NAME
+		+ " INTEGER NULL, "
+		+ TODO_COL_DUEDATE_NAME
+		+ " DATE NULL, "
+		+ TODO_COL_DUEMILAGE_NAME
+		+ " INTEGER NULL, "
+		+ TODO_COL_POSTPONEUNTIL_NAME
+		+ " DATE NULL, "
+		+ TODO_COL_ISDONE_NAME
+		+ " TEXT DEFAULT 'N', "
+		+ TODO_COL_DONEDATE_NAME
+		+ " DATE NULL, "
+		+ TODO_COL_ISSTOPNOTIFICATION_NAME
+		+ " TEXT DEFAULT 'N' "
+		+ ");";
+
 	/**
 	 * Constructor - takes the context to allow the database to be
 	 * opened/created
@@ -1196,11 +1273,12 @@ public class DB {
 
 		}
 
-		private void createTaskTables(SQLiteDatabase db) {
+		private void createTaskTables(SQLiteDatabase db) throws SQLException {
 			// create task/reminder
 			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
 			db.execSQL(TASK_TABLE_CREATE_SQL);
 			db.execSQL(TASK_CAR_TABLE_CREATE_SQL);
+			db.execSQL(TODO_TABLE_CREATE_SQL);
 		}
 
 		private void createBPartnerTable(SQLiteDatabase db) throws SQLException {
@@ -2160,6 +2238,9 @@ public class DB {
 		
 		db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS " + TASK_CAR_TABLE_NAME + "_UK1 "
 				+ "ON " + TASK_CAR_TABLE_NAME + " (" + TASK_CAR_COL_CAR_ID_NAME + ", " + TASK_CAR_COL_TASK_ID_NAME + ")");
+		
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TODO_TABLE_NAME + "_IX1 "
+				+ "ON " + TODO_TABLE_NAME + " (" + TODO_COL_TASK_ID_NAME + ")");
 	}
 
 	public boolean backupDb(String bkName, String bkPrefix) {

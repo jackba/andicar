@@ -99,7 +99,7 @@ public class MainDbAdapter extends DB
                     stopIndex = new BigDecimal(newIndexStr);
             }
 
-            if(mCarId != -1 && stopIndex != null){
+            if(mCarId != -1 && stopIndex != null){ //update the car current index
                try{
                     mDb.beginTransaction();
                     retVal = mDb.insertOrThrow( tableName, null, content );
@@ -123,7 +123,7 @@ public class MainDbAdapter extends DB
             else{
                 retVal = mDb.insertOrThrow(tableName, null, content);
             }
-            if(retVal != -1 && tableName.equals(REFUEL_TABLE_NAME)){
+            if(retVal != -1 && tableName.equals(REFUEL_TABLE_NAME)){ //create expesnse
                 ContentValues expenseContent = null;
                 expenseContent = new ContentValues();
 
@@ -292,7 +292,25 @@ public class MainDbAdapter extends DB
                 if(newIndexStr != null && newIndexStr.length() > 0)
                     stopIndex = new BigDecimal(newIndexStr);
             }
-
+            
+            else if(tableName.equals(CAR_TABLE_NAME)){ //inactivate/activate the related task-car links/todos
+                String[] whereArgs = {Long.toString(rowId)};
+                ContentValues isActiveContent = new ContentValues();
+                isActiveContent.put(GEN_COL_ISACTIVE_NAME, content.getAsString(GEN_COL_ISACTIVE_NAME));
+                mDb.update(TASK_CAR_TABLE_NAME, isActiveContent, TASK_CAR_COL_CAR_ID_NAME + " = ?", whereArgs);
+                mDb.update(TODO_TABLE_NAME, isActiveContent, TODO_COL_CAR_ID_NAME + " = ?", whereArgs);
+            }
+            else if(tableName.equals(TASK_TABLE_NAME)){ //inactivate/activate the related task-car links/todos
+                String[] whereArgs = {Long.toString(rowId)};
+                ContentValues isActiveContent = new ContentValues();
+                isActiveContent.put(GEN_COL_ISACTIVE_NAME, content.getAsString(GEN_COL_ISACTIVE_NAME));
+                mDb.update(TASK_CAR_TABLE_NAME, isActiveContent, TASK_CAR_COL_TASK_ID_NAME + " = ?", whereArgs);
+                mDb.update(TODO_TABLE_NAME, isActiveContent, TODO_COL_TASK_ID_NAME + " = ?", whereArgs);
+            }
+/*
+                    mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_CAR_ID_NAME + "=" + rowId, null);
+                    mDb.delete(TODO_TABLE_NAME, TODO_COL_CAR_ID_NAME + "=" + rowId, null);
+ */
             if(mCarId != -1 && stopIndex != null){
                try{
                     mDb.beginTransaction();
@@ -653,11 +671,13 @@ public class MainDbAdapter extends DB
                 else if(tableName.equals(CAR_TABLE_NAME)){
                     //also delete the locations
                     mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_CAR_ID_NAME + "=" + rowId, null);
+                    mDb.delete(TODO_TABLE_NAME, TODO_COL_CAR_ID_NAME + "=" + rowId, null);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 }
                 else if(tableName.equals(TASK_TABLE_NAME)){
                     //also delete the locations
                     mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_TASK_ID_NAME + "=" + rowId, null);
+                    mDb.delete(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME + "=" + rowId, null);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 }
                 else
