@@ -313,6 +313,7 @@
     <string name="TaskEditActivity_FillFrequency">"Fill frequency!"</string>
     <string name="TaskEditActivity_LinkedCarsOptionsHelp">"Long press on a car for more options"</string>
     <string name="TaskEditActivity_AllCarsLinkedMsg">"All active cars are linked to this task."</string>
+    <string name="TaskEditActivity_NoLinkedCarsMsg">"At least one car must be linked to this task."</string>
     
     <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
     <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>
