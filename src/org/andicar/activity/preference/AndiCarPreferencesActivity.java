@@ -43,6 +43,7 @@ import org.andicar.activity.TaskTypeListActivity;
 import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
+import org.andicar.service.TodoManagementService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
@@ -146,7 +147,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         addOnPreferenceScreen.setSummary(mRes.getString(R.string.AddOn_PreferencesSummary));
         addOnCategory.addPreference(addOnPreferenceScreen);
 
-        //Tasks/Reminders
+        //Tasks/Reminders/Todos
         PreferenceCategory taskReminderCategory = new PreferenceCategory(this);
         taskReminderCategory.setTitle(mRes.getString(R.string.PREF_TaskReminderCategoryTitle));
         prefScreenRoot.addPreference(taskReminderCategory);
@@ -160,6 +161,11 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         taskTypePreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTypeTitle));
         taskTypePreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskTypeSummary));
         taskReminderCategory.addPreference(taskTypePreferenceScreen);
+//        PreferenceScreen todoCheckPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+//        todoCheckPreferenceScreen.setIntent(new Intent(this, TodoManagementService.class));
+//        todoCheckPreferenceScreen.setTitle("Check Todos");
+//        todoCheckPreferenceScreen.setSummary("Check todos");
+//        taskReminderCategory.addPreference(todoCheckPreferenceScreen);
 
         //business partners
         PreferenceCategory bPartnerCategory = new PreferenceCategory(this);

@@ -74,6 +74,7 @@
 		 
         <service android:name="org.andicar.service.GPSTrackService" />
         <service android:name="org.andicar.service.UpdateCheckService" />
+        <service android:name="org.andicar.service.TodoManagementService" /> 
         
         <activity android:name="org.andicar.activity.MainActivity"
                   android:label="AndiCar"
