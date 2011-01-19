@@ -24,7 +24,6 @@ import android.app.Service;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.os.IBinder;
 
 /**
@@ -32,8 +31,8 @@ import android.os.IBinder;
  * 
  * <hr>
  * <br><b> Description:</b> 
- * <br>This service maintain the todo entries for the defined tasks based on the task properties (due date, mileage, linked cars etc.
- * <br>All <b>recurent</b> tasks have a predefined number (actually 3) of todo entries.
+ * <br>This service maintain the todo entries based on the task properties (due date, mileage, linked cars etc.) 
+ * <br>All <b>recurent</b> tasks have a predefined number (currently 3) of todo entries for each linked car.
  * <br>A new todo is automatically created when an existing todo is done or deactivated. 
  *
  */
@@ -58,12 +57,12 @@ public class TodoManagementService extends Service {
 		mDb = new MainDbAdapter(this);
 		
 		//#1 check todo's for none recurent tasks
-		checkNonRecurentTasks();
+		maintainNonRecurentTasks();
 		
 		mDb.close();
 	}
 	
-	private void checkNonRecurentTasks(){
+	private void maintainNonRecurentTasks(){
 		Cursor taskCursor = null;
 		Cursor todoCursor = null;
 		String taskSelection = null;
