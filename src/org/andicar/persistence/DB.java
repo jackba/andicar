@@ -1519,14 +1519,14 @@ public class DB {
 			} else if (oldVersion == 356) {
 				upgradeDbTo357(db, oldVersion);
 			}
-//			 upgradeDbTo357(db, oldVersion);
+			 upgradeDbTo357(db, oldVersion);
 			// !!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
 
 			// create indexes
 			createIndexes(db);
 			// create the missing folders on SDCARD
 			FileUtils fu = new FileUtils(mCtx);
-			if (fu.createFolderIfNotExists(0) != -1) {
+			if (fu.createFolderIfNotExists(FileUtils.ALL_FOLDER) != -1) {
 				Log.e(TAG, fu.lastError);
 			}
 

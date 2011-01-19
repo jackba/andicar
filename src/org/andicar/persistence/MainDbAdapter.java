@@ -267,7 +267,7 @@ public class MainDbAdapter extends DB
      * @param content
      * @return -1 if the row updated, an error code otherwise. For error codes see errors.xml
      */
-    public int updateRecord( String tableName, long rowId, ContentValues content)
+    public int updateRecord(String tableName, long rowId, ContentValues content)
     {
         int retVal = canUpdate(tableName, content, rowId);
         if(retVal != -1)
@@ -300,12 +300,13 @@ public class MainDbAdapter extends DB
                 mDb.update(TASK_CAR_TABLE_NAME, isActiveContent, TASK_CAR_COL_CAR_ID_NAME + " = ?", whereArgs);
                 mDb.update(TODO_TABLE_NAME, isActiveContent, TODO_COL_CAR_ID_NAME + " = ?", whereArgs);
             }
-            else if(tableName.equals(TASK_TABLE_NAME)){ //inactivate/activate the related task-car links/todos
+            else if(tableName.equals(TASK_TABLE_NAME)){ 
+            	//inactivate/activate the related task-car links; delete todos (will be recreated based on new task definition)
                 String[] whereArgs = {Long.toString(rowId)};
                 ContentValues isActiveContent = new ContentValues();
                 isActiveContent.put(GEN_COL_ISACTIVE_NAME, content.getAsString(GEN_COL_ISACTIVE_NAME));
                 mDb.update(TASK_CAR_TABLE_NAME, isActiveContent, TASK_CAR_COL_TASK_ID_NAME + " = ?", whereArgs);
-                mDb.update(TODO_TABLE_NAME, isActiveContent, TODO_COL_TASK_ID_NAME + " = ?", whereArgs);
+                mDb.delete(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME + " = ?", whereArgs);
             }
 /*
                     mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_CAR_ID_NAME + "=" + rowId, null);

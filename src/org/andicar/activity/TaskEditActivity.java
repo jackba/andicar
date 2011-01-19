@@ -36,6 +36,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.test.IsolatedContext;
 import android.text.format.DateFormat;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -140,6 +141,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private boolean saveSuccess = true;
 	private boolean isDeleteLinkedCarsOnSave = false;
 	private String mScheduledFor = StaticValues.TASK_SCHEDULED_FOR_BOTH;
+	private String mLinkDialogCarSelectCondition = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -461,6 +463,15 @@ public class TaskEditActivity extends EditActivityBase {
 				return;
 			}
 		}
+		if(!isRecurent && isTimingEnabled){//check if the starting time is in the future
+			if(mlDateTimeInSeconds * 1000 < System.currentTimeMillis()){
+				Toast toast = Toast.makeText(getApplicationContext(),
+						mResource.getString(R.string.TaskEditActivity_StartingTimeInFutureMsg), Toast.LENGTH_SHORT);
+				toast.show();
+				saveSuccess = false;
+				return;
+			}
+		}
 		
 		ContentValues data = new ContentValues();
 		data.put(MainDbAdapter.GEN_COL_NAME_NAME, etName.getText().toString());
@@ -492,7 +503,7 @@ public class TaskEditActivity extends EditActivityBase {
 		else
 			data.put(MainDbAdapter.TASK_COL_RUNMONTH_NAME, (String)null);
 		
-		if(rbOneTime.isChecked())
+		if(!isRecurent)
 			data.put(MainDbAdapter.TASK_COL_RUNTIME_NAME, mlDateTimeInSeconds);
 		else
 			data.put(MainDbAdapter.TASK_COL_RUNTIME_NAME, mcalDateTime2.getTimeInMillis() / 1000);
@@ -558,21 +569,36 @@ public class TaskEditActivity extends EditActivityBase {
 			mPrefEditor.commit();
 			if(!saveSuccess)
 				return;
+			mLinkDialogCarSelectCondition = MainDbAdapter.isActiveCondition +
+				" AND " + MainDbAdapter.GEN_COL_ROWID_NAME + 
+												" NOT IN (SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + 
+														" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
+														" WHERE " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = " + Long.toString(mRowId) +
+														")";
+			if(!isRecurent && isMileageEnabled && !isTimingEnabled){ //select only cars with current mileage < due mileage
+				mLinkDialogCarSelectCondition  = mLinkDialogCarSelectCondition  + 
+					" AND " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + " < " + etMileage.getText().toString();
+			}
+			
 			//check if unlinked cars exists.
 			String checkSQL = "SELECT * " +
 								" FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
-								" WHERE IsActive = 'Y' " +
-										" AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " NOT IN ( " +
-												" SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + " " +
-												" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
-												" WHERE " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = " + mRowId + " )";
+								" WHERE " + mLinkDialogCarSelectCondition;
 			Cursor c = mDbAdapter.query(checkSQL, null);
 			
 			if(!c.moveToNext()){//no record exist
 				c.close();
-	            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(TaskEditActivity.this, 
-	            		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.GEN_Info));
-	            builder.setMessage(mResource.getString(R.string.TaskEditActivity_AllCarsLinkedMsg));
+	            AndiCarDialogBuilder builder = null; 
+				if(!isRecurent && isMileageEnabled && !isTimingEnabled){
+		            builder = new AndiCarDialogBuilder(TaskEditActivity.this, 
+		            		AndiCarDialogBuilder.DIALOGTYPE_WARNING, mResource.getString(R.string.GEN_Warning));
+		            builder.setMessage(mResource.getString(R.string.TaskEditActivity_NoCarsLinkedMsg));
+				}
+				else{
+		            builder = new AndiCarDialogBuilder(TaskEditActivity.this, 
+		            		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.GEN_Info));
+		            builder.setMessage(mResource.getString(R.string.TaskEditActivity_AllCarsLinkedMsg));
+				}
 	            builder.setCancelable(false);
 	            
 	            builder.setPositiveButton(mResource.getString(R.string.GEN_OK),
@@ -736,6 +762,17 @@ public class TaskEditActivity extends EditActivityBase {
 	private void initDialog() {
 		llDialogStartingDateZone = (LinearLayout) linkView.findViewById(R.id.llStartingDateZone);
         llDialogStartingMileageZone = (LinearLayout) linkView.findViewById(R.id.llStartingMileageZone);
+
+        if(!isRecurent){
+        	llDialogStartingDateZone.setVisibility(View.GONE);
+        	llDialogStartingMileageZone.setVisibility(View.GONE);
+        	return;
+        }
+        else{
+        	llDialogStartingDateZone.setVisibility(View.VISIBLE);
+        	llDialogStartingMileageZone.setVisibility(View.VISIBLE);
+        }
+        	
         if(isTimingEnabled && isDiffStartingTime)
         	llDialogStartingDateZone.setVisibility(View.VISIBLE);
         else
@@ -748,28 +785,14 @@ public class TaskEditActivity extends EditActivityBase {
 	}
 
 	private void initDialogControls(long carId) {
+		if(carId != -1)
+			mLinkDialogCarSelectCondition = MainDbAdapter.isActiveCondition;
 		
-		String carSelectCondition = MainDbAdapter.isActiveCondition;
-		if(carId == -1){ //new car link
-			carSelectCondition  = carSelectCondition  + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + 
-											" NOT IN (SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + 
-													" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
-													" WHERE " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?" +
-													")";
-			String[] selectionArgs = {Long.toString(mRowId)};
-			initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
-					MainDbAdapter.genColName,
-					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-					carSelectCondition, selectionArgs,
-					MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
-		}
-		else{
-			initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
-				MainDbAdapter.genColName,
-				new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-				carSelectCondition, null,
-				MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
-		}
+		initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
+			MainDbAdapter.genColName,
+			new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
+			mLinkDialogCarSelectCondition, null,
+			MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
 		
 		if(carId != -1)
 			spnLinkDialogCar.setEnabled(false);

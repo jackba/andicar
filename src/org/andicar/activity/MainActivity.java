@@ -33,6 +33,7 @@ import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.service.TodoManagementService;
 import org.andicar.service.UpdateCheckService;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
@@ -388,6 +389,14 @@ public class MainActivity extends BaseActivity {
 		            alert.show();
 				}
 			}
+
+			AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+			Intent intent = new Intent(this, TodoManagementService.class);
+			PendingIntent pIntent = PendingIntent.getService(this, 0,
+					intent, PendingIntent.FLAG_CANCEL_CURRENT);
+			am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+					pIntent);
+
 			
 		} catch (Exception e) {
 			String logFile = "startup.log";
