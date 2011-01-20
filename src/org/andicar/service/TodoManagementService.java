@@ -19,7 +19,6 @@ package org.andicar.service;
 
 import java.util.Calendar;
 
-import org.andicar.activity.TaskEditActivity;
 import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
@@ -75,7 +74,7 @@ public class TodoManagementService extends Service {
 		mDb = new MainDbAdapter(this);
 		
 		//#1 check todo's for none recurent tasks
-//		maintainNonRecurentTasks();
+		maintainNonRecurentTasks();
 		maintainRecurentTasks();
 		
 		mDb.close();
@@ -194,7 +193,6 @@ public class TodoManagementService extends Service {
 	private void maintainRecurentTasks(){
 		Cursor taskCursor = null;
 		Cursor todoCursor = null;
-		Cursor taskCarCursor = null;
 		String taskSelection = null;
 		String todoSelection = null;
 		String selectSql = null;
@@ -202,7 +200,6 @@ public class TodoManagementService extends Service {
 		String[] todoSelectionArgs = null;
 		ContentValues toDoContent = new ContentValues();
 		long taskId = -1;
-		long carId = -1;
 		int todoCount = 1;
 		boolean isDifferentStartingTime = true;
 
@@ -298,7 +295,7 @@ public class TodoManagementService extends Service {
 				else if(nextToDoCalendar.get(Calendar.DAY_OF_WEEK) == runDay){ //check the hour
 					long l1 = System.currentTimeMillis();
 					
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparision
+					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
 					long diff = nextToDoCalendar.getTimeInMillis() - l1;
 					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
 					if(diff < 0)
@@ -314,7 +311,7 @@ public class TodoManagementService extends Service {
 				}
 				else if(nextToDoCalendar.get(Calendar.DAY_OF_MONTH) == runDay){ //check the hour
 					long l1 = System.currentTimeMillis();
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparision
+					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
 					long diff = nextToDoCalendar.getTimeInMillis() - l1;
 					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
 					if(diff < 0)
@@ -337,7 +334,7 @@ public class TodoManagementService extends Service {
 				}
 				else if(nextToDoCalendar.get(Calendar.MONTH) == runMonth && nextToDoCalendar.get(Calendar.DAY_OF_MONTH) == runDay){
 					long l1 = System.currentTimeMillis();
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparision
+					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
 					long diff = nextToDoCalendar.getTimeInMillis() - l1;
 					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
 					if(diff < 0)
