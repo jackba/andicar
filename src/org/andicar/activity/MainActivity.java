@@ -385,13 +385,8 @@ public class MainActivity extends BaseActivity {
 				}
 			}
 
-//			AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//			Intent intent = new Intent(this, TodoManagementService.class);
-//			PendingIntent pIntent = PendingIntent.getService(this, 0,
-//					intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//			am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-//					pIntent);
-
+			Intent intent = new Intent(this, TodoManagementService.class);
+			startService(intent);
 			
 		} catch (Exception e) {
 			String logFile = "startup.log";

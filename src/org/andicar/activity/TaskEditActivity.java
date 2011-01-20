@@ -20,6 +20,7 @@
 package org.andicar.activity;
 
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;
@@ -28,14 +29,11 @@ import org.andicar.service.TodoManagementService;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -152,6 +150,8 @@ public class TaskEditActivity extends EditActivityBase {
 		super.onCreate(icicle);
 
 		String operation = mBundleExtras.getString("Operation"); // E = edit, N = new
+		//mcalDateTime2 is used only for the time part => should not be influenced by the time zone 
+		mcalDateTime2.setTimeZone(TimeZone.getTimeZone("UTC"));
 
 		init();
 
@@ -211,7 +211,7 @@ public class TaskEditActivity extends EditActivityBase {
 			
 			int runDays = ((Long)c.getLong(MainDbAdapter.TASK_COL_RUNDAY_POS)).intValue();
 			if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_WEEK)
-				spnDaysOfWeek.setSelection(runDays);
+				spnDaysOfWeek.setSelection(runDays - 1);
 			else{
 				if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH 
 						&& runDays == 32) //last day
@@ -227,10 +227,6 @@ public class TaskEditActivity extends EditActivityBase {
 			if(!isRecurent){
 	            initDateTime(runTime);
 	            initTime2(0);
-//	        	mcalDateTime.setTimeInMillis(mlDateTimeInSeconds * 1000);
-//	            tvDateTimeValue.setText(
-//	            		DateFormat.getDateFormat(getApplicationContext()).format(mcalDateTime.getTime()) + " " +
-//	    					DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime()));
 			}
 			else{
 				initDateOnly = true;
@@ -414,23 +410,6 @@ public class TaskEditActivity extends EditActivityBase {
 		fillLinkedCarsData();
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see org.andicar.activity.EditActivityBase#onStop()
-	 */
-	@Override
-	protected void onStop() {
-		super.onStop();
-//		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent(this, TodoManagementService.class);
-		intent.putExtra("TaskID", mRowId);
-//		PendingIntent pIntent = PendingIntent.getService(this, 0,
-//				intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//		am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-//				pIntent);
-		this.startService(intent);
-	}
-
 	@Override
 	protected void saveData() {
 		String strRetVal = checkMandatory(vgRoot);
@@ -508,7 +487,7 @@ public class TaskEditActivity extends EditActivityBase {
 		data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_NAME, mRecurencyTypeId);
 		
 		if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_WEEK) //week
-			data.put(MainDbAdapter.TASK_COL_RUNDAY_NAME, spnDaysOfWeek.getSelectedItemId());
+			data.put(MainDbAdapter.TASK_COL_RUNDAY_NAME, spnDaysOfWeek.getSelectedItemId() + 1);
 		else{
 			if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH
 					&& ckOnLastDay.isChecked())
@@ -537,8 +516,12 @@ public class TaskEditActivity extends EditActivityBase {
 				saveSuccess = true;
 			else
 				saveSuccess = false;
-			if(isFinishAfterSave)
+			if(isFinishAfterSave){
+				Intent intent = new Intent(this, TodoManagementService.class);
+				intent.putExtra("TaskID", mRowId);
+				this.startService(intent);
 				finish();
+			}
 		} else {
 			int updResult = mDbAdapter.updateRecord(
 					MainDbAdapter.TASK_TABLE_NAME, mRowId, data);
@@ -553,8 +536,12 @@ public class TaskEditActivity extends EditActivityBase {
 				madError.show();
 			} else{
 				saveSuccess = true;
-				if(isFinishAfterSave)
+				if(isFinishAfterSave){
+					Intent intent = new Intent(this, TodoManagementService.class);
+					intent.putExtra("TaskID", mRowId);
+					this.startService(intent);
 					finish();
+				}
 			}
 		}
 		//delete existent linked cars if the configuration not support linked cars
@@ -729,8 +716,9 @@ public class TaskEditActivity extends EditActivityBase {
 		mcalDateTime2.set(Calendar.MINUTE, mMinute2);
 		mcalDateTime2.set(Calendar.SECOND, 0);
 		// mlDateTimeInSeconds2 = mcalDateTime2.getTimeInMillis() / 1000;
-		tvDateTimeValue2.setText(DateFormat.getTimeFormat(
-				getApplicationContext()).format(mcalDateTime2.getTime()));
+		tvDateTimeValue2.setText(DateFormat.format(DateFormat.HOUR + ":" + DateFormat.MINUTE + " " + DateFormat.AM_PM, mcalDateTime2));
+//		tvDateTimeValue2.setText(DateFormat.getTimeFormat(
+//				getApplicationContext()).format(mcalDateTime2.getTime()));
 	}
 
 	
