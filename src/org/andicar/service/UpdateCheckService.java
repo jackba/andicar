@@ -24,6 +24,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.andicar.activity.R;
+import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.apache.http.util.ByteArrayBuffer;
 
@@ -49,6 +50,10 @@ public class UpdateCheckService extends Service{
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 
+		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+			Thread.setDefaultUncaughtExceptionHandler(
+	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+
 //		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         try {
             URL updateURL = new URL(StaticValues.VERSION_FILE_URL);
@@ -72,7 +77,7 @@ public class UpdateCheckService extends Service{
             int newVersion = Integer.valueOf(s);
 
             /* Is a higher version than the current already out? */
-//            if (newVersion > curVersion) {
+            if (newVersion > curVersion) {
                 mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
                 notification = null;
                 Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:org.andicar.activity"));
@@ -87,7 +92,7 @@ public class UpdateCheckService extends Service{
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
                 notification.setLatestEventInfo(UpdateCheckService.this, title, message, contentIntent);
                 mNM.notify(StaticValues.NOTIF_UPDATECHECK_ID, notification);
-//            }
+            }
             stopSelf();
         } catch (Exception e) {
     		Log.i("UpdateService", "Service failed.");
