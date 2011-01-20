@@ -306,7 +306,7 @@ public class MainDbAdapter extends DB
                 ContentValues isActiveContent = new ContentValues();
                 isActiveContent.put(GEN_COL_ISACTIVE_NAME, content.getAsString(GEN_COL_ISACTIVE_NAME));
                 mDb.update(TASK_CAR_TABLE_NAME, isActiveContent, TASK_CAR_COL_TASK_ID_NAME + " = ?", whereArgs);
-                mDb.delete(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME + " = ?", whereArgs);
+                mDb.delete(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME + " = ? AND " + TODO_COL_ISDONE_NAME + " = 'N'", whereArgs);
             }
 /*
                     mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_CAR_ID_NAME + "=" + rowId, null);
