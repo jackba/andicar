@@ -72,7 +72,7 @@ public class UpdateCheckService extends Service{
             int newVersion = Integer.valueOf(s);
 
             /* Is a higher version than the current already out? */
-            if (newVersion > curVersion) {
+//            if (newVersion > curVersion) {
                 mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
                 notification = null;
                 Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:org.andicar.activity"));
@@ -87,7 +87,8 @@ public class UpdateCheckService extends Service{
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
                 notification.setLatestEventInfo(UpdateCheckService.this, title, message, contentIntent);
                 mNM.notify(StaticValues.NOTIF_UPDATECHECK_ID, notification);
-            }
+//            }
+            stopSelf();
         } catch (Exception e) {
     		Log.i("UpdateService", "Service failed.");
         	e.printStackTrace();

@@ -24,6 +24,7 @@ import android.app.Service;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.os.IBinder;
 
 /**
@@ -39,6 +40,8 @@ import android.os.IBinder;
 public class TodoManagementService extends Service {
 
 	private MainDbAdapter mDb =null;
+	private Bundle mBundleExtras;
+	private long mTaskID = 0;
 	/* (non-Javadoc)
 	 * @see android.app.Service#onBind(android.content.Intent)
 	 */
@@ -54,12 +57,18 @@ public class TodoManagementService extends Service {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		
+		mBundleExtras = intent.getExtras();
+		if(mBundleExtras != null){
+			mTaskID = mBundleExtras.getLong("TaskID");
+		}
+		
 		mDb = new MainDbAdapter(this);
 		
 		//#1 check todo's for none recurent tasks
 		maintainNonRecurentTasks();
 		
 		mDb.close();
+		stopSelf();
 	}
 	
 	private void maintainNonRecurentTasks(){
@@ -68,7 +77,7 @@ public class TodoManagementService extends Service {
 		String taskSelection = null;
 		String todoSelection = null;
 		String selectSql = null;
-		String[] taskSelectionArgs = {Long.toString(System.currentTimeMillis() / 1000)}; //miliseconds to seconds
+		String[] taskSelectionArgs = null;
 		String[] todoSelectionArgs = null;
 		ContentValues toDoContent = new ContentValues();
 		long taskId = -1;
@@ -79,6 +88,17 @@ public class TodoManagementService extends Service {
 				" AND " + MainDbAdapter.TASK_COL_ISRECURENT_NAME + "='N' " +
 				" AND " + MainDbAdapter.TASK_COL_SCHEDULEDFOR_NAME + "='T' " +
 				" AND " + MainDbAdapter.TASK_COL_RUNTIME_NAME + " > ?";
+		
+		if(mTaskID > 0){
+			taskSelection = taskSelection + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ?";
+			taskSelectionArgs = new String[2];
+			taskSelectionArgs[0] = Long.toString(System.currentTimeMillis() / 1000); //miliseconds to seconds
+			taskSelectionArgs[1] = Long.toString(mTaskID);
+		}
+		else{
+			taskSelectionArgs = new String[1];
+			taskSelectionArgs[0] = Long.toString(System.currentTimeMillis() / 1000); //miliseconds to seconds
+		}
 		
 		taskCursor = mDb.query(MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.taskTableColNames, taskSelection, taskSelectionArgs, null, null, null);
 		
@@ -115,11 +135,17 @@ public class TodoManagementService extends Service {
 							+ " AND " + DB.sqlConcatTableColumn(MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.TASK_COL_ISRECURENT_NAME) + "='N' "
 							+ " AND " + DB.sqlConcatTableColumn(MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.TASK_COL_SCHEDULEDFOR_NAME) + "!='T' "
 							;
+		taskSelectionArgs = null;
+		if(mTaskID > 0){
+			selectSql = selectSql + " AND " + DB.sqlConcatTableColumn(MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + " = ?";
+			taskSelectionArgs = new String[1];
+			taskSelectionArgs[0] = Long.toString(mTaskID);
+		}
 
-		taskCursor = mDb.query(selectSql, null);
+		taskCursor = mDb.query(selectSql, taskSelectionArgs);
 
-		todoSelectionArgs = null;
 		todoSelection = MainDbAdapter.TODO_COL_TASK_ID_NAME + "=? AND " + MainDbAdapter.TODO_COL_CAR_ID_NAME + "=?";
+		todoSelectionArgs = null;
 		todoSelectionArgs = new String[2];
 		while(taskCursor.moveToNext()){
 			taskId = taskCursor.getLong(MainDbAdapter.GEN_COL_ROWID_POS);
