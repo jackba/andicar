@@ -24,14 +24,18 @@ import java.util.Calendar;
 import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.TaskCarLinkDataBinder;
+import org.andicar.service.TodoManagementService;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -410,6 +414,22 @@ public class TaskEditActivity extends EditActivityBase {
 		fillLinkedCarsData();
 	}
 
+	
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#onStop()
+	 */
+	@Override
+	protected void onStop() {
+		super.onStop();
+//		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		Intent intent = new Intent(this, TodoManagementService.class);
+		intent.putExtra("TaskID", mRowId);
+//		PendingIntent pIntent = PendingIntent.getService(this, 0,
+//				intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//		am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+//				pIntent);
+		this.startService(intent);
+	}
 
 	@Override
 	protected void saveData() {

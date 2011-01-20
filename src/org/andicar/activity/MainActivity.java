@@ -344,19 +344,14 @@ public class MainActivity extends BaseActivity {
 			long oneDayInMilis = 86400000; //(24 * 60 * 60 * 1000);
 			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
 				if ((lastTime + oneDayInMilis) < currentTime) {
-					AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 					Intent intent = new Intent(this, UpdateCheckService.class);
-					PendingIntent pIntent = PendingIntent.getService(this, 0,
-							intent, PendingIntent.FLAG_CANCEL_CURRENT);
-					am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-							pIntent);
+					this.startService(intent);
 					editor.putLong("lastUpdateCheckTime", lastTime);
 					editor.commit();
 				}
 			}
 			
 			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
-//			if(lastTime + (30 * oneDayInMilis) < currentTime){
 			if(isJustInstalled){
 				//show the question above 10 days 
 				editor.putLong("lastAddOnCheckTime", currentTime - (5 * oneDayInMilis));
@@ -390,12 +385,12 @@ public class MainActivity extends BaseActivity {
 				}
 			}
 
-			AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-			Intent intent = new Intent(this, TodoManagementService.class);
-			PendingIntent pIntent = PendingIntent.getService(this, 0,
-					intent, PendingIntent.FLAG_CANCEL_CURRENT);
-			am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-					pIntent);
+//			AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//			Intent intent = new Intent(this, TodoManagementService.class);
+//			PendingIntent pIntent = PendingIntent.getService(this, 0,
+//					intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//			am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+//					pIntent);
 
 			
 		} catch (Exception e) {
