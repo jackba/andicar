@@ -129,10 +129,10 @@
     <string name="GEN_Password">"Password"</string>
     <string name="GEN_ShowNotification">"Show notification"</string>
     <string name="GEN_TaskTypeLabel">"Task type:"</string>
-    <string name="GEN_RepeatingHdr">"Repeating"</string>
     <string name="GEN_SetDate">"Set date/time"</string>
     <string name="GEN_On">"On"</string> <!-- ex. on Monday -->
     <string name="GEN_Days">"days"</string>
+    <string name="GEN_Minutes">"minutes"</string>
     <string name="GEN_LastDay">"last day"</string>
     <string name="GEN_Description">"Description"</string>
     <string name="GEN_Or">"Or:"</string>

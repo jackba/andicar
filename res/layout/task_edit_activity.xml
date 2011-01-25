@@ -404,7 +404,7 @@
 	                    android:text="@string/TaskEditActivity_ReminderStartLabel"
 	                    />
 	                <EditText
-	                    android:id="@+id/etReminderDays"
+	                    android:id="@+id/etTimeReminder"
 	                    android:layout_marginLeft="10dip"
 	                    android:layout_width="50dip"
 	                    android:layout_height="wrap_content"
@@ -415,22 +415,14 @@
 	                    android:text="3"
 	                    />
 	                <TextView
+	                    android:id="@+id/tvTimeReminderUnitLbl"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="10dip"
 	                    android:typeface="sans"
 	                    android:textColor="@android:color/white"
-	                    android:text="@string/GEN_Days"
 	                    />
             	</LinearLayout>
-            	<!-- 
-			    <TextView
-			        android:layout_height="1dip"
-			        android:layout_width="fill_parent"
-			        android:background="@color/separator_bg"
-                	android:layout_marginTop="10dip"
-			        />
-			         -->
             </LinearLayout>
             <TextView
                 android:id="@+id/tvOr"

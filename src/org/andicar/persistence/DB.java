@@ -281,43 +281,30 @@ public class DB {
 	public static final String TASK_COL_SCHEDULEDFOR_NAME = "ScheduledFor";
 	public static final String TASK_COL_ISDIFFERENTSTARTINGTIME_NAME = "IsDifferentSTime";
 	/**
-	 * no of days/weeks/years
+	 * no of days/weeks/months/years
 	 */
 	public static final String TASK_COL_TIMEFREQUENCY_NAME = "TimeFrequency";
 	/**
 	 * Type integer<br>
-	 * Frequency type: 0 = Week, 1 = Month, 2 = Year (StaticValues.TASK_SCHEDULED_FREQTYPE_...
+	 * Frequency type: 0 = Day, 1 = Week, 2 = Month, 3 = Year (StaticValues.TASK_SCHEDULED_FREQTYPE_...
 	 */
 	public static final String TASK_COL_TIMEFREQUENCYTYPE_NAME = "TimeFrequencyType";
 	
 	/**
-	 * run on a specified day when IsDifferentSTime = 'N' 
-	 * <li>if TimeFrequencyType is week: 0 Sunday - 6 Saturday <br>
-	 * <li>if TimeFrequencyType is month: 1 - 32. 32 for last day of the month
-	 * <li>if TimeFrequencyType is year: 1 - 31
-	 */
-	public static final String TASK_COL_RUNDAY_NAME = "RunDay";
-
-	/**
-	 * run on a specified month when IsDifferentSTime = 'N' and TimeFrequencyType is year <br>
-	 *  <li> 0 = January
-	 *  <li> ...
-	 *  <li> 11 = December
-	 */
-	public static final String TASK_COL_RUNMONTH_NAME = "RunMonth";
-	/**
 	 * Type Date<br><br>
 	 * If IsRecurent = 'Y':
-	 * <li>1970-01-01 hh:mm. Just the hh:mm part are considered<br><br>
+	 * <li>The starting date<br><br>
 	 * If IsRecurent = 'N':
-	 * <li>Datetime
+	 * <li>The run date
+	 * <li>0 if TASK_COL_TIMEFREQUENCYTYPE_NAME = Month and if is LastDay of the month
 	 */
-	public static final String TASK_COL_RUNTIME_NAME = "RunTime";
+	public static final String TASK_COL_STARTINGTIME_NAME = "StartingTime";
 	/**
-	 * Type integer
-	 * No. of days to start reminders
+	 * Type integer <br>
+	 * <li>No. of days to start reminders if TASK_COL_TIMEFREQUENCYTYPE_NAME != Day
+	 * <li>No. of minutes to start reminders if TASK_COL_TIMEFREQUENCYTYPE_NAME == Day
 	 */
-	public static final String TASK_COL_REMINDERDAYS_NAME = "ReminderDays";
+	public static final String TASK_COL_TIMEREMINDERSTART_NAME = "TimeReminderStart";
 	/**
 	 * If IsRecurent = 'Y':
 	 * <li>Run on every mileage<br>
@@ -328,7 +315,7 @@ public class DB {
 	/**
 	 * No. of km|mi to start reminders
 	 */
-	public static final String TASK_COL_REMINDERMILEAGES_NAME = "ReminderMileages";
+	public static final String TASK_COL_MILEAGEREMINDERSTART_NAME = "MileageReminderStart";
 	
 	
 	/**
@@ -496,19 +483,17 @@ public class DB {
 	public static final int BPARTNER_LOCATION_COL_FAX_POS = 12;
 	public static final int BPARTNER_LOCATION_COL_EMAIL_POS = 13;
 	public static final int BPARTNER_LOCATION_COL_CONTACTPERSON_POS = 14;
-
+	
 	public static final int TASK_COL_TASKTYPE_ID_POS = 4;
 	public static final int TASK_COL_ISRECURENT_POS = 5;
 	public static final int TASK_COL_SCHEDULEDFOR_POS = 6;
 	public static final int TASK_COL_ISDIFFERENTSTARTINGTIME_POS = 7;
 	public static final int TASK_COL_TIMEFREQUENCY_POS = 8;
 	public static final int TASK_COL_TIMEFREQUENCYTYPE_POS = 9;
-	public static final int TASK_COL_RUNDAY_POS = 10;
-	public static final int TASK_COL_RUNMONTH_POS = 11;
-	public static final int TASK_COL_RUNTIME_POS = 12;
-	public static final int TASK_COL_REMINDERDAYS_POS = 13;
-	public static final int TASK_COL_RUNMILEAGE_POS = 14;
-	public static final int TASK_COL_REMINDERMILEAGES_POS = 15;
+	public static final int TASK_COL_STARTINGTIME_POS = 10;
+	public static final int TASK_COL_TIMEREMINDERSTART_POS = 11;
+	public static final int TASK_COL_RUNMILEAGE_POS = 12;
+	public static final int TASK_COL_MILEAGEREMINDERSTART_POS = 13;
 
 	public static final int TASK_CAR_COL_TASK_ID_POS = 4;
 	public static final int TASK_CAR_COL_CAR_ID_POS = 5;
@@ -647,8 +632,8 @@ public class DB {
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
 			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME, TASK_COL_ISRECURENT_NAME,
 			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, TASK_COL_TIMEFREQUENCY_NAME,
-			TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_RUNDAY_NAME, TASK_COL_RUNMONTH_NAME, TASK_COL_RUNTIME_NAME,
-			TASK_COL_REMINDERDAYS_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_REMINDERMILEAGES_NAME};
+			TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_STARTINGTIME_NAME,
+			TASK_COL_TIMEREMINDERSTART_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEREMINDERSTART_NAME};
 	public static final String[] taskCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
 			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
 
@@ -1094,17 +1079,13 @@ public class DB {
 			+ " INTEGER NULL, "
 			+ TASK_COL_TIMEFREQUENCYTYPE_NAME
 			+ " INTEGER NULL, "
-			+ TASK_COL_RUNDAY_NAME
-			+ " INTEGER NULL, "
-			+ TASK_COL_RUNMONTH_NAME
-			+ " INTEGER NULL, "
-			+ TASK_COL_RUNTIME_NAME
+			+ TASK_COL_STARTINGTIME_NAME
 			+ " DATE NULL, "
-			+ TASK_COL_REMINDERDAYS_NAME
+			+ TASK_COL_TIMEREMINDERSTART_NAME
 			+ " INTEGER NULL, "
 			+ TASK_COL_RUNMILEAGE_NAME
 			+ " INTEGER NULL, "
-			+ TASK_COL_REMINDERMILEAGES_NAME
+			+ TASK_COL_MILEAGEREMINDERSTART_NAME
 			+ " INTEGER NULL, "
 			+ " FOREIGN KEY(" + TASK_COL_TASKTYPE_ID_NAME + ") REFERENCES " + TASKTYPE_TABLE_NAME + "(" + GEN_COL_ROWID_NAME + ")"
 			+ ");";
