@@ -162,4 +162,6 @@ public class StaticValues
     public static final int TASK_SCHEDULED_FREQTYPE_WEEK = 1;
     public static final int TASK_SCHEDULED_FREQTYPE_MONTH = 2;
     public static final int TASK_SCHEDULED_FREQTYPE_YEAR = 3;
+    
+    public static final long ONE_DAY_IN_MILISECONDS = 86400000;
 }

@@ -62,22 +62,22 @@ public class TodoManagementService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
-			Thread.setDefaultUncaughtExceptionHandler(
-	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
-		
-		mBundleExtras = intent.getExtras();
-		if(mBundleExtras != null){
-			mTaskID = mBundleExtras.getLong("TaskID");
-		}
-		
-		mDb = new MainDbAdapter(this);
-		
-		//#1 check todo's for none recurent tasks
-		maintainNonRecurentTasks();
-		maintainRecurentTasks();
-		
-		mDb.close();
+//		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+//			Thread.setDefaultUncaughtExceptionHandler(
+//	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+//		
+//		mBundleExtras = intent.getExtras();
+//		if(mBundleExtras != null){
+//			mTaskID = mBundleExtras.getLong("TaskID");
+//		}
+//		
+//		mDb = new MainDbAdapter(this);
+//		
+//		//#1 check todo's for none recurent tasks
+//		maintainNonRecurentTasks();
+//		maintainRecurentTasks();
+//		
+//		mDb.close();
 		stopSelf();
 	}
 	
@@ -97,7 +97,7 @@ public class TodoManagementService extends Service {
 		taskSelection = MainDbAdapter.isActiveCondition + 
 				" AND " + MainDbAdapter.TASK_COL_ISRECURENT_NAME + "='N' " +
 				" AND " + MainDbAdapter.TASK_COL_SCHEDULEDFOR_NAME + "='T' " +
-				" AND " + MainDbAdapter.TASK_COL_RUNTIME_NAME + " > ?";
+				" AND " + MainDbAdapter.TASK_COL_STARTINGTIME_NAME + " > ?";
 		
 		if(mTaskID > 0){
 			taskSelection = taskSelection + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ?";
@@ -122,7 +122,7 @@ public class TodoManagementService extends Service {
 			toDoContent.put(MainDbAdapter.GEN_COL_NAME_NAME, taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS));
 			toDoContent.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME, taskCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
 			toDoContent.put(MainDbAdapter.TODO_COL_TASK_ID_NAME, taskId);
-			toDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, taskCursor.getLong(MainDbAdapter.TASK_COL_RUNTIME_POS));
+			toDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS));
 			if(todoCursor.moveToNext()){ //the todo exist -> just update it
 				if(!todoCursor.getString(MainDbAdapter.TODO_COL_ISDONE_POS).equals("Y")) //if the todo is done leave it untached
 					mDb.updateRecord(MainDbAdapter.TODO_TABLE_NAME, todoCursor.getLong(MainDbAdapter.GEN_COL_ROWID_POS), toDoContent);
@@ -176,7 +176,7 @@ public class TodoManagementService extends Service {
 			}
 			else{ //both
 				toDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS));
-				toDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, taskCursor.getLong(MainDbAdapter.TASK_COL_RUNTIME_POS));
+				toDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS));
 			}
 			if(todoCursor.moveToNext()){ //the todo exist -> just update it
 				if(!todoCursor.getString(MainDbAdapter.TODO_COL_ISDONE_POS).equals("Y")) //if the todo is done leave it untached
@@ -233,7 +233,7 @@ public class TodoManagementService extends Service {
 			toDoContent.put(MainDbAdapter.TODO_COL_TASK_ID_NAME, taskId);
 			if(todoCount < mTodoCount){
 				for( int i = todoCount; i < mTodoCount; i++){
-					toDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, calculateNextToDoTime(taskId, taskCursor));
+//					toDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, calculateNextToDoTime(taskId, taskCursor));
 					mDb.createRecord(MainDbAdapter.TODO_TABLE_NAME, toDoContent);
 				}
 			}
@@ -241,112 +241,112 @@ public class TodoManagementService extends Service {
 		}
 	}
 	
-	private long calculateNextToDoTime(long taskId, Cursor currentTask){
-//		Calendar refCalendar = Calendar.getInstance();
-		Calendar nextToDoCalendar = Calendar.getInstance();
-		Cursor lastTodoCursor = null; //base time for calculating next run time
-		String todoSelectCondition = "";
-		String[] todoSelectArgs = null;
-		String todoSelectOrderBy = "";
-		int frequencyType = currentTask.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS);
-		int timeFrequency = currentTask.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCY_POS);
-		int runDay = currentTask.getInt(MainDbAdapter.TASK_COL_RUNDAY_POS);
-		int runMonth = currentTask.getInt(MainDbAdapter.TASK_COL_RUNMONTH_POS);
-		long currentTaskRunHour = currentTask.getLong(MainDbAdapter.TASK_COL_RUNTIME_POS) * 1000;
-		
-		
-		//select the last todo
-		todoSelectCondition = MainDbAdapter.isActiveCondition
-				+ " AND " + MainDbAdapter.TODO_COL_TASK_ID_NAME + " = ? ";
-		todoSelectArgs = new String[1];
-		todoSelectArgs[0] = Long.toString(taskId);
-		todoSelectOrderBy = MainDbAdapter.TODO_COL_DUEDATE_NAME + " DESC";
-		lastTodoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelectCondition, todoSelectArgs, null, null, todoSelectOrderBy);
-		
-		if(lastTodoCursor.moveToNext()){ //just add the recurrence period to the last todo
-			nextToDoCalendar.setTimeInMillis(lastTodoCursor.getLong(MainDbAdapter.TODO_COL_DUEDATE_POS) * 1000);
-			if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_WEEK){
-				nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, timeFrequency);
-			}
-			else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH){
-				if(runDay == 32){ //last day of the month
-					nextToDoCalendar.set(Calendar.DAY_OF_MONTH, 1);
-					nextToDoCalendar.add(Calendar.MONTH, timeFrequency + 1);
-					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1); //go back to the last day of the previous month
-				}
-				else
-					nextToDoCalendar.add(Calendar.MONTH, timeFrequency);
-			}
-			else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_YEAR){
-				nextToDoCalendar.add(Calendar.YEAR, timeFrequency);
-			}
-			lastTodoCursor.close();
-		}
-		else{ //this is the first todo
-			lastTodoCursor.close();
-			nextToDoCalendar = Calendar.getInstance();
-			nextToDoCalendar.set(Calendar.HOUR_OF_DAY, 0);
-			nextToDoCalendar.set(Calendar.MINUTE, 0);
-			nextToDoCalendar.set(Calendar.SECOND, 1);
-			nextToDoCalendar.set(Calendar.MILLISECOND, 0);
-			if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_WEEK){
-				if(nextToDoCalendar.get(Calendar.DAY_OF_WEEK) > runDay)
-					nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, 1);
-				else if(nextToDoCalendar.get(Calendar.DAY_OF_WEEK) == runDay){ //check the hour
-					long l1 = System.currentTimeMillis();
-					
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
-					long diff = nextToDoCalendar.getTimeInMillis() - l1;
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
-					if(diff < 0)
-						nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, 1);
-				}
-				nextToDoCalendar.set(Calendar.DAY_OF_WEEK, runDay);
-				//set the hour:min
-				nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour);
-			}
-			else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH){
-				if(nextToDoCalendar.get(Calendar.DAY_OF_MONTH) > runDay){
-					nextToDoCalendar.add(Calendar.MONTH, 1);
-				}
-				else if(nextToDoCalendar.get(Calendar.DAY_OF_MONTH) == runDay){ //check the hour
-					long l1 = System.currentTimeMillis();
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
-					long diff = nextToDoCalendar.getTimeInMillis() - l1;
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
-					if(diff < 0)
-						nextToDoCalendar.add(Calendar.MONTH, 1);
-				}
-				if(runDay == 32){ //last day
-					nextToDoCalendar.set(Calendar.DAY_OF_MONTH, 1);
-					nextToDoCalendar.add(Calendar.MONTH, 1); //go to the 1'st of the next month
-					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1); //go back to the last day of the previous month
-				}
-				else
-					nextToDoCalendar.set(Calendar.DAY_OF_MONTH, runDay);
-				//set the hour:min
-				nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour);
-			}
-			else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_YEAR){
-				if(nextToDoCalendar.get(Calendar.MONTH) > runMonth || 
-						(nextToDoCalendar.get(Calendar.MONTH) == runMonth && nextToDoCalendar.get(Calendar.DAY_OF_MONTH) > runDay)){
-					nextToDoCalendar.add(Calendar.YEAR, 1);
-				}
-				else if(nextToDoCalendar.get(Calendar.MONTH) == runMonth && nextToDoCalendar.get(Calendar.DAY_OF_MONTH) == runDay){
-					long l1 = System.currentTimeMillis();
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
-					long diff = nextToDoCalendar.getTimeInMillis() - l1;
-					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
-					if(diff < 0)
-						nextToDoCalendar.add(Calendar.YEAR, 1);
-				}
-				nextToDoCalendar.set(Calendar.MONTH, runMonth);
-				nextToDoCalendar.set(Calendar.DAY_OF_MONTH, runDay);
-				nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour);
-			}
-		}
-
-
-		return nextToDoCalendar.getTimeInMillis() / 1000;
-	}
+//	private long calculateNextToDoTime(long taskId, Cursor currentTask){
+////		Calendar refCalendar = Calendar.getInstance();
+//		Calendar nextToDoCalendar = Calendar.getInstance();
+//		Cursor lastTodoCursor = null; //base time for calculating next run time
+//		String todoSelectCondition = "";
+//		String[] todoSelectArgs = null;
+//		String todoSelectOrderBy = "";
+//		int frequencyType = currentTask.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS);
+//		int timeFrequency = currentTask.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCY_POS);
+////		int runDay = currentTask.getInt(MainDbAdapter.TASK_COL_RUNDAY_POS);
+////		int runMonth = currentTask.getInt(MainDbAdapter.TASK_COL_RUNMONTH_POS);
+//		long currentTaskRunHour = currentTask.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000;
+//		
+//		
+//		//select the last todo
+//		todoSelectCondition = MainDbAdapter.isActiveCondition
+//				+ " AND " + MainDbAdapter.TODO_COL_TASK_ID_NAME + " = ? ";
+//		todoSelectArgs = new String[1];
+//		todoSelectArgs[0] = Long.toString(taskId);
+//		todoSelectOrderBy = MainDbAdapter.TODO_COL_DUEDATE_NAME + " DESC";
+//		lastTodoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelectCondition, todoSelectArgs, null, null, todoSelectOrderBy);
+//		
+//		if(lastTodoCursor.moveToNext()){ //just add the recurrence period to the last todo
+//			nextToDoCalendar.setTimeInMillis(lastTodoCursor.getLong(MainDbAdapter.TODO_COL_DUEDATE_POS) * 1000);
+//			if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_WEEK){
+//				nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, timeFrequency);
+//			}
+//			else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH){
+//				if(runDay == 32){ //last day of the month
+//					nextToDoCalendar.set(Calendar.DAY_OF_MONTH, 1);
+//					nextToDoCalendar.add(Calendar.MONTH, timeFrequency + 1);
+//					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1); //go back to the last day of the previous month
+//				}
+//				else
+//					nextToDoCalendar.add(Calendar.MONTH, timeFrequency);
+//			}
+//			else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_YEAR){
+//				nextToDoCalendar.add(Calendar.YEAR, timeFrequency);
+//			}
+//			lastTodoCursor.close();
+//		}
+//		else{ //this is the first todo
+//			lastTodoCursor.close();
+//			nextToDoCalendar = Calendar.getInstance();
+//			nextToDoCalendar.set(Calendar.HOUR_OF_DAY, 0);
+//			nextToDoCalendar.set(Calendar.MINUTE, 0);
+//			nextToDoCalendar.set(Calendar.SECOND, 1);
+//			nextToDoCalendar.set(Calendar.MILLISECOND, 0);
+//			if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_WEEK){
+//				if(nextToDoCalendar.get(Calendar.DAY_OF_WEEK) > runDay)
+//					nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, 1);
+//				else if(nextToDoCalendar.get(Calendar.DAY_OF_WEEK) == runDay){ //check the hour
+//					long l1 = System.currentTimeMillis();
+//					
+//					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
+//					long diff = nextToDoCalendar.getTimeInMillis() - l1;
+//					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
+//					if(diff < 0)
+//						nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, 1);
+//				}
+//				nextToDoCalendar.set(Calendar.DAY_OF_WEEK, runDay);
+//				//set the hour:min
+//				nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour);
+//			}
+//			else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH){
+//				if(nextToDoCalendar.get(Calendar.DAY_OF_MONTH) > runDay){
+//					nextToDoCalendar.add(Calendar.MONTH, 1);
+//				}
+//				else if(nextToDoCalendar.get(Calendar.DAY_OF_MONTH) == runDay){ //check the hour
+//					long l1 = System.currentTimeMillis();
+//					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
+//					long diff = nextToDoCalendar.getTimeInMillis() - l1;
+//					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
+//					if(diff < 0)
+//						nextToDoCalendar.add(Calendar.MONTH, 1);
+//				}
+//				if(runDay == 32){ //last day
+//					nextToDoCalendar.set(Calendar.DAY_OF_MONTH, 1);
+//					nextToDoCalendar.add(Calendar.MONTH, 1); //go to the 1'st of the next month
+//					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1); //go back to the last day of the previous month
+//				}
+//				else
+//					nextToDoCalendar.set(Calendar.DAY_OF_MONTH, runDay);
+//				//set the hour:min
+//				nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour);
+//			}
+//			else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_YEAR){
+//				if(nextToDoCalendar.get(Calendar.MONTH) > runMonth || 
+//						(nextToDoCalendar.get(Calendar.MONTH) == runMonth && nextToDoCalendar.get(Calendar.DAY_OF_MONTH) > runDay)){
+//					nextToDoCalendar.add(Calendar.YEAR, 1);
+//				}
+//				else if(nextToDoCalendar.get(Calendar.MONTH) == runMonth && nextToDoCalendar.get(Calendar.DAY_OF_MONTH) == runDay){
+//					long l1 = System.currentTimeMillis();
+//					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour); //just for comparison
+//					long diff = nextToDoCalendar.getTimeInMillis() - l1;
+//					nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() - currentTaskRunHour); //revert to initial value
+//					if(diff < 0)
+//						nextToDoCalendar.add(Calendar.YEAR, 1);
+//				}
+//				nextToDoCalendar.set(Calendar.MONTH, runMonth);
+//				nextToDoCalendar.set(Calendar.DAY_OF_MONTH, runDay);
+//				nextToDoCalendar.setTimeInMillis(nextToDoCalendar.getTimeInMillis() + currentTaskRunHour);
+//			}
+//		}
+//
+//
+//		return nextToDoCalendar.getTimeInMillis() / 1000;
+//	}
 }
