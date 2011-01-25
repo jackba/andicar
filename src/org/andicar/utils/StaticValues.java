@@ -95,7 +95,7 @@ public class StaticValues
     public static final int DIALOG_REPORT_OPTIONS = 3;
     public static final int DIALOG_DATE_FROM_PICKER = 4;
     public static final int DIALOG_DATE_TO_PICKER = 5;
-    public static final int DIALOG_TIME_PICKER2 = 6;
+//    public static final int DIALOG_TIME_PICKER2 = 6;
     public static final int DIALOG_TASK_CAR_LINK = 7;
 
     public static final int NOTIF_UPDATECHECK_ID = 0;
