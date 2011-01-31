@@ -33,7 +33,6 @@ import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.service.TodoManagementService;
 import org.andicar.service.UpdateCheckService;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
@@ -383,9 +382,6 @@ public class MainActivity extends BaseActivity {
 				}
 			}
 
-			Intent intent = new Intent(this, TodoManagementService.class);
-			startService(intent);
-			
 		} catch (Exception e) {
 			String logFile = "startup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);

@@ -294,9 +294,9 @@
     <string name="BPartnerEditActivity_LocationsHeaderCaption">"Locations"</string>
 
     <string name="TaskEditActivity_OneTime">"One time"</string>
-    <string name="TaskEditActivity_Recurent">"Recurent"</string>
-    <string name="TaskEditActivity_RecurentEveryLabel">"Every"</string>
-    <string name="TaskEditActivity_RecurentfrequencyLabel">"Frequency"</string>
+    <string name="TaskEditActivity_Recurrent">"Recurrent"</string>
+    <string name="TaskEditActivity_RecurrentEveryLabel">"Every"</string>
+    <string name="TaskEditActivity_RecurrentFrequencyLabel">"Frequency"</string>
     <string name="TaskEditActivity_FirstRunDependOnCar">"Different starting time for each linked car"</string>
     <string name="TaskEditActivity_TimeDriven">"Time"</string>
     <string name="TaskEditActivity_Scheduled">"Scheduled for:"</string>
@@ -306,7 +306,7 @@
     <string name="TaskEditActivity_FirstMileageRunExplanation">"The starting mileage will be specified for each linked car"</string>
     <string name="TaskEditActivity_ReminderStartLabel">"Start reminder before"</string>
     <string name="TaskEditActivity_LinkedCarsLabel">"Linked cars"</string>
-    <string name="TaskEditActivity_MileageUOMText">"mi or km (depending on car)"</string>
+    <string name="TaskEditActivity_MileageUOMText">"mi or km (depending on car definition)"</string>
     <string name="TaskEditActivity_FillMileage">"Fill mileage!"</string>
     <string name="TaskEditActivity_FillFrequency">"Fill frequency!"</string>
     <string name="TaskEditActivity_LinkedCarsOptionsHelp">"Long press on a car for more options"</string>
@@ -315,8 +315,8 @@
     <string name="TaskEditActivity_NoCarsLinkedMsg">"No active car exists with current mileage smaller than the task mileage!\nPlease increase the mileage of the task."</string>
     <string name="TaskEditActivity_StartingTimeInFutureMsg">"The starting time must be in the future!"</string>
     <string name="TaskEditActivity_StartingTimeLbl">"Starting time:"</string>
-    <string name="TaskEditActivity_MiOrKm">"mi or km"</string>
-    
+    <string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"Mileage frequency must be bigger than the reminder."</string>
+        
     <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
     <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>
     <string name="TaskCarDialogActivity_Title">"Link car to task"</string>

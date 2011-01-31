@@ -226,7 +226,7 @@ public class GPSTrackController extends BaseActivity {
 	   if(isCreateMileage){
 		   llIndexStartZone.setVisibility(View.VISIBLE);
 	       try{
-	       		BigDecimal startIndex = mDbAdapter.getMileageStartIndex(mCarId);
+	       		BigDecimal startIndex = mDbAdapter.getCarCurrentIndex(mCarId);
 	       		if(startIndex != null){
 	       			etIndexStart.setText(Utils.numberToString(startIndex, false, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
 	       		}
