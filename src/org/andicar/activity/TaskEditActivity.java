@@ -24,6 +24,7 @@ import java.util.Calendar;
 import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.TaskCarLinkDataBinder;
+import org.andicar.service.TodoManagementService;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
@@ -76,10 +77,12 @@ public class TaskEditActivity extends EditActivityBase {
 
 	private Spinner spnTaskType = null;
 	private Spinner spnScheduleFrequency = null;
-    private Spinner spnLinkDialogCar;
+    private Spinner spnLinkDialogCar = null;
+    private Spinner spnLastDayMonth = null;
 
 	private TextView tvMileageLabelEvery = null;
 	private TextView tvFirstTimeRunExplanation = null;
+	private TextView tvFirstMileageRunExplanation = null;
 	private TextView tvOr = null;
 	private TextView tvOrLastDay = null;
 	private TextView tvLinkCarDialogFirstRunDate = null;
@@ -198,19 +201,22 @@ public class TaskEditActivity extends EditActivityBase {
 			mRecurencyTypeId = c.getLong(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS);
 			spnScheduleFrequency.setSelection( ((Long)mRecurencyTypeId).intValue());
 			
-			Long startingTime = c.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000;
-			if(!isRecurent){
-	            initDateTime(startingTime);
-			}
-			else{
-				if(startingTime == 0){
+			Long startingTimeInMilis = c.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000;
+			if(isTimingEnabled){
+	            initDateTime(startingTimeInMilis);
+//				if(startingTimeInMilis < StaticValues.ONE_DAY_IN_MILISECONDS){
+	            if(mcalDateTime.get(Calendar.YEAR) == 1970){
 					ckOnLastDay.setChecked(true);
-					initDateTime(System.currentTimeMillis() + StaticValues.ONE_DAY_IN_MILISECONDS);
+					spnLastDayMonth.setSelection(mcalDateTime.get(Calendar.MONTH));
+					initTimeOnly = true;
 				}
 				else{
-					initDateTime(startingTime);
+					initTimeOnly = false;
 				}
+				initDateTime(startingTimeInMilis);
 			}
+			else
+				initDateTime(System.currentTimeMillis() + StaticValues.ONE_DAY_IN_MILISECONDS);
 			
 			if(c.getString(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS) != null)
 				etTimeReminder.setText(c.getString(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
@@ -272,6 +278,7 @@ public class TaskEditActivity extends EditActivityBase {
 
 		spnScheduleFrequency = (Spinner) findViewById(R.id.spnScheduleFrequency);
 		spnScheduleFrequency.setOnItemSelectedListener(spnScheduleFrequencyOnItemSelectedListener);
+		spnLastDayMonth = (Spinner) findViewById(R.id.spnLastDayMonth);
 		
 		ckOnLastDay = (CheckBox)findViewById(R.id.ckOnLastDay);
 
@@ -289,6 +296,8 @@ public class TaskEditActivity extends EditActivityBase {
 		
 		llLinkedCarsList = (LinearLayout)findViewById(R.id.llLinkedCarsList);
 		lvLinkedCarsList = (ListView)findViewById(R.id.lvLinkedCarsList);
+		
+		tvFirstMileageRunExplanation = (TextView)findViewById(R.id.tvFirstMileageRunExplanation);
 	}
 
 	private void initControls() {
@@ -404,24 +413,44 @@ public class TaskEditActivity extends EditActivityBase {
 			return;
 		}
 		
-		if(isMileageEnabled && 
-				(etMileage.getText().toString() == null || etMileage.getText().toString().length() == 0)){
-			Toast toast = Toast.makeText(getApplicationContext(),
-					mResource.getString(R.string.TaskEditActivity_FillMileage), Toast.LENGTH_SHORT);
-			toast.show();
-			etMileage.requestFocus();
-			saveSuccess = false;
-			return;
+		if(isMileageEnabled){ 
+			if(etMileage.getText().toString() == null || etMileage.getText().toString().length() == 0 
+					|| Integer.parseInt(etMileage.getText().toString()) == 0){
+				Toast toast = Toast.makeText(getApplicationContext(),
+						mResource.getString(R.string.TaskEditActivity_FillMileage), Toast.LENGTH_SHORT);
+				toast.show();
+				etMileage.requestFocus();
+				saveSuccess = false;
+				return;
+			}
+			if(etReminderMileage.getText().toString() == null || etReminderMileage.getText().toString().length() == 0){
+				etReminderMileage.setText("0");
+			}
+			
+			if(Integer.parseInt(etMileage.getText().toString()) < Integer.parseInt(etReminderMileage.getText().toString())){
+				Toast toast = Toast.makeText(getApplicationContext(),
+						mResource.getString(R.string.TaskEditActivity_MileageFrequencySmallerThanReminder), Toast.LENGTH_SHORT);
+				toast.show();
+				etMileage.requestFocus();
+				saveSuccess = false;
+				return;
+			}
+
 		}
 
-		if(isTimingEnabled && isRecurent && 
-				(etFrequency.getText().toString() == null || etFrequency.getText().toString().length() == 0)){
-			Toast toast = Toast.makeText(getApplicationContext(),
-					mResource.getString(R.string.TaskEditActivity_FillFrequency), Toast.LENGTH_SHORT);
-			toast.show();
-			etFrequency.requestFocus();
-			saveSuccess = false;
-			return;
+		if(isTimingEnabled && isRecurent){
+			if(etFrequency.getText().toString() == null || etFrequency.getText().toString().length() == 0
+						|| Integer.parseInt(etFrequency.getText().toString()) == 0){
+				Toast toast = Toast.makeText(getApplicationContext(),
+						mResource.getString(R.string.TaskEditActivity_FillFrequency), Toast.LENGTH_SHORT);
+				toast.show();
+				etFrequency.requestFocus();
+				saveSuccess = false;
+				return;
+			}
+			if(etTimeReminder.getText().toString() == null || etTimeReminder.getText().toString().length() == 0){
+				etTimeReminder.setText("0");
+			}
 		}
 
 		//at least one linked car required
@@ -457,13 +486,27 @@ public class TaskEditActivity extends EditActivityBase {
 		data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (isDiffStartingTime ? "Y" : "N"));
 		data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCY_NAME, etFrequency.getText().toString());
 		data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_NAME, mRecurencyTypeId);
-		if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH && ckOnLastDay.isChecked())
-			data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, 0);
-		else
-			data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
-		data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, etTimeReminder.getText().toString());
-		data.put(MainDbAdapter.TASK_COL_RUNMILEAGE_NAME, etMileage.getText().toString());
-		data.put(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_NAME, etReminderMileage.getText().toString());
+		if(isTimingEnabled){
+			if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH && ckOnLastDay.isChecked()){
+				mcalDateTime.set(Calendar.MONTH, spnLastDayMonth.getSelectedItemPosition());
+				data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mcalDateTime.getTimeInMillis() / 1000);
+			}
+			else
+				data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
+			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, etTimeReminder.getText().toString());
+		}
+		else{
+			data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, (Integer)null);
+			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, (Integer)null);
+		}
+		if(isMileageEnabled){
+			data.put(MainDbAdapter.TASK_COL_RUNMILEAGE_NAME, etMileage.getText().toString());
+			data.put(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_NAME, etReminderMileage.getText().toString());
+		}
+		else{
+			data.put(MainDbAdapter.TASK_COL_RUNMILEAGE_NAME, (Integer)null);
+			data.put(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_NAME, (Integer)null);
+		}
 		
 		if (mRowId == -1) {
 			mRowId = mDbAdapter.createRecord(MainDbAdapter.TASK_TABLE_NAME, data);
@@ -471,12 +514,12 @@ public class TaskEditActivity extends EditActivityBase {
 				saveSuccess = true;
 			else
 				saveSuccess = false;
-//			if(isFinishAfterSave){
-//				Intent intent = new Intent(this, TodoManagementService.class);
-//				intent.putExtra("TaskID", mRowId);
-//				this.startService(intent);
-//				finish();
-//			}
+			if(isFinishAfterSave){
+				Intent intent = new Intent(this, TodoManagementService.class);
+				intent.putExtra("TaskID", mRowId);
+				this.startService(intent);
+				finish();
+			}
 		} else {
 			int updResult = mDbAdapter.updateRecord(
 					MainDbAdapter.TASK_TABLE_NAME, mRowId, data);
@@ -491,12 +534,12 @@ public class TaskEditActivity extends EditActivityBase {
 				madError.show();
 			} else{
 				saveSuccess = true;
-//				if(isFinishAfterSave){
-//					Intent intent = new Intent(this, TodoManagementService.class);
-//					intent.putExtra("TaskID", mRowId);
-//					this.startService(intent);
-//					finish();
-//				}
+				if(isFinishAfterSave){
+					Intent intent = new Intent(this, TodoManagementService.class);
+					intent.putExtra("TaskID", mRowId);
+					this.startService(intent);
+					finish();
+				}
 			}
 		}
 		//delete existent linked cars if the configuration not support linked cars
@@ -925,15 +968,23 @@ public class TaskEditActivity extends EditActivityBase {
 				}
 				else{
 					tvFirstTimeRunExplanation.setVisibility(View.GONE);
-						if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH
-								&& ckOnLastDay.isChecked()){
-							llStartingTime.setVisibility(View.GONE);
-							tvOrLastDay.setVisibility(View.GONE);
-						}
-						else{
-							llStartingTime.setVisibility(View.VISIBLE);
-							tvOrLastDay.setVisibility(View.VISIBLE);
-						}
+					llStartingTime.setVisibility(View.VISIBLE);
+					if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH
+							&& ckOnLastDay.isChecked()){
+						initTimeOnly = true;
+						initDateTime(mlDateTimeInSeconds * 1000);
+						spnLastDayMonth.setVisibility(View.VISIBLE);
+//						initTimeOnly = false;
+						btnPickDate.setVisibility(View.GONE);
+						tvOrLastDay.setVisibility(View.GONE);
+					}
+					else{
+						spnLastDayMonth.setVisibility(View.GONE);
+						initTimeOnly = false;
+						initDateTime(System.currentTimeMillis() + StaticValues.ONE_DAY_IN_MILISECONDS);
+						btnPickDate.setVisibility(View.VISIBLE);
+						tvOrLastDay.setVisibility(View.VISIBLE);
+					}
 				}
 				if(isDiffStartingTime){
 					llLinkedCarsZone.setVisibility(View.VISIBLE);
@@ -968,6 +1019,7 @@ public class TaskEditActivity extends EditActivityBase {
 				llLinkedCarsHelp.setVisibility(View.VISIBLE);
 				llLinkedCarsList.setVisibility(View.VISIBLE);
 				isDeleteLinkedCarsOnSave = false;
+				tvFirstMileageRunExplanation.setVisibility(View.VISIBLE);
 			}
 			else{
 				llMileageZone.setVisibility(View.GONE);
@@ -976,10 +1028,12 @@ public class TaskEditActivity extends EditActivityBase {
 		else{ //one time
 			tvStartingTimeLbl.setText(R.string.GEN_On);
 			tvFirstTimeRunExplanation.setVisibility(View.GONE);
+			tvFirstMileageRunExplanation.setVisibility(View.GONE);
 			llRecurentTimeSettings.setVisibility(View.GONE);
 			llLastMonthDay.setVisibility(View.GONE);
 			ckIsDifferentStartingTime.setVisibility(View.GONE);
 			tvMileageLabelEvery.setVisibility(View.GONE);
+			tvTimeReminderUnitLbl.setText(R.string.GEN_Days);
 
 			if(isTimingEnabled){
 				llStartingTime.setVisibility(View.VISIBLE);

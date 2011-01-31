@@ -1500,7 +1500,7 @@ public class DB {
 			} else if (oldVersion == 356) {
 				upgradeDbTo357(db, oldVersion);
 			}
-			 upgradeDbTo357(db, oldVersion);
+//			 upgradeDbTo357(db, oldVersion);
 			// !!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
 
 			// create indexes

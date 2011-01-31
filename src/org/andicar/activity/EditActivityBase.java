@@ -54,6 +54,8 @@ public abstract class EditActivityBase extends BaseActivity {
     protected Bundle mBundleExtras = null;
     protected ImageButton btnOk = null;
     protected ImageButton btnCancel = null;
+    ImageButton btnPickDate = null;
+    protected ImageButton btnPickTime = null;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
@@ -104,6 +106,8 @@ public abstract class EditActivityBase extends BaseActivity {
         vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
         if(vgRoot != null)
         	setInputType(vgRoot);
+        btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
+        btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
 
     }
 
@@ -204,16 +208,15 @@ public abstract class EditActivityBase extends BaseActivity {
         mMinute = mcalDateTime.get(Calendar.MINUTE);
 
         tvDateTimeValue = (TextView) findViewById(R.id.tvDateTimeValue);
-        if(dateTimeInMiliseconds > 0){
+//        if(dateTimeInMiliseconds > 0){
 	        if(initTimeOnly)
 	        	updateTime();
             else if(initDateOnly)
             	updateDate();
 	        else
 	        	updateDateTime();
-        }
+//        }
 
-        ImageButton btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
         if(btnPickDate != null)
             btnPickDate.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
@@ -221,7 +224,6 @@ public abstract class EditActivityBase extends BaseActivity {
                 }
             });
 
-        ImageButton btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
         if(btnPickTime != null)
             btnPickTime.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
@@ -307,7 +309,7 @@ public abstract class EditActivityBase extends BaseActivity {
     }
 
     private void updateTime() {
-        mcalDateTime.set(2000, Calendar.JANUARY, 1, mHour, mMinute, 0);
+        mcalDateTime.set(1970, Calendar.JANUARY, 1, mHour, mMinute, 0);
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
         tvDateTimeValue.setText(
 				DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime()));

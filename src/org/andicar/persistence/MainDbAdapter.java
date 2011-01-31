@@ -1399,7 +1399,7 @@ public class MainDbAdapter extends DB
     /**
      * get the start index for a new mileage record
      */
-    public BigDecimal getMileageStartIndex(long mCarId){
+    public BigDecimal getCarCurrentIndex(long mCarId){
         Double mStartIndexStr = null;
         String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
                         "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
