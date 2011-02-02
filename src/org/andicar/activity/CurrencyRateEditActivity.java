@@ -179,12 +179,18 @@ public class CurrencyRateEditActivity extends EditActivityBase
     		strCurrencyFromCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
     		c.close();
     	}
+    	if(strCurrencyFromCode == null)
+    		strCurrencyFromCode = "";
+    	
     	c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
                 lCurrencyToId);
     	if(c != null){
     		strCurrencyToCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
     		c.close();
     	}
+    	if(strCurrencyToCode == null)
+    		strCurrencyToCode = "";
+    	
         tvCurrencyRateLabel.setText(mResource.getString(R.string.CurrencyRateEditActivity_CurrencyRateLabel).
                 replace("[#1]", strCurrencyFromCode));
         tvCurrencyRateToLabel.setText(strCurrencyToCode);
