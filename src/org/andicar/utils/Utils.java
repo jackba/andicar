@@ -226,7 +226,7 @@ public class Utils {
             c.close();
             reportDbAdapter.close();
 
-            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText + "\nSent by AndiCar (http://sites.google.com/site/andicarfree/)");
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText + "\nSent by AndiCar (http://www.andicar.org)");
         }
 
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
