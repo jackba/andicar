@@ -18,7 +18,6 @@
 package org.andicar.service;
 
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
@@ -30,6 +29,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Looper;
 
 /**
  * @author Miklos Keresztes
@@ -75,89 +75,29 @@ public class TodoManagementService extends Service {
 		
 		mDb = new MainDbAdapter(this);
 		
-		//#1 check todo's for none recurrent tasks
-		maintainNonRecurrentTasks();
-		//#2 check todo's for recurrent tasks
-		maintainRecurentTasks();
+		createTaskTodos();
 
 		mDb.close();
 		stopSelf();
 	}
 	
-	private void maintainNonRecurrentTasks(){
-		Cursor taskCursor = null;
-		Cursor todoCursor = null;
-		String taskSelection = null;
-		String taskScheduledFor = null; //time, mileage, both
-		String todoSelection = null;
-		String[] taskSelectionArgs = null;
-		String[] todoSelectionArgs = null;
-		ContentValues toDoContent = new ContentValues();
-		long taskId = -1;
-
-		taskSelection = MainDbAdapter.isActiveCondition + 
-				" AND " + MainDbAdapter.TASK_COL_ISRECURENT_NAME + "='N' ";
-		
-		if(mTaskID > 0){
-			taskSelection = taskSelection + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ?";
-			taskSelectionArgs = new String[1];
-			taskSelectionArgs[0] = Long.toString(mTaskID);
-		}
-		
-		taskCursor = mDb.query(MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.taskTableColNames, taskSelection, taskSelectionArgs, null, null, null);
-		
-		todoSelection = MainDbAdapter.TODO_COL_TASK_ID_NAME + "=? ";
-		todoSelectionArgs = new String[1];
-
-		while(taskCursor.moveToNext()){
-			taskId = taskCursor.getLong(MainDbAdapter.GEN_COL_ROWID_POS);
-			taskScheduledFor = taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS);
-			todoSelectionArgs[0] = Long.toString(taskId);
-			todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
-			toDoContent.clear();
-			toDoContent.put(MainDbAdapter.GEN_COL_NAME_NAME, taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS));
-			toDoContent.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME, taskCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
-			toDoContent.put(MainDbAdapter.TODO_COL_TASK_ID_NAME, taskId);
-
-			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_TIME) || taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH))
-				toDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS));
-			else
-				toDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, (Long)null);
-			
-			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) || taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH))
-				toDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS));
-			else
-				toDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, (Long)null);
-				
-			if(todoCursor.moveToNext()){ //the todo exist -> just update it
-				if(!todoCursor.getString(MainDbAdapter.TODO_COL_ISDONE_POS).equals("Y")) //if the todo is done leave it as is
-					mDb.updateRecord(MainDbAdapter.TODO_TABLE_NAME, todoCursor.getLong(MainDbAdapter.GEN_COL_ROWID_POS), toDoContent);
-			}
-			else{ //the todo does not exist -> create it
-				mDb.createRecord(MainDbAdapter.TODO_TABLE_NAME, toDoContent);
-			}
-			todoCursor.close();
-		}
-		taskCursor.close();
-		
-	}
-
-	private void maintainRecurentTasks(){
+	private void createTaskTodos(){
 		Cursor taskCursor = null;
 		Cursor todoCursor = null;
 		Cursor taskCarCursor = null;
 		String taskSelection = null;
 		String taskCarSelection = null;
 		String todoSelection = null;
-		String taskScheduledFor = null;
+//		String taskScheduledFor = null;
 		String[] taskSelectionArgs = null;
 		String[] todoSelectionArgs = null;
 		String[] taskCarSelectArgs = null;
 		int todoCount = 1;
-		boolean isDiffStartingTime = true;
+//		boolean isDiffStartingTime = true;
 
-		taskSelection = MainDbAdapter.isActiveCondition + 
-				" AND " + MainDbAdapter.TASK_COL_ISRECURENT_NAME + "='Y' ";
+//		taskSelection = MainDbAdapter.isActiveCondition + 
+//				" AND " + MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_NAME + "!='" + StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME + "'";
+		taskSelection = MainDbAdapter.isActiveCondition;
 		taskSelectionArgs = null;
 		if(mTaskID > 0){
 			taskSelection = taskSelection + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ?";
@@ -175,9 +115,9 @@ public class TodoManagementService extends Service {
 			
 			todoSelection = MainDbAdapter.TODO_COL_TASK_ID_NAME + "=? AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + "='N'";
 			
-			isDiffStartingTime = (taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS) != null &&
-					taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y"));
-			taskScheduledFor = taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS);
+//			isDiffStartingTime = (taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS) != null &&
+//					taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y"));
+//			taskScheduledFor = taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS);
 			if(mCarID > 0){
 				taskCarSelection = taskCarSelection + " AND " +
 						MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + " =? ";
@@ -191,44 +131,54 @@ public class TodoManagementService extends Service {
 				taskCarSelectArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
 			}
 			
-			if(isDiffStartingTime ||
-					taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) ||
-						taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){ //cars are linked to task
-				taskCarCursor = mDb.query(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.taskCarTableColNames, 
-						taskCarSelection, taskCarSelectArgs, null, null, null);
+			taskCarCursor = mDb.query(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.taskCarTableColNames, 
+					taskCarSelection, taskCarSelectArgs, null, null, null);
+			
+//			if(isDiffStartingTime ||
+//					taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) ||
+//						taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){ //cars are linked to task
+			if(taskCarCursor.getCount() > 0){//cars are linked to task
 				todoSelection = todoSelection + " AND " + MainDbAdapter.TODO_COL_CAR_ID_NAME + "=?";
 				todoSelectionArgs = new String[2];
 				todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
 				while(taskCarCursor.moveToNext()){
-					todoSelectionArgs[1] = taskCarCursor.getString(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS); 
+					if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) != StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME){
+						todoSelectionArgs[1] = taskCarCursor.getString(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS); 
+						todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
+						todoCount = todoCursor.getCount();
+						todoCursor.close();
+						if(todoCount < mTodoCount){
+							for( int i = todoCount; i < mTodoCount; i++){
+								createToDo(taskCursor, taskCarCursor);
+							}
+						}
+					}
+					else
+						createToDo(taskCursor, taskCarCursor);
+				}
+			}
+			else{
+				if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) != StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME){
+					todoSelectionArgs = new String[1];
+					todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
 					todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
 					todoCount = todoCursor.getCount();
 					todoCursor.close();
 					if(todoCount < mTodoCount){
 						for( int i = todoCount; i < mTodoCount; i++){
-							createNextRecurrentToDo(taskCursor, taskCarCursor);
+							createToDo(taskCursor, null);
 						}
 					}
 				}
-				taskCarCursor.close();
+				else
+					createToDo(taskCursor, null);
 			}
-			else{
-				todoSelectionArgs = new String[1];
-				todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
-				todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
-				todoCount = todoCursor.getCount();
-				todoCursor.close();
-				if(todoCount < mTodoCount){
-					for( int i = todoCount; i < mTodoCount; i++){
-						createNextRecurrentToDo(taskCursor, null);
-					}
-				}
-			}
+			taskCarCursor.close();
 		}
 		taskCursor.close();
 	}
 	
-	private void createNextRecurrentToDo(Cursor taskCursor, Cursor taskCarCursor){
+	private void createToDo(Cursor taskCursor, Cursor taskCarCursor){
 		Calendar nextToDoCalendar = Calendar.getInstance();
 		long nextToDoMileage = 0;
 		long firstRunMileage = 0;
@@ -289,24 +239,10 @@ public class TodoManagementService extends Service {
 				
 				//calculate the next todo date
 				nextToDoCalendar.setTimeInMillis(lastTodoCursor.getLong(MainDbAdapter.TODO_COL_DUEDATE_POS) * 1000);
-				if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_DAY){
-					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, timeFrequency);
-				}
-				else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_WEEK){
-					nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, timeFrequency);
-				}
-				else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH){
-					if(isLastDayOfMonth){ //last day of the month
-						nextToDoCalendar.set(Calendar.DAY_OF_MONTH, 1);
-						nextToDoCalendar.add(Calendar.MONTH, timeFrequency + 1); //go to the first day of the month
-						nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1); //go back to the last day of the previous month
-					}
-					else
-						nextToDoCalendar.add(Calendar.MONTH, timeFrequency);
-				}
-				else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_YEAR){
-					nextToDoCalendar.add(Calendar.YEAR, timeFrequency);
-				}
+
+				//set the calendar for next todo based on task definition
+				setNextToDoCalendar(nextToDoCalendar, frequencyType, timeFrequency, isLastDayOfMonth);
+				
 				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
 			}
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) ||
@@ -328,7 +264,7 @@ public class TodoManagementService extends Service {
 			
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE)){
 				if(taskCarCursor != null){
-					firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS) + mileageFrequency;
+					firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
 					carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
 					while(firstRunMileage <= carCurrentIndex)
 						firstRunMileage = firstRunMileage + mileageFrequency;
@@ -340,48 +276,51 @@ public class TodoManagementService extends Service {
 			else if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)
 					|| taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_TIME)){
 				
+				//at this point the nextToDoCalendar is initialized with the current time.
 				int currentYear = nextToDoCalendar.get(Calendar.YEAR);
+				int currentMonth = nextToDoCalendar.get(Calendar.MONTH);
+				int currentDay = nextToDoCalendar.get(Calendar.DAY_OF_MONTH);
+				nextToDoCalendar.add(Calendar.DAY_OF_YEAR, 1);
+				boolean isLastDayOfCurrentMonth = (currentMonth != nextToDoCalendar.get(Calendar.MONTH));
+				nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1);
+					
 				
 				if(taskCarCursor != null)
 					nextToDoCalendar.setTimeInMillis(taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000);
-				else
-					nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000);
+				else{
+					if(taskCursor.getString(MainDbAdapter.TASK_COL_STARTINGTIME_POS) != null)
+						nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000);
+					else
+						nextToDoCalendar.setTimeInMillis(System.currentTimeMillis());
+				}
 
-				//for recurrent tasks
-				
-				nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000);
 				boolean isLastDayOfMonth = (nextToDoCalendar.get(Calendar.YEAR) == 1970); 
 				nextToDoCalendar.set(Calendar.YEAR, currentYear);
-				
-//				nextToDoCalendar.set(Calendar.HOUR, 0);
-//				nextToDoCalendar.set(Calendar.MINUTE, 0);
-//				nextToDoCalendar.set(Calendar.SECOND, 0);
+
+				if(isLastDayOfMonth){
+					if(isLastDayOfCurrentMonth)
+						//wee need to compare the hour:minute of the task with the current hour:minute
+						nextToDoCalendar.set(Calendar.DAY_OF_MONTH, currentDay);
+					else
+						//wee not need to compare the hour:minute of the task with the current hour:minute
+						nextToDoCalendar.set(Calendar.DAY_OF_MONTH, currentDay + 1);
+					
+					if(nextToDoCalendar.getTimeInMillis() > System.currentTimeMillis()){
+						//set the first run at the end of the month specified in the task definition
+						nextToDoCalendar.set(Calendar.DAY_OF_MONTH, 1);
+						nextToDoCalendar.add(Calendar.MONTH, 1); //go to the first day of the next month
+						nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1); //go back to the last day of the previous month
+					}
+				}
 				while(nextToDoCalendar.getTimeInMillis() < System.currentTimeMillis()){
-					if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_DAY){
-						nextToDoCalendar.add(Calendar.DAY_OF_YEAR, timeFrequency);
-					}
-					else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_WEEK){
-						nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, timeFrequency);
-					}
-					else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH){
-						if(isLastDayOfMonth){ //last day of the month
-							nextToDoCalendar.set(Calendar.DAY_OF_MONTH, 1);
-							nextToDoCalendar.add(Calendar.MONTH, timeFrequency + 1); //go to the first day of the month
-							nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1); //go back to the last day of the previous month
-						}
-						else
-							nextToDoCalendar.add(Calendar.MONTH, timeFrequency);
-					}
-					else if(frequencyType == StaticValues.TASK_SCHEDULED_FREQTYPE_YEAR){
-						nextToDoCalendar.add(Calendar.YEAR, timeFrequency);
-					}
+					setNextToDoCalendar(nextToDoCalendar, frequencyType, timeFrequency, isLastDayOfMonth);
 				}
 				
 				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
 
 				if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 					if(taskCarCursor != null){
-						firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS) + mileageFrequency;
+						firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
 						carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
 						while(firstRunMileage <= carCurrentIndex)
 							firstRunMileage = firstRunMileage + mileageFrequency;
@@ -395,5 +334,26 @@ public class TodoManagementService extends Service {
 		}
 		mDb.createRecord(MainDbAdapter.TODO_TABLE_NAME, nextToDoContent);
 		lastTodoCursor.close();
+	}
+
+	private void setNextToDoCalendar(Calendar nextToDoCalendar, int frequencyType, int timeFrequency, boolean isLastDayOfMonth) {
+		if(frequencyType == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
+			nextToDoCalendar.add(Calendar.DAY_OF_YEAR, timeFrequency);
+		}
+		else if(frequencyType == StaticValues.TASK_TIMEFREQUENCYTYPE_WEEKLY){
+			nextToDoCalendar.add(Calendar.WEEK_OF_YEAR, timeFrequency);
+		}
+		else if(frequencyType == StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY){
+			if(isLastDayOfMonth){ //last day of the month
+				nextToDoCalendar.set(Calendar.DAY_OF_MONTH, 1);
+				nextToDoCalendar.add(Calendar.MONTH, timeFrequency + 1); //go to the first day of the next month
+				nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1); //go back to the last day of the previous month
+			}
+			else
+				nextToDoCalendar.add(Calendar.MONTH, timeFrequency);
+		}
+		else if(frequencyType == StaticValues.TASK_TIMEFREQUENCYTYPE_YEARLY){
+			nextToDoCalendar.add(Calendar.YEAR, timeFrequency);
+		}
 	}
 }

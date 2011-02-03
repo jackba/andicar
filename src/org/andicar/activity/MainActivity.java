@@ -33,7 +33,6 @@ import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.service.UpdateCheckService;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
@@ -338,24 +337,23 @@ public class MainActivity extends BaseActivity {
 			Long currentTime = System.currentTimeMillis();
 			Long lastTime = mPreferences.getLong("lastUpdateCheckTime", 0);
 			SharedPreferences.Editor editor = mPreferences.edit();
-			long oneDayInMilis = 86400000; //(24 * 60 * 60 * 1000);
-			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
-				if ((lastTime + oneDayInMilis) < currentTime) {
-					Intent intent = new Intent(this, UpdateCheckService.class);
-					this.startService(intent);
-					editor.putLong("lastUpdateCheckTime", lastTime);
-					editor.commit();
-				}
-			}
+//			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
+//				if ((lastTime + oneDayInMilis) < currentTime) {
+//					Intent intent = new Intent(this, UpdateCheckService.class);
+//					this.startService(intent);
+//					editor.putLong("lastUpdateCheckTime", lastTime);
+//					editor.commit();
+//				}
+//			}
 			
 			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
 			if(isJustInstalled){
 				//show the question above 10 days 
-				editor.putLong("lastAddOnCheckTime", currentTime - (5 * oneDayInMilis));
+				editor.putLong("lastAddOnCheckTime", currentTime - (5 * StaticValues.ONE_DAY_IN_MILISECONDS));
 				editor.commit();
 			}
 			else{
-				if(lastTime + (15 * oneDayInMilis) < currentTime && 
+				if(lastTime + (15 * StaticValues.ONE_DAY_IN_MILISECONDS) < currentTime && 
 						!ServiceSubscription.isAddOnsUsed(mDbAdapter)){
 					editor.putLong("lastAddOnCheckTime", currentTime);
 					editor.commit();
