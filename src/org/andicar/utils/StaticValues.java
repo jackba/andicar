@@ -158,10 +158,11 @@ public class StaticValues
     public static final String TASK_SCHEDULED_FOR_MILEAGE = "M";
     public static final String TASK_SCHEDULED_FOR_BOTH = "B";
     
-    public static final int TASK_SCHEDULED_FREQTYPE_DAY = 0;
-    public static final int TASK_SCHEDULED_FREQTYPE_WEEK = 1;
-    public static final int TASK_SCHEDULED_FREQTYPE_MONTH = 2;
-    public static final int TASK_SCHEDULED_FREQTYPE_YEAR = 3;
+    public static final int TASK_TIMEFREQUENCYTYPE_ONETIME = 0;
+    public static final int TASK_TIMEFREQUENCYTYPE_DAILY = 1;
+    public static final int TASK_TIMEFREQUENCYTYPE_WEEKLY = 2;
+    public static final int TASK_TIMEFREQUENCYTYPE_MONTHLY = 3;
+    public static final int TASK_TIMEFREQUENCYTYPE_YEARLY = 4;
     
     public static final long ONE_DAY_IN_MILISECONDS = 86400000;
 }

@@ -74,8 +74,7 @@
     </string>
 
     <string name="AddOn_SubscriptionValidity">
-    	The subscription is valid for your current database instance or 
-    	for a database restored from a backup created AFTER the subscription process.
+    	The subscription is valid for your current database instance.
     	\nYou should create a backup immediately after the subscription process!     
     </string>
     <string name="AddOn_Backup_LongDescription">

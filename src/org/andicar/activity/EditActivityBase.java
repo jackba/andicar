@@ -199,6 +199,7 @@ public abstract class EditActivityBase extends BaseActivity {
    }
 
    protected void initDateTime(long dateTimeInMiliseconds){
+	   
         mlDateTimeInSeconds = dateTimeInMiliseconds / 1000;
         mcalDateTime.setTimeInMillis(dateTimeInMiliseconds);
         mYear = mcalDateTime.get(Calendar.YEAR);

@@ -125,7 +125,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private int mLinkDialogStartingHour;
 	private int mLinkDialogStartingMinute;
 
-	private long mRecurencyTypeId = -1;
+	private long mTimeFrequencyTypeId = -1;
 	private long mlStartingDateTimeInSeconds;
 	private long mLongClickId;
 	private boolean isDiffStartingTime = true;
@@ -171,8 +171,7 @@ public class TaskEditActivity extends EditActivityBase {
 					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
 					MainDbAdapter.isActiveCondition, null,
 					MainDbAdapter.GEN_COL_NAME_NAME, lTaskTypeId, false);
-			
-			isRecurent = c.getString(MainDbAdapter.TASK_COL_ISRECURENT_POS).equals("Y");
+			isRecurent = (c.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) != StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME);
 			if(isRecurent)
 				rbRecurent.setChecked(true);
 			else
@@ -195,13 +194,18 @@ public class TaskEditActivity extends EditActivityBase {
 				isTimingEnabled = false;
 				rbMileageDriven.setChecked(true);
 			}
-			ckIsDifferentStartingTime.setChecked(c.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y"));
-			isDiffStartingTime = c.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y");
-			etFrequency.setText(c.getString(MainDbAdapter.TASK_COL_TIMEFREQUENCY_POS));
-			mRecurencyTypeId = c.getLong(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS);
-			spnScheduleFrequency.setSelection( ((Long)mRecurencyTypeId).intValue());
-			
-			Long startingTimeInMilis = c.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000;
+			if(c.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS) != null){
+				ckIsDifferentStartingTime.setChecked(c.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y"));
+				isDiffStartingTime = c.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y");
+				etFrequency.setText(c.getString(MainDbAdapter.TASK_COL_TIMEFREQUENCY_POS));
+			}
+			mTimeFrequencyTypeId = c.getLong(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS);
+			spnScheduleFrequency.setSelection( ((Long)mTimeFrequencyTypeId).intValue() - 1);
+			Long startingTimeInMilis;
+			if(c.getString(MainDbAdapter.TASK_COL_STARTINGTIME_POS) != null)
+				startingTimeInMilis = c.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000;
+			else
+				startingTimeInMilis = System.currentTimeMillis();
 			if(isTimingEnabled){
 	            initDateTime(startingTimeInMilis);
 //				if(startingTimeInMilis < StaticValues.ONE_DAY_IN_MILISECONDS){
@@ -372,9 +376,9 @@ public class TaskEditActivity extends EditActivityBase {
     protected AdapterView.OnItemClickListener mLinkedCarListItemClickListener =
         new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> av, View view, int position, long id) {
-    			isFinishAfterSave = false;
-    			saveData();
-    			isFinishAfterSave = true;
+//    			isFinishAfterSave = false;
+//    			saveData();
+//    			isFinishAfterSave = true;
     			mPrefEditor.putLong("TaskCarLinkId", id);
     			mPrefEditor.commit();
                 showDialog(StaticValues.DIALOG_TASK_CAR_LINK);
@@ -481,22 +485,33 @@ public class TaskEditActivity extends EditActivityBase {
 
 		data.put(MainDbAdapter.TASK_COL_TASKTYPE_ID_NAME, spnTaskType.getSelectedItemId());
 		
-		data.put(MainDbAdapter.TASK_COL_ISRECURENT_NAME, (isRecurent ? "Y" : "N"));
 		data.put(MainDbAdapter.TASK_COL_SCHEDULEDFOR_NAME, mScheduledFor);
-		data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (isDiffStartingTime ? "Y" : "N"));
-		data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCY_NAME, etFrequency.getText().toString());
-		data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_NAME, mRecurencyTypeId);
 		if(isTimingEnabled){
-			if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH && ckOnLastDay.isChecked()){
-				mcalDateTime.set(Calendar.MONTH, spnLastDayMonth.getSelectedItemPosition());
-				data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mcalDateTime.getTimeInMillis() / 1000);
+			if(isRecurent){
+				data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (isDiffStartingTime ? "Y" : "N"));
+				data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCY_NAME, etFrequency.getText().toString());
 			}
-			else
-				data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
+			else{
+				data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (String)null);
+				data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCY_NAME, (String)null);
+			}
+
+			data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_NAME, mTimeFrequencyTypeId);
+			if(isDiffStartingTime)
+				data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, (Long)null);
+			else{
+				if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY && ckOnLastDay.isChecked()){
+					mcalDateTime.set(Calendar.MONTH, spnLastDayMonth.getSelectedItemPosition());
+					data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mcalDateTime.getTimeInMillis() / 1000);
+				}
+				else
+					data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
+			}
 			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, etTimeReminder.getText().toString());
 		}
 		else{
 			data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, (Integer)null);
+			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, (Integer)null);
 			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, (Integer)null);
 		}
 		if(isMileageEnabled){
@@ -515,7 +530,7 @@ public class TaskEditActivity extends EditActivityBase {
 			else
 				saveSuccess = false;
 			if(isFinishAfterSave){
-				Intent intent = new Intent(this, TodoManagementService.class);
+                Intent intent = new Intent(this, TodoManagementService.class);
 				intent.putExtra("TaskID", mRowId);
 				this.startService(intent);
 				finish();
@@ -535,6 +550,13 @@ public class TaskEditActivity extends EditActivityBase {
 			} else{
 				saveSuccess = true;
 				if(isFinishAfterSave){
+					//final save => recreate the todos (delete existing & recreate)
+					String[] deleteArgs = {Long.toString(mRowId)};
+//	                mDbAdapter.deleteRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?", deleteArgs);
+	                mDbAdapter.deleteRecords(MainDbAdapter.TODO_TABLE_NAME, 
+	                		MainDbAdapter.TODO_COL_TASK_ID_NAME + " = ? AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + " = 'N'", 
+	                		deleteArgs);
+
 					Intent intent = new Intent(this, TodoManagementService.class);
 					intent.putExtra("TaskID", mRowId);
 					this.startService(intent);
@@ -643,6 +665,7 @@ public class TaskEditActivity extends EditActivityBase {
 		public void onCheckedChanged(RadioGroup arg0, int checkedId) {
 			if (checkedId == rbOneTime.getId()) {
 				isRecurent = false;
+				mTimeFrequencyTypeId = StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME;
 			} else { //
 				isRecurent = true;
 			}
@@ -786,14 +809,8 @@ public class TaskEditActivity extends EditActivityBase {
 	        
 			//we don't need here the task selection zone.
 			((LinearLayout) linkView.findViewById(R.id.llTaskZone)).setVisibility(View.GONE);
-//			spnLinkDialogTask = (Spinner) linkView.findViewById(R.id.spnTask);
-//			initSpinner(spnLinkDialogTask, MainDbAdapter.TASK_TABLE_NAME,
-//					MainDbAdapter.genColName,
-//					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-//					MainDbAdapter.isActiveCondition, null,
-//					MainDbAdapter.GEN_COL_NAME_NAME, 1, false);
 
-	        ImageButton btnPickDate = (ImageButton) linkView.findViewById(R.id.btnPickDate);
+			ImageButton btnPickDate = (ImageButton) linkView.findViewById(R.id.btnPickDate);
 	        if(btnPickDate != null)
 	        	btnPickDate.setOnClickListener(new View.OnClickListener() {
 	                public void onClick(View arg0) {
@@ -870,8 +887,22 @@ public class TaskEditActivity extends EditActivityBase {
 	    		data.put(MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
 	    		data.put(MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME, mRowId);
 	    		data.put(MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME, selectedCarId);
-	    		data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, mlStartingDateTimeInSeconds);
-	    		data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, etLinkedCarIndexStart.getText().toString());
+	    		if(isTimingEnabled){
+	    			if(!isDiffStartingTime|| !isRecurent)
+	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, mlDateTimeInSeconds);
+	    			else
+	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, mlStartingDateTimeInSeconds);
+	    		}
+	    		else
+	    			data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, (Long)null);
+	    		if(isMileageEnabled){
+	    			if(isRecurent)
+	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, etLinkedCarIndexStart.getText().toString());
+	    			else
+	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, etMileage.getText().toString());
+	    		}
+	    		else
+	    			data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, (Long)null);
 
 	    		long linkId = mPreferences.getLong("TaskCarLinkId", -1);
 	    		if(linkId == -1){ //new link
@@ -913,7 +944,8 @@ public class TaskEditActivity extends EditActivityBase {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			
-			mRecurencyTypeId = arg3;
+			mTimeFrequencyTypeId = arg3 + 1; //0 is one time
+			initDateTime(mlDateTimeInSeconds * 1000);
 			setSpecificLayout();
 		}
 
@@ -924,10 +956,24 @@ public class TaskEditActivity extends EditActivityBase {
 	protected CheckBox.OnCheckedChangeListener ckOnLastDayChecked = new CheckBox.OnCheckedChangeListener() {
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-			if(mRecurencyTypeId != StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH)
+			if(mTimeFrequencyTypeId != StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY)
 				return; //invalid
-			else
+			else{
+				if(isChecked){
+					initTimeOnly = true; //just the time because we know the day (last day of month)
+					initDateTime(mlDateTimeInSeconds * 1000);
+					initTimeOnly = false; //put back the default value
+				}
+				else{
+					initTimeOnly = false;
+					if(mcalDateTime.get(Calendar.YEAR) == 1970)
+						initDateTime(System.currentTimeMillis() + StaticValues.ONE_DAY_IN_MILISECONDS);
+					else
+						initDateTime(mlDateTimeInSeconds * 1000);
+				}
+				
 				setSpecificLayout();
+			}
 		}
 	};
 	
@@ -948,14 +994,14 @@ public class TaskEditActivity extends EditActivityBase {
 				ckIsDifferentStartingTime.setVisibility(View.VISIBLE);
 				llRecurentTimeSettings.setVisibility(View.VISIBLE);
 				llTimeReminder.setVisibility(View.VISIBLE);
-				if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_DAY){
+				if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
 					tvTimeReminderUnitLbl.setText(R.string.GEN_Minutes);
 				}
 				else{
 					tvTimeReminderUnitLbl.setText(R.string.GEN_Days);
 				}
 					
-				if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH
+				if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY
 						&&!isDiffStartingTime){
 					llLastMonthDay.setVisibility(View.VISIBLE);
 				}
@@ -969,19 +1015,14 @@ public class TaskEditActivity extends EditActivityBase {
 				else{
 					tvFirstTimeRunExplanation.setVisibility(View.GONE);
 					llStartingTime.setVisibility(View.VISIBLE);
-					if(mRecurencyTypeId == StaticValues.TASK_SCHEDULED_FREQTYPE_MONTH
+					if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY
 							&& ckOnLastDay.isChecked()){
-						initTimeOnly = true;
-						initDateTime(mlDateTimeInSeconds * 1000);
 						spnLastDayMonth.setVisibility(View.VISIBLE);
-//						initTimeOnly = false;
 						btnPickDate.setVisibility(View.GONE);
 						tvOrLastDay.setVisibility(View.GONE);
 					}
 					else{
 						spnLastDayMonth.setVisibility(View.GONE);
-						initTimeOnly = false;
-						initDateTime(System.currentTimeMillis() + StaticValues.ONE_DAY_IN_MILISECONDS);
 						btnPickDate.setVisibility(View.VISIBLE);
 						tvOrLastDay.setVisibility(View.VISIBLE);
 					}
@@ -1034,6 +1075,7 @@ public class TaskEditActivity extends EditActivityBase {
 			ckIsDifferentStartingTime.setVisibility(View.GONE);
 			tvMileageLabelEvery.setVisibility(View.GONE);
 			tvTimeReminderUnitLbl.setText(R.string.GEN_Days);
+			spnLastDayMonth.setVisibility(View.GONE);
 
 			if(isTimingEnabled){
 				llStartingTime.setVisibility(View.VISIBLE);
@@ -1087,9 +1129,9 @@ public class TaskEditActivity extends EditActivityBase {
     public boolean onContextItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case StaticValues.CONTEXT_MENU_EDIT_ID:
-    			isFinishAfterSave = false;
-    			saveData();
-    			isFinishAfterSave = true;
+//    			isFinishAfterSave = false;
+//    			saveData();
+//    			isFinishAfterSave = true;
     			mPrefEditor.putLong("TaskCarLinkId", mLongClickId);
     			mPrefEditor.commit();
     			if(saveSuccess)
@@ -1103,6 +1145,14 @@ public class TaskEditActivity extends EditActivityBase {
                 builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+            					String[] deleteArgs = {Long.toString(mLongClickId)};
+            					mDbAdapter.deleteRecords(MainDbAdapter.TODO_TABLE_NAME, 
+            	                		MainDbAdapter.TODO_COL_ISDONE_NAME + " = 'N' " + " AND " + 
+            	                		MainDbAdapter.TODO_COL_CAR_ID_NAME + " = " +
+            	                					"(SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + 
+            	                					" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME +
+            	                					" WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ? )",
+            	                		deleteArgs);
                                 int deleteResult = mDbAdapter.deleteRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, mLongClickId);
                                 if(deleteResult != -1) {
                                     madbErrorAlert.setMessage(mResource.getString(deleteResult));
@@ -1110,6 +1160,7 @@ public class TaskEditActivity extends EditActivityBase {
                                     madError.show();
                                 }
                                 else {
+                                	//also delete the existing todo's
                                     fillLinkedCarsData();
                                 }
                             }
