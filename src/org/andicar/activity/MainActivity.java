@@ -33,16 +33,13 @@ import org.andicar.activity.report.RefuelListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.service.UpdateCheckService;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -341,18 +338,18 @@ public class MainActivity extends BaseActivity {
 			Long lastTime = mPreferences.getLong("lastUpdateCheckTime", 0);
 			SharedPreferences.Editor editor = mPreferences.edit();
 			long oneDayInMilis = 86400000; //(24 * 60 * 60 * 1000);
-			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
-				if ((lastTime + oneDayInMilis) < currentTime) {
-					AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-					Intent intent = new Intent(this, UpdateCheckService.class);
-					PendingIntent pIntent = PendingIntent.getService(this, 0,
-							intent, PendingIntent.FLAG_CANCEL_CURRENT);
-					am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-							pIntent);
-					editor.putLong("lastUpdateCheckTime", lastTime);
-					editor.commit();
-				}
-			}
+//			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
+//				if ((lastTime + oneDayInMilis) < currentTime) {
+//					AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//					Intent intent = new Intent(this, UpdateCheckService.class);
+//					PendingIntent pIntent = PendingIntent.getService(this, 0,
+//							intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//					am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+//							pIntent);
+//					editor.putLong("lastUpdateCheckTime", lastTime);
+//					editor.commit();
+//				}
+//			}
 			
 			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
 //			if(lastTime + (30 * oneDayInMilis) < currentTime){
@@ -782,7 +779,7 @@ public class MainActivity extends BaseActivity {
 			Cursor c = null;
 			String fuelEffStr = mRes
 					.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
-			String lastFuelEffStr = "N/A";
+			String lastFuelEffStr = mRes.getString(R.string.MainActivity_StatisticsLastConsNoData);
 			String sql = "";
 			BigDecimal tmpFullRefuelIndex = null;
 			BigDecimal lastFullRefuelIndex = null;
@@ -1001,7 +998,8 @@ public class MainActivity extends BaseActivity {
 					.getString(R.string.MainActivity_StatisticsLastConsLabel)
 					+ lastFuelEffStr);
 		} else {
-			tvStatisticsLastFuelEff.setText("N/A");
+			tvStatisticsLastFuelEff.setText(mRes
+					.getString(R.string.MainActivity_StatisticsLastConsNoData));
 			tvStatisticsTotalExpenses.setText("N/A");
 			tvStatisticsMileageExpense.setText("N/A");
 		}
