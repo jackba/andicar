@@ -20,7 +20,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
-          android:versionCode="3562" 
+          android:versionCode="3563" 
           android:versionName="3.5.7 Beta"
           android:installLocation="internalOnly">
 <!-- 
