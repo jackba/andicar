@@ -1521,7 +1521,7 @@ public class MainActivity extends BaseActivity {
 		} else if (item.getItemId() == StaticValues.MENU_LOCALIZE_ID) {
 			startActivity(new Intent(
 					Intent.ACTION_VIEW,
-					Uri.parse("http://sites.google.com/site/andicarfree/localizing-andicar")));
+					Uri.parse("http://www.andicar.org/localizing-andicar")));
 		}
 		else if (item.getItemId() == StaticValues.MENU_TASKREMINDER_ID) {
 			startActivity(new Intent(this, TaskListActivity.class));
