@@ -131,7 +131,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private boolean isDiffStartingTime = true;
 	private boolean isTimingEnabled = true;
 	private boolean isMileageEnabled = true;
-	private boolean isRecurent = true;
+	private boolean isRecurrent = true;
 	private boolean isFinishAfterSave = true;
 	private boolean saveSuccess = true;
 	private boolean isDeleteLinkedCarsOnSave = false;
@@ -171,8 +171,8 @@ public class TaskEditActivity extends EditActivityBase {
 					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
 					MainDbAdapter.isActiveCondition, null,
 					MainDbAdapter.GEN_COL_NAME_NAME, lTaskTypeId, false);
-			isRecurent = (c.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) != StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME);
-			if(isRecurent)
+			isRecurrent = (c.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y"));
+			if(isRecurrent)
 				rbRecurent.setChecked(true);
 			else
 				rbOneTime.setChecked(true);
@@ -316,7 +316,7 @@ public class TaskEditActivity extends EditActivityBase {
     private void fillLinkedCarsData(){
 //        String selection = MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + "=?";
     	String firstRun = ""; 
-    	if(isRecurent){
+    	if(isRecurrent){
 			if(isTimingEnabled && isDiffStartingTime){
 				firstRun = "'" + mResource.getString(R.string.TaskCarEditActivity_StartDate) + " ' || " +
 						" '[#1]'";
@@ -442,7 +442,7 @@ public class TaskEditActivity extends EditActivityBase {
 
 		}
 
-		if(isTimingEnabled && isRecurent){
+		if(isTimingEnabled && isRecurrent){
 			if(etFrequency.getText().toString() == null || etFrequency.getText().toString().length() == 0
 						|| Integer.parseInt(etFrequency.getText().toString()) == 0){
 				Toast toast = Toast.makeText(getApplicationContext(),
@@ -466,7 +466,7 @@ public class TaskEditActivity extends EditActivityBase {
 				return;
 			}
 		}
-		if(!isRecurent && isTimingEnabled){//check if the starting time is in the future
+		if(!isRecurrent && isTimingEnabled){//check if the starting time is in the future
 			if(mlDateTimeInSeconds * 1000 < System.currentTimeMillis()){
 				Toast toast = Toast.makeText(getApplicationContext(),
 						mResource.getString(R.string.TaskEditActivity_StartingTimeInFutureMsg), Toast.LENGTH_SHORT);
@@ -484,29 +484,30 @@ public class TaskEditActivity extends EditActivityBase {
 				.getText().toString());
 
 		data.put(MainDbAdapter.TASK_COL_TASKTYPE_ID_NAME, spnTaskType.getSelectedItemId());
-		
 		data.put(MainDbAdapter.TASK_COL_SCHEDULEDFOR_NAME, mScheduledFor);
+		data.put(MainDbAdapter.TASK_COL_ISRECURRENT_NAME, (isRecurrent ? "Y" : "N"));
 		if(isTimingEnabled){
-			if(isRecurent){
+			if(isRecurrent){
 				data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (isDiffStartingTime ? "Y" : "N"));
 				data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCY_NAME, etFrequency.getText().toString());
+				if(isDiffStartingTime)
+					data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, (Long)null);
+				else{
+					if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY && ckOnLastDay.isChecked()){
+						mcalDateTime.set(Calendar.MONTH, spnLastDayMonth.getSelectedItemPosition());
+						data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mcalDateTime.getTimeInMillis() / 1000);
+					}
+					else
+						data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
+				}
 			}
 			else{
 				data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (String)null);
 				data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCY_NAME, (String)null);
+				data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
 			}
 
 			data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_NAME, mTimeFrequencyTypeId);
-			if(isDiffStartingTime)
-				data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, (Long)null);
-			else{
-				if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY && ckOnLastDay.isChecked()){
-					mcalDateTime.set(Calendar.MONTH, spnLastDayMonth.getSelectedItemPosition());
-					data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mcalDateTime.getTimeInMillis() / 1000);
-				}
-				else
-					data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
-			}
 			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, etTimeReminder.getText().toString());
 		}
 		else{
@@ -601,7 +602,7 @@ public class TaskEditActivity extends EditActivityBase {
 														" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
 														" WHERE " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = " + Long.toString(mRowId) +
 														")";
-			if(!isRecurent && isMileageEnabled && !isTimingEnabled){ //select only cars with current mileage < due mileage
+			if(!isRecurrent && isMileageEnabled && !isTimingEnabled){ //select only cars with current mileage < due mileage
 				mLinkDialogCarSelectCondition  = mLinkDialogCarSelectCondition  + 
 					" AND " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + " < " + etMileage.getText().toString();
 			}
@@ -615,7 +616,7 @@ public class TaskEditActivity extends EditActivityBase {
 			if(!c.moveToNext()){//no record exist
 				c.close();
 	            AndiCarDialogBuilder builder = null; 
-				if(!isRecurent && isMileageEnabled && !isTimingEnabled){
+				if(!isRecurrent && isMileageEnabled && !isTimingEnabled){
 		            builder = new AndiCarDialogBuilder(TaskEditActivity.this, 
 		            		AndiCarDialogBuilder.DIALOGTYPE_WARNING, mResource.getString(R.string.GEN_Warning));
 		            builder.setMessage(mResource.getString(R.string.TaskEditActivity_NoCarsLinkedMsg));
@@ -664,10 +665,10 @@ public class TaskEditActivity extends EditActivityBase {
 	private RadioGroup.OnCheckedChangeListener rgRepeatingOnCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
 		public void onCheckedChanged(RadioGroup arg0, int checkedId) {
 			if (checkedId == rbOneTime.getId()) {
-				isRecurent = false;
+				isRecurrent = false;
 				mTimeFrequencyTypeId = StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME;
 			} else { //
-				isRecurent = true;
+				isRecurrent = true;
 			}
 			setSpecificLayout();
 			fillLinkedCarsData();
@@ -744,7 +745,7 @@ public class TaskEditActivity extends EditActivityBase {
 		llDialogStartingDateZone = (LinearLayout) linkView.findViewById(R.id.llStartingDateZone);
         llDialogStartingMileageZone = (LinearLayout) linkView.findViewById(R.id.llStartingMileageZone);
 
-        if(!isRecurent){
+        if(!isRecurrent){
         	llDialogStartingDateZone.setVisibility(View.GONE);
         	llDialogStartingMileageZone.setVisibility(View.GONE);
         	return;
@@ -888,19 +889,16 @@ public class TaskEditActivity extends EditActivityBase {
 	    		data.put(MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME, mRowId);
 	    		data.put(MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME, selectedCarId);
 	    		if(isTimingEnabled){
-	    			if(!isDiffStartingTime|| !isRecurent)
+	    			if(!isDiffStartingTime|| !isRecurrent)
 	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, mlDateTimeInSeconds);
 	    			else
 	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, mlStartingDateTimeInSeconds);
 	    		}
 	    		else
 	    			data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, (Long)null);
-	    		if(isMileageEnabled){
-	    			if(isRecurent)
-	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, etLinkedCarIndexStart.getText().toString());
-	    			else
-	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, etMileage.getText().toString());
-	    		}
+	    		
+	    		if(isMileageEnabled && isRecurrent)
+    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, etLinkedCarIndexStart.getText().toString());
 	    		else
 	    			data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, (Long)null);
 
@@ -988,7 +986,7 @@ public class TaskEditActivity extends EditActivityBase {
 	};
 	
 	private void setSpecificLayout(){
-		if (isRecurent) {
+		if (isRecurrent) {
 			if(isTimingEnabled){
 				tvStartingTimeLbl.setText(R.string.TaskEditActivity_StartingTimeLbl);
 				ckIsDifferentStartingTime.setVisibility(View.VISIBLE);
