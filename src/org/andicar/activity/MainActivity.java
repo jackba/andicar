@@ -773,7 +773,7 @@ public class MainActivity extends BaseActivity {
 			Cursor c = null;
 			String fuelEffStr = mRes
 					.getString(R.string.MainActivity_StatisticsAvgConsNoDataText);
-			String lastFuelEffStr = "N/A";
+			String lastFuelEffStr = mRes.getString(R.string.MainActivity_StatisticsLastConsNoData);
 			String sql = "";
 			BigDecimal tmpFullRefuelIndex = null;
 			BigDecimal lastFullRefuelIndex = null;
@@ -992,7 +992,8 @@ public class MainActivity extends BaseActivity {
 					.getString(R.string.MainActivity_StatisticsLastConsLabel)
 					+ lastFuelEffStr);
 		} else {
-			tvStatisticsLastFuelEff.setText("N/A");
+			tvStatisticsLastFuelEff.setText(mRes
+					.getString(R.string.MainActivity_StatisticsLastConsNoData));
 			tvStatisticsTotalExpenses.setText("N/A");
 			tvStatisticsMileageExpense.setText("N/A");
 		}

@@ -172,8 +172,9 @@
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
     <string name="MainActivity_StatisticsListLastOdoLabel">"Last known odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
-    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the mileage between the first and last FULL refuel."</string>
+    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. fuel efficiency is calculated for the first and last full refuels."</string>
     <string name="MainActivity_StatisticsLastConsLabel">"Last fuel eff.: "</string>
+    <string name="MainActivity_StatisticsLastConsNoData">"N/A. The last fuel efficiency is calculated for the last two full refuels."</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"Total expenses:"</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"Mileage exp.:"</string>
     <string name="MainActivity_MileageNoDataText">"No mileage for this car"</string>
@@ -434,7 +435,7 @@
     
     <!-- AddOn Services -->
     <string name="AddOn_PayPalTransactionID">"PayPal Transaction ID"</string>
-    <string name="AddOn_SubscribeWaiting">"Contacting PayPal server. Please wait..."</string>
+    <string name="AddOn_SubscribeWaiting">"Contacting PayPal. Please wait..."</string>
     <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until: [#1]"</string>
     <string name="AddOn_BtnTryCaption">"Start FREE evaluation"</string>
     <string name="AddOn_BtnConfigureServiceCaption">"Configure service"</string>
