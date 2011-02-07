@@ -34,14 +34,14 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices.
         It is licensed under the terms of the GNU General Public License, version 3.\n
-        See the About page for more details.\nCopyright © 2010-2011 Miklos Keresztes.\n
+        See the About page for more details.\n Copyright © 2010-2011 Miklos Keresztes.\n
         Thank you for using <b><i>AndiCar</i></b>!
     </string>
 
     <string name="LM_COPYRIGHT_HTML1">
         <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices. 
         It is licensed under the terms of the GNU General Public License.\n
-        *  For more information (how tos, latest news, etc.) please visit the project home page at
+        *  For more information (how to, latest news, etc.) please visit the project home page at
         <a href="http://www.andicar.org">www.andicar.org</a>.\n
         <small>Refresh the page in your browser if you get a \"Web page not available\" message.</small>\n
         *  For questions you are welcome to the <b><i>AndiCar</i></b> discussion list at
