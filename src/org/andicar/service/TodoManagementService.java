@@ -93,6 +93,7 @@ public class TodoManagementService extends Service {
 		String[] todoSelectionArgs = null;
 		String[] taskCarSelectArgs = null;
 		int todoCount = 1;
+		boolean isRecurrentTask = false;
 //		boolean isDiffStartingTime = true;
 
 //		taskSelection = MainDbAdapter.isActiveCondition + 
@@ -112,12 +113,9 @@ public class TodoManagementService extends Service {
 				MainDbAdapter.taskTableColNames, taskSelection, taskSelectionArgs, null, null, null);
 
 		while(taskCursor.moveToNext()){
-			
+			isRecurrentTask = taskCursor.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
 			todoSelection = MainDbAdapter.TODO_COL_TASK_ID_NAME + "=? AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + "='N'";
 			
-//			isDiffStartingTime = (taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS) != null &&
-//					taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y"));
-//			taskScheduledFor = taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS);
 			if(mCarID > 0){
 				taskCarSelection = taskCarSelection + " AND " +
 						MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + " =? ";
@@ -134,15 +132,12 @@ public class TodoManagementService extends Service {
 			taskCarCursor = mDb.query(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.taskCarTableColNames, 
 					taskCarSelection, taskCarSelectArgs, null, null, null);
 			
-//			if(isDiffStartingTime ||
-//					taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) ||
-//						taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){ //cars are linked to task
 			if(taskCarCursor.getCount() > 0){//cars are linked to task
 				todoSelection = todoSelection + " AND " + MainDbAdapter.TODO_COL_CAR_ID_NAME + "=?";
 				todoSelectionArgs = new String[2];
 				todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
 				while(taskCarCursor.moveToNext()){
-					if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) != StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME){
+					if(isRecurrentTask){
 						todoSelectionArgs[1] = taskCarCursor.getString(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS); 
 						todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
 						todoCount = todoCursor.getCount();
@@ -157,8 +152,8 @@ public class TodoManagementService extends Service {
 						createToDo(taskCursor, taskCarCursor);
 				}
 			}
-			else{
-				if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) != StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME){
+			else{ //no cars are linked to task
+				if(isRecurrentTask){
 					todoSelectionArgs = new String[1];
 					todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
 					todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
@@ -190,6 +185,15 @@ public class TodoManagementService extends Service {
 		String todoSelectOrderBy = null;
 		long taskId = taskCursor.getLong(MainDbAdapter.GEN_COL_ROWID_POS);
 		long carId = 0;
+		boolean isRecurrentTask = taskCursor.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
+		boolean isDiffStartingTime = false; 
+		if( taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS) == null ||
+				taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("N")){
+			isDiffStartingTime = false;
+		}
+		else
+			isDiffStartingTime = true;
+
 		if(taskCarCursor != null)
 			carId = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS);
 		
@@ -264,12 +268,17 @@ public class TodoManagementService extends Service {
 			
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE)){
 				if(taskCarCursor != null){
-					firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
-					carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
-					while(firstRunMileage <= carCurrentIndex)
-						firstRunMileage = firstRunMileage + mileageFrequency;
-					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, firstRunMileage);
+					if(isRecurrentTask){
+						firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
+						carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
+						while(firstRunMileage <= carCurrentIndex)
+							firstRunMileage = firstRunMileage + mileageFrequency;
 
+					}
+					else
+						firstRunMileage = taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
+
+					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, firstRunMileage);
 					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, (Long)null);
 				}
 			}
@@ -285,7 +294,7 @@ public class TodoManagementService extends Service {
 				nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1);
 					
 				
-				if(taskCarCursor != null)
+				if(taskCarCursor != null && isRecurrentTask && isDiffStartingTime)
 					nextToDoCalendar.setTimeInMillis(taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000);
 				else{
 					if(taskCursor.getString(MainDbAdapter.TASK_COL_STARTINGTIME_POS) != null)
@@ -320,10 +329,14 @@ public class TodoManagementService extends Service {
 
 				if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 					if(taskCarCursor != null){
-						firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
-						carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
-						while(firstRunMileage <= carCurrentIndex)
-							firstRunMileage = firstRunMileage + mileageFrequency;
+						if(isRecurrentTask){
+							firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
+							carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
+							while(firstRunMileage <= carCurrentIndex)
+								firstRunMileage = firstRunMileage + mileageFrequency;
+						}
+						else
+							firstRunMileage = taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
 						nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, firstRunMileage);
 					}
 				}

@@ -1399,7 +1399,7 @@ public class MainDbAdapter extends DB
     /**
      * get the start index for a new mileage record
      */
-    public BigDecimal getCarCurrentIndex(long mCarId){
+    public BigDecimal getCarLastMileageIndex(long mCarId){
         Double mStartIndexStr = null;
         String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
                         "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
@@ -1418,6 +1418,25 @@ public class MainDbAdapter extends DB
         if((mStartIndexStr == null)
                 && c.moveToNext() && c.getString(0) != null)
             mStartIndexStr = c.getDouble(0);
+        if(mStartIndexStr == null)
+            mStartIndexStr = new Double("0");
+    	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
+    }
+
+    /**
+     * get the current index of the car
+     */
+    public BigDecimal getCarCurrentIndex(long mCarId){
+        Double mStartIndexStr = null;
+        String sql = 
+                      "SELECT " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + 
+                      " FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
+                      " WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ? ";
+        String[] selectionArgs = {Long.toString(mCarId)};
+        Cursor c = execSelectSql(sql, selectionArgs);
+        if(c.moveToFirst() && c.getString(0) != null){
+            mStartIndexStr = c.getDouble(0);
+        }
         if(mStartIndexStr == null)
             mStartIndexStr = new Double("0");
     	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);

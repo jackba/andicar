@@ -270,14 +270,19 @@ public class DB {
 	public static final String BPARTNER_LOCATION_COL_EMAIL_NAME = "Email";
 	public static final String BPARTNER_LOCATION_COL_CONTACTPERSON_NAME = "ContactPerson";
 
+	
 	public static final String TASK_COL_TASKTYPE_ID_NAME = TASKTYPE_TABLE_NAME + "_ID";
 	/**
 	 * Time|Mileage|Both (StaticValues.TASK_SCHEDULED_FOR_{TIME|MILEAGE|BOTH})
 	 */
 	public static final String TASK_COL_SCHEDULEDFOR_NAME = "ScheduledFor";
+	/**
+	 * recurrent or one time task {Y|N}
+	 */
+	public static final String TASK_COL_ISRECURRENT_NAME = "IsRecurrent";
 	public static final String TASK_COL_ISDIFFERENTSTARTINGTIME_NAME = "IsDifferentSTime";
 	/**
-	 * no of days/weeks/months/years
+	 * recurrency  (every X days/weeks/months/years depending on TASK_COL_TIMEFREQUENCYTYPE_NAME) 
 	 */
 	public static final String TASK_COL_TIMEFREQUENCY_NAME = "TimeFrequency";
 	/**
@@ -482,13 +487,14 @@ public class DB {
 	
 	public static final int TASK_COL_TASKTYPE_ID_POS = 4;
 	public static final int TASK_COL_SCHEDULEDFOR_POS = 5;
-	public static final int TASK_COL_ISDIFFERENTSTARTINGTIME_POS = 6;
-	public static final int TASK_COL_TIMEFREQUENCY_POS = 7;
-	public static final int TASK_COL_TIMEFREQUENCYTYPE_POS = 8;
-	public static final int TASK_COL_STARTINGTIME_POS = 9;
-	public static final int TASK_COL_TIMEREMINDERSTART_POS = 10;
-	public static final int TASK_COL_RUNMILEAGE_POS = 11;
-	public static final int TASK_COL_MILEAGEREMINDERSTART_POS = 12;
+	public static final int TASK_COL_ISRECURRENT_POS = 6;
+	public static final int TASK_COL_ISDIFFERENTSTARTINGTIME_POS = 7;
+	public static final int TASK_COL_TIMEFREQUENCY_POS = 8;
+	public static final int TASK_COL_TIMEFREQUENCYTYPE_POS = 9;
+	public static final int TASK_COL_STARTINGTIME_POS = 10;
+	public static final int TASK_COL_TIMEREMINDERSTART_POS = 11;
+	public static final int TASK_COL_RUNMILEAGE_POS = 12;
+	public static final int TASK_COL_MILEAGEREMINDERSTART_POS = 13;
 
 	public static final int TASK_CAR_COL_TASK_ID_POS = 4;
 	public static final int TASK_CAR_COL_CAR_ID_POS = 5;
@@ -623,12 +629,14 @@ public class DB {
 	// tasks/reminders tables
 	public static final String[] taskTypeTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME };
+	
 	public static final String[] taskTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
 			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME,
-			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, TASK_COL_TIMEFREQUENCY_NAME,
-			TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_STARTINGTIME_NAME,
+			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISRECURRENT_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, 
+			TASK_COL_TIMEFREQUENCY_NAME, TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_STARTINGTIME_NAME,
 			TASK_COL_TIMEREMINDERSTART_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEREMINDERSTART_NAME};
+	
 	public static final String[] taskCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
 			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
 
@@ -1066,6 +1074,8 @@ public class DB {
 			+ " INTEGER NOT NULL, "
 			+ TASK_COL_SCHEDULEDFOR_NAME
 			+ " TEXT NULL, "
+			+ TASK_COL_ISRECURRENT_NAME
+			+ " TEXT NOT NULL, "
 			+ TASK_COL_ISDIFFERENTSTARTINGTIME_NAME
 			+ " TEXT NULL, "
 			+ TASK_COL_TIMEFREQUENCY_NAME
