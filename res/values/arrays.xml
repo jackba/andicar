@@ -32,7 +32,7 @@
         <item>html</item>
     </string-array>
 
-    <!-- Used in gps track (minimum time betwee 2 recording points) -->
+    <!-- Used in gps track (minimum time between 2 recording points) -->
     <string-array name="gpstrack_preference_mintime_entries">
         <item>Highest</item>
         <item>3 s</item>
@@ -44,7 +44,7 @@
         <item>5 min</item>
         <item>10 min</item>
     </string-array>
-    <!-- values in miliseconds -->
+    <!-- values in milliseconds -->
     <string-array name="gpstrack_preference_mintime_values">
         <item>0</item>
         <item>3000</item>
