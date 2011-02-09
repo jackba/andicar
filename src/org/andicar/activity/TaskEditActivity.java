@@ -112,6 +112,8 @@ public class TaskEditActivity extends EditActivityBase {
 	//used in link dialog
 	private LinearLayout llDialogStartingDateZone = null;
 	private LinearLayout llDialogStartingMileageZone = null;
+    protected TimePickerDialog mLinkDialogTimePickerDialog = null;
+    protected DatePickerDialog mLinkDialogDatePickerDialog = null;
 
     private ListView lvLinkedCarsList = null;
 	
@@ -703,42 +705,59 @@ public class TaskEditActivity extends EditActivityBase {
 	@Override
 	protected void onPrepareDialog(int id, Dialog dialog) {
 		super.onPrepareDialog(id, dialog);
-		if(id != StaticValues.DIALOG_TASK_CAR_LINK)
-			return;
+//		if(id != StaticValues.DIALOG_TASK_CAR_LINK)
+//			return;
 		
-        initDialog();
-		long linkId = mPreferences.getLong("TaskCarLinkId", -1);
-		if(linkId != -1){
-			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.taskCarTableColNames, linkId);
-	        initDialogControls(c.getLong(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS));
-	        long linkedCarStartDate = c.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000;
-	        mLinkDialogStartingDateTimeCal = Calendar.getInstance();
-	        mLinkDialogStartingDateTimeCal.setTimeInMillis(linkedCarStartDate);
-	        mLinkDialogStartingYear = mLinkDialogStartingDateTimeCal.get(Calendar.YEAR);
-	        mLinkDialogStartingMonth = mLinkDialogStartingDateTimeCal.get(Calendar.MONTH);
-	        mLinkDialogStartingDay = mLinkDialogStartingDateTimeCal.get(Calendar.DAY_OF_MONTH);
-	        mLinkDialogStartingHour = mLinkDialogStartingDateTimeCal.get(Calendar.HOUR_OF_DAY);
-	        mLinkDialogStartingMinute = mLinkDialogStartingDateTimeCal.get(Calendar.MINUTE);
-	        updateLinkDialogStartingDateTime();
-	        etLinkedCarIndexStart.setText(c.getString(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS));
-	        c.close();
+		if(id == StaticValues.DIALOG_TASK_CAR_LINK){
+	        initDialog();
+			long linkId = mPreferences.getLong("TaskCarLinkId", -1);
+			if(linkId != -1){
+				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.taskCarTableColNames, linkId);
+		        initDialogControls(c.getLong(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS));
+		        long linkedCarStartDate = c.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000;
+		        mLinkDialogStartingDateTimeCal = Calendar.getInstance();
+		        mLinkDialogStartingDateTimeCal.setTimeInMillis(linkedCarStartDate);
+		        mLinkDialogStartingYear = mLinkDialogStartingDateTimeCal.get(Calendar.YEAR);
+		        mLinkDialogStartingMonth = mLinkDialogStartingDateTimeCal.get(Calendar.MONTH);
+		        mLinkDialogStartingDay = mLinkDialogStartingDateTimeCal.get(Calendar.DAY_OF_MONTH);
+		        mLinkDialogStartingHour = mLinkDialogStartingDateTimeCal.get(Calendar.HOUR_OF_DAY);
+		        mLinkDialogStartingMinute = mLinkDialogStartingDateTimeCal.get(Calendar.MINUTE);
+		        updateLinkDialogStartingDateTime();
+		        etLinkedCarIndexStart.setText(c.getString(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS));
+		        c.close();
+			}
+			else{
+				initDialogControls(-1);
+					
+				mLinkDialogStartingDateTimeCal = Calendar.getInstance();
+				mLinkDialogStartingDateTimeCal.add(Calendar.HOUR_OF_DAY, 1);
+				mLinkDialogStartingDateTimeCal.set(Calendar.MINUTE, 0);
+				mLinkDialogStartingDateTimeCal.set(Calendar.SECOND, 0);
+				mLinkDialogStartingDateTimeCal.set(Calendar.MILLISECOND, 0);
+				mLinkDialogStartingYear = mLinkDialogStartingDateTimeCal.get(Calendar.YEAR);
+				mLinkDialogStartingMonth = mLinkDialogStartingDateTimeCal.get(Calendar.MONTH);
+				mLinkDialogStartingDay = mLinkDialogStartingDateTimeCal.get(Calendar.DAY_OF_MONTH);
+				mLinkDialogStartingHour = mLinkDialogStartingDateTimeCal.get(Calendar.HOUR_OF_DAY);
+				mLinkDialogStartingMinute = mLinkDialogStartingDateTimeCal.get(Calendar.MINUTE);
+		        updateLinkDialogStartingDateTime();
+		        etLinkedCarIndexStart.setText("0");
+			}
 		}
-		else{
-			initDialogControls(-1);
-				
-			mLinkDialogStartingDateTimeCal = Calendar.getInstance();
-			mLinkDialogStartingDateTimeCal.add(Calendar.HOUR_OF_DAY, 1);
-			mLinkDialogStartingDateTimeCal.set(Calendar.MINUTE, 0);
-			mLinkDialogStartingDateTimeCal.set(Calendar.SECOND, 0);
-			mLinkDialogStartingDateTimeCal.set(Calendar.MILLISECOND, 0);
-			mLinkDialogStartingYear = mLinkDialogStartingDateTimeCal.get(Calendar.YEAR);
-			mLinkDialogStartingMonth = mLinkDialogStartingDateTimeCal.get(Calendar.MONTH);
-			mLinkDialogStartingDay = mLinkDialogStartingDateTimeCal.get(Calendar.DAY_OF_MONTH);
-			mLinkDialogStartingHour = mLinkDialogStartingDateTimeCal.get(Calendar.HOUR_OF_DAY);
-			mLinkDialogStartingMinute = mLinkDialogStartingDateTimeCal.get(Calendar.MINUTE);
-	        updateLinkDialogStartingDateTime();
-	        etLinkedCarIndexStart.setText("0");
-		}
+        mYear = mLinkDialogStartingYear;
+        mMonth = mLinkDialogStartingMonth;
+        mDay = mLinkDialogStartingDay;
+        mHour = mLinkDialogStartingHour;
+        mMinute = mLinkDialogStartingMinute;
+        switch(id) {
+	        case StaticValues.DIALOG_TIME_PICKER:
+	        	if(mTimePickerDialog != null)
+	        		mTimePickerDialog.updateTime(mHour, mMinute);
+	            break;
+	        case StaticValues.DIALOG_DATE_PICKER:
+	        	if(mDatePickerDialog != null)
+	        		mDatePickerDialog.updateDate(mYear, mMonth, mDay);
+	            break;
+        }
 	}
 
 	private void initDialog() {
@@ -788,13 +807,15 @@ public class TaskEditActivity extends EditActivityBase {
 			return super.onCreateDialog(id);
 		//date part
 		else if(id == StaticValues.DIALOG_DATE_FROM_PICKER){
-	        return new DatePickerDialog(this,
-	        		onStartingDateSetListener, mLinkDialogStartingYear, mLinkDialogStartingMonth, mLinkDialogStartingDay);
+			mLinkDialogDatePickerDialog = new DatePickerDialog(this,
+	        		onStartingDateSetListener, mLinkDialogStartingYear, mLinkDialogStartingMonth, mLinkDialogStartingDay); 
+	        return mLinkDialogDatePickerDialog;
 		}
 		//time part
 		else if(id == StaticValues.DIALOG_DATE_TO_PICKER){
-	        return new TimePickerDialog(this,
-	        		onStartingTimeSetListener, mLinkDialogStartingHour, mLinkDialogStartingMinute, false);
+			mLinkDialogTimePickerDialog = new TimePickerDialog(this,
+	        		onStartingTimeSetListener, mLinkDialogStartingHour, mLinkDialogStartingMinute, false); 
+	        return mLinkDialogTimePickerDialog;
 		}
 		else if(id == StaticValues.DIALOG_TASK_CAR_LINK){
 			LayoutInflater liLayoutFactory = LayoutInflater.from(this);
