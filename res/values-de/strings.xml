@@ -33,15 +33,15 @@
 -->
 
 <resources>
-    <string name="APP_Description">"Gratis Open-Source Fahrzeugverwaltung."</string>
-    <string name="APP_Motto">"Verwalte deine Fahrzeuge mit der Kraft von Open-Source."</string>
+    <string name="APP_Description">"Open-Source Fahrzeugverwaltung"</string>
+    <string name="APP_Motto">"Fahrzeugverwaltung mit der Kraft von OpenSource."</string>
     <string name="APP_Activity_DriverEdit">"Fahrer bearbeiten"</string>
     <string name="APP_Activity_DriverList">"Fahrer"</string>
     <string name="APP_Activity_CarEdit">"Fahrzeug bearbeiten"</string>
     <string name="APP_Activity_CarList">"Fahrzeuge"</string>
     <string name="APP_Activity_Preferences">"Einstellungen"</string>
     <string name="APP_Activity_GPSPreferences">"GPS Tracking Einstellungen"</string>
-    <string name="APP_Activity_ExpenseCategoryList">"Kategorien für Ausgaben"</string>
+    <string name="APP_Activity_ExpenseCategoryList">"Kategorien für Kosten"</string>
     <string name="APP_Activity_ExpenseCategoryEdit">"Ausgabenkategorien bearbeiten"</string>
     <string name="APP_Activity_ExpenseTypeList">"Kostentypen"</string>
     <string name="APP_Activity_ExpenseTypeEdit">"Kostentypen bearbeiten"</string>
@@ -51,24 +51,24 @@
     <string name="APP_Activity_UOMConversionEdit">"Einheitsumrechnungen bearbeiten"</string>
     <string name="APP_Activity_CurrencyList">"Währungen"</string>
     <string name="APP_Activity_CurrencyEdit">"Währungen bearbeiten"</string>
-    <string name="APP_Activity_MileageList">"Fahrstrecken"</string>
-    <string name="APP_Activity_MileageEdit">"Fahrstrecken bearbeiten"</string>
-    <string name="APP_Activity_RefuelList">"Betankungen"</string>
+    <string name="APP_Activity_MileageList">"Strecken"</string>
+    <string name="APP_Activity_MileageEdit">"Strecken bearbeiten"</string>
+    <string name="APP_Activity_RefuelList">"Tanken"</string>
     <string name="APP_Activity_RefuelEdit">"Betankungen bearbeiten"</string>
     <string name="APP_Activity_About">"Über AndiCar"</string>
-    <string name="APP_Activity_BackupRestore">"Backup / Wiederherstellen"</string>
+    <string name="APP_Activity_BackupRestore">"Backup / Restore"</string>
     <string name="APP_Activity_ExpenseList">"Kosten"</string>
     <string name="APP_Activity_ExpenseEdit">"Kosten bearbeiten"</string>
-    <string name="APP_Activity_CurrencyRateList">"Währungsumrechnungen"</string>
+    <string name="APP_Activity_CurrencyRateList">"Wechselkurse"</string>
     <string name="APP_Activity_CurrencyRateEdit">"Wechselkurse bearbeiten"</string>
     <string name="APP_Activity_GPSTrackController">"GPS Track Control"</string>
     <string name="APP_Activity_GPSTrackEdit">"GPS Tracks bearbeiten"</string>
     <string name="APP_Activity_GPSTrackList">"GPS Tracks"</string>
-    <string name="APP_Activity_BPartnerList">"Partners"</string>
-    <string name="APP_Activity_BPartnerEdit">"Partner berabeiten"</string>
+    <string name="APP_Activity_BPartnerList">"Partner"</string>
+    <string name="APP_Activity_BPartnerEdit">"Lieferanten, Geschäfte, Garagen, etc."</string>
     <string name="APP_Activity_BPartnerLocationEdit">"Orte bearbeiten"</string>
     <string name="APP_Activity_TagList">"Tags"</string>
-    <string name="APP_Activity_TagEdit">"Tags bearbeiten"</string>
+    <string name="APP_Activity_TagEdit">"Tags (Kurzzeichen) bearbeiten"</string>
     <string name="APP_Activity_Message">"AndiCar Mitteilungen"</string>
     <string name="APP_Activity_TaskTypeList">"Typen für Aufgaben/Erinnerungen"</string>
     <string name="APP_Activity_TaskTypeEdit">"Aufgabentypen bearbeiten"</string>
@@ -112,17 +112,17 @@
     <string name="GEN_BPartner">"Lieferant:"</string>
     <string name="GEN_Address">"Adresse:"</string>
     <string name="GEN_BPartnerAdressInfo">"Gib in Einstellungen -> Partner mehr Details zum Lieferant ein"</string>
-    <string name="GEN_City">"Ortschaft:"</string>
+    <string name="GEN_City">"Ort:"</string>
     <string name="GEN_Region">"Region:"</string>
     <string name="GEN_Country">"Land:"</string>
     <string name="GEN_Contact">"Kontakt:"</string>
     <string name="GEN_Phone">"Telefon:"</string>
     <string name="GEN_Phone2">"Tel 2:"</string>
     <string name="GEN_Fax">"Fax:"</string>
-    <string name="GEN_Email">"Email:"</string>
+    <string name="GEN_Email">"E-Mail:"</string>
     <string name="GEN_Postal">"Anschrift:"</string>
     <string name="GEN_Tag">"Tag:"</string>
-    <string name="GEN_TagHint">"Nur ein kurzer Tag. Genaueres unter Komentar unten eingeben."</string>
+    <string name="GEN_TagHint">"Nur ein Kurzzeichen (TAG). Genaueres unter Komentar unten eingeben."</string>
     <string name="GEN_LifeTime">"Gültigkeit"</string>
     <string name="GEN_CreatedOn">"Erstellt am"</string>
     <string name="GEN_Category">"Kategorie:"</string>
@@ -139,7 +139,7 @@
     <string name="GEN_LastDay">"letzter Tag"</string>
     
     <string name="MENU_PreferencesCaption">"Einstellungen"</string>
-    <string name="MENU_AboutCaption">"Über"</string>
+    <string name="MENU_AboutCaption">"Über AndiCar"</string>
     <string name="MENU_DeleteCaption">"löschen"</string>
     <string name="MENU_AddNewCaption">"Neu erstellen"</string>
     <string name="MENU_EditCaption">"bearbeiten"</string>
@@ -149,27 +149,27 @@
     <string name="MENU_CreateReportCaption">"Auswertung erstellen"</string>
     <string name="MENU_SendAsEmailCaption">"Als Mail senden"</string>
     <string name="MENU_ShowOnMap">"auf Karte zeigen"</string>
-    <string name="MENU_MileageCaption">"Fahrstrecken"</string>
-    <string name="MENU_RefuelCaption">"Betankungen"</string>
+    <string name="MENU_MileageCaption">"gefahrene Strecken"</string>
+    <string name="MENU_RefuelCaption">"TankfÜllungen"</string>
     <string name="MENU_ExpenseCaption">"Kosten"</string>
     <string name="MENU_GPSTrackCaption">"GPS Tracks"</string>
     <string name="MENU_SetDefault">"als Standard"</string>
     <string name="MENU_OpenGPSTrack">"GPS Track öffnen"</string>
     <string name="MENU_RateCommentCaption">"Genaueres/Komentar"</string>
-    <string name="MENU_AddOnServicesCaption">"zusäzliche Angebote"</string>
+    <string name="MENU_AddOnServicesCaption">"Premium Dienste"</string>
     <string name="MENU_LocalizeAndiCar">"AndiCar übersetzen"</string>
 
 
-    <string name="MainActivity_MileageHeaderCaption">"Letzte Fahrstrecke"</string>
-    <string name="MainActivity_RefuelHeaderCaption">"Letztes mal Tanken"</string>
+    <string name="MainActivity_MileageHeaderCaption">"Letzte Strecke"</string>
+    <string name="MainActivity_RefuelHeaderCaption">"Letztes Auftanken"</string>
     <string name="MainActivity_GPSTrackHeaderCaption">"Letzter GPS Track"</string>
     <string name="MainActivity_ExpenseHeaderCaption">"Letzte Kosten"</string>
     <string name="MainActivity_StatisticsHeaderCaption">"Statistik der letzten Aufzeichnung "</string>
     <string name="MainActivity_StatisticsListLastOdoLabel">"Letzter Tachostand: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Durschn.Benzinverbrauch: "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"Noch keine Daten. Der Durchschnitt wird aus der gefahrenen Strecke zwischen der ersten und der letzten vollständigen Betankung berechnet."</string>
-    <string name="MainActivity_StatisticsLastConsLabel">"aktueller Benzinverbrauch: "</string>
-    <string name="MainActivity_StatisticsTotalExpenseLabel">"Kosten Total:"</string>
+    <string name="MainActivity_StatisticsLastConsLabel">"akt.Benzinverbrauch: "</string>
+    <string name="MainActivity_StatisticsTotalExpenseLabel">"Gesamtkosten:"</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"Durchschnittskosten:"</string>
     <string name="MainActivity_MileageNoDataText">"noch keine Strecken für dieses Fahrzeug"</string>
     <string name="MainActivity_RefuelNoDataText">"noch keine Betankungen für dieses Fahrzeug."</string>
@@ -180,7 +180,7 @@
     <string name="MainActivity_WellcomeMessage">"Willkommen bei AndiCar."</string>
     <string name="MainActivity_WellcomeBackMessage">"Willkommen zurück!"</string>
     <string name="MainActivity_BackupExistMessage">"Backup Dateien existieren bereits.\nWillst Du eine Wiederherstellen?"</string>
-    <string name="MainActivity_UpdateMessage">"Update Nachricht"</string>
+    <string name="MainActivity_UpdateMessage">"Update verfügbar"</string>
     <string name="MainActivity_GPSTrackZoneNoDataText">"Keine Tracks."</string>
     <string name="MainActivity_NoMarketAccessMsg">"Ich kann Android Market nicht öffnen!"</string>
     <string name="MainActivity_AppVersion">"Programm version:"</string>
@@ -210,7 +210,7 @@
 
     <string name="CurrencyEditActivity_CodeLabel">"Code:"</string>
 
-    <string name="MileageEditActivity_IndexHeaderLabel">"Anfangs/End Tachostand or Fahrstrecke"</string>
+    <string name="MileageEditActivity_IndexHeaderLabel">"Anfangs/End Tachostand or gefahrene Strecke"</string>
     <string name="MileageEditActivity_IndexStartLabel">"Anfang "</string>
     <string name="MileageEditActivity_OptionIndexLabel">"Ende"</string>
     <string name="MileageEditActivity_OptionMileageLabel">"Fahrstrecke"</string>
@@ -223,9 +223,9 @@
     <string name="RefuelEditActivity_NoConversionRateMessage">"Kein Umrechnungsfaktor für diese Einheiten definiert."</string>
 
     <string name="BackupRestoreEditActivity_BackupBtnCaption">"Backup"</string>
-    <string name="BackupRestoreEditActivity_RestoreBtnCaption">"Wiederherstellen"</string>
+    <string name="BackupRestoreEditActivity_RestoreBtnCaption">"Restore"</string>
     <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Backup löschen"</string>
-    <string name="BackupRestoreEditActivity_BackupListLabel">"Existierende Backups:"</string>
+    <string name="BackupRestoreEditActivity_BackupListLabel">"vorhandene Backups:"</string>
     <string name="BackupRestoreEditActivity_BackupCreatedMessage">"Backup erstellt."</string>
     <string name="BackupRestoreEditActivity_BackupFailedMessage">"Fehler: Backup wurde nicht erstellt!"</string>
     <string name="BackupRestoreEditActivity_BackupDeleteConfirmation">"Bist Du Dir sicher dass Du dieses Backup löschen willst?"</string>
@@ -250,7 +250,7 @@
 
 
     <string name="GPSTrackReport_GPSTrackVar_1">"Distanz: "</string>
-    <string name="GPSTrackReport_GPSTrackVar_2">"Max. Geschwindikeit: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_2">"Max. Tempo: "</string>
     <string name="GPSTrackReport_GPSTrackVar_3">"Durchschnitt über alles: "</string>
     <string name="GPSTrackReport_GPSTrackVar_4">"Durchschnitt in Bewegung: "</string>
     <string name="GPSTrackReport_GPSTrackVar_5">"Gesammtzeit: "</string>
@@ -261,12 +261,12 @@
     <string name="GPSTrackReport_GPSTrackVar_10">"Min. Höhe: "</string>
     <string name="GPSTrackReport_GPSTrackVar_11">"Max. Höhe: "</string>
 
-    <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Tracking Dateien"</string>
+    <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Trackingdateien"</string>
     <string name="GPSTrackEditActivity_TrackStatistics">"Statistiken"</string>
 
     <string name="GPSTrackControllerActivity_StopBtnCaption">"Stop GPS Track"</string>
-    <string name="GPSTrackControllerActivity_FileFormatLabel">"Track Dateiformat:"</string>
-    <string name="GPSTrackControllerActivity_CreateMileageLabel">"Erstelle Fahrstrecke"</string>
+    <string name="GPSTrackControllerActivity_FileFormatLabel">"Trackingformat:"</string>
+    <string name="GPSTrackControllerActivity_CreateMileageLabel">"Strecke erstellen"</string>
     <string name="GPSTrackControllerActivity_IndexLabel">"Start Tachostand:"</string>
 
     <string name="GPSTrackService_ServiceStoppedMessage">"GPS tracking gestopt"</string>
@@ -295,27 +295,27 @@
     <string name="PREF_UOMCategoryTitle">"Einheiten"</string>
     <string name="PREF_ExpenseCategoryTitle">"Kosten"</string>
     <string name="PREF_ExpenseTypeCategoryTitle">"Kostentypen"</string>
-    <string name="PREF_ExpenseTypeCategorySummary">"Kostentypen hinzufügen oder ändern."</string>
+    <string name="PREF_ExpenseTypeCategorySummary">"Kostengruppen hinzufügen oder ändern."</string>
     <string name="PREF_CarDriverCategoryTitle">"Fahrer und Fahrzeuge"</string>
     <string name="PREF_CarTitle">"Fahrzeuge"</string>
     <string name="PREF_CarSummary">"Fahrzeuge hinzufügen, bearbeiten und löschen.\nWähle das aktuelle Fahrzeug aus"</string>
     <string name="PREF_DriverTitle">"Fahrer"</string>
-    <string name="PREF_DriverSummary">"Fahrer hinzufügen, ändern und löschen.\nWähle den aktuellen Fahrer aus."</string>
+    <string name="PREF_DriverSummary">"Fahrer hinzufügen, bearbeiten und löschen.\nWähle den aktuellen Fahrer aus."</string>
     <string name="PREF_UOMTitle">"Einheiten"</string>
-    <string name="PREF_UOMSummary">"hinzufügen, ändern und löschen von Einheiten."</string>
+    <string name="PREF_UOMSummary">"hinzufügen, bearbeiten und löschen von Einheiten."</string>
     <string name="PREF_UOMConversionTitle">"Einheitsumrechnung"</string>
-    <string name="PREF_UOMConversionSummary">"hinzufügen, ändern und löschen von Einheitsumrechnungen."</string>
+    <string name="PREF_UOMConversionSummary">"hinzufügen, bearbeiten und löschen von Einheitsumrechnungen."</string>
     <string name="PREF_CurrencyTitle">"Währungen"</string>
-    <string name="PREF_CurrencySummary">"hinzufügen, ändern und löschen von Währungen"</string>
-    <string name="PREF_BackupRestoreCategoryTitle">"Backup / Wiederherstellen"</string>
-    <string name="PREF_BackupRestoreTitle">"Backup / Restore Deiner Daten"</string>
-    <string name="PREF_BackupRestoreSummary">"Backup der Daten anlegen oder Wiederherstellen eines vorhandenen Backups."</string>
-    <string name="PREF_ExpenseCategoryCategoryTitle">"Ausgaben Kategorien"</string>
-    <string name="PREF_ExpenseCategoryCategorySummary">"hinzufügen, ändern und löschen von Kosten/Ausgabenkategorien"</string>
+    <string name="PREF_CurrencySummary">"hinzufügen, bearbeiten und löschen von Währungen"</string>
+    <string name="PREF_BackupRestoreCategoryTitle">"Backup / Restore"</string>
+    <string name="PREF_BackupRestoreTitle">"Backup und Wiederherstellen der Datenbank"</string>
+    <string name="PREF_BackupRestoreSummary">"Backup der Daten anlegen oder wiederherstellen eines vorhandenen Backups."</string>
+    <string name="PREF_ExpenseCategoryCategoryTitle">"Kostenarten"</string>
+    <string name="PREF_ExpenseCategoryCategorySummary">"hinzufügen, bearbeiten und löschen von Kosten/Ausgaben Kategorien"</string>
     <string name="PREF_MiscCategoryTitle">"Diverses"</string>
     <string name="PREF_MainScreenCategoryTitle">"Einstellungen zur Startseite"</string>
     <string name="PREF_MainScreenCategorySummary">"Anzeigen auf der Startseite"</string>
-    <string name="PREF_CurrencyRateCategoryTitle">"Währungsumrechnungen"</string>
+    <string name="PREF_CurrencyRateCategoryTitle">"Wechselkurse"</string>
     <string name="PREF_CurrencyRateCategorySummary">"hinzufügen, ändern und löschen von Wechselkursen"</string>
     <string name="PREF_GPSTrackCategoryTitle">"GPS Tracking"</string>
     <string name="PREF_GPSTrackTitle">"GPS Track"</string>
@@ -331,7 +331,7 @@
     <string name="PREF_UseNumericInputTitle">"Numerische Tastatur benutzen"</string>
     <string name="PREF_UseNumericInputSummary">"Benutzen einer einfachen Zehnertastatur zur Eingabe von Zahlen."</string>
     <string name="PREF_TagCategoryTitle">"Tags"</string>
-    <string name="PREF_TagCategorySummary">"hinzufügen, ändern und löschen von Tags"</string>
+    <string name="PREF_TagCategorySummary">"hinzufügen, ändern und löschen von Kurzzeichen (Tags)"</string>
     <string name="PREF_RememberLastTagTitle">"Den letzten Tag merken"</string>
     <string name="PREF_RememberLastTagSummary">"Den zuletzt benutzen Tag bei neuen Einträgen als Voreinstellung benutzen."</string>
     <string name="PREF_AutoUpdateCheckTitle">"Auf Aktualisierungen überprüfen"</string>
@@ -342,14 +342,14 @@
     <string name="PREF_TaskTitle">"Aufgaben"</string>
     <string name="PREF_TaskSummary">"hinzufügen, ändern oder löschen von Aufgaben"</string>
 
-    <string name="PREF_MainScreen_ShowMileageZone">"Zeige Streckenbereiche"</string>
-    <string name="PREF_MainScreen_ShowGPSTrackZone">"Zeige GPS track Bereiche"</string>
-    <string name="PREF_MainScreen_ShowRefuelZone">"Zeige Betankungsbereiche"</string>
-    <string name="PREF_MainScreen_ShowExpenseZone">"Zeige Ausgabenbereiche"</string>
+    <string name="PREF_MainScreen_ShowMileageZone">"Zeige Strecken"</string>
+    <string name="PREF_MainScreen_ShowGPSTrackZone">"Zeige GPS tracks"</string>
+    <string name="PREF_MainScreen_ShowRefuelZone">"Zeige Tanken"</string>
+    <string name="PREF_MainScreen_ShowExpenseZone">"Zeige Kosten"</string>
     <string name="PREF_MainScreen_ShowStatistics">"Zeige Statistik"</string>
 
-    <string name="PREF_AddOnCategoryTitle">"AddOn Services"</string>
-    <string name="PREF_AddOnServicesTitle">"AddOn Services"</string>
+    <string name="PREF_AddOnCategoryTitle">"Premium Dienste"</string>
+    <string name="PREF_AddOnServicesTitle">"Premium Dienste"</string>
     <string name="PREF_AddOnServicesSummary">"Anmeldungen zu Kostenpflichtigen Zusatzdiensten."</string>
     <string name="PREF_AddOnServicesSubscribe">"Anmeldung über PayPal"</string>
 
@@ -377,7 +377,7 @@
 
     <string name="DIALOGReport_DialogTitle">"Auswertungsoptionen"</string>
     <string name="DIALOGReport_SendEmailLabel">"  als E-Mail Anhang weiterleiten"</string>
-    <string name="DIALOGReport_ReportFormatLabel">"Auswertungsformat:"</string>
+    <string name="DIALOGReport_ReportFormatLabel">"Format der Auswertung:"</string>
 
     <string name="DayOfWeek_0">"Sonntag"</string>
     <string name="DayOfWeek_1">"Montag"</string>
@@ -418,7 +418,7 @@
     <string name="AddOn_SubscriptionExpired">"Deine Anmeldung für das AddOn [#1] ist abgelaufen."</string>
     <string name="AddOn_RenewSubscriptionPeriodInfo">"Die gewählte Zeit wird zu der bereits gekauften Zeit addiert."</string>
 
-    <string name="AddOn_SecureBackup_Title">"Sicheres Backup"</string>
+    <string name="AddOn_SecureBackup_Title">"Backup versenden"</string>
     <string name="AddOn_SecureBackup_Description">"Immer wenn ein Datenbank Backup erstellt wird, sendet dieser Service ein E-Mail mit dem Datenbankbackup als Attachment an eine voreingestellte E-Mail Adresse. Dadurch bleiben deine aufgenommenen Daten verfügbar auch wenn du dein Handy verlierst. Zusammen mit dem Backup Service AddOn ist das die beste Lösung für deine Datensicherheit."</string>
     <string name="AddOn_SecureBackup_TermOfService">"Wir können für Fehler durch schlechte/defekte/nicht vorhandene Internetverbindungen nicht haftbar gemacht werden. Durch schlechte Internetverbindungen kann es zu defekten Backupdateien im E-Mail Attachment kommen. Ebenso sind wir nicht Verantwortlich für gelöschte/nicht angenommene E-Mails durch dein Internetanbieter oder andere Fälle welche dazu führen dass dein E-Mail mit dem Backup nicht angenommen werden kann."</string>
     <string name="AddOn_SecureBackup_Requirements">"Voraussetzungen das der Service funktioniert: gültiger GMail Account, Internetverbindung, mobile Datenübertragung."</string>
