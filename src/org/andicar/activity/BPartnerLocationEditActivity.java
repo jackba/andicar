@@ -307,7 +307,7 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
                             String to[] = {acEmail.getText().toString()};
                             actionIntent.putExtra(android.content.Intent.EXTRA_EMAIL, to);
                             actionIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-                                    "\n\n\n\n--\nSent from AndiCar (http://sites.google.com/site/andicarfree/)\n" +
+                                    "\n\n\n\n--\nSent from AndiCar (http://www.andicar.org)\n" +
                                     "Manage your cars with the power of open source.");
                             startActivity(Intent.createChooser(actionIntent, "Send mail..."));
                         }

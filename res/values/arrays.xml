@@ -32,7 +32,7 @@
         <item>html</item>
     </string-array>
 
-    <!-- Used in gps track (minimum time betwee 2 recording points) -->
+    <!-- Used in gps track (minimum time between 2 recording points) -->
     <string-array name="gpstrack_preference_mintime_entries">
         <item>Highest</item>
         <item>3 s</item>
@@ -44,7 +44,7 @@
         <item>5 min</item>
         <item>10 min</item>
     </string-array>
-    <!-- values in miliseconds -->
+    <!-- values in milliseconds -->
     <string-array name="gpstrack_preference_mintime_values">
         <item>0</item>
         <item>3000</item>
@@ -116,22 +116,13 @@
     </string-array>
 
     <string-array name="recurency_periods">
+        <item>Day(s)</item>
         <item>Week(s)</item>
         <item>Month(s)</item>
         <item>Year(s)</item>
     </string-array>
-
-    <string-array name="days_of_week">
-    	<item>Sunday</item>
-    	<item>Monday</item>
-    	<item>Tuesday</item>
-    	<item>Wednesday</item>
-    	<item>Thursday</item>
-    	<item>Friday</item>
-    	<item>Saturday</item>
-    </string-array>
-
-    <string-array name="months_of_year">
+    
+    <string-array name="months">
 	    <item>January</item>
 	    <item>February</item>
 	    <item>March</item>
@@ -145,6 +136,7 @@
 	    <item>November</item>
 	    <item>December</item>
     </string-array>
+    
 
 </resources>
 

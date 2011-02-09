@@ -90,11 +90,12 @@ public class DB {
 	// tags table
 	public static final String TAG_TABLE_NAME = "DEF_TAG";
 
-	// tasks/reminders tables
+	// tasks/reminders/todo tables
 	public static final String TASKTYPE_TABLE_NAME = "DEF_TASKTYPE";
 	public static final String TASK_TABLE_NAME = "DEF_TASK";
 	public static final String TASK_CAR_TABLE_NAME = "TASK_CAR";
-
+	public static final String TODO_TABLE_NAME = "TASK_TODO";
+	
 	// column names. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
 	public static final String GEN_COL_ROWID_NAME = "_id";
@@ -269,54 +270,42 @@ public class DB {
 	public static final String BPARTNER_LOCATION_COL_EMAIL_NAME = "Email";
 	public static final String BPARTNER_LOCATION_COL_CONTACTPERSON_NAME = "ContactPerson";
 
+	
 	public static final String TASK_COL_TASKTYPE_ID_NAME = TASKTYPE_TABLE_NAME + "_ID";
 	/**
-	 * this task is a recurent task? {Y|N}
-	 */
-	public static final String TASK_COL_ISRECURENT_NAME = "IsRecurent";
-	/**
-	 * Time|Mileage|Both (StaticValues.TASK_SCHEDULED_FOR_...)
+	 * Time|Mileage|Both (StaticValues.TASK_SCHEDULED_FOR_{TIME|MILEAGE|BOTH})
 	 */
 	public static final String TASK_COL_SCHEDULEDFOR_NAME = "ScheduledFor";
+	/**
+	 * recurrent or one time task {Y|N}
+	 */
+	public static final String TASK_COL_ISRECURRENT_NAME = "IsRecurrent";
 	public static final String TASK_COL_ISDIFFERENTSTARTINGTIME_NAME = "IsDifferentSTime";
 	/**
-	 * no of days/weeks/years
+	 * recurrency  (every X days/weeks/months/years depending on TASK_COL_TIMEFREQUENCYTYPE_NAME) 
 	 */
 	public static final String TASK_COL_TIMEFREQUENCY_NAME = "TimeFrequency";
 	/**
 	 * Type integer<br>
-	 * Frequency type: 0 = Week, 1 = Month, 2 = Year (StaticValues.TASK_SCHEDULED_FREQTYPE_...
+	 * Frequency type: 0 = One time, 1 = Daily, 2 = Weekly, 3 = Monthly, 4 = Yearly (StaticValues.TASK_TIMEFREQUENCYTYPE_...
 	 */
 	public static final String TASK_COL_TIMEFREQUENCYTYPE_NAME = "TimeFrequencyType";
 	
 	/**
-	 * run on a specified day when IsDifferentSTime = 'N' 
-	 * <li>if TimeFrequencyType is week: 0 Sunday - 6 Saturday <br>
-	 * <li>if TimeFrequencyType is month: 1 - 32. 32 for last day of the month
-	 * <li>if TimeFrequencyType is year: 1 - 31
-	 */
-	public static final String TASK_COL_RUNDAY_NAME = "RunDay";
-
-	/**
-	 * run on a specified month when IsDifferentSTime = 'N' and TimeFrequencyType is year <br>
-	 *  <li> 0 = January
-	 *  <li> ...
-	 *  <li> 11 = December
-	 */
-	public static final String TASK_COL_RUNMONTH_NAME = "RunMonth";
-	/**
 	 * Type Date<br><br>
 	 * If IsRecurent = 'Y':
-	 * <li>1970-01-01 hh:mm. Just the hh:mm part are considered<br><br>
+	 * <li>The starting date<br><br>
 	 * If IsRecurent = 'N':
-	 * <li>Datetime
+	 * <li>The run date
+	 * <li>1970-mm-01 hh:mm if TASK_COL_TIMEFREQUENCYTYPE_NAME = Month and if is LastDay of the month
 	 */
-	public static final String TASK_COL_RUNTIME_NAME = "RunTime";
+	public static final String TASK_COL_STARTINGTIME_NAME = "StartingTime";
 	/**
-	 * Type integer
-	 * No. of days to start reminders
+	 * Type integer <br>
+	 * <li>No. of days to start reminders if TASK_COL_TIMEFREQUENCYTYPE_NAME != Day
+	 * <li>No. of minutes to start reminders if TASK_COL_TIMEFREQUENCYTYPE_NAME == Day
 	 */
-	public static final String TASK_COL_REMINDERDAYS_NAME = "ReminderDays";
+	public static final String TASK_COL_TIMEREMINDERSTART_NAME = "TimeReminderStart";
 	/**
 	 * If IsRecurent = 'Y':
 	 * <li>Run on every mileage<br>
@@ -325,14 +314,43 @@ public class DB {
 	 */
 	public static final String TASK_COL_RUNMILEAGE_NAME = "RunMileage";
 	/**
-	 * UOM for mileage: km or mi
-	 */
-	public static final String TASK_COL_MILEAGEUOM_ID_NAME = "MileageUom_ID";
-	/**
 	 * No. of km|mi to start reminders
 	 */
-	public static final String TASK_COL_REMINDERMILEAGES_NAME = "ReminderMileages";
-
+	public static final String TASK_COL_MILEAGEREMINDERSTART_NAME = "MileageReminderStart";
+	
+	
+	/**
+	 * the task from where this todo come
+	 */
+	public static final String TODO_COL_TASK_ID_NAME = TASK_TABLE_NAME + "_ID";
+	/**
+	 * the linked car to the task (if exist) 
+	 */
+	public static final String TODO_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
+	/**
+	 * the due date based on start time and recurency settings
+	 */
+	public static final String TODO_COL_DUEDATE_NAME = "DueDate";
+	/**
+	 * the due mileage based on starting mileage and recurency mileage
+	 */
+	public static final String TODO_COL_DUEMILAGE_NAME = "DueMilage";
+	/**
+	 * postpone the next reminder until this date 
+	 */
+	public static final String TODO_COL_POSTPONEUNTIL_NAME = "PostponeUntil";
+	/**
+	 * if this todo is done {Y|N}
+	 */
+	public static final String TODO_COL_ISDONE_NAME = "IsDone";
+	/**
+	 * the date when this todo was done
+	 */
+	public static final String TODO_COL_DONEDATE_NAME = "DoneDate";
+	/**
+	 * stop the notification for this todo, even if is not done
+	 */
+	public static final String TODO_COL_ISSTOPNOTIFICATION_NAME = "IsStopNotification";
 	
 	public static final String TASK_CAR_COL_TASK_ID_NAME = TASK_TABLE_NAME + "_ID";
 	public static final String TASK_CAR_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
@@ -466,25 +484,32 @@ public class DB {
 	public static final int BPARTNER_LOCATION_COL_FAX_POS = 12;
 	public static final int BPARTNER_LOCATION_COL_EMAIL_POS = 13;
 	public static final int BPARTNER_LOCATION_COL_CONTACTPERSON_POS = 14;
-
+	
 	public static final int TASK_COL_TASKTYPE_ID_POS = 4;
-	public static final int TASK_COL_ISRECURENT_POS = 5;
-	public static final int TASK_COL_SCHEDULEDFOR_POS = 6;
+	public static final int TASK_COL_SCHEDULEDFOR_POS = 5;
+	public static final int TASK_COL_ISRECURRENT_POS = 6;
 	public static final int TASK_COL_ISDIFFERENTSTARTINGTIME_POS = 7;
 	public static final int TASK_COL_TIMEFREQUENCY_POS = 8;
 	public static final int TASK_COL_TIMEFREQUENCYTYPE_POS = 9;
-	public static final int TASK_COL_RUNDAY_POS = 10;
-	public static final int TASK_COL_RUNMONTH_POS = 11;
-	public static final int TASK_COL_RUNTIME_POS = 12;
-	public static final int TASK_COL_REMINDERDAYS_POS = 13;
-	public static final int TASK_COL_RUNMILEAGE_POS = 14;
-	public static final int TASK_COL_MILEAGEUOM_ID_POS = 15;
-	public static final int TASK_COL_REMINDERMILEAGES_POS = 16;
+	public static final int TASK_COL_STARTINGTIME_POS = 10;
+	public static final int TASK_COL_TIMEREMINDERSTART_POS = 11;
+	public static final int TASK_COL_RUNMILEAGE_POS = 12;
+	public static final int TASK_COL_MILEAGEREMINDERSTART_POS = 13;
 
 	public static final int TASK_CAR_COL_TASK_ID_POS = 4;
 	public static final int TASK_CAR_COL_CAR_ID_POS = 5;
 	public static final int TASK_CAR_COL_FIRSTRUN_DATE_POS = 6;
 	public static final int TASK_CAR_COL_FIRSTRUN_MILEAGE_POS = 7;
+	
+	public static final int TODO_COL_TASK_ID_POS = 4;
+	public static final int TODO_COL_CAR_ID_POS = 5;
+	public static final int TODO_COL_DUEDATE_POS = 6;
+	public static final int TODO_COL_DUEMILAGE_POS = 7;
+	public static final int TODO_COL_POSTPONEUNTI_POS = 8;
+	public static final int TODO_COL_ISDONE_POS = 9;
+	public static final int TODO_COL_DONEDATE_POS = 10;
+	public static final int TODO_COL_ISSTOPNOTIFICATION_POS = 11;
+
 
 	public static final String[] driverTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
@@ -604,14 +629,20 @@ public class DB {
 	// tasks/reminders tables
 	public static final String[] taskTypeTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME };
+	
 	public static final String[] taskTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME, TASK_COL_ISRECURENT_NAME,
-			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, TASK_COL_TIMEFREQUENCY_NAME,
-			TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_RUNDAY_NAME, TASK_COL_RUNMONTH_NAME, TASK_COL_RUNTIME_NAME,
-			TASK_COL_REMINDERDAYS_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEUOM_ID_NAME, TASK_COL_REMINDERMILEAGES_NAME};
+			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME,
+			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISRECURRENT_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, 
+			TASK_COL_TIMEFREQUENCY_NAME, TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_STARTINGTIME_NAME,
+			TASK_COL_TIMEREMINDERSTART_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEREMINDERSTART_NAME};
+	
 	public static final String[] taskCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
 			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
+
+	public static final String[] todoTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
+		TODO_COL_TASK_ID_NAME, TODO_COL_CAR_ID_NAME, TODO_COL_DUEDATE_NAME, TODO_COL_DUEMILAGE_NAME, TODO_COL_POSTPONEUNTIL_NAME, 
+		TODO_COL_ISDONE_NAME, TODO_COL_DONEDATE_NAME, TODO_COL_ISSTOPNOTIFICATION_NAME};
 
 	public static final String[] genColName = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME };
@@ -1041,30 +1072,25 @@ public class DB {
 			+ " TEXT NULL, "
 			+ TASK_COL_TASKTYPE_ID_NAME
 			+ " INTEGER NOT NULL, "
-			+ TASK_COL_ISRECURENT_NAME 
-			+ " TEXT DEFAULT 'Y', "
 			+ TASK_COL_SCHEDULEDFOR_NAME
 			+ " TEXT NULL, "
+			+ TASK_COL_ISRECURRENT_NAME
+			+ " TEXT NOT NULL, "
 			+ TASK_COL_ISDIFFERENTSTARTINGTIME_NAME
 			+ " TEXT NULL, "
 			+ TASK_COL_TIMEFREQUENCY_NAME
 			+ " INTEGER NULL, "
 			+ TASK_COL_TIMEFREQUENCYTYPE_NAME
 			+ " INTEGER NULL, "
-			+ TASK_COL_RUNDAY_NAME
-			+ " INTEGER NULL, "
-			+ TASK_COL_RUNMONTH_NAME
-			+ " INTEGER NULL, "
-			+ TASK_COL_RUNTIME_NAME
+			+ TASK_COL_STARTINGTIME_NAME
 			+ " DATE NULL, "
-			+ TASK_COL_REMINDERDAYS_NAME
+			+ TASK_COL_TIMEREMINDERSTART_NAME
 			+ " INTEGER NULL, "
 			+ TASK_COL_RUNMILEAGE_NAME
 			+ " INTEGER NULL, "
-			+ TASK_COL_MILEAGEUOM_ID_NAME
+			+ TASK_COL_MILEAGEREMINDERSTART_NAME
 			+ " INTEGER NULL, "
-			+ TASK_COL_REMINDERMILEAGES_NAME
-			+ " INTEGER NULL "
+			+ " FOREIGN KEY(" + TASK_COL_TASKTYPE_ID_NAME + ") REFERENCES " + TASKTYPE_TABLE_NAME + "(" + GEN_COL_ROWID_NAME + ")"
 			+ ");";
 
 	protected static final String TASK_CAR_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
@@ -1086,6 +1112,35 @@ public class DB {
 		+ " DATE NULL, "
 		+ TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME
 		+ " INTEGER NULL "
+		+ ");";
+
+	protected static final String TODO_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
+		+ TODO_TABLE_NAME
+		+ " ( "
+		+ GEN_COL_ROWID_NAME
+		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+		+ GEN_COL_NAME_NAME
+		+ " TEXT NOT NULL, "
+		+ GEN_COL_ISACTIVE_NAME
+		+ " TEXT DEFAULT 'Y', "
+		+ GEN_COL_USER_COMMENT_NAME
+		+ " TEXT NULL, "
+		+ TODO_COL_TASK_ID_NAME 
+		+ " INTEGER NOT NULL, "
+		+ TODO_COL_CAR_ID_NAME
+		+ " INTEGER NULL, "
+		+ TODO_COL_DUEDATE_NAME
+		+ " DATE NULL, "
+		+ TODO_COL_DUEMILAGE_NAME
+		+ " INTEGER NULL, "
+		+ TODO_COL_POSTPONEUNTIL_NAME
+		+ " DATE NULL, "
+		+ TODO_COL_ISDONE_NAME
+		+ " TEXT DEFAULT 'N', "
+		+ TODO_COL_DONEDATE_NAME
+		+ " DATE NULL, "
+		+ TODO_COL_ISSTOPNOTIFICATION_NAME
+		+ " TEXT DEFAULT 'N' "
 		+ ");";
 
 	/**
@@ -1202,12 +1257,12 @@ public class DB {
 
 		}
 
-		private void createTaskTables(SQLiteDatabase db) {
-			return;
+		private void createTaskTables(SQLiteDatabase db) throws SQLException {
 			// create task/reminder
-//			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
-//			db.execSQL(TASK_TABLE_CREATE_SQL);
-//			db.execSQL(TASK_CAR_TABLE_CREATE_SQL);
+			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
+			db.execSQL(TASK_TABLE_CREATE_SQL);
+			db.execSQL(TASK_CAR_TABLE_CREATE_SQL);
+			db.execSQL(TODO_TABLE_CREATE_SQL);
 		}
 
 		private void createBPartnerTable(SQLiteDatabase db) throws SQLException {
@@ -1455,7 +1510,7 @@ public class DB {
 			createIndexes(db);
 			// create the missing folders on SDCARD
 			FileUtils fu = new FileUtils(mCtx);
-			if (fu.createFolderIfNotExists(0) != -1) {
+			if (fu.createFolderIfNotExists(FileUtils.ALL_FOLDER) != -1) {
 				Log.e(TAG, fu.lastError);
 			}
 
@@ -2164,6 +2219,12 @@ public class DB {
 		db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX4 "
 				+ "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME
 				+ ")");
+		
+		db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS " + TASK_CAR_TABLE_NAME + "_UK1 "
+				+ "ON " + TASK_CAR_TABLE_NAME + " (" + TASK_CAR_COL_CAR_ID_NAME + ", " + TASK_CAR_COL_TASK_ID_NAME + ")");
+		
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TODO_TABLE_NAME + "_IX1 "
+				+ "ON " + TODO_TABLE_NAME + " (" + TODO_COL_TASK_ID_NAME + ")");
 	}
 
 	public boolean backupDb(String bkName, String bkPrefix) {

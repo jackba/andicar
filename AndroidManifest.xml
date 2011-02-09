@@ -20,8 +20,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
-          android:versionCode="3564" 
-          android:versionName="3.5.6.4 Beta"
+          android:versionCode="3563" 
+          android:versionName="3.5.7 Beta"
           android:installLocation="internalOnly">
 <!-- 
 	internalOnly becouse:
@@ -74,6 +74,7 @@
 		 
         <service android:name="org.andicar.service.GPSTrackService" />
         <service android:name="org.andicar.service.UpdateCheckService" />
+        <service android:name="org.andicar.service.TodoManagementService" /> 
         
         <activity android:name="org.andicar.activity.MainActivity"
                   android:label="AndiCar"

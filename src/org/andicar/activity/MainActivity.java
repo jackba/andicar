@@ -337,29 +337,23 @@ public class MainActivity extends BaseActivity {
 			Long currentTime = System.currentTimeMillis();
 			Long lastTime = mPreferences.getLong("lastUpdateCheckTime", 0);
 			SharedPreferences.Editor editor = mPreferences.edit();
-			long oneDayInMilis = 86400000; //(24 * 60 * 60 * 1000);
 //			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
 //				if ((lastTime + oneDayInMilis) < currentTime) {
-//					AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 //					Intent intent = new Intent(this, UpdateCheckService.class);
-//					PendingIntent pIntent = PendingIntent.getService(this, 0,
-//							intent, PendingIntent.FLAG_CANCEL_CURRENT);
-//					am.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
-//							pIntent);
+//					this.startService(intent);
 //					editor.putLong("lastUpdateCheckTime", lastTime);
 //					editor.commit();
 //				}
 //			}
 			
 			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
-//			if(lastTime + (30 * oneDayInMilis) < currentTime){
 			if(isJustInstalled){
 				//show the question above 10 days 
-				editor.putLong("lastAddOnCheckTime", currentTime - (5 * oneDayInMilis));
+				editor.putLong("lastAddOnCheckTime", currentTime - (5 * StaticValues.ONE_DAY_IN_MILISECONDS));
 				editor.commit();
 			}
 			else{
-				if(lastTime + (15 * oneDayInMilis) < currentTime && 
+				if(lastTime + (15 * StaticValues.ONE_DAY_IN_MILISECONDS) < currentTime && 
 						!ServiceSubscription.isAddOnsUsed(mDbAdapter)){
 					editor.putLong("lastAddOnCheckTime", currentTime);
 					editor.commit();
@@ -385,7 +379,7 @@ public class MainActivity extends BaseActivity {
 		            alert.show();
 				}
 			}
-			
+
 		} catch (Exception e) {
 			String logFile = "startup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
@@ -1471,9 +1465,9 @@ public class MainActivity extends BaseActivity {
 		menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
 				mRes.getText(R.string.MENU_PreferencesCaption)).setIcon(
 				mRes.getDrawable(R.drawable.ic_menu_preferences));
-//		menu.add(0, StaticValues.MENU_TASKREMINDER_ID, 0,
-//				mRes.getText(R.string.MENU_TaskReminderCaption)).setIcon(
-//				mRes.getDrawable(R.drawable.ic_menu_task));
+		menu.add(0, StaticValues.MENU_TASKREMINDER_ID, 0,
+				mRes.getText(R.string.MENU_TaskReminderCaption)).setIcon(
+				mRes.getDrawable(R.drawable.ic_menu_task));
 		menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
 				mRes.getText(R.string.MENU_AboutCaption)).setIcon(
 				mRes.getDrawable(R.drawable.ic_menu_info_details));
@@ -1528,7 +1522,7 @@ public class MainActivity extends BaseActivity {
 		} else if (item.getItemId() == StaticValues.MENU_LOCALIZE_ID) {
 			startActivity(new Intent(
 					Intent.ACTION_VIEW,
-					Uri.parse("http://sites.google.com/site/andicarfree/localizing-andicar")));
+					Uri.parse("http://www.andicar.org/localizing-andicar")));
 		}
 		else if (item.getItemId() == StaticValues.MENU_TASKREMINDER_ID) {
 			startActivity(new Intent(this, TaskListActivity.class));

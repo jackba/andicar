@@ -51,9 +51,9 @@
     <string name="DB_UOMConv_USGToGBGComment">"US gallon to Imperial gallon"</string>
     <!-- expense types -->
     <string name="DB_ExpType_PersonalName">"Personal"</string>
-    <string name="DB_ExpType_PersonalComment">"Expenses suported by you"</string>
+    <string name="DB_ExpType_PersonalComment">"Expenses supported by you"</string>
     <string name="DB_ExpType_EmployerName">"Business"</string>
-    <string name="DB_ExpType_EmployerComment">"Expenses suported by your employer"</string>
+    <string name="DB_ExpType_EmployerComment">"Expenses supported by your employer"</string>
     <!-- expense categories -->
     <string name="DB_ExpCat_FuelName">"Fuel"</string>
     <string name="DB_ExpCat_FuelComment">"Expenses with refuels"</string>
