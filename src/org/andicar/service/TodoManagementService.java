@@ -304,7 +304,8 @@ public class TodoManagementService extends Service {
 				}
 
 				boolean isLastDayOfMonth = (nextToDoCalendar.get(Calendar.YEAR) == 1970); 
-				nextToDoCalendar.set(Calendar.YEAR, currentYear);
+				if(isLastDayOfMonth)
+					nextToDoCalendar.set(Calendar.YEAR, currentYear);
 
 				if(isLastDayOfMonth){
 					if(isLastDayOfCurrentMonth)

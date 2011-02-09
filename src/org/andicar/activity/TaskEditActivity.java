@@ -568,10 +568,22 @@ public class TaskEditActivity extends EditActivityBase {
 			}
 		}
 		//delete existent linked cars if the configuration not support linked cars
+		String[] selectionArgs = {Long.toString(mRowId)};
 		if(isFinishAfterSave && isDeleteLinkedCarsOnSave){
-			String[] selectionArgs = {Long.toString(mRowId)};
 			mDbAdapter.deleteRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, 
 						MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + "= ?", selectionArgs);
+		}
+		
+		ContentValues newContent = new ContentValues();
+		if(!isTimingEnabled){
+			newContent.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, (Long)null);
+			mDbAdapter.updateRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?", 
+					selectionArgs, newContent);
+		}
+		if(!isMileageEnabled){
+			newContent.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, (Integer)null);
+			mDbAdapter.updateRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?", 
+					selectionArgs, newContent);
 		}
 	}
 
@@ -743,19 +755,19 @@ public class TaskEditActivity extends EditActivityBase {
 		        etLinkedCarIndexStart.setText("0");
 			}
 		}
-        mYear = mLinkDialogStartingYear;
-        mMonth = mLinkDialogStartingMonth;
-        mDay = mLinkDialogStartingDay;
-        mHour = mLinkDialogStartingHour;
-        mMinute = mLinkDialogStartingMinute;
+//        mYear = mLinkDialogStartingYear;
+//        mMonth = mLinkDialogStartingMonth;
+//        mDay = mLinkDialogStartingDay;
+//        mHour = mLinkDialogStartingHour;
+//        mMinute = mLinkDialogStartingMinute;
         switch(id) {
-	        case StaticValues.DIALOG_TIME_PICKER:
-	        	if(mTimePickerDialog != null)
-	        		mTimePickerDialog.updateTime(mHour, mMinute);
+	        case StaticValues.DIALOG_DATE_TO_PICKER:
+	        	if(mLinkDialogTimePickerDialog != null)
+	        		mLinkDialogTimePickerDialog.updateTime(mLinkDialogStartingHour, mLinkDialogStartingMinute);
 	            break;
-	        case StaticValues.DIALOG_DATE_PICKER:
-	        	if(mDatePickerDialog != null)
-	        		mDatePickerDialog.updateDate(mYear, mMonth, mDay);
+	        case StaticValues.DIALOG_DATE_FROM_PICKER:
+	        	if(mLinkDialogDatePickerDialog != null)
+	        		mLinkDialogDatePickerDialog.updateDate(mLinkDialogStartingYear, mLinkDialogStartingMonth, mLinkDialogStartingDay);
 	            break;
         }
 	}

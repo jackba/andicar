@@ -27,15 +27,17 @@ public class TaskCarLinkDataBinder implements SimpleCursorAdapter.ViewBinder {
     @Override
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
     	if(columnIndex == 2) {
-    		((TextView) view).setText(
-    				cursor.getString(2)
-    					.replace("[#1]", 
-    							DateFormat.getDateFormat(view.getContext().getApplicationContext())
-    									.format(cursor.getLong(3) * 1000) + " " +
-		 							DateFormat.getTimeFormat(view.getContext().getApplicationContext())
-			 								.format(cursor.getLong(3) * 1000))
-			 );
-    		return true;
+    		if(cursor != null && cursor.getString(2) != null){
+	    		((TextView) view).setText(
+	    				cursor.getString(2)
+	    					.replace("[#1]", 
+	    							DateFormat.getDateFormat(view.getContext().getApplicationContext())
+	    									.format(cursor.getLong(3) * 1000) + " " +
+			 							DateFormat.getTimeFormat(view.getContext().getApplicationContext())
+				 								.format(cursor.getLong(3) * 1000))
+				 );
+	    		return true;
+    		}
     	}
         return false;
     }
