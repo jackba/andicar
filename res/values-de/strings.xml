@@ -130,12 +130,10 @@
     <string name="GEN_MailSent">"Mail gesendet"</string>
     <string name="GEN_Password">"Passwort"</string>
     <string name="GEN_ShowNotification">"Zeige Benachrichtigung"</string>
-    <string name="GEN_TaskTypeLabel">"Aufgabenart:"</string>
-    <string name="GEN_RepeatingHdr">"Wiederholung"</string>
+    <string name="GEN_TaskType">"Aufgabenart:"</string>
     <string name="GEN_SetDate">"Datum/Zeit setzen"</string>
     <string name="GEN_On">"am"</string> <!-- ex. on Monday -->
-    <string name="GEN_At">"um"</string> <!-- ex. on Monday at 1 PM -->
-    <string name="GEN_Day">"Tag"</string>
+    <string name="GEN_Days">"Tag"</string>
     <string name="GEN_LastDay">"letzter Tag"</string>
     
     <string name="MENU_PreferencesCaption">"Einstellungen"</string>
@@ -289,8 +287,7 @@
     <string name="TaskEditActivity_OneTime">"Einmal am"</string>
     <string name="TaskEditActivity_Recurent">"Wiederholend"</string>
     <string name="TaskEditActivity_RecurentEveryLabel">"Jeden"</string>
-    <string name="TaskEditActivity_RecurentfrequencyLabel">"Wiederholung"</string>
-    <string name="TaskEditActivity_MoreExact">"genauer "</string>
+    <string name="TaskEditActivity_RecurentFrequencyLabel">"Wiederholung"</string>
 
     <string name="PREF_UOMCategoryTitle">"Einheiten"</string>
     <string name="PREF_ExpenseCategoryTitle">"Kosten"</string>
@@ -298,9 +295,9 @@
     <string name="PREF_ExpenseTypeCategorySummary">"Kostengruppen hinzufügen oder ändern."</string>
     <string name="PREF_CarDriverCategoryTitle">"Fahrer und Fahrzeuge"</string>
     <string name="PREF_CarTitle">"Fahrzeuge"</string>
-    <string name="PREF_CarSummary">"Fahrzeuge hinzufügen, bearbeiten und löschen.\nWähle das aktuelle Fahrzeug aus"</string>
+    <string name="PREF_CarSummary">"Fahrzeuge hinzufügen, bearbeiten und löschen."</string>
     <string name="PREF_DriverTitle">"Fahrer"</string>
-    <string name="PREF_DriverSummary">"Fahrer hinzufügen, bearbeiten und löschen.\nWähle den aktuellen Fahrer aus."</string>
+    <string name="PREF_DriverSummary">"Fahrer hinzufügen, bearbeiten und löschen."</string>
     <string name="PREF_UOMTitle">"Einheiten"</string>
     <string name="PREF_UOMSummary">"hinzufügen, bearbeiten und löschen von Einheiten."</string>
     <string name="PREF_UOMConversionTitle">"Einheitsumrechnung"</string>

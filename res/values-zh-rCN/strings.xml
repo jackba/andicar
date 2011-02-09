@@ -118,7 +118,11 @@
 	<string name="GEN_MailSent">"邮件已发送"</string>
 	<string name="GEN_Password">"密码"</string>
 	<string name="GEN_ShowNotification">"显示通知"</string>
-
+	<string name="GEN_Error">"错误"</string>
+	<string name="GEN_Confirm">"确认"</string>
+	<string name="GEN_Info">"关于"</string>
+	<string name="GEN_Warning">"警告"</string>
+	
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
     <string name="MENU_DeleteCaption">"删除"</string>
@@ -162,6 +166,8 @@
     <string name="MainActivity_GPSTrackZoneNoDataText">"无追踪。"</string>
     <string name="MainActivity_NoMarketAccessMsg">"无法打开Android市场！"</string>
     <string name="MainActivity_AppVersion">"程序版本："</string>
+    <string name="MainActivity_DidYouKnow">"你知道么?"</string>
+	<string name="MainActivity_AddOnMessage">"AndiCar支持一些插件服务，所有的插件能够免费试用。\n\n想要看看可用插件的列表么?"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"执照号码："</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"不能阻止当前司机的活动。"</string>
