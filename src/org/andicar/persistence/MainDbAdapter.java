@@ -547,6 +547,31 @@ public class MainDbAdapter extends DB
      * @param tableName
      * @param selection
      * @param selectionArgs
+     * @param newContent
+     * @return TODO return values on error (eg. record cannot be deleted)
+     */
+    public int updateRecords( String tableName, String selection, String[] selectionArgs, ContentValues newContent)
+    {
+//    	int checkVal;
+    	String checkSql =
+    		"SELECT * " +
+    		" FROM " + tableName;
+    	if(selection != null)
+    		checkSql = checkSql +
+    				" WHERE " + selection;
+    	Cursor c = query(checkSql, selectionArgs);
+    	while(c.moveToNext()){
+    		updateRecord(tableName, c.getLong(GEN_COL_ROWID_POS), newContent);
+    	}
+    	c.close();
+    	return 1;
+    }
+
+    /**
+     * 
+     * @param tableName
+     * @param selection
+     * @param selectionArgs
      * @return TODO return values on error (eg. record cannot be deleted)
      */
     public int deleteRecords( String tableName, String selection, String[] selectionArgs)
