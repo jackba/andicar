@@ -53,9 +53,9 @@
     <string name="DB_UOMConv_USGToGBGComment">"US Gallonen nach englischen Gallonen"</string>
     <!-- expense types -->
     <string name="DB_ExpType_PersonalName">"Persönlich"</string>
-    <string name="DB_ExpType_PersonalComment">"Ausgaben, durch Dich bezahlt"</string>
+    <string name="DB_ExpType_PersonalComment">"Ausgaben, von dir bezahlt"</string>
     <string name="DB_ExpType_EmployerName">"Geschäftlich"</string>
-    <string name="DB_ExpType_EmployerComment">"Ausgaben, duch Dein Arbeitgeber bezahlt"</string>
+    <string name="DB_ExpType_EmployerComment">"Ausgaben, duch dein Arbeitgeber bezahlt"</string>
     <!-- expense categories -->
     <string name="DB_ExpCat_FuelName">"Benzin"</string>
     <string name="DB_ExpCat_FuelComment">"Ausgaben durch Tanken"</string>
