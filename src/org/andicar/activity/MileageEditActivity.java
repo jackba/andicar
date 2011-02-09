@@ -270,9 +270,17 @@ public class MileageEditActivity extends EditActivityBase {
         }
 
         initControls();
-
-        mUOMLengthId = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId)
-                                        .getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
+        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mCarId);
+        if(c != null){
+        	mUOMLengthId = c.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS);
+        }
+        else{
+            madbErrorAlert.setMessage(mResource.getString(R.string.ERR_051));
+            madError = madbErrorAlert.create();
+            madError.show();
+            return;
+        }
+    	c.close();
 
         etUserInput.requestFocus();
         if(isSendStatistics)
