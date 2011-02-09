@@ -127,7 +127,11 @@
     <string name="GEN_MailSent">"Mail sent"</string>
     <string name="GEN_Password">"Password"</string>
     <string name="GEN_ShowNotification">"Show notification"</string>
-    <string name="GEN_TaskTypeLabel">"Task type:"</string>
+    <string name="GEN_Error">"Error"</string>
+    <string name="GEN_Confirm">"Confirmation"</string>
+    <string name="GEN_Info">"Info"</string>
+    <string name="GEN_Warning">"Warning"</string>
+    <string name="GEN_TaskType">"Task type:"</string>
     <string name="GEN_SetDate">"Set date/time"</string>
     <string name="GEN_On">"On"</string> <!-- example on Monday -->
     <string name="GEN_Days">"days"</string>
@@ -135,10 +139,6 @@
     <string name="GEN_LastDay">"last day"</string>
     <string name="GEN_Description">"Description"</string>
     <string name="GEN_Or">"Or:"</string>
-    <string name="GEN_Error">"Error"</string>
-    <string name="GEN_Confirm">"Confirmation"</string>
-    <string name="GEN_Info">"Info"</string>
-    <string name="GEN_Warning">"Warning"</string>
     <string name="GEN_TaskLabel">"Task:"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
