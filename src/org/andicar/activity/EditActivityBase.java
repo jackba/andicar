@@ -54,8 +54,10 @@ public abstract class EditActivityBase extends BaseActivity {
     protected Bundle mBundleExtras = null;
     protected ImageButton btnOk = null;
     protected ImageButton btnCancel = null;
-    ImageButton btnPickDate = null;
+    protected ImageButton btnPickDate = null;
     protected ImageButton btnPickTime = null;
+    protected TimePickerDialog mTimePickerDialog = null;
+    protected DatePickerDialog mDatePickerDialog = null;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
@@ -237,27 +239,30 @@ public abstract class EditActivityBase extends BaseActivity {
     protected Dialog onCreateDialog(int id) {
         switch(id) {
             case StaticValues.DIALOG_TIME_PICKER:
-                return new TimePickerDialog(this,
-                        onTimeSetListener, mHour, mMinute, false);
+            	mTimePickerDialog = new TimePickerDialog(this,
+                        onTimeSetListener, mHour, mMinute, false); 
+                return mTimePickerDialog;
             case StaticValues.DIALOG_DATE_PICKER:
-                return new DatePickerDialog(this,
-                        onDateSetListener,
-                        mYear, mMonth, mDay);
+            	mDatePickerDialog = new DatePickerDialog(this,
+                        onDateSetListener, mYear, mMonth, mDay); 
+                return mDatePickerDialog;
         }
         return null;
     }
 
-//    @Override
-//    protected void onPrepareDialog(int id, Dialog dialog) {
-//        switch(id) {
-//            case StaticValues.DIALOG_TIME_PICKER:
-//                ((TimePickerDialog) dialog).updateTime(mHour, mMinute);
-//                break;
-//            case StaticValues.DIALOG_DATE_PICKER:
-//                ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
-//                break;
-//        }
-//    }
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+        switch(id) {
+            case StaticValues.DIALOG_TIME_PICKER:
+            	if(mTimePickerDialog != null)
+            		mTimePickerDialog.updateTime(mHour, mMinute);
+                break;
+            case StaticValues.DIALOG_DATE_PICKER:
+            	if(mDatePickerDialog != null)
+            		mDatePickerDialog.updateDate(mYear, mMonth, mDay);
+                break;
+        }
+    }
 
     private DatePickerDialog.OnDateSetListener onDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
