@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 356;
+    public static final int DATABASE_VERSION = 357;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     
@@ -95,7 +95,7 @@ public class StaticValues
     public static final int DIALOG_REPORT_OPTIONS = 3;
     public static final int DIALOG_DATE_FROM_PICKER = 4;
     public static final int DIALOG_DATE_TO_PICKER = 5;
-    public static final int DIALOG_TIME_PICKER2 = 6;
+//    public static final int DIALOG_TIME_PICKER2 = 6;
     public static final int DIALOG_TASK_CAR_LINK = 7;
 
     public static final int NOTIF_UPDATECHECK_ID = 0;
@@ -157,7 +157,12 @@ public class StaticValues
     public static final String TASK_SCHEDULED_FOR_TIME = "T";
     public static final String TASK_SCHEDULED_FOR_MILEAGE = "M";
     public static final String TASK_SCHEDULED_FOR_BOTH = "B";
-    public static final int TASK_SCHEDULED_FREQTYPE_WEEK = 0;
-    public static final int TASK_SCHEDULED_FREQTYPE_MONTH = 1;
-    public static final int TASK_SCHEDULED_FREQTYPE_YEAR = 2;
+    
+    public static final int TASK_TIMEFREQUENCYTYPE_ONETIME = 0;
+    public static final int TASK_TIMEFREQUENCYTYPE_DAILY = 1;
+    public static final int TASK_TIMEFREQUENCYTYPE_WEEKLY = 2;
+    public static final int TASK_TIMEFREQUENCYTYPE_MONTHLY = 3;
+    public static final int TASK_TIMEFREQUENCYTYPE_YEARLY = 4;
+    
+    public static final long ONE_DAY_IN_MILISECONDS = 86400000;
 }

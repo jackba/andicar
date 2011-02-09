@@ -506,7 +506,7 @@ public class MileageEditActivity extends EditActivityBase {
     private BigDecimal fillGetCurrentIndex() throws SQLException {
         try{
             if(mStartIndex.equals(new BigDecimal("0"))){
-                mStartIndex = mDbAdapter.getMileageStartIndex(mCarId);
+                mStartIndex = mDbAdapter.getCarLastMileageIndex(mCarId);
             }
             etStartIndex.setText(Utils.numberToString(mStartIndex, false, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
         }

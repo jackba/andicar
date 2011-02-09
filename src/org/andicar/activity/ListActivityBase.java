@@ -153,10 +153,12 @@ public class ListActivityBase extends ListActivity {
 
         lvBaseList.setTextFilterEnabled(true);
         lvBaseList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        lvBaseList.setOnItemClickListener(mItemClickListener);
         lvBaseList.setOnItemLongClickListener(mItemLongClickListener);
         registerForContextMenu(lvBaseList);
-        lvBaseList.setOnItemClickListener(this.mItemClickListener);
+        if(mItemClickListener != null)
+        	lvBaseList.setOnItemClickListener(mItemClickListener);
+        else
+        	lvBaseList.setOnItemClickListener(this.mItemClickListener);
 
         fillData();
 

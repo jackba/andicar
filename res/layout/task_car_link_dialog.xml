@@ -86,54 +86,62 @@
                 />
         </LinearLayout>
 
-        <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/TaskCarEditActivity_StartDate"
-	        android:typeface="sans"
-	        android:textColor="@android:color/white"
-	        android:layout_marginTop="20dip"
-       		android:layout_marginLeft="5dip"
-        />
+
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/llStartingDateZone"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
+	        android:layout_marginTop="20dip"
        		android:layout_marginLeft="5dip"
-            android:gravity="center_vertical|right"
             >
 	        <TextView
-		         android:id="@+id/tvFirstRunDate"
-		         android:layout_width="wrap_content"
-		         android:layout_height="wrap_content"
-		         android:text="@string/GEN_SetDate"
-		         android:typeface="sans"
-		         android:textColor="@android:color/white"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/TaskCarEditActivity_StartDate"
+		        android:typeface="sans"
+		        android:textColor="@android:color/white"
 	        />
-            <ImageButton android:id="@+id/btnPickDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:background="@drawable/btn_background_selector"
-                    android:src="@drawable/icon_calendar_selector"
-                    />
-            <ImageButton android:id="@+id/btnPickTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:background="@drawable/btn_background_selector"
-                    android:src="@drawable/icon_clock_selector"
-                    />
+	        <LinearLayout
+	            android:orientation="horizontal"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="5dip"
+	            android:gravity="center_vertical|right"
+	            >
+		        <TextView
+			         android:id="@+id/tvFirstRunDate"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:text="@string/GEN_SetDate"
+			         android:typeface="sans"
+			         android:textColor="@android:color/white"
+		        />
+	            <ImageButton android:id="@+id/btnPickDate"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="10dip"
+	                    android:background="@drawable/btnsmall_background_selector"
+	                    android:src="@drawable/icon_calendar_selector"
+	                    />
+	            <ImageButton android:id="@+id/btnPickTime"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="10dip"
+	                    android:background="@drawable/btnsmall_background_selector"
+	                    android:src="@drawable/icon_clock_selector"
+	                    />
+	        </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llStartingMileageZone"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
        		android:layout_marginLeft="5dip"
-            android:gravity="center_vertical"
+	        android:layout_marginTop="20dip"
+	        android:gravity="center_vertical"
             >
 	        <TextView
 		         android:layout_width="wrap_content"
@@ -149,8 +157,8 @@
                 android:numeric="decimal"
                 android:digits="1234567890"
                 android:inputType="phone"
-                android:layout_marginLeft="2dip"
                 android:background="@drawable/white_background"
+	       		android:layout_marginLeft="5dip"
                 />
         </LinearLayout>
     </LinearLayout>

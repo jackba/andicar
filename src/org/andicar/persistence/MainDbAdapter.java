@@ -99,7 +99,7 @@ public class MainDbAdapter extends DB
                     stopIndex = new BigDecimal(newIndexStr);
             }
 
-            if(mCarId != -1 && stopIndex != null){
+            if(mCarId != -1 && stopIndex != null){ //update the car current index
                try{
                     mDb.beginTransaction();
                     retVal = mDb.insertOrThrow( tableName, null, content );
@@ -123,7 +123,7 @@ public class MainDbAdapter extends DB
             else{
                 retVal = mDb.insertOrThrow(tableName, null, content);
             }
-            if(retVal != -1 && tableName.equals(REFUEL_TABLE_NAME)){
+            if(retVal != -1 && tableName.equals(REFUEL_TABLE_NAME)){ //create expesnse
                 ContentValues expenseContent = null;
                 expenseContent = new ContentValues();
 
@@ -242,6 +242,21 @@ public class MainDbAdapter extends DB
             }
 	        c.close();
         }
+        else if(tableName.equals(TASK_CAR_TABLE_NAME)){
+            String checkSelect =
+                "SELECT " + GEN_COL_ROWID_NAME + " " +
+                "FROM " + TASK_CAR_TABLE_NAME + " " +
+                "WHERE " + TASK_CAR_COL_CAR_ID_NAME + " = ? " +
+                			" AND " + TASK_CAR_COL_TASK_ID_NAME + " = ? ";
+	        String[] selectionArgs = {content.getAsString(TASK_CAR_COL_CAR_ID_NAME), 
+	        							content.getAsString(TASK_CAR_COL_TASK_ID_NAME)};
+	        Cursor c = execSelectSql(checkSelect, selectionArgs);
+	        if(c.moveToFirst()){ //duplicate record
+	            c.close();
+	            return R.string.ERR_059;
+            }
+	        c.close();
+        }
         return -1;
     }
 
@@ -252,7 +267,7 @@ public class MainDbAdapter extends DB
      * @param content
      * @return -1 if the row updated, an error code otherwise. For error codes see errors.xml
      */
-    public int updateRecord( String tableName, long rowId, ContentValues content)
+    public int updateRecord(String tableName, long rowId, ContentValues content)
     {
         int retVal = canUpdate(tableName, content, rowId);
         if(retVal != -1)
@@ -277,7 +292,26 @@ public class MainDbAdapter extends DB
                 if(newIndexStr != null && newIndexStr.length() > 0)
                     stopIndex = new BigDecimal(newIndexStr);
             }
-
+            
+            else if(tableName.equals(CAR_TABLE_NAME)){ //inactivate/activate the related task-car links/todos
+                String[] whereArgs = {Long.toString(rowId)};
+                ContentValues isActiveContent = new ContentValues();
+                isActiveContent.put(GEN_COL_ISACTIVE_NAME, content.getAsString(GEN_COL_ISACTIVE_NAME));
+                mDb.update(TASK_CAR_TABLE_NAME, isActiveContent, TASK_CAR_COL_CAR_ID_NAME + " = ?", whereArgs);
+                mDb.update(TODO_TABLE_NAME, isActiveContent, TODO_COL_CAR_ID_NAME + " = ?", whereArgs);
+            }
+//            else if(tableName.equals(TASK_TABLE_NAME)){ 
+//            	//inactivate/activate the related task-car links; delete todos (will be recreated based on new task definition)
+//                String[] whereArgs = {Long.toString(rowId)};
+//                ContentValues isActiveContent = new ContentValues();
+//                isActiveContent.put(GEN_COL_ISACTIVE_NAME, content.getAsString(GEN_COL_ISACTIVE_NAME));
+//                mDb.update(TASK_CAR_TABLE_NAME, isActiveContent, TASK_CAR_COL_TASK_ID_NAME + " = ?", whereArgs);
+//                mDb.delete(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME + " = ? AND " + TODO_COL_ISDONE_NAME + " = 'N'", whereArgs);
+//            }
+/*
+                    mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_CAR_ID_NAME + "=" + rowId, null);
+                    mDb.delete(TODO_TABLE_NAME, TODO_COL_CAR_ID_NAME + "=" + rowId, null);
+ */
             if(mCarId != -1 && stopIndex != null){
                try{
                     mDb.beginTransaction();
@@ -509,6 +543,30 @@ public class MainDbAdapter extends DB
     }
 
     /**
+     * 
+     * @param tableName
+     * @param selection
+     * @param selectionArgs
+     * @return TODO return values on error (eg. record cannot be deleted)
+     */
+    public int deleteRecords( String tableName, String selection, String[] selectionArgs)
+    {
+//    	int checkVal;
+    	String checkSql =
+    		"SELECT * " +
+    		" FROM " + tableName;
+    	if(selection != null)
+    		checkSql = checkSql +
+    				" WHERE " + selection;
+    	Cursor c = query(checkSql, selectionArgs);
+    	while(c.moveToNext()){
+    		deleteRecord(tableName, c.getLong(GEN_COL_ROWID_POS));
+    	}
+    	c.close();
+    	return 1;
+    }
+
+    /**
      * Delete the record with rowId from tableName
      * @param tableName
      * @param rowId
@@ -609,6 +667,18 @@ public class MainDbAdapter extends DB
                 else if(tableName.equals(BPARTNER_TABLE_NAME)){
                     //also delete the locations
                     mDb.delete(BPARTNER_LOCATION_TABLE_NAME, BPARTNER_LOCATION_COL_BPARTNER_ID_NAME + "=" + rowId, null);
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                }
+                else if(tableName.equals(CAR_TABLE_NAME)){
+                    //also delete the locations
+                    mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_CAR_ID_NAME + "=" + rowId, null);
+                    mDb.delete(TODO_TABLE_NAME, TODO_COL_CAR_ID_NAME + "=" + rowId, null);
+                    checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
+                }
+                else if(tableName.equals(TASK_TABLE_NAME)){
+                    //also delete the locations
+                    mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_TASK_ID_NAME + "=" + rowId, null);
+                    mDb.delete(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME + "=" + rowId, null);
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
                 }
                 else
@@ -1329,7 +1399,7 @@ public class MainDbAdapter extends DB
     /**
      * get the start index for a new mileage record
      */
-    public BigDecimal getMileageStartIndex(long mCarId){
+    public BigDecimal getCarLastMileageIndex(long mCarId){
         Double mStartIndexStr = null;
         String sql = "SELECT MAX( " + MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME + "), 1 As Pos " +
                         "FROM " + MainDbAdapter.MILEAGE_TABLE_NAME + " " +
@@ -1348,6 +1418,25 @@ public class MainDbAdapter extends DB
         if((mStartIndexStr == null)
                 && c.moveToNext() && c.getString(0) != null)
             mStartIndexStr = c.getDouble(0);
+        if(mStartIndexStr == null)
+            mStartIndexStr = new Double("0");
+    	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
+    }
+
+    /**
+     * get the current index of the car
+     */
+    public BigDecimal getCarCurrentIndex(long mCarId){
+        Double mStartIndexStr = null;
+        String sql = 
+                      "SELECT " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + 
+                      " FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
+                      " WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ? ";
+        String[] selectionArgs = {Long.toString(mCarId)};
+        Cursor c = execSelectSql(sql, selectionArgs);
+        if(c.moveToFirst() && c.getString(0) != null){
+            mStartIndexStr = c.getDouble(0);
+        }
         if(mStartIndexStr == null)
             mStartIndexStr = new Double("0");
     	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);

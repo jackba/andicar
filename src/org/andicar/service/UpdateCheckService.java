@@ -24,6 +24,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import org.andicar.activity.R;
+import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.apache.http.util.ByteArrayBuffer;
 
@@ -48,6 +49,10 @@ public class UpdateCheckService extends Service{
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
+
+		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+			Thread.setDefaultUncaughtExceptionHandler(
+	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 
 //		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         try {
@@ -88,6 +93,7 @@ public class UpdateCheckService extends Service{
                 notification.setLatestEventInfo(UpdateCheckService.this, title, message, contentIntent);
                 mNM.notify(StaticValues.NOTIF_UPDATECHECK_ID, notification);
             }
+            stopSelf();
         } catch (Exception e) {
     		Log.i("UpdateService", "Service failed.");
         	e.printStackTrace();
