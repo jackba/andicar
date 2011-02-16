@@ -28,7 +28,7 @@ import java.math.RoundingMode;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 310;
+    public static final int DATABASE_VERSION = 357;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     
@@ -40,6 +40,11 @@ public class StaticValues
     public static final int MENU_REFUEL_ID = 15;
     public static final int MENU_EXPENSES_ID = 16;
     public static final int MENU_GPSTRACK_ID = 17;
+    public static final int MENU_RATE_COMMENT_ID = 18;
+    public static final int MENU_ADDON_ID = 19;
+    public static final int MENU_LOCALIZE_ID = 20;
+    public static final int MENU_TASK_ID = 21;
+    public static final int MENU_TODO_ID = 22;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
@@ -52,6 +57,8 @@ public class StaticValues
     public static final int CONTEXT_MENU_DELETE_ID = 33;
     public static final int CONTEXT_MENU_SENDASEMAIL_ID = 34;
     public static final int CONTEXT_MENU_SHOWONMAP_ID = 35;
+    public static final int CONTEXT_MENU_OPENGPSTRACK_ID = 36;
+    public static final int CONTEXT_MENU_TODO_DONE_ID = 37;
 
     public static final int GPSTRACKMAP_MENU_MAPMODE_ID = 41;
     public static final int GPSTRACKMAP_MENU_SATELLITEMODE_ID = 42;
@@ -59,7 +66,12 @@ public class StaticValues
     public static final int ACTIVITY_NEW_REQUEST_CODE = 0;
     public static final int ACTIVITY_EDIT_REQUEST_CODE = 1;
 
-    //no. of decimals when converting uom's to/from base uom
+    public static final int NUMBERTYPE_VOLUME = 1;
+    public static final int NUMBERTYPE_LENGTH = 2;
+    public static final int NUMBERTYPE_AMOUNT = 3;
+    public static final int NUMBERTYPE_CONVERSION = 4;
+    public static final int NUMBERTYPE_PRICE = 5;
+    //no. of decimals & rounding modes
     public static final int DECIMALS_VOLUME = 2;
     public static final RoundingMode ROUNDING_MODE_VOLUME = RoundingMode.HALF_UP;
     public static final int DECIMALS_LENGTH = 2;
@@ -71,16 +83,42 @@ public class StaticValues
     public static final int DECIMALS_PRICE = 3;
     public static final RoundingMode ROUNDING_MODE_PRICE = RoundingMode.HALF_UP;
 
-
     public static final String UOM_LENGTH_TYPE_CODE = "L";
     public static final String UOM_VOLUME_TYPE_CODE = "V";
+    public static final String UOM_OTHER_TYPE_CODE = "O";
 
     //mileage insert mode: 0 = new index; 1 = mileage
     public static int MILEAGE_INSERTMODE_INDEX = 0;
     public static int MILEAGE_INSERTMODE_MILEAGE = 1;
 
-    public static final int TIME_DIALOG_ID = 0;
-    public static final int DATE_DIALOG_ID = 1;
+    public static final int DIALOG_TIME_PICKER = 0;
+    public static final int DIALOG_DATE_PICKER = 1;
+    public static final int DIALOG_LOCAL_SEARCH = 2;
+    public static final int DIALOG_REPORT_OPTIONS = 3;
+    public static final int DIALOG_DATE_FROM_PICKER = 4;
+    public static final int DIALOG_DATE_TO_PICKER = 5;
+//    public static final int DIALOG_TIME_PICKER2 = 6;
+    public static final int DIALOG_TASK_CAR_LINK = 7;
+
+    public static final int NOTIF_UPDATECHECK_ID = 0;
+    public static final int NOTIF_GPS_TRACK_STARTED_ID = 1;
+    public static final int NOTIF_GPS_ACCURACY_WARNING_ID = 2;
+    public static final int NOTIF_FILESYSTEM_ERROR_ID = 3;
+    public static final int NOTIF_GPS_ACCURACY_SHUTDOWN_ID = 4;
+    public static final int NOTIF_GPS_DISABLED_ID = 5;
+    public static final int NOTIF_GPS_OUTOFSERVICE_ID = 6;
+    public static final int NOTIF_BACKUP_SERVICE_EXCEPTION_ID = 7;
+    public static final int NOTIF_BACKUP_SERVICE_INFO_ID = 8;
+    public static final int NOTIF_BACKUP_SERVICE_ERROR_ID = 9;
+    public static final int NOTIF_BACKUP_SERVICE_EXPIRE_ID = 10;
+    public static final int NOTIF_SECURE_BACKUP_EXPIRE_ID = 11;
+    public static final int NOTIF_SECURE_BACKUP_INFO_ID = 12;
+    public static final int NOTIF_SECURE_BACKUP_ERROR_ID = 13;
+    
+    //used for notification PendingIntents
+    public static final int ACTIVITY_REQUEST_CODE_FILEMAILER = 10;
+    public static final int ACTIVITY_REQUEST_CODE_BACKUPSERVICE_EXPIRE = 20;
+    public static final int ACTIVITY_REQUEST_CODE_SECUREBACKUP_EXPIRE = 30;
 
     /**
      * 
@@ -95,12 +133,12 @@ public class StaticValues
      */
     public static String DATE_DECODE_NO_CHANGE = "12";
 
-    public static int DIALOG_LOCAL_SEARCH = 0;
-    public static int DIALOG_REPORT_OPTIONS = 1;
-
-    public static final String REPORT_FOLDER = "/sdcard/andicar/reports/";
-    public static final String BACKUP_FOLDER = "/sdcard/andicar/backups/";
-    public static final String TRACK_FOLDER = "/sdcard/andicar/gpstrack/";
+    public static final String BASE_FOLDER = "/sdcard/andicar/";
+    public static final String REPORT_FOLDER = BASE_FOLDER + "reports/";
+    public static final String BACKUP_FOLDER = BASE_FOLDER + "backups/";
+    public static final String TRACK_FOLDER = BASE_FOLDER + "gpstrack/";
+    public static final String TEMP_FOLDER = BASE_FOLDER + "temp/";
+    
     public static final String BACKUP_PREFIX = "bk";
     public static final String BACKUP_SUFIX = ".db";
 
@@ -111,12 +149,22 @@ public class StaticValues
 
     public static final String EXPENSES_COL_FROMREFUEL_TABLE_NAME = "Refuel";
     
-    public static int NOTIF_TYPE_GPS_TRACK_STARTED_ID = 1;
-    public static int NOTIF_TYPE_GPS_ACCURACY_WARNING_ID = 2;
-    public static int NOTIF_TYPE_FILESYSTEM_ERROR_ID = 3;
-    public static int NOTIF_TYPE_GPS_ACCURACY_SHUTDOWN_ID = 4;
-    public static int NOTIF_TYPE_GPS_DISABLED_ID = 5;
-    public static int NOTIF_TYPE_GPS_OUTOFSERVICE_ID = 6;
+    public static final String DAY_OF_WEEK_NAME = "DayOfWeek";
     
     public static final String FLURRY_ID = "E8C8QUTB7KS46SHMEP6V";
+
+    public static final String VERSION_FILE_URL = "http://sites.google.com/site/andicarservices/andicarversion.txt";
+    
+    //used in task definition
+    public static final String TASK_SCHEDULED_FOR_TIME = "T";
+    public static final String TASK_SCHEDULED_FOR_MILEAGE = "M";
+    public static final String TASK_SCHEDULED_FOR_BOTH = "B";
+    
+    public static final int TASK_TIMEFREQUENCYTYPE_ONETIME = 0;
+    public static final int TASK_TIMEFREQUENCYTYPE_DAILY = 1;
+    public static final int TASK_TIMEFREQUENCYTYPE_WEEKLY = 2;
+    public static final int TASK_TIMEFREQUENCYTYPE_MONTHLY = 3;
+    public static final int TASK_TIMEFREQUENCYTYPE_YEARLY = 4;
+    
+    public static final long ONE_DAY_IN_MILISECONDS = 86400000;
 }

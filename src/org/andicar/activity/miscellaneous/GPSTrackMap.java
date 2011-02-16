@@ -35,6 +35,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapController;
@@ -51,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
+import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
 /**
@@ -61,7 +64,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private Bundle mExtras;
     private SharedPreferences mPreferences;
     protected Resources mResource = null;
-    protected AlertDialog.Builder madbErrorAlert;
+    protected AndiCarDialogBuilder madbErrorAlert;
     protected AlertDialog madError;
     protected ArrayList<GeoPoint> trackPoints;
     protected Projection projection;
@@ -97,7 +100,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gps_track_map);
+        setContentView(R.layout.gpstrack_map);
         mapView = (MapView) findViewById(R.id.gpstrackmap);
 
         mapView.setBuiltInZoomControls(true);
@@ -131,13 +134,6 @@ public class GPSTrackMap extends MapActivity implements Runnable{
 
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(progressDialog != null && progressDialog.isShowing())
-            handler.sendEmptyMessage(0);
-    }
-
     public void run() {
         drawTrack();
     }
@@ -145,20 +141,21 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what == 0){
-                    if(progressDialog != null && progressDialog.isShowing())
+                try{
+                    if(msg.what == 0)
                         progressDialog.dismiss();
-                }
-                else{
-                    if(progressDialog != null && progressDialog.isShowing())
+                    else{
                         progressDialog.dismiss();
-                    madbErrorAlert = new AlertDialog.Builder( GPSTrackMap.this );
-                    madbErrorAlert.setCancelable( false );
-                    madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
-                    madbErrorAlert.setMessage(mResource.getString(msg.what));
-                    madError = madbErrorAlert.create();
-                    madError.show();
+                        madbErrorAlert = new AndiCarDialogBuilder(GPSTrackMap.this, 
+                        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mResource.getString(R.string.GEN_Error));
+                        madbErrorAlert.setCancelable( false );
+                        madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
+                        madbErrorAlert.setMessage(mResource.getString(msg.what));
+                        madError = madbErrorAlert.create();
+                        madError.show();
+                    }
                 }
+                catch(Exception e){}
             }
     };
 
@@ -181,6 +178,14 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     
     private void drawTrack(){
         mMapController = mapView.getController();
+        
+        if(mMapController == null){ //Issue #38
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString(R.string.ERR_050), Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+        
         if(trackPoints.size() == 0){ //trackpoints are not loaded
             FileInputStream trackInputStream;
             DataInputStream trackData;
@@ -191,15 +196,16 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             //get the list of gop files
 //            trackId = "99";
             trackFiles = FileUtils.getFileNames(StaticValues.TRACK_FOLDER, trackId + "_[0-9][0-9][0-9].gop");
-            if(trackFiles.isEmpty()){
+            if(trackFiles == null || trackFiles.isEmpty()){
                 handler.sendEmptyMessage(R.string.ERR_036);
+                return;
             }
             int latitudeE6;
             int longitudeE6;
             int c1;
             boolean isFirst = true;
-            for(String trackFile : trackFiles) {
-                try{
+            try{
+            	for(String trackFile : trackFiles) {
                     trackFile = StaticValues.TRACK_FOLDER + trackFile;
                     trackInputStream = new FileInputStream(trackFile);
                     trackData = new DataInputStream(trackInputStream);
@@ -235,30 +241,34 @@ public class GPSTrackMap extends MapActivity implements Runnable{
                     trackInputStream.close();
                     trackData.close();
                     trackBufferedReader.close();
-                }
-                catch(FileNotFoundException e){}
-                catch(IOException e){}
+            	}
             }
+            catch(FileNotFoundException e){}
+            catch(IOException e){}
         }
 
-        if(trackPoints.size() >= 1){
-            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(0), R.drawable.icon_start_point, "Start"));
-            mapOverlays.add(new TrackRouteOverlay());
-            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(trackPoints.size() - 1),
-                    R.drawable.icon_stop_point, "Stop"));
-            mapView.postInvalidate();
-            mMapController.zoomToSpan(
-                          (maxLatitude - minLatitude),
-                          (maxLongitude - minLongitude));
-            // Animate to the center cluster of points
-            mMapController.animateTo(new GeoPoint(
-                           (maxLatitude + minLatitude)/2,
-                           (maxLongitude + minLongitude)/2 ));
-            if(showMode.equals("M"))
-                mapView.setSatellite(false);
-            else
-                mapView.setSatellite(true);
+        try{
+	        if(trackPoints.size() >= 1){
+	            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(0), R.drawable.icon_start_point, "Start"));
+	            mapOverlays.add(new TrackRouteOverlay());
+	            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(trackPoints.size() - 1),
+	                    R.drawable.icon_stop_point, "Stop"));
+	            mapView.postInvalidate();
+	            mMapController.zoomToSpan(
+	                          (maxLatitude - minLatitude),
+	                          (maxLongitude - minLongitude));
+	            // Animate to the center cluster of points
+	            mMapController.animateTo(new GeoPoint(
+	                           (maxLatitude + minLatitude)/2,
+	                           (maxLongitude + minLongitude)/2 ));
+	            if(showMode.equals("M"))
+	                mapView.setSatellite(false);
+	            else
+	                mapView.setSatellite(true);
+	        }
         }
+        catch(Exception e){}
+        
         handler.sendEmptyMessage(0);
     }
     

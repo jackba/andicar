@@ -19,6 +19,17 @@
 
 package org.andicar.activity.miscellaneous;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.andicar.activity.BaseActivity;
+import org.andicar.activity.R;
+import org.andicar.persistence.FileUtils;
+import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -29,14 +40,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import org.andicar.activity.BaseActivity;
-import org.andicar.activity.R;
-import org.andicar.persistence.FileUtils;
-import org.andicar.utils.AndiCarStatistics;
-import org.andicar.utils.StaticValues;
+
+import com.andicar.addon.services.AndiCarAddOnServiceStarter;
 
 
 /**
@@ -50,7 +55,7 @@ public class BackupRestoreActivity extends BaseActivity {
     private Button btnRestore;
     private Button btnBackup;
     private Button btnDelete;
-    private ListView lvBackupSet;
+    private ListView lvBackupList;
 
     /** Called when the activity is first created. */
     @Override
@@ -66,7 +71,7 @@ public class BackupRestoreActivity extends BaseActivity {
         btnDelete = (Button) findViewById(R.id.btnDelete);
         btnDelete.setOnClickListener(btnDeleteBkClickListener);
         btnDelete.setEnabled(false);
-        lvBackupSet = (ListView) findViewById(R.id.lvBackupList);
+        lvBackupList = (ListView) findViewById(R.id.lvBackupList);
         fillBkList();
 
     }
@@ -76,14 +81,15 @@ public class BackupRestoreActivity extends BaseActivity {
         if(bkFileList == null || bkFileList.isEmpty()){
             btnRestore.setEnabled(false);
             btnDelete.setEnabled(false);
-            lvBackupSet.setAdapter(null);
+            lvBackupList.setAdapter(null);
             return;
         }
-        ArrayAdapter listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_single_choice, bkFileList);
-        lvBackupSet.setAdapter(listAdapter);
-        lvBackupSet.setItemsCanFocus(false);
-        lvBackupSet.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        lvBackupSet.setOnItemClickListener(bkFileSelectedListener);
+        ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_single_choice, bkFileList);
+        lvBackupList.setAdapter(listAdapter);
+        lvBackupList.setItemsCanFocus(false);
+        lvBackupList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        lvBackupList.setOnItemClickListener(bkFileSelectedListener);
     }
 
     protected AdapterView.OnItemClickListener bkFileSelectedListener = new AdapterView.OnItemClickListener() {
@@ -96,7 +102,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
     private View.OnClickListener btnBkClickListener =  new View.OnClickListener() {
             public void onClick(View arg0) {
-                if(mDbAdapter.backupDb(null)){
+                if(mDbAdapter.backupDb(null, null)){
                     Toast toast = Toast.
                             makeText( getApplicationContext(),
                             mResource.getString( R.string.BackupRestoreEditActivity_BackupCreatedMessage ), Toast.LENGTH_SHORT);
@@ -105,7 +111,7 @@ public class BackupRestoreActivity extends BaseActivity {
                     if(isSendStatistics){
                         Map<String, String> parameters = new HashMap<String, String>();
                         parameters.put("Operation", "Backup");
-                        AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                        AndiCarStatistics.sendFlurryEvent(BackupRestoreActivity.this, "BackupRestore", parameters);
                     }
                 }
                 else{
@@ -121,7 +127,8 @@ public class BackupRestoreActivity extends BaseActivity {
 
     private View.OnClickListener btnRestoreClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
+            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(BackupRestoreActivity.this, 
+            		AndiCarDialogBuilder.DIALOGTYPE_WARNING, mResource.getString(R.string.GEN_Confirm));
             builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_RestoreConfirmation));
             builder.setCancelable(false);
             builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
@@ -131,15 +138,17 @@ public class BackupRestoreActivity extends BaseActivity {
                                     SharedPreferences.Editor editor = mPreferences.edit();
                                     editor.putBoolean("MustClose", true);
                                     editor.putLong( "CurrentCar_ID", -1);
-                                    editor.putLong( "CurrentDriver_ID", -1);
+//                                    editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
+                                    AndiCarAddOnServiceStarter.startServices(BackupRestoreActivity.this);
                                     if(isSendStatistics){
                                         Map<String, String> parameters = new HashMap<String, String>();
                                         parameters.put("Operation", "Restore");
-                                        AndiCarStatistics.sendFlurryEvent("BackupRestore", parameters);
+                                        AndiCarStatistics.sendFlurryEvent(BackupRestoreActivity.this, "BackupRestore", parameters);
                                     }
 
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
+                                    AndiCarDialogBuilder builder = new AndiCarDialogBuilder(BackupRestoreActivity.this, 
+                                    		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.GEN_Info));
                                     builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_RestoreOKMessage));
                                     builder.setCancelable(false);
                                     builder.setPositiveButton(mResource.getString(R.string.GEN_OK),
@@ -168,12 +177,13 @@ public class BackupRestoreActivity extends BaseActivity {
                         });
             AlertDialog alert = builder.create();
             alert.show();
-            }
+        }
     };
 
     private View.OnClickListener btnDeleteBkClickListener =  new View.OnClickListener() {
         public void onClick(View arg0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(BackupRestoreActivity.this);
+            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(BackupRestoreActivity.this, 
+            		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.GEN_Confirm));
             builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_BackupDeleteConfirmation));
             builder.setCancelable(false);
             builder.setPositiveButton(mResource.getString(R.string.GEN_YES),

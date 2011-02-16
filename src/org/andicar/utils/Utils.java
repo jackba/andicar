@@ -19,27 +19,24 @@
 
 package org.andicar.utils;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Calendar;
+
+import org.andicar.activity.R;
+import org.andicar.persistence.FileUtils;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.ReportDbAdapter;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+
 import com.google.android.maps.GeoPoint;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.activity.R;
 
 /**
  *
@@ -111,9 +108,10 @@ public class Utils {
 
     /**
      *
+     * @param appendSecond TODO
      * @return the current date in the form of yyyy-mm-dd
      */
-    public static String getDateStr(boolean appendHour, boolean appendMinute){
+    public static String getDateStr(boolean appendHour, boolean appendMinute, boolean appendSecond){
         Calendar cal = Calendar.getInstance();
         String retVal = cal.get(Calendar.YEAR) + "-" +
                     pad(cal.get(Calendar.MONTH) + 1, 2) + "-" +
@@ -129,6 +127,10 @@ public class Utils {
             else
                 retVal = retVal + " " +
                         pad(cal.get(Calendar.MINUTE), 2);
+        }
+        if(appendSecond){
+        	retVal = retVal + " " +
+            		pad(cal.get(Calendar.SECOND), 2);
         }
         return retVal;
 
@@ -204,19 +206,19 @@ public class Utils {
             String emailText =
                     c.getString(c.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)) + "\n" +
                     c.getString(c.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
-                        .replace("[%1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
-                        .replace("[%2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
-                        .replace("[%3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
-                        .replace("[%4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
-                        .replace("[%5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
+                        .replace("[#1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
+                        .replace("[#2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+                        .replace("[#3]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+                        .replace("[#4]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+                        .replace("[#5]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
                                 Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
-                        .replace("[%6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
+                        .replace("[#6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
                                 Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
-                        .replace("[%7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
-                        .replace("[%8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
-                        .replace("[%9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
-                        .replace("[%10]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
-                        .replace("[%11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
+                        .replace("[#7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+                        .replace("[#8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+                        .replace("[#9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                        .replace("[#10]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_10))
+                        .replace("[#11]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_11))
                     + "\n" +
                     c.getString(c.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
             emailSubject = emailSubject + " - " +
@@ -224,59 +226,60 @@ public class Utils {
             c.close();
             reportDbAdapter.close();
 
-            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText + "\nSent by AndiCar (http://sites.google.com/site/andicarfree/)");
+            emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, emailText + "\nSent by AndiCar (http://www.andicar.org)");
         }
-        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
-        //attach the trackfiles
-        byte[] buf = new byte[1024];
-        ZipOutputStream out = null;
-        try {
-            out = new ZipOutputStream(new FileOutputStream(StaticValues.TRACK_FOLDER + "trackFiles.zip"));
 
-            c = mMainDbAdapter.fetchForTable(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
-                                MainDbAdapter.gpsTrackDetailTableColNames,
-                                MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=" + Long.toString(gpsTrackID),
-                                MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
-            while(c.moveToNext()){
-                try{
-                    FileInputStream in = new FileInputStream(c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS));
-                    //zip entry name
-                    String entryName = c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS).replace(StaticValues.TRACK_FOLDER, "");
-                    out.putNextEntry(new ZipEntry(entryName));
-                    // Transfer bytes from the file to the ZIP file
-                    int len;
-                    while ((len = in.read(buf)) > 0) {
-                            out.write(buf, 0, len);
-                    }
-                    // Complete the entry
-                    out.closeEntry();
-                    in.close();
-                }
-                catch(FileNotFoundException ex){}
-            }
-            out.close();
-            c.close();
-            Uri trackFile = Uri.parse("file://" + StaticValues.TRACK_FOLDER + "trackFiles.zip");
-            if(trackFile != null)
-                emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, trackFile);
-        } catch (IOException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
+        
+        //get the track files
+        String selection = MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "= ? ";
+        String[] selectionArgs = {Long.toString(gpsTrackID)};
+        c = mMainDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, MainDbAdapter.gpsTrackDetailTableColNames, 
+                selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
+        
+        Bundle trackFiles = new Bundle();
+        String trackFile = "";
+        while(c.moveToNext()){
+        	trackFile = c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS);
+        	trackFiles.putString(trackFile.replace(StaticValues.TRACK_FOLDER, ""), trackFile);
         }
+        
+        //create the zip file
+        Uri trackFileZip = FileUtils.zipFiles(trackFiles, StaticValues.TRACK_FOLDER + "AndiCarGPSTrack.zip");
+        if(trackFileZip != null)
+            emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, trackFileZip);
         ctx.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-        mMainDbAdapter.close();
     }
 
-    public String roundStringNumber(String sNumber, int decimals){
-        String retVal = null;
-        try{
-            BigDecimal number = new BigDecimal(sNumber);
-            if(number == null)
-                return null;
-            retVal = number.setScale(decimals, RoundingMode.HALF_UP).toString();
-        }
-        catch(NumberFormatException e){
-            return null;
-        }
-        return retVal;
+    /**
+     * @param number: the number which will be converted to string
+     * @param localeFormat: also format the returned string according to locale formats
+     * @return the string representation of the number
+     */
+    public static String numberToString(Object number, boolean localeFormat, int scale, RoundingMode roundingMode){
+//    	String retVal = null;
+    	BigDecimal bdNumber = null;
+    	
+    	if(number instanceof Double)
+    		bdNumber = new BigDecimal((Double)number);
+    	else if(number instanceof Float)
+    		bdNumber = new BigDecimal((Float)number);
+    	else if(number instanceof Float)
+    		bdNumber = new BigDecimal((Float)number);
+    	else if(number instanceof Integer)
+    		bdNumber = new BigDecimal((Integer)number);
+    	else if(number instanceof Long)
+    		bdNumber = new BigDecimal((Long)number);
+    	else if(number instanceof Short)
+    		bdNumber = new BigDecimal((Short)number);
+    	else if(number instanceof BigDecimal)
+    		bdNumber = (BigDecimal)number;
+    	
+    	bdNumber = bdNumber.setScale(scale, roundingMode);
+    	bdNumber = bdNumber.stripTrailingZeros();
+    	if(localeFormat)
+    		return NumberFormat.getInstance().format(bdNumber);
+
+    	return bdNumber.toPlainString();
     }
 }

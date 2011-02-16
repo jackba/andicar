@@ -19,22 +19,23 @@
 
 package org.andicar.activity.miscellaneous;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.andicar.activity.BaseActivity;
+import org.andicar.activity.R;
+import org.andicar.utils.AndiCarStatistics;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
+import android.os.Vibrator;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.andicar.paypal.GetPayPalActivity;
-import org.andicar.activity.R;
-import org.andicar.utils.StaticValues;
-import android.os.Vibrator;
-import android.content.Context;
-import java.util.HashMap;
-import java.util.Map;
-import org.andicar.activity.BaseActivity;
-import org.andicar.utils.AndiCarStatistics;
+
+import com.andicar.addon.activity.GetPayPalActivityForAboutDonate;
 
 
 /**
@@ -50,10 +51,6 @@ public class AboutActivity extends BaseActivity{
         setContentView(R.layout.about_activity);
 
         TextView tvAbout1 = (TextView)findViewById(R.id.tvAbout1);
-        CharSequence abt = mResource.getString(R.string.LM_COPYRIGHT_HTML1);
-
-//        tvAbout1.setText(Html.fromHtml(StaticValues.LM_COPYRIGHT_HTML1));
-        tvAbout1.setText(Html.fromHtml(abt.toString()));
         tvAbout1.setMovementMethod(LinkMovementMethod.getInstance());
 
         ImageView imgEUR = (ImageView)findViewById(R.id.aboutDonateEUR);
@@ -65,8 +62,6 @@ public class AboutActivity extends BaseActivity{
         imgUSD.setOnClickListener(mDonateClickListener);
 
         TextView tvAbout2 = (TextView)findViewById(R.id.tvAbout2);
-        abt = mResource.getString(R.string.LM_COPYRIGHT_HTML2);
-        tvAbout2.setText(Html.fromHtml(abt.toString()));
         tvAbout2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
@@ -80,7 +75,7 @@ public class AboutActivity extends BaseActivity{
                 if(isSendStatistics){
                     Map<String, String> parameters = new HashMap<String, String>();
                     parameters.put("Currency", "Eur");
-                    AndiCarStatistics.sendFlurryEvent("PayPal", parameters);
+                    AndiCarStatistics.sendFlurryEvent(AboutActivity.this, "PayPal", parameters);
                 }
             }
             else if(srcImg.getId() == R.id.aboutDonateUSD){
@@ -88,12 +83,12 @@ public class AboutActivity extends BaseActivity{
                 if(isSendStatistics){
                     Map<String, String> parameters = new HashMap<String, String>();
                     parameters.put("Currency", "USD");
-                    AndiCarStatistics.sendFlurryEvent("PayPal", parameters);
+                    AndiCarStatistics.sendFlurryEvent(AboutActivity.this, "PayPal", parameters);
                 }
             }
             Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
             vibrator.vibrate(100);
-            GetPayPalActivity ppa = new GetPayPalActivity();
+            GetPayPalActivityForAboutDonate ppa = new GetPayPalActivityForAboutDonate();
             Intent i = ppa.getPayPalIntent(payPalCurrency);
             startActivity(i);
         }

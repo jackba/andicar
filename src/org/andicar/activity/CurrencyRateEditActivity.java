@@ -19,23 +19,24 @@
 
 package org.andicar.activity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.StaticValues;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -117,12 +118,12 @@ public class CurrencyRateEditActivity extends EditActivityBase
         }
 
         initSpinner(spnCurrencyFromSpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyFromId, false);
+                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyFromId, false);
 
         initSpinner(spnCurrencyToSpinner, MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyToId, false);
+                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyToId, false);
     }
 
     @Override
@@ -151,6 +152,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
     private AdapterView.OnItemSelectedListener spinnerCurrencyFromOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    setSpinnerTextToCode(arg0, arg3, arg1);
                     lCurrencyFromId = arg3;
                     updateLabel();
                 }
@@ -161,6 +163,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
     private AdapterView.OnItemSelectedListener spinnerCurrencyToOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    setSpinnerTextToCode(arg0, arg3, arg1);
                     lCurrencyToId = arg3;
                     updateLabel();
                 }
@@ -170,17 +173,31 @@ public class CurrencyRateEditActivity extends EditActivityBase
 
 
     private void updateLabel(){
-        strCurrencyFromCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
-                            lCurrencyFromId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-        strCurrencyToCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
-                lCurrencyToId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+    	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+                lCurrencyFromId);
+    	if(c != null){
+    		strCurrencyFromCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+    		c.close();
+    	}
+    	if(strCurrencyFromCode == null)
+    		strCurrencyFromCode = "";
+    	
+    	c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
+                lCurrencyToId);
+    	if(c != null){
+    		strCurrencyToCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+    		c.close();
+    	}
+    	if(strCurrencyToCode == null)
+    		strCurrencyToCode = "";
+    	
         tvCurrencyRateLabel.setText(mResource.getString(R.string.CurrencyRateEditActivity_CurrencyRateLabel).
-                replace("[%1]", strCurrencyFromCode));
+                replace("[#1]", strCurrencyFromCode));
         tvCurrencyRateToLabel.setText(strCurrencyToCode);
 
         tvInverseRateLabel.setText(
                 mResource.getString(R.string.CurrencyRateEditActivity_InverseCurrencyRateLabel)
-                    .replace("[%1]", strCurrencyToCode));
+                    .replace("[#1]", strCurrencyToCode));
         tvInverseRateToLabel.setText(strCurrencyFromCode);
     }
 
@@ -189,7 +206,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
         if(strCurrencyRate != null && strCurrencyRate.length() > 0) {
             try{
                 bdRate = new BigDecimal(strCurrencyRate);
-                if(bdRate.equals(BigDecimal.ZERO))
+                if(bdRate.signum() == 0)
                     bdInverseRate = bdRate;
                 else
                     bdInverseRate = BigDecimal.ONE.divide(bdRate, 10, RoundingMode.HALF_UP)
@@ -210,8 +227,8 @@ public class CurrencyRateEditActivity extends EditActivityBase
     }
 
     @Override
-    void saveData() {
-        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+    protected void saveData() {
+        String strRetVal = checkMandatory(vgRoot);
         if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
                     mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
@@ -219,13 +236,39 @@ public class CurrencyRateEditActivity extends EditActivityBase
             return;
         }
 
+        strRetVal = checkNumeric(vgRoot, false);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
         ContentValues cvData = new ContentValues();
-        String strCurrFromCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+        
+/*
+        	mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
                 MainDbAdapter.currencyTableColNames, spnCurrencyFromSpinner.getSelectedItemId())
                     .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-        String strCurrToCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.currencyTableColNames, spnCurrencyToSpinner.getSelectedItemId())
-                    .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+ */
+        String strCurrFromCode = null;
+        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+                MainDbAdapter.currencyTableColNames, spnCurrencyFromSpinner.getSelectedItemId());
+        if(c != null){
+        	strCurrFromCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        	c.close();
+        }
+        
+//        String strCurrToCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+//                MainDbAdapter.currencyTableColNames, spnCurrencyToSpinner.getSelectedItemId())
+//                    .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        String strCurrToCode = null;
+        c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
+              MainDbAdapter.currencyTableColNames, spnCurrencyToSpinner.getSelectedItemId());
+        if(c != null){
+        	strCurrToCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+        	c.close();
+        }
         cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
                 strCurrFromCode + " <-> " + strCurrToCode);
         cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
@@ -271,7 +314,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.currencyrate_edit_activity);
     }
 }

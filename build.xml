@@ -71,7 +71,7 @@
         Build a release version.
         For detail see: http://developer.android.com/guide/publishing/app-signing.html
     -->
-    <target depends="clean, test,releasejar,javadoc" description="Build and test whole project." name="release"/>
+    <target depends="clean, test,releasejar" description="Build and test whole project." name="release"/>
     <target depends="init,compile,-pre-jar,-dex,-package-res-and-assets,-package-res-no-assets,-package-dex,-unsign,-post-jar" description="Build JAR." name="releasejar"/>
     <target depends="init,-package-res-and-assets,-package-res-no-assets,-package-dex" name="-unsign">
         <exec executable="${apkbuilder}" failonerror="true">
@@ -86,6 +86,7 @@
     <target name="-pre-jar">
         <unjar src="lib/PayPalLib.jar" dest="${build.dir}/classes"/>
         <unjar src="lib/FlurryAgent.jar" dest="${build.dir}/classes"/>
+        <unjar src="lib/AndiCarAddOns.jar" dest="${build.dir}/classes"/>
         <delete dir="${build.dir}/classes/META-INF" failonerror="false"/>
     </target>
 </project>

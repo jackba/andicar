@@ -12,3 +12,14 @@
 ^AndiCar210\.apk$
 ^myEnv\.sh$
 ^AndiCarResources\.zip$
+
+syntax: regexp
+^bin$
+syntax: regexp
+^build$
+syntax: regexp
+^dist$
+syntax: regexp
+\.apk$
+syntax: regexp
+\.db$

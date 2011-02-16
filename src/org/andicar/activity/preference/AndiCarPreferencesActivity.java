@@ -30,6 +30,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import java.util.HashMap;
 import java.util.Map;
+import org.andicar.activity.BPartnerListActivity;
 import org.andicar.activity.CarListActivity;
 import org.andicar.activity.CurrencyListActivity;
 import org.andicar.activity.CurrencyRateListActivity;
@@ -37,13 +38,18 @@ import org.andicar.activity.DriverListActivity;
 import org.andicar.activity.ExpenseCategoryListActivity;
 import org.andicar.activity.ExpenseTypeListActivity;
 import org.andicar.activity.R;
+import org.andicar.activity.TagListActivity;
+import org.andicar.activity.TaskTypeListActivity;
 import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
+import org.andicar.service.TodoManagementService;
 import org.andicar.utils.StaticValues;
-import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
+
+import com.andicar.addon.activity.AddOnPreferences;
+
 
 /**
  *
@@ -89,7 +95,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
                 AndiCarStatistics.sendFlurryStartSession(this);
             Map<String, String> parameters = new HashMap<String, String>();
             parameters.put("SendStatisticsChanged", "From " + isSendStatistics + " to " + mPreferences.getBoolean("SendUsageStatistics", true));
-            AndiCarStatistics.sendFlurryEvent("SendStatistics", parameters);
+            AndiCarStatistics.sendFlurryEvent(this, "SendStatistics", parameters);
             if(!isSendStatistics)
                 AndiCarStatistics.sendFlurryEndSession(this);
         }
@@ -121,33 +127,6 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         driverPrefScreen.setSummary(mRes.getString(R.string.PREF_DriverSummary));
         carDriverCategory.addPreference(driverPrefScreen);
 
-        //uom's
-        PreferenceCategory uomPrefCategory = new PreferenceCategory(this);
-        uomPrefCategory.setTitle(mRes.getString( R.string.PREF_UOMCategoryTitle ));
-        prefScreenRoot.addPreference(uomPrefCategory);
-        //preference for length (distance) uom
-        PreferenceScreen uomLengthPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        Intent uomLengthIntent = new Intent(this, UOMListActivity.class);
-        uomLengthIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_LENGTH_TYPE_CODE);
-        uomLengthPrefScreen.setIntent(uomLengthIntent);
-        uomLengthPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMLengthTitle));
-        uomLengthPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMLengthSummary));
-        uomPrefCategory.addPreference(uomLengthPrefScreen);
-        //preference for volumne uom
-        PreferenceScreen uomVolumePrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        Intent uomVolumeIntent = new Intent(this, UOMListActivity.class);
-        uomVolumeIntent.putExtra( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_VOLUME_TYPE_CODE);
-        uomVolumePrefScreen.setIntent(uomVolumeIntent);
-        uomVolumePrefScreen.setTitle(mRes.getString(R.string.PREF_UOMVolumeTitle));
-        uomVolumePrefScreen.setSummary(mRes.getString(R.string.PREF_UOMVolumeSummary));
-        uomPrefCategory.addPreference(uomVolumePrefScreen);
-        //uom conversions
-        PreferenceScreen uomConversionPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        uomConversionPrefScreen.setIntent(new Intent(this, UOMConversionListActivity.class));
-        uomConversionPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMConversionTitle));
-        uomConversionPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMConversionSummary));
-        uomPrefCategory.addPreference(uomConversionPrefScreen);
-
         //Backup/Restore
         PreferenceCategory bkRestoreCategory = new PreferenceCategory(this);
         bkRestoreCategory.setTitle(mRes.getString(R.string.PREF_BackupRestoreCategoryTitle));
@@ -157,6 +136,65 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         bkRestorePrefScreen.setTitle(mRes.getString(R.string.PREF_BackupRestoreTitle));
         bkRestorePrefScreen.setSummary(mRes.getString(R.string.PREF_BackupRestoreSummary));
         bkRestoreCategory.addPreference(bkRestorePrefScreen);
+
+        //AddOn preferences
+        PreferenceCategory addOnCategory = new PreferenceCategory(this);
+        addOnCategory.setTitle(mRes.getString(R.string.AddOn_PreferencesCategoryTitle));
+        prefScreenRoot.addPreference(addOnCategory);
+        PreferenceScreen addOnPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+        addOnPreferenceScreen.setIntent(new Intent(this, AddOnPreferences.class));
+        addOnPreferenceScreen.setTitle(mRes.getString(R.string.AddOn_PreferencesTitle));
+        addOnPreferenceScreen.setSummary(mRes.getString(R.string.AddOn_PreferencesSummary));
+        addOnCategory.addPreference(addOnPreferenceScreen);
+
+        //Tasks/Reminders/Todos
+        PreferenceCategory taskReminderCategory = new PreferenceCategory(this);
+        taskReminderCategory.setTitle(mRes.getString(R.string.PREF_TaskReminderCategoryTitle));
+        prefScreenRoot.addPreference(taskReminderCategory);
+//        PreferenceScreen taskPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+//        taskPreferenceScreen.setIntent(new Intent(this, TaskListActivity.class));
+//        taskPreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTitle));
+//        taskPreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskSummary));
+//        taskReminderCategory.addPreference(taskPreferenceScreen);
+        PreferenceScreen taskTypePreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+        taskTypePreferenceScreen.setIntent(new Intent(this, TaskTypeListActivity.class));
+        taskTypePreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTypeTitle));
+        taskTypePreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskTypeSummary));
+        taskReminderCategory.addPreference(taskTypePreferenceScreen);
+//        PreferenceScreen todoCheckPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
+//        todoCheckPreferenceScreen.setIntent(new Intent(this, TodoManagementService.class));
+//        todoCheckPreferenceScreen.setTitle("Check Todos");
+//        todoCheckPreferenceScreen.setSummary("Check todos");
+//        taskReminderCategory.addPreference(todoCheckPreferenceScreen);
+
+        //business partners
+        PreferenceCategory bPartnerCategory = new PreferenceCategory(this);
+        bPartnerCategory.setTitle(mRes.getString(R.string.PREF_BPartnersCategoryTitle));
+        prefScreenRoot.addPreference(bPartnerCategory);
+        //partners
+        PreferenceScreen partnersPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        partnersPrefScreen.setIntent(new Intent(this, BPartnerListActivity.class));
+        partnersPrefScreen.setTitle(mRes.getString(R.string.PREF_PartnerTitle));
+        partnersPrefScreen.setSummary(mRes.getString(R.string.PREF_PartnerSummary));
+        bPartnerCategory.addPreference(partnersPrefScreen);
+
+        //uom's
+        PreferenceCategory uomPrefCategory = new PreferenceCategory(this);
+        uomPrefCategory.setTitle(mRes.getString( R.string.PREF_UOMCategoryTitle ));
+        prefScreenRoot.addPreference(uomPrefCategory);
+        //preference for uom
+        PreferenceScreen uomLengthPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        Intent uomLengthIntent = new Intent(this, UOMListActivity.class);
+        uomLengthPrefScreen.setIntent(uomLengthIntent);
+        uomLengthPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMTitle));
+        uomLengthPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMSummary));
+        uomPrefCategory.addPreference(uomLengthPrefScreen);
+        //uom conversions
+        PreferenceScreen uomConversionPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        uomConversionPrefScreen.setIntent(new Intent(this, UOMConversionListActivity.class));
+        uomConversionPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMConversionTitle));
+        uomConversionPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMConversionSummary));
+        uomPrefCategory.addPreference(uomConversionPrefScreen);
 
         //Expenses settings
         PreferenceCategory expenseCategory = new PreferenceCategory(this);
@@ -206,12 +244,32 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         miscCategory.setTitle(mRes.getString(R.string.PREF_MiscCategoryTitle));
         prefScreenRoot.addPreference(miscCategory);
 
+        //tags
+        PreferenceScreen tagPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        tagPrefScreen.setIntent(new Intent(this, TagListActivity.class));
+        tagPrefScreen.setTitle(mRes.getString(R.string.PREF_TagCategoryTitle));
+        tagPrefScreen.setSummary(mRes.getString(R.string.PREF_TagCategorySummary));
+        miscCategory.addPreference(tagPrefScreen);
+
+        CheckBoxPreference rememberLastTag = new CheckBoxPreference(this);
+        rememberLastTag.setTitle(R.string.PREF_RememberLastTagTitle);
+        rememberLastTag.setSummary(R.string.PREF_RememberLastTagSummary);
+        rememberLastTag.setKey("RememberLastTag");
+        miscCategory.addPreference(rememberLastTag);
+
         //main screen pref
         PreferenceScreen mainScreenPref = getPreferenceManager().createPreferenceScreen(this);
         mainScreenPref.setIntent(new Intent(this, MainScreenPreferenceActivity.class));
         mainScreenPref.setTitle(mRes.getString(R.string.PREF_MainScreenCategoryTitle));
         mainScreenPref.setSummary(mRes.getString(R.string.PREF_MainScreenCategorySummary));
         miscCategory.addPreference(mainScreenPref);
+
+        //numeric inout type
+        CheckBoxPreference useNumericInput = new CheckBoxPreference(this);
+        useNumericInput.setTitle(R.string.PREF_UseNumericInputTitle);
+        useNumericInput.setSummary(R.string.PREF_UseNumericInputSummary);
+        useNumericInput.setKey("UseNumericKeypad");
+        miscCategory.addPreference(useNumericInput);
 
         //send crash and usage statistiscs
         CheckBoxPreference sendUsagePrefCk = new CheckBoxPreference(this);
@@ -225,6 +283,13 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         sendCrashPrefCk.setSummary(R.string.PREF_SendCrashReportsSummary);
         sendCrashPrefCk.setKey("SendCrashReport");
         miscCategory.addPreference(sendCrashPrefCk);
+
+        //preference for automatic version update check
+//        CheckBoxPreference ckUpdateCheck = new CheckBoxPreference(this);
+//        ckUpdateCheck.setTitle(R.string.PREF_AutoUpdateCheckTitle);
+//        ckUpdateCheck.setSummary(R.string.PREF_AutoUpdateCheckSummary);
+//        ckUpdateCheck.setKey("AutoUpdateCheck");
+//        miscCategory.addPreference(ckUpdateCheck);
 
         return prefScreenRoot;
     }

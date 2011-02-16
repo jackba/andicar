@@ -1,5 +1,5 @@
 /*
- *  AndiCar - a car management software for Android powered devices.
+*  AndiCar - a car management software for Android powered devices.
  *
  *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
  *
@@ -19,19 +19,21 @@
 
 package org.andicar.activity;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
 import java.math.BigDecimal;
+
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
+
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 /**
  *
@@ -48,6 +50,7 @@ public class CarEditActivity extends EditActivityBase
     private EditText etUserComment = null;
     private EditText etIndexStart = null;
     private CheckBox ckIsActive = null;
+    private ImageButton btnNewCurrency = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -64,7 +67,9 @@ public class CarEditActivity extends EditActivityBase
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         etIndexStart = (EditText) findViewById( R.id.etIndexStart );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
-
+        btnNewCurrency = (ImageButton) findViewById( R.id.btnNewCurrency );
+        btnNewCurrency.setOnClickListener(onNewCurrClickListener);
+        
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
         BigDecimal bdStartIndex = null;
 
@@ -87,18 +92,16 @@ public class CarEditActivity extends EditActivityBase
             initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, lUomLengthId, false);
+                        MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, lUomLengthId, false);
             //uom for volume
             initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, lUomVolumeId, false);
+                        MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, lUomVolumeId, false);
              //default currency
             initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-//                    MainDbAdapter.genColName,
-                    MainDbAdapter.currencyTableColNames,
-                    new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME, MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyId, false);
+                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                    MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyId, false);
 
             if( strName != null ) {
                 etName.setText( strName );
@@ -118,48 +121,41 @@ public class CarEditActivity extends EditActivityBase
             if( bdStartIndex != null ) {
                 etIndexStart.setText( bdStartIndex.toString() );
             }
-
-            //cannot be inactivated if is the current car
-            if( mBundleExtras.getLong( "CurrentCar_ID" ) == mRowId ) {
-                ckIsActive.setClickable( false );
-                ckIsActive.setOnTouchListener( new View.OnTouchListener()
-                {
-                    public boolean onTouch( View arg0, MotionEvent arg1 )
-                    {
-                        Toast toast = Toast.makeText( getApplicationContext(),
-                                mResource.getString( R.string.CarEditActivity_CurrentCarInactivateMessage ), Toast.LENGTH_SHORT );
-                        toast.show();
-                        return false;
-                    }
-                } );
-            }
             c.close();
         }
         else {
             initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 1, false);
+                        MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, 1, false);
             //uom for volume
             initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
                     MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, MainDbAdapter.UOM_COL_CODE_NAME, 3, false);
+                        MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, 3, false);
              //default currency
             initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, MainDbAdapter.GEN_COL_NAME_NAME, 1, false);
+                    MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, 1, false);
 
             ckIsActive.setChecked( true );
         }
     }
 
     @Override
-    void saveData() {
-        String strRetVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
+    protected void saveData() {
+        String strRetVal = checkMandatory(vgRoot);
         if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
                     mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
+        strRetVal = checkNumeric(vgRoot, false);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
             toast.show();
             return;
         }
@@ -214,14 +210,45 @@ public class CarEditActivity extends EditActivityBase
                 madError = madbErrorAlert.create();
                 madError.show();
             }
-            else
+            else{
+            	//if the selected car in the main activity is inactivated, invalidate it
+            	if(mRowId == mPreferences.getLong("CurrentCar_ID", -1)
+            			&& !ckIsActive.isChecked()){
+            		mPrefEditor.putLong("CurrentCar_ID", -1);
+                    mPrefEditor.commit();
+            	}
                 finish();
+            }
         }
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.car_edit_activity);
     }
+
+    protected View.OnClickListener onNewCurrClickListener =
+        new View.OnClickListener(){
+            public void onClick( View v )
+            {
+				Intent i = new Intent(CarEditActivity.this, CurrencyEditActivity.class);
+				i.putExtra("Operation", "N");
+				startActivityForResult(i, 0);
+            }
+        };
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onActivityResult(int, int, android.content.Intent)
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		long newId = 0;
+		if(data != null)
+			newId =	data.getLongExtra("mRowId", 0);
+			
+        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
+                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, newId, false);
+	}
 
 }
