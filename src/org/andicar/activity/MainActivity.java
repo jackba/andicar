@@ -30,6 +30,7 @@ import org.andicar.activity.report.ExpensesListReportActivity;
 import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.activity.report.RefuelListReportActivity;
+import org.andicar.activity.report.TodoListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
@@ -1465,8 +1466,11 @@ public class MainActivity extends BaseActivity {
 		menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
 				mRes.getText(R.string.MENU_PreferencesCaption)).setIcon(
 				mRes.getDrawable(R.drawable.ic_menu_preferences));
-		menu.add(0, StaticValues.MENU_TASKREMINDER_ID, 0,
+		menu.add(0, StaticValues.MENU_TASK_ID, 0,
 				mRes.getText(R.string.MENU_TaskReminderCaption)).setIcon(
+				mRes.getDrawable(R.drawable.ic_menu_task));
+		menu.add(0, StaticValues.MENU_TODO_ID, 0,
+				mRes.getText(R.string.MENU_TodoCaption)).setIcon(
 				mRes.getDrawable(R.drawable.ic_menu_task));
 		menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
 				mRes.getText(R.string.MENU_AboutCaption)).setIcon(
@@ -1524,10 +1528,13 @@ public class MainActivity extends BaseActivity {
 					Intent.ACTION_VIEW,
 					Uri.parse("http://www.andicar.org/localizing-andicar")));
 		}
-		else if (item.getItemId() == StaticValues.MENU_TASKREMINDER_ID) {
+		else if (item.getItemId() == StaticValues.MENU_TASK_ID) {
 			startActivity(new Intent(this, TaskListActivity.class));
 		}
-			return false;
+		else if (item.getItemId() == StaticValues.MENU_TODO_ID) {
+			startActivity(new Intent(this, TodoListReportActivity.class));
+		}
+		return false;
 	}
 
 	@Override

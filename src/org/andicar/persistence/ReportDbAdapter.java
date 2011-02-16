@@ -599,7 +599,204 @@ public class ReportDbAdapter extends MainDbAdapter{
         				" ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TAG_ID_NAME) + "=" +
                     						sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_ROWID_NAME) +
             " WHERE 1=1 ";
-
+    
+    //todo list
+    public static String todoListReportSelect = 
+    	"SELECT "
+			+ sqlConcatTableColumn(TODO_TABLE_NAME, GEN_COL_ROWID_NAME) + ", "  // #0
+			+ "'[#1] ' || " + sqlConcatTableColumn(TASKTYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " || ', ' || " //type - GEN_TypeLabel 
+				+ "'[#2] ' || " + sqlConcatTableColumn(TASK_TABLE_NAME, GEN_COL_NAME_NAME) + " || ', ' || " //task - GEN_TaskLabel
+				+ " CASE "
+					+ " WHEN "  + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " IS NOT NULL "
+						+ " THEN "
+								+ "'[#3] ' || COALESCE(" + sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + ", '') || ', ' " //car - GEN_CarLabel
+					+ " ELSE '' "
+				+ " END || "
+				+ "'[#4] ' || " //task status - GEN_StatusLabel
+				+ " CASE "
+					+ " WHEN " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_ISDONE_NAME) + " == 'Y' "
+						+ " THEN '[#15]' " //done - ToDo_DoneLabel
+					+ " WHEN " + sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " == '" + StaticValues.TASK_SCHEDULED_FOR_TIME + "' " +
+										" AND " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + " < strftime('%s','now') "
+								+ " THEN '[#5]' " //overdue - Todo_OverdueLabel
+					+ " WHEN " + sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " == '" + StaticValues.TASK_SCHEDULED_FOR_MILEAGE + "' " +
+										" AND " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) + " < " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME)
+									+ " THEN '[#5]' " //overdue - Todo_OverdueLabel 
+					+ " WHEN " + sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " == '" + StaticValues.TASK_SCHEDULED_FOR_BOTH + "' " +
+										" AND ( " 
+											+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) + " < " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME)
+											+ " OR "
+											+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + " < strftime('%s','now')) "
+									+ " THEN '[#5]' " //overdue - Todo_OverdueLabel
+					+ " ELSE '[#6]' " //scheduled - Todo_ScheduledLabel
+				+ " END AS "  + FIRST_LINE_LIST_NAME + ", " //datetime(task_todo.DueDate, 'unixepoch', 'localtime') // #1
+				
+    		+ " CASE "
+    				+ " WHEN " + sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " == '" + StaticValues.TASK_SCHEDULED_FOR_TIME + "' "
+    					+ " THEN '[#7] [#8]' " //duedate label/ToDo_ScheduledDateLabel + date
+    				+ " WHEN " + sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " == '" + StaticValues.TASK_SCHEDULED_FOR_MILEAGE + "' "
+    					+ " THEN '[#10] [#11] ' || "
+    							+ " COALESCE (" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ", '') || "
+    							+ " ' ([#13] [#14])' " //duemileage label/ToDo_ScheduledMileageLabel + mileage + (estimated date)
+    				+ " ELSE '[#7] [#8] [#9] [#12] [#11] ' || "
+								+ " COALESCE (" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ", '') || "
+    						+ "' ([#13] [#14])' "
+    		+ " END " //duemileage label/ToDo_ScheduledMileageLabel + mileage 
+    			+ " AS " + SECOND_LINE_LIST_NAME + ", " // #2
+    		+ " COALESCE( " + sqlConcatTableColumn(TODO_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + ", '') AS " + THIRD_LINE_LIST_NAME + ", " // #3
+			+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + ", " // #4
+    		+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) + ", " // #5
+    		+ sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + ", " // #6
+    		+ " CASE "
+    			+ " WHEN Minimums.Mileage IS NOT NULL "
+		    		+ " THEN ( " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) 
+		    				+ " - " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + ") " //no of mileages until the todo
+					+ " / "
+					+ "("
+							//avg. daily mileage
+		    				+ "( " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " - Minimums.Mileage ) " 
+		    				+ " / "
+		    				+ " (strftime('%J','now', 'localtime') - COALESCE(strftime('%J', datetime(Minimums.Date, 'unixepoch'), 'localtime'), 0) ) "
+					+ ") " 
+				+ " ELSE 99999999999 "
+			+ " END " + " AS EstDaysUntilDueMileage, "  //Estimated days until the due mileage #7 
+			+ "( " 
+					+ " COALESCE(strftime('%J', datetime(" 
+							+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + ", 'unixepoch'), 'localtime'), 0) "
+					+ " - "
+					+ " strftime('%J','now', 'localtime') " 
+			+ " ) AS DaysUntilDueDate, " // #8
+			+ " CASE "
+				+ " WHEN "
+					+ sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " = '" + StaticValues.TASK_SCHEDULED_FOR_BOTH + "' "
+							+ " AND Minimums.Mileage IS NOT NULL AND Minimums.Date IS NOT NULL "
+							+ " AND ( "
+					    		+ "( ( " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) 
+								+ " - " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + ") " //no of mileages until the todo
+								+ " / "
+								+ "("
+										+ "( " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " - Minimums.Mileage ) " 
+										+ " / "
+										+ " (strftime('%J','now', 'localtime') - COALESCE(strftime('%J', datetime(Minimums.Date, 'unixepoch'), 'localtime'), 0) ) "
+								+ ") ) " 
+								+ " < " 
+								+ "( " 
+									+ " COALESCE(strftime('%J', datetime(" 
+											+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + ", 'unixepoch'), 'localtime'), 0) "
+									+ " - "
+									+ " strftime('%J','now', 'localtime') " 
+								+ " ) "
+							+ " ) "
+						+ " THEN "
+				    		+ "( ( " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) 
+							+ " - " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + ") " //no of mileages until the todo
+							+ " / "
+							+ "("
+									+ "( " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " - Minimums.Mileage ) " 
+									+ " / "
+									+ " (strftime('%J','now', 'localtime') - COALESCE(strftime('%J', datetime(Minimums.Date, 'unixepoch'), 'localtime'), 0) ) "
+							+ ") ) " 
+				+ " WHEN "
+						+ sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " = '" + StaticValues.TASK_SCHEDULED_FOR_BOTH + "' "
+								+ " AND Minimums.Mileage IS NOT NULL AND Minimums.Date IS NOT NULL "
+								+ " AND ( "
+						    		+ "( ( " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) 
+									+ " - " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + ") " //no of mileages until the todo
+									+ " / "
+									+ "("
+											+ "( " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " - Minimums.Mileage ) " 
+											+ " / "
+											+ " (strftime('%J','now', 'localtime') - COALESCE(strftime('%J', datetime(Minimums.Date, 'unixepoch'), 'localtime'), 0) ) "
+									+ ") ) " 
+									+ " > " 
+									+ "( " 
+										+ " COALESCE(strftime('%J', datetime(" 
+												+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + ", 'unixepoch'), 'localtime'), 0) "
+										+ " - "
+										+ " strftime('%J','now', 'localtime') " 
+									+ " ) "
+								+ " ) "
+							+ " THEN "
+								+ "( " 
+									+ " COALESCE(strftime('%J', datetime(" 
+											+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + ", 'unixepoch'), 'localtime'), 0) "
+									+ " - "
+									+ " strftime('%J','now', 'localtime') " 
+								+ " ) "
+				+ " WHEN "
+					+ "(" + sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " = '" + StaticValues.TASK_SCHEDULED_FOR_BOTH + "' "
+								+ " OR " + sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " = '" + StaticValues.TASK_SCHEDULED_FOR_MILEAGE + "') "
+							+ " AND " 
+								+ " Minimums.Mileage IS NULL "
+						+ " THEN 99999999999 " 
+				+ " WHEN "
+						+ sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " = '" + StaticValues.TASK_SCHEDULED_FOR_MILEAGE + "' "
+								+ " AND Minimums.Mileage IS NOT NULL "
+						+ " THEN "
+				    		+ "( ( " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) 
+							+ " - " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + ") " //no of mileages until the todo
+							+ " / "
+							+ "("
+									+ "( " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " - Minimums.Mileage ) " 
+									+ " / "
+									+ " (strftime('%J','now', 'localtime') - COALESCE(strftime('%J', datetime(Minimums.Date, 'unixepoch'), 'localtime'), 0) ) "
+							+ ") ) " 
+				+ " WHEN "
+						+ sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_SCHEDULEDFOR_NAME) + " = '" + StaticValues.TASK_SCHEDULED_FOR_TIME + "' "
+						+ " THEN "
+							+ "( " 
+							+ " COALESCE(strftime('%J', datetime(" 
+									+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + ", 'unixepoch'), 'localtime'), 0) "
+							+ " - "
+							+ " strftime('%J','now', 'localtime') " 
+						+ " ) "
+//				+ " ELSE "
+//						+ "( " 
+//							+ " COALESCE(strftime('%J', datetime(" 
+//									+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + ", 'unixepoch'), 'localtime'), 0) "
+//							+ " - "
+//							+ " strftime('%J','now', 'localtime') " 
+//						+ " ) "
+			+ " END AS EstDueDays, " //#9
+			+ sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) //#10
+//		+ " END AS " + THIRD_LINE_LIST_NAME
+							
+		+ " FROM " + TODO_TABLE_NAME
+			+ " JOIN " + TASK_TABLE_NAME + " ON " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME) + " = " +
+															sqlConcatTableColumn(TASK_TABLE_NAME, GEN_COL_ROWID_NAME)
+				+ " JOIN " + TASKTYPE_TABLE_NAME + " ON "+ sqlConcatTableColumn(TASK_TABLE_NAME, TASK_COL_TASKTYPE_ID_NAME) + " = " +
+															sqlConcatTableColumn(TASKTYPE_TABLE_NAME, GEN_COL_ROWID_NAME)
+			+ " LEFT OUTER JOIN " + CAR_TABLE_NAME + " ON " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_CAR_ID_NAME) + " = " +
+															sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_ROWID_NAME)
+				+ " LEFT OUTER JOIN " + UOM_TABLE_NAME + " ON " + sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_UOMLENGTH_ID_NAME) + " = " +
+															sqlConcatTableColumn(UOM_TABLE_NAME, GEN_COL_ROWID_NAME)
+			+ " LEFT OUTER JOIN ( "
+					+ " SELECT MIN(Date) AS Date, MIN(Mileage) AS Mileage, CAR_ID "  
+					+ " FROM "  
+						+ " (SELECT MIN(" + MILEAGE_COL_DATE_NAME + ") AS Date, "
+									+ " MIN(" + MILEAGE_COL_INDEXSTART_NAME + ") AS Mileage, " 
+									+ MILEAGE_COL_CAR_ID_NAME + " AS CAR_ID " 
+						+ " FROM " + MILEAGE_TABLE_NAME
+						+ " WHERE " + GEN_COL_ISACTIVE_NAME + " = 'Y' "
+						+ " GROUP BY " + MILEAGE_COL_CAR_ID_NAME  
+						+ " UNION "  
+						+ " SELECT MIN(" + REFUEL_COL_DATE_NAME + ") AS Date, "
+								+ " MIN(" + REFUEL_COL_INDEX_NAME + ") AS Mileage, " 
+								+ REFUEL_COL_CAR_ID_NAME + " AS CAR_ID " 
+						+ " FROM " + REFUEL_TABLE_NAME
+						+ " WHERE " + GEN_COL_ISACTIVE_NAME + " = 'Y' "
+						+ " GROUP BY " + REFUEL_COL_CAR_ID_NAME
+						+ " UNION "
+						+ " SELECT MIN(" + EXPENSE_COL_DATE_NAME + ") AS Date, " 
+								+ " MIN(" + EXPENSE_COL_INDEX_NAME + ") AS Mileage, " 
+								+ EXPENSE_COL_CAR_ID_NAME + " AS CAR_ID " 
+						+ " FROM " + EXPENSE_TABLE_NAME
+						+ " WHERE " + GEN_COL_ISACTIVE_NAME + " = 'Y' "
+						+ " GROUP BY " + EXPENSE_COL_CAR_ID_NAME
+						+ " ) "
+					+ " GROUP BY CAR_ID ) AS Minimums ON Minimums.CAR_ID = " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_CAR_ID_NAME)
+	;
+    
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )
     {
         super(ctx);
@@ -674,14 +871,6 @@ public class ReportDbAdapter extends MainDbAdapter{
             reportSql = reportSql +
                                     " ORDER BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + " DESC";
         }
-//        else if(mReportSqlName.equals("reportExpensesListViewSelect")){
-//            reportSql = expensesListViewSelect;
-//            if(whereCondition.length() > 0)
-//                reportSql = reportSql + whereCondition;
-//
-//            reportSql = reportSql +
-//                                    " ORDER BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + " DESC";
-//        }
         else if(mReportSqlName.equals("reportExpensesListReportSelect")){
             reportSql = expensesListReportSelect;
             if(whereCondition.length() > 0)
@@ -690,7 +879,6 @@ public class ReportDbAdapter extends MainDbAdapter{
             reportSql = reportSql +
                                     " ORDER BY " + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_DATE_NAME) + " DESC";
         }
-
         else if(mReportSqlName.equals("statisticsMainViewSelect")){
             reportSql = statisticsMainViewSelect;
             if(whereCondition.length() > 0)
@@ -711,6 +899,15 @@ public class ReportDbAdapter extends MainDbAdapter{
 
             reportSql = reportSql +
                                     " ORDER BY " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + " DESC";
+        }
+        else if(mReportSqlName.equals("todoListReportSelect")){
+            reportSql = todoListReportSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +
+                                    " ORDER BY EstDueDays ASC, " + 
+                                    	"COALESCE (" + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) + ", 0) ASC ";
         }
 
         if(limitCount != -1)

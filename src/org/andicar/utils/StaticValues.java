@@ -43,7 +43,8 @@ public class StaticValues
     public static final int MENU_RATE_COMMENT_ID = 18;
     public static final int MENU_ADDON_ID = 19;
     public static final int MENU_LOCALIZE_ID = 20;
-    public static final int MENU_TASKREMINDER_ID = 21;
+    public static final int MENU_TASK_ID = 21;
+    public static final int MENU_TODO_ID = 22;
     
     public static final int OPTION_MENU_ADD_ID = 21;
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
@@ -57,6 +58,7 @@ public class StaticValues
     public static final int CONTEXT_MENU_SENDASEMAIL_ID = 34;
     public static final int CONTEXT_MENU_SHOWONMAP_ID = 35;
     public static final int CONTEXT_MENU_OPENGPSTRACK_ID = 36;
+    public static final int CONTEXT_MENU_TODO_DONE_ID = 37;
 
     public static final int GPSTRACKMAP_MENU_MAPMODE_ID = 41;
     public static final int GPSTRACKMAP_MENU_SATELLITEMODE_ID = 42;

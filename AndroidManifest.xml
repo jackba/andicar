@@ -270,6 +270,10 @@
             android:name="org.andicar.activity.TaskEditActivity"
             android:label="@string/APP_Activity_TaskEdit">
         </activity>
+        <activity 
+            android:name="org.andicar.activity.report.TodoListReportActivity"
+            android:label="@string/APP_Activity_TodoList">
+        </activity>
 
         <!-- AddOn Services -->
         <service android:name="com.andicar.addon.services.BackupService" 

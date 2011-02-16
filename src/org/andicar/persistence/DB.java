@@ -109,12 +109,10 @@ public class DB {
 	public static final String CAR_COL_REGISTRATIONNO_NAME = "RegistrationNo";
 	public static final String CAR_COL_INDEXSTART_NAME = "IndexStart";
 	public static final String CAR_COL_INDEXCURRENT_NAME = "IndexCurrent";
-	public static final String CAR_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME
-			+ "_Length_ID";
-	public static final String CAR_COL_UOMVOLUME_ID_NAME = UOM_TABLE_NAME
-			+ "_Volume_ID";
-	public static final String CAR_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME
-			+ "_ID";
+	public static final String CAR_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME + "_Length_ID";
+	public static final String CAR_COL_UOMVOLUME_ID_NAME = UOM_TABLE_NAME + "_Volume_ID";
+	public static final String CAR_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
+	
 	// uom specific column names
 	public static final String UOM_COL_CODE_NAME = "Code";
 	public static final String UOM_COL_UOMTYPE_NAME = "UOMType"; // V - Volume
@@ -317,6 +315,10 @@ public class DB {
 	 * No. of km|mi to start reminders
 	 */
 	public static final String TASK_COL_MILEAGEREMINDERSTART_NAME = "MileageReminderStart";
+	/**
+	 * How many todos will be generated for this task
+	 */
+	public static final String TASK_COL_TODOCOUNT_NAME = "TodoCount";
 	
 	
 	/**
@@ -334,7 +336,7 @@ public class DB {
 	/**
 	 * the due mileage based on starting mileage and recurency mileage
 	 */
-	public static final String TODO_COL_DUEMILAGE_NAME = "DueMilage";
+	public static final String TODO_COL_DUEMILEAGE_NAME = "DueMileage";
 	/**
 	 * postpone the next reminder until this date 
 	 */
@@ -373,6 +375,7 @@ public class DB {
 	public static final int CAR_COL_UOMLENGTH_ID_POS = 8;
 	public static final int CAR_COL_UOMVOLUME_ID_POS = 9;
 	public static final int CAR_COL_CURRENCY_ID_POS = 10;
+
 	// uom specific column positions
 	public static final int UOM_COL_CODE_POS = 4;
 	public static final int UOM_COL_UOMTYPE_POS = 5;
@@ -495,6 +498,7 @@ public class DB {
 	public static final int TASK_COL_TIMEREMINDERSTART_POS = 11;
 	public static final int TASK_COL_RUNMILEAGE_POS = 12;
 	public static final int TASK_COL_MILEAGEREMINDERSTART_POS = 13;
+	public static final int TASK_COL_TODOCOUNT_POS = 14;
 
 	public static final int TASK_CAR_COL_TASK_ID_POS = 4;
 	public static final int TASK_CAR_COL_CAR_ID_POS = 5;
@@ -520,7 +524,7 @@ public class DB {
 			GEN_COL_USER_COMMENT_NAME, CAR_COL_MODEL_NAME,
 			CAR_COL_REGISTRATIONNO_NAME, CAR_COL_INDEXSTART_NAME,
 			CAR_COL_INDEXCURRENT_NAME, CAR_COL_UOMLENGTH_ID_NAME,
-			CAR_COL_UOMVOLUME_ID_NAME, CAR_COL_CURRENCY_ID_NAME };
+			CAR_COL_UOMVOLUME_ID_NAME, CAR_COL_CURRENCY_ID_NAME};
 
 	public static final String[] uomTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
@@ -635,13 +639,14 @@ public class DB {
 			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME,
 			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISRECURRENT_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, 
 			TASK_COL_TIMEFREQUENCY_NAME, TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_STARTINGTIME_NAME,
-			TASK_COL_TIMEREMINDERSTART_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEREMINDERSTART_NAME};
+			TASK_COL_TIMEREMINDERSTART_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEREMINDERSTART_NAME,
+			TASK_COL_TODOCOUNT_NAME};
 	
 	public static final String[] taskCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
 			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
 
 	public static final String[] todoTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-		TODO_COL_TASK_ID_NAME, TODO_COL_CAR_ID_NAME, TODO_COL_DUEDATE_NAME, TODO_COL_DUEMILAGE_NAME, TODO_COL_POSTPONEUNTIL_NAME, 
+		TODO_COL_TASK_ID_NAME, TODO_COL_CAR_ID_NAME, TODO_COL_DUEDATE_NAME, TODO_COL_DUEMILEAGE_NAME, TODO_COL_POSTPONEUNTIL_NAME, 
 		TODO_COL_ISDONE_NAME, TODO_COL_DONEDATE_NAME, TODO_COL_ISSTOPNOTIFICATION_NAME};
 
 	public static final String[] genColName = { GEN_COL_ROWID_NAME,
@@ -692,7 +697,10 @@ public class DB {
 			+ " INTEGER, "
 			+ CAR_COL_UOMVOLUME_ID_NAME
 			+ " INTEGER, "
-			+ CAR_COL_CURRENCY_ID_NAME + " INTEGER " + ");";
+			+ CAR_COL_CURRENCY_ID_NAME 
+			+ " INTEGER "
+			+ ");";
+	
 	protected static final String UOM_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
 			+ UOM_TABLE_NAME
 			+ " ( "
@@ -1090,6 +1098,8 @@ public class DB {
 			+ " INTEGER NULL, "
 			+ TASK_COL_MILEAGEREMINDERSTART_NAME
 			+ " INTEGER NULL, "
+			+ TASK_COL_TODOCOUNT_NAME
+			+ " INTEGER NOT NULL, "
 			+ " FOREIGN KEY(" + TASK_COL_TASKTYPE_ID_NAME + ") REFERENCES " + TASKTYPE_TABLE_NAME + "(" + GEN_COL_ROWID_NAME + ")"
 			+ ");";
 
@@ -1131,7 +1141,7 @@ public class DB {
 		+ " INTEGER NULL, "
 		+ TODO_COL_DUEDATE_NAME
 		+ " DATE NULL, "
-		+ TODO_COL_DUEMILAGE_NAME
+		+ TODO_COL_DUEMILEAGE_NAME
 		+ " INTEGER NULL, "
 		+ TODO_COL_POSTPONEUNTIL_NAME
 		+ " DATE NULL, "
