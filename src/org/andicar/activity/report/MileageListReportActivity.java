@@ -19,21 +19,26 @@
 
 package org.andicar.activity.report;
 
-import android.app.AlertDialog;
+import org.andicar.activity.MileageEditActivity;
+import org.andicar.activity.R;
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.persistence.MileageListDataBinder;
+import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
-import org.andicar.activity.MileageEditActivity;
-import org.andicar.activity.R;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
 
 /**
  *
@@ -43,21 +48,27 @@ public class MileageListReportActivity extends ReportListActivityBase {
 
     private View searchView;
     private EditText etUserCommentSearch;
-    private Spinner spnExpTypeSearch;
     private EditText etDateFromSearch;
     private EditText etDateToSearch;
+    private AutoCompleteTextView acTag;
     private Spinner spnDriverSearch;
     private Spinner spnCarSearch;
+    private Spinner spnExpTypeSearch;
+//    private Spinner spnIsActive;
+    private ArrayAdapter<String> tagAdapter;
+    private Long mCarId;
 
     @Override
     public void onCreate(Bundle icicle) {
         reportSelectName = "reportMileageListViewSelect";
-        Long mCarId = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getLong("CurrentCar_ID", 0);
+        mCarId = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getLong("CurrentCar_ID", 0);
         if(icicle == null){
             whereConditions = new Bundle();
             whereConditions.putString(
                     ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
                     mCarId.toString());
+//    		whereConditions.putString(
+//    				ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.GEN_COL_ISACTIVE_NAME) + " = ", "Y"); 
         }
         else
             whereConditions = (Bundle)getLastNonConfigurationInstance();
@@ -68,7 +79,9 @@ public class MileageListReportActivity extends ReportListActivityBase {
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
-                reportSelectName, whereConditions, null);
+                reportSelectName, whereConditions, new MileageListDataBinder() 
+//                null
+                );
 
     }
 
@@ -96,27 +109,55 @@ public class MileageListReportActivity extends ReportListActivityBase {
         
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
         searchView = liLayoutFactory.inflate(R.layout.mileage_search_dialog, null);
-        AlertDialog.Builder searchDialog = new AlertDialog.Builder(MileageListReportActivity.this);
-        searchDialog.setTitle(R.string.DIALOGSearch_DialogTitle);
+        AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(MileageListReportActivity.this, 
+        		AndiCarDialogBuilder.DIALOGTYPE_SEARCH, mRes.getString(R.string.DIALOGSearch_DialogTitle));
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
         spnExpTypeSearch = (Spinner) searchView.findViewById(R.id.spnExpTypeSearch);
-        initSpinner(spnExpTypeSearch, MainDbAdapter.EXPENSETYPE_TABLE_NAME);
+        initSpinner(spnExpTypeSearch, MainDbAdapter.EXPENSETYPE_TABLE_NAME, null, null, -1);
         etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
         etUserCommentSearch.setText("%");
         etDateFromSearch = (EditText) searchView.findViewById(R.id.etDateFromSearch);
+        etDateFromSearch.setEnabled(false);
         etDateToSearch = (EditText) searchView.findViewById(R.id.etDateToSearch);
+        etDateToSearch.setEnabled(false);
         spnCarSearch = (Spinner) searchView.findViewById(R.id.spnCarSearch);
-        initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME);
+        initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME, null, null, mCarId);
         spnDriverSearch = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
-        initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME);
+        initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME, null, null, -1);
+        acTag = ((AutoCompleteTextView) searchView.findViewById( R.id.acTag ));
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                0, 0));
+        acTag.setAdapter(tagAdapter);
+        acTag.setText("%");
+//        spnIsActive = (Spinner) searchView.findViewById(R.id.spnIsActive);
+//        spnIsActive.setSelection(1); //yes
+
+        ImageButton btnPickDateFrom = (ImageButton) searchView.findViewById(R.id.btnPickDateFrom);
+        if(btnPickDateFrom != null)
+            btnPickDateFrom.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    showDialog(StaticValues.DIALOG_DATE_FROM_PICKER);
+                }
+            });
+        
+        ImageButton btnPickDateTo = (ImageButton) searchView.findViewById(R.id.btnPickDateTo);
+        if(btnPickDateTo != null)
+            btnPickDateTo.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View arg0) {
+                    showDialog(StaticValues.DIALOG_DATE_TO_PICKER);
+                }
+            });
         return searchDialog.create();
     }
     private DialogInterface.OnClickListener searchDialogButtonlistener = new DialogInterface.OnClickListener() {
 
         public void onClick(DialogInterface dialog, int whichButton) {
             if (whichButton == DialogInterface.BUTTON_POSITIVE) {
+            	if(whereConditions == null)
+            		whereConditions = new Bundle();
                 try {
                     whereConditions.clear();
                     if (spnExpTypeSearch.getSelectedItemId() != -1) {
@@ -157,6 +198,25 @@ public class MileageListReportActivity extends ReportListActivityBase {
                                 MainDbAdapter.MILEAGE_COL_DRIVER_ID_NAME) + "=",
                                 String.valueOf(spnDriverSearch.getSelectedItemId()));
                     }
+                    if (acTag.getText().toString() != null) {
+                    	if(acTag.getText().toString().length() == 0)
+                            whereConditions.putString(
+                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
+                                    							MainDbAdapter.MILEAGE_COL_TAG_ID_NAME) + " is ",
+                                    "null");
+                    	else
+                            whereConditions.putString(
+                            		"COALESCE( " +
+	                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TAG_TABLE_NAME,
+	                                    							MainDbAdapter.GEN_COL_NAME_NAME) + ", '') LIKE ",
+        							acTag.getText().toString());
+                    }
+//                    if(spnIsActive.getSelectedItemId() > 0){
+//	                    whereConditions.putString(
+//	                            ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME,
+//	                            			MainDbAdapter.GEN_COL_ISACTIVE_NAME) + "=",
+//	                        			(spnIsActive.getSelectedItemId() == 1 ? "Y" : "N"));
+//                    }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);
                     fillData();
                 } catch (IndexOutOfBoundsException e) {
@@ -171,4 +231,17 @@ public class MileageListReportActivity extends ReportListActivityBase {
             }
         };
     };
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.report.ReportListActivityBase#updateDate(int)
+	 */
+	@Override
+	protected void updateDate(int what) {
+		if(what == 1){ //date from
+			etDateFromSearch.setText(mYearFrom + "-" + Utils.pad((mMonthFrom + 1), 2) + "-" + Utils.pad(mDayFrom, 2));
+		}
+		else{ //date to
+			etDateToSearch.setText(mYearTo + "-" + Utils.pad((mMonthTo + 1), 2) + "-" + Utils.pad(mDayTo, 2));
+		}
+	}
 }

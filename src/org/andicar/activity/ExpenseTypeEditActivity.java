@@ -19,14 +19,14 @@
 
 package org.andicar.activity;
 
+import org.andicar.persistence.MainDbAdapter;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
-import org.andicar.persistence.MainDbAdapter;
 
 /**
  *
@@ -76,11 +76,19 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     }
 
     @Override
-    void saveData() {
-        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-        if( retVal != null ) {
+    protected void saveData() {
+        String strRetVal = checkMandatory(vgRoot);
+        if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+
+        strRetVal = checkNumeric(vgRoot, false);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
             toast.show();
             return;
         }
@@ -114,7 +122,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.expensetype_edit_activity);
     }
 

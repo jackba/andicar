@@ -24,6 +24,7 @@
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
     android:id="@+id/vgRoot"
+    android:background="@android:color/black"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -38,6 +39,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="fill"
+            android:typeface="sans"
+            android:textColor="@android:color/white"
+            android:text="@string/LM_COPYRIGHT_HTML1"
             />
         <TableLayout
             android:layout_width="fill_parent"
@@ -50,10 +54,14 @@
                 <TextView
                     android:text="EUR"
                     android:gravity="center_horizontal"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
                     />
                 <TextView
                     android:text="USD"
                     android:gravity="center_horizontal"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
                     />
             </TableRow>
 
@@ -71,6 +79,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="fill"
+            android:typeface="sans"
+            android:textColor="@android:color/white"
+            android:text="@string/LM_COPYRIGHT_HTML2"
             />
     </LinearLayout>
 </ScrollView>

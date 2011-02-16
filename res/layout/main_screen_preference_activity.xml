@@ -23,6 +23,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_marginRight="5dip"
+    android:background="@android:color/black"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -33,12 +34,16 @@
             android:layout_height="1dip"
             android:layout_width="fill_parent"
             android:background="@color/separator_bg"
+            android:typeface="sans"
+            android:textColor="@android:color/white"
             />
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:text="@string/PREFMainScreen_ZonesLabel"
+            android:typeface="sans"
+            android:textColor="@android:color/white"
             />
 
         <ListView android:id="@+id/lvZones"
@@ -46,6 +51,8 @@
                   android:layout_height="fill_parent"
                   android:drawSelectorOnTop="false"
                   android:choiceMode="multipleChoice"
+                  android:typeface="sans"
+                  android:textColor="@android:color/white"
                   />
     </LinearLayout>
 </LinearLayout>

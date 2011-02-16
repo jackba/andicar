@@ -17,6 +17,11 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
+
+<!--
+        < = <
+-->
+
 <resources>
     <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
         AndiCar is a free and open source car management
@@ -27,42 +32,54 @@
     </string>
 
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
-        &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> is a free and open source car management software for Android powered devices.
-        It is licensed under the terms of the GNU General Public License, version 3.&lt;br>
-        See the About page for more details.&lt;br>Copyright © 2010 Miklos Keresztes.&lt;br>
-        Thank you for using &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>!&lt;br>
-        Application version:
+        <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices.
+        It is licensed under the terms of the GNU General Public License, version 3.\n
+        See the About page for more details.\n Copyright © 2010-2011 Miklos Keresztes.\n
+        Thank you for using <b><i>AndiCar</i></b>!
     </string>
 
     <string name="LM_COPYRIGHT_HTML1">
-        &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> is a free and open source car management
-        software for Android powered devices. It is licensed under the terms of the GNU General Public License.&lt;br>
-        *  For more information (how to's, latest news, etc.) please visit the project home page at
-        &lt;a href="http://sites.google.com/site/andicarfree/">http://sites.google.com/site/andicarfree/&lt;/a>.&lt;br>
-        &lt;small>Refresh the page in your browser if you get a "Web page not available" message.&lt;/small>&lt;br>
-        *  For questions you are welcome to the &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> discussion list at
-        &lt;a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar&lt;/a>.&lt;br>
-        *  For bug reports or enhancement requests don\'t hesitate to use the &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b> issue system at
-        &lt;a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list&lt;/a>.&lt;br>
+        <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices. 
+        It is licensed under the terms of the GNU General Public License.\n
+        *  For more information (how to, latest news, etc.) please visit the project home page at
+        <a href="http://www.andicar.org">www.andicar.org</a>.\n
+        <small>Refresh the page in your browser if you get a \"Web page not available\" message.</small>\n
+        *  For questions you are welcome to the <b><i>AndiCar</i></b> discussion list at
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
+        *  For bug reports or enhancement requests do not hesitate to use the <b><i>AndiCar</i></b> issue system at
+        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
         *  You can subscribe for the project news at
-        &lt;a href="http://sites.google.com/site/andicarfree/News/">http://sites.google.com/site/andicarfree/News/&lt;/a>.&lt;br>
-        *  For other things you can send an email to andicar.support@gmail.com.&lt;br>&lt;br>
-        If you enjoy using &lt;b>&lt;i>AndiCar&lt;/b>&lt;/i>, please consider making a donation.
+        <a href="http://www.andicar.org/News/">www.andicar.org/News/</a>.\n
+        *  For other things you can send an email to andicar.support@gmail.com.\n\n
+        You can make a donation if you enjoy using <b><i>AndiCar</i></b>.
         All donations can be made using a PayPal account.
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
-        &lt;br>&lt;br>Thank you for using &lt;b>&lt;i>AndiCar&lt;/i>&lt;/b>.&lt;br>&lt;br>
-        &lt;br>&lt;b>&lt;i>Copyright notice&lt;/i>&lt;/b>:&lt;br>&lt;br>
-        Copyright © 2010 Miklos Keresztes (miklos.keresztes@gmail.com)&lt;br>&lt;br>
+        \n\nThank you for using <b><i>AndiCar</i></b>.\n\n
+        <b><i>Credits:</i></b>\n
+        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
+        *  Russian translation by Andrey Demin - andde@rambler.ru\n
+		*  German translation by Andy Haubenschmid - andy@haubenschmid.li\n
+        \n<b><i>Copyright notice</i></b>:\n\n
+        Copyright © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
-        the Free Software Foundation, either version 3 of the License, or (at your option) any later version.&lt;br>&lt;br>
+        the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n
         This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
         without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-        See the GNU General Public License for more details.&lt;br>&lt;br>
+        See the GNU General Public License for more details.\n\n
         You should have received a copy of the GNU General Public License along with this program.
-        If not, see &lt;a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses&lt;/a>.&lt;br>
-        The whole license can be found &lt;a href="http://www.gnu.org/licenses/gpl.html">here&lt;/a>.&lt;br>
+        If not, see <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n
+        The whole license can be found <a href="http://www.gnu.org/licenses/gpl.html">here</a>.\n
     </string>
+
+    <string name="AddOn_SubscriptionValidity">
+    	The subscription is valid for your current database instance.
+    	\nYou should create a backup immediately after the subscription process!     
+    </string>
+    <string name="AddOn_Backup_LongDescription">
+    	The recorded informations (mileages, expenses, fill ups) are the most valuable assets for you. In case of database/phone loss, the only way to ensure the availability of these data is a more recent backup.    	
+   	</string>
+
 </resources>

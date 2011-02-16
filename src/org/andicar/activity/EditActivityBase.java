@@ -19,22 +19,23 @@
 
 package org.andicar.activity;
 
+import java.util.Calendar;
+
+import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import java.util.Calendar;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.StaticValues;
-import android.widget.TimePicker;
 import android.widget.DatePicker;
-import org.andicar.utils.AndiCarStatistics;
-import org.andicar.utils.Utils;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
 /**
  * Base class for all edit activities. Implement common functionalities:
@@ -51,8 +52,12 @@ import org.andicar.utils.Utils;
 public abstract class EditActivityBase extends BaseActivity {
     protected long mRowId = -1;
     protected Bundle mBundleExtras = null;
-    protected Button btnOk = null;
-    protected Button btnCancel = null;
+    protected ImageButton btnOk = null;
+    protected ImageButton btnCancel = null;
+    protected ImageButton btnPickDate = null;
+    protected ImageButton btnPickTime = null;
+    protected TimePickerDialog mTimePickerDialog = null;
+    protected DatePickerDialog mDatePickerDialog = null;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
@@ -61,10 +66,11 @@ public abstract class EditActivityBase extends BaseActivity {
     protected long mlDateTimeInSeconds;
     protected TextView tvDateTimeValue;
     protected final Calendar mcalDateTime = Calendar.getInstance();
-//    protected int mLayoutResID = -1;
+    protected boolean initTimeOnly = false;
+    protected boolean initDateOnly = false;
 
-    abstract void saveData();
-    abstract void setLayout();
+    abstract protected void saveData();
+    abstract protected void setLayout();
     
     @Override
     protected void onStart()
@@ -91,13 +97,19 @@ public abstract class EditActivityBase extends BaseActivity {
 
         mBundleExtras = getIntent().getExtras();
 
-        btnCancel = (Button) findViewById( android.R.id.closeButton);
+        btnCancel = (ImageButton) findViewById( android.R.id.closeButton);
         if(btnCancel != null)
-            btnCancel.setOnClickListener(mCancelClickListener);
+            btnCancel.setOnClickListener(onCancelClickListener);
 
-        btnOk = (Button)findViewById( android.R.id.button1 );
-        if(mOkClickListener != null)
-            btnOk.setOnClickListener(mOkClickListener);
+        btnOk = (ImageButton)findViewById( android.R.id.button1 );
+        if(onOkClickListener != null)
+            btnOk.setOnClickListener(onOkClickListener);
+            
+        vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
+        if(vgRoot != null)
+        	setInputType(vgRoot);
+        btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
+        btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
 
     }
 
@@ -126,7 +138,7 @@ public abstract class EditActivityBase extends BaseActivity {
         outState.putInt("mMinute", mMinute);
     }
 
-    protected View.OnClickListener mCancelClickListener =
+    protected View.OnClickListener onCancelClickListener =
             new View.OnClickListener(){
                 public void onClick( View v )
                 {
@@ -134,7 +146,7 @@ public abstract class EditActivityBase extends BaseActivity {
                 }
             };
 
-    protected View.OnClickListener mOkClickListener =
+    protected View.OnClickListener onOkClickListener =
             new View.OnClickListener()
                 {
                     public void onClick( View v )
@@ -143,15 +155,17 @@ public abstract class EditActivityBase extends BaseActivity {
                     }
                 };
 
-
    /**
-    * Check mandatory fields. Mandatory fields are detected based on view tag (if contain a value => field is mandatory)
+    * Check mandatory fields. Mandatory fields are detected based on view hint (Required)
     * @return null or field tag if is empty
     */
    protected String checkMandatory(ViewGroup wg){
        View vwChild;
        EditText etChild;
        String strRetVal;
+       if(wg == null)
+           return null;
+       
        for(int i = 0; i < wg.getChildCount(); i++)
        {
            vwChild = wg.getChildAt(i);
@@ -162,9 +176,11 @@ public abstract class EditActivityBase extends BaseActivity {
            }
            else if(vwChild instanceof EditText){
                etChild = (EditText) vwChild;
-               if(etChild.getTag() != null && etChild.getTag().toString().length() > 0
+//               if(etChild.getTag() != null && etChild.getTag().toString().length() > 0
+               if(etChild.getHint() != null && etChild.getHint().toString().equals(mResource.getString(R.string.GEN_Required))
+                       && etChild.isShown()
                        && (etChild.getText().toString() == null || etChild.getText().toString().length() == 0)){
-                   return etChild.getTag().toString();
+                   return etChild.getTag().toString().replace(":", "");
                }
            }
        }
@@ -179,12 +195,13 @@ public abstract class EditActivityBase extends BaseActivity {
            if(vwChild instanceof ViewGroup){
                setEditable((ViewGroup)vwChild, editable);
            }
-           if(vwChild.getId() != R.id.tvWarningLabel)
+           if(vwChild.getId() != R.id.tvWarningLabel && vwChild.getId() != android.R.id.closeButton)
                vwChild.setEnabled(editable);
        }
    }
 
    protected void initDateTime(long dateTimeInMiliseconds){
+	   
         mlDateTimeInSeconds = dateTimeInMiliseconds / 1000;
         mcalDateTime.setTimeInMillis(dateTimeInMiliseconds);
         mYear = mcalDateTime.get(Calendar.YEAR);
@@ -194,34 +211,41 @@ public abstract class EditActivityBase extends BaseActivity {
         mMinute = mcalDateTime.get(Calendar.MINUTE);
 
         tvDateTimeValue = (TextView) findViewById(R.id.tvDateTimeValue);
-        updateDateTime();
+//        if(dateTimeInMiliseconds > 0){
+	        if(initTimeOnly)
+	        	updateTime();
+            else if(initDateOnly)
+            	updateDate();
+	        else
+	        	updateDateTime();
+//        }
 
-        Button btnPickDate = (Button) findViewById(R.id.btnPickDate);
         if(btnPickDate != null)
             btnPickDate.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
-                    showDialog(StaticValues.DATE_DIALOG_ID);
+                    showDialog(StaticValues.DIALOG_DATE_PICKER);
                 }
             });
 
-        Button btnPickTime = (Button) findViewById(R.id.btnPickTime);
         if(btnPickTime != null)
             btnPickTime.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View arg0) {
-                    showDialog(StaticValues.TIME_DIALOG_ID);
+                    showDialog(StaticValues.DIALOG_TIME_PICKER);
                 }
             });
    }
-    @Override
+
+   @Override
     protected Dialog onCreateDialog(int id) {
         switch(id) {
-            case StaticValues.TIME_DIALOG_ID:
-                return new TimePickerDialog(this,
-                        mTimeSetListener, mHour, mMinute, false);
-            case StaticValues.DATE_DIALOG_ID:
-                return new DatePickerDialog(this,
-                        mDateSetListener,
-                        mYear, mMonth, mDay);
+            case StaticValues.DIALOG_TIME_PICKER:
+            	mTimePickerDialog = new TimePickerDialog(this,
+                        onTimeSetListener, mHour, mMinute, false); 
+                return mTimePickerDialog;
+            case StaticValues.DIALOG_DATE_PICKER:
+            	mDatePickerDialog = new DatePickerDialog(this,
+                        onDateSetListener, mYear, mMonth, mDay); 
+                return mDatePickerDialog;
         }
         return null;
     }
@@ -229,31 +253,44 @@ public abstract class EditActivityBase extends BaseActivity {
     @Override
     protected void onPrepareDialog(int id, Dialog dialog) {
         switch(id) {
-            case StaticValues.TIME_DIALOG_ID:
-                ((TimePickerDialog) dialog).updateTime(mHour, mMinute);
+            case StaticValues.DIALOG_TIME_PICKER:
+            	if(mTimePickerDialog != null)
+            		mTimePickerDialog.updateTime(mHour, mMinute);
                 break;
-            case StaticValues.DATE_DIALOG_ID:
-                ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
+            case StaticValues.DIALOG_DATE_PICKER:
+            	if(mDatePickerDialog != null)
+            		mDatePickerDialog.updateDate(mYear, mMonth, mDay);
                 break;
         }
     }
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
+
+    private DatePickerDialog.OnDateSetListener onDateSetListener =
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int monthOfYear,
                         int dayOfMonth) {
                     mYear = year;
                     mMonth = monthOfYear;
                     mDay = dayOfMonth;
-                    updateDateTime();
+                    if(initTimeOnly)
+                    	updateTime();
+                    else if(initDateOnly)
+                    	updateDate();
+                    else
+                    	updateDateTime();
                 }
             };
             
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener =
+    private TimePickerDialog.OnTimeSetListener onTimeSetListener =
             new TimePickerDialog.OnTimeSetListener() {
                 public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                     mHour = hourOfDay;
                     mMinute = minute;
-                    updateDateTime();
+                    if(initTimeOnly)
+                    	updateTime();
+                    else if(initDateOnly)
+                    	updateDate();
+                    else
+                    	updateDateTime();
                 }
             };
 
@@ -261,11 +298,28 @@ public abstract class EditActivityBase extends BaseActivity {
         mcalDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
         tvDateTimeValue.setText(
-                new StringBuilder() // Month is 0 based so add 1
-                .append(Utils.pad(mMonth + 1, 2)).append("-")
-                .append(Utils.pad(mDay, 2)).append("-")
-                .append(mYear).append(" ")
-                .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
+        		DateFormat.getDateFormat(getApplicationContext()).format(mcalDateTime.getTime()) + " " +
+					DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime())
+        );
     }
 
+    private void updateDate() {
+    	mHour = 0;
+    	mMinute = 0;
+        mcalDateTime.set(mYear, mMonth, mDay, 0, 0, 0);
+        mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
+        tvDateTimeValue.setText(
+        		DateFormat.getDateFormat(getApplicationContext()).format(mcalDateTime.getTime()) + " " +
+					DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime())
+				);
+    }
+
+    private void updateTime() {
+        mcalDateTime.set(1970, Calendar.JANUARY, 1, mHour, mMinute, 0);
+        mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
+        tvDateTimeValue.setText(
+				DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime()));
+//                new StringBuilder() // Month is 0 based so add 1
+//                .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
+    }
 }

@@ -17,197 +17,345 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:scrollbars="vertical"
+    android:layout_height="fill_parent"
+    android:layout_marginRight="5dip"
     android:id="@+id/vgRoot"
+    android:background="@android:color/black"
     >
-
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dip"
         >
-        <TextView android:id="@+id/tvCarDriverLabel"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  />
-        <TextView
-            android:id="@+id/tvStartStopIndexHdr"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/MileageEditActivity_IndexHeaderLabel"
-            android:layout_marginTop="5dip"
-            />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            >
-            <TextView
-                android:id="@+id/tvIndexStartLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/MileageEditActivity_IndexStartLabel"
-                />
-            <EditText
-                android:id="@+id/etIndexStart"
-                android:layout_width="90dip"
-                android:layout_height="wrap_content"
-                android:numeric="decimal"
-                android:layout_marginLeft="2dip"
-                android:background="@color/mandatory_bg"
-                android:tag="@string/MileageEditActivity_IndexStartLabel"
-                />
-
-            <TextView
-                android:id="@+id/tvUserInputLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
-                />
-            <EditText
-                android:id="@+id/etUserInput"
-                android:layout_width="90dip"
-                android:layout_height="wrap_content"
-                android:numeric="decimal"
-                android:layout_marginLeft="2dip"
-                android:background="@color/mandatory_bg"
-                android:tag=""
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_marginTop="10dip"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tvCalculatedTextLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-            <TextView
-                android:id="@+id/tvCalculatedTextContent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="2dip"
-                />
-            <TextView
-                android:id="@+id/tvExpenseTypeLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
-                android:text="@string/GEN_ExpenseTypeLabel"
-                />
-            <Spinner android:id="@+id/spnExpType"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:drawSelectorOnTop="true"
-                android:layout_marginLeft="2dip"
-                android:background="@color/mandatory_bg"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                />
-     </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvUserCommentLabel"
+        <ImageButton
+            android:id="@android:id/closeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/GEN_UserCommentLabel"
-            android:layout_marginTop="10dip"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_cancel_selector"
             />
-        <AutoCompleteTextView
-            android:id="@+id/acUserComment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@android:drawable/editbox_background"
+        <ImageButton
+            android:id="@+id/btnStartStopMileageRecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_mileage_start_record_24x24"
             />
+        <ImageButton
+            android:id="@+id/btnOpenGPSTrack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_map_selector"
+            />
+        <ImageButton
+            android:id="@android:id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_done_selector"
+            android:layout_marginRight="5dip"
+            />
+    </RelativeLayout>
+    <TextView
+        android:layout_height="1dip"
+        android:layout_width="fill_parent"
+        android:background="@color/separator_bg"
+        android:layout_marginTop="10dip"
+        />
 
-        <TextView android:id="@+id/tvInsertModeHdrLabel"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:text="@string/MileageEditActivity_InsertModeHeaderLabel"/>
-        <RelativeLayout
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        >
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
+            android:layout_marginRight="5dip"
             >
-            <Button
-                android:id="@android:id/button1"
+            <TextView
+                android:id="@+id/tvMileageRecInProgress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/MileageEditActivity_RecordingInProgress"
+        		android:gravity="center"
+                android:typeface="sans"
+        		android:textStyle="bold|italic"
+                android:textColor="@android:color/white"
+                />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                >
+                <TextView
+                    android:id="@+id/tvCarLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GEN_CarLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <Spinner android:id="@+id/spnCar"
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:drawSelectorOnTop="true"
+                         android:layout_marginLeft="5dip"
+                         android:prompt="@string/GEN_ChooseOneTitle"
+                         android:background="@drawable/white_background"
+                         />
+                <TextView
+                    android:id="@+id/tvDriverLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="@string/GEN_DriverLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <Spinner android:id="@+id/spnDriver"
+                         android:layout_width="fill_parent"
+                         android:layout_height="wrap_content"
+                         android:drawSelectorOnTop="true"
+                         android:layout_marginLeft="5dip"
+                         android:prompt="@string/GEN_ChooseOneTitle"
+                         android:background="@drawable/white_background"
+                         />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+                <TextView
+                    android:id="@+id/tvExpenseTypeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/GEN_ExpenseTypeLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <Spinner android:id="@+id/spnExpType"
+                         android:layout_width="fill_parent"
+                         android:layout_height="wrap_content"
+                         android:drawSelectorOnTop="true"
+                         android:layout_marginLeft="5dip"
+                         android:background="@drawable/white_background"
+                         android:prompt="@string/GEN_ChooseOneTitle"
+                         />
+            </LinearLayout>
+            <!--date/time -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:layout_marginTop="5dip"
+                >
+                <TextView
+                    android:id="@+id/tvDateTimeValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:gravity="center_vertical"
+                    />
+                <ImageButton android:id="@+id/btnPickDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/btn_background_selector"
+                        android:src="@drawable/icon_calendar_selector"
+                        />
+                <ImageButton android:id="@+id/btnPickTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:background="@drawable/btn_background_selector"
+                        android:src="@drawable/icon_clock_selector"
+                        />
+            </LinearLayout>
+
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                android:layout_marginTop="5dip"
+                />
+            <TextView
+                android:id="@+id/tvStartStopIndexHdr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="20dip"
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/GEN_Done"
+                android:text="@string/GEN_IndexLabel"
+                android:layout_marginTop="5dip"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+				android:textStyle="bold"
+                android:gravity="center_vertical"
                 />
-
-            <Button
-                android:id="@android:id/closeButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@android:id/button1"
-                android:layout_alignTop="@android:id/button1"
-                style="?android:attr/buttonStyleSmall"
-                android:text="@string/GEN_CANCEL"
-                />
-
+                >
+                <TextView
+                    android:id="@+id/tvIndexStartLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/MileageEditActivity_IndexStartLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:layout_marginLeft="40dip"
+                    />
+                <EditText
+                    android:id="@+id/etIndexStart"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:numeric="decimal"
+                    android:digits="-.1234567890"
+                    android:inputType="phone"
+                    android:layout_marginLeft="2dip"
+                    android:hint="@string/GEN_Required"
+                    android:background="@drawable/white_background"
+                    android:tag="@string/MileageEditActivity_IndexStartLabel"
+                    />
+            </LinearLayout>
+	
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@android:id/closeButton"
-                android:layout_alignTop="@android:id/closeButton"
-                android:layout_alignParentLeft="true"
                 android:orientation="horizontal"
                 android:checkedButton="@+id/rbInsertModeIndex"
-                android:id="@+id/rgMileageInsertMode">
+                android:id="@+id/rgMileageInsertMode"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dip"
+                android:layout_marginLeft="40dip"
+                >
                 <RadioButton
                     android:id="@id/rbInsertModeIndex"
                     android:text="@string/MileageEditActivity_OptionIndexLabel"
                     style="?android:attr/textAppearanceSmall"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/rb_selector"
                     />
+                    <!--android:gravity="center_vertical"-->
                 <RadioButton
                     android:id="@+id/rbInsertModeMileage"
                     android:text="@string/MileageEditActivity_OptionMileageLabel"
                     style="?android:attr/textAppearanceSmall"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:button="@drawable/rb_selector"
+                    android:layout_marginLeft="10dip"
                     />
             </RadioGroup>
-        </RelativeLayout>
 
-
-        <!--date/time -->
-        <TextView android:id="@+id/tvDateTimeHdrLabel"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textStyle="bold"
-                  android:text="@string/GEN_DateTimeLabel"
-                  />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-            <TextView android:id="@+id/tvDateTimeValue"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      />
-            <Button android:id="@+id/btnPickDate"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/tvUserInputLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_marginLeft="10dip"
-                    android:text="@string/GEN_PickDateCaption"/>
-            <Button android:id="@+id/btnPickTime"
+                    android:layout_marginLeft="40dip"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <EditText
+                    android:id="@+id/etUserInput"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:numeric="decimal"
+                    android:digits="-.1234567890"
+                    android:inputType="phone"
+                    android:layout_marginLeft="2dip"
+                    android:hint="@string/GEN_Required"
+                    android:background="@drawable/white_background"
+                    android:tag=""
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_marginTop="10dip"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvCalculatedTextLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="?android:attr/buttonStyleSmall"
-                    android:text="@string/GEN_PickTimeCaption"/>
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+                <TextView
+                    android:id="@+id/tvCalculatedTextContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dip"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    />
+            </LinearLayout>
+            <TextView
+                android:layout_height="1dip"
+                android:layout_width="fill_parent"
+                android:background="@color/separator_bg"
+                android:layout_marginTop="5dip"
+                />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                >
+	            <TextView
+	                android:id="@+id/tvTagLabel"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/GEN_Tag"
+	                android:typeface="sans"
+	                android:textColor="@android:color/white"
+	                />
+	            <AutoCompleteTextView
+	                android:id="@+id/acTag"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dip"
+	                android:background="@drawable/white_background"
+	                android:hint="@string/GEN_TagHint"
+	                />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvUserCommentLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_UserCommentLabel"
+                android:layout_marginTop="5dip"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                />
+            <AutoCompleteTextView
+                android:id="@+id/acUserComment"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/white_background"
+                />
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

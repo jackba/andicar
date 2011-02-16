@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--
+        < = <
+-->
+
+<resources>
+    <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
+        AndiCar 是一個ANDROID設備上免費而且開源的汽車管理程式。 \n
+        授權遵循GNU公共授權第3版的條款。\n
+        在關於頁面有更多訊息。 \n
+        感謝您使用AndiCar！
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
+        <b><i>AndiCar</i></b>是一個ANDROID設備上免費而且開源的汽車管理程式。
+        授權遵循GNU公共授權第3版的條款。\n
+        在關於頁面有更多訊息 \n版權所有 c 2010-2011 Miklos Keresztes.\n
+        感謝使用<b><i>AndiCar</i></b>!
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML1">
+        <b><i>AndiCar</i></b> 是一個ANDROID設備上免費而且開源的汽車管理程式。授權遵循GNU公共授權第3版的條款。\n
+        *  更多訊息（怎麼使用，最新新聞）請拜訪項目首頁：
+                <a href="http://www.andicar.org">www.andicar.org</a>.\n
+        <small>如果你的瀏覽器出現了"目前頁面不可用"想新，請更新此頁。</small>\n
+        *  如有任何問題關於<b><i>AndiCar</i></b> 歡迎到小組討論：
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
+        *  錯誤報告或 改進要求，請用 <b><i>AndiCar</i></b>問題系統：
+                <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
+        *  你可以在以下以上訂閱關於專案的更新訊息：
+        <a href="http://www.andicar.org/News/">www.andicar.org/News/</a>.\n
+        *  如有任何其他的問題，可以發Email到 andicar.support@gmail.com.\n
+        如果你喜歡 <b><i>AndiCar</i></b>，請考慮為我們做一個捐贈。
+        所有的捐贈均可使用一個PayPal賬戶。
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML2">
+        \n\n感謝使用<b><i>AndiCar</i></b>.\n\n
+        <b><i>Credits:</i></b>\n
+        *  中文化 <a href="http://goapk.com/">goapk.com</a> \n
+        \n<b><i>版權須知</i></b>:\n\n
+        版權所有 c 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
+        這一程式是自由軟體，你可以遵照自由軟體基金會出版的GNU通用公共授權條款來修改和重新發佈這一程式。或者用授權的第三版，或者（根據你的選取）用任何更新的版本。\n\n
+        發佈這一程式的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的的隱含的擔保。更細節的情況請參閱GNU通用公共授權。\n\n
+        你應該已經和程式一起收到一份GNU通用公共授權的副本。如果還沒有，參照<a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>。\n
+        授權全部內容見 <a href="http://www.gnu.org/licenses/gpl.html"></a>。\n
+    </string>
+
+	<string name="AddOn_SubscriptionValidity">
+		這個訂閱對於你目前的或從處理訂閱後建立的備份中還原的資料庫來說是有效的。
+		\n你應該在處理這個訂閱後立即進行備份！
+	</string>
+	<string name="AddOn_Backup_LongDescription">
+		所記錄的訊息(里程數，支出，總用油)對於你來說是很有價值的財產。為了在資料遺失的情況下還原最近的備份，這是一種很有用的方式。
+	</string>
+
+
+<!--        <b><i>Credits:</i></b>\n
+        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
+-->
+</resources>

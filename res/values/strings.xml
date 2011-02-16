@@ -5,8 +5,8 @@
 
  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
 
- This program is free software: you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
+ This program is free software: you can redistribute it and/or modify 
+ it under the terms of the GNU General Public License as published by 
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
@@ -21,12 +21,18 @@
 
 <!-- UI labels and messages-->
 <!--
-    Some strings contain one or more "variables". These looks like [%No] (for example [%1]).
-    These variables are parsed in the java code and are replaced with a string value (a currency code, an UOM code, etc)
+    Some strings contains one or more "variables". These looks like [#No] (for example [#1], [#2]).
+    These variables are parsed in the application and are replaced with a string value (a currency code, an UOM code, etc)
+
+    !!!For translators!!!:
+        If any of the translated string is longer than the English value you should
+        verify the look of the user interface (using the android emulator or any other device)
+        with the translated values.
 -->
 
 <resources>
     <string name="APP_Description">"Free and open source car management software."</string>
+    <string name="APP_Motto">"Manage your cars with the power of open source."</string>
     <string name="APP_Activity_DriverEdit">"Edit driver"</string>
     <string name="APP_Activity_DriverList">"Drivers"</string>
     <string name="APP_Activity_CarEdit">"Edit car"</string>
@@ -56,6 +62,17 @@
     <string name="APP_Activity_GPSTrackController">"GPS Track Control"</string>
     <string name="APP_Activity_GPSTrackEdit">"Edit GPS Track"</string>
     <string name="APP_Activity_GPSTrackList">"GPS Tracks"</string>
+    <string name="APP_Activity_BPartnerList">"Partners"</string>
+    <string name="APP_Activity_BPartnerEdit">"Edit partner, location"</string>
+    <string name="APP_Activity_BPartnerLocationEdit">"Edit location"</string>
+    <string name="APP_Activity_TagList">"Tags"</string>
+    <string name="APP_Activity_TagEdit">"Edit tag"</string>
+    <string name="APP_Activity_Message">"AndiCar Message"</string>
+    <string name="APP_Activity_TaskTypeList">"Task/reminder types"</string>
+    <string name="APP_Activity_TaskTypeEdit">"Edit task type"</string>
+    <string name="APP_Activity_TaskList">"Tasks"</string>
+    <string name="APP_Activity_TaskEdit">"Edit task"</string>
+    <string name="APP_Activity_TodoList">"To-Do List"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -77,20 +94,58 @@
     <string name="GEN_Refuel">"Refuel"</string>
     <string name="GEN_CarLabel">"Car:"</string>
     <string name="GEN_DriverLabel">"Driver:"</string>
-    <string name="GEN_ExpenseCategoryLabel">"Expense category:"</string>
-    <string name="GEN_ExpenseTypeLabel">"Expense type:"</string>
+    <string name="GEN_ExpenseTypeLabel">"Type:"</string>
+    <string name="GEN_TypeLabel">"Type:"</string>
     <string name="GEN_DocumentNoLabel">"Document no.:"</string>
     <string name="GEN_IndexLabel">"Odometer:"</string>
     <string name="GEN_QuantityLabel">"Quantity:"</string>
     <string name="GEN_PriceLabel">"Price"</string>
     <string name="GEN_AmountLabel">"Amt"</string>
-    <string name="GEN_ConvertionRateLabel">"Conv. rate:"</string>
-    <string name="GEN_ConvertedAmountLabel">"Amt. [%1]"</string>
-    <string name="GEN_ConvertedPriceLabel">"Price [%1]"</string>
+    <string name="GEN_ConversionRateLabel">"Rate:"</string>
+    <string name="GEN_ConvertedAmountLabel">"Amt. [#1]"</string>
+    <string name="GEN_ConvertedPriceLabel">"Price [#1]"</string>
     <string name="GEN_SelectedMessage">" selected"</string>
     <string name="GEN_CurrencyLabel">"Currency"</string>
-
-
+    <string name="GEN_Required">"Required"</string>
+    <string name="GEN_BPartner">"Vendor:"</string>
+    <string name="GEN_Address">"Address:"</string>
+    <string name="GEN_BPartnerAdressInfo">"Enter more details in Preferences -> Partners"</string>
+    <string name="GEN_City">"City:"</string>
+    <string name="GEN_Region">"Region:"</string>
+    <string name="GEN_Country">"Country:"</string>
+    <string name="GEN_Contact">"Contact:"</string>
+    <string name="GEN_Phone">"Phone:"</string>
+    <string name="GEN_Phone2">"Phone 2:"</string>
+    <string name="GEN_Fax">"Fax:"</string>
+    <string name="GEN_Email">"Email:"</string>
+    <string name="GEN_Postal">"Postal:"</string>
+    <string name="GEN_Tag">"Tag:"</string>
+    <string name="GEN_TagHint">"Short tag. Write comment bellow."</string>
+    <string name="GEN_LifeTime">"Life time"</string>
+    <string name="GEN_CreatedOn">"Created on"</string>
+    <string name="GEN_Category">"Category:"</string>
+    <string name="GEN_UOM">"UOM:"</string>
+    <string name="GEN_MailSent">"Mail sent"</string>
+    <string name="GEN_Password">"Password"</string>
+    <string name="GEN_ShowNotification">"Show notification"</string>
+    <string name="GEN_Error">"Error"</string>
+    <string name="GEN_Confirm">"Confirmation"</string>
+    <string name="GEN_Info">"Info"</string>
+    <string name="GEN_Warning">"Warning"</string>
+    <string name="GEN_TaskType">"Task type:"</string>
+    <string name="GEN_SetDate">"Set date/time"</string>
+    <string name="GEN_On">"On"</string> <!-- example on Monday -->
+    <string name="GEN_Days">"days"</string>
+    <string name="GEN_Minutes">"minutes"</string>
+    <string name="GEN_LastDay">"last day"</string>
+    <string name="GEN_Description">"Description"</string>
+    <string name="GEN_Or">"Or:"</string>
+    <string name="GEN_TaskLabel">"Task:"</string>
+    <string name="GEN_StatusLabel">"Status:"</string>
+    <string name="GEN_Mileage">"mileage:"</string>
+    <string name="GEN_Or2">"or"</string>
+    <string name="GEN_ToDo">"to-do"</string>
+    
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
     <string name="MENU_DeleteCaption">"Delete"</string>
@@ -106,42 +161,43 @@
     <string name="MENU_RefuelCaption">"Refuels"</string>
     <string name="MENU_ExpenseCaption">"Expenses"</string>
     <string name="MENU_GPSTrackCaption">"GPS Tracks"</string>
+    <string name="MENU_SetDefault">"Set default"</string>
+    <string name="MENU_OpenGPSTrack">"Open GPS track"</string>
+    <string name="MENU_RateCommentCaption">"Rate/Comment"</string>
+    <string name="MENU_AddOnServicesCaption">"Add-On Services"</string>
+    <string name="MENU_LocalizeAndiCar">"Localize AndiCar"</string>
+    <string name="MENU_TaskReminderCaption">"Task/Reminder"</string>
+    <string name="MENU_TodoCaption">"To-Do List"</string>
+    <string name="MENU_ToDoDoneCaption">"Is done"</string>
 
 
-    <string name="MainActivity_MileageHeaderCaption">"Mileages"</string>
-    <string name="MainActivity_MileageListHeaderCaption">"Last mileage:"</string>
-    <string name="MainActivity_MileageInsertBtnCaption">"  Add new  "</string>
-    <string name="MainActivity_MileageListBtnCaption">"  View more  "</string>
-    <string name="MainActivity_RefuelHeaderCaption">"Refuels"</string>
-    <string name="MainActivity_RefuelListHeaderCaption">"Last refuel:"</string>
-    <string name="MainActivity_RefuelInsertBtnCaption">"  Add new  "</string>
-    <string name="MainActivity_RefuelListBtnCaption">"  View more  "</string>
-    <string name="MainActivity_GPSTrackHeaderCaption">"GPS Tracks"</string>
-    <string name="MainActivity_GPSTrackListHeaderCaption">"Last track:"</string>
-    <string name="MainActivity_GPSTrackInsertBtnCaption">"  Add new  "</string>
-    <string name="MainActivity_GPSTrackShowOnMapBtnCaption">" Show on map "</string>
-    <string name="MainActivity_GPSTrackListBtnCaption">"  View more  "</string>
-    <string name="MainActivity_ExpenseHeaderCaption">"Expenses"</string>
-    <string name="MainActivity_ExpenseListHeaderCaption">"Last expense:"</string>
-    <string name="MainActivity_ExpenseInsertBtnCaption">"  Add new  "</string>
-    <string name="MainActivity_ExpenseListBtnCaption">"  View more  "</string>
+    <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
+    <string name="MainActivity_RefuelHeaderCaption">"Last refuel"</string>
+    <string name="MainActivity_GPSTrackHeaderCaption">"Last GPS track"</string>
+    <string name="MainActivity_ExpenseHeaderCaption">"Last expense"</string>
     <string name="MainActivity_StatisticsHeaderCaption">"Statistics for the registered "</string>
-    <string name="MainActivity_StatisticsListHeaderCaption">"Last know odometer: "</string>
+    <string name="MainActivity_StatisticsListLastOdoLabel">"Last known odometer: "</string>
     <string name="MainActivity_StatisticsAvgConsLabel">"Avg. fuel eff.: "</string>
-    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. consumption is calculated for the mileage between the first and last FULL refuel."</string>
+    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. The avg. fuel efficiency is calculated for the first and last full refuels."</string>
+    <string name="MainActivity_StatisticsLastConsLabel">"Last fuel eff.: "</string>
+    <string name="MainActivity_StatisticsLastConsNoData">"N/A. The last fuel efficiency is calculated for the last two full refuels."</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"Total expenses:"</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"Mileage exp.:"</string>
     <string name="MainActivity_MileageNoDataText">"No mileage for this car"</string>
     <string name="MainActivity_RefuelNoDataText">"No refuel for this car"</string>
     <string name="MainActivity_ExpenseNoDataText">"No expense for this car"</string>
     <string name="MainActivity_ExpenseNoDataAditionalText">"This zone does not show the expenses created conjunctively with other records (refuels, etc.)"</string>
-    <string name="MainActivity_NoCurrentCarMessage">"No car selected. In the following page you can select / define one."</string>
-    <string name="MainActivity_NoCurrentDriverMessage">"No driver selected. In the following page you can select / define one."</string>
-    <string name="MainActivity_WellcomeMessage">"Wellcome to AndiCar."</string>
+    <string name="MainActivity_NoCurrentCarMessage">"At least one car must be created in order to work with AndiCar.\n In the following screen you can create one.\n More cars can be created later from Preference -> Cars.\n\n Please pay attention when you choose the currency and the measurement units for your car(s)."</string>
+    <string name="MainActivity_NoCurrentDriverMessage">"At least one driver must be created in order to work with AndiCar.\n In the following screen you can create one.\n More drivers can be created later from Preference -> Drivers."</string>
+    <string name="MainActivity_WellcomeMessage">"Welcome to AndiCar."</string>
     <string name="MainActivity_WellcomeBackMessage">"Welcome back!"</string>
-    <string name="MainActivity_BackupExistMessage">"Backup files exist.\nDo you want to restore one?"</string>
+    <string name="MainActivity_BackupExistMessage">"Backup files exist.\n Do you want to restore one?"</string>
     <string name="MainActivity_UpdateMessage">"Update message"</string>
     <string name="MainActivity_GPSTrackZoneNoDataText">"No tracks."</string>
+    <string name="MainActivity_NoMarketAccessMsg">"Cannot open Android Market!"</string>
+    <string name="MainActivity_AppVersion">"Application version:"</string>
+    <string name="MainActivity_DidYouKnow">"Did you know?"</string>
+    <string name="MainActivity_AddOnMessage">"AndiCar have some useful add-on services.\n These add-ons can be tried for free, without any limitations of missing features for up to 15 days.\n\n Do you want to see the list of available add-ons?"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>
@@ -170,11 +226,11 @@
 
     <string name="MileageEditActivity_IndexHeaderLabel">"Start/stop odometer or mileage"</string>
     <string name="MileageEditActivity_IndexStartLabel">"Start "</string>
-    <string name="MileageEditActivity_OptionIndexLabel">"Stop "</string>
-    <string name="MileageEditActivity_OptionMileageLabel">"Mileage "</string>
-    <string name="MileageEditActivity_InsertModeHeaderLabel">"<b><i>Insert mode:</i></b>"</string>
+    <string name="MileageEditActivity_OptionIndexLabel">"Stop"</string>
+    <string name="MileageEditActivity_OptionMileageLabel">"Mileage"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Mileage added."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Mileage updated."</string>
+    <string name="MileageEditActivity_RecordingInProgress">"Two phase recording in progress. Press STOP to finalize."</string>
 
     <string name="RefuelEditActivity_IsFullLabel">"Is full"</string>
     <string name="RefuelEditActivity_QtyInBaseUOMLabel">"Quantity in base UOM: "</string>
@@ -191,14 +247,15 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Your database was restored. The application will be closed."</string>
 
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Exclude from mileage cost calculation"</string>
+    <string name="ExpenseCategoryEditActivity_IsFuel">"Is fuel"</string>
 
-    <string name="ExpenseEditActivity_CreatedFromWarning">"This expense was created from [%1].\nEdit the coresponding [%1]."</string>
+    <string name="ExpenseEditActivity_CreatedFromWarning">"This expense was created from [#1]. Edit the corresponding [#1]."</string>
 
     <string name="CurrencyRateEditActivity_CurrencyFromLabel">"From currency "</string>
     <string name="CurrencyRateEditActivity_CurrencyToLabel">"To currency "</string>
-    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Rate: 1 [%1] = "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Rate: 1 [#1] = "</string>
     <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
-    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Inverse rate: 1 [%1] = "</string>
+    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Inverse rate: 1 [#1] = "</string>
     <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Max. allowed decimals: "</string>
 
     <string name="REPORTActivity_ReportCreatedMessage">"Your report was created successfully to sdcard/andicar/reports"</string>
@@ -221,25 +278,66 @@
     <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Track files"</string>
     <string name="GPSTrackEditActivity_TrackStatistics">"Statistics"</string>
 
-    <string name="GPSTrackControllerActivity_StartBtnCaption">"Start GPS Track"</string>
     <string name="GPSTrackControllerActivity_StopBtnCaption">"Stop GPS Track"</string>
     <string name="GPSTrackControllerActivity_FileFormatLabel">"Track file format:"</string>
     <string name="GPSTrackControllerActivity_CreateMileageLabel">"Create mileage"</string>
+    <string name="GPSTrackControllerActivity_IndexLabel">"Start odometer:"</string>
 
     <string name="GPSTrackService_ServiceStoppedMessage">"GPS tracking stopped"</string>
-    <string name="GPSTrackService_GPSDisabledMessage">"Your gps is disabled!\nPlease enable it."</string>
+    <string name="GPSTrackService_GPSDisabledMessage">"Your gps is disabled!\n Please enable it."</string>
     <string name="GPSTrackService_GPSOutOfService">"GPS Service provider out of service!"</string>
     <string name="GPSTrackService_TrackInProgressTitle">"AndiCar GPS Tracking"</string>
     <string name="GPSTrackService_TrackInProgressMessage">"Tracking in progress"</string>
     <string name="GPSTrackService_AccuracyProblemTitle">"AndiCar GPS Warning!"</string>
     <string name="GPSTrackService_AccuracyProblemMessage">"Accuracy is over the limit!"</string>
     <string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS Stopped!"</string>
-    <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent ([%1]) is over the limit ([%2])!\nYou can adjust the limit in the Preferences -> Self stop limit."</string>
+    <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent ([#1]) is over the limit ([#2])!\n You can adjust the limit in the Preferences -> Self stop limit."</string>
     <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar File System Error!"</string>
 
-    <string name="GPSTrackShowOnMap_ProgressMessage">"Drawing in progress.\nPlease wait..."</string>
+    <string name="GPSTrackShowOnMap_ProgressMessage">"Drawing in progress.\n Please wait..."</string>
     <string name="GPSTrackShowOnMapMenu_MapMode">"Map mode"</string>
     <string name="GPSTrackShowOnMapMenu_SatelliteMode">"Satellite mode"</string>
+
+    <string name="BPartnerEditActivity_LocationsHeaderCaption">"Locations"</string>
+
+    <string name="TaskEditActivity_OneTime">"One time"</string>
+    <string name="TaskEditActivity_Recurrent">"Recurrent"</string>
+    <string name="TaskEditActivity_RecurrentEveryLabel">"Every"</string>
+    <string name="TaskEditActivity_RecurrentFrequencyLabel">"Frequency"</string>
+    <string name="TaskEditActivity_FirstRunDependOnCar">"Different starting time for each linked car"</string>
+    <string name="TaskEditActivity_TimeDriven">"Time"</string>
+    <string name="TaskEditActivity_Scheduled">"Scheduled for:"</string>
+    <string name="TaskEditActivity_MileageDriven">"Mileage"</string>
+    <string name="TaskEditActivity_BothDriven">"Both"</string>
+    <string name="TaskEditActivity_FirstTimeRunExplanation">"The starting time will be specified for each linked car"</string>
+    <string name="TaskEditActivity_FirstMileageRunExplanation">"The starting mileage will be specified for each linked car"</string>
+    <string name="TaskEditActivity_ReminderStartLabel">"Start reminder before"</string>
+    <string name="TaskEditActivity_LinkedCarsLabel">"Linked cars"</string>
+    <string name="TaskEditActivity_MileageUOMText">"mi or km (depending on car definition)"</string>
+    <string name="TaskEditActivity_FillMileage">"Fill mileage!"</string>
+    <string name="TaskEditActivity_FillFrequency">"Fill frequency!"</string>
+    <string name="TaskEditActivity_LinkedCarsOptionsHelp">"Long press on a car for more options"</string>
+    <string name="TaskEditActivity_AllCarsLinkedMsg">"All active cars are linked to this task."</string>
+    <string name="TaskEditActivity_NoLinkedCarsMsg">"At least one car must be linked to this task."</string>
+    <string name="TaskEditActivity_NoCarsLinkedMsg">"No active car with current mileage smaller than the task mileage!\n Please increase the mileage of the task."</string>
+    <string name="TaskEditActivity_StartingTimeInFutureMsg">"The starting time must be in the future!"</string>
+    <string name="TaskEditActivity_StartingTimeLbl">"Starting time:"</string>
+    <string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"Mileage frequency must be bigger than the reminder."</string>
+    <string name="TaskEditActivity_GeneratedToDoCountLabel">"Automatically generate the next"</string>
+    <string name="TaskEditActivity_ToDoCount">"to-do count"</string>
+        
+    <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
+    <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>
+    <string name="TaskCarDialogActivity_Title">"Link car to task"</string>
+    
+    <string name="ToDo_OverdueLabel">"Overdue"</string>
+    <string name="ToDo_ScheduledLabel">"Scheduled"</string>
+    <string name="ToDo_DoneLabel">"Done"</string>
+    <string name="ToDo_ScheduledDateLabel">"Scheduled date:"</string>
+    <string name="ToDo_ScheduledMileageLabel">"Scheduled mileage:"</string>
+    <string name="ToDo_EstimatedMileageDate">"estimated for:"</string>
+    <string name="ToDo_EstimatedMileageDateNoData">"not enough records for an estimated date"</string>
+    <string name="ToDo_EstimatedMileageDateTooFar">"too far to estimate"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>
@@ -247,13 +345,11 @@
     <string name="PREF_ExpenseTypeCategorySummary">"Add, delete, modify expense types"</string>
     <string name="PREF_CarDriverCategoryTitle">"Cars and drivers"</string>
     <string name="PREF_CarTitle">"Cars"</string>
-    <string name="PREF_CarSummary">"Add, delete, modify cars.\nSelect current car."</string>
+    <string name="PREF_CarSummary">"Add, delete, modify cars."</string>
     <string name="PREF_DriverTitle">"Drivers"</string>
-    <string name="PREF_DriverSummary">"Add, delete, modify drivers.\nSelect current driver."</string>
-    <string name="PREF_UOMLengthTitle">"UOM for distance"</string>
-    <string name="PREF_UOMLengthSummary">"Add, delete, modify measurement units for distance"</string>
-    <string name="PREF_UOMVolumeTitle">"UOM for volume"</string>
-    <string name="PREF_UOMVolumeSummary">"Add, delete, modify measurement units for volume"</string>
+    <string name="PREF_DriverSummary">"Add, delete, modify drivers."</string>
+    <string name="PREF_UOMTitle">"UOM"</string>
+    <string name="PREF_UOMSummary">"Add, delete, modify measurement units"</string>
     <string name="PREF_UOMConversionTitle">"UOM conversion"</string>
     <string name="PREF_UOMConversionSummary">"Add, delete, modify conversions between measurement units"</string>
     <string name="PREF_CurrencyTitle">"Currencies"</string>
@@ -265,7 +361,7 @@
     <string name="PREF_ExpenseCategoryCategorySummary">"Add, delete, modify expense categories"</string>
     <string name="PREF_MiscCategoryTitle">"Miscellaneous"</string>
     <string name="PREF_MainScreenCategoryTitle">"Main screen preferences"</string>
-    <string name="PREF_MainScreenCategorySummary">"Customize your main sceen"</string>
+    <string name="PREF_MainScreenCategorySummary">"Customize your main screen"</string>
     <string name="PREF_CurrencyRateCategoryTitle">"Currency rates"</string>
     <string name="PREF_CurrencyRateCategorySummary">"Add, delete, modify currency rates"</string>
     <string name="PREF_GPSTrackCategoryTitle">"GPS Tracking"</string>
@@ -276,10 +372,38 @@
     <string name="PREF_SendCrashReportsTitle">"Crash reports"</string>
     <string name="PREF_SendCrashReportsSummary">"Help developers by sending anonymous crash reports."</string>
     <string name="PREF_MainScreen">"Customize your main screen"</string>
+    <string name="PREF_BPartnersCategoryTitle">"Partners and locations"</string>
+    <string name="PREF_PartnerTitle">"Partners"</string>
+    <string name="PREF_PartnerSummary">"Add, delete, modify partners and locations"</string>
+    <string name="PREF_UseNumericInputTitle">"Use numeric keypad"</string>
+    <string name="PREF_UseNumericInputSummary">"Use a simplified keypad for numeric fields."</string>
+    <string name="PREF_TagCategoryTitle">"Tags"</string>
+    <string name="PREF_TagCategorySummary">"Add, delete, modify tags"</string>
+    <string name="PREF_RememberLastTagTitle">"Remember last tag"</string>
+    <string name="PREF_RememberLastTagSummary">"Remember the last used tag"</string>
+    <string name="PREF_AutoUpdateCheckTitle">"Check for updates"</string>
+    <string name="PREF_AutoUpdateCheckSummary">"Check and notify me if a new version of AndiCar was published"</string>
+    <string name="PREF_TaskReminderCategoryTitle">"Tasks / reminders"</string>
+    <string name="PREF_TaskTypeTitle">"Task types"</string>
+    <string name="PREF_TaskTypeSummary">"Add, delete, modify task types"</string>
+    <string name="PREF_TaskTitle">"Tasks"</string>
+    <string name="PREF_TaskSummary">"Add, delete, modify tasks"</string>
+
+    <string name="PREF_MainScreen_ShowMileageZone">"Show mileage zone"</string>
+    <string name="PREF_MainScreen_ShowGPSTrackZone">"Show GPS track zone"</string>
+    <string name="PREF_MainScreen_ShowRefuelZone">"Show refuel zone"</string>
+    <string name="PREF_MainScreen_ShowExpenseZone">"Show expense zone"</string>
+    <string name="PREF_MainScreen_ShowStatistics">"Show statistics"</string>
+
+    <string name="PREF_AddOnCategoryTitle">"Add-On Services"</string>
+    <string name="PREF_AddOnServicesTitle">"Add-On Services"</string>
+    <string name="PREF_AddOnServicesSummary">"Subscription based, payed services."</string>
+    <string name="PREF_AddOnServicesSubscribe">"Subscribe with PayPal"</string>
+
     <string name="PREFMainScreen_ZonesLabel">"Existing zones:"</string>
     <string name="PREFGPSTrack_FileFormatTitle">"File format"</string>
     <string name="PREFGPSTrack_FileFormatSummary">"Choose the file format(s) used for the track"</string>
-    <string name="PREFGPSTrack_CSVFileFormatMessage">"CSV is allways used"</string>
+    <string name="PREFGPSTrack_CSVFileFormatMessage">"CSV is always used"</string>
     <string name="PREFGPSTrack_KMLFileFormatTitle">"KML"</string>
     <string name="PREFGPSTrack_KMLFileFormatSummary">"Keyhole Markup Language"</string>
     <string name="PREFGPSTrack_GPXFileFormatTitle">"GPX"</string>
@@ -295,11 +419,80 @@
     <string name="PREFGPSTrack_FileLocationMessage">"Your track files are located in SDCARD/andicar/gpstrack folder"</string>
 
     <string name="DIALOGSearch_DialogTitle">"Enter criteria"</string>
-    <string name="DIALOGSearch_DateFromLabel">"From (YYYY-MM-DD)"</string>
-    <string name="DIALOGSearch_DateToLabel">"To (YYYY-MM-DD)"</string>
+    <string name="DIALOGSearch_DateFromLabel">"From"</string>
+    <string name="DIALOGSearch_DateToLabel">"To"</string>
 
     <string name="DIALOGReport_DialogTitle">"Report options"</string>
     <string name="DIALOGReport_SendEmailLabel">"  send as email attachment"</string>
     <string name="DIALOGReport_ReportFormatLabel">"Report format:"</string>
+
+    <string name="DayOfWeek_0">"Sunday"</string>
+    <string name="DayOfWeek_1">"Monday"</string>
+    <string name="DayOfWeek_2">"Tuesday"</string>
+    <string name="DayOfWeek_3">"Wednesday"</string>
+    <string name="DayOfWeek_4">"Thursday"</string>
+    <string name="DayOfWeek_5">"Friday"</string>
+    <string name="DayOfWeek_6">"Saturday"</string>
+
+    <string name="Month_01">"January"</string>
+    <string name="Month_02">"February"</string>
+    <string name="Month_03">"March"</string>
+    <string name="Month_04">"April"</string>
+    <string name="Month_05">"May"</string>
+    <string name="Month_06">"June"</string>
+    <string name="Month_07">"July"</string>
+    <string name="Month_08">"August"</string>
+    <string name="Month_09">"September"</string>
+    <string name="Month_10">"October"</string>
+    <string name="Month_11">"November"</string>
+    <string name="Month_12">"December"</string>
+
+    <string name="Notif_UpdateTitle">"Update Available"</string>
+    <string name="Notif_UpdateMsg">"An update for AndiCar is available!"</string>
+    
+    <!-- AddOn Services -->
+    <string name="AddOn_PayPalTransactionID">"PayPal Transaction ID"</string>
+    <string name="AddOn_SubscribeWaiting">"Contacting PayPal. Please wait..."</string>
+    <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until: [#1]"</string>
+    <string name="AddOn_BtnTryCaption">"Start FREE evaluation"</string>
+    <string name="AddOn_BtnConfigureServiceCaption">"Configure service"</string>
+    <string name="AddOn_BtnRenewSubscriptionCaption">"Renew subscription"</string>
+    <string name="AddOn_PreferencesTitle">"Configure Add-On services"</string>
+    <string name="AddOn_PreferencesSummary">"Configure your Add-On services"</string>
+    <string name="AddOn_PreferencesCategoryTitle">"Add-On services"</string>
+    <string name="AddOn_SubscriptionExpireWarning">"Your subscription to the [#1] Add-On will expire in [#2] days"</string>
+    <string name="AddOn_SubscriptionExpired">"Your subscription to the [#1] Add-On is expired."</string>
+    <string name="AddOn_RenewSubscriptionPeriodInfo">"The selected period will be added to the current subscription"</string>
+
+    <string name="AddOn_SecureBackup_Title">"Secure Backup"</string>
+    <string name="AddOn_SecureBackup_Description">"Every time a database backup is created, this service automatically send it as an email attachment to a preconfigured email address. In this way your recorded data will be available even if you lose your phone. Combined with the Backup Service Add-On is the definitive solution for your data safety."</string>
+    <string name="AddOn_SecureBackup_TermOfService">"We are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data, insufficient storage space on your Google account, deletion of backup files from Google Mail or any other event which cause lose or unusable backup files."</string>
+    <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid GMail account, Internet connectivity, mobile data transfer."</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"Six month subscription: [#1] [#2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [#1] [#2]"</string>
+
+    <string name="AddOn_SecureBackup_Configure">"Go to the SecureBackup configuration in order to enter the missing information."</string>
+    <string name="AddOn_SecureBackup_SMTPUserFrom">"From email (GMail account required):"</string>
+    <string name="AddOn_SecureBackup_SMTPEmailTo">"Send to email:"</string>
+    <string name="AddOn_SecureBackup_IncludeGPSTrack">"Include GPS track files"</string>
+    <string name="AddOn_SecureBackup_IncludeReports">"Include generated reports"</string>
+    
+    <string name="AddOn_AutoBackupService_Title">"Backup Service"</string>
+    <string name="AddOn_AutoBackupService_Description">"This service allow you to schedule a daily/weekly automatic database backup task. Combined with the Secure Backup Add-On is the definitive solution for your data safety."</string>
+    <string name="AddOn_AutoBackupService_TermOfService">""</string>
+    <string name="AddOn_AutoBackupService_Requirements">"Service requirements: free space on the SDCARD depending on your database size and the number of existing backups."</string>
+    <string name="AddOn_AutoBackupService_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
+    <string name="AddOn_AutoBackupService_SubscriptionOption2">"Life time subscription: [#1] [#2]"</string>
+
+    <string name="AddOn_AutoBackupService_ScheduleTitle">"Backup Service Schedule"</string>
+    <string name="AddOn_AutoBackupService_ScheduleFrequency">"Frequency:"</string>
+    <string name="AddOn_AutoBackupService_ScheduleHour">"Hour:"</string>
+    <string name="AddOn_AutoBackupService_NoOfBackups1">"Keep only the last"</string>
+    <string name="AddOn_AutoBackupService_NoOfBackups2">"backups."</string>
+    <string name="AddOn_AutoBackupService_NotifyIfSuccess">"Notify on success"</string>
+    <string name="AddOn_AutoBackupService_NoDaySelectedMsg">"At least one day must be selected!"</string>
+    <string name="AddOn_AutoBackupService_BackupSucceeded">"The backup was created with success"</string>
+    <string name="AddOn_AutoBackupService_BackupFailed">"The backup failed! Check your SDCARD."</string>
 
 </resources>

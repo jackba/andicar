@@ -26,6 +26,9 @@
     <TextView android:id="@+id/tvOneLineListTextSmall"
               android:textSize="14sp"
               android:textStyle="italic"
+              android:typeface="sans"
+              android:textColor="@android:color/white"
               android:layout_width="fill_parent"
-              android:layout_height="wrap_content"/>
+              android:layout_height="wrap_content"
+              />
 </LinearLayout>

@@ -19,12 +19,7 @@
 
 package org.andicar.activity;
 
-import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
 
 /**
@@ -37,37 +32,9 @@ public class DriverListActivity extends ListActivityBase
     @Override
     public void onCreate( Bundle icicle )
     {
-        super.onCreate( icicle, mItemClickListener, DriverEditActivity.class, null,
+        super.onCreate( icicle, null, DriverEditActivity.class, null,
                 MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
                 android.R.layout.simple_list_item_2,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
     }
-
-
-    private OnItemClickListener mItemClickListener = new OnItemClickListener()
-    {
-        public void onItemClick( AdapterView parent, View v, int position, long id )
-        {
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME,
-                    MainDbAdapter.driverTableColNames, id);
-            //driver is actve?
-            if( c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS ).equals( "Y" ) ) {
-                mPrefEditor.putLong( "CurrentDriver_ID", id );
-                mPrefEditor.putString( "CurrentDriver_Name", c.getString( MainDbAdapter.GEN_COL_NAME_POS ).trim() );
-                mPrefEditor.commit();
-                Toast toast = Toast.makeText( getApplicationContext(),
-                        c.getString( MainDbAdapter.GEN_COL_NAME_POS ) + mRes.getString( R.string.GEN_SelectedMessage), Toast.LENGTH_SHORT );
-                toast.show();
-                c.close();
-                finish();
-            }
-            else //inactive driver selected
-            {
-                c.close();
-                errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_InactiveDriverSelectedMessage));
-                errorAlert = errorAlertBuilder.create();
-                errorAlert.show();
-            }
-        }
-    };
 }

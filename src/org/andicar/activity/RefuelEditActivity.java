@@ -25,11 +25,12 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,6 +51,9 @@ import org.andicar.utils.AndiCarStatistics;
  */
 public class RefuelEditActivity extends EditActivityBase {
     private AutoCompleteTextView acUserComment;
+    private AutoCompleteTextView acBPartner;
+    private AutoCompleteTextView acAdress;
+    private AutoCompleteTextView acTag;
     private Spinner spnCar;
     private Spinner spnDriver;
     private Spinner spnCurrency;
@@ -77,25 +81,30 @@ public class RefuelEditActivity extends EditActivityBase {
 
     private long mCurrencyId = 0;
     private long carDefaultCurrencyId = 0;
+    private long mExpCategoryId = 0;
+    private long mExpTypeId = 0;
+    private long carDefaultUOMVolumeId = 0;
+    private long mUomVolumeId = 0;
+    private long mBPartnerId = 0;
+    private long mAddressId = 0;
+    private long mTagId = 0;
     private String carDefaultCurrencyCode = "";
     private String currencyCode = "";
+    private String carDefaultUOMVolumeCode = "";
     private BigDecimal currencyConversionRate = null;
     private BigDecimal priceEntered = null;
     private BigDecimal priceConverted = null;
     private BigDecimal amountEntered = null;
     private BigDecimal amountConverted = null;
-    private long carDefaultUOMVolumeId = 0;
-    private long mUomVolumeId = 0;
-    private String carDefaultUOMVolumeCode = "";
     private BigDecimal uomVolumeConversionRate= null;
     private BigDecimal baseUomQty = null;
-    private long mCarId = 0;
-    private long mDriverId = 0;
-    private long mExpCategoryId = 0;
-    private long mExpTypeId = 0;
 
     private ArrayAdapter<String> userCommentAdapter;
+    private ArrayAdapter<String> bpartnerNameAdapter;
+    private ArrayAdapter<String> addressAdapter;
+    private ArrayAdapter<String> tagAdapter;
     private String operationType;
+
     private int mInsertMode = 0; //0 = price; 1 = amount
     private static int INSERTMODE_PRICE = 0;
     private static int INSERTMODE_AMOUNT = 1;
@@ -123,6 +132,49 @@ public class RefuelEditActivity extends EditActivityBase {
             mExpTypeId = c.getLong(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_POS);
             mUomVolumeId = c.getLong(MainDbAdapter.REFUEL_COL_UOMVOLUMEENTERED_ID_POS);
             mCurrencyId = c.getLong(MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_POS);
+            Cursor c2 = null;
+            if(c.getString(MainDbAdapter.REFUEL_COL_BPARTNER_ID_POS) != null
+                    && c.getString(MainDbAdapter.REFUEL_COL_BPARTNER_ID_POS).length() > 0){
+                mBPartnerId = c.getLong(MainDbAdapter.REFUEL_COL_BPARTNER_ID_POS);
+                String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+                String[] selectionArgs = {Long.toString(mBPartnerId)};
+                c2 = mDbAdapter.query(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
+                            selection, selectionArgs, null, null, null);
+                if(c2.moveToFirst())
+                    acBPartner.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
+                c2.close();
+
+                if(c.getString(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_POS) != null
+                        && c.getString(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_POS).length() > 0){
+                    mAddressId = c.getLong(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_POS);
+                    selectionArgs[0] = Long.toString(mAddressId);
+                    c2 = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.bpartnerLocationTableColNames,
+                            selection, selectionArgs, null, null, null);
+                    if(c2.moveToFirst())
+                        acAdress.setText(c2.getString(MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_POS));
+                    c2.close();
+                }
+            }
+            else{
+                acAdress.setEnabled(false);
+                acAdress.setText(null);
+                acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                        mResource.getString(R.string.GEN_Required).replace(":", ""));
+            }
+            
+            //fill tag
+            if(c.getString(MainDbAdapter.REFUEL_COL_TAG_ID_POS) != null
+                    && c.getString(MainDbAdapter.REFUEL_COL_TAG_ID_POS).length() > 0){
+                mTagId = c.getLong(MainDbAdapter.REFUEL_COL_TAG_ID_POS);
+                String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+                String[] selectionArgs = {Long.toString(mTagId)};
+                c2 = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+                            selection, selectionArgs, null, null, null);
+                if(c2.moveToFirst())
+                    acTag.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
+                c2.close();
+            }
+
             try{
                 currencyConversionRate = new BigDecimal(c.getString(MainDbAdapter.REFUEL_COL_CURRENCYRATE_POS));
                 uomVolumeConversionRate = new BigDecimal(c.getString(MainDbAdapter.REFUEL_COL_UOMVOLCONVERSIONRATE_POS));
@@ -130,7 +182,10 @@ public class RefuelEditActivity extends EditActivityBase {
             catch(NumberFormatException e){}
             etConversionRate.setText(currencyConversionRate.toString());
             initDateTime(c.getLong(MainDbAdapter.REFUEL_COL_DATE_POS) * 1000);
-            etCarIndex.setText(c.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
+            etCarIndex.setText(
+            		Utils.numberToString(c.getDouble(MainDbAdapter.REFUEL_COL_INDEX_POS), false, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+//            		(new BigDecimal(c.getDouble(MainDbAdapter.REFUEL_COL_INDEX_POS)).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH)).toPlainString());
+//            		c.getString(MainDbAdapter.REFUEL_COL_INDEX_POS));
             etQty.setText(c.getString(MainDbAdapter.REFUEL_COL_QUANTITYENTERED_POS));
             etUserInput.setText(c.getString(MainDbAdapter.REFUEL_COL_PRICEENTERED_POS));
             etDocNo.setText(c.getString(MainDbAdapter.REFUEL_COL_DOCUMENTNO_POS));
@@ -140,7 +195,10 @@ public class RefuelEditActivity extends EditActivityBase {
             carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
             carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
             if(carDefaultUOMVolumeId != mUomVolumeId){
-                tvBaseUOMQtyValue.setText(c.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS) +
+                tvBaseUOMQtyValue.setText(
+                		Utils.numberToString(c.getDouble(MainDbAdapter.REFUEL_COL_QUANTITY_POS), true, 
+                				StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME) +
+//                		c.getString(MainDbAdapter.REFUEL_COL_QUANTITY_POS) +
                         " " + carDefaultUOMVolumeCode);
                 setBaseUOMQtyZoneVisibility(true);
             }
@@ -152,18 +210,35 @@ public class RefuelEditActivity extends EditActivityBase {
             rbInsertModePrice.setChecked(true);
         }
         else {
-            mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-            mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
+            mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
             mExpCategoryId = mPreferences.getLong("RefuelExpenseCategory_ID", 1);
-            mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", -1);
-            mUomVolumeId = mPreferences.getLong("CarUOMVolume_ID", -1);
-            mCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
+            mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", 1);
+            mUomVolumeId = mPreferences.getLong("CarUOMVolume_ID", 1);
+            mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
             initDateTime(System.currentTimeMillis());
             ckIsFullRefuel.setChecked(false);
             carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
             carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
             setInsertMode(INSERTMODE_AMOUNT);
             rbInsertModeAmount.setChecked(true);
+            acAdress.setEnabled(false);
+            acAdress.setText(null);
+            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                    mResource.getString(R.string.GEN_Required).replace(":", ""));
+
+            //init tag
+            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+	            mTagId = mPreferences.getLong("LastTagId", 0);
+	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+	            String[] selectionArgs = {Long.toString(mTagId)};
+	            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+	                        selection, selectionArgs, null, null, null);
+	            if(c.moveToFirst())
+	                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+	            c.close();
+            }
+            
         }
 
         initControls();
@@ -174,11 +249,16 @@ public class RefuelEditActivity extends EditActivityBase {
         }
 
         if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent("RefuelEdit", null);
+            AndiCarStatistics.sendFlurryEvent(this, "RefuelEdit", null);
     }
 
     private void init() {
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
+        acBPartner = ((AutoCompleteTextView) findViewById( R.id.acBPartner ));
+        acBPartner.setOnFocusChangeListener(vendorChangeListener);
+        acBPartner.addTextChangedListener(bPartnerTextWatcher);
+        acAdress = ((AutoCompleteTextView) findViewById( R.id.acAdress ));
+        acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
         spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
@@ -217,7 +297,8 @@ public class RefuelEditActivity extends EditActivityBase {
         tvBaseUOMQtyValue = (TextView) findViewById(R.id.tvBaseUOMQtyValue);
         setBaseUOMQtyZoneVisibility(false);
         carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
-        carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
+        if(carDefaultCurrencyId != -1)
+        	carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
         currencyCode = carDefaultCurrencyCode;
         currencyConversionRate = BigDecimal.ONE;
         uomVolumeConversionRate = BigDecimal.ONE;
@@ -225,29 +306,42 @@ public class RefuelEditActivity extends EditActivityBase {
 
     private void initControls() {
         initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME,
                 mCarId, false);
         initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
         initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, true);
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, false);
         initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, true);
-        initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, 
-                new String[]{MainDbAdapter.UOM_COL_CODE_NAME}, MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition,
-                MainDbAdapter.UOM_COL_CODE_NAME, mUomVolumeId, false);
-        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
+                MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'Y'", null,
+                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
+        initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.genColName,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition, null,
+                MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
+        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.genColName,
+                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId, false);
 
         userCommentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
-                mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
                 mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
+        bpartnerNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_TABLE_NAME, null,
+                0, 0));
+        acBPartner.setAdapter(bpartnerNameAdapter);
+        addressAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME,
+                mBPartnerId, 0));
+        acAdress.setAdapter(addressAdapter);
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                0, 0));
+        acTag.setAdapter(tagAdapter);
     }
 
     @Override
@@ -264,6 +358,16 @@ public class RefuelEditActivity extends EditActivityBase {
             setBaseUOMQtyZoneVisibility(true);
         else
             setBaseUOMQtyZoneVisibility(false);
+        if(acBPartner.getText().toString() == null || acBPartner.getText().toString().length() == 0){
+            acAdress.setEnabled(false);
+            acAdress.setText(null);
+            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                                mResource.getString(R.string.GEN_Required).replace(":", ""));
+        }
+        else{
+            acAdress.setEnabled(true);
+            acAdress.setHint(null);
+        }
 
         calculatePriceAmount();
         calculateBaseUOMQty();
@@ -341,12 +445,41 @@ public class RefuelEditActivity extends EditActivityBase {
 
             initControls();
             calculateBaseUOMQty();
-            calculatePriceAmount();
+//            calculatePriceAmount();
             initDateTime(mlDateTimeInSeconds * 1000);
+            setInsertMode(mInsertMode);
         }
         catch(NumberFormatException e){}
     }
-    
+
+    //change the address autocomplete list when the vendor change
+    private View.OnFocusChangeListener vendorChangeListener = new View.OnFocusChangeListener() {
+
+        public void onFocusChange(View view, boolean hasFocus) {
+            if(!hasFocus){
+                String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+                String[] selectionArgs = {acBPartner.getText().toString().toUpperCase()};
+                Cursor c = mDbAdapter.query(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+                        null, null, null);
+//                Cursor c = mDbAdapter.fetchForTable(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName,
+//                            "UPPER(" + MainDbAdapter.GEN_COL_NAME_NAME + ") = '" + acBPartner.getText().toString().toUpperCase() + "'", null);
+                String bPartnerIdStr = null;
+                if(c.moveToFirst())
+                    bPartnerIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+                c.close();
+                if(bPartnerIdStr != null && bPartnerIdStr.length() > 0)
+                    mBPartnerId = Long.parseLong(bPartnerIdStr);
+                else
+                    mBPartnerId = 0;
+                addressAdapter = new ArrayAdapter<String>(RefuelEditActivity.this, android.R.layout.simple_dropdown_item_1line,
+                        mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME,
+                        mBPartnerId, 0));
+                acAdress.setAdapter(addressAdapter);
+                
+            }
+        }
+    };
+
     private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -358,7 +491,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     userCommentAdapter = null;
                     userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
                             android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteUserComments(MainDbAdapter.REFUEL_TABLE_NAME,
+                            mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
                             mCarId, 30));
                     acUserComment.setAdapter(userCommentAdapter);
 
@@ -366,9 +499,9 @@ public class RefuelEditActivity extends EditActivityBase {
                     long newCarCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
                     if(newCarCurrencyId != mCurrencyId){
                         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                                MainDbAdapter.currencyTableColNames, new String[]{MainDbAdapter.CURRENCY_COL_CODE_NAME},
-                                    MainDbAdapter.isActiveCondition,
-                                    MainDbAdapter.CURRENCY_COL_CODE_NAME,
+                                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                                    MainDbAdapter.isActiveCondition, null,
+                                    MainDbAdapter.GEN_COL_NAME_NAME,
                                     newCarCurrencyId, false);
                         mCurrencyId = newCarCurrencyId;
                         carDefaultCurrencyId = mCurrencyId;
@@ -384,9 +517,9 @@ public class RefuelEditActivity extends EditActivityBase {
                         carDefaultUOMVolumeId = mUomVolumeId;
                         carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
                         initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
-                                MainDbAdapter.uomTableColNames, new String[]{MainDbAdapter.UOM_COL_CODE_NAME},
-                                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition,
-                                MainDbAdapter.UOM_COL_CODE_NAME, mUomVolumeId, false);
+                                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition, null,
+                                MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
                         setBaseUOMQtyZoneVisibility(false);
                     }
                 }
@@ -397,6 +530,7 @@ public class RefuelEditActivity extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerCurrencyOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    setSpinnerTextToCode(arg0, arg3, arg1);
                     if(isActivityOnLoading)
                         return;
                     mCurrencyId = spnCurrency.getSelectedItemId();
@@ -424,6 +558,7 @@ public class RefuelEditActivity extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerUOMOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                    setSpinnerTextToCode(arg0, arg3, arg1);
                     if(isActivityOnLoading)
                         return;
                     mUomVolumeId = spnUomVolume.getSelectedItemId();
@@ -434,7 +569,7 @@ public class RefuelEditActivity extends EditActivityBase {
                         setBaseUOMQtyZoneVisibility(false);
                     }
 
-                    uomVolumeConversionRate = mDbAdapter.getUOMConvertionRate(mUomVolumeId, carDefaultUOMVolumeId);
+                    uomVolumeConversionRate = mDbAdapter.getUOMConversionRate(mUomVolumeId, carDefaultUOMVolumeId);
                     if(uomVolumeConversionRate == null)
                         btnOk.setEnabled(false);
                     else
@@ -453,6 +588,31 @@ public class RefuelEditActivity extends EditActivityBase {
             return false;
         }
     };
+
+    private TextWatcher bPartnerTextWatcher =
+        new TextWatcher() {
+
+            public void beforeTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void onTextChanged(CharSequence cs, int i, int i1, int i2) {
+                return;
+            }
+
+            public void afterTextChanged(Editable edtbl) {
+                if(edtbl.toString() == null || edtbl.toString().length() == 0){
+                    acAdress.setEnabled(false);
+                    acAdress.setText(null);
+                    acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                                        mResource.getString(R.string.GEN_Required).replace(":", ""));
+                }
+                else{
+                    acAdress.setEnabled(true);
+                    acAdress.setHint(null);
+                }
+            }
+        };
 
     private TextWatcher textWatcher =
         new TextWatcher() {
@@ -491,10 +651,8 @@ public class RefuelEditActivity extends EditActivityBase {
                         else {
                             setInsertMode(INSERTMODE_AMOUNT);
                         }
-//                        calculateMileageOrNewIndex();
                     }
                 };
-
 
     private void calculatePriceAmount() {
         String qtyStr = etQty.getText().toString();
@@ -506,37 +664,40 @@ public class RefuelEditActivity extends EditActivityBase {
         if(qtyStr != null && qtyStr.length() > 0
                 && userInputStr != null && userInputStr.length() > 0) {
             try{
-                if(mInsertMode == INSERTMODE_PRICE){ //calculate amount
+            	BigDecimal qtyBd = new BigDecimal(qtyStr);
+            	if(qtyBd.signum() == 0)
+            		return;
+
+            	if(mInsertMode == INSERTMODE_PRICE){ //calculate amount
                     priceEntered = new BigDecimal(userInputStr);
-                    calculatedValue = (new BigDecimal(qtyStr)).multiply(priceEntered);
+                    calculatedValue = qtyBd.multiply(priceEntered);
                     amountEntered = calculatedValue;
                 }
                 else{ //INSERTMODE_AMOUNT - calculate price
                     amountEntered = new BigDecimal(userInputStr);
-                    calculatedValue = amountEntered.divide(new BigDecimal(qtyStr), 10, RoundingMode.HALF_UP);
+                    calculatedValue = amountEntered.divide(qtyBd, 10, RoundingMode.HALF_UP);
                     priceEntered = calculatedValue;
                 }
-                calculatedValueStr = calculatedValue.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
-                            .toString() + " " + currencyCode;
+                calculatedValueStr =
+                	Utils.numberToString(calculatedValue, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
+                            + " " + currencyCode;
                 tvCalculatedTextContent.setText(calculatedValueStr);
                 if(carDefaultCurrencyId != mCurrencyId && currencyConversionRate != null){
                     amountConverted = amountEntered.multiply(currencyConversionRate);
                     priceConverted = priceEntered.multiply(currencyConversionRate);
 
+                    if(carDefaultCurrencyCode == null)
+                    	carDefaultCurrencyCode = "";
                     calculatedValueStr =
-                            (mResource.getString(R.string.GEN_ConvertedPriceLabel)).replace("[%1]", carDefaultCurrencyCode) + " = " +
-                                priceConverted.
-                                    setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString() + "; " +
-                            (mResource.getString(R.string.GEN_ConvertedAmountLabel)).replace("[%1]", carDefaultCurrencyCode) + " = " +
-                                amountConverted.
-                                    setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT).toString();
+                            (mResource.getString(R.string.GEN_ConvertedPriceLabel)).replace("[#1]", carDefaultCurrencyCode) + " = " +
+                        		Utils.numberToString(priceConverted, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT)
+                                    + "; " +
+                            (mResource.getString(R.string.GEN_ConvertedAmountLabel)).replace("[#1]", carDefaultCurrencyCode) + " = " +
+                    			Utils.numberToString(amountConverted, true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
                     tvConvertedAmountLabel.setText(calculatedValueStr);
                 }
             }
             catch(NumberFormatException e){
-                if(isSendCrashReport)
-                    AndiCarStatistics.sendFlurryError("RefuelError",
-                            "NFE1: qtyStr = " + qtyStr + "; priceStr = " + userInputStr, this.toString());
             }
         }
     }
@@ -555,8 +716,9 @@ public class RefuelEditActivity extends EditActivityBase {
         if(qtyStr != null && qtyStr.length() > 0) {
             try{
                 baseUomQty = (new BigDecimal(qtyStr)).multiply(uomVolumeConversionRate);
-                amountStr = baseUomQty.setScale(StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME)
-                                .toString() + " " + carDefaultUOMVolumeCode;
+                amountStr = 
+        			Utils.numberToString(baseUomQty, true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME)
+                		+ " " + carDefaultUOMVolumeCode;
 
                 tvBaseUOMQtyValue.setText(amountStr);
             }
@@ -568,7 +730,7 @@ public class RefuelEditActivity extends EditActivityBase {
         if(visible){
             llConversionRateZone.setVisibility(View.VISIBLE);
             etConversionRate.setVisibility(View.VISIBLE);
-            etConversionRate.setTag(mResource.getString(R.string.GEN_ConvertionRateLabel));
+            etConversionRate.setTag(mResource.getString(R.string.GEN_ConversionRateLabel));
             tvConversionRateLabel.setVisibility(View.VISIBLE);
 
         }else{
@@ -600,22 +762,26 @@ public class RefuelEditActivity extends EditActivityBase {
     }
 
     @Override
-    void saveData() {
-        String retVal = checkMandatory((ViewGroup) findViewById(R.id.vgRoot));
-        if( retVal != null ) {
+    protected void saveData() {
+        String strRetVal = checkMandatory(vgRoot);
+        if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + retVal, Toast.LENGTH_SHORT );
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
             toast.show();
             return;
         }
-//        if(priceEntered != null)
-//            priceEntered = priceEntered.setScale(StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
-//        if(amountEntered != null)
-//            amountEntered = amountEntered.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
-//        if(priceConverted != null)
-//            priceConverted = priceConverted.setScale(StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE);
-//        if(amountConverted != null)
-//            amountConverted = amountConverted.setScale(StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT);
+
+        strRetVal = checkNumeric(vgRoot, false);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return;
+        }
+        
+        //final calculations
+        calculatePriceAmount();
+        calculateBaseUOMQty();
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -669,6 +835,83 @@ public class RefuelEditActivity extends EditActivityBase {
             data.put( MainDbAdapter.REFUEL_COL_CURRENCYRATE_NAME, currencyConversionRate.toString());
         }
 
+        if(acBPartner.getText().toString() != null && acBPartner.getText().toString().length() > 0){
+            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String[] selectionArgs = {acBPartner.getText().toString().toUpperCase()};
+            Cursor c = mDbAdapter.query(MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+                    null, null, null);
+            String bPartnerIdStr = null;
+            if(c.moveToFirst())
+                bPartnerIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+            c.close();
+            if(bPartnerIdStr != null && bPartnerIdStr.length() > 0){
+                mBPartnerId = Long.parseLong(bPartnerIdStr);
+                data.put(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME, mBPartnerId);
+            }
+            else{
+                ContentValues tmpData = new ContentValues();
+                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acBPartner.getText().toString());
+                mBPartnerId = mDbAdapter.createRecord(MainDbAdapter.BPARTNER_TABLE_NAME, tmpData);
+                if(mBPartnerId >= 0)
+                    data.put(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME, mBPartnerId);
+            }
+
+            if(acAdress.getText().toString() != null && acAdress.getText().toString().length() > 0){
+                selection = "UPPER (" + MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME + ") = ? AND " +
+                                            MainDbAdapter.BPARTNER_LOCATION_COL_BPARTNER_ID_NAME + " = ?";
+                String[] selectionArgs2 = {acAdress.getText().toString().toUpperCase(), Long.toString(mBPartnerId)};
+                c = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs2,
+                        null, null, null);
+                String addressIdStr = null;
+                if(c.moveToFirst())
+                    addressIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+                c.close();
+                if(addressIdStr != null && addressIdStr.length() > 0)
+                    data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, Long.parseLong(addressIdStr));
+                else{
+                    ContentValues tmpData = new ContentValues();
+                    tmpData.put(MainDbAdapter.BPARTNER_LOCATION_COL_BPARTNER_ID_NAME, mBPartnerId);
+                    tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acAdress.getText().toString());
+                    tmpData.put(MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME, acAdress.getText().toString());
+                    long newAddressId = mDbAdapter.createRecord(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, tmpData);
+                    if(newAddressId >= 0)
+                        data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, newAddressId);
+                }
+            }
+            else
+                data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, (String)null);
+        }
+        else{
+            data.put(MainDbAdapter.REFUEL_COL_BPARTNER_ID_NAME, (String)null);
+            data.put(MainDbAdapter.REFUEL_COL_BPARTNER_LOCATION_ID_NAME, (String)null);
+        }
+
+        if(acTag.getText().toString() != null && acTag.getText().toString().length() > 0){
+            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String[] selectionArgs = {acTag.getText().toString().toUpperCase()};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+                    null, null, null);
+            String tagIdStr = null;
+            if(c.moveToFirst())
+                tagIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+            c.close();
+            if(tagIdStr != null && tagIdStr.length() > 0){
+                mTagId = Long.parseLong(tagIdStr);
+                data.put(MainDbAdapter.REFUEL_COL_TAG_ID_NAME, mTagId);
+            }
+            else{
+                ContentValues tmpData = new ContentValues();
+                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acTag.getText().toString());
+                mTagId = mDbAdapter.createRecord(MainDbAdapter.TAG_TABLE_NAME, tmpData);
+                if(mTagId >= 0)
+                    data.put(MainDbAdapter.REFUEL_COL_TAG_ID_NAME, mTagId);
+            }
+        }
+        else{
+            data.put(MainDbAdapter.REFUEL_COL_TAG_ID_NAME, (String)null);
+        }
+        
+        
         if( operationType.equals("N") ) {
             Long createResult = mDbAdapter.createRecord(MainDbAdapter.REFUEL_TABLE_NAME, data);
             if(createResult.intValue() < 0){
@@ -678,9 +921,8 @@ public class RefuelEditActivity extends EditActivityBase {
                     madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
                 madError = madbErrorAlert.create();
                 madError.show();
+                return;
             }
-            else
-                finish();
         }
         else {
             int updResult = mDbAdapter.updateRecord(MainDbAdapter.REFUEL_TABLE_NAME, mRowId, data);
@@ -692,14 +934,21 @@ public class RefuelEditActivity extends EditActivityBase {
                 madbErrorAlert.setMessage(errMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return;
             }
-            else
-                finish();
         }
+        
+    	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0)
+    		mPrefEditor.putLong("LastTagId", mTagId);
+    	
+    	mPrefEditor.putLong("LastDriver_ID", mDriverId);
+		mPrefEditor.commit();
+    	
+        finish();
     }
 
     @Override
-    void setLayout() {
+    protected void setLayout() {
         setContentView(R.layout.refuel_edit_activity);
     }
 

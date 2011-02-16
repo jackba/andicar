@@ -20,24 +20,61 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
-          android:versionCode="310"
-          android:versionName="3.1.0">
+          android:versionCode="3563" 
+          android:versionName="3.5.7 Beta"
+          android:installLocation="internalOnly">
+<!-- 
+	internalOnly becouse:
+		-services
+		-BOOT_COMPLETED broadcast receiver
+	See http://developer.android.com/guide/appendix/install-location.html
+ -->          
     <uses-sdk android:minSdkVersion="3" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- <uses-permission android:name="android.permission.CALL_PHONE" />  -->
     
+    <!-- need by secure backup -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    
+    <!-- required by PayPal activity -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <supports-screens 
+    	android:smallScreens="true"
+        android:normalScreens="true" 
+        android:largeScreens="true"
+    	android:anyDensity="true"/>
+	
+	<uses-feature android:name="android.hardware.location" android:required="false" />
+	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
+	<uses-feature android:name="android.hardware.location.network" android:required="false" />
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+	
     <application
         android:label="AndiCar"
         android:description="@string/APP_Description"
         android:icon="@drawable/car2"
-        android:debuggable="true"
+        android:debuggable="false"
     >
         <uses-library android:name="com.google.android.maps" />
+
+        <receiver android:name="org.andicar.service.AndiCarServiceStarter">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
+			</intent-filter>
+		</receiver>
+		 
         <service android:name="org.andicar.service.GPSTrackService" />
+        <service android:name="org.andicar.service.UpdateCheckService" />
+        <service android:name="org.andicar.service.TodoManagementService" /> 
         
         <activity android:name="org.andicar.activity.MainActivity"
                   android:label="AndiCar"
@@ -142,10 +179,6 @@
         </activity>
 
         <activity
-            android:name="com.andicar.paypall.GetPayPallActivity">
-        </activity>
-
-        <activity
             android:name="org.andicar.activity.ExpenseCategoryListActivity"
             android:label="@string/APP_Activity_ExpenseCategoryList">
         </activity>
@@ -195,6 +228,95 @@
             android:name="org.andicar.activity.GPSTrackEditActivity"
             android:label="@string/APP_Activity_GPSTrackEdit">
         </activity>
+        <activity
+            android:name="org.andicar.activity.BPartnerListActivity"
+            android:label="@string/APP_Activity_BPartnerList">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.BPartnerEditActivity"
+            android:label="@string/APP_Activity_BPartnerEdit">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.BPartnerLocationEditActivity"
+            android:label="@string/APP_Activity_BPartnerLocationEdit">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.TagListActivity"
+            android:label="@string/APP_Activity_TagList">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.TagEditActivity"
+            android:label="@string/APP_Activity_TagEdit">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.miscellaneous.MessageActivity"
+            android:label="@string/APP_Activity_Message">
+        </activity>
+        
+        <activity 
+            android:name="org.andicar.activity.TaskTypeListActivity"
+            android:label="@string/APP_Activity_TaskTypeList">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.TaskTypeEditActivity"
+            android:label="@string/APP_Activity_TaskTypeEdit">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.TaskListActivity"
+            android:label="@string/APP_Activity_TaskList">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.TaskEditActivity"
+            android:label="@string/APP_Activity_TaskEdit">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.report.TodoListReportActivity"
+            android:label="@string/APP_Activity_TodoList">
+        </activity>
+
+        <!-- AddOn Services -->
+        <service android:name="com.andicar.addon.services.BackupService" 
+			android:label="AndiCarBackupService"
+			android:process="com.andicar.addon.services">
+ 		</service>
+
+        <service android:name="com.andicar.addon.services.CheckSubscriptionsService" 
+			android:label="AndiCarCheckSubscription"
+			android:process="com.andicar.addon.services">
+ 		</service>
+
+        <activity
+            android:name="com.andicar.addon.activity.AddOnServicesList"
+            android:label="@string/PREF_AddOnCategoryTitle">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.ServiceSubscription">
+        </activity>
+  
+		<activity 
+			android:name="com.paypal.android.MEP.PayPalActivity"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar"
+			android:configChanges="keyboardHidden|orientation">
+        </activity>
+
+        <activity
+            android:name="com.andicar.addon.activity.AddOnPreferences"
+            android:label="@string/AddOn_PreferencesTitle">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.BackupSchedule"
+            android:label="@string/AddOn_AutoBackupService_ScheduleTitle">
+        </activity>
+
+        <activity
+            android:name="com.andicar.addon.activity.SecureBackupConfig"
+            android:label="@string/AddOn_SecureBackup_Title">
+        </activity>
+        <service android:name="com.andicar.addon.services.FileMailer" 
+			android:label="AndiCarFileMailer"
+			android:process="com.andicar.addon.services">
+ 		</service>
 
     </application>
 </manifest>

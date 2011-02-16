@@ -18,19 +18,27 @@
 
 package org.andicar.activity;
 
+import java.math.BigDecimal;
+
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.utils.AndiCarExceptionHandler;
+import org.andicar.utils.StaticValues;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.AndiCarExceptionHandler;
-import org.andicar.utils.StaticValues;
+import android.widget.TextView;
 
 /**
  *
@@ -40,11 +48,15 @@ public class BaseActivity extends Activity {
     protected MainDbAdapter mDbAdapter = null;
     protected Resources mResource = null;
     protected SharedPreferences mPreferences;
-    protected AlertDialog.Builder madbErrorAlert;
+    protected AndiCarDialogBuilder madbErrorAlert;
     protected AlertDialog madError;
     protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport;
     protected SharedPreferences.Editor mPrefEditor;
+    protected ViewGroup vgRoot;
+    protected boolean isUseNumericInput = true;
+    protected long mCarId = -1;
+    protected long mDriverId = -1;
 
     /** Called when the activity is first created. */
     @Override
@@ -62,19 +74,22 @@ public class BaseActivity extends Activity {
         mDbAdapter = new MainDbAdapter(this);
         mResource = getResources();
 
-        madbErrorAlert = new AlertDialog.Builder( this );
+        madbErrorAlert = new AndiCarDialogBuilder(BaseActivity.this, AndiCarDialogBuilder.DIALOGTYPE_ERROR, mResource.getString(R.string.GEN_Error));
         madbErrorAlert.setCancelable( false );
         madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
 
+        isUseNumericInput = mPreferences.getBoolean("UseNumericKeypad", true);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
-        if(mDbAdapter != null){
-            mDbAdapter.close();
-            mDbAdapter = null;
-        }
+        try{
+            super.onDestroy();
+            if(mDbAdapter != null){
+                mDbAdapter.close();
+                mDbAdapter = null;
+            }
+        }catch(Exception e){}
     }
 
     @Override
@@ -85,19 +100,37 @@ public class BaseActivity extends Activity {
             mDbAdapter = new MainDbAdapter(this);
     }
 
-    protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from, String whereCondition,
-            String orderBy, long selectedId, boolean addListener){
+    protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from,
+            String selection, String[] selectionArgs,
+            String orderBy, long selectedId, boolean addEmptyValue){
         try{
             Spinner spnCurrentSpinner = (Spinner) pSpinner;
-            Cursor dbcRecordCursor = mDbAdapter.fetchForTable( tableName, columns, whereCondition, orderBy);
+            Cursor dbcRecordCursor;
+            if(addEmptyValue){
+                String selectSql = "SELECT -1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME + ", " +
+                                    "null AS " + MainDbAdapter.GEN_COL_NAME_NAME +
+                                    " UNION " +
+                                    " SELECT " + MainDbAdapter.GEN_COL_ROWID_NAME + ", " +
+                                                MainDbAdapter.GEN_COL_NAME_NAME +
+                                    " FROM " + tableName;
+                if(selection != null && selection.length() > 0)
+                    selectSql = selectSql + " WHERE " + selection;
+                selectSql = selectSql + " ORDER BY " + MainDbAdapter.GEN_COL_NAME_NAME;
+                dbcRecordCursor = mDbAdapter.execSelectSql(selectSql, selectionArgs);
+            }
+            else{
+                dbcRecordCursor = mDbAdapter.query(tableName, columns, selection, selectionArgs, null, null, orderBy);
+//                        fetchForTable( tableName, columns, whereCondition, orderBy);
+            }
+            
             startManagingCursor( dbcRecordCursor );
-            int[] to = new int[]{android.R.id.text1, android.R.id.text2};
+            int[] to = new int[]{android.R.id.text1};
             SimpleCursorAdapter scaCursorAdapter =
-//                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, dbcRecordCursor,
-                    new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, dbcRecordCursor,
+                    new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, dbcRecordCursor,
+//                    new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, dbcRecordCursor,
                     from, to);
-//            scaCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            scaCursorAdapter.setDropDownViewResource(android.R.layout.two_line_list_item);
+            scaCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            scaCursorAdapter.setDropDownViewResource(android.R.layout.two_line_list_item);
             spnCurrentSpinner.setAdapter(scaCursorAdapter);
 
             if(selectedId >= 0){
@@ -111,8 +144,7 @@ public class BaseActivity extends Activity {
                     dbcRecordCursor.moveToNext();
                 }
             }
-
-            if(addListener)
+            if(spnCurrentSpinner.getOnItemSelectedListener() == null)
                 spnCurrentSpinner.setOnItemSelectedListener(spinnerOnItemSelectedListener);
         }
         catch(Exception e){
@@ -121,6 +153,81 @@ public class BaseActivity extends Activity {
             madError.show();
         }
 
+    }
+
+    /**
+     * Check numeric fields. Numeric fields are detected based on input type (TYPE_CLASS_PHONE)
+     * @param integerOnly just integer allowed
+     * @return null or field tag if is empty
+     */
+    protected String checkNumeric(ViewGroup wg, boolean integerOnly){
+        View vwChild;
+        EditText etChild;
+        String strRetVal;
+        if(wg == null)
+            return null;
+
+        for(int i = 0; i < wg.getChildCount(); i++)
+        {
+            vwChild = wg.getChildAt(i);
+            if(vwChild instanceof ViewGroup){
+                strRetVal = checkNumeric((ViewGroup)vwChild, integerOnly);
+                if(strRetVal != null)
+                    return strRetVal;
+            }
+            else if(vwChild instanceof EditText){
+                etChild = (EditText) vwChild;
+                String sValue = ((EditText)etChild).getText().toString();
+                if(etChild.getOnFocusChangeListener() == null &&
+                        (etChild.getInputType() == InputType.TYPE_CLASS_PHONE
+                             || etChild.getInputType() == InputType.TYPE_CLASS_NUMBER)) {
+                     if(sValue != null && sValue.length() > 0)
+                     {
+                         try{
+                             //check if valid number
+                        	 if(integerOnly)
+                        		 Integer.parseInt(sValue);
+                        	 else
+                        		 new BigDecimal(sValue);
+                         }
+                         catch(NumberFormatException e){
+                         	if(etChild.getTag() != null && etChild.getTag().toString() != null)
+                         		return etChild.getTag().toString().replace(":", "");
+                         	else
+                         		return "";
+                         	
+                         }
+                     }
+                }
+            }
+        }
+        return null;
+    }
+
+    protected void setSpinnerTextToCode(AdapterView<?> arg0, long arg3, View arg1) {
+        if(arg1 == null)
+            return;
+        String code = null;
+        //set the spinner text to the selected item code
+        if ((((Spinner) arg0).equals(findViewById(R.id.spnUomFrom))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnUomLength))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnUomTo))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnUomVolume))
+                )
+                && arg3 > 0) {
+            code = mDbAdapter.getUOMCode(arg3);
+            if (code != null) {
+                ((TextView) arg1).setText(code);
+            }
+        } else if ((((Spinner) arg0).equals(findViewById(R.id.spnCurrency))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnCurrencyFrom))
+                || ((Spinner) arg0).equals(findViewById(R.id.spnCurrencyTo)))
+                && arg3 > 0) {
+            code = mDbAdapter.getCurrencyCode(arg3);
+            if (code != null) {
+                ((TextView) arg1).setText(code);
+            }
+        }
     }
 
     protected AdapterView.OnItemSelectedListener spinnerOnItemSelectedListener =
@@ -142,9 +249,51 @@ public class BaseActivity extends Activity {
                             mPrefEditor.commit();
                         }
                     }
+                    else if(BaseActivity.this instanceof MainActivity){
+                        if( ((Spinner)arg0).equals(findViewById(R.id.spnCar))){
+                        	mCarId = arg3;
+                            mPrefEditor.putLong("CurrentCar_ID", arg3);
+                            mPrefEditor.commit();
+                        }
+                    }
+                    setSpinnerTextToCode(arg0, arg3, arg1);
                 }
+                
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
+
+
+            /**
+             * set the input type associated to a numeric field
+             * on some devices the input type PHONE does not show the dot simbol
+             * see issue #29
+             * @param wg
+             */
+            protected void setInputType(ViewGroup wg){
+                if(wg == null)
+                    return;
+
+                View vwChild;
+                EditText etChild;
+
+                for(int i = 0; i < wg.getChildCount(); i++)
+                {
+                    vwChild = wg.getChildAt(i);
+                    if(vwChild instanceof ViewGroup){
+                        setInputType((ViewGroup)vwChild);
+                    }
+                    else if(vwChild instanceof EditText){
+                        etChild = (EditText) vwChild;
+                        if(etChild.getInputType() == InputType.TYPE_CLASS_PHONE
+                                     || etChild.getInputType() == InputType.TYPE_CLASS_NUMBER) { //numeric field
+                             if(isUseNumericInput)
+                                 etChild.setRawInputType(InputType.TYPE_CLASS_PHONE);
+                             else
+                                 etChild.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+                        }
+                    }
+                }
+            }
 
 }

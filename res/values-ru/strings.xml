@@ -1,0 +1,432 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ Translated to Russian by Andrey Demin, andde@rambler.ru
+-->
+
+<!-- UI labels and messages-->
+<!--
+    Some strings contains one or more "variables". These looks like [#No] (for example [#1], [#2]).
+    These variables are parsed in the application and are replaced with a string value (a currency code, an UOM code, etc)
+
+    !!!For translators!!!:
+        If any of the translated string is longer than the english value you should
+        verify the look of the user interface (using the android emulator or any other device)
+        with the translated values.
+-->
+
+<resources>
+    <string name="APP_Description">"Бесплатная программа для учета расходов на автомобили."</string>
+    <string name="APP_Motto">"Управляйте своим автопарком программой с открытым кодом."</string>
+    <string name="APP_Activity_DriverEdit">"Редактировать водителя"</string>
+    <string name="APP_Activity_DriverList">"Водители"</string>
+    <string name="APP_Activity_CarEdit">"Редактировать автомобиль"</string>
+    <string name="APP_Activity_CarList">"Автомобили"</string>
+    <string name="APP_Activity_Preferences">"Настройки"</string>
+    <string name="APP_Activity_GPSPreferences">"Настройки треков GPS"</string>
+    <string name="APP_Activity_ExpenseCategoryList">"Категории расходов"</string>
+    <string name="APP_Activity_ExpenseCategoryEdit">"Редактировать категорию расходов"</string>
+    <string name="APP_Activity_ExpenseTypeList">"Типы расходов"</string>
+    <string name="APP_Activity_ExpenseTypeEdit">"Редактировать тип расходов"</string>
+    <string name="APP_Activity_UOMList">"Единицы измерения"</string>
+    <string name="APP_Activity_UOMEdit">"Редактировать единицу измерения"</string>
+    <string name="APP_Activity_UOMConversionList">"Преобразования единиц измерений"</string>
+    <string name="APP_Activity_UOMConversionEdit">"Редактировать преобразования ед.изм."</string>
+    <string name="APP_Activity_CurrencyList">"Валюты"</string>
+    <string name="APP_Activity_CurrencyEdit">"Редактировать валюту"</string>
+    <string name="APP_Activity_MileageList">"Поездки"</string>
+    <string name="APP_Activity_MileageEdit">"Добавить или редактировать поездку"</string>
+    <string name="APP_Activity_RefuelList">"Заправки"</string>
+    <string name="APP_Activity_RefuelEdit">"Добавить или редактировать заправку"</string>
+    <string name="APP_Activity_About">"О программе AndiCar"</string>
+    <string name="APP_Activity_BackupRestore">"Резервирование / Восстановление"</string>
+    <string name="APP_Activity_ExpenseList">"Расходы"</string>
+    <string name="APP_Activity_ExpenseEdit">"Добавить или редактировать расход"</string>
+    <string name="APP_Activity_CurrencyRateList">"Обменные курсы"</string>
+    <string name="APP_Activity_CurrencyRateEdit">"Добавить или редактировать курс обмена"</string>
+    <string name="APP_Activity_GPSTrackController">"Управление треками GPS"</string>
+    <string name="APP_Activity_GPSTrackEdit">"Редактировать трек GPS"</string>
+    <string name="APP_Activity_GPSTrackList">"Треки GPS"</string>
+    <string name="APP_Activity_BPartnerList">"Партнеры"</string>
+    <string name="APP_Activity_BPartnerEdit">"Редактировать партнера, местоположение"</string>
+    <string name="APP_Activity_BPartnerLocationEdit">"Редактировать местоположение"</string>
+    <string name="APP_Activity_TagList">"Метки"</string>
+    <string name="APP_Activity_TagEdit">"Редактировать метку"</string>
+    <string name="APP_Activity_Message">"Сообщение AndiCar"</string>
+
+    <string name="GEN_OK">"OK"</string>
+    <string name="GEN_CANCEL">"Отмена"</string>
+    <string name="GEN_YES">"Да"</string>
+    <string name="GEN_NO">"Нет"</string>
+    <string name="GEN_Done">"Сделано"</string>
+    <string name="GEN_FillMandatory">"Заполните обязательные поля"</string>
+    <string name="GEN_NumberFormatException">"Неверное число"</string>
+    <string name="GEN_ChooseOneTitle">"Выберите одно"</string>
+    <string name="GEN_ChooseOneMessage">"Вы должны выбрать по крайне мере одно значение"</string>
+    <string name="GEN_ChooseTitle">"Выбрать"</string>
+    <string name="GEN_IsActiveLabel">"Активно"</string>
+    <string name="GEN_UserCommentLabel">"Комментарий"</string>
+    <string name="GEN_NameLabel">"Имя:"</string>
+    <string name="GEN_DateTimeLabel">"<b><i>Дата и время:</i></b>"</string>
+    <string name="GEN_PickDateCaption">"Изменить дату"</string>
+    <string name="GEN_PickTimeCaption">"Изменить время"</string>
+    <string name="GEN_DeleteConfirmation">"Удалить выбранную запись?"</string>
+    <string name="GEN_Refuel">"Заправка"</string>
+    <string name="GEN_CarLabel">"Авто:"</string>
+    <string name="GEN_DriverLabel">"Водитель:"</string>
+    <!-- <string name="GEN_ExpenseCategoryLabel">"Расх. категория:"</string> -->
+    <string name="GEN_ExpenseTypeLabel">"Тип расходов:"</string>
+    <string name="GEN_TypeLabel">"Тип:"</string>
+    <string name="GEN_DocumentNoLabel">"Документ no.:"</string>
+    <string name="GEN_IndexLabel">"Счетчик:"</string>
+    <string name="GEN_QuantityLabel">"Количество:"</string>
+    <string name="GEN_PriceLabel">"Цена"</string>
+    <string name="GEN_AmountLabel">"Сум"</string>
+    <string name="GEN_ConversionRateLabel">"Курс:"</string>
+    <string name="GEN_ConvertedAmountLabel">"Сум. [#1]"</string>
+    <string name="GEN_ConvertedPriceLabel">"Цена [#1]"</string>
+    <string name="GEN_SelectedMessage">" выбрано"</string>
+    <string name="GEN_CurrencyLabel">"Валюта"</string>
+    <string name="GEN_Required">"Требуется"</string>
+    <string name="GEN_BPartner">"Продавец:"</string>
+    <string name="GEN_Address">"Адрес:"</string>
+    <string name="GEN_BPartnerAdressInfo">"Полная информация в Настройка -> Партнеры"</string>
+    <string name="GEN_City">"Город:"</string>
+    <string name="GEN_Region">"Область:"</string>
+    <string name="GEN_Country">"Страна:"</string>
+    <string name="GEN_Contact">"Контакт:"</string>
+    <string name="GEN_Phone">"Телефон:"</string>
+    <string name="GEN_Phone2">"Телефон 2:"</string>
+    <string name="GEN_Fax">"Факс:"</string>
+    <string name="GEN_Email">"Email:"</string>
+    <string name="GEN_Postal">"Почтовый:"</string>
+    <string name="GEN_Tag">"Метка:"</string>
+    <string name="GEN_TagHint">"Короткая метка. Комментарий напишите ниже."</string>
+	<string name="GEN_LifeTime">"Срок подписки"</string>
+    <string name="GEN_Category">"Категория:"</string>
+    <string name="GEN_UOM">"Ед.изм.:"</string>
+    <string name="GEN_MailSent">"Почта отправлена"</string>
+	<string name="GEN_Password">"Пароль"</string>
+	<string name="GEN_ShowNotification">"Показать уведомление"</string>
+	<string name="GEN_Error">"Ошибка"</string>
+	<string name="GEN_Confirm">"Подтверждение"</string>
+	<string name="GEN_Info">"Информация"</string>
+	<string name="GEN_Warning">"Предупреждение"</string>
+
+    <string name="MENU_PreferencesCaption">"Настройки"</string>
+    <string name="MENU_AboutCaption">"О программе"</string>
+    <string name="MENU_DeleteCaption">"Удалить"</string>
+    <string name="MENU_AddNewCaption">"Добавить новое"</string>
+    <string name="MENU_EditCaption">"Редактировать"</string>
+    <string name="MENU_ShowInactiveCaption">"Показать неактивные"</string>
+    <string name="MENU_HideInactiveCaption">"Спрятать неактивные"</string>
+    <string name="MENU_SearchCaption">"Поиск/фильтр"</string>
+    <string name="MENU_CreateReportCaption">"Создать отчет"</string>
+    <string name="MENU_SendAsEmailCaption">"Отправить по email"</string>
+    <string name="MENU_ShowOnMap">"Показать на карте"</string>
+    <string name="MENU_MileageCaption">"Поездки"</string>
+    <string name="MENU_RefuelCaption">"Заправки"</string>
+    <string name="MENU_ExpenseCaption">"Расходы"</string>
+    <string name="MENU_GPSTrackCaption">"Треки GPS"</string>
+    <string name="MENU_SetDefault">"Установить по умолчанию"</string>
+	<string name="MENU_RateCommentCaption">"Рейтинг/Комментарий"</string>
+	<string name="MENU_AddOnServicesCaption">"Доп. услуги"</string>
+	
+    <string name="MainActivity_MileageHeaderCaption">"Последняя поездка"</string>
+    <string name="MainActivity_RefuelHeaderCaption">"Последняя заправка"</string>
+    <string name="MainActivity_GPSTrackHeaderCaption">"Последний трек GPS"</string>
+    <string name="MainActivity_ExpenseHeaderCaption">"Последний расход"</string>
+    <string name="MainActivity_StatisticsHeaderCaption">"Статистика для введенных "</string>
+    <string name="MainActivity_StatisticsListLastOdoLabel">"Последнее показание счетчика: "</string>
+    <string name="MainActivity_StatisticsAvgConsLabel">"Ср. расход топл.: "</string>
+    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. Средний расход топлива вычисляется между первой и последней ПОЛНОЙ заправкой."</string>
+    <string name="MainActivity_StatisticsLastConsLabel">"Посл. расход: "</string>
+    <string name="MainActivity_StatisticsTotalExpenseLabel">"Общие расходы:"</string>
+    <string name="MainActivity_StatisticsMileageExpenseLabel">"Затраты на пробег:"</string>
+    <string name="MainActivity_MileageNoDataText">"Нет поездок для этого автомобиля"</string>
+    <string name="MainActivity_RefuelNoDataText">"Нет заправок для этого автомобиля"</string>
+    <string name="MainActivity_ExpenseNoDataText">"Нет расходов для этого автомобиля"</string>
+    <string name="MainActivity_ExpenseNoDataAditionalText">" В этой зоне не отражаются расходы, созданные совместно с другими записями (например с заправкой)"</string>
+    <string name="MainActivity_NoCurrentCarMessage">"Автомобиль не определен. По крайней мере один автомобиль должен быть создан."</string>
+    <string name="MainActivity_NoCurrentDriverMessage">"Водитель не определен. По крайней мере один водитель должен быть создан."</string>
+    <string name="MainActivity_WellcomeMessage">"Добро пожаловать в AndiCar."</string>
+    <string name="MainActivity_WellcomeBackMessage">"Добро пожаловать!"</string>
+    <string name="MainActivity_BackupExistMessage">"Резервная копия уже есть.\nВы хотите восстановить резервную копию?"</string>
+    <string name="MainActivity_UpdateMessage">"Обновление сообщения"</string>
+    <string name="MainActivity_GPSTrackZoneNoDataText">"Нет треков."</string>
+    <string name="MainActivity_NoMarketAccessMsg">"Не открывается Android маркет!"</string>
+    <string name="MainActivity_AppVersion">"Версия программы:"</string>
+	<string name="MainActivity_DidYouKnow">"Вы знаете?"</string>
+	<string name="MainActivity_AddOnMessage">"В программе AndiCar есть некоторые полезные дополнительные услуги. Работу дополнений можно попробовать бесплатно. \n\nВы хотите увидеть список доступных дополнений?"</string>	
+
+    <string name="DriverEditActivity_LicenseNoLabel">"Вод. удостоверение No.:"</string>
+    <string name="DriverEditActivity_CurrentDriverInactivateMessage">" Текущий водитель не может быть неактивным."</string>
+    <string name="DriverListActivity_InactiveDriverSelectedMessage">"Неактивный водитель не может быть выбран."</string>
+    <string name="DriverListActivity_CurrentDriverDeleteMessage">"Текущий водитель не может быть удален."</string>
+
+    <string name="CarEditActivity_ModelLabel">"Модель:"</string>
+    <string name="CarEditActivity_LicensePlateLabel">"Номерной знак:"</string>
+    <string name="CarEditActivity_UOMLengthLabel">"Ед.изм. для пробега:"</string>
+    <string name="CarEditActivity_UOMVolumeLabel">"Ед.изм. для заправки:"</string>
+    <string name="CarEditActivity_IndexStartLabel">"Начальный пробег:"</string>
+    <string name="CarEditActivity_CurrencyLabel">"Валюта по умолчанию:"</string>
+    <string name="CarEditActivity_CurrentCarInactivateMessage">"Текущий автомобиль не может быть неактивным."</string>
+    <string name="CarListActivity_InactiveCarSelectedMessage">"Неактивный автомобиль не может быть выбран."</string>
+    <string name="CarListActivity_CurrentCarDeleteMessage">"Текущий автомобиль не может быть удален."</string>
+
+    <string name="UOMEditActivity_CodeLabel">"Код:"</string>
+    <string name="UOMEditActivity_UOMTypeLengthTitle">"расстояние"</string>
+    <string name="UOMEditActivity_UOMTypeVolumeTitle">"объем"</string>
+
+    <string name="UOMConversionEditActivity_UOMFromLabel">"Из ед.изм:"</string>
+    <string name="UOMConversionEditActivity_UOMToLabel">"В ед.изм."</string>
+    <string name="UOMConversionEditActivity_ConvertionRateLabel">"Соотношение перевода:"</string>
+
+    <string name="CurrencyEditActivity_CodeLabel">"Код:"</string>
+
+    <string name="MileageEditActivity_IndexHeaderLabel">"Начало/окончание счетчика или поездки"</string>
+    <string name="MileageEditActivity_IndexStartLabel">"Старт "</string>
+    <string name="MileageEditActivity_OptionIndexLabel">"Остановка"</string>
+    <string name="MileageEditActivity_OptionMileageLabel">"Расстояние"</string>
+    <string name="MileageEditActivity_InsertOkMessage">"Поездка добавлена."</string>
+    <string name="MileageEditActivity_UpdateOkMessage">"Поездка обновлена."</string>
+    <string name="MileageEditActivity_RecordingInProgress">"Данные записываются!"</string>
+
+    <string name="RefuelEditActivity_IsFullLabel">"Полный"</string>
+    <string name="RefuelEditActivity_QtyInBaseUOMLabel">"Кол-во в базовых ед.изм.: "</string>
+    <string name="RefuelEditActivity_NoConversionRateMessage">"Не определено преобразования для этих единиц измерения"</string>
+
+    <string name="BackupRestoreEditActivity_BackupBtnCaption">"Копировать"</string>
+    <string name="BackupRestoreEditActivity_RestoreBtnCaption">"Восстановить"</string>
+    <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Удалить копию"</string>
+    <string name="BackupRestoreEditActivity_BackupListLabel">"Существующие копии:"</string>
+    <string name="BackupRestoreEditActivity_BackupCreatedMessage">"Копия создана."</string>
+    <string name="BackupRestoreEditActivity_BackupFailedMessage">"Не получилось создать копию!"</string>
+    <string name="BackupRestoreEditActivity_BackupDeleteConfirmation">"Действительно удалить выбранную копию?"</string>
+    <string name="BackupRestoreEditActivity_RestoreConfirmation">"Действительно востановить выбранную копию? Это действие заменит все ваши существующие данные!"</string>
+    <string name="BackupRestoreEditActivity_RestoreOKMessage">"Ваша база данных восстановлена из копии. Программа будет закрыта."</string>
+
+    <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"исключить из расчета стоимости поездки"</string>
+    <string name="ExpenseEditActivity_CreatedFromWarning">"Эти расходы созданы на основе [#1].\nРедактируйте соответствующую [#1]."</string>
+
+    <string name="CurrencyRateEditActivity_CurrencyFromLabel">"Из валюты "</string>
+    <string name="CurrencyRateEditActivity_CurrencyToLabel">"В валюту "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"Курс: 1 [#1] = "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
+    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Обратный курс: 1 [#1] = "</string>
+    <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Макс. кол-во знаков после запятой: "</string>
+
+    <string name="REPORTActivity_ReportCreatedMessage">"Ваш отчет успешно создан в папке sdcard/andicar/reports"</string>
+    <string name="REPORTActivity_ProgressMessage">"Начало создания отчета. Пожалуйста подождите..."</string>
+
+
+
+    <string name="GPSTrackReport_GPSTrackVar_1">"Расстояние: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_2">"Макс. скорость: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_3">"Ср. скорость: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_4">"Ср. скорость движения: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_5">"Общее время: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_6">"Время движения: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_7">"Макс. точность: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_8">"Мин. точность: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_9">"Ср. точность: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_10">"Мин. высота: "</string>
+    <string name="GPSTrackReport_GPSTrackVar_11">"Макс. высота: "</string>
+
+    <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Файлы треков"</string>
+    <string name="GPSTrackEditActivity_TrackStatistics">"Статистика"</string>
+
+    <string name="GPSTrackControllerActivity_StopBtnCaption">"Остановить трек GPS"</string>
+    <string name="GPSTrackControllerActivity_FileFormatLabel">"Формат файла трека:"</string>
+    <string name="GPSTrackControllerActivity_CreateMileageLabel">"Создать поездку"</string>
+    <string name="GPSTrackControllerActivity_IndexLabel">"Начальное показание счетчика:"</string>
+
+    <string name="GPSTrackService_ServiceStoppedMessage">"Записю трека GPS остановлена"</string>
+    <string name="GPSTrackService_GPSDisabledMessage">"Прием сигнала GPS выключен\nВключите прием сигнала."</string>
+    <string name="GPSTrackService_GPSOutOfService">"Нет сигнала GPS!"</string>
+    <string name="GPSTrackService_TrackInProgressTitle">"AndiCar записывает данные GPS"</string>
+    <string name="GPSTrackService_TrackInProgressMessage">"Данные GPS записываются"</string>
+    <string name="GPSTrackService_AccuracyProblemTitle">"AndiCar предупреждает о проблемах GPS!"</string>
+    <string name="GPSTrackService_AccuracyProblemMessage">"Точность превысила границы!"</string>
+    <string name="GPSTrackService_AutoShutDownTitle">"AndiCar остановил запись GPS!"</string>
+    <string name="GPSTrackService_AutoShutDownMessage">"Запись трека GPS была остновлена, потому что доля пропущенных точек ([#1]) превышает заданную ([#2])!\nВы можеть отрегулировать заданную долю пропущенных точек на экране Настройка -> Граница самостоятельной остановки."</string>
+
+    <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar - ошибка файловой стистемы!"</string>
+
+    <string name="GPSTrackShowOnMap_ProgressMessage">"Отрисовка карты.\nПожалуйста подождите..."</string>
+    <string name="GPSTrackShowOnMapMenu_MapMode">"Режим схемы"</string>
+    <string name="GPSTrackShowOnMapMenu_SatelliteMode">"Режим фото со спутника"</string>
+
+    <string name="BPartnerEditActivity_LocationsHeaderCaption">"Местоположения"</string>
+
+    <string name="PREF_UOMCategoryTitle">"Единицы измерения"</string>
+    <string name="PREF_ExpenseCategoryTitle">"Расходы"</string>
+    <string name="PREF_ExpenseTypeCategoryTitle">"Типы расходов"</string>
+    <string name="PREF_ExpenseTypeCategorySummary">"Добавить, удалить, редактировать типы расходов"</string>
+    <string name="PREF_CarDriverCategoryTitle">"Автомобили и водители"</string>
+    <string name="PREF_CarTitle">"Автомобили"</string>
+    <string name="PREF_CarSummary">"Добавить, удалить, редактировать автомобили.\nВыбрать текущий автомобиль."</string>
+    <string name="PREF_DriverTitle">"Водители"</string>
+    <string name="PREF_DriverSummary">"Добавить, удалить, редактировать водителей.\nВыбрать текущего водителя."</string>
+    <string name="PREF_UOMTitle">"Единицы измерения"</string>
+    <string name="PREF_UOMSummary">"Добавить, удалить, редактировать единицы измерения"</string>
+    <string name="PREF_UOMConversionTitle">"Преобразование ед. изм."</string>
+    <string name="PREF_UOMConversionSummary">"Добавить, удалить, редактировать преобразования между единицами измерения"</string>
+    <string name="PREF_CurrencyTitle">"Валюты"</string>
+    <string name="PREF_CurrencySummary">"Добавить, удалить, редактировать валюты"</string>
+    <string name="PREF_BackupRestoreCategoryTitle">"Резервное копирование / восстановление"</string>
+    <string name="PREF_BackupRestoreTitle">"Сохранение и восстановление"</string>
+    <string name="PREF_BackupRestoreSummary">"Создать новую копию базы данных или восстановить из копии."</string>
+    <string name="PREF_ExpenseCategoryCategoryTitle">"Категории расходов"</string>
+    <string name="PREF_ExpenseCategoryCategorySummary">"Добавить, удалить, редактировать категории расходов"</string>
+    <string name="PREF_MiscCategoryTitle">"Прочее"</string>
+    <string name="PREF_MainScreenCategoryTitle">"Настройки старта"</string>
+    <string name="PREF_MainScreenCategorySummary">"Изменить настройки вашего главного экрана"</string>
+    <string name="PREF_CurrencyRateCategoryTitle">"Курсы валют"</string>
+    <string name="PREF_CurrencyRateCategorySummary">"Добавить, удалить, редактировать курсы валют"</string>
+    <string name="PREF_GPSTrackCategoryTitle">"Запись треков GPS"</string>
+    <string name="PREF_GPSTrackTitle">"Трек GPS"</string>
+    <string name="PREF_GPSTrackSummary">"Различные настройки для записи треков GPS."</string>
+    <string name="PREF_SendUsageTitle">"Статистика работы ПО"</string>
+    <string name="PREF_SendUsageSummary">"Помоги сделать программу лучше, отправляя анонимную статистику работы."</string>
+    <string name="PREF_SendCrashReportsTitle">"Отчет о сбоях"</string>
+    <string name="PREF_SendCrashReportsSummary">"Помоги разработчикам сделать программу лучше, отправляя анонимный отчет о сбоях."</string>
+    <string name="PREF_MainScreen">"Настроить ваш главный экран"</string>
+    <string name="PREF_BPartnersCategoryTitle">"Партнеры и местоположения"</string>
+    <string name="PREF_PartnerTitle">"Партнеры"</string>
+    <string name="PREF_PartnerSummary">"Добавить, удалить, редактировать партнеров и местоположения"</string>
+    <string name="PREF_UseNumericInputTitle">"Цифровая клавиатура"</string>
+    <string name="PREF_UseNumericInputSummary">"Использовать цифровую клавиатуру для числовых полей."</string>
+    <string name="PREF_TagCategoryTitle">"Метки"</string>
+    <string name="PREF_TagCategorySummary">"Добавить, удалить, редактировать метки"</string>
+    <string name="PREF_RememberLastTagTitle">"Запомнить посл. метку"</string>
+    <string name="PREF_RememberLastTagSummary">"Запомнить последнюю использованную метку"</string>
+	<string name="PREF_AutoUpdateCheckTitle">"Проверить обновления"</string>
+	<string name="PREF_AutoUpdateCheckSummary">"Проверить и сообщить мне, если опубликована новая версия AndiCar"</string>
+
+    <string name="PREF_MainScreen_ShowMileageZone">"Раздел поездок"</string>
+    <string name="PREF_MainScreen_ShowGPSTrackZone">"Раздел треков GPS"</string>
+    <string name="PREF_MainScreen_ShowRefuelZone">"Раздел заправок"</string>
+    <string name="PREF_MainScreen_ShowExpenseZone">"Раздел расходов"</string>
+    <string name="PREF_MainScreen_ShowStatistics">"Раздел статистики"</string>
+
+    <string name="PREF_AddOnCategoryTitle">"Дополнительные услуги"</string>
+    <string name="PREF_AddOnServicesTitle">"Дополнительные услуги"</string>
+    <string name="PREF_AddOnServicesSummary">"Подписки, основанные на платных услугах."</string>
+    <string name="PREF_AddOnServicesSubscribe">"Подписаться с помощью PayPal"</string>
+
+    <string name="PREFMainScreen_ZonesLabel">"возможные разделы:"</string>
+    <string name="PREFGPSTrack_FileFormatTitle">"Формат файла"</string>
+    <string name="PREFGPSTrack_FileFormatSummary">"Выберите формат файла, используемый для записи треков GPS"</string>
+    <string name="PREFGPSTrack_CSVFileFormatMessage">"CSV используется всегда"</string>
+    <string name="PREFGPSTrack_KMLFileFormatTitle">"KML"</string>
+    <string name="PREFGPSTrack_KMLFileFormatSummary">"Keyhole Markup Language"</string>
+    <string name="PREFGPSTrack_GPXFileFormatTitle">"GPX"</string>
+    <string name="PREFGPSTrack_GPXFileFormatSummary">"GPs eXchange format"</string>
+    <string name="PREFGPSTrack_MinimumTimeTitle">"Мин. время между точками"</string>
+    <string name="PREFGPSTrack_MinimumTimeSummary">"Минимальное время между двумя записями вашей позиции"</string>
+    <string name="PREFGPSTrack_AccuracyTitle">"Точность"</string>
+    <string name="PREFGPSTrack_AccuracySummary">"Минимальная точность для достоверности точки трека. Используется для записи треков в форматах KML и GPX."</string>
+    <string name="PREFGPSTrack_AutoShutDownTitle">"Граница автоостановки"</string>
+    <string name="PREFGPSTrack_AutoShutDownSummary">"Остановить запись трека, если доля пропущенных точек больше чем это значение."</string>
+    <string name="PREFGPSTrack_FileSplitTitle">"Разделение файлов треков GPS"</string>
+    <string name="PREFGPSTrack_FileSplitSummary">"Разделить файл и начать новый после каждых N точек трека. 0 - для отмены разделения."</string>
+    <string name="PREFGPSTrack_FileLocationMessage">"Ваши треки находятся в папке SDCARD/andicar/gpstrack"</string>
+
+    <string name="DIALOGSearch_DialogTitle">"Введите критерий"</string>
+    <string name="DIALOGSearch_DateFromLabel">"От"</string>
+    <string name="DIALOGSearch_DateToLabel">"До"</string>
+
+    <string name="DIALOGReport_DialogTitle">"Опции отчета"</string>
+    <string name="DIALOGReport_SendEmailLabel">"  отправить как вложение по email"</string>
+    <string name="DIALOGReport_ReportFormatLabel">"Формат отчета:"</string>
+
+    <string name="DayOfWeek_0">"Воскресенье"</string>
+    <string name="DayOfWeek_1">"Понедельник"</string>
+    <string name="DayOfWeek_2">"Вторник"</string>
+    <string name="DayOfWeek_3">"Среда"</string>
+    <string name="DayOfWeek_4">"Четверг"</string>
+    <string name="DayOfWeek_5">"Пятница"</string>
+    <string name="DayOfWeek_6">"Суббота"</string>
+
+    <string name="Month_01">"Январь"</string>
+    <string name="Month_02">"Февраль"</string>
+    <string name="Month_03">"Март"</string>
+    <string name="Month_04">"Апрель"</string>
+    <string name="Month_05">"Май"</string>
+    <string name="Month_06">"Июнь"</string>
+    <string name="Month_07">"Июль"</string>
+    <string name="Month_08">"Август"</string>
+    <string name="Month_09">"Сентябрь"</string>
+    <string name="Month_10">"Октябрь"</string>
+    <string name="Month_11">"Ноябрь"</string>
+    <string name="Month_12">"Декабрь"</string>
+
+    <string name="Notif_UpdateTitle">"Доступно обновление"</string>
+    <string name="Notif_UpdateMsg">"Обновление программы AndiCar доступно для скачивания!"</string>
+    
+    <!-- AddOn Services -->
+    <string name="AddOn_PayPalWarning">"В период осуществления платежа ** НЕ ИСПОЛЬЗУЙТЕ НА ТЕЛЕФОНЕ КЛАВИШУ ВОЗВРАТА И НЕ ИЗМЕНЯЙТЕ ОРИЕНТАЦИЮ ЭКРАНА ТЕЛЕФОНА**"</string>
+    <string name="AddOn_PayPalTransactionID">"Номер транзакции PayPal"</string>
+    <string name="AddOn_SubscribeWaiting">"Загружаю платежные библиотеки PayPal Payment"</string>
+    <string name="AddOn_SubscriptionInfo">"Вы подписаны на этот сервис до: [#1]"</string>
+ 	<string name="AddOn_BtnTryCaption">"Попробуйте БЕСПЛАТНО"</string>
+ 	<string name="AddOn_BtnConfigureServiceCaption">"Настройка услуги"</string>
+ 	<string name="AddOn_BtnRenewSubscriptionCaption">"Обновить подписку"</string>
+ 	<string name="AddOn_PreferencesTitle">"Настроить доп.услуги"</string>
+ 	<string name="AddOn_PreferencesSummary">"Настроить ваши доп.услуги"</string>
+ 	<string name="AddOn_PreferencesCategoryTitle">"Доп. услуги"</string>
+ 	<string name="AddOn_SubscriptionExpireWarning">"Ваша подписка на доп. услугу [#1] закончится через [#2] дней"</string>
+
+ 	<string name="AddOn_SubscriptionExpired">"Ваша подписка на доп.услугу [#1] закончилась."</string>
+ 	<string name="AddOn_RenewSubscriptionPeriodInfo">"Выбранный период добавится к текущей подписке"</string>
+
+    <string name="AddOn_SecureBackup_Title">"Безопасное копирование"</string>
+    <string name="AddOn_SecureBackup_Description">"Каждый раз, когда создается резервная копия базы данных, эта служба автоматически отправляет  резервную копию в качестве вложения электронной почты, на предварительно  указанный адрес электронной почты. Таким образом, записанные данные будут доступны, даже если вы потеряете свой телефон. В сочетании с резервным копированием этот модуль представляет собой законченное решение для безопасности ваших данных."</string>
+    <string name="AddOn_SecureBackup_LongDescription">"Автоматическая загрузка ваших копий баз данных  позволит вам иметь доступ к данным даже в случае утери телефона"</string>
+    <string name="AddOn_SecureBackup_TermOfService">" Мы не несем ответственности за: плохое / несуществующее / дефектное подключение к Интернету приводящее к неполным / поврежденным данным, недостаточное место для хранения  почты на вашей учетной записи Google, удаление файлов резервных копий с Google Mail или любые другие события, которые вызывают потери или делают непригодными  файлы резервного копирования."</string>
+	<string name="AddOn_SecureBackup_Requirements">"Системные требования службы: действующая учетная запись GMail, подключение к Интернету,  разрешение мобильной передачи данных"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption2">"Полугодовая подписка: [#1] [#2]"</string>
+    <string name="AddOn_SecureBackup_SubscriptionOption3">"Годовая подписка: [#1] [#2]"</string>
+
+    <string name="AddOn_SecureBackup_Configure">"Перейдите  в конфигурацию безопасного копирования, чтобы ввести недостающую информацию."</string>
+    <string name="AddOn_SecureBackup_SMTPUserFrom">"С адреса (требуется учетная запись GMail):"</string>
+	<string name="AddOn_SecureBackup_SMTPEmailTo">"Отправить на адрес:"</string>
+	<string name="AddOn_SecureBackup_IncludeGPSTrack">"Включить  файлы треков GPS "</string>
+	<string name="AddOn_SecureBackup_IncludeReports">"Включить сгенерированные отчеты"</string>
+    
+    <string name="AddOn_AutoBackupService_Title">"Услуга резервного копирования"</string>
+	<string name="AddOn_AutoBackupService_Description">" Эта услуга позволяет вам планировать ежедневные / еженедельные автоматические задачи резервного копирования баз данных. В сочетании с модулем резервного копирования она  представляет собой законченное решение для безопасности ваших данных."</string>
+	<string name="AddOn_AutoBackupService_Requirements">"Требования: свободное место на карте SD в зависимости от  размера вашей базы данных и количества существующих резервных копий."</string>
+	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
+	<string name="AddOn_AutoBackupService_SubscriptionOption2">"Срок подписки: [#1] [#2]"</string>
+
+	<string name="AddOn_AutoBackupService_ScheduleTitle">"Расписание услуги резервного копирования"</string>
+ 	<string name="AddOn_AutoBackupService_ScheduleFrequency">"Частота:"</string>
+	<string name="AddOn_AutoBackupService_ScheduleHour">"Час:"</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups1">"Оставлять только посл."</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups2">"коп."</string>
+	<string name="AddOn_AutoBackupService_NotifyIfSuccess">"Сообщить об успехе"</string>
+	<string name="AddOn_AutoBackupService_NotifyIfFailure">"Сообщить о неудаче"</string>
+	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"По крайней мере, один день должен быть выбран!"</string>
+	<string name="AddOn_AutoBackupService_BackupSucceeded">"Резервная копия создана успешно"</string>
+	<string name="AddOn_AutoBackupService_BackupFailed">"Неудача резервного копирования! Проверьте свою карту SD."</string>
+</resources>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- Error messages -->
+<resources>
+    <string name="ERR_000">"数据库错误。"</string>
+    <string name="ERR_001">"起始指数是在现在的里程数"</string>
+    <string name="ERR_002">"停止/新指数是在现有的里程"</string>
+    <string name="ERR_003">"新建的里程数与已存在的一个里程数相重叠"</string>
+    <string name="ERR_004">"停止/新建指数必须大于开始指数"</string>
+    <string name="ERR_005">"转换率已经存在"</string>
+    <string name="ERR_006">"创建记录时出错！"</string>
+    <string name="ERR_008">"无效的日期/时间格式！"</string>
+    <string name="ERR_009">"此司机不能被删除，因为他仍在里程条目中被使用。"</string>
+    <string name="ERR_010">"此司机不能被删除，因为他仍在燃料条目中被使用。"</string>
+    <string name="ERR_011">"此汽车不能被删除，因为它仍在里程条目中被使用。"</string>
+    <string name="ERR_012">"此汽车不能被删除，因为它仍在燃料条目中被使用。"</string>
+    <string name="ERR_013">"此度量单位不能被删除，因为它仍在里程条目中被使用。"</string>
+    <string name="ERR_014">"此度量单位不能被删除，因为它仍在燃料条目中被使用。"</string>
+    <string name="ERR_015">"此度量单位不能被删除，因为它仍在度量单位转换条目中被使用。"</string>
+    <string name="ERR_016">"此货币不能被删除，因为它仍在汽车定义条目中被使用。"</string>
+    <string name="ERR_017">"此货币不能被删除，因为它仍在燃料条目中被使用。"</string>
+    <string name="ERR_018">"此支出类型不能被删除，因为它仍在里程条目中被使用。"</string>
+    <string name="ERR_019">"此支出类型不能被删除，因为它仍在燃料条目中被使用。"</string>
+    <string name="ERR_020">"SD卡未找到。你无法创建报告、GPS追踪和数据库备份！"</string>
+    <string name="ERR_021">"报告文件夹 (/sdcard/andicar/reports) 无法被创建。在改文件夹在你的设备被创建之前你无法在本地保存报告。"</string>
+    <string name="ERR_022">"无法创建报告文件！"</string>
+    <string name="ERR_023">"文件写入错误！"</string>
+    <string name="ERR_024">"无法创建备份文件夹(/sdcard/andicar/backup)。在你在设备上创建好该文件夹之前你不能备份你的数据库。"</string>
+    <string name="ERR_025">"这个度量单位不能被设置为不活动的，因为它仍被用于活动汽车的定义。"</string>
+    <string name="ERR_026">"这个货币不能被设置为不活动的，因为它仍被用于活动汽车的定义。"</string>
+    <string name="ERR_027">"此类别不能被删除，因为仍在燃料条目中被使用。"</string>
+    <string name="ERR_028">"此类别不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_029">"这个转换已经在货币之间被定义了。"</string>
+    <string name="ERR_030">""此类别不能被删除，因为仍在燃料条目中被使用。\n你需要删除对应的燃料。"</string>
+    <string name="ERR_031">"你不能为同种度量单位定义转换。"</string>
+    <string name="ERR_032">"你不能为同种货币定义转换。"</string>
+    <string name="ERR_033">"无法创建GPS追踪记录文件夹(/sdcard/andicar/gpstrack)。在你在设备上创建好该文件夹之前你不能保存你的GPS追踪文件。"</string>
+    <string name="ERR_034">"文件系统错误！\n检查你的SD卡。"</string>
+    <string name="ERR_035">"无效的报告。"</string>
+    <string name="ERR_036">"路径文件未找到或为空！"</string>
+    <string name="ERR_037">"未知汽车！\n如果这个错误程序发生，请到以下地方报告 https://code.google.com/p/andicar/issues/entry"</string>
+    <string name="ERR_038">"此货币不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_039">"此司机不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_040">"此汽车不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_041">"此支出类型不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_042">"此搭档不能被删除，因为仍在燃料条目中被使用。"</string>
+    <string name="ERR_043">"此搭档不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_044">"此定位不能被删除，因为仍在燃料条目中被使用。"</string>
+    <string name="ERR_045">"此定位不能被删除，因为它仍在支出条目中被使用。"</string>
+
+    <string name="ERR_046">"此标签不能被删除，因为它仍在里程条目中被使用。"</string>
+    <string name="ERR_047">"此标签不能被删除，因为它仍在燃料条目中被使用。"</string>
+    <string name="ERR_048">"此标签不能被删除，因为它仍在支出条目中被使用。"</string>
+    <string name="ERR_049">"此标签不能被删除，因为它仍在GPS追踪条目中被使用。"</string>
+    
+	<string name="ERR_052">"未配置 SMTP 验证(无用户名)！"</string>
+	<string name="ERR_053">"未配置 SMTP 验证(无密码)！"</string>
+	<string name="ERR_054">"未配置 SMTP 验证(无目标Email)！"</string>
+	<string name="ERR_055">"邮件发送失败。"</string>
+	<string name="ERR_056">"未知错误。"</string>
+	<string name="ERR_057">"无法压缩数据库备份！"</string>
+	<string name="ERR_058">"无法创建临时文件夹 (/sdcard/andicar/temp)。在你与 设备上创建该文件夹之前你将无法使用安全备份服务。"</string>
+    
+</resources>
