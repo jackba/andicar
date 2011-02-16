@@ -72,6 +72,7 @@
     <string name="APP_Activity_TaskTypeEdit">"Edit task type"</string>
     <string name="APP_Activity_TaskList">"Tasks"</string>
     <string name="APP_Activity_TaskEdit">"Edit task"</string>
+    <string name="APP_Activity_TodoList">"To-Do List"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -140,6 +141,10 @@
     <string name="GEN_Description">"Description"</string>
     <string name="GEN_Or">"Or:"</string>
     <string name="GEN_TaskLabel">"Task:"</string>
+    <string name="GEN_StatusLabel">"Status:"</string>
+    <string name="GEN_Mileage">"mileage:"</string>
+    <string name="GEN_Or2">"or"</string>
+    <string name="GEN_ToDo">"to-do"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -162,6 +167,8 @@
     <string name="MENU_AddOnServicesCaption">"Add-On Services"</string>
     <string name="MENU_LocalizeAndiCar">"Localize AndiCar"</string>
     <string name="MENU_TaskReminderCaption">"Task/Reminder"</string>
+    <string name="MENU_TodoCaption">"To-Do List"</string>
+    <string name="MENU_ToDoDoneCaption">"Is done"</string>
 
 
     <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
@@ -316,10 +323,21 @@
     <string name="TaskEditActivity_StartingTimeInFutureMsg">"The starting time must be in the future!"</string>
     <string name="TaskEditActivity_StartingTimeLbl">"Starting time:"</string>
     <string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"Mileage frequency must be bigger than the reminder."</string>
+    <string name="TaskEditActivity_GeneratedToDoCountLabel">"Automatically generate the next"</string>
+    <string name="TaskEditActivity_ToDoCount">"to-do count"</string>
         
     <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
     <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>
     <string name="TaskCarDialogActivity_Title">"Link car to task"</string>
+    
+    <string name="ToDo_OverdueLabel">"Overdue"</string>
+    <string name="ToDo_ScheduledLabel">"Scheduled"</string>
+    <string name="ToDo_DoneLabel">"Done"</string>
+    <string name="ToDo_ScheduledDateLabel">"Scheduled date:"</string>
+    <string name="ToDo_ScheduledMileageLabel">"Scheduled mileage:"</string>
+    <string name="ToDo_EstimatedMileageDate">"estimated for:"</string>
+    <string name="ToDo_EstimatedMileageDateNoData">"not enough records for an estimated date"</string>
+    <string name="ToDo_EstimatedMileageDateTooFar">"too far to estimate"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>

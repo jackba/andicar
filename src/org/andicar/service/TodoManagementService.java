@@ -29,7 +29,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.os.Looper;
 
 /**
  * @author Miklos Keresztes
@@ -47,7 +46,7 @@ public class TodoManagementService extends Service {
 	private Bundle mBundleExtras;
 	private long mTaskID = 0;
 	private long mCarID = 0;
-	private static int mTodoCount = 3;
+//	private static int mTodoCount = 3;
 
 	/* (non-Javadoc)
 	 * @see android.app.Service#onBind(android.content.Intent)
@@ -112,9 +111,11 @@ public class TodoManagementService extends Service {
 		taskCursor = mDb.query(MainDbAdapter.TASK_TABLE_NAME, 
 				MainDbAdapter.taskTableColNames, taskSelection, taskSelectionArgs, null, null, null);
 
+		int taskToDoCount = 3;
 		while(taskCursor.moveToNext()){
 			isRecurrentTask = taskCursor.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
 			todoSelection = MainDbAdapter.TODO_COL_TASK_ID_NAME + "=? AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + "='N'";
+			taskToDoCount = taskCursor.getInt(MainDbAdapter.TASK_COL_TODOCOUNT_POS);
 			
 			if(mCarID > 0){
 				taskCarSelection = taskCarSelection + " AND " +
@@ -142,8 +143,8 @@ public class TodoManagementService extends Service {
 						todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
 						todoCount = todoCursor.getCount();
 						todoCursor.close();
-						if(todoCount < mTodoCount){
-							for( int i = todoCount; i < mTodoCount; i++){
+						if(todoCount < taskToDoCount){
+							for( int i = todoCount; i < taskToDoCount; i++){
 								createToDo(taskCursor, taskCarCursor);
 							}
 						}
@@ -159,8 +160,8 @@ public class TodoManagementService extends Service {
 					todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
 					todoCount = todoCursor.getCount();
 					todoCursor.close();
-					if(todoCount < mTodoCount){
-						for( int i = todoCount; i < mTodoCount; i++){
+					if(todoCount < taskToDoCount){
+						for( int i = todoCount; i < taskToDoCount; i++){
 							createToDo(taskCursor, null);
 						}
 					}
@@ -222,7 +223,7 @@ public class TodoManagementService extends Service {
 		}
 		
 		if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE))
-			todoSelectOrderBy = MainDbAdapter.TODO_COL_DUEMILAGE_NAME + " DESC";
+			todoSelectOrderBy = MainDbAdapter.TODO_COL_DUEMILEAGE_NAME + " DESC";
 		else
 			todoSelectOrderBy = MainDbAdapter.TODO_COL_DUEDATE_NAME + " DESC";
 
@@ -238,7 +239,14 @@ public class TodoManagementService extends Service {
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_TIME) ||
 					taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 				
-				nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000);
+				if(taskCarCursor != null && isRecurrentTask && isDiffStartingTime)
+					nextToDoCalendar.setTimeInMillis(taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000);
+				else{
+					if(taskCursor.getString(MainDbAdapter.TASK_COL_STARTINGTIME_POS) != null)
+						nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000);
+					else
+						nextToDoCalendar.setTimeInMillis(System.currentTimeMillis());
+				}
 				boolean isLastDayOfMonth = (nextToDoCalendar.get(Calendar.YEAR) == 1970);
 				
 				//calculate the next todo date
@@ -252,13 +260,13 @@ public class TodoManagementService extends Service {
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) ||
 					taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 				nextToDoMileage = lastTodoCursor.getLong(MainDbAdapter.TODO_COL_DUEMILAGE_POS) + mileageFrequency;
-				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, nextToDoMileage);
+				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, nextToDoMileage);
 			}
 			
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE))
 				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, (Long)null);
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_TIME))
-				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, (Long)null);
+				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, (Long)null);
 		}
 		else{ //this is the first todo
 			if(taskCarCursor != null)
@@ -271,14 +279,14 @@ public class TodoManagementService extends Service {
 					if(isRecurrentTask){
 						firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
 						carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
-						while(firstRunMileage <= carCurrentIndex)
+						while(firstRunMileage < carCurrentIndex)
 							firstRunMileage = firstRunMileage + mileageFrequency;
 
 					}
 					else
 						firstRunMileage = taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
 
-					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, firstRunMileage);
+					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, firstRunMileage);
 					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, (Long)null);
 				}
 			}
@@ -338,11 +346,11 @@ public class TodoManagementService extends Service {
 						}
 						else
 							firstRunMileage = taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
-						nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, firstRunMileage);
+						nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, firstRunMileage);
 					}
 				}
 				else
-					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILAGE_NAME, (Long)null); 
+					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, (Long)null); 
 			}
 			
 		}

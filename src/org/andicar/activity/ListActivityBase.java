@@ -21,6 +21,7 @@ package org.andicar.activity;
 import org.andicar.activity.miscellaneous.GPSTrackMap;
 import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
+import org.andicar.activity.report.TodoListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
@@ -220,7 +221,15 @@ public class ListActivityBase extends ListActivity {
 
         menu.add(0, StaticValues.CONTEXT_MENU_EDIT_ID, 0, mRes.getString(R.string.MENU_EditCaption));
         menu.add(0, StaticValues.CONTEXT_MENU_INSERT_ID, 0, mRes.getString(R.string.MENU_AddNewCaption));
-    	menu.add(0, StaticValues.CONTEXT_MENU_DELETE_ID, 0, mRes.getString(R.string.MENU_DeleteCaption));
+        if(this instanceof TodoListReportActivity){
+        	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, mLongClickId);
+        	if(c.getString(MainDbAdapter.TODO_COL_ISDONE_POS).equals("N"))
+        		menu.add(0, StaticValues.CONTEXT_MENU_TODO_DONE_ID, 0, mRes.getString(R.string.MENU_ToDoDoneCaption));
+        	c.close();
+        }
+        else
+        	menu.add(0, StaticValues.CONTEXT_MENU_DELETE_ID, 0, mRes.getString(R.string.MENU_DeleteCaption));
+
         if(this instanceof GPSTrackListReportActivity){
             menu.add( 0, StaticValues.CONTEXT_MENU_SENDASEMAIL_ID, 0, mRes.getText( R.string.MENU_SendAsEmailCaption ));
             menu.add( 0, StaticValues.CONTEXT_MENU_SHOWONMAP_ID, 0, mRes.getText( R.string.MENU_ShowOnMap ));
@@ -254,14 +263,23 @@ public class ListActivityBase extends ListActivity {
     }
 
     protected void startEditActivity(long id){
-        Intent i = new Intent(this, mEditClass);
-        i.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, id);
+    	if(mEditClass == null)
+    		return;
+
+    	Intent i = new Intent(this, mEditClass);
+        if(mTableName.equals(MainDbAdapter.TODO_TABLE_NAME)) {
+        	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, id);
+        	long taskId = c.getLong(MainDbAdapter.TODO_COL_TASK_ID_POS);
+        	c.close();
+        	i.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, taskId);
+        }
+        else
+        	i.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, id);
+        
         if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
             i.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
         }
-//        else if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)) {
-//            i.putExtra("CurrentDriver_ID", mPreferences.getLong("CurrentDriver_ID", -1));
-//        }
+        
         i.putExtra("Operation", "E");
 
         startActivityForResult(i, StaticValues.ACTIVITY_EDIT_REQUEST_CODE);
@@ -282,15 +300,6 @@ public class ListActivityBase extends ListActivity {
                     errorAlert.show();
                     return true;
                 }
-//                else {
-//                    if(mTableName.equals(MainDbAdapter.DRIVER_TABLE_NAME)
-//                            && mPreferences.getLong("CurrentDriver_ID", -1) == mLongClickId) {
-//                        errorAlertBuilder.setMessage(mRes.getString(R.string.DriverListActivity_CurrentDriverDeleteMessage));
-//                        errorAlert = errorAlertBuilder.create();
-//                        errorAlert.show();
-//                        return true;
-//                    }
-//                }
                 AndiCarDialogBuilder builder = new AndiCarDialogBuilder(ListActivityBase.this, 
                 		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mRes.getString(R.string.GEN_Confirm));
                 builder.setMessage(mRes.getString(R.string.GEN_DeleteConfirmation));

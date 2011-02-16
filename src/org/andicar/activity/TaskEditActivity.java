@@ -70,6 +70,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private EditText etMileage = null;
 	private EditText etReminderMileage = null;
 	private EditText etLinkedCarIndexStart = null;
+	private EditText etNoOfNextToDo = null;
 
 	private CheckBox ckIsActive = null;
 	private CheckBox ckIsDifferentStartingTime = null;
@@ -231,6 +232,8 @@ public class TaskEditActivity extends EditActivityBase {
 				etMileage.setText(c.getString(MainDbAdapter.TASK_COL_RUNMILEAGE_POS));
 
 			etReminderMileage.setText(c.getString(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_POS));
+			
+			etNoOfNextToDo.setText(c.getString(MainDbAdapter.TASK_COL_TODOCOUNT_POS));
 
 			c.close();
 		} else { // new
@@ -304,6 +307,8 @@ public class TaskEditActivity extends EditActivityBase {
 		lvLinkedCarsList = (ListView)findViewById(R.id.lvLinkedCarsList);
 		
 		tvFirstMileageRunExplanation = (TextView)findViewById(R.id.tvFirstMileageRunExplanation);
+		
+		etNoOfNextToDo = (EditText)findViewById(R.id.etNoOfNextToDo);
 	}
 
 	private void initControls() {
@@ -478,6 +483,16 @@ public class TaskEditActivity extends EditActivityBase {
 			}
 		}
 		
+		if(etNoOfNextToDo.getText().toString() == null || etNoOfNextToDo.getText().toString().length() == 0){
+			Toast toast = Toast.makeText(getApplicationContext(),
+					mResource.getString(R.string.GEN_FillMandatory) + ": " + mResource.getString(R.string.TaskEditActivity_ToDoCount), 
+					Toast.LENGTH_SHORT);
+			toast.show();
+			saveSuccess = false;
+			etNoOfNextToDo.requestFocus();
+			return;
+		}
+		
 		ContentValues data = new ContentValues();
 		data.put(MainDbAdapter.GEN_COL_NAME_NAME, etName.getText().toString());
 		data.put(MainDbAdapter.GEN_COL_ISACTIVE_NAME,
@@ -488,6 +503,7 @@ public class TaskEditActivity extends EditActivityBase {
 		data.put(MainDbAdapter.TASK_COL_TASKTYPE_ID_NAME, spnTaskType.getSelectedItemId());
 		data.put(MainDbAdapter.TASK_COL_SCHEDULEDFOR_NAME, mScheduledFor);
 		data.put(MainDbAdapter.TASK_COL_ISRECURRENT_NAME, (isRecurrent ? "Y" : "N"));
+		data.put(MainDbAdapter.TASK_COL_TODOCOUNT_NAME, etNoOfNextToDo.getText().toString());
 		if(isTimingEnabled){
 			if(isRecurrent){
 				data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (isDiffStartingTime ? "Y" : "N"));
@@ -683,6 +699,7 @@ public class TaskEditActivity extends EditActivityBase {
 				mTimeFrequencyTypeId = StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME;
 			} else { //
 				isRecurrent = true;
+				mTimeFrequencyTypeId = spnScheduleFrequency.getSelectedItemId() + 1;
 			}
 			setSpecificLayout();
 			fillLinkedCarsData();
