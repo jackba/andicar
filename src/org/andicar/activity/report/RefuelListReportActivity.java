@@ -219,12 +219,6 @@ public class RefuelListReportActivity extends ReportListActivityBase{
 	                                    							MainDbAdapter.GEN_COL_NAME_NAME) + ", '') LIKE ",
         							acTag.getText().toString());
                     }
-//                    if(spnIsActive.getSelectedItemId() > 0){
-//	                    whereConditions.putString(
-//	                            ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
-//	                            			MainDbAdapter.GEN_COL_ISACTIVE_NAME) + "=",
-//	                        			(spnIsActive.getSelectedItemId() == 1 ? "Y" : "N"));
-//                    }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);
                     fillData();
                 } catch (IndexOutOfBoundsException e) {
