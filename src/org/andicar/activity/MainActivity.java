@@ -65,6 +65,7 @@ import android.widget.TextView;
 import com.andicar.addon.activity.AddOnServicesList;
 import com.andicar.addon.activity.ServiceSubscription;
 import com.andicar.addon.services.AndiCarAddOnServiceStarter;
+import com.innerActive.ads.InnerActiveAdView;
 
 /**
  * 
@@ -380,7 +381,13 @@ public class MainActivity extends BaseActivity {
 		            alert.show();
 				}
 			}
-
+			
+			//inneractive
+			InnerActiveAdView iaView = (InnerActiveAdView) findViewById(R.id.ad1);
+			if(iaView != null){
+				iaView.setVisibility(View.VISIBLE);
+				iaView.setRefreshInterval(120); //120 seconds
+			}
 		} catch (Exception e) {
 			String logFile = "startup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);

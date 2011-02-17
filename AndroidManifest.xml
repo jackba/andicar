@@ -35,7 +35,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- <uses-permission android:name="android.permission.CALL_PHONE" />  -->
+	<uses-permission android:name="android.permission.CALL_PHONE" />
     
     <!-- need by secure backup -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
