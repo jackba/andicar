@@ -43,8 +43,8 @@ public class TodoListDataBinder implements SimpleCursorAdapter.ViewBinder {
     			tv.setTextColor(Color.RED);
     		else if(dataString.contains("[#15]"))
     			tv.setTextColor(Color.GREEN);
-    		else if(dataString.contains("[#6]"))
-    			tv.setTextColor(Color.YELLOW);
+//    		else if(dataString.contains("[#6]"))
+//    			tv.setTextColor(Color.YELLOW);
     		else
     			tv.setTextColor(Color.WHITE);
 
