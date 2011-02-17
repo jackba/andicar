@@ -165,11 +165,9 @@
     <string name="MENU_OpenGPSTrack">"Open GPS track"</string>
     <string name="MENU_RateCommentCaption">"Rate/Comment"</string>
     <string name="MENU_AddOnServicesCaption">"Add-On Services"</string>
-    <string name="MENU_LocalizeAndiCar">"Localize AndiCar"</string>
-    <string name="MENU_TaskReminderCaption">"Task/Reminder"</string>
+    <string name="MENU_LocalizeAndiCar">"Translate AndiCar"</string>
+    <string name="MENU_TaskReminderCaption">"Task"</string>
     <string name="MENU_TodoCaption">"To-Do List"</string>
-    <string name="MENU_ToDoDoneCaption">"Is done"</string>
-
 
     <string name="MainActivity_MileageHeaderCaption">"Last mileage"</string>
     <string name="MainActivity_RefuelHeaderCaption">"Last refuel"</string>
@@ -338,6 +336,7 @@
     <string name="ToDo_EstimatedMileageDate">"estimated for:"</string>
     <string name="ToDo_EstimatedMileageDateNoData">"not enough records for an estimated date"</string>
     <string name="ToDo_EstimatedMileageDateTooFar">"too far to estimate"</string>
+    <string name="ToDo_IsDoneCaption">"Is done"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>

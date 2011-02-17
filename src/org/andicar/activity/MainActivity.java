@@ -385,8 +385,9 @@ public class MainActivity extends BaseActivity {
 			//inneractive
 			InnerActiveAdView iaView = (InnerActiveAdView) findViewById(R.id.ad1);
 			if(iaView != null){
-				iaView.setVisibility(View.VISIBLE);
-				iaView.setRefreshInterval(120); //120 seconds
+				iaView.setVisibility(View.GONE);
+//				iaView.setVisibility(View.VISIBLE);
+//				iaView.setRefreshInterval(120); //120 seconds
 			}
 		} catch (Exception e) {
 			String logFile = "startup.log";

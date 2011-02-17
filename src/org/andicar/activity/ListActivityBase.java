@@ -224,7 +224,7 @@ public class ListActivityBase extends ListActivity {
         if(this instanceof TodoListReportActivity){
         	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, mLongClickId);
         	if(c.getString(MainDbAdapter.TODO_COL_ISDONE_POS).equals("N"))
-        		menu.add(0, StaticValues.CONTEXT_MENU_TODO_DONE_ID, 0, mRes.getString(R.string.MENU_ToDoDoneCaption));
+        		menu.add(0, StaticValues.CONTEXT_MENU_TODO_DONE_ID, 0, mRes.getString(R.string.ToDo_IsDoneCaption));
         	c.close();
         }
         else
