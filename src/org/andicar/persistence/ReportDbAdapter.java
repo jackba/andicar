@@ -750,16 +750,8 @@ public class ReportDbAdapter extends MainDbAdapter{
 							+ " - "
 							+ " strftime('%J','now', 'localtime') " 
 						+ " ) "
-//				+ " ELSE "
-//						+ "( " 
-//							+ " COALESCE(strftime('%J', datetime(" 
-//									+ sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEDATE_NAME) + ", 'unixepoch'), 'localtime'), 0) "
-//							+ " - "
-//							+ " strftime('%J','now', 'localtime') " 
-//						+ " ) "
 			+ " END AS EstDueDays, " //#9
 			+ sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) //#10
-//		+ " END AS " + THIRD_LINE_LIST_NAME
 							
 		+ " FROM " + TODO_TABLE_NAME
 			+ " JOIN " + TASK_TABLE_NAME + " ON " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME) + " = " +
@@ -795,6 +787,7 @@ public class ReportDbAdapter extends MainDbAdapter{
 						+ " GROUP BY " + EXPENSE_COL_CAR_ID_NAME
 						+ " ) "
 					+ " GROUP BY CAR_ID ) AS Minimums ON Minimums.CAR_ID = " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_CAR_ID_NAME)
+		+ " WHERE 1=1 "
 	;
     
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )
@@ -822,12 +815,18 @@ public class ReportDbAdapter extends MainDbAdapter{
         if(whereColumns != null && whereColumns.size() > 0){
             for(Iterator<String> it = whereColumns.iterator(); it.hasNext();) {
                 whereColumn = it.next();
-                if(!mSearchCondition.getString(whereColumn).toUpperCase().equals("NULL"))
+                //TODO data type treatment required!
+                if(whereColumn.startsWith("EstDueDays"))
 	                whereCondition = whereCondition +
+                    		" AND " + whereColumn + " " + mSearchCondition.getString(whereColumn);
+                else{ 
+                	if(!mSearchCondition.getString(whereColumn).toUpperCase().equals("NULL"))
+                		whereCondition = whereCondition +
 	                                " AND " + whereColumn + " '" + mSearchCondition.getString(whereColumn) + "'";
-                else
-	                whereCondition = whereCondition +
+                	else
+                		whereCondition = whereCondition +
                     				" AND " + whereColumn + " " + mSearchCondition.getString(whereColumn);
+                }
             }
         }
 

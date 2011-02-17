@@ -19,6 +19,8 @@
 
 package org.andicar.activity.report;
 
+import java.util.Calendar;
+
 import org.andicar.activity.R;
 import org.andicar.activity.TaskEditActivity;
 import org.andicar.persistence.MainDbAdapter;
@@ -49,8 +51,8 @@ public class TodoListReportActivity extends ReportListActivityBase{
     private EditText etDateFromSearch;
     private EditText etDateToSearch;
     private Spinner spnCarSearch;
-//    private Spinner spnIsActive;
-//    private Long mCarId;
+    private Spinner spnTask;
+    private Spinner spnIsActive;
 
     @Override
     public void onCreate( Bundle icicle )
@@ -101,7 +103,7 @@ public class TodoListReportActivity extends ReportListActivityBase{
             return super.onCreateDialog(id);
 
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
-        searchView = liLayoutFactory.inflate(R.layout.refuel_search_dialog, null);
+        searchView = liLayoutFactory.inflate(R.layout.todo_search_dialog, null);
         AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(TodoListReportActivity.this, 
         		AndiCarDialogBuilder.DIALOGTYPE_SEARCH, mRes.getString(R.string.DIALOGSearch_DialogTitle));
         searchDialog.setView(searchView);
@@ -113,6 +115,11 @@ public class TodoListReportActivity extends ReportListActivityBase{
         etDateFromSearch.setEnabled(false);
         etDateToSearch = (EditText) searchView.findViewById(R.id.etDateToSearch);
         etDateToSearch.setEnabled(false);
+        spnCarSearch = (Spinner) searchView.findViewById(R.id.spnCarSearch);
+        initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME, null, null, 0);
+        spnTask = (Spinner) searchView.findViewById(R.id.spnTask);
+        initSpinner(spnTask, MainDbAdapter.TASK_TABLE_NAME, null, null, 0);
+        spnIsActive = (Spinner) searchView.findViewById(R.id.spnIsActive);
 
         ImageButton btnPickDateFrom = (ImageButton) searchView.findViewById(R.id.btnPickDateFrom);
         if(btnPickDateFrom != null)
@@ -147,24 +154,60 @@ public class TodoListReportActivity extends ReportListActivityBase{
                                 etUserCommentSearch.getText().toString());
                     }
                     if (etDateFromSearch.getText().toString().length() > 0) {
-                        whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
-                                		MainDbAdapter.TODO_COL_DUEDATE_NAME) + " >= ",
-                                Long.toString(Utils.decodeDateStr(etDateFromSearch.getText().toString(),
-                                StaticValues.DATE_DECODE_TO_ZERO) / 1000));
+//                        whereConditions.putString(
+//                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
+//                                		MainDbAdapter.TODO_COL_DUEDATE_NAME) + " >= ",
+//                                Long.toString(Utils.decodeDateStr(etDateFromSearch.getText().toString(),
+//                                StaticValues.DATE_DECODE_TO_ZERO) / 1000));
+                    	Calendar now = Calendar.getInstance();
+                    	long estDueDay =
+                    			(
+                    			Utils.decodeDateStr(etDateFromSearch.getText().toString(), StaticValues.DATE_DECODE_TO_ZERO)
+                				- 
+                				now.getTimeInMillis()
+                				) 
+                				/ 
+                				StaticValues.ONE_DAY_IN_MILISECONDS;
+                        whereConditions.putString("EstDueDays >= ", Long.toString(estDueDay));
                     }
                     if (etDateToSearch.getText().toString().length() > 0) {
-                        whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
-                                		MainDbAdapter.TODO_COL_DUEDATE_NAME) + " <= ",
-                                Long.toString(Utils.decodeDateStr(etDateToSearch.getText().toString(),
-                                StaticValues.DATE_DECODE_TO_24) / 1000));
+//                        whereConditions.putString(
+//                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
+//                                		MainDbAdapter.TODO_COL_DUEDATE_NAME) + " <= ",
+//                                Long.toString(Utils.decodeDateStr(etDateToSearch.getText().toString(),
+//                                StaticValues.DATE_DECODE_TO_24) / 1000));
+                    	Calendar now = Calendar.getInstance();
+                    	long estDueDay =
+                			(
+                			Utils.decodeDateStr(etDateToSearch.getText().toString(), StaticValues.DATE_DECODE_TO_ZERO)
+            				- 
+            				now.getTimeInMillis()
+            				) 
+            				/ 
+            				StaticValues.ONE_DAY_IN_MILISECONDS;
+                        whereConditions.putString("EstDueDays <= ", Long.toString(estDueDay));
                     }
                     if (spnCarSearch.getSelectedItemId() != -1) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
                                 		MainDbAdapter.TODO_COL_CAR_ID_NAME) + "=",
                                 String.valueOf(spnCarSearch.getSelectedItemId()));
+                    }
+                    if (spnTask.getSelectedItemId() != -1) {
+                        whereConditions.putString(
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
+                                		MainDbAdapter.TODO_COL_TASK_ID_NAME) + "=",
+                                String.valueOf(spnTask.getSelectedItemId()));
+                    }
+                    if (spnIsActive.getSelectedItemId() == 1) { //is done
+                        whereConditions.putString(
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
+                                		MainDbAdapter.TODO_COL_ISDONE_NAME) + "=", "Y");
+                    }
+                    else if (spnIsActive.getSelectedItemId() == 2) { //is not done
+                        whereConditions.putString(
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
+                                		MainDbAdapter.TODO_COL_ISDONE_NAME) + "=", "N");
                     }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);
                     fillData();

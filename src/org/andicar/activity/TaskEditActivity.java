@@ -261,6 +261,7 @@ public class TaskEditActivity extends EditActivityBase {
 		etUserComment = (EditText) findViewById(R.id.etUserComment);
 		ckIsActive = (CheckBox) findViewById(R.id.ckIsActive);
 		spnTaskType = (Spinner) findViewById(R.id.spnTaskType);
+		spnTaskType.setOnItemSelectedListener(spnTaskTypeOnItemSelectedListener);
 		btnNewTaskType = (ImageButton) findViewById(R.id.btnNewTaskType);
 		btnNewTaskType.setOnClickListener(onNewTaskTypeClickListener);
 		btnLinkCar = (ImageButton) findViewById(R.id.btnLinkCar);
@@ -1001,6 +1002,23 @@ public class TaskEditActivity extends EditActivityBase {
 		}
 	};
 	
+	protected AdapterView.OnItemSelectedListener spnTaskTypeOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, MainDbAdapter.taskTypeTableColNames, arg3);
+			if(c != null){
+				String comment = c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS);
+				if(comment != null && comment.length() > 0)
+					etUserComment.setText(comment);
+				c.close();
+			}
+				
+		}
+
+		public void onNothingSelected(AdapterView<?> arg0) {
+		}
+	};
+
 	protected CheckBox.OnCheckedChangeListener ckOnLastDayChecked = new CheckBox.OnCheckedChangeListener() {
 		@Override
 		public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
