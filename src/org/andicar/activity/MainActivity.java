@@ -426,7 +426,7 @@ public class MainActivity extends BaseActivity {
 						+ "=", String.valueOf(mCarId));
 		whereConditions.putString("COALESCE("
 				+ MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME + ", '') = ", "");
-		reportDb.setReportSql("reportExpensesListMainViewSelect",
+		reportDb.setReportSql("expensesListViewSelect",
 				whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
@@ -556,7 +556,7 @@ public class MainActivity extends BaseActivity {
 						MainDbAdapter.MILEAGE_COL_CAR_ID_NAME)
 						+ "=", String.valueOf(mCarId));
 
-		reportDb.setReportSql("reportMileageListViewSelect", whereConditions);
+		reportDb.setReportSql("mileageListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
 			tvThreeLineListMileageText1.setText(listCursor.getString(1)
@@ -604,7 +604,7 @@ public class MainActivity extends BaseActivity {
 						MainDbAdapter.REFUEL_TABLE_NAME,
 						MainDbAdapter.REFUEL_COL_CAR_ID_NAME)
 						+ "=", String.valueOf(mCarId));
-		reportDb.setReportSql("reportRefuelListViewSelect", whereConditions);
+		reportDb.setReportSql("refuelListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
 			tvThreeLineListRefuelText1.setText(listCursor.getString(1).replace(

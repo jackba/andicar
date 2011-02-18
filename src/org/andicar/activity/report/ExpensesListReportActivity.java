@@ -61,7 +61,7 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
     @Override
     public void onCreate( Bundle icicle )
     {
-        reportSelectName = "reportExpensesListMainViewSelect";
+        reportSelectName = "expensesListViewSelect";
         mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
         if(icicle == null){
             whereConditions = new Bundle();
@@ -70,8 +70,6 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
                     			MainDbAdapter.EXPENSE_COL_CAR_ID_NAME) + "=",
                     mCarId.toString() );
     		whereConditions.putString("COALESCE(" + MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME + ", '') = ", ""); 
-//    		whereConditions.putString(
-//    				ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME, MainDbAdapter.GEN_COL_ISACTIVE_NAME) + " = ", "Y"); 
         }
         else
             whereConditions = (Bundle)getLastNonConfigurationInstance();

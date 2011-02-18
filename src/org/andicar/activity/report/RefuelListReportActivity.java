@@ -61,7 +61,7 @@ public class RefuelListReportActivity extends ReportListActivityBase{
     @Override
     public void onCreate( Bundle icicle )
     {
-        reportSelectName = "reportRefuelListViewSelect";
+        reportSelectName = "refuelListViewSelect";
         mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
         if(icicle == null){
             whereConditions = new Bundle();
