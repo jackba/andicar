@@ -40,6 +40,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -306,22 +307,27 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
         int i;
         if( this instanceof MileageListReportActivity){
             reportTitle = "MileageReport_";
-            mReportDbHelper = new ReportDbAdapter(this, "reportMileageListReportSelect", whereConditions);
+            mReportDbHelper = new ReportDbAdapter(this, "mileageListReportSelect", whereConditions);
             c = mReportDbHelper.fetchReport(-1);
         }
         else if(this instanceof RefuelListReportActivity){
             reportTitle = "RefuelReport_";
-            mReportDbHelper = new ReportDbAdapter(this, "reportRefuelListReportSelect", whereConditions);
+            mReportDbHelper = new ReportDbAdapter(this, "refuelListReportSelect", whereConditions);
             c = mReportDbHelper.fetchReport(-1);
         }
         else if(this instanceof ExpensesListReportActivity){
             reportTitle = "ExpenseReport_";
-            mReportDbHelper = new ReportDbAdapter(this, "reportExpensesListReportSelect", whereConditions);
+            mReportDbHelper = new ReportDbAdapter(this, "expensesListReportSelect", whereConditions);
             c = mReportDbHelper.fetchReport(-1);
         }
         else if(this instanceof GPSTrackListReportActivity){
             reportTitle = "GPSTrackReport_";
             mReportDbHelper = new ReportDbAdapter(this, "gpsTrackListReportSelect", whereConditions);
+            c = mReportDbHelper.fetchReport(-1);
+        }
+        else if(this instanceof TodoListReportActivity){
+            reportTitle = "ToDoListReport_";
+            mReportDbHelper = new ReportDbAdapter(this, "todoListReportSelect", whereConditions);
             c = mReportDbHelper.fetchReport(-1);
         }
         else{
@@ -378,34 +384,86 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
         for(i = 0; i< reportCursor.getColumnCount(); i++){
             if(i > 0)
                 reportContent = reportContent + ",";
-            reportContent = reportContent + reportCursor.getColumnName(i).replaceAll("_DTypeN", "");
+            reportContent = reportContent + "\"" + 
+            					reportCursor.getColumnName(i)
+            						.replaceAll("_DTypeN", "")
+            						.replaceAll("_DTypeD", "")
+            						.replaceAll("_DTypeL", "")
+            						+ "\"";
         }
         reportContent = reportContent + "\n";
+        
+		long currentTime = System.currentTimeMillis();
+		long days;
+		Calendar now = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+        
         while(reportCursor != null && reportCursor.moveToNext()){
             for(i = 0; i< reportCursor.getColumnCount(); i++){
                 if(i > 0)
                     reportContent = reportContent + ",";
-                if(reportCursor.getColumnName(i).contains("_DTypeN"))
+                if(reportCursor.getColumnName(i).endsWith("_DTypeN"))
                 	colVal = Utils.numberToString(reportCursor.getDouble(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
+                else if(reportCursor.getColumnName(i).endsWith("_DTypeL"))
+                	colVal = Utils.numberToString(reportCursor.getLong(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
+                else if(reportCursor.getColumnName(i).endsWith("_DTypeD"))
+                	colVal = DateFormat.getDateFormat(this).format(reportCursor.getLong(i) * 1000);
                 else
                 	colVal = reportCursor.getString(i);
                 if(colVal == null)
                     colVal = "";
-                reportContent = reportContent  + 
-                        colVal.replace(",", " ")
-                            .replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
-                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
-                            .replace("[#d2]", mRes.getString(R.string.DayOfWeek_2))
-                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
-                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
-                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
-                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6))
-                            ;
+                colVal = colVal.replace("\"", "''");
+                if(!(this instanceof TodoListReportActivity)){
+                	colVal =   
+	                	colVal.replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
+	                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
+	                            .replace("[#d2]", mRes.getString(R.string.DayOfWeek_2))
+	                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
+	                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
+	                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
+	                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6))
+	                            ;
+                }
+                else{
+                	colVal =   
+	                	colVal.replace("[#TDR1]", mRes.getString(R.string.ToDo_DoneLabel))
+	                            .replace("[#TDR2]", mRes.getString(R.string.ToDo_OverdueLabel))
+	                            .replace("[#TDR3]", mRes.getString(R.string.ToDo_ScheduledLabel))
+	                            .replace("[#TDR4]", mRes.getString(R.string.TaskEditActivity_TimeDriven))
+	                            .replace("[#TDR5]", mRes.getString(R.string.TaskEditActivity_MileageDriven))
+	                            .replace("[#TDR6]", 
+	                            		mRes.getString(R.string.TaskEditActivity_TimeDriven) 
+	                            			+ " & " + mRes.getString(R.string.TaskEditActivity_MileageDriven))
+	                            ;
+                	if((i == 6 || i == 7 || i == 8) && colVal.equals("0"))
+                		colVal = "N/A";
+                	if((i == 8 || i == 9) && !colVal.equals("N/A")){
+                		days = Long.parseLong(colVal);
+                		if(days == 99999999999L)
+							colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
+                		else{
+							cal.setTimeInMillis(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+							if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
+								colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
+							else{
+								if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
+									colVal = DateFormat.getDateFormat(this)
+														.format(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+								else{
+									colVal = DateFormat.format("MMM, yyyy", cal).toString();
+								}
+							}
+                		}
+                	}
+                }
+                reportContent = reportContent + "\"" + colVal + "\"";
             }
             reportContent = reportContent + "\n";
         }
         return reportContent;
     }
+    
+    
     public String createHTMLContent(Cursor reportCursor, String title){
         String reportContent = 
                 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n" +
@@ -422,31 +480,92 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
         //create table header
         for(i = 0; i< reportCursor.getColumnCount(); i++){
             reportContent = reportContent +
-                                "<TH>" + reportCursor.getColumnName(i).replaceAll("_DTypeN", "") + "</TH>\n";
+                                "<TH>" + reportCursor.getColumnName(i)
+                                		.replaceAll("_DTypeN", "") 
+	            						.replaceAll("_DTypeD", "")
+	            						.replaceAll("_DTypeL", "")
+                        		+ "</TH>\n";
         }
         reportContent = reportContent +
                             "</TR>\n"; //end table header
+		
+        long currentTime = System.currentTimeMillis();
+		long days;
+		Calendar now = Calendar.getInstance();
+		Calendar cal = Calendar.getInstance();
+		String colValUF = "";
+		long date = 0;
 
         while(reportCursor != null && reportCursor.moveToNext()){
             reportContent = reportContent +
                             "<TR VALIGN=TOP>\n";
             for(i = 0; i< reportCursor.getColumnCount(); i++){
-                if(reportCursor.getColumnName(i).contains("_DTypeN"))
-                	colVal = Utils.numberToString(reportCursor.getDouble(i), true, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
+                if(reportCursor.getColumnName(i).contains("_DTypeN")){
+                	colVal = Utils.numberToString(reportCursor.getDouble(i), true, 4, StaticValues.ROUNDING_MODE_LENGTH);
+                	colValUF = Utils.numberToString(reportCursor.getDouble(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH);
+                }
+                else if(reportCursor.getColumnName(i).endsWith("_DTypeL")){
+                	colVal = Utils.numberToString(reportCursor.getLong(i), true, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
+                	colValUF = Utils.numberToString(reportCursor.getLong(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH);
+                }
+                else if(reportCursor.getColumnName(i).endsWith("_DTypeD")){
+                	date = reportCursor.getLong(i) * 1000;
+                	colVal = DateFormat.getDateFormat(this).format(date);
+                }
                 else
                 	colVal = reportCursor.getString(i);
                 if(colVal == null)
                     colVal = "";
-                reportContent = reportContent +
-                                "<TD>" + colVal
-                                            .replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
-                                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
-                                            .replace("[#d2]", mRes.getString(R.string.DayOfWeek_2))
-                                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
-                                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
-                                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
-                                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6))
-                                + "</TD>\n";
+                if(!(this instanceof TodoListReportActivity)){
+                	colVal =   
+	                	colVal.replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
+	                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
+	                            .replace("[#d2]", mRes.getString(R.string.DayOfWeek_2))
+	                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
+	                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
+	                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
+	                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6))
+	                            ;
+                }
+                else{
+                	colVal =   
+	                	colVal.replace("[#TDR1]", mRes.getString(R.string.ToDo_DoneLabel))
+	                            .replace("[#TDR2]", mRes.getString(R.string.ToDo_OverdueLabel))
+	                            .replace("[#TDR3]", mRes.getString(R.string.ToDo_ScheduledLabel))
+	                            .replace("[#TDR4]", mRes.getString(R.string.TaskEditActivity_TimeDriven))
+	                            .replace("[#TDR5]", mRes.getString(R.string.TaskEditActivity_MileageDriven))
+	                            .replace("[#TDR6]", 
+	                            		mRes.getString(R.string.TaskEditActivity_TimeDriven) 
+	                            			+ " & " + mRes.getString(R.string.TaskEditActivity_MileageDriven))
+	                            ;
+                	if((i == 6 && date == 0) || ((i == 7 || i == 8) && colVal.equals("0")))
+                		colVal = "N/A";
+                	if((i == 8 || i == 9) && !colVal.equals("N/A")){
+                		try{
+                			days = Long.parseLong(colValUF);
+                		}
+                		catch (NumberFormatException e) {
+                			days = 0;
+						}
+                		if(days == 99999999999L)
+							colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
+                		else{
+							cal.setTimeInMillis(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+							if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
+								colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
+							else{
+								if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
+									colVal = DateFormat.getDateFormat(this)
+														.format(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+								else{
+									colVal = DateFormat.format("MMM, yyyy", cal).toString();
+								}
+							}
+                		}
+                	}
+                }
+                reportContent = reportContent + "<TD>" + colVal + "</TD>\n"; 
+//                reportContent = reportContent + "</TD>\n";
             }
             reportContent = reportContent +
                             "</TR\n";

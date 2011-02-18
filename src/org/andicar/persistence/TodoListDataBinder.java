@@ -105,7 +105,6 @@ public class TodoListDataBinder implements SimpleCursorAdapter.ViewBinder {
 	    					.replace("[#12]", mRes.getString(R.string.GEN_Mileage))
 	    					.replace("[#13]", mRes.getString(R.string.ToDo_EstimatedMileageDate))
 	    					.replace("[#14]", timeStr)
-	    					+ " Est day = " + cursor.getString(9)
 				 );
 	    		return true;
     		}
