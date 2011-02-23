@@ -68,10 +68,10 @@
     <string name="APP_Activity_TagList">"Tags"</string>
     <string name="APP_Activity_TagEdit">"Edit tag"</string>
     <string name="APP_Activity_Message">"AndiCar Message"</string>
-    <string name="APP_Activity_TaskTypeList">"Task/reminder types"</string>
+    <string name="APP_Activity_TaskTypeList">"Task types"</string>
     <string name="APP_Activity_TaskTypeEdit">"Edit task type"</string>
     <string name="APP_Activity_TaskList">"Tasks"</string>
-    <string name="APP_Activity_TaskEdit">"Edit task"</string>
+    <string name="APP_Activity_TaskEdit">"Add or edit task"</string>
     <string name="APP_Activity_TodoList">"To-Do List"</string>
 
     <string name="GEN_OK">"OK"</string>
@@ -196,6 +196,7 @@
     <string name="MainActivity_AppVersion">"Application version:"</string>
     <string name="MainActivity_DidYouKnow">"Did you know?"</string>
     <string name="MainActivity_AddOnMessage">"AndiCar have some useful add-on services.\n These add-ons can be tried for free, without any limitations of missing features for up to 15 days.\n\n Do you want to see the list of available add-ons?"</string>
+    <string name="MainActivity_ToDoHeaderCaption">"Next To-Do"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>
@@ -331,7 +332,7 @@
     <string name="ToDo_OverdueLabel">"Overdue"</string>
     <string name="ToDo_ScheduledLabel">"Scheduled"</string>
     <string name="ToDo_DoneLabel">"Done"</string>
-    <string name="ToDo_ScheduledDateLabel">"Scheduled date:"</string>
+    <string name="ToDo_ScheduledDateLabel">"Scheduled for:"</string>
     <string name="ToDo_ScheduledMileageLabel">"Scheduled mileage:"</string>
     <string name="ToDo_EstimatedMileageDate">"estimated for:"</string>
     <string name="ToDo_EstimatedMileageDateNoData">"not enough records for an estimated date"</string>
@@ -382,7 +383,7 @@
     <string name="PREF_RememberLastTagSummary">"Remember the last used tag"</string>
     <string name="PREF_AutoUpdateCheckTitle">"Check for updates"</string>
     <string name="PREF_AutoUpdateCheckSummary">"Check and notify me if a new version of AndiCar was published"</string>
-    <string name="PREF_TaskReminderCategoryTitle">"Tasks / reminders"</string>
+    <string name="PREF_TaskReminderCategoryTitle">"Tasks"</string>
     <string name="PREF_TaskTypeTitle">"Task types"</string>
     <string name="PREF_TaskTypeSummary">"Add, delete, modify task types"</string>
     <string name="PREF_TaskTitle">"Tasks"</string>
@@ -393,6 +394,7 @@
     <string name="PREF_MainScreen_ShowRefuelZone">"Show refuel zone"</string>
     <string name="PREF_MainScreen_ShowExpenseZone">"Show expense zone"</string>
     <string name="PREF_MainScreen_ShowStatistics">"Show statistics"</string>
+    <string name="PREF_MainScreen_ShowToDoZone">"Show To-Do zone"</string>
 
     <string name="PREF_AddOnCategoryTitle">"Add-On Services"</string>
     <string name="PREF_AddOnServicesTitle">"Add-On Services"</string>

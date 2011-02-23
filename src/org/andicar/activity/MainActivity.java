@@ -20,6 +20,7 @@ package org.andicar.activity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Calendar;
 
 import org.andicar.activity.miscellaneous.AboutActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
@@ -30,7 +31,7 @@ import org.andicar.activity.report.ExpensesListReportActivity;
 import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.activity.report.RefuelListReportActivity;
-import org.andicar.activity.report.TodoListReportActivity;
+import org.andicar.activity.report.ToDoListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
@@ -48,6 +49,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -77,6 +79,7 @@ public class MainActivity extends BaseActivity {
 	private int ACTIVITY_MILEAGEINSERT_REQUEST_CODE = 0;
 	private int ACTIVITY_REFUELINSERT_REQUEST_CODE = 1;
 	private int ACTIVITY_EXPENSEINSERT_REQUEST_CODE = 2;
+	private int ACTIVITY_TODOINSERT_REQUEST_CODE = 3;
 	private SharedPreferences mPreferences;
 
 	private ImageButton btnMileageList;
@@ -88,6 +91,8 @@ public class MainActivity extends BaseActivity {
 	private ImageButton btnRefuelInsert;
 	private ImageButton btnExpenseList;
 	private ImageButton btnExpenseInsert;
+	private ImageButton btnToDoList;
+	private ImageButton btnToDoInsert;
 
 	private ReportDbAdapter reportDb;
 	private Cursor listCursor;
@@ -103,6 +108,9 @@ public class MainActivity extends BaseActivity {
 	private TextView tvThreeLineListExpenseText1;
 	private TextView tvThreeLineListExpenseText2;
 	private TextView tvThreeLineListExpenseText3;
+	private TextView tvThreeLineListToDoText1;
+	private TextView tvThreeLineListToDoText2;
+	private TextView tvThreeLineListToDoText3;
 	private TextView tvStatisticsLastKnownOdometer;
 	private TextView tvStatisticsAvgFuelEff;
 	private TextView tvStatisticsLastFuelEff;
@@ -121,6 +129,7 @@ public class MainActivity extends BaseActivity {
 	private boolean showRefuelZone = true;
 	private boolean showExpenseZone = true;
 	private boolean showStatistcsZone = true;
+	private boolean showToDoZone = true;
 	private boolean isActivityOnLoading = true;
 
 	private boolean isSendStatistics = true;
@@ -192,25 +201,29 @@ public class MainActivity extends BaseActivity {
 			spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
 			spnCar.setOnTouchListener(spinnerOnTouchListener);
 			btnMileageList = (ImageButton) findViewById(R.id.btnMileageList);
-			btnMileageList.setOnClickListener(btnMileageListClickListener);
+			btnMileageList.setOnClickListener(btnListMileageClickListener);
 			btnMileageInsert = (ImageButton) findViewById(R.id.btnMileageInsert);
 			btnMileageInsert.setOnClickListener(btnInsertMileageClickListener);
 			btnRefuelList = (ImageButton) findViewById(R.id.btnRefuelList);
-			btnRefuelList.setOnClickListener(btnRefuelListClickListener);
+			btnRefuelList.setOnClickListener(btnListRefuelClickListener);
 			btnRefuelInsert = (ImageButton) findViewById(R.id.btnRefuelInsert);
 			btnRefuelInsert.setOnClickListener(btnInsertRefuelClickListener);
 			btnExpenseList = (ImageButton) findViewById(R.id.btnExpenseList);
 			btnExpenseList.setOnClickListener(btnExpenseListClickListener);
 			btnExpenseInsert = (ImageButton) findViewById(R.id.btnExpenseInsert);
 			btnExpenseInsert.setOnClickListener(btnInsertExpenseClickListener);
+			btnToDoList = (ImageButton) findViewById(R.id.btnToDoList);
+			btnToDoList.setOnClickListener(btnListToDoClickListener);
+			btnToDoInsert = (ImageButton) findViewById(R.id.btnToDoInsert);
+			btnToDoInsert.setOnClickListener(btnInsertToDoClickListener);
 			btnGPSTrackInsert = (ImageButton) findViewById(R.id.btnGPSTrackInsert);
 			btnGPSTrackInsert
-					.setOnClickListener(btnGPSTrackInsertClickListener);
+					.setOnClickListener(btnInsertGPSTrackClickListener);
 			btnGPSTrackList = (ImageButton) findViewById(R.id.btnGPSTrackList);
-			btnGPSTrackList.setOnClickListener(btnGPSTrackListClickListener);
+			btnGPSTrackList.setOnClickListener(btnListGPSTrackClickListener);
 			btnGPSTrackShowOnMap = (ImageButton) findViewById(R.id.btnGPSTrackShowOnMap);
 			btnGPSTrackShowOnMap
-					.setOnClickListener(btnGPSTrackShowClickListener);
+					.setOnClickListener(btnShowOnMapGPSTrackClickListener);
 
 			tvThreeLineListMileageText1 = (TextView) findViewById(R.id.tvThreeLineListMileageText1);
 			tvThreeLineListMileageText2 = (TextView) findViewById(R.id.tvThreeLineListMileageText2);
@@ -224,6 +237,9 @@ public class MainActivity extends BaseActivity {
 			tvThreeLineListExpenseText1 = (TextView) findViewById(R.id.tvThreeLineListExpenseText1);
 			tvThreeLineListExpenseText2 = (TextView) findViewById(R.id.tvThreeLineListExpenseText2);
 			tvThreeLineListExpenseText3 = (TextView) findViewById(R.id.tvThreeLineListExpenseText3);
+			tvThreeLineListToDoText1 = (TextView) findViewById(R.id.tvThreeLineListToDoText1);
+			tvThreeLineListToDoText2 = (TextView) findViewById(R.id.tvThreeLineListToDoText2);
+			tvThreeLineListToDoText3 = (TextView) findViewById(R.id.tvThreeLineListToDoText3);
 			tvStatisticsHdr = (TextView) findViewById(R.id.tvStatisticsHdr);
 			tvStatisticsLastKnownOdometer = (TextView) findViewById(R.id.tvStatisticsLastKnownOdometer);
 			tvStatisticsAvgFuelEff = (TextView) findViewById(R.id.tvStatisticsAvgFuelEff);
@@ -661,6 +677,92 @@ public class MainActivity extends BaseActivity {
 			listCursor.close();
 	}
 
+	private void fillToDoZone(){
+		listCursor = null;
+		Bundle whereConditions = new Bundle();
+		whereConditions.putString(
+				ReportDbAdapter.sqlConcatTableColumn(
+						MainDbAdapter.TODO_TABLE_NAME,
+						MainDbAdapter.TODO_COL_ISDONE_NAME)
+						+ "=", "N");
+		reportDb.setReportSql("todoListViewSelect", whereConditions);
+		listCursor = reportDb.fetchReport(1);
+		if (listCursor != null && listCursor.moveToFirst()) {
+			String dataString = listCursor.getString(1);
+    		if(dataString.contains("[#5]"))
+    			tvThreeLineListToDoText1.setTextColor(Color.RED);
+    		else if(dataString.contains("[#15]"))
+    			tvThreeLineListToDoText1.setTextColor(Color.GREEN);
+    		else
+    			tvThreeLineListToDoText1.setTextColor(Color.WHITE);
+			tvThreeLineListToDoText1.setText(
+				dataString
+					.replace("[#1]", mRes.getString(R.string.GEN_TypeLabel))
+					.replace("[#2]", mRes.getString(R.string.GEN_TaskLabel))
+					.replace("[#3]", mRes.getString(R.string.GEN_CarLabel))
+					.replace("[#4]", mRes.getString(R.string.GEN_StatusLabel))
+					.replace("[#5]", mRes.getString(R.string.ToDo_OverdueLabel))
+					.replace("[#6]", mRes.getString(R.string.ToDo_ScheduledLabel))
+					.replace("[#15]", mRes.getString(R.string.ToDo_DoneLabel))
+					);
+			
+    		long time = System.currentTimeMillis();
+    		Calendar now = Calendar.getInstance();
+    		Calendar cal = Calendar.getInstance();
+    		
+    		long estMileageDueDays = listCursor.getLong(7);
+    		String timeStr = "";
+			if(estMileageDueDays >= 0){
+				if(estMileageDueDays == 99999999999L)
+					timeStr = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
+				else{
+					if(listCursor.getString(1).contains("[#5]"))
+						timeStr = mRes.getString(R.string.ToDo_OverdueLabel);
+					else{
+						cal.setTimeInMillis(time + (estMileageDueDays * StaticValues.ONE_DAY_IN_MILISECONDS));
+						if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
+							timeStr = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
+						else{
+							if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
+    							timeStr = DateFormat.getDateFormat(this)
+													.format(time + (estMileageDueDays * StaticValues.ONE_DAY_IN_MILISECONDS));
+							else{
+								timeStr = DateFormat.format("MMM, yyyy", cal).toString();
+							}
+								
+						}
+					}
+				}
+			}
+			time = time + listCursor.getLong(7);
+			tvThreeLineListToDoText2.setText(
+					listCursor.getString(2)
+    					.replace("[#7]", mRes.getString(R.string.ToDo_ScheduledDateLabel)) 
+    					.replace("[#8]",  
+	    							DateFormat.getDateFormat(this)
+									.format(listCursor.getLong(4) * 1000) + " " +
+			 							DateFormat.getTimeFormat(this)
+				 								.format(listCursor.getLong(4) * 1000))
+						.replace("[#9]", mRes.getString(R.string.GEN_Or2))
+    					.replace("[#10]", mRes.getString(R.string.ToDo_ScheduledMileageLabel))
+    					.replace("[#11]", Utils.numberToString(listCursor.getDouble(5) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
+    					.replace("[#12]", mRes.getString(R.string.GEN_Mileage))
+    					.replace("[#13]", mRes.getString(R.string.ToDo_EstimatedMileageDate))
+    					.replace("[#14]", timeStr)
+			 );
+			tvThreeLineListToDoText3.setText(listCursor.getString(listCursor
+					.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+			btnRefuelList.setEnabled(true);
+		} else {
+			tvThreeLineListToDoText1.setText(mRes
+					.getString(R.string.MainActivity_RefuelNoDataText));
+			tvThreeLineListToDoText2.setText("");
+			tvThreeLineListToDoText3.setText("");
+			btnRefuelList.setEnabled(false);
+		}
+		if (listCursor != null)
+			listCursor.close();
+	}
 	private void fillStatisticsZone() {
 		listCursor = null;
 		Bundle whereConditions = new Bundle();
@@ -1111,16 +1213,12 @@ public class MainActivity extends BaseActivity {
 		if (reportDb == null)
 			reportDb = new ReportDbAdapter(mainContext, null, null);
 
-		showMileageZone = mPreferences.getBoolean("MainActivityShowMileage",
-				true);
-		showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack",
-				true);
-		showRefuelZone = mPreferences
-				.getBoolean("MainActivityShowRefuel", true);
-		showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense",
-				true);
-		showStatistcsZone = mPreferences.getBoolean(
-				"MainActivityShowStatistics", true);
+		showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
+		showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
+		showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
+		showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
+		showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
+		showToDoZone = mPreferences.getBoolean("MainActivityShowToDo", true);
 
 		CharSequence abt = mRes.getText(R.string.LM_MAIN_ACTIVITY_SHORTABOUT);
 		String versionInfo = " " + appVersion + " (DBv: " + dbVersion + ")";
@@ -1201,6 +1299,13 @@ public class MainActivity extends BaseActivity {
 			fillStatisticsZone();
 		} else
 			findViewById(R.id.llStatistcsZone).setVisibility(View.GONE);
+
+		// fill statistics zone
+		if (showToDoZone) {
+			findViewById(R.id.llToDoZone).setVisibility(View.VISIBLE);
+			fillToDoZone();
+		} else
+			findViewById(R.id.llToDoZone).setVisibility(View.GONE);
 	}
 
 	@Override
@@ -1257,7 +1362,7 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnMileageListClickListener = new OnClickListener() {
+	private OnClickListener btnListMileageClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
@@ -1279,7 +1384,7 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnRefuelListClickListener = new OnClickListener() {
+	private OnClickListener btnListRefuelClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
@@ -1321,7 +1426,28 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnGPSTrackInsertClickListener = new OnClickListener() {
+	private OnClickListener btnListToDoClickListener = new OnClickListener() {
+
+		public void onClick(View arg0) {
+			Intent i = new Intent(mainContext,
+					ToDoListReportActivity.class);
+			startActivity(i);
+		}
+	};
+
+	private OnClickListener btnInsertToDoClickListener = new OnClickListener() {
+
+		public void onClick(View arg0) {
+			Intent i = new Intent(mainContext,
+					TaskEditActivity.class);
+			// refuelInsertIntent.putExtra("CurrentCar_ID", mCarId);
+			i.putExtra("Operation", "N");
+			startActivityForResult(i,
+					ACTIVITY_TODOINSERT_REQUEST_CODE);
+		}
+	};
+
+	private OnClickListener btnInsertGPSTrackClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
@@ -1331,7 +1457,7 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnGPSTrackListClickListener = new OnClickListener() {
+	private OnClickListener btnListGPSTrackClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
@@ -1340,7 +1466,7 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnGPSTrackShowClickListener = new OnClickListener() {
+	private OnClickListener btnShowOnMapGPSTrackClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
@@ -1539,7 +1665,7 @@ public class MainActivity extends BaseActivity {
 			startActivity(new Intent(this, TaskListActivity.class));
 		}
 		else if (item.getItemId() == StaticValues.MENU_TODO_ID) {
-			startActivity(new Intent(this, TodoListReportActivity.class));
+			startActivity(new Intent(this, ToDoListReportActivity.class));
 		}
 		return false;
 	}

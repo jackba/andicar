@@ -31,7 +31,7 @@ import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class TodoListDataBinder implements SimpleCursorAdapter.ViewBinder {
+public class ToDoListDataBinder implements SimpleCursorAdapter.ViewBinder {
     @Override
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
     	Resources mRes = view.getResources();
@@ -43,8 +43,6 @@ public class TodoListDataBinder implements SimpleCursorAdapter.ViewBinder {
     			tv.setTextColor(Color.RED);
     		else if(dataString.contains("[#15]"))
     			tv.setTextColor(Color.GREEN);
-//    		else if(dataString.contains("[#6]"))
-//    			tv.setTextColor(Color.YELLOW);
     		else
     			tv.setTextColor(Color.WHITE);
 

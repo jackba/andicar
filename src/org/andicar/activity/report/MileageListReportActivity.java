@@ -67,8 +67,6 @@ public class MileageListReportActivity extends ReportListActivityBase {
             whereConditions.putString(
                     ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.MILEAGE_COL_CAR_ID_NAME) + "=",
                     mCarId.toString());
-//    		whereConditions.putString(
-//    				ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.MILEAGE_TABLE_NAME, MainDbAdapter.GEN_COL_ISACTIVE_NAME) + " = ", "Y"); 
         }
         else
             whereConditions = (Bundle)getLastNonConfigurationInstance();

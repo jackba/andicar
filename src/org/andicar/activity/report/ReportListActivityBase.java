@@ -325,7 +325,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
             mReportDbHelper = new ReportDbAdapter(this, "gpsTrackListReportSelect", whereConditions);
             c = mReportDbHelper.fetchReport(-1);
         }
-        else if(this instanceof TodoListReportActivity){
+        else if(this instanceof ToDoListReportActivity){
             reportTitle = "ToDoListReport_";
             mReportDbHelper = new ReportDbAdapter(this, "todoListReportSelect", whereConditions);
             c = mReportDbHelper.fetchReport(-1);
@@ -413,7 +413,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                 if(colVal == null)
                     colVal = "";
                 colVal = colVal.replace("\"", "''");
-                if(!(this instanceof TodoListReportActivity)){
+                if(!(this instanceof ToDoListReportActivity)){
                 	colVal =   
 	                	colVal.replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
 	                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
@@ -516,7 +516,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                 	colVal = reportCursor.getString(i);
                 if(colVal == null)
                     colVal = "";
-                if(!(this instanceof TodoListReportActivity)){
+                if(!(this instanceof ToDoListReportActivity)){
                 	colVal =   
 	                	colVal.replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
 	                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))

@@ -21,7 +21,7 @@ package org.andicar.activity;
 import org.andicar.activity.miscellaneous.GPSTrackMap;
 import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
-import org.andicar.activity.report.TodoListReportActivity;
+import org.andicar.activity.report.ToDoListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
@@ -221,7 +221,7 @@ public class ListActivityBase extends ListActivity {
 
         menu.add(0, StaticValues.CONTEXT_MENU_EDIT_ID, 0, mRes.getString(R.string.MENU_EditCaption));
         menu.add(0, StaticValues.CONTEXT_MENU_INSERT_ID, 0, mRes.getString(R.string.MENU_AddNewCaption));
-        if(this instanceof TodoListReportActivity){
+        if(this instanceof ToDoListReportActivity){
         	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, mLongClickId);
         	if(c.getString(MainDbAdapter.TODO_COL_ISDONE_POS).equals("N"))
         		menu.add(0, StaticValues.CONTEXT_MENU_TODO_DONE_ID, 0, mRes.getString(R.string.ToDo_IsDoneCaption));
