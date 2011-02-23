@@ -55,6 +55,7 @@ public class MainScreenPreferenceActivity extends BaseActivity {
         ArrayList<String> mainScreenZones = new ArrayList<String>();
 
         mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowMileageZone));
+        mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowToDoZone));
         mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowGPSTrackZone));
         mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowRefuelZone));
         mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowExpenseZone));
@@ -68,10 +69,11 @@ public class MainScreenPreferenceActivity extends BaseActivity {
         lvZones.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         lvZones.setOnItemClickListener(zonesSelectedListener);
         lvZones.setItemChecked(0, mPreferences.getBoolean("MainActivityShowMileage", true));
-        lvZones.setItemChecked(1, mPreferences.getBoolean("MainActivityShowGPSTrack", true));
-        lvZones.setItemChecked(2, mPreferences.getBoolean("MainActivityShowRefuel", true));
-        lvZones.setItemChecked(3, mPreferences.getBoolean("MainActivityShowExpense", true));
-        lvZones.setItemChecked(4, mPreferences.getBoolean("MainActivityShowStatistics", true));
+        lvZones.setItemChecked(1, mPreferences.getBoolean("MainActivityShowToDo", true));
+        lvZones.setItemChecked(2, mPreferences.getBoolean("MainActivityShowGPSTrack", true));
+        lvZones.setItemChecked(3, mPreferences.getBoolean("MainActivityShowRefuel", true));
+        lvZones.setItemChecked(4, mPreferences.getBoolean("MainActivityShowExpense", true));
+        lvZones.setItemChecked(5, mPreferences.getBoolean("MainActivityShowStatistics", true));
     }
 
     protected AdapterView.OnItemClickListener zonesSelectedListener = new AdapterView.OnItemClickListener() {
@@ -81,19 +83,28 @@ public class MainScreenPreferenceActivity extends BaseActivity {
                     mPrefEditor.putBoolean("MainActivityShowMileage", true);
                 else
                     mPrefEditor.putBoolean("MainActivityShowMileage", false);
+                
                 if(checkedItems.valueAt(1))
+                    mPrefEditor.putBoolean("MainActivityShowToDo", true);
+                else
+                    mPrefEditor.putBoolean("MainActivityShowToDo", false);
+                
+                if(checkedItems.valueAt(2))
                     mPrefEditor.putBoolean("MainActivityShowGPSTrack", true);
                 else
                     mPrefEditor.putBoolean("MainActivityShowGPSTrack", false);
-                if(checkedItems.valueAt(2))
+                
+                if(checkedItems.valueAt(3))
                     mPrefEditor.putBoolean("MainActivityShowRefuel", true);
                 else
                     mPrefEditor.putBoolean("MainActivityShowRefuel", false);
-                if(checkedItems.valueAt(3))
+                
+                if(checkedItems.valueAt(4))
                     mPrefEditor.putBoolean("MainActivityShowExpense", true);
                 else
                     mPrefEditor.putBoolean("MainActivityShowExpense", false);
-                if(checkedItems.valueAt(4))
+                
+                if(checkedItems.valueAt(5))
                     mPrefEditor.putBoolean("MainActivityShowStatistics", true);
                 else
                     mPrefEditor.putBoolean("MainActivityShowStatistics", false);

@@ -25,7 +25,7 @@ import org.andicar.activity.R;
 import org.andicar.activity.TaskEditActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.persistence.TodoListDataBinder;
+import org.andicar.persistence.ToDoListDataBinder;
 import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -45,14 +45,14 @@ import android.widget.Spinner;
  *
  * @author miki
  */
-public class TodoListReportActivity extends ReportListActivityBase{
+public class ToDoListReportActivity extends ReportListActivityBase{
     private View searchView;
     private EditText etUserCommentSearch;
     private EditText etDateFromSearch;
     private EditText etDateToSearch;
     private Spinner spnCarSearch;
     private Spinner spnTask;
-    private Spinner spnIsActive;
+    private Spinner spnIsDone;
 
     @Override
     public void onCreate( Bundle icicle )
@@ -60,12 +60,9 @@ public class TodoListReportActivity extends ReportListActivityBase{
         reportSelectName = "todoListViewSelect";
 //        mCarId = getSharedPreferences( StaticValues.GLOBAL_PREFERENCE_NAME, 0 ).getLong("CurrentCar_ID", 0);
         if(icicle == null){
-//            whereConditions = new Bundle();
-//            whereConditions.putString(
-//                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.REFUEL_COL_CAR_ID_NAME) + "=",
-//                    mCarId.toString() );
-//    		whereConditions.putString(
-//    				ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.GEN_COL_ISACTIVE_NAME) + " = ", "Y"); 
+            whereConditions = new Bundle();
+            whereConditions.putString(
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_ISDONE_NAME) + "=", "N");
         }
         else
             whereConditions = (Bundle)getLastNonConfigurationInstance();
@@ -76,7 +73,7 @@ public class TodoListReportActivity extends ReportListActivityBase{
                 R.layout.threeline_listreport_activity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
-                reportSelectName,  whereConditions, new TodoListDataBinder());
+                reportSelectName,  whereConditions, new ToDoListDataBinder());
 
     }
 
@@ -104,7 +101,7 @@ public class TodoListReportActivity extends ReportListActivityBase{
 
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
         searchView = liLayoutFactory.inflate(R.layout.todo_search_dialog, null);
-        AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(TodoListReportActivity.this, 
+        AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(ToDoListReportActivity.this, 
         		AndiCarDialogBuilder.DIALOGTYPE_SEARCH, mRes.getString(R.string.DIALOGSearch_DialogTitle));
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
@@ -119,7 +116,8 @@ public class TodoListReportActivity extends ReportListActivityBase{
         initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME, null, null, 0);
         spnTask = (Spinner) searchView.findViewById(R.id.spnTask);
         initSpinner(spnTask, MainDbAdapter.TASK_TABLE_NAME, null, null, 0);
-        spnIsActive = (Spinner) searchView.findViewById(R.id.spnIsActive);
+        spnIsDone = (Spinner) searchView.findViewById(R.id.spnIsActive);
+        spnIsDone.setSelection(2); //yes
 
         ImageButton btnPickDateFrom = (ImageButton) searchView.findViewById(R.id.btnPickDateFrom);
         if(btnPickDateFrom != null)
@@ -199,12 +197,12 @@ public class TodoListReportActivity extends ReportListActivityBase{
                                 		MainDbAdapter.TODO_COL_TASK_ID_NAME) + "=",
                                 String.valueOf(spnTask.getSelectedItemId()));
                     }
-                    if (spnIsActive.getSelectedItemId() == 1) { //is done
+                    if (spnIsDone.getSelectedItemId() == 1) { //is done
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
                                 		MainDbAdapter.TODO_COL_ISDONE_NAME) + "=", "Y");
                     }
-                    else if (spnIsActive.getSelectedItemId() == 2) { //is not done
+                    else if (spnIsDone.getSelectedItemId() == 2) { //is not done
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
                                 		MainDbAdapter.TODO_COL_ISDONE_NAME) + "=", "N");

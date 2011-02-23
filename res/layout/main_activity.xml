@@ -72,11 +72,13 @@
 		app:bgColor="#000000"
 		app:txtColor="#FFFFFF"
 	 -->
+	 <!-- 
 	<com.innerActive.ads.InnerActiveAdView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/ad1"
 	/>
+	 -->
     <TextView
         android:layout_height="1dip"
         android:layout_width="fill_parent"
@@ -169,6 +171,88 @@
                                  android:layout_height="wrap_content"
                                  android:layout_alignParentRight="true"
                                  android:layout_alignTop="@id/btnMileageList"
+                                 android:background="@drawable/btn_background_selector"
+                                 android:src="@drawable/icon_add_selector"
+                                 />
+                </RelativeLayout>
+                <TextView
+                    android:layout_height="1dip"
+                    android:layout_width="fill_parent"
+                    android:background="@color/separator_bg"
+                    android:layout_marginTop="5dip"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llToDoZone"
+                >
+                <TextView
+                    android:id="@+id/tvToDoHdr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="10dip"
+                    android:background="@color/header_bg"
+                    android:gravity="center_vertical"
+                    android:text="@string/MainActivity_ToDoHeaderCaption"
+                    />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView android:id="@+id/tvThreeLineListToDoText1"
+                              android:textSize="14sp"
+                              android:textStyle="bold"
+                              android:typeface="sans"
+                              android:textColor="@android:color/white"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"/>
+
+                    <TextView android:id="@+id/tvThreeLineListToDoText2"
+                              android:textSize="14sp"
+                              android:textStyle="italic"
+                              android:typeface="sans"
+                              android:textColor="@android:color/white"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"/>
+
+                    <TextView android:id="@+id/tvThreeLineListToDoText3"
+                              android:textSize="14sp"
+                              android:textStyle="italic"
+                              android:typeface="sans"
+                              android:textColor="@android:color/white"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"/>
+                </LinearLayout>
+                <TextView
+                    android:layout_height="1dip"
+                    android:layout_width="fill_parent"
+                    android:background="@color/separator_bg"
+                    />
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    >
+                    <ImageButton android:id="@+id/btnToDoList"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentLeft="true"
+                                 android:background="@drawable/btn_background_selector"
+                                 android:src="@drawable/icon_more_selector"
+                                 />
+                    <ImageButton android:id="@+id/btnToDoInsert"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentRight="true"
+                                 android:layout_alignTop="@id/btnToDoList"
                                  android:background="@drawable/btn_background_selector"
                                  android:src="@drawable/icon_add_selector"
                                  />
