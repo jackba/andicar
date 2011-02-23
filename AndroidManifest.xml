@@ -271,7 +271,7 @@
             android:label="@string/APP_Activity_TaskEdit">
         </activity>
         <activity 
-            android:name="org.andicar.activity.report.TodoListReportActivity"
+            android:name="org.andicar.activity.report.ToDoListReportActivity"
             android:label="@string/APP_Activity_TodoList">
         </activity>
 
