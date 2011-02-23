@@ -65,7 +65,6 @@ import android.widget.TextView;
 import com.andicar.addon.activity.AddOnServicesList;
 import com.andicar.addon.activity.ServiceSubscription;
 import com.andicar.addon.services.AndiCarAddOnServiceStarter;
-import com.innerActive.ads.InnerActiveAdView;
 
 /**
  * 
@@ -383,12 +382,12 @@ public class MainActivity extends BaseActivity {
 			}
 			
 			//inneractive
-			InnerActiveAdView iaView = (InnerActiveAdView) findViewById(R.id.ad1);
-			if(iaView != null){
-				iaView.setVisibility(View.GONE);
-//				iaView.setVisibility(View.VISIBLE);
-//				iaView.setRefreshInterval(120); //120 seconds
-			}
+//			InnerActiveAdView iaView = (InnerActiveAdView) findViewById(R.id.ad1);
+//			if(iaView != null){
+//				iaView.setVisibility(View.GONE);
+////				iaView.setVisibility(View.VISIBLE);
+////				iaView.setRefreshInterval(120); //120 seconds
+//			}
 		} catch (Exception e) {
 			String logFile = "startup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
@@ -1261,52 +1260,42 @@ public class MainActivity extends BaseActivity {
 	private OnClickListener btnMileageListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
-			Intent mileageReportIntent = new Intent(mainContext,
+			Intent i = new Intent(mainContext,
 					MileageListReportActivity.class);
-			startActivity(mileageReportIntent);
+			startActivity(i);
 		}
 	};
 
 	private OnClickListener btnInsertMileageClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
-			Intent mileageInsertIntent = new Intent(mainContext,
+			Intent i = new Intent(mainContext,
 					MileageEditActivity.class);
 			// Intent mileageInsertIntent = new Intent(mainContext,
 			// TaskEditActivity.class);
-			mileageInsertIntent.putExtra("Operation", "N");
-			startActivityForResult(mileageInsertIntent,
+			i.putExtra("Operation", "N");
+			startActivityForResult(i,
 					ACTIVITY_MILEAGEINSERT_REQUEST_CODE);
-		}
-	};
-
-	private OnClickListener btnGPSTrackInsertClickListener = new OnClickListener() {
-
-		public void onClick(View arg0) {
-			Intent gpsTrackInsertIntent = new Intent(mainContext,
-					GPSTrackController.class);
-			gpsTrackInsertIntent.putExtra("Operation", "N");
-			startActivity(gpsTrackInsertIntent);
 		}
 	};
 
 	private OnClickListener btnRefuelListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
-			Intent mileageReportIntent = new Intent(mainContext,
+			Intent i = new Intent(mainContext,
 					RefuelListReportActivity.class);
-			startActivity(mileageReportIntent);
+			startActivity(i);
 		}
 	};
 
 	private OnClickListener btnInsertRefuelClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
-			Intent refuelInsertIntent = new Intent(mainContext,
+			Intent i = new Intent(mainContext,
 					RefuelEditActivity.class);
 			// refuelInsertIntent.putExtra("CurrentCar_ID", mCarId);
-			refuelInsertIntent.putExtra("Operation", "N");
-			startActivityForResult(refuelInsertIntent,
+			i.putExtra("Operation", "N");
+			startActivityForResult(i,
 					ACTIVITY_REFUELINSERT_REQUEST_CODE);
 		}
 	};
@@ -1314,41 +1303,51 @@ public class MainActivity extends BaseActivity {
 	private OnClickListener btnExpenseListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
-			Intent mileageReportIntent = new Intent(mainContext,
+			Intent i = new Intent(mainContext,
 					ExpensesListReportActivity.class);
-			startActivity(mileageReportIntent);
+			startActivity(i);
 		}
 	};
 
 	private OnClickListener btnInsertExpenseClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
-			Intent refuelInsertIntent = new Intent(mainContext,
+			Intent i = new Intent(mainContext,
 					ExpenseEditActivity.class);
 			// refuelInsertIntent.putExtra("CurrentCar_ID", mCarId);
-			refuelInsertIntent.putExtra("Operation", "N");
-			startActivityForResult(refuelInsertIntent,
+			i.putExtra("Operation", "N");
+			startActivityForResult(i,
 					ACTIVITY_EXPENSEINSERT_REQUEST_CODE);
+		}
+	};
+
+	private OnClickListener btnGPSTrackInsertClickListener = new OnClickListener() {
+
+		public void onClick(View arg0) {
+			Intent i = new Intent(mainContext,
+					GPSTrackController.class);
+			i.putExtra("Operation", "N");
+			startActivity(i);
 		}
 	};
 
 	private OnClickListener btnGPSTrackListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
-			Intent gpstrackReportIntent = new Intent(mainContext,
+			Intent i = new Intent(mainContext,
 					GPSTrackListReportActivity.class);
-			startActivity(gpstrackReportIntent);
+			startActivity(i);
 		}
 	};
 
 	private OnClickListener btnGPSTrackShowClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
-			Intent gpstrackShowMapIntent = new Intent(mainContext,
+			Intent i = new Intent(mainContext,
 					GPSTrackMap.class);
-			gpstrackShowMapIntent.putExtra("gpsTrackId",
+			i.putExtra("gpsTrackId",
 					Long.toString(gpsTrackId));
-			startActivity(gpstrackShowMapIntent);
+			startActivity(i);
 		}
 	};
 
