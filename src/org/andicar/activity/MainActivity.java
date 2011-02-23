@@ -116,6 +116,7 @@ public class MainActivity extends BaseActivity {
 	private TextView tvStatisticsLastFuelEff;
 	private TextView tvStatisticsTotalExpenses;
 	private TextView tvStatisticsMileageExpense;
+	private TextView tvCarIndex;
 
 	private TextView tvStatisticsHdr;
 
@@ -246,6 +247,7 @@ public class MainActivity extends BaseActivity {
 			tvStatisticsLastFuelEff = (TextView) findViewById(R.id.tvStatisticsLastFuelEff);
 			tvStatisticsTotalExpenses = (TextView) findViewById(R.id.tvStatisticsTotalExpenses);
 			tvStatisticsMileageExpense = (TextView) findViewById(R.id.tvStatisticsMileageExpense);
+			tvCarIndex = (TextView) findViewById(R.id.tvCarIndex);
 
 			if (isJustInstalled) {
 				exitResume = true;
@@ -1348,6 +1350,7 @@ public class MainActivity extends BaseActivity {
 			mPrefEditor.putLong("CarUOMLength_ID",
 					mDbAdapter.getCarUOMLengthID(arg3));
 			mPrefEditor.commit();
+			fillCarIndexLabel();
 			initZones();
 		}
 
@@ -1479,6 +1482,8 @@ public class MainActivity extends BaseActivity {
 
 	private void fillDriverCar() {
 		Cursor c = null;
+		
+		String carIndexLabel = null;
 
 		// get the last selected car id
 		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
@@ -1504,7 +1509,8 @@ public class MainActivity extends BaseActivity {
 				mPrefEditor.putLong("CarUOMLength_ID",
 						mDbAdapter.getCarUOMLengthID(mCarId));
 				mPrefEditor.commit();
-			} else {
+			} 
+			else {
                 AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
                 		AndiCarDialogBuilder.DIALOGTYPE_INFO, mRes.getString(R.string.GEN_Info));
 				builder.setMessage(mRes
@@ -1532,6 +1538,7 @@ public class MainActivity extends BaseActivity {
 				return;
 			}
 		}
+		fillCarIndexLabel();
 		// check if drivers exists
 		c = mDbAdapter.query(MainDbAdapter.DRIVER_TABLE_NAME,
 				MainDbAdapter.genColName, MainDbAdapter.GEN_COL_ISACTIVE_NAME
@@ -1577,6 +1584,21 @@ public class MainActivity extends BaseActivity {
 		btnRefuelList.setEnabled(true);
 		btnExpenseList.setEnabled(true);
 		btnExpenseInsert.setEnabled(true);
+	}
+
+	private void fillCarIndexLabel() {
+		
+		String carIndexLabel;
+		BigDecimal carIndex = mDbAdapter.getCarCurrentIndex(mCarId);
+		if(mCarId > -1 && carIndex != null){
+			tvCarIndex.setVisibility(View.VISIBLE);
+			carIndexLabel = mRes.getString(R.string.GEN_IndexLabel) + " " +
+					Utils.numberToString(carIndex, true, StaticValues.DECIMALS_LENGTH,StaticValues.ROUNDING_MODE_LENGTH) + " " +
+					mDbAdapter.getUOMCode(mPreferences.getLong("CarUOMLength_ID", 0));
+			tvCarIndex.setText(carIndexLabel);
+		}
+		else
+			tvCarIndex.setVisibility(View.GONE);
 	}
 
 	@Override
