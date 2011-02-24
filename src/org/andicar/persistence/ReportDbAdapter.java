@@ -1075,7 +1075,8 @@ public class ReportDbAdapter extends MainDbAdapter{
 
             reportSql = reportSql +
                                     " ORDER BY EstimatedDueDate_DTypeL ASC, " + 
-                                    	"COALESCE (" + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_DUEMILEAGE_NAME) + ", 0) ASC ";
+                                    	"COALESCE (ScheduledDate_DTypeD , 99999999999) ASC, " +
+                                    			"COALESCE(EstimatedScheduledMileageDate_DTypeL, 99999999999) ASC ";
         }
 
         if(limitCount != -1)

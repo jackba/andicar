@@ -40,7 +40,7 @@ import android.os.IBinder;
  * <br>A new todo is automatically created when an existing todo is done or deactivated. 
  *
  */
-public class TodoManagementService extends Service {
+public class ToDoManagementService extends Service {
 
 	private MainDbAdapter mDb =null;
 	private Bundle mBundleExtras;

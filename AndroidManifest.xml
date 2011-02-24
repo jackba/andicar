@@ -35,9 +35,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <!-- 
 	<uses-permission android:name="android.permission.CALL_PHONE" />
-	 -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     
     <!-- need by secure backup -->
@@ -74,7 +72,8 @@
 		 
         <service android:name="org.andicar.service.GPSTrackService" />
         <service android:name="org.andicar.service.UpdateCheckService" />
-        <service android:name="org.andicar.service.TodoManagementService" /> 
+        <service android:name="org.andicar.service.ToDoManagementService" /> 
+        <service android:name="org.andicar.service.ToDoNotificationService" /> 
         
         <activity android:name="org.andicar.activity.MainActivity"
                   android:label="AndiCar"
@@ -273,6 +272,12 @@
         <activity 
             android:name="org.andicar.activity.report.ToDoListReportActivity"
             android:label="@string/APP_Activity_TodoList">
+        </activity>
+        
+        <activity 
+        	android:theme="@android:style/Theme.Dialog"
+        	android:label=""
+            android:name="org.andicar.activity.dialog.ToDoNotificationDialog">
         </activity>
 
         <!-- AddOn Services -->

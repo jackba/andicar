@@ -52,8 +52,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import org.andicar.activity.R;
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.FileUtils;
-import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
 /**

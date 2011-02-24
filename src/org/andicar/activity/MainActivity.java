@@ -22,6 +22,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
 
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.activity.miscellaneous.AboutActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.activity.miscellaneous.GPSTrackController;
@@ -35,7 +36,7 @@ import org.andicar.activity.report.ToDoListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.service.ToDoNotificationService;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -362,6 +363,10 @@ public class MainActivity extends BaseActivity {
 //					editor.commit();
 //				}
 //			}
+
+			//debug
+			Intent intent = new Intent(this, ToDoNotificationService.class);
+			this.startService(intent);
 			
 			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
 			if(isJustInstalled){
@@ -752,13 +757,13 @@ public class MainActivity extends BaseActivity {
 			 );
 			tvThreeLineListToDoText3.setText(listCursor.getString(listCursor
 					.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
-			btnRefuelList.setEnabled(true);
+			btnToDoList.setEnabled(true);
 		} else {
 			tvThreeLineListToDoText1.setText(mResource
-					.getString(R.string.MainActivity_RefuelNoDataText));
+					.getString(R.string.MainActivity_ToDoNoDataText));
 			tvThreeLineListToDoText2.setText("");
 			tvThreeLineListToDoText3.setText("");
-			btnRefuelList.setEnabled(false);
+			btnToDoList.setEnabled(false);
 		}
 		if (listCursor != null)
 			listCursor.close();
