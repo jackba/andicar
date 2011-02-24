@@ -144,7 +144,7 @@
     <string name="GEN_StatusLabel">"Status:"</string>
     <string name="GEN_Mileage">"mileage:"</string>
     <string name="GEN_Or2">"or"</string>
-    <string name="GEN_ToDo">"to-do"</string>
+    <string name="GEN_ToDo">"To-Do"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -339,6 +339,7 @@
     <string name="ToDo_EstimatedMileageDateNoData">"not enough records for an estimated date"</string>
     <string name="ToDo_EstimatedMileageDateTooFar">"too far to estimate"</string>
     <string name="ToDo_IsDoneCaption">"Is done"</string>
+    <string name="ToDo_PostPoneLabel">"Postpone for:"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>

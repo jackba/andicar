@@ -365,8 +365,9 @@ public class MainActivity extends BaseActivity {
 //			}
 
 			//debug
-			Intent intent = new Intent(this, ToDoNotificationService.class);
-			this.startService(intent);
+//			Intent intent = new Intent(this, ToDoNotificationService.class);
+//			intent.putExtra("ToDoID", 77L);
+//			this.startService(intent);
 			
 			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
 			if(isJustInstalled){

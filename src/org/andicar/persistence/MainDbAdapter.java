@@ -48,7 +48,7 @@ public class MainDbAdapter extends DB
      * Return a Cursor positioned at the record that matches the given rowId from the given table
      *
      * @param rowId id of the record to retrieve
-     * @return Cursor positioned to matching record, if found
+     * @return Cursor positioned to matching record, if found. Otherwise null.
      * @throws SQLException if the record could not be found/retrieved
      */
     public Cursor fetchRecord( String tableName, String[] columns, long rowId ) throws SQLException

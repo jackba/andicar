@@ -509,7 +509,7 @@ public class DB {
 	public static final int TODO_COL_CAR_ID_POS = 5;
 	public static final int TODO_COL_DUEDATE_POS = 6;
 	public static final int TODO_COL_DUEMILAGE_POS = 7;
-	public static final int TODO_COL_POSTPONEUNTI_POS = 8;
+	public static final int TODO_COL_POSTPONEUNTIL_POS = 8;
 	public static final int TODO_COL_ISDONE_POS = 9;
 	public static final int TODO_COL_DONEDATE_POS = 10;
 	public static final int TODO_COL_ISSTOPNOTIFICATION_POS = 11;
@@ -649,8 +649,7 @@ public class DB {
 		TODO_COL_TASK_ID_NAME, TODO_COL_CAR_ID_NAME, TODO_COL_DUEDATE_NAME, TODO_COL_DUEMILEAGE_NAME, TODO_COL_POSTPONEUNTIL_NAME, 
 		TODO_COL_ISDONE_NAME, TODO_COL_DONEDATE_NAME, TODO_COL_ISSTOPNOTIFICATION_NAME};
 
-	public static final String[] genColName = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME };
+	public static final String[] genColName = { GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME };
 	public static final String[] genColRowId = { GEN_COL_ROWID_NAME };
 	public static final String isActiveCondition = " " + GEN_COL_ISACTIVE_NAME
 			+ "='Y' ";
