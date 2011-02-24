@@ -21,11 +21,11 @@ package org.andicar.activity.report;
 
 import org.andicar.activity.GPSTrackEditActivity;
 import org.andicar.activity.R;
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.activity.miscellaneous.GPSTrackController;
 import org.andicar.persistence.GPSTrackListDataBinder;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 

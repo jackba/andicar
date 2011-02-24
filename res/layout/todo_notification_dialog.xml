@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 - 2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:id="@+id/vgRoot"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dip"
+        >
+        
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvTaskLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_TaskLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <Spinner android:id="@+id/spnTask"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:background="@color/search_dialog_spinner_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvCarLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_CarLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <Spinner android:id="@+id/spnCarSearch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:background="@color/search_dialog_spinner_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvDateFromLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/DIALOGSearch_DateFromLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <EditText
+                android:id="@+id/etDateFromSearch"
+                android:layout_width="140dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:scrollHorizontally="true"
+                android:autoText="false"
+                android:capitalize="none"
+                android:gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background"
+                />
+            <ImageButton android:id="@+id/btnPickDateFrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="@drawable/btn_background_selector"
+                    android:src="@drawable/icon_calendar_selector"
+                    />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvDateToLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/DIALOGSearch_DateToLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <EditText
+                android:id="@+id/etDateToSearch"
+                android:layout_width="140dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:layout_marginRight="2dip"
+                android:scrollHorizontally="true"
+                android:autoText="false"
+                android:capitalize="none"
+                android:gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background"
+                />
+            <ImageButton android:id="@+id/btnPickDateTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:background="@drawable/btn_background_selector"
+                    android:src="@drawable/icon_calendar_selector"
+                    />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
+                android:id="@+id/tvUserCommentLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_UserCommentLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <EditText
+                android:id="@+id/etUserCommentSearch"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:scrollHorizontally="true"
+                android:autoText="false"
+                android:capitalize="none"
+                android:gravity="fill_horizontal"
+                android:background="@android:drawable/editbox_background"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+	         <TextView
+	             android:id="@+id/tvIsActiveLabel"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:text="@string/ToDo_IsDoneCaption"
+	             android:typeface="sans"
+	             android:textColor="@android:color/white"
+	             />
+            <Spinner android:id="@+id/spnIsActive"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="2dip"
+                android:background="@color/search_dialog_spinner_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                android:entries="@array/isactive_values"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:gravity="center_horizontal"
+            >
+	        <ImageButton
+	            android:id="@android:id/button1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:background="@drawable/btn_background_selector"
+	            android:src="@drawable/icon_done_selector"
+	            android:layout_marginRight="5dip"
+	            />
+    	</LinearLayout>
+    </LinearLayout>
+</ScrollView>

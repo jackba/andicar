@@ -23,10 +23,10 @@ import java.util.Calendar;
 
 import org.andicar.activity.ListActivityBase;
 import org.andicar.activity.R;
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 

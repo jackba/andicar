@@ -18,12 +18,12 @@
  */
 package org.andicar.activity;
 
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.activity.miscellaneous.GPSTrackMap;
 import org.andicar.activity.report.GPSTrackListReportActivity;
 import org.andicar.activity.report.MileageListReportActivity;
 import org.andicar.activity.report.ToDoListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;

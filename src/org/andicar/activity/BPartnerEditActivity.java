@@ -19,8 +19,8 @@
 
 package org.andicar.activity;
 
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.AndiCarDialogBuilder;
 import org.andicar.utils.StaticValues;
 
 import android.app.AlertDialog;

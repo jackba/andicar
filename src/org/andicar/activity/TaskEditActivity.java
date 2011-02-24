@@ -21,11 +21,11 @@ package org.andicar.activity;
 
 import java.util.Calendar;
 
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.TaskCarLinkDataBinder;
-import org.andicar.service.TodoManagementService;
-import org.andicar.utils.AndiCarDialogBuilder;
+import org.andicar.service.ToDoManagementService;
 import org.andicar.utils.StaticValues;
 
 import android.app.AlertDialog;
@@ -550,7 +550,7 @@ public class TaskEditActivity extends EditActivityBase {
 			else
 				saveSuccess = false;
 			if(isFinishAfterSave){
-                Intent intent = new Intent(this, TodoManagementService.class);
+                Intent intent = new Intent(this, ToDoManagementService.class);
 				intent.putExtra("TaskID", mRowId);
 				this.startService(intent);
 				finish();
@@ -577,7 +577,7 @@ public class TaskEditActivity extends EditActivityBase {
 	                		MainDbAdapter.TODO_COL_TASK_ID_NAME + " = ? AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + " = 'N'", 
 	                		deleteArgs);
 
-					Intent intent = new Intent(this, TodoManagementService.class);
+					Intent intent = new Intent(this, ToDoManagementService.class);
 					intent.putExtra("TaskID", mRowId);
 					this.startService(intent);
 					finish();
