@@ -18,31 +18,20 @@
 package org.andicar.service;
 
 import org.andicar.activity.R;
-import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.activity.dialog.ToDoNotificationDialog;
-import org.andicar.activity.report.ToDoListReportActivity;
 import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
 
-import com.andicar.addon.activity.ServiceSubscription;
-
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.Toast;
 
 /**
  * @author Miklos Keresztes
@@ -50,11 +39,15 @@ import android.widget.Toast;
  */
 public class ToDoNotificationService extends Service {
 
+	public static final int TRIGGERED_BY_TIME = 0; 
+	public static final int TRIGGERED_BY_MILEAGE = 1; 
+
 	private MainDbAdapter mDb =null;
-	private long mToDoID = -1;
+	private long mToDoID = 0;
 	private Bundle mBundleExtras = null;
 	private NotificationManager mNM = null;
 	private Notification notification = null;
+	
 	/**
 	 * 
 	 */
@@ -79,59 +72,96 @@ public class ToDoNotificationService extends Service {
 			Thread.setDefaultUncaughtExceptionHandler(
 	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 
-//		mBundleExtras  = intent.getExtras();
-//		if(mBundleExtras != null){ //postponed to-do
-//			mToDoID = mBundleExtras.getLong("ToDoID");
-//		}
-//		
-//		mDb = new MainDbAdapter(this);
-//		
-//		mDb.close();
-		checkNotifToDo();
+		mDb = new MainDbAdapter(this);
+
+		String sql = " SELECT * "+
+					" FROM " + MainDbAdapter.TODO_TABLE_NAME +
+					" WHERE " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_ISDONE_NAME) + "='N' ";
+		String argVals[] = null;
+
+		mBundleExtras  = intent.getExtras();
+		if(mBundleExtras != null){ //postponed to-do
+			mToDoID = mBundleExtras.getLong("ToDoID");
+			if(mToDoID > 0){
+				sql = sql + " AND " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + " = ?";
+				argVals = new String[1];
+				argVals[0] = Long.toString(mToDoID);
+			}
+		}
+
+		Cursor toDoCursor = mDb.execSelectSql(sql, argVals);
+		while(toDoCursor.moveToNext())
+			checkNotifToDo(toDoCursor);
+
+		toDoCursor.close();
+		mDb.close();
 		stopSelf();
 	}
 	
-	private void checkNotifToDo(){
-//		String sql = " SELECT " + MainDbAdapter.TODO_TABLE_NAME + ".* " +
-//						" FROM " + MainDbAdapter.TODO_TABLE_NAME +
-//							" JOIN " + MainDbAdapter.TASK_TABLE_NAME + " ON " + 
-//									DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_TASK_ID_NAME) + "=" +
-//										DB.sqlConcatTableColumn(MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) +
-//						" WHERE " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_ISDONE_NAME) + "='N' " +
-//								" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + " = ?";
-//		String argVals[] = {Long.toString(mToDoID)};
-//		Cursor c = mDb.query(sql, argVals);
-//		if(c.moveToNext()){
-//            mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-//            notification = null;
-////	        Intent i = new Intent(this, ServiceSubscription.class);
-////	        i.putExtra("Operation", subsOperation);
-////	        i.putExtra("AddOnType", subsId);
-////	        i.putExtra("NotificationMessage", notifMsg);
-////
-////            CharSequence title = getText(R.string.Notif_UpdateTitle);
-////            String message = getString(R.string.Notif_UpdateMsg);
-////            notification = new Notification(R.drawable.icon_sys_info, message,
-////                    System.currentTimeMillis());
-////	        notification.flags |= Notification.DEFAULT_LIGHTS;
-////	        notification.flags |= Notification.DEFAULT_SOUND;
-////            notification.flags |= Notification.FLAG_AUTO_CANCEL;
-////            notification.setLatestEventInfo(UpdateCheckService.this, title, message, contentIntent);
-////            mNM.notify(StaticValues.NOTIF_UPDATECHECK_ID, notification);
-//		}
+	private void checkNotifToDo(Cursor toDoCursor){
+		long toDoID = toDoCursor.getLong(MainDbAdapter.GEN_COL_ROWID_POS);
+		String sql = " SELECT * " +
+						" FROM " + MainDbAdapter.TASK_TABLE_NAME +
+						" WHERE " + DB.sqlConcatTableColumn(MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + " = ?";
+		String argVals[] = {Long.toString(toDoCursor.getLong(MainDbAdapter.TODO_COL_TASK_ID_POS))};
+		Cursor taskCursor = mDb.query(sql, argVals);
+		boolean showNotif = false;
 		
-	    mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-	    notification = new Notification(R.drawable.icon_sys_info, "ToDo notif", System.currentTimeMillis());
-		Intent i = new Intent(this, ToDoNotificationDialog.class);
-        notification.setLatestEventInfo(this, 
-        		"AndiCar ToDo Notification", "ToDo Notification", 
-        		PendingIntent.getActivity(this, StaticValues.ACTIVITY_REQUEST_CODE_BACKUPSERVICE_EXPIRE, i, PendingIntent.FLAG_UPDATE_CURRENT));
-        notification.flags |= Notification.DEFAULT_LIGHTS;
-        notification.flags |= Notification.DEFAULT_VIBRATE;
-        notification.flags |= Notification.DEFAULT_SOUND;
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        notification.flags |= Notification.FLAG_NO_CLEAR;
-        mNM.notify(StaticValues.NOTIF_UPDATECHECK_ID, notification);
+		if(taskCursor != null && taskCursor.moveToNext()){
+			if(taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_TIME) || 
+					taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
+				//check time
+				long todoDueDateSec = toDoCursor.getLong(MainDbAdapter.TODO_COL_DUEDATE_POS);
+				long todoTimeReminderStart = taskCursor.getLong(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS);
+				long todoPostPone;
+				long currentSec = System.currentTimeMillis() / 1000;
+				if(toDoCursor.getString(MainDbAdapter.TODO_COL_POSTPONEUNTIL_POS) != null)
+					todoPostPone = toDoCursor.getLong(MainDbAdapter.TODO_COL_POSTPONEUNTIL_POS);
+				else
+					todoPostPone = -1;
+				
+				if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCY_POS) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY)
+					//in this case the reminder start is in hours
+					todoTimeReminderStart = todoTimeReminderStart * 3600; //in sec
+				else
+					//in this case the reminder start is in days
+					todoTimeReminderStart = todoTimeReminderStart * 24 * 3600; //in sec
+				
+				if(todoPostPone > -1 && todoPostPone <= currentSec)
+					showNotif = true;
+				else if(todoDueDateSec - todoTimeReminderStart <= currentSec)
+					showNotif = true;
+						
+				if(showNotif){
+				    mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+				    notification = new Notification(R.drawable.icon_sys_info, "AndiCar " + getString(R.string.GEN_ToDo), System.currentTimeMillis());
+					Intent i = new Intent(this, ToDoNotificationDialog.class);
+					i.putExtra("TriggeredBy", TRIGGERED_BY_TIME);
+					i.putExtra("ToDoID", toDoID);
+					CharSequence contentTitle = getString(R.string.GEN_TaskLabel) + " " + taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS);
+					i.putExtra("NotifTitle", contentTitle);
+					CharSequence contentText = "";
+					if(toDoCursor.getString(MainDbAdapter.TODO_COL_CAR_ID_POS) != null){
+						Cursor carCursor = mDb.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, toDoCursor.getLong(MainDbAdapter.TODO_COL_CAR_ID_POS));
+						if(carCursor != null){
+							contentText = getString(R.string.GEN_CarLabel) + " " + carCursor.getString(MainDbAdapter.GEN_COL_NAME_POS);
+							carCursor.close();
+						}
+					}
+					i.putExtra("NotifText", contentText);
+			        notification.setLatestEventInfo(this, 
+			        		contentTitle, contentText, 
+			        		PendingIntent.getActivity(this, StaticValues.ACTIVITY_REQUEST_CODE_BACKUPSERVICE_EXPIRE, i, PendingIntent.FLAG_UPDATE_CURRENT));
+			        notification.flags |= Notification.DEFAULT_LIGHTS;
+			        notification.flags |= Notification.DEFAULT_VIBRATE;
+			        notification.flags |= Notification.DEFAULT_SOUND;
+			        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+			        notification.flags |= Notification.FLAG_NO_CLEAR;
+			        mNM.notify( ((Long)toDoID).intValue(), notification);
+				}
+			}
+			taskCursor.close();
+		}
 	}
 	
 }
