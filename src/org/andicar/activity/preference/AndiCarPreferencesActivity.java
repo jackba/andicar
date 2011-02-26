@@ -19,17 +19,9 @@
 
 package org.andicar.activity.preference;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.os.Bundle;
-import android.preference.CheckBoxPreference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceCategory;
-import android.preference.PreferenceManager;
-import android.preference.PreferenceScreen;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.andicar.activity.BPartnerListActivity;
 import org.andicar.activity.CarListActivity;
 import org.andicar.activity.CurrencyListActivity;
@@ -43,10 +35,19 @@ import org.andicar.activity.TaskTypeListActivity;
 import org.andicar.activity.UOMConversionListActivity;
 import org.andicar.activity.UOMListActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
-import org.andicar.service.ToDoManagementService;
-import org.andicar.utils.StaticValues;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.os.Bundle;
+import android.preference.CheckBoxPreference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
+import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 
 import com.andicar.addon.activity.AddOnPreferences;
 

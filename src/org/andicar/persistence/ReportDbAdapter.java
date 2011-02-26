@@ -627,7 +627,7 @@ public class ReportDbAdapter extends MainDbAdapter{
     					+ " THEN '[#10] [#11] ' || "
     							+ " COALESCE (" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ", '') || "
     							+ " ' ([#13] [#14])' " //duemileage label/ToDo_ScheduledMileageLabel + mileage + (estimated date)
-    				+ " ELSE '[#7] [#8] [#9] [#12] [#11] ' || "
+    				+ " ELSE '[#7] [#8] [#9] [#11] ' || " // [#12]
 								+ " COALESCE (" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ", '') || "
     						+ "' ([#13] [#14])' "
     		+ " END " //duemileage label/ToDo_ScheduledMileageLabel + mileage 

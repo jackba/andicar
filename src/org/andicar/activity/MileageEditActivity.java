@@ -22,6 +22,7 @@ package org.andicar.activity;
 import java.math.BigDecimal;
 
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.service.ToDoNotificationService;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -696,6 +697,12 @@ public class MileageEditActivity extends EditActivityBase {
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
 		mPrefEditor.commit();
         
+		//check if mileage todo exists
+		Intent intent = new Intent(this, ToDoNotificationService.class);
+		intent.putExtra("setJustNextRun", false);
+		intent.putExtra("CarID", mCarId);
+		this.startService(intent);
+
 		finish();
     }
 

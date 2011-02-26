@@ -137,6 +137,7 @@
     <string name="GEN_On">"On"</string> <!-- example on Monday -->
     <string name="GEN_Days">"days"</string>
     <string name="GEN_Minutes">"minutes"</string>
+    <string name="GEN_Min">"min"</string>
     <string name="GEN_LastDay">"last day"</string>
     <string name="GEN_Description">"Description"</string>
     <string name="GEN_Or">"Or:"</string>
@@ -145,6 +146,7 @@
     <string name="GEN_Mileage">"mileage:"</string>
     <string name="GEN_Or2">"or"</string>
     <string name="GEN_ToDo">"To-Do"</string>
+    <string name="GEN_ToDoAlert">"To-Do alert"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -338,8 +340,13 @@
     <string name="ToDo_EstimatedMileageDate">"estimated for:"</string>
     <string name="ToDo_EstimatedMileageDateNoData">"not enough records for an estimated date"</string>
     <string name="ToDo_EstimatedMileageDateTooFar">"too far to estimate"</string>
-    <string name="ToDo_IsDoneCaption">"Is done"</string>
-    <string name="ToDo_PostPoneLabel">"Postpone for:"</string>
+    <string name="ToDo_ActionHdr">"Action"</string>
+    <string name="ToDo_PostPoneLabel">"Remind me again after:"</string>
+    <string name="ToDo_IsDoneCaption">"This To-Do is done"</string>
+    <string name="ToDo_DaysLeft">"Days left: "</string>
+    <string name="ToDo_MinutesLeft">"Minutes left: "</string>
+    <string name="ToDo_MileageLeft">"Mileage left: "</string>
+    <string name="ToDo_CurrentIndex">"Current odometer: "</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>

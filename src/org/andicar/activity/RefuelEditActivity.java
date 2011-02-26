@@ -20,6 +20,7 @@
 package org.andicar.activity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,6 +29,7 @@ import android.view.MotionEvent;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.service.ToDoNotificationService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
@@ -954,7 +956,12 @@ public class RefuelEditActivity extends EditActivityBase {
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
 		mPrefEditor.commit();
     	
-        finish();
+		Intent intent = new Intent(this, ToDoNotificationService.class);
+		intent.putExtra("setJustNextRun", false);
+		intent.putExtra("CarID", mCarId);
+		this.startService(intent);
+
+		finish();
     }
 
     @Override

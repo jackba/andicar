@@ -36,7 +36,7 @@ import org.andicar.activity.report.ToDoListReportActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
-import org.andicar.service.ToDoNotificationService;
+import org.andicar.service.AndiCarServiceStarter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -338,11 +338,13 @@ public class MainActivity extends BaseActivity {
 				int appVersionCode = getPackageManager().getPackageInfo(
 						getPackageName(), 0).versionCode;
 				if (!mPreferences.contains("appVersionCode")
-						|| mPreferences.getInt("appVersionCode", 0) < appVersionCode
-						|| appVersion.endsWith("Beta")) { // for beta testing
+						|| mPreferences.getInt("appVersionCode", 0) < appVersionCode //version update
+//						|| appVersion.endsWith("Beta")  // for beta testing
+						) {
 
 					initPreferenceValues(); // version update => init (new)
 											// preference values
+					AndiCarServiceStarter.startServices(this);
 					AndiCarAddOnServiceStarter.startServices(this);
 					editor.putInt("appVersionCode", appVersionCode);
 					editor.commit();
@@ -365,9 +367,9 @@ public class MainActivity extends BaseActivity {
 //			}
 
 			//debug
-			Intent intent = new Intent(this, ToDoNotificationService.class);
-//			intent.putExtra("ToDoID", 22L);
-			this.startService(intent);
+//			Intent intent = new Intent(this, ToDoNotificationService.class);
+////			intent.putExtra("ToDoID", 22L);
+//			this.startService(intent);
 			
 			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
 			if(isJustInstalled){

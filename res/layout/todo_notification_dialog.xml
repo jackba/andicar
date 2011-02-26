@@ -25,13 +25,18 @@
     android:scrollbars="vertical"
     android:id="@+id/vgRoot"
     >
+<!-- 
+    android:background="@android:color/black"
+ -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dip"
+       	android:id="@+id/fakeFocus"
+		android:focusable="true"
+		android:focusableInTouchMode="true" 
         >
-        
         <TextView
             android:id="@+id/tvText1"
 			android:textSize="16sp"
@@ -45,33 +50,52 @@
         <TextView
             android:id="@+id/tvText2"
 			android:textSize="16sp"
+			android:textStyle="bold"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:typeface="sans"
+			android:textColor="@android:color/white"
+        	android:gravity="center_horizontal"
+            />
+        <TextView
+            android:id="@+id/tvText3"
+			android:textSize="16sp"
 			android:textStyle="italic"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:typeface="sans"
 			android:textColor="@android:color/white"
-        	android:layout_marginTop="5dip"
         	android:gravity="center_horizontal"
             />
         <TextView
-            android:id="@+id/tvText3"
+            android:id="@+id/tvText4"
 			android:textSize="14sp"
 			android:textStyle="italic"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:typeface="sans"
 			android:textColor="@android:color/white"
-        	android:layout_marginTop="5dip"
-        	android:gravity="center_horizontal"
+        	android:layout_marginLeft="5dip"
+        	android:gravity="left"
             />
 
 	    <TextView
-	        android:layout_height="1dip"
+	        android:layout_height="2dip"
 	        android:layout_width="fill_parent"
 	        android:background="@color/separator_bg"
 	        android:layout_marginTop="10dip"
 	        />
-
+         <TextView
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:textSize="14sp"
+             android:textStyle="bold"
+             android:typeface="sans"
+             android:textColor="@android:color/white"
+             android:background="@color/header_bg"
+             android:gravity="center_vertical|center_horizontal"
+             android:text="@string/ToDo_ActionHdr"
+             />
 		<LinearLayout
 			android:orientation="horizontal"
 			android:layout_width="fill_parent"
@@ -86,6 +110,7 @@
 			    android:text="@string/ToDo_PostPoneLabel"
 			    android:typeface="sans"
 			    android:textColor="@android:color/white"
+				android:textSize="16sp"
 			    />
 			<EditText
 			    android:id="@+id/etPostpone"
@@ -99,12 +124,12 @@
 			    />
 			<TextView
 			    android:id="@+id/tvPostponeUOM"
-			    android:layout_width="wrap_content"
+			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
-			    android:text="X X"
 			    android:layout_marginLeft="2dip"
 			    android:typeface="sans"
 			    android:textColor="@android:color/white"
+				android:textSize="16sp"
 			    />
 		</LinearLayout>
 		<TextView
@@ -115,6 +140,7 @@
 		    android:text="@string/GEN_Or"
 	        android:layout_marginTop="5dip"
 	        android:layout_marginLeft="10dip"
+			android:textSize="16sp"
 		    />
 
 	    <CheckBox
@@ -148,10 +174,8 @@
 	            android:id="@android:id/button1"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_alignParentRight="true"
 	            android:background="@drawable/btn_background_selector"
 	            android:src="@drawable/icon_done_selector"
-	            android:layout_marginRight="5dip"
 	            />
     	</LinearLayout>
     </LinearLayout>

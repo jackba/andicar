@@ -550,6 +550,7 @@ public class TaskEditActivity extends EditActivityBase {
 			else
 				saveSuccess = false;
 			if(isFinishAfterSave){
+				//generate the To-Do's
                 Intent intent = new Intent(this, ToDoManagementService.class);
 				intent.putExtra("TaskID", mRowId);
 				this.startService(intent);
@@ -584,7 +585,7 @@ public class TaskEditActivity extends EditActivityBase {
 				}
 			}
 		}
-		//delete existent linked cars if the configuration not support linked cars
+		//delete existent linked cars if the current configuration not support linked cars
 		String[] selectionArgs = {Long.toString(mRowId)};
 		if(isFinishAfterSave && isDeleteLinkedCarsOnSave){
 			mDbAdapter.deleteRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, 

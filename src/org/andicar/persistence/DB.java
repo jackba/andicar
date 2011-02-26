@@ -338,9 +338,13 @@ public class DB {
 	 */
 	public static final String TODO_COL_DUEMILEAGE_NAME = "DueMileage";
 	/**
-	 * postpone the next reminder until this date 
+	 * show the notification at this date 
 	 */
-	public static final String TODO_COL_POSTPONEUNTIL_NAME = "PostponeUntil";
+	public static final String TODO_COL_NOTIFICATIONDATE_NAME = "NotificationDate";
+	/**
+	 * show the notification at this mileage 
+	 */
+	public static final String TODO_COL_NOTIFICATIONMILEAGE_NAME = "NotificationMileage";
 	/**
 	 * if this todo is done {Y|N}
 	 */
@@ -509,11 +513,11 @@ public class DB {
 	public static final int TODO_COL_CAR_ID_POS = 5;
 	public static final int TODO_COL_DUEDATE_POS = 6;
 	public static final int TODO_COL_DUEMILAGE_POS = 7;
-	public static final int TODO_COL_POSTPONEUNTIL_POS = 8;
-	public static final int TODO_COL_ISDONE_POS = 9;
-	public static final int TODO_COL_DONEDATE_POS = 10;
-	public static final int TODO_COL_ISSTOPNOTIFICATION_POS = 11;
-
+	public static final int TODO_COL_NOTIFICATIONDATE_POS = 8;
+	public static final int TODO_COL_NOTIFICATIONMILEAGE_POS = 9;
+	public static final int TODO_COL_ISDONE_POS = 10;
+	public static final int TODO_COL_DONEDATE_POS = 11;
+	public static final int TODO_COL_ISSTOPNOTIFICATION_POS = 12;
 
 	public static final String[] driverTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
@@ -646,7 +650,8 @@ public class DB {
 			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
 
 	public static final String[] todoTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-		TODO_COL_TASK_ID_NAME, TODO_COL_CAR_ID_NAME, TODO_COL_DUEDATE_NAME, TODO_COL_DUEMILEAGE_NAME, TODO_COL_POSTPONEUNTIL_NAME, 
+		TODO_COL_TASK_ID_NAME, TODO_COL_CAR_ID_NAME, TODO_COL_DUEDATE_NAME, TODO_COL_DUEMILEAGE_NAME, 
+		TODO_COL_NOTIFICATIONDATE_NAME, TODO_COL_NOTIFICATIONMILEAGE_NAME,  
 		TODO_COL_ISDONE_NAME, TODO_COL_DONEDATE_NAME, TODO_COL_ISSTOPNOTIFICATION_NAME};
 
 	public static final String[] genColName = { GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME };
@@ -1142,8 +1147,10 @@ public class DB {
 		+ " DATE NULL, "
 		+ TODO_COL_DUEMILEAGE_NAME
 		+ " INTEGER NULL, "
-		+ TODO_COL_POSTPONEUNTIL_NAME
+		+ TODO_COL_NOTIFICATIONDATE_NAME
 		+ " DATE NULL, "
+		+ TODO_COL_NOTIFICATIONMILEAGE_NAME
+		+ " INTEGER NULL, "
 		+ TODO_COL_ISDONE_NAME
 		+ " TEXT DEFAULT 'N', "
 		+ TODO_COL_DONEDATE_NAME
