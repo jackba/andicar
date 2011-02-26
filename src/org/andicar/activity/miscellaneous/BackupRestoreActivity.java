@@ -140,7 +140,10 @@ public class BackupRestoreActivity extends BaseActivity {
                                     editor.putLong( "CurrentCar_ID", -1);
 //                                    editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
-                                    AndiCarAddOnServiceStarter.startServices(BackupRestoreActivity.this);
+                                    try{
+                                    	AndiCarAddOnServiceStarter.startServices(BackupRestoreActivity.this);
+                                    }
+                                    catch(Exception e){}
                                     if(isSendStatistics){
                                         Map<String, String> parameters = new HashMap<String, String>();
                                         parameters.put("Operation", "Restore");

@@ -20,6 +20,7 @@
 package org.andicar.activity;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
@@ -29,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.service.ToDoNotificationService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
@@ -853,6 +855,14 @@ public class ExpenseEditActivity extends EditActivityBase {
     	
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
 		mPrefEditor.commit();
+
+		//check if mileage todo exists
+		if(etCarIndex.getText().toString() != null && etCarIndex.getText().toString().length() > 0){
+			Intent intent = new Intent(this, ToDoNotificationService.class);
+			intent.putExtra("setJustNextRun", false);
+			intent.putExtra("CarID", mCarId);
+			this.startService(intent);
+		}
         finish();
         
     }

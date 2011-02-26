@@ -36,7 +36,7 @@ import android.os.IBinder;
  * <hr>
  * <br><b> Description:</b> 
  * <br>This service maintain the todo entries based on the task properties (due date, mileage, linked cars etc.) 
- * <br>All <b>recurent</b> tasks have a predefined number (currently 3) of todo entries for each linked car.
+ * <br>All <b>recurent</b> tasks have a number of todo entries for each linked car.
  * <br>A new todo is automatically created when an existing todo is done or deactivated. 
  *
  */
@@ -75,6 +75,9 @@ public class ToDoManagementService extends Service {
 		mDb = new MainDbAdapter(this);
 		
 		createTaskTodos();
+		Intent i = new Intent(this, ToDoNotificationService.class);
+		i.putExtra("setJustNextRun", false);
+		this.startService(i);
 
 		mDb.close();
 		stopSelf();
@@ -209,7 +212,9 @@ public class ToDoManagementService extends Service {
 
 		
 		//select the last todo
-		todoSelectCondition = MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.TODO_COL_TASK_ID_NAME + " = ? ";
+		todoSelectCondition = MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + " = 'N' " +
+				" AND " + MainDbAdapter.TODO_COL_TASK_ID_NAME + " = ? ";
+				
 		if(taskCarCursor == null){
 			todoSelectArgs = new String[1];
 			todoSelectArgs[0] = Long.toString(taskId);
@@ -254,19 +259,35 @@ public class ToDoManagementService extends Service {
 
 				//set the calendar for next todo based on task definition
 				setNextToDoCalendar(nextToDoCalendar, frequencyType, timeFrequency, isLastDayOfMonth);
-				
 				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
+				//set the alarm date
+				if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
+					nextToDoCalendar.add(Calendar.MINUTE, -1 * taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+				}
+				else{
+					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1 * taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+				}
+				if(nextToDoCalendar.getTimeInMillis() < System.currentTimeMillis())
+					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, (System.currentTimeMillis() / 1000) + 60);
+				else
+					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
 			}
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) ||
 					taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 				nextToDoMileage = lastTodoCursor.getLong(MainDbAdapter.TODO_COL_DUEMILAGE_POS) + mileageFrequency;
 				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, nextToDoMileage);
+				nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, 
+						nextToDoMileage - taskCursor.getLong(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_POS));
 			}
 			
-			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE))
+			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE)){
 				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, (Long)null);
-			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_TIME))
+				nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, (Long)null);
+			}
+			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_TIME)){
 				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, (Long)null);
+				nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, (Long)null); 
+			}
 		}
 		else{ //this is the first todo
 			if(taskCarCursor != null)
@@ -287,7 +308,10 @@ public class ToDoManagementService extends Service {
 						firstRunMileage = taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
 
 					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, firstRunMileage);
+					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, 
+							firstRunMileage - taskCursor.getLong(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_POS));
 					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, (Long)null);
+					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, (Long)null);
 				}
 			}
 			else if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)
@@ -335,6 +359,17 @@ public class ToDoManagementService extends Service {
 				}
 				
 				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
+				//set the alarm date
+				if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
+					nextToDoCalendar.add(Calendar.MINUTE, -1 * taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+				}
+				else{
+					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1 * taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+				}
+				if(nextToDoCalendar.getTimeInMillis() < System.currentTimeMillis())
+					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, (System.currentTimeMillis() / 1000) + 60);
+				else
+					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
 
 				if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 					if(taskCarCursor != null){
@@ -347,10 +382,14 @@ public class ToDoManagementService extends Service {
 						else
 							firstRunMileage = taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
 						nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, firstRunMileage);
+						nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, 
+								firstRunMileage - taskCursor.getLong(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_POS));
 					}
 				}
-				else
-					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, (Long)null); 
+				else{
+					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, (Long)null);
+					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, (Long)null);
+				}
 			}
 			
 		}
