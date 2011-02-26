@@ -801,6 +801,16 @@ public class RefuelEditActivity extends EditActivityBase {
         data.put( MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME, etQty.getText().toString());
         data.put( MainDbAdapter.REFUEL_COL_UOMVOLUMEENTERED_ID_NAME,
                 spnUomVolume.getSelectedItemId());
+        //just for 
+        calculatePriceAmount();
+        if(priceEntered == null || amountEntered == null){
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString(R.string.GEN_PriceLabel) + ": " + mResource.getString(R.string.GEN_Required), Toast.LENGTH_SHORT );
+            toast.show();
+            etUserInput.setText("");
+            return;
+        }
+        	
         data.put( MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME, priceEntered.toString());
         data.put( MainDbAdapter.REFUEL_COL_AMOUNTENTERED_NAME, amountEntered.toString());
         data.put( MainDbAdapter.REFUEL_COL_CURRENCYENTERED_ID_NAME,
