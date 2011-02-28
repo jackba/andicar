@@ -298,8 +298,26 @@ public class MainActivity extends BaseActivity {
 								public void onClick(DialogInterface dialog,
 										int id) {
 									dialog.cancel();
-									exitResume = false;
-									onResume();
+//									exitResume = false;
+									AndiCarDialogBuilder builder2 = new AndiCarDialogBuilder(MainActivity.this, 
+					                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.MainActivity_HowToMessage));
+									builder2.setTitle(mResource
+											.getString(R.string.MainActivity_HowToMessage));
+									builder2.setMessage(mResource
+											.getString(R.string.LM_MAIN_ACTIVITY_USABILITY_MESSAGE));
+									builder2.setCancelable(false);
+									builder2.setPositiveButton(mResource.getString(R.string.GEN_OK),
+											new DialogInterface.OnClickListener() {
+												public void onClick(DialogInterface dialog,
+														int id) {
+													dialog.cancel();
+													exitResume = false;
+													onResume();
+												}
+											});
+									AlertDialog alert2 = builder2.create();
+									alert2.show();
+//									onResume();
 								}
 							});
 					AlertDialog alert = builder.create();
