@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+ Translated to German on 24.02.2011 by andy@haubenschmid.li
+-->
+
+<!-- Error messages -->
+
+<resources>
+    <string name="ERR_000">"Datenbank Fehler."</string>
+    <string name="ERR_001">"Der Tachostand ist in einer bereits existierenden Fahrstrecke."</string>
+    <string name="ERR_002">"Das Ende/Der neue Tachostand ist in einer bereits existierenden Fahrstrecke."</string>
+    <string name="ERR_003">"Die neue Fahrstrecke überlappt mit einem bereits existierenden Fahrstrecke."</string>
+    <string name="ERR_004">"Das Ende/Der neue Tachostand muss grösser sein als der start Tachostand."</string>
+    <string name="ERR_005">"Diese Umrechnungsrate existiert bereits."</string>
+    <string name="ERR_006">"Fehler beim erstellen des Eintrags!"</string>
+    <string name="ERR_008">"Ungültiges Datum/Zeitformat!"</string>
+    <string name="ERR_009">"Dieser Fahrer kann nicht gelöscht werden, weil er Fahrstrecken zugeordnet hat."</string>
+    <string name="ERR_010">"Dieser Fahrer kann nicht gelöscht werden, weil er Betankungen hat."</string>
+    <string name="ERR_011">"Dieses Fahrzeug kann nicht gelöscht werden, weil es Fahrstrecken zugeordnet hat."</string>
+    <string name="ERR_012">"Dieses Fahrzeug kann nicht gelöscht werden, weil es Betankungen hat."</string>
+    <string name="ERR_013">"Diese Einheit kann nicht gelöscht werden, weil sie in Fahrstrecken benutzt wird."</string>
+    <string name="ERR_014">"Diese Einheit kann nicht gelöscht werden, weil sie in Betankungen verwendet wird."</string>
+    <string name="ERR_015">"Diese Einheit kann nicht gelöscht werden, weil sie in Umrechnungen benutzt wird."</string>
+    <string name="ERR_016">"Diese Währung kann nicht gelöscht werden, weil sie in Fahrzeugdefinitionen verwendet wird."</string>
+    <string name="ERR_017">"Diese Währung kann nicht gelöscht werden, weil sie in Betankungen benutzt wird."</string>
+    <string name="ERR_018">"Diese Kostenart kann nicht gelöscht werden, weil sie in Fahrstrecken verwendet wird."</string>
+    <string name="ERR_019">"Diese Kostenart kann nicht gelöscht werden, weil sie in Betankungen benutzt wird."</string>
+    <string name="ERR_020">"SD-Karte nicht gefunden. Du kannst keine Auswertungen, GPS Trackings oder Datenbank-Backups erstellen!"</string>
+    <string name="ERR_021">"Report Verzeichnis (/sdcard/andicar/reports) kann nicht erstellt werden. Du kannst keine Auswertungen lokal speichern solange Du dieses Verzeichnis nicht erstellt hast."</string>
+    <string name="ERR_022">"Ich kann die Auswertungs-Datei nicht erstellen!"</string>
+    <string name="ERR_023">"Fehler beim schreiben der Datei!"</string>
+    <string name="ERR_024">"Backup Verzeichnis (/sdcard/andicar/backup) kann nicht erstellt werden. Du kannst keine Backups Deiner Datenbank erstellen, solange Du dieses Verzeichnis nicht erstellt hast."</string>
+    <string name="ERR_025">"Diese Einheit kann nicht deaktiviert werden, weil sie in einer aktiven Fahrzeugkonfiguration verwendet wird."</string>
+    <string name="ERR_026">"Diese Währung kann nicht deaktiviert werden, weil sie in einer aktiven Fahrzeugkonfiguration verwendet wird."</string>
+    <string name="ERR_027">"Diese Kategorie kann nicht gelöscht werden, weil sie in Betankungen verwendet wird."</string>
+    <string name="ERR_028">"Diese Kategorie kann nicht gelöscht werden, weil sie in Kosten verwendet wird."</string>
+    <string name="ERR_029">"Es ist bereits eine Umrechnungsrate zwischen diesen beiden Währungen definiert."</string>
+    <string name="ERR_030">"Diese Ausgabe kann nicht gelöscht werden weil sie durch eine Betankung erstellt wurde.\nDu musst die Betankung löschen."</string>
+    <string name="ERR_031">"Du kannst keine Umrechnungsrate zwischen derselben Einheit definieren."</string>
+    <string name="ERR_032">"Du kannst kein Wechselkurs zwischen derselben Währung definieren."</string>
+    <string name="ERR_033">"GPS Track Verzeichnis (/sdcard/andicar/gpstrack) kann nicht erstellt werden. Du kannst keine GPS Tracks speichern bevor du dieses Verzeichnis nicht erstellt hast."</string>
+    <string name="ERR_034">"Dateisystemfehler!\nÜberprüfe Deine SD-Karte."</string>
+    <string name="ERR_035">"Ungültige Auswertung."</string>
+    <string name="ERR_036">"Tracking Datei nicht gefunden oder sie ist leer!"</string>
+    <string name="ERR_037">"Unbekanntes Fahrzeug!\nWenn dieser Fehler weiterhin besteht, melde das bitte auf https://code.google.com/p/andicar/issues/entry"</string>
+    <string name="ERR_038">"Diese Währung kann nicht gelöscht werden, weil sie in Kosten verwendet wird."</string>
+    <string name="ERR_039">"Dieser Fahrer kann nicht gelöscht werden, weil er in Kosten verwendet wird."</string>
+    <string name="ERR_040">"Dieses Fahrzeug kann nicht gelöscht werden, weil es in Kosten verwendet wird."</string>
+    <string name="ERR_041">"Diese Kostenart kann nicht gelöscht werden, weil sie in den Kosten verwendet wird."</string>
+    <string name="ERR_042">"Dieser Partner kann nicht gelöscht werden, weil er in Betankungen verwendet wird."</string>
+    <string name="ERR_043">"Dieser Partner kann nicht gelöscht werden, weil er in Kosten verwendet wird."</string>
+    <string name="ERR_044">"Dieser Ort kann nicht gelöscht werden, weil er in Betankungen verwendet wird."</string>
+    <string name="ERR_045">"Dieser Ort kann nicht gelöscht werden, weil er in Kosten verwendet wird."</string>
+
+    <string name="ERR_046">"Dieser Tag kann nicht gelöscht werden, weil er in Fahrstrecken verwendet wird."</string>
+    <string name="ERR_047">"Dieser Tag kann nicht gelöscht werden, weil er in Betankungen verwendet wird."</string>
+    <string name="ERR_048">"Dieser Tag kann nicht gelöscht werden, weil er in Kosten verwendet wird."</string>
+    <string name="ERR_049">"Dieser Tag kann nicht gelöscht werden, weil er in GPS Track(s) verwendet wird."</string>
+
+    <string name="ERR_050">"Fehler beim verwenden der Landkarte!"</string>
+    <string name="ERR_051">"Kein Fahrzeug ausgewählt!\nBitte wähle ein Fahrzeug im Hauptbildschirm aus. Please chose a car in the main screen."</string>
+
+    <string name="ERR_052">"SMTP authentication nicht konfiguriert (kein Benutzername)!"</string>
+    <string name="ERR_053">"SMTP authentication nicht konfiguriert (kein Passwort)!"</string>
+    <string name="ERR_054">"SMTP authentication nicht konfiguriert (keine E-Mail Adresse)!"</string>
+    <string name="ERR_055">"Senden der E-Mail fehlgeschlagen."</string>
+    <string name="ERR_056">"Unbekannter Fehler."</string>
+    <string name="ERR_057">"Fehler beim komprimieren des Datenbank-Backups!"</string>
+
+    <string name="ERR_058">"Temp. Verzeichnis (/sdcard/andicar/temp) konnte nicht erstellt werden. Du kannst den  SecureBackup Service nicht benutzen solange dieses Verzeichnis nicht erstellt wurde."</string>
+    <string name="ERR_059">"Doppelter Eintrag."</string>
+
+    <string name="ERR_060">"Dieser Typ kann nicht gelöscht werden, weil er noch in Aufgaben verwendet wird."</string>
+</resources>
