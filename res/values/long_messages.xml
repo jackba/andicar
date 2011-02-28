@@ -31,6 +31,14 @@
         Thank you for using AndiCar!
     </string>
 
+    <string name="LM_MAIN_ACTIVITY_USABILITY_MESSAGE">
+    	Below are some general usability rules for AndiCar:\n
+    	* press your device Menu key to see the options applicable to a specific screen\n
+    	* in the lists tap a record to edit it. Long press it for more options\n\n
+    	** visit www.andicar.org -> \"How To\" to learn about how to use AndiCar **\n\n
+    	Thank you.
+    </string>
+
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices.
         It is licensed under the terms of the GNU General Public License, version 3.\n
