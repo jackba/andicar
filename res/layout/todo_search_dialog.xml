@@ -188,7 +188,7 @@
 	             android:id="@+id/tvIsActiveLabel"
 	             android:layout_width="wrap_content"
 	             android:layout_height="wrap_content"
-	             android:text="@string/ToDo_IsDoneCaption"
+	             android:text="@string/ToDo_IsDone"
 	             android:typeface="sans"
 	             android:textColor="@android:color/white"
 	             />
