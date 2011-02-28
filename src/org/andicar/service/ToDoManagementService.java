@@ -46,6 +46,7 @@ public class ToDoManagementService extends Service {
 	private Bundle mBundleExtras;
 	private long mTaskID = 0;
 	private long mCarID = 0;
+	private boolean isSetJustNextRun = false;
 //	private static int mTodoCount = 3;
 
 	/* (non-Javadoc)
@@ -70,13 +71,14 @@ public class ToDoManagementService extends Service {
 		if(mBundleExtras != null){
 			mTaskID = mBundleExtras.getLong("TaskID");
 			mCarID = mBundleExtras.getLong("CarID");
+			isSetJustNextRun = mBundleExtras.getBoolean("setJustNextRun");
 		}
 		
 		mDb = new MainDbAdapter(this);
 		
 		createTaskTodos();
 		Intent i = new Intent(this, ToDoNotificationService.class);
-		i.putExtra("setJustNextRun", false);
+		i.putExtra("setJustNextRun", isSetJustNextRun);
 		this.startService(i);
 
 		mDb.close();

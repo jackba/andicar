@@ -1625,9 +1625,6 @@ public class MainActivity extends BaseActivity {
 		menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
 				mResource.getText(R.string.MENU_PreferencesCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_preferences));
-		menu.add(0, StaticValues.MENU_TASK_ID, 0,
-				mResource.getText(R.string.MENU_TaskReminderCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_task));
 		menu.add(0, StaticValues.MENU_TODO_ID, 0,
 				mResource.getText(R.string.MENU_TodoCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_task));
@@ -1686,9 +1683,6 @@ public class MainActivity extends BaseActivity {
 			startActivity(new Intent(
 					Intent.ACTION_VIEW,
 					Uri.parse("http://www.andicar.org/localizing-andicar")));
-		}
-		else if (item.getItemId() == StaticValues.MENU_TASK_ID) {
-			startActivity(new Intent(this, TaskListActivity.class));
 		}
 		else if (item.getItemId() == StaticValues.MENU_TODO_ID) {
 			startActivity(new Intent(this, ToDoListReportActivity.class));

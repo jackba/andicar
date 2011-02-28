@@ -327,6 +327,7 @@
     <string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"Mileage frequency must be bigger than the reminder."</string>
     <string name="TaskEditActivity_GeneratedToDoCountLabel">"Automatically generate the next"</string>
     <string name="TaskEditActivity_ToDoCount">"to-do count"</string>
+    <string name="TaskEditActivity_ToDoCountHelp">"When a To-Do is marked as done, a new one will be automatically appended to the To-Do list."</string>
         
     <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
     <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>

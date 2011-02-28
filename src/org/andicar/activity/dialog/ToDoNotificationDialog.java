@@ -24,6 +24,7 @@ import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar.service.ToDoManagementService;
 import org.andicar.service.ToDoNotificationService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -51,7 +52,8 @@ public class ToDoNotificationDialog extends EditActivityBase {
 	private boolean isOKPressed = false;
 	String notifTitle = "";
 	String notifText = "";
-	long mToDoID;
+	private long mToDoID;
+	private long mTaskID; 
 	int triggeredBy = -1;
 	private TextView tvText1;
 	private TextView tvText2;
@@ -140,6 +142,7 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		
 		if (todoReportCursor != null && todoReportCursor.moveToFirst()) {
 			String dataString = todoReportCursor.getString(1);
+			mTaskID = todoReportCursor.getLong(11);
     		if(dataString.contains("[#5]"))
     			tvText1.setTextColor(Color.RED);
     		else if(dataString.contains("[#15]"))
@@ -234,8 +237,9 @@ public class ToDoNotificationDialog extends EditActivityBase {
 				cvData.put( MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, cal.getTimeInMillis() / 1000);
 			}
 		}
-		mDbAdapter.updateRecord(MainDbAdapter.TODO_TABLE_NAME, mToDoID, cvData);			
-		Intent intent = new Intent(this, ToDoNotificationService.class);
+		mDbAdapter.updateRecord(MainDbAdapter.TODO_TABLE_NAME, mToDoID, cvData);
+		Intent intent = new Intent(this, ToDoManagementService.class);
+		intent.putExtra("TaskID", mTaskID);
 		intent.putExtra("setJustNextRun", true);
 		this.startService(intent);
 		finish();

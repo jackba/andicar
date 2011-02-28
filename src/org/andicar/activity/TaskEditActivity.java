@@ -110,6 +110,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private LinearLayout llLinkedCarsList = null;
 	private LinearLayout llLastMonthDay = null;
 	private LinearLayout llTimeReminder = null;
+	private LinearLayout llToDoCountZone = null;
 	//used in link dialog
 	private LinearLayout llDialogStartingDateZone = null;
 	private LinearLayout llDialogStartingMileageZone = null;
@@ -283,6 +284,7 @@ public class TaskEditActivity extends EditActivityBase {
 		llLinkedCarsZone = (LinearLayout)findViewById(R.id.llLinkedCarsZone);
 		llLinkedCarsHelp = (LinearLayout)findViewById(R.id.llLinkedCarsHelp);
 		llTimeReminder = (LinearLayout)findViewById(R.id.llTimeReminder);
+		llToDoCountZone = (LinearLayout)findViewById(R.id.llToDoCountZone);
 
 		rgRepeating = (RadioGroup) findViewById(R.id.rgRepeating);
 
@@ -484,7 +486,8 @@ public class TaskEditActivity extends EditActivityBase {
 			}
 		}
 		
-		if(etNoOfNextToDo.getText().toString() == null || etNoOfNextToDo.getText().toString().length() == 0){
+		if(isRecurrent && 
+				(etNoOfNextToDo.getText().toString() == null || etNoOfNextToDo.getText().toString().length() == 0)){
 			Toast toast = Toast.makeText(getApplicationContext(),
 					mResource.getString(R.string.GEN_FillMandatory) + ": " + mResource.getString(R.string.TaskEditActivity_ToDoCount), 
 					Toast.LENGTH_SHORT);
@@ -504,7 +507,10 @@ public class TaskEditActivity extends EditActivityBase {
 		data.put(MainDbAdapter.TASK_COL_TASKTYPE_ID_NAME, spnTaskType.getSelectedItemId());
 		data.put(MainDbAdapter.TASK_COL_SCHEDULEDFOR_NAME, mScheduledFor);
 		data.put(MainDbAdapter.TASK_COL_ISRECURRENT_NAME, (isRecurrent ? "Y" : "N"));
-		data.put(MainDbAdapter.TASK_COL_TODOCOUNT_NAME, etNoOfNextToDo.getText().toString());
+		if(isRecurrent)
+			data.put(MainDbAdapter.TASK_COL_TODOCOUNT_NAME, etNoOfNextToDo.getText().toString());
+		else
+			data.put(MainDbAdapter.TASK_COL_TODOCOUNT_NAME, 1);
 		if(isTimingEnabled){
 			if(isRecurrent){
 				data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (isDiffStartingTime ? "Y" : "N"));
@@ -1006,12 +1012,14 @@ public class TaskEditActivity extends EditActivityBase {
 	protected AdapterView.OnItemSelectedListener spnTaskTypeOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, MainDbAdapter.taskTypeTableColNames, arg3);
-			if(c != null){
-				String comment = c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS);
-				if(comment != null && comment.length() > 0)
-					etUserComment.setText(comment);
-				c.close();
+			if(etUserComment.getText().toString() == null || etUserComment.getText().toString().length() == 0){
+				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, MainDbAdapter.taskTypeTableColNames, arg3);
+				if(c != null){
+					String comment = c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS);
+					if(comment != null && comment.length() > 0)
+						etUserComment.setText(comment);
+					c.close();
+				}
 			}
 				
 		}
@@ -1056,6 +1064,7 @@ public class TaskEditActivity extends EditActivityBase {
 	
 	private void setSpecificLayout(){
 		if (isRecurrent) {
+			llToDoCountZone.setVisibility(View.VISIBLE);
 			if(isTimingEnabled){
 				tvStartingTimeLbl.setText(R.string.TaskEditActivity_StartingTimeLbl);
 				ckIsDifferentStartingTime.setVisibility(View.VISIBLE);
@@ -1063,9 +1072,16 @@ public class TaskEditActivity extends EditActivityBase {
 				llTimeReminder.setVisibility(View.VISIBLE);
 				if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
 					tvTimeReminderUnitLbl.setText(R.string.GEN_Minutes);
+					if(mRowId == -1){ //new record
+						etTimeReminder.setText("30");
+					}
+
 				}
 				else{
 					tvTimeReminderUnitLbl.setText(R.string.GEN_Days);
+					if(mRowId == -1){ //new record
+						etTimeReminder.setText("3");
+					}
 				}
 					
 				if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY
@@ -1134,6 +1150,7 @@ public class TaskEditActivity extends EditActivityBase {
 			}
 		}
 		else{ //one time
+			llToDoCountZone.setVisibility(View.GONE);
 			tvStartingTimeLbl.setText(R.string.GEN_On);
 			tvFirstTimeRunExplanation.setVisibility(View.GONE);
 			tvFirstMileageRunExplanation.setVisibility(View.GONE);
