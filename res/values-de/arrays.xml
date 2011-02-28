@@ -112,12 +112,6 @@
         <item>Nein</item>
     </string-array>
 
-    <string-array name="recurency_periods">
-        <item>Woche(n)</item>
-        <item>Monat(e)</item>
-        <item>Jahr(e)</item>
-    </string-array>
-
     <string-array name="days_of_week">
     	<item>Sonntag</item>
     	<item>Montag</item>

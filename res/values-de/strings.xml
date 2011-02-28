@@ -448,16 +448,6 @@
     <string name="AddOn_AutoBackupService_BackupFailed">"Das Backup ist fehlgeschlagen! Überprüfe deine SDCARD."</string>
 
 
-    <string name="APP_Activity_TaskTypeList">"Aufgabenarten"</string>
-    <string name="APP_Activity_TaskTypeEdit">"Aufgabenarten bearbeiten"</string>
-    <string name="APP_Activity_TaskList">"Aufgaben"</string>
-    <string name="APP_Activity_TaskEdit">"Aufgaben bearbeiten"</string>
-    <string name="PREF_TaskReminderCategoryTitle">"Service / Erinnerungen"</string>
-    <string name="PREF_TaskTypeTitle">"Aufgabenarten"</string>
-    <string name="PREF_TaskTypeSummary">"hinzufügen, ändern und löschen von Aufgabenarten"</string>
-    <string name="PREF_TaskTitle">"Aufgaben"</string>
-    <string name="PREF_TaskSummary">"hinzufügen, ändern und löschen von Aufgaben"</string>
-
     <string name="GEN_Minutes">"Minuten"</string>
     <string name="GEN_Description">"Beschreibung"</string>
     <string name="GEN_Or">"Oder:"</string>
