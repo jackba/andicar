@@ -200,6 +200,7 @@
     <string name="MainActivity_AddOnMessage">"AndiCar have some useful add-on services.\n These add-ons can be tried for free, without any limitations of missing features for up to 15 days.\n\n Do you want to see the list of available add-ons?"</string>
     <string name="MainActivity_ToDoHeaderCaption">"Next To-Do"</string>
     <string name="MainActivity_ToDoNoDataText">"No task defined."</string>
+    <string name="MainActivity_HowToMessage">"Usability"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>
@@ -348,6 +349,7 @@
     <string name="ToDo_MinutesLeft">"Minutes left: "</string>
     <string name="ToDo_MileageLeft">"Mileage left: "</string>
     <string name="ToDo_CurrentIndex">"Current odometer: "</string>
+    <string name="ToDo_IsDone">"Is done"</string>
 
     <string name="PREF_UOMCategoryTitle">"Measurement units"</string>
     <string name="PREF_ExpenseCategoryTitle">"Expenses"</string>
