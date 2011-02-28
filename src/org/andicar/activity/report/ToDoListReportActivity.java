@@ -27,12 +27,15 @@ import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.persistence.ToDoListDataBinder;
+import org.andicar.service.ToDoManagementService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -255,6 +258,17 @@ public class ToDoListReportActivity extends ReportListActivityBase{
 				errorAlert = errorAlertBuilder.create();
 				errorAlert.show();
 			}
+			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, mLongClickId);
+			long taskID = 0;
+			if(c != null){
+				taskID = c.getLong(MainDbAdapter.TODO_COL_TASK_ID_POS);
+				c.close();
+			}
+			Intent intent = new Intent(this, ToDoManagementService.class);
+			intent.putExtra("TaskID", taskID);
+			intent.putExtra("setJustNextRun", true);
+			startService(intent);
+			finish();
 			return true;
 		}
 	}

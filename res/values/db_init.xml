@@ -100,4 +100,13 @@
     
     <!-- default tag -->
     <string name="DB_Tag_Default">"Default"</string>
+
+    <string name="DB_TaskType_ServiceName">"Service"</string>
+    <string name="DB_TaskType_ServiceComment">"Recurrent maintenance"</string>
+    <string name="DB_TaskType_ReminderName">"Reminder"</string>
+    <string name="DB_TaskType_ReminderComment">"Reminder for general tasks"</string>
+    <string name="DB_DemoTask_Name">"Daily mileage"</string>
+    <string name="DB_DemoTask_Comment">"Did you entered your daily mileage?\nThis is a demo task. You can modify or delete it from Preferences -> Tasks."</string>
+    
+    
 </resources>

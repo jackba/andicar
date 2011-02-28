@@ -740,8 +740,8 @@ public class ReportDbAdapter extends MainDbAdapter{
 							+ " strftime('%J','now', 'localtime') " 
 						+ " ) "
 			+ " END AS EstDueDays, " //#9
-			+ sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) //#10
-							
+			+ sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " //#10
+			+ sqlConcatTableColumn(TASK_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS TaskID " //#11
 		+ " FROM " + TODO_TABLE_NAME
 			+ " JOIN " + TASK_TABLE_NAME + " ON " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME) + " = " +
 															sqlConcatTableColumn(TASK_TABLE_NAME, GEN_COL_ROWID_NAME)
@@ -782,7 +782,7 @@ public class ReportDbAdapter extends MainDbAdapter{
     //used in exported reports
     public static String todoListReportSelect = 
     	"SELECT "
-			+ sqlConcatTableColumn(TODO_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS ToDoID, " 
+			+ sqlConcatTableColumn(TODO_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS ToDoID, " //#0
 			+ sqlConcatTableColumn(TASKTYPE_TABLE_NAME, GEN_COL_NAME_NAME) + " AS TaskType, "
 			+ sqlConcatTableColumn(TASK_TABLE_NAME, GEN_COL_NAME_NAME) + " AS Task, "
 			+ sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS Car, "
