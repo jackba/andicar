@@ -116,5 +116,27 @@
         <item>Нет</item>
     </string-array>
 
+	<string-array name="recurency_periods">
+        <item>Дн.</item>
+        <item>Нед.</item>
+        <item>Мес.</item>
+        <item>Год</item>
+    </string-array>
+    
+    <string-array name="months">
+	    <item>Январь</item>
+	    <item>Февраль</item>
+	    <item>Март</item>
+	    <item>Апрель</item>
+	    <item>Май</item>
+	    <item>Июнь</item>
+	    <item>Июль</item>
+	    <item>Август</item>
+	    <item>Сентябрь</item>
+	    <item>Октябрь</item>
+	    <item>Ноябрь</item>
+	    <item>Декабрь</item>
+    </string-array>
+    
 </resources>
 

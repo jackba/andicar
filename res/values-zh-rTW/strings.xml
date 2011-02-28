@@ -65,6 +65,10 @@
     <string name="APP_Activity_TagList">"標籤"</string>
     <string name="APP_Activity_TagEdit">"編輯標籤"</string>
     <string name="APP_Activity_Message">"AndiCar 訊息"</string>
+	<string name="APP_Activity_TaskTypeList">"工作/提醒類型"</string>
+	<string name="APP_Activity_TaskTypeEdit">"編輯工作類型"</string>
+	<string name="APP_Activity_TaskList">"工作"</string>
+	<string name="APP_Activity_TaskEdit">"編輯工作"</string>
 
     <string name="GEN_OK">"確定"</string>
     <string name="GEN_CANCEL">"取消"</string>
@@ -120,8 +124,17 @@
 	<string name="GEN_ShowNotification">"顯示通知"</string>
 	<string name="GEN_Error">"錯誤"</string>
 	<string name="GEN_Confirm">"確認"</string>
-	<string name="GEN_Info">"關於"</string>
+	<string name="GEN_Info">"訊息"</string>
 	<string name="GEN_Warning">"警告"</string>
+	<string name="GEN_TaskType">"工作類型"</string>
+	<string name="GEN_SetDate">"設定日期/時間"</string>
+	<string name="GEN_On">"在"</string> <!-- ex. on Monday -->
+	<string name="GEN_Days">"天"</string>
+	<string name="GEN_Minutes">"分鐘"</string>
+	<string name="GEN_LastDay">"最後一天"</string>
+	<string name="GEN_Description">"描述"</string>
+	<string name="GEN_Or">"或："</string>
+	<string name="GEN_TaskLabel">"工作："</string>
 
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
@@ -151,6 +164,7 @@
     <string name="MainActivity_StatisticsAvgConsLabel">"燃料平均效率： "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. 這個平均消耗是由里程數以及開始和最後燃料的總量計算出來的。"</string>
     <string name="MainActivity_StatisticsLastConsLabel">"燃料的最近效率："</string>
+	<string name="MainActivity_StatisticsLastConsNoData">"N/A。最新的燃油效率是使用最近兩次加滿油後的使用情況進行計算的。"</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"總支出："</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"里程費用："</string>
     <string name="MainActivity_MileageNoDataText">"沒有這輛車的里程記錄"</string>
@@ -269,15 +283,41 @@
 
     <string name="BPartnerEditActivity_LocationsHeaderCaption">"定位"</string>
 
+	<string name="TaskEditActivity_OneTime">"一次"</string>
+	<string name="TaskEditActivity_Recurrent">"循環"</string>
+	<string name="TaskEditActivity_RecurrentEveryLabel">"每次"</string>
+	<string name="TaskEditActivity_RecurrentFrequencyLabel">"頻率"</string>
+	<string name="TaskEditActivity_FirstRunDependOnCar">"為每輛車設定不同的開始時間"</string>
+	<string name="TaskEditActivity_TimeDriven">"時間"</string>
+	<string name="TaskEditActivity_MileageDriven">"里程"</string>
+	<string name="TaskEditActivity_BothDriven">"兩者"</string>
+	<string name="TaskEditActivity_FirstTimeRunExplanation">"將會為每個已連接的車輛指定開始時間"</string>
+	<string name="TaskEditActivity_FirstMileageRunExplanation">"將會為每個已連接的車輛指定開始里程"</string>
+	<string name="TaskEditActivity_ReminderStartLabel">"以下時間前提醒"</string>
+	<string name="TaskEditActivity_MileageUOMText">"英里或千米(取決於對汽車的定義)"</string>
+	<string name="TaskEditActivity_FillMileage">"填寫里程！"</string>
+	<string name="TaskEditActivity_FillFrequency">"填寫頻率！"</string>
+	<string name="TaskEditActivity_LinkedCarsOptionsHelp">"在一輛車上長按來檢視更多選項"</string>
+	<string name="TaskEditActivity_AllCarsLinkedMsg">"所有活動的車輛都已連接到此工作。"</string>
+	<string name="TaskEditActivity_NoLinkedCarsMsg">"必須連接至少一輛車到這個工作。"</string>
+	<string name="TaskEditActivity_NoCarsLinkedMsg">"沒有活動車輛的目前里程數小於工作里程！\n請提高工作的里程。"</string>
+	<string name="TaskEditActivity_StartingTimeInFutureMsg">"開始時間必須是未來的一個時間！"</string>
+	<string name="TaskEditActivity_StartingTimeLbl">"開始時間："</string>
+	<string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"里程頻率必須大於大提醒"</string>
+	
+	<string name="TaskCarEditActivity_StartDate">"開始日期："</string>
+	<string name="TaskCarEditActivity_StartMileage">"開始里程："</string>
+	<string name="TaskCarDialogActivity_Title">"連接車輛到工作"</string>
+
     <string name="PREF_UOMCategoryTitle">"度量單位"</string>
     <string name="PREF_ExpenseCategoryTitle">"支出"</string>
     <string name="PREF_ExpenseTypeCategoryTitle">"支出類型"</string>
     <string name="PREF_ExpenseTypeCategorySummary">"新增、刪除、修改支出類型"</string>
     <string name="PREF_CarDriverCategoryTitle">"汽車和司機"</string>
     <string name="PREF_CarTitle">"汽車"</string>
-    <string name="PREF_CarSummary">"新增、刪除、修改汽車。\n選取目前汽車。"</string>
+	<string name="PREF_CarSummary">"新增，刪除，修改車輛。"</string>
     <string name="PREF_DriverTitle">"司機"</string>
-    <string name="PREF_DriverSummary">"新增、刪除、修改司機。\n選取目前司機。"</string>
+	<string name="PREF_DriverSummary">"新增，刪除，修改司機。"</string>
     <string name="PREF_UOMTitle">"度量單位"</string>
     <string name="PREF_UOMSummary">"新增、刪除、修改度量單位"</string>
     <string name="PREF_UOMConversionTitle">"度量單位轉換"</string>
@@ -313,6 +353,11 @@
     <string name="PREF_RememberLastTagSummary">"記住上次使用的標籤"</string>
     <string name="PREF_AutoUpdateCheckTitle">"檢查更新"</string>
 	<string name="PREF_AutoUpdateCheckSummary">"檢查並在有新版本的 AndiCar 發佈時通知我"</string>
+	<string name="PREF_TaskReminderCategoryTitle">"工作/提醒"</string>
+	<string name="PREF_TaskTypeTitle">"工作類型"</string>
+	<string name="PREF_TaskTypeSummary">"新增，刪除，修改工作類型"</string>
+	<string name="PREF_TaskTitle">"工作"</string>
+	<string name="PREF_TaskSummary">"新增，刪除，修改工作"</string>
 
 	<string name="PREF_MainScreen_ShowMileageZone">"顯示里程區域"</string>
 	<string name="PREF_MainScreen_ShowGPSTrackZone">"顯示GPS追蹤區域"</string>

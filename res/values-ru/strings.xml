@@ -70,6 +70,10 @@
     <string name="APP_Activity_TagList">"Метки"</string>
     <string name="APP_Activity_TagEdit">"Редактировать метку"</string>
     <string name="APP_Activity_Message">"Сообщение AndiCar"</string>
+	<string name="APP_Activity_TaskTypeList">"Типы задач/напоминаний"</string>
+	<string name="APP_Activity_TaskTypeEdit">"Редактировать тип задачи"</string>
+	<string name="APP_Activity_TaskList">"Задачи"</string>
+	<string name="APP_Activity_TaskEdit">"Редактировать задачи"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Отмена"</string>
@@ -129,6 +133,15 @@
 	<string name="GEN_Confirm">"Подтверждение"</string>
 	<string name="GEN_Info">"Информация"</string>
 	<string name="GEN_Warning">"Предупреждение"</string>
+	<string name="GEN_TaskType">"Тип задач"</string>
+	<string name="GEN_SetDate">"Установить дату/время"</string>
+	<string name="GEN_On">"Вкл"</string> <!-- ex. on Monday -->
+	<string name="GEN_Days">"дней"</string>
+	<string name="GEN_Minutes">"минут"</string>
+	<string name="GEN_LastDay">"посл.день"</string>
+	<string name="GEN_Description">"Описание"</string>
+	<string name="GEN_Or">"Или:"</string>
+	<string name="GEN_TaskLabel">"Задача:"</string>
 
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
@@ -158,6 +171,7 @@
     <string name="MainActivity_StatisticsAvgConsLabel">"Ср. расход топл.: "</string>
     <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. Средний расход топлива вычисляется между первой и последней ПОЛНОЙ заправкой."</string>
     <string name="MainActivity_StatisticsLastConsLabel">"Посл. расход: "</string>
+	<string name="MainActivity_StatisticsLastConsNoData">"Не считается. Последний расход топлива считается по последним двум полным заправкам."</string>
     <string name="MainActivity_StatisticsTotalExpenseLabel">"Общие расходы:"</string>
     <string name="MainActivity_StatisticsMileageExpenseLabel">"Затраты на пробег:"</string>
     <string name="MainActivity_MileageNoDataText">"Нет поездок для этого автомобиля"</string>
@@ -276,15 +290,41 @@
 
     <string name="BPartnerEditActivity_LocationsHeaderCaption">"Местоположения"</string>
 
+	<string name="TaskEditActivity_OneTime">"Один раз"</string>
+	<string name="TaskEditActivity_Recurrent">"Повтор"</string>
+	<string name="TaskEditActivity_RecurrentEveryLabel">"Каждый"</string>
+	<string name="TaskEditActivity_RecurrentFrequencyLabel">"Частота"</string>
+	<string name="TaskEditActivity_FirstRunDependOnCar">" Различное время начала для каждого автомобиля "</string>
+	<string name="TaskEditActivity_TimeDriven">"Время"</string>
+	<string name="TaskEditActivity_MileageDriven">"Пробег"</string>
+	<string name="TaskEditActivity_BothDriven">"Оба"</string>
+	<string name="TaskEditActivity_FirstTimeRunExplanation">" Время начала будет указано для каждого  автомобиля "</string>
+	<string name="TaskEditActivity_FirstMileageRunExplanation">" Начальный пробег будет указан для каждого автомобиля "</string>
+	<string name="TaskEditActivity_ReminderStartLabel">"Запустить напоминание перед"</string>
+	<string name="TaskEditActivity_MileageUOMText">"мил. или км (зависит от настроек автомобиля)"</string>
+	<string name="TaskEditActivity_FillMileage">"Заполните пробег!"</string>
+	<string name="TaskEditActivity_FillFrequency">"Заполните частоту!"</string>
+	<string name="TaskEditActivity_LinkedCarsOptionsHelp">"Долгое нажатие на автомобиль для большего количества опций"</string>
+	<string name="TaskEditActivity_AllCarsLinkedMsg">"Все активные автомобили привязаны к этой задаче."</string>
+	<string name="TaskEditActivity_NoLinkedCarsMsg">"По крайне мере один автомобиль должен быть привязан к этой задаче."</string>
+	<string name="TaskEditActivity_NoCarsLinkedMsg">" Нет активных автомобилей с текущим пробегом меньше чем пробег в задачe!\nПожалуйста увеличьте пробег в задаче."</string>
+	<string name="TaskEditActivity_StartingTimeInFutureMsg">"Время начала должно быть в будущем!"</string>
+	<string name="TaskEditActivity_StartingTimeLbl">"Время начала:"</string>
+	<string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"Частота пробега должна быть больше чем в напоминании"</string>
+	 
+	<string name="TaskCarEditActivity_StartDate">"Начальная дата:"</string>
+	<string name="TaskCarEditActivity_StartMileage">"Начальный пробег:"</string>
+	<string name="TaskCarDialogActivity_Title">"Свяжите автомобиль с задачей"</string>
+
     <string name="PREF_UOMCategoryTitle">"Единицы измерения"</string>
     <string name="PREF_ExpenseCategoryTitle">"Расходы"</string>
     <string name="PREF_ExpenseTypeCategoryTitle">"Типы расходов"</string>
     <string name="PREF_ExpenseTypeCategorySummary">"Добавить, удалить, редактировать типы расходов"</string>
     <string name="PREF_CarDriverCategoryTitle">"Автомобили и водители"</string>
     <string name="PREF_CarTitle">"Автомобили"</string>
-    <string name="PREF_CarSummary">"Добавить, удалить, редактировать автомобили.\nВыбрать текущий автомобиль."</string>
+	<string name="PREF_CarSummary">" Добавить, удалить, редактировать  автомобили."</string>
     <string name="PREF_DriverTitle">"Водители"</string>
-    <string name="PREF_DriverSummary">"Добавить, удалить, редактировать водителей.\nВыбрать текущего водителя."</string>
+	<string name="PREF_DriverSummary">" Добавить, удалить, редактировать водителей."</string>
     <string name="PREF_UOMTitle">"Единицы измерения"</string>
     <string name="PREF_UOMSummary">"Добавить, удалить, редактировать единицы измерения"</string>
     <string name="PREF_UOMConversionTitle">"Преобразование ед. изм."</string>
@@ -320,7 +360,12 @@
     <string name="PREF_RememberLastTagSummary">"Запомнить последнюю использованную метку"</string>
 	<string name="PREF_AutoUpdateCheckTitle">"Проверить обновления"</string>
 	<string name="PREF_AutoUpdateCheckSummary">"Проверить и сообщить мне, если опубликована новая версия AndiCar"</string>
-
+	<string name="PREF_TaskReminderCategoryTitle">"Задачи/ напоминания"</string>
+	<string name="PREF_TaskTypeTitle">"Типы задач"</string>
+	<string name="PREF_TaskTypeSummary">"Добавить, удалить, редактировать типы задач"</string>
+	<string name="PREF_TaskTitle">"Задачи"</string>
+	<string name="PREF_TaskSummary">"Добавить, удалить, редактировать задачи"</string>
+	
     <string name="PREF_MainScreen_ShowMileageZone">"Раздел поездок"</string>
     <string name="PREF_MainScreen_ShowGPSTrackZone">"Раздел треков GPS"</string>
     <string name="PREF_MainScreen_ShowRefuelZone">"Раздел заправок"</string>
