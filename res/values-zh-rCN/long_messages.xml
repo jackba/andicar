@@ -66,9 +66,9 @@
     </string>
 
 	<string name="AddOn_SubscriptionValidity">
-		这个订阅对于你当前的或从处理订阅后创建的备份中还原的数据库来说是有效的。
-		\n你应该在处理这个订阅后立即进行备份！
+		对于当前的数据库，订阅是有效的。\n你应该在处理订阅后立即创建一个备份！
 	</string>
+	
 	<string name="AddOn_Backup_LongDescription">
 		所记录的信息(里程数，支出，总用油)对于你来说是很有价值的财产。为了在数据丢失的情况下还原最近的备份，这是一种很有用的方式。
 	</string>
