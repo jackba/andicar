@@ -38,7 +38,7 @@ public class StaticValues
      * 		Other
      * 		Unknown
      */
-    public static final String INITIAL_INSTALL_SOURCE = "Google Android Market";
+    public static final String INITIAL_INSTALL_SOURCE = "Unknown";
     
     public static final int MENU_PREFERENCES_ID = 10;
     public static final int MENU_REPORTS_ID = 11;
