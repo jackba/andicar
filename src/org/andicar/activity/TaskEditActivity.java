@@ -1012,15 +1012,15 @@ public class TaskEditActivity extends EditActivityBase {
 	protected AdapterView.OnItemSelectedListener spnTaskTypeOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
-			if(etUserComment.getText().toString() == null || etUserComment.getText().toString().length() == 0){
-				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, MainDbAdapter.taskTypeTableColNames, arg3);
-				if(c != null){
-					String comment = c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS);
-					if(comment != null && comment.length() > 0)
-						etUserComment.setText(comment);
-					c.close();
-				}
-			}
+//			if(etUserComment.getText().toString() == null || etUserComment.getText().toString().length() == 0){
+//				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, MainDbAdapter.taskTypeTableColNames, arg3);
+//				if(c != null){
+//					String comment = c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS);
+//					if(comment != null && comment.length() > 0)
+//						etUserComment.setText(comment);
+//					c.close();
+//				}
+//			}
 				
 		}
 
