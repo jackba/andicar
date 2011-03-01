@@ -31,6 +31,16 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="5dip"
         >
+        
+	    <LinearLayout
+	        android:orientation="vertical"
+	        android:layout_width="fill_parent"
+	        android:layout_height="0dip"
+	        android:layout_marginRight="5dip"
+	       	android:id="@+id/fakeFocus"
+			android:focusable="true"
+			android:focusableInTouchMode="true" 
+	        />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -38,11 +48,36 @@
             android:layout_height="wrap_content"
             >
             <TextView
+                android:id="@+id/tvExpCategoryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_Category"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <Spinner android:id="@+id/spnExpCategorySearch"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="2dip"
+                android:background="@color/search_dialog_spinner_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            >
+            <TextView
                 android:id="@+id/tvExpTypeLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_ExpenseTypeLabel"
-             	android:typeface="sans"
+	            android:typeface="sans"
 	            android:textColor="@android:color/white"
                 />
             <Spinner android:id="@+id/spnExpTypeSearch"
@@ -67,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_DriverLabel"
-             	android:typeface="sans"
+	            android:typeface="sans"
 	            android:textColor="@android:color/white"
                 />
             <Spinner android:id="@+id/spnDriverSearch"
@@ -92,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_CarLabel"
-             	android:typeface="sans"
+	            android:typeface="sans"
 	            android:textColor="@android:color/white"
                 />
             <Spinner android:id="@+id/spnCarSearch"
@@ -117,20 +152,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/DIALOGSearch_DateFromLabel"
-             	android:typeface="sans"
+	            android:typeface="sans"
 	            android:textColor="@android:color/white"
                 />
-            <EditText
-                android:id="@+id/etDateFromSearch"
+            <TextView
+                android:id="@+id/tvDateFromSearch"
                 android:layout_width="140dip"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
-                android:scrollHorizontally="true"
-                android:autoText="false"
-                android:capitalize="none"
-                android:gravity="fill_horizontal"
-                android:background="@android:drawable/editbox_background"
+                android:gravity="center_horizontal"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <ImageButton android:id="@+id/btnPickDateFrom"
                     android:layout_width="wrap_content"
@@ -140,7 +173,6 @@
                     android:src="@drawable/icon_calendar_selector"
                     />
         </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -152,20 +184,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/DIALOGSearch_DateToLabel"
-             	android:typeface="sans"
+	            android:typeface="sans"
 	            android:textColor="@android:color/white"
                 />
-            <EditText
-                android:id="@+id/etDateToSearch"
+            <TextView
+                android:id="@+id/tvDateToSearch"
                 android:layout_width="140dip"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
-                android:scrollHorizontally="true"
-                android:autoText="false"
-                android:capitalize="none"
-                android:gravity="fill_horizontal"
-                android:background="@android:drawable/editbox_background"
+                android:gravity="center_horizontal"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <ImageButton android:id="@+id/btnPickDateTo"
                     android:layout_width="wrap_content"
@@ -175,7 +205,6 @@
                     android:src="@drawable/icon_calendar_selector"
                     />
         </LinearLayout>
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -187,19 +216,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_UserCommentLabel"
-             	android:typeface="sans"
+	            android:typeface="sans"
 	            android:textColor="@android:color/white"
                 />
             <EditText
                 android:id="@+id/etUserCommentSearch"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:layout_marginLeft="2dip"
+                android:layout_marginLeft="5dip"
                 android:layout_marginRight="2dip"
-                android:scrollHorizontally="true"
-                android:autoText="false"
-                android:capitalize="none"
-                android:gravity="fill_horizontal"
                 android:background="@android:drawable/editbox_background"
                 />
         </LinearLayout>
@@ -223,6 +248,7 @@
 	             android:layout_width="fill_parent"
 	             android:layout_height="wrap_content"
 	             android:layout_marginLeft="5dip"
+                 android:layout_marginRight="2dip"
 	             android:background="@android:drawable/editbox_background"
 	             />
         </LinearLayout>

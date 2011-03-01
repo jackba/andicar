@@ -32,6 +32,16 @@
         android:layout_marginRight="5dip"
         >
         
+	    <LinearLayout
+	        android:orientation="vertical"
+	        android:layout_width="fill_parent"
+	        android:layout_height="0dip"
+	        android:layout_marginRight="5dip"
+	       	android:id="@+id/fakeFocus"
+			android:focusable="true"
+			android:focusableInTouchMode="true" 
+	        />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -96,17 +106,15 @@
 	            android:typeface="sans"
 	            android:textColor="@android:color/white"
                 />
-            <EditText
-                android:id="@+id/etDateFromSearch"
+            <TextView
+                android:id="@+id/tvDateFromSearch"
                 android:layout_width="140dip"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
-                android:scrollHorizontally="true"
-                android:autoText="false"
-                android:capitalize="none"
-                android:gravity="fill_horizontal"
-                android:background="@android:drawable/editbox_background"
+                android:gravity="center_horizontal"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <ImageButton android:id="@+id/btnPickDateFrom"
                     android:layout_width="wrap_content"
@@ -130,17 +138,15 @@
 	            android:typeface="sans"
 	            android:textColor="@android:color/white"
                 />
-            <EditText
-                android:id="@+id/etDateToSearch"
+            <TextView
+                android:id="@+id/tvDateToSearch"
                 android:layout_width="140dip"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dip"
+                android:layout_marginLeft="2dip"
                 android:layout_marginRight="2dip"
-                android:scrollHorizontally="true"
-                android:autoText="false"
-                android:capitalize="none"
-                android:gravity="fill_horizontal"
-                android:background="@android:drawable/editbox_background"
+                android:gravity="center_horizontal"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
                 />
             <ImageButton android:id="@+id/btnPickDateTo"
                     android:layout_width="wrap_content"
@@ -168,12 +174,8 @@
                 android:id="@+id/etUserCommentSearch"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:layout_marginLeft="2dip"
+                android:layout_marginLeft="5dip"
                 android:layout_marginRight="2dip"
-                android:scrollHorizontally="true"
-                android:autoText="false"
-                android:capitalize="none"
-                android:gravity="fill_horizontal"
                 android:background="@android:drawable/editbox_background"
                 />
         </LinearLayout>

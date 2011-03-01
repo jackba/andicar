@@ -43,6 +43,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 /**
  *
@@ -51,8 +52,8 @@ import android.widget.Spinner;
 public class ToDoListReportActivity extends ReportListActivityBase{
     private View searchView;
     private EditText etUserCommentSearch;
-    private EditText etDateFromSearch;
-    private EditText etDateToSearch;
+    private TextView tvDateFromSearch;
+    private TextView tvDateToSearch;
     private Spinner spnCarSearch;
     private Spinner spnTask;
     private Spinner spnIsDone;
@@ -103,7 +104,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
             return super.onCreateDialog(id);
 
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
-        searchView = liLayoutFactory.inflate(R.layout.todo_search_dialog, null);
+        searchView = liLayoutFactory.inflate(R.layout.search_dialog_todo, null);
         AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(ToDoListReportActivity.this, 
         		AndiCarDialogBuilder.DIALOGTYPE_SEARCH, mRes.getString(R.string.DIALOGSearch_DialogTitle));
         searchDialog.setView(searchView);
@@ -111,10 +112,8 @@ public class ToDoListReportActivity extends ReportListActivityBase{
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
         etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
         etUserCommentSearch.setText("%");
-        etDateFromSearch = (EditText) searchView.findViewById(R.id.etDateFromSearch);
-        etDateFromSearch.setEnabled(false);
-        etDateToSearch = (EditText) searchView.findViewById(R.id.etDateToSearch);
-        etDateToSearch.setEnabled(false);
+        tvDateFromSearch = (TextView) searchView.findViewById(R.id.tvDateFromSearch);
+        tvDateToSearch = (TextView) searchView.findViewById(R.id.tvDateToSearch);
         spnCarSearch = (Spinner) searchView.findViewById(R.id.spnCarSearch);
         initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME, null, null, 0);
         spnTask = (Spinner) searchView.findViewById(R.id.spnTask);
@@ -154,7 +153,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
                                 		MainDbAdapter.GEN_COL_USER_COMMENT_NAME) + " LIKE ",
                                 etUserCommentSearch.getText().toString());
                     }
-                    if (etDateFromSearch.getText().toString().length() > 0) {
+                    if (tvDateFromSearch.getText().toString().length() > 0) {
 //                        whereConditions.putString(
 //                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
 //                                		MainDbAdapter.TODO_COL_DUEDATE_NAME) + " >= ",
@@ -163,7 +162,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
                     	Calendar now = Calendar.getInstance();
                     	long estDueDay =
                     			(
-                    			Utils.decodeDateStr(etDateFromSearch.getText().toString(), StaticValues.DATE_DECODE_TO_ZERO)
+                    			Utils.decodeDateStr(tvDateFromSearch.getText().toString(), StaticValues.DATE_DECODE_TO_ZERO)
                 				- 
                 				now.getTimeInMillis()
                 				) 
@@ -171,7 +170,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
                 				StaticValues.ONE_DAY_IN_MILISECONDS;
                         whereConditions.putString("EstDueDays >= ", Long.toString(estDueDay));
                     }
-                    if (etDateToSearch.getText().toString().length() > 0) {
+                    if (tvDateToSearch.getText().toString().length() > 0) {
 //                        whereConditions.putString(
 //                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
 //                                		MainDbAdapter.TODO_COL_DUEDATE_NAME) + " <= ",
@@ -180,7 +179,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
                     	Calendar now = Calendar.getInstance();
                     	long estDueDay =
                 			(
-                			Utils.decodeDateStr(etDateToSearch.getText().toString(), StaticValues.DATE_DECODE_TO_ZERO)
+                			Utils.decodeDateStr(tvDateToSearch.getText().toString(), StaticValues.DATE_DECODE_TO_ZERO)
             				- 
             				now.getTimeInMillis()
             				) 
@@ -231,10 +230,10 @@ public class ToDoListReportActivity extends ReportListActivityBase{
 	@Override
 	protected void updateDate(int what) {
 		if(what == 1){ //date from
-			etDateFromSearch.setText(mYearFrom + "-" + Utils.pad((mMonthFrom + 1), 2) + "-" + Utils.pad(mDayFrom, 2));
+			tvDateFromSearch.setText(mYearFrom + "-" + Utils.pad((mMonthFrom + 1), 2) + "-" + Utils.pad(mDayFrom, 2));
 		}
 		else{ //date to
-			etDateToSearch.setText(mYearTo + "-" + Utils.pad((mMonthTo + 1), 2) + "-" + Utils.pad(mDayTo, 2));
+			tvDateToSearch.setText(mYearTo + "-" + Utils.pad((mMonthTo + 1), 2) + "-" + Utils.pad(mDayTo, 2));
 		}
 	}
 

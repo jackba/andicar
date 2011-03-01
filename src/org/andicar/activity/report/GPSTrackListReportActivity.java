@@ -40,6 +40,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 /**
  *
@@ -49,8 +50,8 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
     //used for search dialog
     private View searchView;
     private EditText etUserCommentSearch;
-    private EditText etDateFromSearch;
-    private EditText etDateToSearch;
+    private TextView tvDateFromSearch;
+    private TextView tvDateToSearch;
     private AutoCompleteTextView acTag;
     private Spinner spnDriverSearch;
     private Spinner spnCarSearch;
@@ -104,7 +105,7 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
             return super.onCreateDialog(id);
 
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
-        searchView = liLayoutFactory.inflate(R.layout.gpstrack_search_dialog, null);
+        searchView = liLayoutFactory.inflate(R.layout.search_dialog_gpstrack, null);
         AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(GPSTrackListReportActivity.this, 
         		AndiCarDialogBuilder.DIALOGTYPE_SEARCH, mRes.getString(R.string.DIALOGSearch_DialogTitle));
         searchDialog.setView(searchView);
@@ -112,10 +113,8 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
         etUserCommentSearch = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
         etUserCommentSearch.setText("%");
-        etDateFromSearch = (EditText) searchView.findViewById(R.id.etDateFromSearch);
-        etDateFromSearch.setEnabled(false);
-        etDateToSearch = (EditText) searchView.findViewById(R.id.etDateToSearch);
-        etDateToSearch.setEnabled(false);
+        tvDateFromSearch = (TextView) searchView.findViewById(R.id.tvDateFromSearch);
+        tvDateToSearch = (TextView) searchView.findViewById(R.id.tvDateToSearch);
         spnCarSearch = (Spinner) searchView.findViewById(R.id.spnCarSearch);
         initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME, null, null, mCarId);
         spnDriverSearch = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
@@ -159,18 +158,18 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
                                 MainDbAdapter.GEN_COL_USER_COMMENT_NAME) + " LIKE ",
                                 etUserCommentSearch.getText().toString());
                     }
-                    if (etDateFromSearch.getText().toString().length() > 0) {
+                    if (tvDateFromSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
                                 MainDbAdapter.GPSTRACK_COL_DATE_NAME) + " >= ",
-                                Long.toString(Utils.decodeDateStr(etDateFromSearch.getText().toString(),
+                                Long.toString(Utils.decodeDateStr(tvDateFromSearch.getText().toString(),
                                 StaticValues.DATE_DECODE_TO_ZERO) / 1000));
                     }
-                    if (etDateToSearch.getText().toString().length() > 0) {
+                    if (tvDateToSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
                                 MainDbAdapter.GPSTRACK_COL_DATE_NAME) + " <= ",
-                                Long.toString(Utils.decodeDateStr(etDateToSearch.getText().toString(),
+                                Long.toString(Utils.decodeDateStr(tvDateToSearch.getText().toString(),
                                 StaticValues.DATE_DECODE_TO_24) / 1000));
                     }
                     if (spnCarSearch.getSelectedItemId() != -1) {
@@ -219,10 +218,10 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
 	@Override
 	protected void updateDate(int what) {
 		if(what == 1){ //date from
-			etDateFromSearch.setText(mYearFrom + "-" + Utils.pad((mMonthFrom + 1), 2) + "-" + Utils.pad(mDayFrom, 2));
+			tvDateFromSearch.setText(mYearFrom + "-" + Utils.pad((mMonthFrom + 1), 2) + "-" + Utils.pad(mDayFrom, 2));
 		}
 		else{ //date to
-			etDateToSearch.setText(mYearTo + "-" + Utils.pad((mMonthTo + 1), 2) + "-" + Utils.pad(mDayTo, 2));
+			tvDateToSearch.setText(mYearTo + "-" + Utils.pad((mMonthTo + 1), 2) + "-" + Utils.pad(mDayTo, 2));
 		}
 	}
 
