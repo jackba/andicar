@@ -36,6 +36,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -98,6 +99,10 @@ public class BaseActivity extends Activity {
 
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);
+
+        LinearLayout fakeFocus = (LinearLayout)findViewById(R.id.fakeFocus);
+		if(fakeFocus != null)
+			fakeFocus.requestFocus();
     }
 
     protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from,

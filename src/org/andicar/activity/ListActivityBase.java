@@ -30,6 +30,7 @@ import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -43,6 +44,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -452,4 +454,17 @@ public class ListActivityBase extends ListActivity {
         }
         return true;
     }
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onPrepareDialog(int, android.app.Dialog)
+	 */
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		super.onPrepareDialog(id, dialog);
+		LinearLayout fakeFocus = (LinearLayout)dialog.findViewById(R.id.fakeFocus);
+		if(fakeFocus != null)
+			fakeFocus.requestFocus();
+	}
+
+    
 }
