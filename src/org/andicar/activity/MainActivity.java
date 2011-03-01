@@ -157,6 +157,7 @@ public class MainActivity extends BaseActivity {
 					StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 			if(mPreferences.getAll().size() == 0)
 				isJustInstalled = true;
+			SharedPreferences.Editor editor = mPreferences.edit();
 			
 			mResource = getResources();
 
@@ -191,7 +192,6 @@ public class MainActivity extends BaseActivity {
 							});
 					AlertDialog alert = builder.create();
 					alert.show();
-					SharedPreferences.Editor editor = mPreferences.edit();
 					editor.remove("UpdateMsg");
 					editor.commit();
 				}
@@ -250,6 +250,8 @@ public class MainActivity extends BaseActivity {
 
 			if (isJustInstalled) {
 				exitResume = true;
+				editor.putString("InitialInstallSource", StaticValues.INITIAL_INSTALL_SOURCE);
+				editor.commit();
 				// test if backups exists
 				if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null
 						&& !FileUtils.getFileNames(StaticValues.BACKUP_FOLDER,
@@ -324,6 +326,10 @@ public class MainActivity extends BaseActivity {
 					alert.show();
 				}
 			}
+			
+			if(!mPreferences.contains("InitialInstallSource"))
+				editor.putString("InitialInstallSource", StaticValues.INITIAL_INSTALL_SOURCE);
+			editor.commit();
 
 			mCarId = mPreferences.getLong("CurrentCar_ID", -1);
 			initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
@@ -337,8 +343,6 @@ public class MainActivity extends BaseActivity {
 						getPackageName(), 0).versionName;
 				
 				String deviceId = ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId(); 
-				SharedPreferences.Editor editor = mPreferences.edit();
-				
 				if (appVersion == null || appVersion.contains("Beta")
 						|| deviceId == null || deviceId.equals("000000000000000")) //emulator
 					editor.putBoolean("IsBeta", true); // no flurry statistics
@@ -374,7 +378,6 @@ public class MainActivity extends BaseActivity {
 			// check for app update once a day
 			Long currentTime = System.currentTimeMillis();
 			Long lastTime = mPreferences.getLong("lastUpdateCheckTime", 0);
-			SharedPreferences.Editor editor = mPreferences.edit();
 //			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
 //				if ((lastTime + oneDayInMilis) < currentTime) {
 //					Intent intent = new Intent(this, UpdateCheckService.class);
