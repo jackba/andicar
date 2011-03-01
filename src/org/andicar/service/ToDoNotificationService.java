@@ -119,9 +119,9 @@ public class ToDoNotificationService extends Service {
 		String carUOMCode = "";
 		String minutesOrDays = "";
 		long carCurrentOdodmeter = 0;
-		long todoDueMileage = 0;
+//		long todoDueMileage = 0;
 		long todoAlarmMileage = 0;
-		long todoDueDateSec = 0;
+//		long todoDueDateSec = 0;
 		long todoAlarmDate = 0;
 		long currentDateSec = System.currentTimeMillis() / 1000;
 		int notifTrigger = -1;
@@ -141,7 +141,7 @@ public class ToDoNotificationService extends Service {
 			if(taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_TIME) || 
 					taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 				//check time
-				todoDueDateSec = toDoCursor.getLong(MainDbAdapter.TODO_COL_DUEDATE_POS);
+//				todoDueDateSec = toDoCursor.getLong(MainDbAdapter.TODO_COL_DUEDATE_POS);
 				todoAlarmDate = toDoCursor.getLong(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_POS);
 				currentDateSec = System.currentTimeMillis() / 1000;
 
@@ -153,7 +153,7 @@ public class ToDoNotificationService extends Service {
 			}
 			if(taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) || 
 						taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
-				todoDueMileage = toDoCursor.getLong(MainDbAdapter.TODO_COL_DUEMILAGE_POS);
+//				todoDueMileage = toDoCursor.getLong(MainDbAdapter.TODO_COL_DUEMILAGE_POS);
 				todoAlarmMileage = toDoCursor.getLong(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_POS);
 				if(todoAlarmMileage <= carCurrentOdodmeter){
 					showNotif = true;
@@ -171,15 +171,16 @@ public class ToDoNotificationService extends Service {
 			if(showNotif){
 			    mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 			    notification = new Notification(R.drawable.icon_sys_alarm, "AndiCar " + getString(R.string.GEN_ToDoAlert), System.currentTimeMillis());
-				CharSequence contentTitle = getString(R.string.GEN_TaskLabel) + " " + taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS);
+				CharSequence contentTitle = getString(R.string.GEN_TaskLabel) + " " + 
+						taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS);
 				Intent i = new Intent(this, ToDoNotificationDialog.class);
 				i.putExtra("ToDoID", toDoID);
 				i.putExtra("NotifTitle", contentTitle);
 				i.putExtra("NotifText", contentText);
 				i.putExtra("TriggeredBy", notifTrigger);
-				i.putExtra("CarCurrentOdodmeter",carCurrentOdodmeter);
-				i.putExtra("TodoDueMileage",todoDueMileage);
-				i.putExtra("TodoDueDateSec",todoDueDateSec);
+//				i.putExtra("CarCurrentOdodmeter",carCurrentOdodmeter);
+//				i.putExtra("TodoDueMileage",todoDueMileage);
+//				i.putExtra("TodoDueDateSec",todoDueDateSec);
 				i.putExtra("CarUOMCode",carUOMCode);
 				i.putExtra("MinutesOrDays", minutesOrDays);
 				
@@ -193,8 +194,12 @@ public class ToDoNotificationService extends Service {
 		        notification.flags |= Notification.FLAG_NO_CLEAR;
 		        mNM.notify( ((Long)toDoID).intValue(), notification);
 			}
-			taskCursor.close();
 		}
+		else{
+			
+		}
+		if(taskCursor != null)
+			taskCursor.close();
 	}
 	
 	private void setNextRunForDate(){

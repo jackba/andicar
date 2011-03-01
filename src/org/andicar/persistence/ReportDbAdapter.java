@@ -741,7 +741,8 @@ public class ReportDbAdapter extends MainDbAdapter{
 						+ " ) "
 			+ " END AS EstDueDays, " //#9
 			+ sqlConcatTableColumn(CAR_TABLE_NAME, GEN_COL_NAME_NAME) + " AS CarName, " //#10
-			+ sqlConcatTableColumn(TASK_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS TaskID " //#11
+			+ sqlConcatTableColumn(TASK_TABLE_NAME, GEN_COL_ROWID_NAME) + " AS TaskID, " //#11
+			+ sqlConcatTableColumn(CAR_TABLE_NAME, CAR_COL_INDEXCURRENT_NAME) + " AS CarCurrentIndex " //#12
 		+ " FROM " + TODO_TABLE_NAME
 			+ " JOIN " + TASK_TABLE_NAME + " ON " + sqlConcatTableColumn(TODO_TABLE_NAME, TODO_COL_TASK_ID_NAME) + " = " +
 															sqlConcatTableColumn(TASK_TABLE_NAME, GEN_COL_ROWID_NAME)

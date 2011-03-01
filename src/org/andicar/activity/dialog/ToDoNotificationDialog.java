@@ -29,15 +29,13 @@ import org.andicar.service.ToDoNotificationService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -50,6 +48,7 @@ import android.widget.Toast;
  */
 public class ToDoNotificationDialog extends EditActivityBase {
 	private boolean isOKPressed = false;
+	private boolean isTodoOK = true;
 	String notifTitle = "";
 	String notifText = "";
 	private long mToDoID;
@@ -61,6 +60,7 @@ public class ToDoNotificationDialog extends EditActivityBase {
 	private TextView tvText4;
 	private TextView tvPostponeUOM;
 	private EditText etPostpone;
+	private LinearLayout llActionZone;
 	private long carCurrentOdodmeter;
 	private long todoDueMileage;
 	private long todoDueDateSec;
@@ -90,45 +90,9 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		notifText = mBundleExtras.getString("NotifText");
 		mToDoID = mBundleExtras.getLong("ToDoID");
 		triggeredBy = mBundleExtras.getInt("TriggeredBy");
-		carCurrentOdodmeter = mBundleExtras.getLong("CarCurrentOdodmeter");
-		todoDueMileage = mBundleExtras.getLong("TodoDueMileage");
-		todoDueDateSec = mBundleExtras.getLong("TodoDueDateSec");
 		carUOMCode = mBundleExtras.getString("CarUOMCode");
 		minutesOrDays = mBundleExtras.getString("MinutesOrDays");
 
-		tvText2.setTextColor(Color.RED);
-		if(triggeredBy == ToDoNotificationService.TRIGGERED_BY_MILEAGE){
-			tvPostponeUOM.setText(carUOMCode);
-			etPostpone.setText("100");
-			if(todoDueMileage - carCurrentOdodmeter > 0){
-				tvText2.setText(getString(R.string.ToDo_MileageLeft) + 
-						Utils.numberToString(todoDueMileage - carCurrentOdodmeter, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH) +
-						" " + carUOMCode);
-			}
-			else{
-				tvText2.setText(getString(R.string.ToDo_CurrentIndex) + 
-						Utils.numberToString(carCurrentOdodmeter, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH) +
-						" " + carUOMCode);
-			}
-		}
-		else{
-			tvPostponeUOM.setText(minutesOrDays);
-			long currentSecs = System.currentTimeMillis() / 1000;
-			if(minutesOrDays.equals(getString(R.string.GEN_Min))){
-				etPostpone.setText("30");
-				tvText2.setText(getString(R.string.ToDo_MinutesLeft) + 
-						Utils.numberToString(((todoDueDateSec - currentSecs) / 60) + 1, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
-			}
-			else{
-				etPostpone.setText("1");
-				tvText2.setText(getString(R.string.ToDo_DaysLeft) + 
-						Utils.numberToString(((todoDueDateSec - currentSecs) / 3600 / 24) + 1, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
-			}
-			if(todoDueDateSec - currentSecs < 0){
-				tvText2.setText("");
-			}
-		}
-		
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
 				ReportDbAdapter.sqlConcatTableColumn(
@@ -139,8 +103,46 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		ReportDbAdapter reportDb = new ReportDbAdapter(this, "todoListViewSelect", whereConditions);
 		reportDb.setReportSql("todoListViewSelect", whereConditions);
 		Cursor todoReportCursor = reportDb.fetchReport(1);
-		
+
 		if (todoReportCursor != null && todoReportCursor.moveToFirst()) {
+			tvText2.setTextColor(Color.RED);
+			todoDueMileage = todoReportCursor.getLong(5);
+			carCurrentOdodmeter = todoReportCursor.getLong(12);
+			todoDueDateSec= todoReportCursor.getLong(4);
+			
+			if(triggeredBy == ToDoNotificationService.TRIGGERED_BY_MILEAGE){
+				tvPostponeUOM.setText(carUOMCode);
+				etPostpone.setText("100");
+				if(todoDueMileage - carCurrentOdodmeter > 0){
+					tvText2.setText(getString(R.string.ToDo_MileageLeft) + 
+							Utils.numberToString(todoDueMileage - carCurrentOdodmeter, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH) +
+							" " + carUOMCode);
+				}
+				else{
+					tvText2.setText(getString(R.string.ToDo_CurrentIndex) + 
+							Utils.numberToString(carCurrentOdodmeter, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH) +
+							" " + carUOMCode);
+				}
+			}
+			else{
+				tvPostponeUOM.setText(minutesOrDays);
+				long currentSecs = System.currentTimeMillis() / 1000;
+				if(minutesOrDays.equals(getString(R.string.GEN_Min))){
+					etPostpone.setText("30");
+					tvText2.setText(getString(R.string.ToDo_MinutesLeft) + 
+							Utils.numberToString(((todoDueDateSec - currentSecs) / 60) + 1, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+				}
+				else{
+					etPostpone.setText("1");
+					tvText2.setText(getString(R.string.ToDo_DaysLeft) + 
+							Utils.numberToString(((todoDueDateSec - currentSecs) / 3600 / 24) + 1, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+				}
+				if(todoDueDateSec - currentSecs < 0){
+					tvText2.setText("");
+				}
+			}
+			
+			
 			String dataString = todoReportCursor.getString(1);
 			mTaskID = todoReportCursor.getLong(11);
     		if(dataString.contains("[#5]"))
@@ -184,6 +186,13 @@ public class ToDoNotificationDialog extends EditActivityBase {
 			text = todoReportCursor.getString(todoReportCursor
 					.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
 			tvText4.setText(text);
+			isTodoOK = true;
+		}
+		else{
+			llActionZone.setVisibility(View.GONE);
+			tvText1.setTextColor(Color.RED);
+			tvText1.setText(R.string.ERR_061);
+			isTodoOK = false;
 		}
 		if(todoReportCursor != null)
 			todoReportCursor.close();
@@ -195,6 +204,10 @@ public class ToDoNotificationDialog extends EditActivityBase {
 	@Override
 	protected void saveData() {
 		isOKPressed = true;
+		if(!isTodoOK){
+			finish();
+			return;
+		}
 		CheckBox ckIsDone = (CheckBox)findViewById(R.id.ckIsDone); 
 		EditText etPostpone = (EditText)findViewById(R.id.etPostpone);
 		BigDecimal postPoneFor;
@@ -258,6 +271,7 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		etPostpone = (EditText) findViewById(R.id.etPostpone);
 		tvPostponeUOM = (TextView) findViewById(R.id.tvPostponeUOM);
 		((LinearLayout) findViewById(R.id.fakeFocus)).requestFocus();
+		llActionZone = (LinearLayout) findViewById(R.id.llActionZone);
 	}
 
 	/* (non-Javadoc)
@@ -268,21 +282,10 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		super.onDestroy();
 		//if back key used show again the notification
 		if(!isOKPressed){
-			NotificationManager mNM = null;
-			Notification notification = null;
-		    mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		    notification = new Notification(R.drawable.icon_sys_alarm, "AndiCar " + getString(R.string.GEN_ToDoAlert), System.currentTimeMillis());
-			Intent i = new Intent(this, ToDoNotificationDialog.class);
-			i.putExtras(getIntent());
-	        notification.setLatestEventInfo(this, 
-	        		notifTitle, notifText, 
-	        		PendingIntent.getActivity(this, ((Long)mToDoID).intValue(), i, PendingIntent.FLAG_UPDATE_CURRENT));
-	        notification.flags |= Notification.DEFAULT_LIGHTS;
-	        notification.flags |= Notification.DEFAULT_VIBRATE;
-	        notification.flags |= Notification.DEFAULT_SOUND;
-	        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-	        notification.flags |= Notification.FLAG_NO_CLEAR;
-	        mNM.notify(((Long)mToDoID).intValue(), notification);
+			Intent i = new Intent(this, ToDoNotificationService.class);
+			i.putExtra("setJustNextRun", false);
+			i.putExtra("ToDoID", mToDoID);
+			this.startService(i);
 		}
 	}
 

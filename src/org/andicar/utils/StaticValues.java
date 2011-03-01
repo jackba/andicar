@@ -31,6 +31,14 @@ public class StaticValues
     public static final int DATABASE_VERSION = 357;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
+    /*
+     * initial install location of AndiCar: 
+     * 		Google Android Market
+     * 		Amazon App Store
+     * 		Other
+     * 		Unknown
+     */
+    public static final String INITIAL_INSTALL_SOURCE = "Google Android Market";
     
     public static final int MENU_PREFERENCES_ID = 10;
     public static final int MENU_REPORTS_ID = 11;
