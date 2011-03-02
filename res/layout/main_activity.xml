@@ -28,6 +28,7 @@
     android:id="@+id/vgRoot"
     android:background="@android:color/black"
     >
+    <!-- 
     <TextView
         android:id="@+id/AndiCarMotto"
         android:layout_width="fill_parent"
@@ -40,57 +41,73 @@
         android:gravity="center"
         android:layout_marginTop="5dip"
         />
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="5dip"
-        >
-	    <TextView
-	        android:id="@+id/tvCarLabel"
-	        android:layout_height="wrap_content"
-	        android:layout_width="wrap_content"
-	        android:textSize="14sp"
-	        android:textStyle="bold"
-	        android:typeface="sans"
-	        android:textColor="@android:color/white"
-        	android:text="@string/GEN_CarLabel"
-	        />
-       <Spinner android:id="@+id/spnCar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dip"
-                android:prompt="@string/GEN_ChooseOneTitle"
-                android:drawSelectorOnTop="true"
-                android:background="@drawable/white_background"
-                />
-    <!-- 
-	    <TextView
-	        android:id="@+id/tvCarIndex"
-	        android:layout_height="wrap_content"
-	        android:layout_width="wrap_content"
-	        android:typeface="sans"
-	        android:textColor="@android:color/white"
-            android:layout_marginLeft="5dip"
-	        />
-     -->
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="3dip"
-        >
-	    <TextView
-	        android:id="@+id/tvCarIndex"
-	        android:layout_height="wrap_content"
-	        android:layout_width="wrap_content"
-	        android:typeface="sans"
-	        android:textColor="@android:color/white"
-	        />
-    </LinearLayout>
+        -->
+        <!-- 
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1"
+            >
+            <TableRow
+            	android:gravity="center_vertical"
+            >
+             
+				<ImageView
+					android:src="@drawable/cabriolet32x32"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+					/>
+			-->		
+				<ImageView
+					android:src="@drawable/main_activity_picture"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+					/>
+			    <LinearLayout
+			        android:orientation="horizontal"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:gravity="center_horizontal"
+			        android:layout_marginTop="5dip"
+			        >
+				    <TextView
+				        android:id="@+id/tvCarLabel"
+				        android:layout_height="wrap_content"
+				        android:layout_width="wrap_content"
+				        android:textSize="14sp"
+				        android:textStyle="bold"
+				        android:typeface="sans"
+				        android:textColor="@android:color/white"
+			        	android:text="@string/GEN_CarLabel"
+				        />
+			       <Spinner android:id="@+id/spnCar"
+			                android:layout_width="wrap_content"
+			                android:layout_height="wrap_content"
+			                android:layout_marginLeft="5dip"
+			                android:prompt="@string/GEN_ChooseOneTitle"
+			                android:drawSelectorOnTop="true"
+			                android:background="@drawable/white_background"
+			                />
+			    </LinearLayout>
+			    <LinearLayout
+			        android:orientation="horizontal"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:gravity="center_horizontal"
+			        android:layout_marginTop="3dip"
+			        >
+				    <TextView
+				        android:id="@+id/tvCarIndex"
+				        android:layout_height="wrap_content"
+				        android:layout_width="wrap_content"
+				        android:typeface="sans"
+				        android:textColor="@android:color/white"
+				        />
+			    </LinearLayout>
+			    <!-- 
+            </TableRow>
+        </TableLayout>
+         -->
     <!-- 
 		android:layout_alignParentTop="true"
 		android:isScrollContainer="true"
