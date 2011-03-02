@@ -61,32 +61,23 @@
         *  Du kannst Dich für den Projekt Newsletter unter 
         <a href="http://www.andicar.org/News/">http://sites.google.com/site/andicarfree/News/</a> 
 	   anmelden.\n
-        *  Für alles andere kannst Du ein Mail (am besten in englischer Sprache) an andicar.support@gmail.com senden.\n\n
-        Wenn Dir <b><i>AndiCar</i></b> gefällt, dann sende uns eine Spende.
-        Alle Spenden können über einen PayPal Account gemacht werden.
-
+        *  Für alles andere kannst Du ein Mail (am besten in englischer Sprache) an andicar.support@gmail.com senden.\n
 	Copyright © 2010-2011 Miklos Keresztes.\n
 
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
-	\n\nDanke dass du <B><I>AndiCar</I></B> benutzt.\n\n
+	Danke dass du <B><I>AndiCar</I></B> benutzt.\n\n
         <b><i>Credits:</i></b>\n
         *  Chinesische Übersetzung durch <a href="http://goapk.com/">goapk.com</a> \n
         *  Russische Übersetzung durch  Andrey Demin - andde@rambler.ru\n
 		*  Deutsche Übersetzung durch andy@haubenschmid.li\n
         \n<b><i>Copyright Hinweis</i></b>:\n\n
         Copyright © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
-	Dieses Programm ist freie Software: Du kannst es weiterverbreiten, und/oder verändern
-	unter den Bedingungen der GNU General Public License wie sie von der Free Software Foundation veröffentlicht
-	wurde. Entweder nach Version 3 der Lizenz oder (wenn du willst) nach einer neueren Version dieser Lizenz.\n\n
-	Dieses Programm wird vertrieben in der Hoffnung das es Dir nützt, aber OHNE JEGLICHE GARANTIE;
-	ohne Produktehaftung und dergleichen. Wir übernehmen keinerlei Haftung, weder für Deine Daten noch dafür,
-	dass das Programm für einen speziellen Zweck funktioniert.
-	Lies dazu die GNU General Public License für genauere Details.\n\n
-	Du solltest eine Kopie der GNU General Public License zusammen mit diesem Programm erhalten haben.
-	Falls nicht, schau unter <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a> nach.\n
-	Die gesamte Lizenz kann <a href="http://www.gnu.org/licenses/gpl.html">HIER</a> gefunden werden.\n
+		Dieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.\n\n
+		Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n\n
+		Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben. Falls nicht, siehe <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a> nach.\n
+		Die gesamte Lizenz kann <a href="http://www.gnu.org/licenses/gpl.html">HIER</a> gefunden werden.\n
     </string>
 
     <string name="AddOn_SubscriptionValidity">

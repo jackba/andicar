@@ -43,6 +43,7 @@
             android:textColor="@android:color/white"
             android:text="@string/LM_COPYRIGHT_HTML1"
             />
+        <!-- 
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -74,6 +75,7 @@
                     />
             </TableRow>
         </TableLayout>
+         -->
         <TextView
             android:id="@+id/tvAbout2"
             android:layout_width="fill_parent"
