@@ -19,23 +19,12 @@
 
 package org.andicar.activity.miscellaneous;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
-import org.andicar.utils.AndiCarStatistics;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.text.method.LinkMovementMethod;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.andicar.addon.activity.GetPayPalActivityForAboutDonate;
 
 
 /**
@@ -53,44 +42,44 @@ public class AboutActivity extends BaseActivity{
         TextView tvAbout1 = (TextView)findViewById(R.id.tvAbout1);
         tvAbout1.setMovementMethod(LinkMovementMethod.getInstance());
 
-        ImageView imgEUR = (ImageView)findViewById(R.id.aboutDonateEUR);
-        imgEUR.setImageResource(R.drawable.btn_donate);
-        imgEUR.setOnClickListener(mDonateClickListener);
-
-        ImageView imgUSD = (ImageView)findViewById(R.id.aboutDonateUSD);
-        imgUSD.setImageResource(R.drawable.btn_donate);
-        imgUSD.setOnClickListener(mDonateClickListener);
+//        ImageView imgEUR = (ImageView)findViewById(R.id.aboutDonateEUR);
+//        imgEUR.setImageResource(R.drawable.btn_donate);
+//        imgEUR.setOnClickListener(mDonateClickListener);
+//
+//        ImageView imgUSD = (ImageView)findViewById(R.id.aboutDonateUSD);
+//        imgUSD.setImageResource(R.drawable.btn_donate);
+//        imgUSD.setOnClickListener(mDonateClickListener);
 
         TextView tvAbout2 = (TextView)findViewById(R.id.tvAbout2);
         tvAbout2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    View.OnClickListener mDonateClickListener = new View.OnClickListener() {
-        public  void onClick(View v) {
-
-            ImageView srcImg = (ImageView)v;
-            String payPalCurrency = "";
-            if(srcImg.getId() == R.id.aboutDonateEUR){
-                payPalCurrency = "EUR";
-                if(isSendStatistics){
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("Currency", "Eur");
-                    AndiCarStatistics.sendFlurryEvent(AboutActivity.this, "PayPal", parameters);
-                }
-            }
-            else if(srcImg.getId() == R.id.aboutDonateUSD){
-                payPalCurrency = "USD";
-                if(isSendStatistics){
-                    Map<String, String> parameters = new HashMap<String, String>();
-                    parameters.put("Currency", "USD");
-                    AndiCarStatistics.sendFlurryEvent(AboutActivity.this, "PayPal", parameters);
-                }
-            }
-            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(100);
-            GetPayPalActivityForAboutDonate ppa = new GetPayPalActivityForAboutDonate();
-            Intent i = ppa.getPayPalIntent(payPalCurrency);
-            startActivity(i);
-        }
-    };
+//    View.OnClickListener mDonateClickListener = new View.OnClickListener() {
+//        public  void onClick(View v) {
+//
+//            ImageView srcImg = (ImageView)v;
+//            String payPalCurrency = "";
+//            if(srcImg.getId() == R.id.aboutDonateEUR){
+//                payPalCurrency = "EUR";
+//                if(isSendStatistics){
+//                    Map<String, String> parameters = new HashMap<String, String>();
+//                    parameters.put("Currency", "Eur");
+//                    AndiCarStatistics.sendFlurryEvent(AboutActivity.this, "PayPal", parameters);
+//                }
+//            }
+//            else if(srcImg.getId() == R.id.aboutDonateUSD){
+//                payPalCurrency = "USD";
+//                if(isSendStatistics){
+//                    Map<String, String> parameters = new HashMap<String, String>();
+//                    parameters.put("Currency", "USD");
+//                    AndiCarStatistics.sendFlurryEvent(AboutActivity.this, "PayPal", parameters);
+//                }
+//            }
+//            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+//            vibrator.vibrate(100);
+//            GetPayPalActivityForAboutDonate ppa = new GetPayPalActivityForAboutDonate();
+//            Intent i = ppa.getPayPalIntent(payPalCurrency);
+//            startActivity(i);
+//        }
+//    };
 }

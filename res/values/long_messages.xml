@@ -58,13 +58,14 @@
         <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
         *  You can subscribe for the project news at
         <a href="http://www.andicar.org/News/">www.andicar.org/News/</a>.\n
-        *  For other things you can send an email to andicar.support@gmail.com.\n\n
-        You can make a donation if you enjoy using <b><i>AndiCar</i></b>.
-        All donations can be made using a PayPal account.
+        *  For other things you can send an email to andicar.support@gmail.com.\n
     </string>
 
+<!--         You can make a donation if you enjoy using <b><i>AndiCar</i></b>.
+        All donations can be made using a PayPal account.
+ -->
     <string name="LM_COPYRIGHT_HTML2">
-        \n\nThank you for using <b><i>AndiCar</i></b>.\n\n
+        Thank you for using <b><i>AndiCar</i></b>.\n\n
         <b><i>Credits:</i></b>\n
         *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
         *  Russian translation by Andrey Demin - andde@rambler.ru\n

@@ -486,6 +486,7 @@
     <string name="AddOn_SecureBackup_SubscriptionOption3">"One year subscription: [#1] [#2]"</string>
 
     <string name="AddOn_SecureBackup_Configure">"Go to the SecureBackup configuration in order to enter the missing information."</string>
+    <string name="AddOn_SecureBackup_Text1">"These data are stored in your device internal memory, not in the AndiCar database.\nExternal applications/parties can not access them."</string>
     <string name="AddOn_SecureBackup_SMTPUserFrom">"From email (GMail account required):"</string>
     <string name="AddOn_SecureBackup_SMTPEmailTo">"Send to email:"</string>
     <string name="AddOn_SecureBackup_IncludeGPSTrack">"Include GPS track files"</string>

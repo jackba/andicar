@@ -48,21 +48,22 @@
                 <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
         *  你可以在以下以上订阅关于工程的更新信息：
         <a href="http://www.andicar.org/News/">www.andicar.org/News/</a>.\n
-        *  如有任何其他的问题，可以发Email到 andicar.support@gmail.com.\n\n
-        如果你喜欢 <b><i>AndiCar</i></b>，请考虑为我们做一个捐赠。
-        所有的捐赠均可使用一个PayPal账户。
+        *  如有任何其他的问题，可以发Email到 andicar.support@gmail.com.\n
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
-        \n\n感谢使用<b><i>AndiCar</i></b>.\n\n
+        感谢使用<b><i>AndiCar</i></b>.\n\n
         <b><i>Credits:</i></b>\n
         *  中文化 <a href="http://goapk.com/">goapk.com</a> \n
+        *  Russian translation by Andrey Demin - andde@rambler.ru\n
+		*  German translation by andy@haubenschmid.li\n
         \n<b><i>版权须知</i></b>:\n\n
         版权所有 © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
-        这一程序是自由软件，你可以遵照自由软件基金会出版的GNU通用公共许可证条款来修改和重新发布这一程序。或者用许可证的第三版，或者（根据你的选择）用任何更新的版本。\n\n
-        发布这一程序的目的是希望它有用，但没有任何担保。甚至没有适合特定目的的隐含的担保。更详细的情况请参阅GNU通用公共许可证。\n\n
-        你应该已经和程序一起收到一份GNU通用公共许可证的副本。如果还没有，参见<a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>。\n
-        许可证全部内容见 <a href="http://www.gnu.org/licenses/gpl.html"></a>。\n
+		本程序为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款，对本程序再次发布和/或修改；无论您依据的是本授权的第三版，或（您可选的）任一日后发行的版本。\n\n
+		本程序是基于使用目的而加以发布，然而不负任何担保责任；亦无对适售性或特定目的适用性所为的默示性担保。详情请参照GNU通用公共授权。\n\n
+		您应已收到附随于本程序的GNU通用公共授权的副本；如果没有，请参照<a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>。\n
+        许可证全部内容见 
+        <a href="http://www.gnu.org/licenses/gpl.html"></a>。\n
     </string>
 
 	<string name="AddOn_SubscriptionValidity">

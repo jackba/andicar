@@ -56,6 +56,23 @@
         android:background="@color/separator_bg"
         android:layout_marginTop="10dip"
         />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/AddOn_SecureBackup_Text1"
+        android:textSize="15sp"
+        android:typeface="sans"
+        android:textStyle="bold|italic"
+        android:textColor="@android:color/white"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dip"
+        />
+    <TextView
+        android:layout_height="1dip"
+        android:layout_width="fill_parent"
+        android:background="@color/separator_bg"
+        android:layout_marginTop="10dip"
+        />
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

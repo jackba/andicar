@@ -49,19 +49,20 @@
         *  你可以在以下以上訂閱關於專案的更新訊息：
         <a href="http://www.andicar.org/News/">www.andicar.org/News/</a>.\n
         *  如有任何其他的問題，可以發Email到 andicar.support@gmail.com.\n
-        如果你喜歡 <b><i>AndiCar</i></b>，請考慮為我們做一個捐贈。
-        所有的捐贈均可使用一個PayPal賬戶。
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
-        \n\n感謝使用<b><i>AndiCar</i></b>.\n\n
+        感謝使用<b><i>AndiCar</i></b>.\n\n
         <b><i>Credits:</i></b>\n
         *  中文化 <a href="http://goapk.com/">goapk.com</a> \n
+        *  Russian translation by Andrey Demin - andde@rambler.ru\n
+		*  German translation by andy@haubenschmid.li\n
         \n<b><i>版權須知</i></b>:\n\n
         版權所有 c 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
-        這一程式是自由軟體，你可以遵照自由軟體基金會出版的GNU通用公共授權條款來修改和重新發佈這一程式。或者用授權的第三版，或者（根據你的選取）用任何更新的版本。\n\n
-        發佈這一程式的目的是希望它有用，但沒有任何擔保。甚至沒有適合特定目的的隱含的擔保。更細節的情況請參閱GNU通用公共授權。\n\n
-        你應該已經和程式一起收到一份GNU通用公共授權的副本。如果還沒有，參照<a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>。\n
+		本程式爲自由軟體；您可依據自由軟體基金會所發表的GNU通用公共授權條款，對本程式再次發佈和/或修改；無論您依據的是本授權的第三版，或（您可選的）任一日後發行的版本。\n\n
+		本程式是基於使用目的而加以發佈，然而不負任何擔保責任；亦無對適售性或特定目的適用性所爲的默示性擔保。詳情請參照GNU通用公共授權。\n\n
+		您應已收到附隨於本程式的GNU通用公共授權的副本；如果沒有，請參照\n\n
+        <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>。\n
         授權全部內容見 <a href="http://www.gnu.org/licenses/gpl.html"></a>。\n
     </string>
 
