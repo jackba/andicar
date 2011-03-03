@@ -1640,15 +1640,15 @@ public class MainActivity extends BaseActivity {
 		menu.add(0, StaticValues.MENU_EXPENSES_ID, 0,
 				mResource.getText(R.string.MENU_ExpenseCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_expenses));
+		menu.add(0, StaticValues.MENU_TODO_ID, 0,
+				mResource.getText(R.string.MENU_TodoCaption)).setIcon(
+				mResource.getDrawable(R.drawable.ic_menu_task));
 		menu.add(0, StaticValues.MENU_ADDON_ID, 0,
 				mResource.getText(R.string.MENU_AddOnServicesCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_star));
 		menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
 				mResource.getText(R.string.MENU_PreferencesCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_preferences));
-		menu.add(0, StaticValues.MENU_TODO_ID, 0,
-				mResource.getText(R.string.MENU_TodoCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_task));
 		menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
 				mResource.getText(R.string.MENU_AboutCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_info_details));
