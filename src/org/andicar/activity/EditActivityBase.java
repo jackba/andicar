@@ -24,6 +24,8 @@ import java.util.Calendar;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
+import com.andicar.addon.activity.DataEntryTemplate;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -110,7 +112,8 @@ public abstract class EditActivityBase extends BaseActivity {
         	setInputType(vgRoot);
         btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
         btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
-
+        
+        DataEntryTemplate.fillFromTemplate(this);
     }
 
     @Override
@@ -159,16 +162,16 @@ public abstract class EditActivityBase extends BaseActivity {
     * Check mandatory fields. Mandatory fields are detected based on view hint (Required)
     * @return null or field tag if is empty
     */
-   protected String checkMandatory(ViewGroup wg){
+   protected String checkMandatory(ViewGroup vg){
        View vwChild;
        EditText etChild;
        String strRetVal;
-       if(wg == null)
+       if(vg == null)
            return null;
        
-       for(int i = 0; i < wg.getChildCount(); i++)
+       for(int i = 0; i < vg.getChildCount(); i++)
        {
-           vwChild = wg.getChildAt(i);
+           vwChild = vg.getChildAt(i);
            if(vwChild instanceof ViewGroup){
                strRetVal = checkMandatory((ViewGroup)vwChild);
                if(strRetVal != null)
