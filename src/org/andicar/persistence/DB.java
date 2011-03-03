@@ -1558,12 +1558,7 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 			}
 			// AndiCar 3.4.x
-			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again
-																// because on
-																// fresh 350
-																// install addon
-																// tables was
-																// not created
+			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again because on fresh 350 install addon tables was not created
 				upgradeDbTo350(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);

@@ -49,6 +49,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 
 /**
  *
@@ -86,7 +87,7 @@ public class FileUtils {
     	File file = null;
     	
         try{
-            file = new File("/sdcard");
+            file = Environment.getExternalStorageDirectory(); 
             if(!file.exists() || !file.isDirectory()){
                 lastError = "SDCARD not found.";
                 retVal = R.string.ERR_020;
