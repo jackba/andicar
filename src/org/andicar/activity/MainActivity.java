@@ -361,7 +361,7 @@ public class MainActivity extends BaseActivity {
 						getPackageName(), 0).versionCode;
 				if (!mPreferences.contains("appVersionCode")
 						|| mPreferences.getInt("appVersionCode", 0) < appVersionCode //version update
-//						|| appVersion.endsWith("Beta")  // for beta testing
+						|| appVersion.endsWith("Beta")  // for beta testing
 						) {
 
 					initPreferenceValues(); // version update => init (new)
