@@ -21,6 +21,8 @@ package org.andicar.utils;
 
 import java.math.RoundingMode;
 
+import android.os.Environment;
+
 /**
  * Global constants
  * @author miki
@@ -141,7 +143,7 @@ public class StaticValues
      */
     public static String DATE_DECODE_NO_CHANGE = "12";
 
-    public static final String BASE_FOLDER = "/sdcard/andicar/";
+    public static final String BASE_FOLDER = Environment.getExternalStorageDirectory().getAbsolutePath() + "/andicar/";
     public static final String REPORT_FOLDER = BASE_FOLDER + "reports/";
     public static final String BACKUP_FOLDER = BASE_FOLDER + "backups/";
     public static final String TRACK_FOLDER = BASE_FOLDER + "gpstrack/";
