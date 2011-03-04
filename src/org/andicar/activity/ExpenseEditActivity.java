@@ -46,6 +46,8 @@ import android.widget.TextView;
 import java.math.BigDecimal;
 import org.andicar.utils.AndiCarStatistics;
 
+import com.andicar.addon.activity.DataEntryTemplate;
+
 /**
  *
  * @author miki
@@ -863,6 +865,7 @@ public class ExpenseEditActivity extends EditActivityBase {
 			intent.putExtra("CarID", mCarId);
 			this.startService(intent);
 		}
+		
         finish();
         
     }

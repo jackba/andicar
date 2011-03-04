@@ -269,36 +269,39 @@ public class BaseActivity extends Activity {
             };
 
 
-            /**
-             * set the input type associated to a numeric field
-             * on some devices the input type PHONE does not show the dot simbol
-             * see issue #29
-             * @param wg
-             */
-            protected void setInputType(ViewGroup wg){
-                if(wg == null)
-                    return;
+    /**
+     * set the input type associated to a numeric field
+     * on some devices the input type PHONE does not show the dot simbol
+     * see issue #29
+     * @param wg
+     */
+    protected void setInputType(ViewGroup wg){
+        if(wg == null)
+            return;
 
-                View vwChild;
-                EditText etChild;
+        View vwChild;
+        EditText etChild;
 
-                for(int i = 0; i < wg.getChildCount(); i++)
-                {
-                    vwChild = wg.getChildAt(i);
-                    if(vwChild instanceof ViewGroup){
-                        setInputType((ViewGroup)vwChild);
-                    }
-                    else if(vwChild instanceof EditText){
-                        etChild = (EditText) vwChild;
-                        if(etChild.getInputType() == InputType.TYPE_CLASS_PHONE
-                                     || etChild.getInputType() == InputType.TYPE_CLASS_NUMBER) { //numeric field
-                             if(isUseNumericInput)
-                                 etChild.setRawInputType(InputType.TYPE_CLASS_PHONE);
-                             else
-                                 etChild.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                        }
-                    }
+        for(int i = 0; i < wg.getChildCount(); i++)
+        {
+            vwChild = wg.getChildAt(i);
+            if(vwChild instanceof ViewGroup){
+                setInputType((ViewGroup)vwChild);
+            }
+            else if(vwChild instanceof EditText){
+                etChild = (EditText) vwChild;
+                if(etChild.getInputType() == InputType.TYPE_CLASS_PHONE
+                             || etChild.getInputType() == InputType.TYPE_CLASS_NUMBER) { //numeric field
+                     if(isUseNumericInput)
+                         etChild.setRawInputType(InputType.TYPE_CLASS_PHONE);
+                     else
+                         etChild.setRawInputType(InputType.TYPE_CLASS_NUMBER);
                 }
             }
-
+        }
+    }
+    
+    public ViewGroup getRootViewGroup(){
+    	return vgRoot;
+    }
 }

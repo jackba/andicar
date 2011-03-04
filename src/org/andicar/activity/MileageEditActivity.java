@@ -27,6 +27,8 @@ import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
+import com.andicar.addon.activity.DataEntryTemplate;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -702,6 +704,9 @@ public class MileageEditActivity extends EditActivityBase {
 		intent.putExtra("setJustNextRun", false);
 		intent.putExtra("CarID", mCarId);
 		this.startService(intent);
+
+		DataEntryTemplate det = new DataEntryTemplate();
+		det.createTemplate(this, mDbAdapter);
 
 		finish();
     }

@@ -124,6 +124,7 @@
                          android:layout_marginLeft="5dip"
                          android:prompt="@string/GEN_ChooseOneTitle"
                          android:background="@drawable/white_background"
+                         android:tag="spnCar"
                          />
                 <TextView
                     android:id="@+id/tvDriverLabel"
@@ -141,6 +142,7 @@
                          android:layout_marginLeft="5dip"
                          android:prompt="@string/GEN_ChooseOneTitle"
                          android:background="@drawable/white_background"
+                         android:tag="spnDriver"
                          />
             </LinearLayout>
             <LinearLayout
@@ -164,6 +166,7 @@
                          android:layout_marginLeft="5dip"
                          android:background="@drawable/white_background"
                          android:prompt="@string/GEN_ChooseOneTitle"
+                         android:tag="spnExpType"
                          />
             </LinearLayout>
             <!--date/time -->
@@ -244,11 +247,11 @@
             </LinearLayout>
 	
             <RadioGroup
+                android:id="@+id/rgMileageInsertMode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:checkedButton="@+id/rbInsertModeIndex"
-                android:id="@+id/rgMileageInsertMode"
                 android:gravity="center_vertical"
                 android:layout_marginTop="10dip"
                 android:layout_marginLeft="40dip"
@@ -260,6 +263,7 @@
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     android:button="@drawable/rb_selector"
+                	android:tag="rbInsertModeIndex"
                     />
                     <!--android:gravity="center_vertical"-->
                 <RadioButton
@@ -270,6 +274,7 @@
                     android:textColor="@android:color/white"
                     android:button="@drawable/rb_selector"
                     android:layout_marginLeft="10dip"
+                	android:tag="rbInsertModeMileage"
                     />
             </RadioGroup>
 
@@ -296,7 +301,7 @@
                     android:layout_marginLeft="2dip"
                     android:hint="@string/GEN_Required"
                     android:background="@drawable/white_background"
-                    android:tag=""
+                	android:tag="etUserInput"
                     />
             </LinearLayout>
             <LinearLayout
@@ -348,6 +353,7 @@
 	                android:layout_marginLeft="5dip"
 	                android:background="@drawable/white_background"
 	                android:hint="@string/GEN_TagHint"
+                	android:tag="acTag"
 	                />
             </LinearLayout>
 
@@ -365,6 +371,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="@drawable/white_background"
+               	android:tag="acUserComment"
                 />
         </LinearLayout>
     </ScrollView>
