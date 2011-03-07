@@ -27,8 +27,6 @@ import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
-import com.andicar.addon.activity.DataEntryTemplate;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
