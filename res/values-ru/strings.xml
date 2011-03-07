@@ -70,10 +70,10 @@
     <string name="APP_Activity_TagList">"Метки"</string>
     <string name="APP_Activity_TagEdit">"Редактировать метку"</string>
     <string name="APP_Activity_Message">"Сообщение AndiCar"</string>
-	<string name="APP_Activity_TaskTypeList">"Типы задач/напоминаний"</string>
+	<string name="APP_Activity_TaskTypeList">"Типы задач"</string>
 	<string name="APP_Activity_TaskTypeEdit">"Редактировать тип задачи"</string>
 	<string name="APP_Activity_TaskList">"Задачи"</string>
-	<string name="APP_Activity_TaskEdit">"Редактировать задачи"</string>
+	<string name="APP_Activity_TaskEdit">"Добавить или редактировать задачу"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Отмена"</string>
@@ -138,10 +138,16 @@
 	<string name="GEN_On">"Вкл"</string> <!-- ex. on Monday -->
 	<string name="GEN_Days">"дней"</string>
 	<string name="GEN_Minutes">"минут"</string>
+	<string name="GEN_Min">"мин"</string>
 	<string name="GEN_LastDay">"посл.день"</string>
 	<string name="GEN_Description">"Описание"</string>
 	<string name="GEN_Or">"Или:"</string>
 	<string name="GEN_TaskLabel">"Задача:"</string>
+	<string name="GEN_StatusLabel">"Статус:"</string>
+	<string name="GEN_Mileage">"пробег:"</string>
+	<string name="GEN_Or2">"или"</string>
+	<string name="GEN_ToDo">"Дела"</string>
+	<string name="GEN_ToDoAlert">"Напоминание "</string>
 
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
@@ -161,7 +167,9 @@
     <string name="MENU_SetDefault">"Установить по умолчанию"</string>
 	<string name="MENU_RateCommentCaption">"Рейтинг/Комментарий"</string>
 	<string name="MENU_AddOnServicesCaption">"Доп. услуги"</string>
-	
+	<string name="MENU_TaskReminderCaption">"Задача"</string>
+	<string name="MENU_TodoCaption">"Список дел"</string>
+
     <string name="MainActivity_MileageHeaderCaption">"Последняя поездка"</string>
     <string name="MainActivity_RefuelHeaderCaption">"Последняя заправка"</string>
     <string name="MainActivity_GPSTrackHeaderCaption">"Последний трек GPS"</string>
@@ -189,6 +197,9 @@
     <string name="MainActivity_AppVersion">"Версия программы:"</string>
 	<string name="MainActivity_DidYouKnow">"Вы знаете?"</string>
 	<string name="MainActivity_AddOnMessage">"В программе AndiCar есть некоторые полезные дополнительные услуги. Работу дополнений можно попробовать бесплатно. \n\nВы хотите увидеть список доступных дополнений?"</string>	
+	<string name="MainActivity_ToDoHeaderCaption">"Следующее дело"</string>
+	<string name="MainActivity_ToDoNoDataText">"Задача неопределена."</string>
+	<string name="MainActivity_HowToMessage">"Удобство"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"Вод. удостоверение No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">" Текущий водитель не может быть неактивным."</string>
@@ -311,10 +322,30 @@
 	<string name="TaskEditActivity_StartingTimeInFutureMsg">"Время начала должно быть в будущем!"</string>
 	<string name="TaskEditActivity_StartingTimeLbl">"Время начала:"</string>
 	<string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"Частота пробега должна быть больше чем в напоминании"</string>
+	<string name="TaskEditActivity_GeneratedToDoCountLabel">"Автоматически создавать следующее"</string>
+	<string name="TaskEditActivity_ToDoCount">"количество дел"</string>
+	<string name="TaskEditActivity_ToDoCountHelp">" Когда дело отмечено как сделанное, новое дело будет автоматически добавляться к списку дел."</string>
 	 
 	<string name="TaskCarEditActivity_StartDate">"Начальная дата:"</string>
 	<string name="TaskCarEditActivity_StartMileage">"Начальный пробег:"</string>
 	<string name="TaskCarDialogActivity_Title">"Свяжите автомобиль с задачей"</string>
+
+	<string name="ToDo_OverdueLabel">"Просроченные:"</string>
+	<string name="ToDo_ScheduledLabel">"Запланированные:"</string>
+	<string name="ToDo_DoneLabel">"Сделано"</string>
+	<string name="ToDo_ScheduledDateLabel">"Запланировано для:"</string>
+	<string name="ToDo_ScheduledMileageLabel">"Запланированный пробег:"</string>
+	<string name="ToDo_EstimatedMileageDate">"оценивается для:"</string>
+	<string name="ToDo_EstimatedMileageDateNoData">"недостаточно записей для оцениваемой даты"</string>
+	<string name="ToDo_EstimatedMileageDateTooFar">"слишком далеко для оценки"</string>
+	<string name="ToDo_ActionHdr">"Действие"</string>
+	<string name="ToDo_PostPoneLabel">"Напомнить мне после:"</string>
+	<string name="ToDo_IsDoneCaption">"Это дело сделано"</string>
+	<string name="ToDo_DaysLeft">"Осталось дней: "</string>
+	<string name="ToDo_MinutesLeft">"Осталось минут: "</string>
+	<string name="ToDo_MileageLeft">"Осталось пробега: "</string>
+	<string name="ToDo_CurrentIndex">"Текущее показание счетчика: "</string>
+	<string name="ToDo_IsDone">"Сделано"</string>
 
     <string name="PREF_UOMCategoryTitle">"Единицы измерения"</string>
     <string name="PREF_ExpenseCategoryTitle">"Расходы"</string>
@@ -360,7 +391,7 @@
     <string name="PREF_RememberLastTagSummary">"Запомнить последнюю использованную метку"</string>
 	<string name="PREF_AutoUpdateCheckTitle">"Проверить обновления"</string>
 	<string name="PREF_AutoUpdateCheckSummary">"Проверить и сообщить мне, если опубликована новая версия AndiCar"</string>
-	<string name="PREF_TaskReminderCategoryTitle">"Задачи/ напоминания"</string>
+	<string name="PREF_TaskReminderCategoryTitle">"Задачи"</string>
 	<string name="PREF_TaskTypeTitle">"Типы задач"</string>
 	<string name="PREF_TaskTypeSummary">"Добавить, удалить, редактировать типы задач"</string>
 	<string name="PREF_TaskTitle">"Задачи"</string>
@@ -371,6 +402,7 @@
     <string name="PREF_MainScreen_ShowRefuelZone">"Раздел заправок"</string>
     <string name="PREF_MainScreen_ShowExpenseZone">"Раздел расходов"</string>
     <string name="PREF_MainScreen_ShowStatistics">"Раздел статистики"</string>
+    <string name="PREF_MainScreen_ShowToDoZone">"Показать зону дел"</string>
 
     <string name="PREF_AddOnCategoryTitle">"Дополнительные услуги"</string>
     <string name="PREF_AddOnServicesTitle">"Дополнительные услуги"</string>

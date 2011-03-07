@@ -102,4 +102,12 @@
     
     <!-- default tag -->
     <string name="DB_Tag_Default">"По умолчанию"</string>
+    
+	<string name="DB_TaskType_ServiceName">"Сервис"</string>
+    <string name="DB_TaskType_ServiceComment">"Периодическое обслуживание "</string>
+    <string name="DB_TaskType_ReminderName">"Напоминание"</string>
+    <string name="DB_TaskType_ReminderComment">"Напоминание для общих задач"</string>
+    <string name="DB_DemoTask_Name">"Ежедневный пробег"</string>
+    <string name="DB_DemoTask_Comment">"Вы ввели свой ежедневный пробег?\nЭто демонстрационная задача. Вы можете ее редактировать или удалить  из меню Настройки -> Задачи."</string> <!-- \n символ новой строки-->
+
 </resources>
