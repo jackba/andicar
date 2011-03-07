@@ -19,6 +19,8 @@
 
 package org.andicar.activity;
 
+import org.andicar.persistence.MainDbAdapter;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -30,8 +32,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
-import org.andicar.persistence.MainDbAdapter;
 
 /**
  *
@@ -208,21 +208,8 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
     
     @Override
     protected void saveData() {
-        String strRetVal = checkMandatory(vgRoot);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
-        strRetVal = checkNumeric(vgRoot, false);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
+        if(!beforeSave())
+        	return;
 
         ContentValues cvData = new ContentValues();
         cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
