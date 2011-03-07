@@ -30,7 +30,6 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 /**
  *
@@ -132,25 +131,11 @@ public class UOMConversionEditActivity extends EditActivityBase {
     protected void saveData() {
         //check mandatory fields
         String convRateStr = etConversionRate.getText().toString();
-        String strRetVal = checkMandatory(vgRoot);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
-        strRetVal = checkNumeric(vgRoot, false);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
+        if(!beforeSave())
+        	return;
 
         long fromId = spnUomFrom.getSelectedItemId();
         long toId = spnUomTo.getSelectedItemId();
-        strRetVal = null;
         int retVal2 = mDbAdapter.canInsertUpdateUOMConversion(mRowId, fromId, toId);
         if(retVal2 != -1){
             madbErrorAlert.setMessage(mResource.getString(retVal2));

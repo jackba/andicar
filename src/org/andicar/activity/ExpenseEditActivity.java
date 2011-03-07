@@ -19,6 +19,14 @@
 
 package org.andicar.activity;
 
+import java.math.BigDecimal;
+
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.service.ToDoNotificationService;
+import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -26,27 +34,18 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
-import android.widget.Spinner;
-import android.widget.Toast;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.service.ToDoNotificationService;
-import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
-
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
-import java.math.BigDecimal;
-import org.andicar.utils.AndiCarStatistics;
-
-import com.andicar.addon.activity.DataEntryTemplate;
+import android.widget.Toast;
 
 /**
  *
@@ -112,7 +111,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             return; //restored from previous state
 
         operationType = mBundleExtras.getString("Operation");
-
+        isCreateTemplate = true;
         init();
 
         if (operationType.equals("E")) {
@@ -669,21 +668,8 @@ public class ExpenseEditActivity extends EditActivityBase {
 
     @Override
     protected void saveData() {
-        String strRetVal = checkMandatory(vgRoot);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
-        strRetVal = checkNumeric(vgRoot, false);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
+        if(!beforeSave())
+        	return;
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -866,7 +852,9 @@ public class ExpenseEditActivity extends EditActivityBase {
 			this.startService(intent);
 		}
 		
-        finish();
+		afterSave();
+
+		finish();
         
     }
 

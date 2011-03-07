@@ -122,6 +122,7 @@ public class RefuelEditActivity extends EditActivityBase {
             return; //restoe from previous state
 
         operationType = mBundleExtras.getString("Operation");
+        isCreateTemplate = true;
 
         init();
 
@@ -765,21 +766,8 @@ public class RefuelEditActivity extends EditActivityBase {
 
     @Override
     protected void saveData() {
-        String strRetVal = checkMandatory(vgRoot);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
-        strRetVal = checkNumeric(vgRoot, false);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
+        if(!beforeSave())
+        	return;
         
         //final calculations
         calculatePriceAmount();
@@ -961,6 +949,7 @@ public class RefuelEditActivity extends EditActivityBase {
 		intent.putExtra("CarID", mCarId);
 		this.startService(intent);
 
+		afterSave();
 		finish();
     }
 

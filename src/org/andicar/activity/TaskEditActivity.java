@@ -407,25 +407,8 @@ public class TaskEditActivity extends EditActivityBase {
 
 	@Override
 	protected void saveData() {
-		String strRetVal = checkMandatory(vgRoot);
-		if (strRetVal != null) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					mResource.getString(R.string.GEN_FillMandatory) + ": "
-							+ strRetVal, Toast.LENGTH_SHORT);
-			toast.show();
-			saveSuccess = false;
-			return;
-		}
-
-		strRetVal = checkNumeric(vgRoot, false);
-		if (strRetVal != null) {
-			Toast toast = Toast.makeText(getApplicationContext(),
-					mResource.getString(R.string.GEN_NumberFormatException)
-							+ ": " + strRetVal, Toast.LENGTH_SHORT);
-			toast.show();
-			saveSuccess = false;
-			return;
-		}
+        if(!beforeSave())
+        	return;
 		
 		if(isMileageEnabled){ 
 			if(etMileage.getText().toString() == null || etMileage.getText().toString().length() == 0 

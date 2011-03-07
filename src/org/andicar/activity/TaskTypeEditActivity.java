@@ -27,7 +27,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  *
@@ -78,21 +77,8 @@ public class TaskTypeEditActivity extends EditActivityBase
 
     @Override
     protected void saveData() {
-        String strRetVal = checkMandatory(vgRoot);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
-        strRetVal = checkNumeric(vgRoot, false);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
+        if(!beforeSave())
+        	return;
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,

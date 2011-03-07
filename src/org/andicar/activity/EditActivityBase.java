@@ -38,6 +38,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 /**
  * Base class for all edit activities. Implement common functionalities:
@@ -70,6 +71,7 @@ public abstract class EditActivityBase extends BaseActivity {
     protected final Calendar mcalDateTime = Calendar.getInstance();
     protected boolean initTimeOnly = false;
     protected boolean initDateOnly = false;
+    protected boolean isCreateTemplate = false;
 
     abstract protected void saveData();
     abstract protected void setLayout();
@@ -324,5 +326,41 @@ public abstract class EditActivityBase extends BaseActivity {
 				DateFormat.getTimeFormat(getApplicationContext()).format(mcalDateTime.getTime()));
 //                new StringBuilder() // Month is 0 based so add 1
 //                .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute, 2)));
+    }
+    
+    /**
+     * called before saving data
+     * @return
+     */
+    protected boolean beforeSave(){
+        String strRetVal = checkMandatory(vgRoot);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return false;
+        }
+
+        strRetVal = checkNumeric(vgRoot, false);
+        if( strRetVal != null ) {
+            Toast toast = Toast.makeText( getApplicationContext(),
+                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
+            toast.show();
+            return false;
+        }
+
+    	return true;
+    }
+
+    /**
+     * called after data saved
+     * @return
+     */
+    protected boolean afterSave(){
+    	if(isCreateTemplate){
+			DataEntryTemplate det = new DataEntryTemplate();
+			det.createTemplate(this, mDbAdapter);
+    	}
+    	return true;
     }
 }

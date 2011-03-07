@@ -99,7 +99,7 @@ public class MileageEditActivity extends EditActivityBase {
 
 
         operationType = mBundleExtras.getString("Operation");
-
+        isCreateTemplate = true;
         init();
         
         if( operationType.equals("E") ) {
@@ -567,22 +567,8 @@ public class MileageEditActivity extends EditActivityBase {
     protected void saveData() {
         //check mandatory fileds & index preconditions
         calculateMileageOrNewIndex();
-        String strRetVal = checkMandatory(vgRoot);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
-        strRetVal = checkNumeric(vgRoot, false);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
+        if(!beforeSave())
+        	return;
         int operationResult = -1;
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME, "");
@@ -704,10 +690,9 @@ public class MileageEditActivity extends EditActivityBase {
 		intent.putExtra("setJustNextRun", false);
 		intent.putExtra("CarID", mCarId);
 		this.startService(intent);
-
-		DataEntryTemplate det = new DataEntryTemplate();
-		det.createTemplate(this, mDbAdapter);
-
+		
+		afterSave();
+		
 		finish();
     }
 

@@ -19,6 +19,9 @@
 
 package org.andicar.activity;
 
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.StaticValues;
+
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -26,9 +29,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -97,22 +97,8 @@ public class UOMEditActivity extends EditActivityBase {
 
     @Override
     protected void saveData() {
-        //check mandatory fields
-        String strRetVal = checkMandatory(vgRoot);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
-        strRetVal = checkNumeric(vgRoot, false);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
+        if(!beforeSave())
+        	return;
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
