@@ -2027,6 +2027,14 @@ public class DB {
 		}
 
 		private void upgradeDbTo357(SQLiteDatabase db, int oldVersion) throws SQLException {
+			String sql = "DROP TABLE IF EXISTS " + TASKTYPE_TABLE_NAME;
+			db.execSQL(sql);
+			sql = "DROP TABLE IF EXISTS " + TASK_CAR_TABLE_NAME;
+			db.execSQL(sql);
+			sql = "DROP TABLE IF EXISTS " + TASK_TABLE_NAME;
+			db.execSQL(sql);
+			sql = "DROP TABLE IF EXISTS " + TODO_TABLE_NAME;
+			db.execSQL(sql);
 			createTaskToDoTables(db);
 		}
 
