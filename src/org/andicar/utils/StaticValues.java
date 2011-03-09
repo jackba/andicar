@@ -38,6 +38,7 @@ public class StaticValues
      * 		Google Android Market
      * 		Amazon App Store
      * 		Other
+     * 		GoApk
      * 		Unknown
      */
     public static final String INITIAL_INSTALL_SOURCE = "Unknown";
