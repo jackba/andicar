@@ -98,4 +98,11 @@
     
     <!-- default tag -->
     <string name="DB_Tag_Default">"預設"</string>
+
+	<string name="DB_TaskType_ServiceName">"服務"</string>
+	<string name="DB_TaskType_ServiceComment">"經常維修"</string>
+	<string name="DB_TaskType_ReminderName">"提醒"</string>
+	<string name="DB_TaskType_ReminderComment">"提醒一般工作"</string>
+	<string name="DB_DemoTask_Name">"日常里程"</string>
+	<string name="DB_DemoTask_Comment">"你是否輸入了你的日常里程？\n這是一個試用工作。你可以修改或是刪除它，於 首選項-&gt;工作 中。"</string>
 </resources>
