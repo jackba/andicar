@@ -30,6 +30,14 @@
         感謝您使用AndiCar！
     </string>
 
+	<string name="LM_MAIN_ACTIVITY_USABILITY_MESSAGE">
+		下面是一些 AndiCar 可用的一般規則：\n
+		* 點擊你設備的選單鍵來檢視一個指定介面中可用的選項\n
+		* 在清單中點擊一個記錄可以進行編輯。長按則可以檢視更多選項\n\n
+		** 存取 www.andicar.org -&gt; \"教程\" 來學習如何適使用 AndiCar **\n\n
+		謝謝支援。
+	</string>
+
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b>是一個ANDROID設備上免費而且開源的汽車管理程式。
         授權遵循GNU公共授權第3版的條款。\n
