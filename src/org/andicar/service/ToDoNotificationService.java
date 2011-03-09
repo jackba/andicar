@@ -71,9 +71,12 @@ public class ToDoNotificationService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
-			Thread.setDefaultUncaughtExceptionHandler(
-	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+		try{
+			if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+				Thread.setDefaultUncaughtExceptionHandler(
+		                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
+		}
+		catch(ArrayIndexOutOfBoundsException e){}
 
 		mBundleExtras  = intent.getExtras();
 		mDb = new MainDbAdapter(this);
