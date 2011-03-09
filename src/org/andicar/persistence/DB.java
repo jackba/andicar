@@ -1278,12 +1278,22 @@ public class DB {
 
 		private void createTaskToDoTables(SQLiteDatabase db) throws SQLException {
 			// create task/reminder
+			String sql = "DROP TABLE IF EXISTS " + TASKTYPE_TABLE_NAME;
+			db.execSQL(sql);
+			sql = "DROP TABLE IF EXISTS " + TASK_CAR_TABLE_NAME;
+			db.execSQL(sql);
+			sql = "DROP TABLE IF EXISTS " + TASK_TABLE_NAME;
+			db.execSQL(sql);
+			sql = "DROP TABLE IF EXISTS " + TODO_TABLE_NAME;
+			db.execSQL(sql);
+			
+			
 			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
 			db.execSQL(TASK_TABLE_CREATE_SQL);
 			db.execSQL(TASK_CAR_TABLE_CREATE_SQL);
 			db.execSQL(TODO_TABLE_CREATE_SQL);
 
-			String sql = 
+			sql = 
 				"INSERT INTO " + TASKTYPE_TABLE_NAME + "( " +
 							GEN_COL_NAME_NAME + ", " +
 							GEN_COL_ISACTIVE_NAME + ", " +
