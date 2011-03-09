@@ -65,10 +65,10 @@
     <string name="APP_Activity_TagList">"标签"</string>
     <string name="APP_Activity_TagEdit">"编辑标签"</string>
     <string name="APP_Activity_Message">"AndiCar 信息"</string>
-	<string name="APP_Activity_TaskTypeList">"任务/提醒类型"</string>
+	<string name="APP_Activity_TaskTypeList">"任务类型"</string>
 	<string name="APP_Activity_TaskTypeEdit">"编辑任务类型"</string>
 	<string name="APP_Activity_TaskList">"任务"</string>
-	<string name="APP_Activity_TaskEdit">"编辑任务"</string>
+	<string name="APP_Activity_TaskEdit">"添加或编辑任务"</string>
 
     <string name="GEN_OK">"确定"</string>
     <string name="GEN_CANCEL">"取消"</string>
@@ -131,10 +131,16 @@
 	<string name="GEN_On">"在"</string> <!-- ex. on Monday -->
 	<string name="GEN_Days">"天"</string>
 	<string name="GEN_Minutes">"分钟"</string>
+	<string name="GEN_Min">"分钟"</string>
 	<string name="GEN_LastDay">"最后一天"</string>
 	<string name="GEN_Description">"描述"</string>
 	<string name="GEN_Or">"或："</string>
 	<string name="GEN_TaskLabel">"任务："</string>
+	<string name="GEN_StatusLabel">"状态："</string>
+	<string name="GEN_Mileage">"里程："</string>
+	<string name="GEN_Or2">"或"</string>
+	<string name="GEN_ToDo">"计划"</string>
+	<string name="GEN_ToDoAlert">"计划提醒"</string>
 	
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
@@ -154,6 +160,8 @@
     <string name="MENU_SetDefault">"设置默认"</string>
 	<string name="MENU_RateCommentCaption">"评分/评论"</string>
 	<string name="MENU_AddOnServicesCaption">"附加服务"</string>
+	<string name="MENU_TodoCaption">"计划列表"</string>
+	<string name="MENU_ToDoDoneCaption">"已完成"</string>
 
     <string name="MainActivity_MileageHeaderCaption">"最后里程"</string>
     <string name="MainActivity_RefuelHeaderCaption">"上次加油"</string>
@@ -182,6 +190,9 @@
     <string name="MainActivity_AppVersion">"程序版本："</string>
     <string name="MainActivity_DidYouKnow">"你知道么?"</string>
 	<string name="MainActivity_AddOnMessage">"AndiCar支持一些插件服务，所有的插件能够免费试用。\n\n想要看看可用插件的列表么?"</string>
+	<string name="MainActivity_ToDoHeaderCaption">"下一计划"</string>
+	<string name="MainActivity_ToDoNoDataText">"未定义的任务。"</string>
+	<string name="MainActivity_HowToMessage">"可用"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"执照号码："</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"不能阻止当前司机的活动。"</string>
@@ -304,10 +315,30 @@
 	<string name="TaskEditActivity_StartingTimeInFutureMsg">"起始时间必须是未来的一个时间！"</string>
 	<string name="TaskEditActivity_StartingTimeLbl">"起始时间："</string>
 	<string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"里程频率必须大于大提醒"</string>
+	<string name="TaskEditActivity_GeneratedToDoCountLabel">"自动生成下一个"</string>
+	<string name="TaskEditActivity_ToDoCount">"计划数"</string>
+	<string name="TaskEditActivity_ToDoCountHelp">"当标记一个计划为已完成时，将自动追加一个新的到计划列表中"</string>
 
 	<string name="TaskCarEditActivity_StartDate">"起始日期："</string>
 	<string name="TaskCarEditActivity_StartMileage">"起始里程："</string>
 	<string name="TaskCarDialogActivity_Title">"连接车辆到任务"</string>
+
+	<string name="ToDo_OverdueLabel">"超期："</string>
+	<string name="ToDo_ScheduledLabel">"如期："</string>
+	<string name="ToDo_DoneLabel">"完成"</string>
+	<string name="ToDo_ScheduledDateLabel">"定于："</string>
+	<string name="ToDo_ScheduledMileageLabel">"预定里程："</string>
+	<string name="ToDo_EstimatedMileageDate">"估计："</string>
+	<string name="ToDo_EstimatedMileageDateNoData">"估计日期中没有足够的记录"</string>
+	<string name="ToDo_EstimatedMileageDateTooFar">"预计太远"</string>
+	<string name="ToDo_ActionHdr">"动作"</string>
+	<string name="ToDo_PostPoneLabel">"以下时间后提醒我："</string>
+	<string name="ToDo_IsDoneCaption">"此计划已完成"</string>
+	<string name="ToDo_DaysLeft">"剩余天数："</string>
+	<string name="ToDo_MinutesLeft">"剩余分钟："</string>
+	<string name="ToDo_MileageLeft">"剩余里程："</string>
+	<string name="ToDo_CurrentIndex">"当前里程表："</string>
+	<string name="ToDo_IsDone">"已完成"</string>
 
     <string name="PREF_UOMCategoryTitle">"度量单位"</string>
     <string name="PREF_ExpenseCategoryTitle">"支出"</string>
@@ -352,7 +383,7 @@
     <string name="PREF_RememberLastTagSummary">"记住上次使用的标签"</string>
     <string name="PREF_AutoUpdateCheckTitle">"检查更新"</string>
 	<string name="PREF_AutoUpdateCheckSummary">"检查并在有新版本的 AndiCar 发布时通知我"</string>
-	<string name="PREF_TaskReminderCategoryTitle">"任务/提醒"</string>
+	<string name="PREF_TaskReminderCategoryTitle">"任务"</string>
 	<string name="PREF_TaskTypeTitle">"任务类型"</string>
 	<string name="PREF_TaskTypeSummary">"添加，删除，修改任务类型"</string>
 	<string name="PREF_TaskTitle">"任务"</string>
@@ -363,7 +394,8 @@
 	<string name="PREF_MainScreen_ShowRefuelZone">"显示燃料区域"</string>
 	<string name="PREF_MainScreen_ShowExpenseZone">"显示支出区域"</string>
 	<string name="PREF_MainScreen_ShowStatistics">"显示数据统计"</string>
-
+	<string name="PREF_MainScreen_ShowToDoZone">"显示计划区域"</string>
+	
     <string name="PREF_AddOnCategoryTitle">"AddOn 服务"</string>
     <string name="PREF_AddOnServicesTitle">"AddOn 服务"</string>
     <string name="PREF_AddOnServicesSummary">"订阅是一个需付费的服务。"</string>
