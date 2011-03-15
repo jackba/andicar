@@ -128,11 +128,9 @@ public class UOMConversionEditActivity extends EditActivityBase {
                 };
 
     @Override
-    protected void saveData() {
+    protected boolean saveData() {
         //check mandatory fields
         String convRateStr = etConversionRate.getText().toString();
-        if(!beforeSave())
-        	return;
 
         long fromId = spnUomFrom.getSelectedItemId();
         long toId = spnUomTo.getSelectedItemId();
@@ -141,7 +139,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
             madbErrorAlert.setMessage(mResource.getString(retVal2));
             madError = madbErrorAlert.create();
             madError.show();
-            return;
+            return false;
         }
 
         ContentValues data = new ContentValues();
@@ -155,23 +153,42 @@ public class UOMConversionEditActivity extends EditActivityBase {
         data.put( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_NAME, toId);
         data.put( MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME, convRateStr);
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if( mRowId == -1 ) {
-            mDbAdapter.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data);
-            finish();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, data)).intValue();
+            if(dbRetVal > 0){
+            	finish();
+            	return true;
+            }
+            else{
+                if(dbRetVal == -1) //DB Error
+                    strErrMsg = mDbAdapter.lastErrorMessage;
+                else //precondition error
+                    strErrMsg = mResource.getString(-1 * dbRetVal);
+
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+                return false;
+            }
         }
         else {
-            int updResult = mDbAdapter.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
-            if(updResult != -1){
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.UOM_CONVERSION_TABLE_NAME, mRowId, data);
+            if(dbRetVal != -1){
                 String errMsg = "";
-                errMsg = mResource.getString(updResult);
-                if(updResult == R.string.ERR_000)
+                errMsg = mResource.getString(dbRetVal);
+                if(dbRetVal == R.string.ERR_000)
                     errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
                 madbErrorAlert.setMessage(errMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
-            else
+            else{
                 finish();
+                return true;
+            }
         }
     }
 

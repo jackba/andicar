@@ -73,7 +73,7 @@ public abstract class EditActivityBase extends BaseActivity {
     protected boolean initDateOnly = false;
     protected boolean isCreateTemplate = false;
 
-    abstract protected void saveData();
+    abstract protected boolean saveData();
     abstract protected void setLayout();
     
     @Override
@@ -156,7 +156,11 @@ public abstract class EditActivityBase extends BaseActivity {
                 {
                     public void onClick( View v )
                     {
-                        saveData();
+                    	if(!beforeSave())
+                    		return;
+                        if(!saveData())
+                        	return;
+                        afterSave();
                     }
                 };
 
@@ -357,10 +361,10 @@ public abstract class EditActivityBase extends BaseActivity {
      * @return
      */
     protected boolean afterSave(){
-    	if(isCreateTemplate){
-			DataEntryTemplate det = new DataEntryTemplate();
-			det.createTemplate(this, mDbAdapter);
-    	}
+//    	if(isCreateTemplate){
+//			DataEntryTemplate det = new DataEntryTemplate();
+//			det.createTemplate(this, mDbAdapter);
+//    	}
     	return true;
     }
 }

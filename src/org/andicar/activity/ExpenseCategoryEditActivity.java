@@ -87,9 +87,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
     }
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
         ContentValues cvData = new ContentValues();
         cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -103,23 +101,41 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
         cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME,
                 (ckIsFuel.isChecked() ? "Y" : "N") );
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if( mRowId == -1 ) {
-            mDbAdapter.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, cvData);
-            finish();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, cvData)).intValue();
+            if(dbRetVal > 0){
+            	finish();
+            	return true;
+            }
+            else{
+                if(dbRetVal == -1) //DB Error
+                    strErrMsg = mDbAdapter.lastErrorMessage;
+                else //precondition error
+                    strErrMsg = mResource.getString(-1 * dbRetVal);
+
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+                return false;
+            }
         }
         else {
-            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mRowId, cvData);
-            if(iUpdateResult != -1){
-                String strErrMsg = "";
-                strErrMsg = mResource.getString(iUpdateResult);
-                if(iUpdateResult == R.string.ERR_000)
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mRowId, cvData);
+            if(dbRetVal != -1){
+                strErrMsg = mResource.getString(dbRetVal);
+                if(dbRetVal == R.string.ERR_000)
                     strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
                 madbErrorAlert.setMessage(strErrMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
-            else
+            else{
                 finish();
+                return true;
+            }
         }
     }
 

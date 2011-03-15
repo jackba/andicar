@@ -406,9 +406,7 @@ public class TaskEditActivity extends EditActivityBase {
 	}
 
 	@Override
-	protected void saveData() {
-        if(!beforeSave())
-        	return;
+	protected boolean saveData() {
 		
 		if(isMileageEnabled){ 
 			if(etMileage.getText().toString() == null || etMileage.getText().toString().length() == 0 
@@ -418,7 +416,7 @@ public class TaskEditActivity extends EditActivityBase {
 				toast.show();
 				etMileage.requestFocus();
 				saveSuccess = false;
-				return;
+				return false;
 			}
 			if(etReminderMileage.getText().toString() == null || etReminderMileage.getText().toString().length() == 0){
 				etReminderMileage.setText("0");
@@ -430,7 +428,7 @@ public class TaskEditActivity extends EditActivityBase {
 				toast.show();
 				etMileage.requestFocus();
 				saveSuccess = false;
-				return;
+				return false;
 			}
 
 		}
@@ -443,7 +441,7 @@ public class TaskEditActivity extends EditActivityBase {
 				toast.show();
 				etFrequency.requestFocus();
 				saveSuccess = false;
-				return;
+				return false;
 			}
 			if(etTimeReminder.getText().toString() == null || etTimeReminder.getText().toString().length() == 0){
 				etTimeReminder.setText("0");
@@ -456,7 +454,7 @@ public class TaskEditActivity extends EditActivityBase {
 				Toast toast = Toast.makeText(getApplicationContext(),
 						mResource.getString(R.string.TaskEditActivity_NoLinkedCarsMsg), Toast.LENGTH_SHORT);
 				toast.show();
-				return;
+				return false;
 			}
 		}
 		if(!isRecurrent && isTimingEnabled){//check if the starting time is in the future
@@ -465,7 +463,7 @@ public class TaskEditActivity extends EditActivityBase {
 						mResource.getString(R.string.TaskEditActivity_StartingTimeInFutureMsg), Toast.LENGTH_SHORT);
 				toast.show();
 				saveSuccess = false;
-				return;
+				return false;
 			}
 		}
 		
@@ -477,7 +475,7 @@ public class TaskEditActivity extends EditActivityBase {
 			toast.show();
 			saveSuccess = false;
 			etNoOfNextToDo.requestFocus();
-			return;
+			return false;
 		}
 		
 		ContentValues data = new ContentValues();
@@ -544,6 +542,7 @@ public class TaskEditActivity extends EditActivityBase {
 				intent.putExtra("TaskID", mRowId);
 				this.startService(intent);
 				finish();
+				return true;
 			}
 		} else {
 			int updResult = mDbAdapter.updateRecord(
@@ -557,6 +556,7 @@ public class TaskEditActivity extends EditActivityBase {
 				madbErrorAlert.setMessage(errMsg);
 				madError = madbErrorAlert.create();
 				madError.show();
+				return false;
 			} else{
 				saveSuccess = true;
 				if(isFinishAfterSave){
@@ -571,6 +571,7 @@ public class TaskEditActivity extends EditActivityBase {
 					intent.putExtra("TaskID", mRowId);
 					this.startService(intent);
 					finish();
+					return true;
 				}
 			}
 		}
@@ -592,6 +593,7 @@ public class TaskEditActivity extends EditActivityBase {
 			mDbAdapter.updateRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?", 
 					selectionArgs, newContent);
 		}
+		return true;
 	}
 
 	@Override

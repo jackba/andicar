@@ -78,11 +78,9 @@ public class DriverEditActivity extends EditActivityBase {
     }
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
-        ContentValues cvData = new ContentValues();
+    	ContentValues cvData = new ContentValues();
         cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
                 etName.getText().toString());
         cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
@@ -92,22 +90,39 @@ public class DriverEditActivity extends EditActivityBase {
         cvData.put( MainDbAdapter.DRIVER_COL_LICENSE_NO_NAME,
                 etLicenseNo.getText().toString());
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if (mRowId == -1) {
-            mDbAdapter.createRecord(MainDbAdapter.DRIVER_TABLE_NAME, cvData);
-            finish();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.DRIVER_TABLE_NAME, cvData)).intValue();
+            if(dbRetVal > 0){
+            	finish();
+            	return true;
+            }
+            else{
+                if(dbRetVal == -1) //DB Error
+                    strErrMsg = mDbAdapter.lastErrorMessage;
+                else //precondition error
+                    strErrMsg = mResource.getString(-1 * dbRetVal);
+
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+                return false;
+            }
         } else {
-            int strUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.DRIVER_TABLE_NAME, mRowId, cvData);
-            if(strUpdateResult != -1){
-                String strErrMsg = "";
-                strErrMsg = mResource.getString(strUpdateResult);
-                if(strUpdateResult == R.string.ERR_000)
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.DRIVER_TABLE_NAME, mRowId, cvData);
+            if(dbRetVal != -1){
+                strErrMsg = mResource.getString(dbRetVal);
+                if(dbRetVal == R.string.ERR_000)
                     strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
                 madbErrorAlert.setMessage(strErrMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
             else{
                 finish();
+                return true;
             }
         }
     }

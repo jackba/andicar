@@ -76,9 +76,7 @@ public class TaskTypeEditActivity extends EditActivityBase
     }
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -88,33 +86,43 @@ public class TaskTypeEditActivity extends EditActivityBase
         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                 etUserComment.getText().toString() );
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if( mRowId == -1 ) {
-        	long newId = mDbAdapter.createRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, data);
-            if(newId < 0){
-            	newId = -1 * newId;
-                String strErrMsg = mResource.getString((int) newId);
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, data)).intValue();
+            if(dbRetVal > 0){
+	            setResult(RESULT_OK, (new Intent()).putExtra("mRowId", dbRetVal));
+            	finish();
+            	return true;
+            }
+            else{
+                if(dbRetVal == -1) //DB Error
+                    strErrMsg = mDbAdapter.lastErrorMessage;
+                else //precondition error
+                    strErrMsg = mResource.getString(-1 * dbRetVal);
+
                 madbErrorAlert.setMessage(strErrMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
-            }
-            else{
-	            setResult(RESULT_OK, (new Intent()).putExtra("mRowId", newId));
-	            finish();
+                return false;
             }
         }
         else {
-            int updResult = mDbAdapter.updateRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, mRowId, data);
-            if(updResult != -1){
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TASKTYPE_TABLE_NAME, mRowId, data);
+            if(dbRetVal != -1){
                 String errMsg = "";
-                errMsg = mResource.getString(updResult);
-                if(updResult == R.string.ERR_000)
+                errMsg = mResource.getString(dbRetVal);
+                if(dbRetVal == R.string.ERR_000)
                     errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
                 madbErrorAlert.setMessage(errMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
-            else
+            else{
                 finish();
+                return true;
+            }
         }
     }
 
