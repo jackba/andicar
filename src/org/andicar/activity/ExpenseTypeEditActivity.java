@@ -76,22 +76,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     }
 
     @Override
-    protected void saveData() {
-        String strRetVal = checkMandatory(vgRoot);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_FillMandatory ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
-
-        strRetVal = checkNumeric(vgRoot, false);
-        if( strRetVal != null ) {
-            Toast toast = Toast.makeText( getApplicationContext(),
-                    mResource.getString( R.string.GEN_NumberFormatException ) + ": " + strRetVal, Toast.LENGTH_SHORT );
-            toast.show();
-            return;
-        }
+    protected boolean saveData() {
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -101,9 +86,25 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
                 etUserComment.getText().toString() );
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if( mRowId == -1 ) {
-            mDbAdapter.createRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, data);
-            finish();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, data)).intValue();
+            if(dbRetVal > 0){
+            	finish();
+            	return true;
+            }
+            else{
+                if(dbRetVal == -1) //DB Error
+                    strErrMsg = mDbAdapter.lastErrorMessage;
+                else //precondition error
+                    strErrMsg = mResource.getString(-1 * dbRetVal);
+
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+                return false;
+            }
         }
         else {
             int updResult = mDbAdapter.updateRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, mRowId, data);
@@ -115,9 +116,12 @@ public class ExpenseTypeEditActivity extends EditActivityBase
                 madbErrorAlert.setMessage(errMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
-            else
+            else{
                 finish();
+                return true;
+            }
         }
     }
 

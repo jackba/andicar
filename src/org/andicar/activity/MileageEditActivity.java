@@ -247,6 +247,8 @@ public class MileageEditActivity extends EditActivityBase {
 	            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
 	            mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
 	            mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", 1);
+	            rbInsertModeIndex.setChecked(true);
+	            rbInsertModeMileage.setChecked(false);
 	            //init tag
 	            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
 		            mTagId = mPreferences.getLong("LastTagId", 0);
@@ -562,11 +564,10 @@ public class MileageEditActivity extends EditActivityBase {
         };
 
     @Override
-    protected void saveData() {
+    protected boolean saveData() {
         //check mandatory fileds & index preconditions
         calculateMileageOrNewIndex();
-        if(!beforeSave())
-        	return;
+
         int operationResult = -1;
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME, "");
@@ -619,7 +620,7 @@ public class MileageEditActivity extends EditActivityBase {
                         madbErrorAlert.setMessage(mResource.getString(-1 * result.intValue()));
                     madError = madbErrorAlert.create();
                     madError.show();
-                    return;
+                    return false;
                 }
                 //set the mileage id on the gps track
                 ContentValues cv = new ContentValues();
@@ -639,7 +640,7 @@ public class MileageEditActivity extends EditActivityBase {
                     madbErrorAlert.setMessage(errMsg);
                     madError = madbErrorAlert.create();
                     madError.show();
-                    return;
+                    return false;
                 }
             }
         }
@@ -648,7 +649,7 @@ public class MileageEditActivity extends EditActivityBase {
             madbErrorAlert.setMessage(mResource.getString(operationResult));
             madError = madbErrorAlert.create();
             madError.show();
-            return;
+            return false;
         }
         else{
             Toast toast = Toast.makeText( getApplicationContext(),
@@ -689,9 +690,8 @@ public class MileageEditActivity extends EditActivityBase {
 		intent.putExtra("CarID", mCarId);
 		this.startService(intent);
 		
-		afterSave();
-		
 		finish();
+		return true;
     }
 
     protected View.OnClickListener onStartStopRecordClickListener =

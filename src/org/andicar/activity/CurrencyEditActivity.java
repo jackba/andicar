@@ -78,9 +78,7 @@ public class CurrencyEditActivity extends EditActivityBase {
     }
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
         ContentValues cvData = new ContentValues();
         cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -92,32 +90,40 @@ public class CurrencyEditActivity extends EditActivityBase {
         cvData.put( MainDbAdapter.CURRENCY_COL_CODE_NAME,
                 etCode.getText().toString());
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if (mRowId == -1) {
-            long newId = mDbAdapter.createRecord(MainDbAdapter.CURRENCY_TABLE_NAME, cvData);
-            if(newId < 0){
-            	newId = -1 * newId;
-                String strErrMsg = mResource.getString((int) newId);
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.CURRENCY_TABLE_NAME, cvData)).intValue();
+            if(dbRetVal > 0){
+	            setResult(RESULT_OK, (new Intent()).putExtra("mRowId", dbRetVal));
+            	finish();
+            	return true;
+            }
+            else{
+                if(dbRetVal == -1) //DB Error
+                    strErrMsg = mDbAdapter.lastErrorMessage;
+                else //precondition error
+                    strErrMsg = mResource.getString(-1 * dbRetVal);
                 madbErrorAlert.setMessage(strErrMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
-            }
-            else{
-	            setResult(RESULT_OK, (new Intent()).putExtra("mRowId", newId));
-	            finish();
+                return false;
             }
         } else {
-            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CURRENCY_TABLE_NAME, mRowId, cvData);
-            if(iUpdateResult != -1){
-                String strErrMsg = "";
-                strErrMsg = mResource.getString(iUpdateResult);
-                if(iUpdateResult == R.string.ERR_000)
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.CURRENCY_TABLE_NAME, mRowId, cvData);
+            if(dbRetVal != -1){
+                strErrMsg = mResource.getString(dbRetVal);
+                if(dbRetVal == R.string.ERR_000)
                     strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
                 madbErrorAlert.setMessage(strErrMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
-            else
+            else{
                 finish();
+                return true;
+            }
         }
     }
 

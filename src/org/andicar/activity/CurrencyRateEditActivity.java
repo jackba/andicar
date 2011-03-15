@@ -227,17 +227,10 @@ public class CurrencyRateEditActivity extends EditActivityBase
     }
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
         ContentValues cvData = new ContentValues();
         
-/*
-        	mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.currencyTableColNames, spnCurrencyFromSpinner.getSelectedItemId())
-                    .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
- */
         String strCurrFromCode = null;
         Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
                 MainDbAdapter.currencyTableColNames, spnCurrencyFromSpinner.getSelectedItemId());
@@ -245,10 +238,7 @@ public class CurrencyRateEditActivity extends EditActivityBase
         	strCurrFromCode = c.getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
         	c.close();
         }
-        
-//        String strCurrToCode = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
-//                MainDbAdapter.currencyTableColNames, spnCurrencyToSpinner.getSelectedItemId())
-//                    .getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
+
         String strCurrToCode = null;
         c = mDbAdapter.fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME,
               MainDbAdapter.currencyTableColNames, spnCurrencyToSpinner.getSelectedItemId());
@@ -271,32 +261,39 @@ public class CurrencyRateEditActivity extends EditActivityBase
         cvData.put( MainDbAdapter.CURRENCYRATE_COL_INVERSERATE_NAME,
                 bdInverseRate.toString());
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if( mRowId == -1 ) {
-            Long lInsertResult = mDbAdapter.createRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME, cvData);
-            if( lInsertResult.intValue() < 0){
-                if(lInsertResult.intValue() == -1) //DB Error
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME, cvData)).intValue();
+            if( dbRetVal < 0){
+                if(dbRetVal == -1) //DB Error
                     madbErrorAlert.setMessage(mDbAdapter.lastErrorMessage);
                 else //precondition error
-                    madbErrorAlert.setMessage(mResource.getString(-1 * lInsertResult.intValue()));
+                    madbErrorAlert.setMessage(mResource.getString(-1 * dbRetVal));
                 madError = madbErrorAlert.create();
                 madError.show();
-                return;
+                return false;
             }
-            finish();
+            else{
+            	finish();
+                return true;
+            }
         }
         else {
-            int lUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME, mRowId, cvData);
-            if(lUpdateResult != -1){
-                String errMsg = "";
-                errMsg = mResource.getString(lUpdateResult);
-                if(lUpdateResult == R.string.ERR_000)
-                    errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
-                madbErrorAlert.setMessage(errMsg);
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.CURRENCYRATE_TABLE_NAME, mRowId, cvData);
+            if(dbRetVal != -1){
+                strErrMsg = mResource.getString(dbRetVal);
+                if(dbRetVal == R.string.ERR_000)
+                    strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
+                madbErrorAlert.setMessage(strErrMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
-            else
+            else{
                 finish();
+                return true;
+            }
         }
     }
 

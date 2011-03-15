@@ -667,9 +667,7 @@ public class ExpenseEditActivity extends EditActivityBase {
         };
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -708,14 +706,14 @@ public class ExpenseEditActivity extends EditActivityBase {
 	                    Toast toast = Toast.makeText( getApplicationContext(),
 	                            mResource.getString( R.string.GEN_AmountLabel ) + " ?", Toast.LENGTH_LONG );
 	                    toast.show();
-	                    return;
+	                    return false;
 	        		}
         		}
         		else{
                     Toast toast = Toast.makeText( getApplicationContext(),
                             mResource.getString( R.string.GEN_AmountLabel ) + " ?", Toast.LENGTH_LONG );
                     toast.show();
-                    return;
+                    return false;
         		}
         	}
             data.put( MainDbAdapter.EXPENSE_COL_AMOUNT_NAME, amount.toString());
@@ -821,7 +819,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                     madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
                 madError = madbErrorAlert.create();
                 madError.show();
-                return;
+                return false;
             }
         }
         else {
@@ -834,7 +832,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                 madbErrorAlert.setMessage(errMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
-                return;
+                return false;
             }
         }
     	
@@ -852,10 +850,8 @@ public class ExpenseEditActivity extends EditActivityBase {
 			this.startService(intent);
 		}
 		
-		afterSave();
-
 		finish();
-        
+        return true;
     }
 
     @Override

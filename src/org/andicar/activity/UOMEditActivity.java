@@ -96,9 +96,7 @@ public class UOMEditActivity extends EditActivityBase {
     }
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -116,23 +114,42 @@ public class UOMEditActivity extends EditActivityBase {
         else
             data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_OTHER_TYPE_CODE);
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if( mRowId == -1 ) {
-            mDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data);
-            finish();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data)).intValue();
+            if(dbRetVal > 0){
+            	finish();
+            	return true;
+            }
+            else{
+                if(dbRetVal == -1) //DB Error
+                    strErrMsg = mDbAdapter.lastErrorMessage;
+                else //precondition error
+                    strErrMsg = mResource.getString(-1 * dbRetVal);
+
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+                return false;
+            }
         }
         else {
-            int updResult = mDbAdapter.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
-            if(updResult != -1){
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
+            if(dbRetVal != -1){
                 String errMsg = "";
-                errMsg = mResource.getString(updResult);
-                if(updResult == R.string.ERR_000)
+                errMsg = mResource.getString(dbRetVal);
+                if(dbRetVal == R.string.ERR_000)
                     errMsg = errMsg + "\n" + mDbAdapter.lastErrorMessage;
                 madbErrorAlert.setMessage(errMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
-            else
+            else{
                 finish();
+                return true;
+            }
         }
     }
 

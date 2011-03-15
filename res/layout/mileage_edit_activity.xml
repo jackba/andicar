@@ -251,13 +251,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:checkedButton="@+id/rbInsertModeIndex"
                 android:gravity="center_vertical"
                 android:layout_marginTop="10dip"
                 android:layout_marginLeft="40dip"
                 >
                 <RadioButton
-                    android:id="@id/rbInsertModeIndex"
+                    android:id="@+id/rbInsertModeIndex"
                     android:text="@string/MileageEditActivity_OptionIndexLabel"
                     style="?android:attr/textAppearanceSmall"
                     android:typeface="sans"

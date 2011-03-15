@@ -765,9 +765,7 @@ public class RefuelEditActivity extends EditActivityBase {
     }
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
         
         //final calculations
         calculatePriceAmount();
@@ -798,7 +796,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     mResource.getString(R.string.GEN_PriceLabel) + ": " + mResource.getString(R.string.GEN_Required), Toast.LENGTH_SHORT );
             toast.show();
             etUserInput.setText("");
-            return;
+            return false;
         }
         	
         data.put( MainDbAdapter.REFUEL_COL_PRICEENTERED_NAME, priceEntered.toString());
@@ -921,7 +919,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     madbErrorAlert.setMessage(mResource.getString(-1 * createResult.intValue()));
                 madError = madbErrorAlert.create();
                 madError.show();
-                return;
+                return false;
             }
         }
         else {
@@ -934,7 +932,7 @@ public class RefuelEditActivity extends EditActivityBase {
                 madbErrorAlert.setMessage(errMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
-                return;
+                return false;
             }
         }
         
@@ -949,8 +947,8 @@ public class RefuelEditActivity extends EditActivityBase {
 		intent.putExtra("CarID", mCarId);
 		this.startService(intent);
 
-		afterSave();
 		finish();
+		return true;
     }
 
     @Override

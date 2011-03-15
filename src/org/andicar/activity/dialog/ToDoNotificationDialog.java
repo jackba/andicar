@@ -202,11 +202,11 @@ public class ToDoNotificationDialog extends EditActivityBase {
 	 * @see org.andicar.activity.EditActivityBase#saveData()
 	 */
 	@Override
-	protected void saveData() {
+	protected boolean saveData() {
 		isOKPressed = true;
 		if(!isTodoOK){
 			finish();
-			return;
+			return false;
 		}
 		CheckBox ckIsDone = (CheckBox)findViewById(R.id.ckIsDone); 
 		EditText etPostpone = (EditText)findViewById(R.id.etPostpone);
@@ -228,7 +228,7 @@ public class ToDoNotificationDialog extends EditActivityBase {
 	                        mResource.getString( R.string.GEN_NumberFormatException ), Toast.LENGTH_SHORT );
 	                toast.show();
 		            etPostpone.requestFocus();
-	                return;
+	                return false;
 	            }
 	        }
 	        else{
@@ -236,7 +236,7 @@ public class ToDoNotificationDialog extends EditActivityBase {
 	                    mResource.getString( R.string.GEN_FillMandatory ) + "", Toast.LENGTH_SHORT );
 	            toast.show();
 	            etPostpone.requestFocus();
-	            return;
+	            return false;
 	        }
 			if(triggeredBy == ToDoNotificationService.TRIGGERED_BY_MILEAGE){
 				cvData.put( MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, carCurrentOdodmeter +  postPoneFor.longValue());
@@ -256,6 +256,7 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		intent.putExtra("setJustNextRun", true);
 		this.startService(intent);
 		finish();
+		return true;
 	}
 
 	/* (non-Javadoc)

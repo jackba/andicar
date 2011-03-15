@@ -143,9 +143,7 @@ public class CarEditActivity extends EditActivityBase
     }
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
         BigDecimal bdStartIndex = null;
         String strIndexStart = etIndexStart.getText().toString();
@@ -158,7 +156,7 @@ public class CarEditActivity extends EditActivityBase
                         mResource.getString( R.string.GEN_NumberFormatException ) + ": "
                         + mResource.getString( R.string.CarEditActivity_IndexStartLabel ), Toast.LENGTH_SHORT );
                 toast.show();
-                return;
+                return false;
             }
         }
         ContentValues cvData = new ContentValues();
@@ -180,22 +178,37 @@ public class CarEditActivity extends EditActivityBase
         cvData.put( MainDbAdapter.CAR_COL_CURRENCY_ID_NAME,
                 spnCurrency.getSelectedItemId());
 
+        int dbRetVal = -1;
+        String strErrMsg = null;
         if( mRowId == -1 ) {
             //when a new car defined the current index is same with the start index
             cvData.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, bdStartIndex.toString() );
-            mDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, cvData);
-            finish();
+            dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, cvData)).intValue();
+            if(dbRetVal > 0){
+            	finish();
+            	return true;
+            }
+            else{
+                if(dbRetVal == -1) //DB Error
+                    strErrMsg = mDbAdapter.lastErrorMessage;
+                else //precondition error
+                    strErrMsg = mResource.getString(-1 * dbRetVal);
+                madbErrorAlert.setMessage(strErrMsg);
+                madError = madbErrorAlert.create();
+                madError.show();
+                return false;
+            }
         }
         else {
-            int iUpdateResult = mDbAdapter.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, cvData);
-            if(iUpdateResult != -1){
-                String strErrMsg = "";
-                strErrMsg = mResource.getString(iUpdateResult);
-                if(iUpdateResult == R.string.ERR_000)
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, cvData);
+            if(dbRetVal != -1){
+                strErrMsg = mResource.getString(dbRetVal);
+                if(dbRetVal == R.string.ERR_000)
                     strErrMsg = strErrMsg + "\n" + mDbAdapter.lastErrorMessage;
                 madbErrorAlert.setMessage(strErrMsg);
                 madError = madbErrorAlert.create();
                 madError.show();
+                return false;
             }
             else{
             	//if the selected car in the main activity is inactivated, invalidate it
@@ -205,6 +218,7 @@ public class CarEditActivity extends EditActivityBase
                     mPrefEditor.commit();
             	}
                 finish();
+                return true;
             }
         }
     }

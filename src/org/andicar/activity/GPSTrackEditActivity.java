@@ -182,9 +182,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
             };
 
     @Override
-    protected void saveData() {
-        if(!beforeSave())
-        	return;
+    protected boolean saveData() {
 
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
@@ -219,6 +217,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
             data.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, (String)null);
         }
 
+
         int updResult = mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, mRowId, data);
         if(updResult != -1){
             String errMsg = "";
@@ -228,6 +227,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
             madbErrorAlert.setMessage(errMsg);
             madError = madbErrorAlert.create();
             madError.show();
+            return false;
         }
         else{
         	if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0){
@@ -235,6 +235,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
         		mPrefEditor.commit();
         	}
             finish();
+            return true;
         }
     }
 
