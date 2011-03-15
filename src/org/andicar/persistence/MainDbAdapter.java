@@ -257,6 +257,19 @@ public class MainDbAdapter extends DB
             }
 	        c.close();
         }
+        else if(tableName.equals(UOM_TABLE_NAME)){
+            String checkSelect =
+                "SELECT " + GEN_COL_ROWID_NAME + " " +
+                "FROM " + UOM_TABLE_NAME + " " +
+                "WHERE UPPER( " + UOM_COL_CODE_NAME + ") = ? ";
+	        String[] selectionArgs = {content.getAsString(UOM_COL_CODE_NAME).toUpperCase()};
+	        Cursor c = execSelectSql(checkSelect, selectionArgs);
+	        if(c.moveToFirst()){ //duplicate currency code
+	            c.close();
+	            return R.string.ERR_059;
+            }
+	        c.close();
+        }
         return -1;
     }
 
