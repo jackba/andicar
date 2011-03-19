@@ -17,7 +17,6 @@ package org.andicar.activity.miscellaneous;
 
 import java.math.BigDecimal;
 
-import org.andicar.activity.BaseActivity;
 import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
