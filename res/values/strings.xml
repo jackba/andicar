@@ -147,6 +147,8 @@
     <string name="GEN_Or2">"or"</string>
     <string name="GEN_ToDo">"To-Do"</string>
     <string name="GEN_ToDoAlert">"To-Do alert"</string>
+    <string name="GEN_New">"New"</string>
+    <string name="GEN_Update">"Update"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -439,6 +441,8 @@
     <string name="DIALOGReport_SendEmailLabel">"  send as email attachment"</string>
     <string name="DIALOGReport_ReportFormatLabel">"Report format:"</string>
 
+    <string name="DIALOGReport_NameTitle">"Give a name"</string>
+
     <string name="DayOfWeek_0">"Sunday"</string>
     <string name="DayOfWeek_1">"Monday"</string>
     <string name="DayOfWeek_2">"Tuesday"</string>
@@ -509,4 +513,16 @@
     <string name="AddOn_AutoBackupService_BackupSucceeded">"The backup was created with success"</string>
     <string name="AddOn_AutoBackupService_BackupFailed">"The backup failed! Check your SDCARD."</string>
 
+    <string name="AddOn_DataTemplate_Title">"Data entry templates"</string>
+    <string name="AddOn_DataTemplate_Description">"This Add-On allow you to create and use templates for your most used data entries."</string>
+    <string name="AddOn_DataTemplate_ApplyTemplateLbl">"Template"</string>
+    <string name="AddOn_DataTemplate_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
+    <string name="AddOn_DataTemplate_SubscriptionOption2">"Six month subscription: [#1] [#2]"</string>
+    <string name="AddOn_DataTemplate_SubscriptionOption3">"One year subscription: [#1] [#2]"</string>
+
+    <string name="AddOn_DataEntryPref_CategoryTitle">"Data entry templates"</string>
+    <string name="AddOn_DataEntryPref_ExpenseTitle">"Expense templates"</string>
+    <string name="AddOn_DataEntryPref_MileageTitle">"Mileage templates"</string>
+    <string name="AddOn_DataEntryPref_RefuelTitle">"Refuel templates"</string>
+    <string name="AddOn_DataEntryPref_GPSTitle">"GPS track templates"</string>
 </resources>

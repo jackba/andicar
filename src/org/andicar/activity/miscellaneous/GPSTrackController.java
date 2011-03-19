@@ -18,6 +18,7 @@ package org.andicar.activity.miscellaneous;
 import java.math.BigDecimal;
 
 import org.andicar.activity.BaseActivity;
+import org.andicar.activity.EditActivityBase;
 import org.andicar.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
@@ -50,9 +51,7 @@ import android.widget.Toast;
  *
  * @author miki
  */
-public class GPSTrackController extends BaseActivity {
-    private Spinner spnCar;
-    private Spinner spnDriver;
+public class GPSTrackController extends EditActivityBase {
     private boolean bIsActivityOnLoading = true;
     private ArrayAdapter<String> aaUserComment;
     private ArrayAdapter<String> tagAdapter;
@@ -332,5 +331,27 @@ public class GPSTrackController extends BaseActivity {
             }
         };
     };
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#saveData()
+	 */
+	@Override
+	protected boolean saveData() {
+		return true;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#setLayout()
+	 */
+	@Override
+	protected void setLayout() {
+	}
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
     
 }

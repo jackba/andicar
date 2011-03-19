@@ -112,5 +112,11 @@ public class MainScreenPreferenceActivity extends BaseActivity {
                 mPrefEditor.commit();
             }
         };
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
 
 }

@@ -131,4 +131,11 @@ public class TaskTypeEditActivity extends EditActivityBase
         setContentView(R.layout.tasktype_edit_activity);
     }
 
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
+
 }

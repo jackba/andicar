@@ -302,4 +302,11 @@ public class BPartnerEditActivity extends EditActivityBase {
         }
         return super.onContextItemSelected(item);
     }
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
 }

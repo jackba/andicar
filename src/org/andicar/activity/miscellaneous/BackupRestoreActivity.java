@@ -208,4 +208,11 @@ public class BackupRestoreActivity extends BaseActivity {
             alert.show();
             }
     };
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
 }

@@ -21,16 +21,18 @@ package org.andicar.activity;
 
 import java.util.Calendar;
 
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
-
-import com.andicar.addon.activity.DataEntryTemplate;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -39,6 +41,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.andicar.addon.activity.DataEntryTemplate;
+import com.andicar.addon.activity.ServiceSubscription;
+import com.andicar.addon.utils.AddOnStaticValues;
 
 /**
  * Base class for all edit activities. Implement common functionalities:
@@ -55,6 +61,7 @@ import android.widget.Toast;
 public abstract class EditActivityBase extends BaseActivity {
     protected long mRowId = -1;
     protected Bundle mBundleExtras = null;
+    protected AndiCarDialogBuilder mAndiCarDialogBuilder;
     protected ImageButton btnOk = null;
     protected ImageButton btnCancel = null;
     protected ImageButton btnPickDate = null;
@@ -71,7 +78,11 @@ public abstract class EditActivityBase extends BaseActivity {
     protected final Calendar mcalDateTime = Calendar.getInstance();
     protected boolean initTimeOnly = false;
     protected boolean initDateOnly = false;
-    protected boolean isCreateTemplate = false;
+	protected boolean isFinishAfterSave = true;
+    protected boolean isUseTemplate = false;
+    protected long mTemplateID = -1;
+    
+    protected DataEntryTemplate mDet = null;
 
     abstract protected boolean saveData();
     abstract protected void setLayout();
@@ -115,7 +126,11 @@ public abstract class EditActivityBase extends BaseActivity {
         btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
         btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
         
-        DataEntryTemplate.fillFromTemplate(this);
+//        mTemplateID = 7;
+//        if(mBundleExtras.getString("Operation").equals("N") && mTemplateID > 0){
+        	mDet = new DataEntryTemplate(this, mDbAdapter);
+//        	mDet.fillFromTemplate(mTemplateID);
+//        }
     }
 
     @Override
@@ -255,6 +270,15 @@ public abstract class EditActivityBase extends BaseActivity {
             	mDatePickerDialog = new DatePickerDialog(this,
                         onDateSetListener, mYear, mMonth, mDay); 
                 return mDatePickerDialog;
+            case StaticValues.DIALOG_NAME:
+    	        LayoutInflater liLayoutFactory = LayoutInflater.from(this);
+    	        mDialog = liLayoutFactory.inflate(R.layout.dialog_name, null);
+    	        etName = (EditText)mDialog.findViewById(R.id.etName);
+    	        mAndiCarDialogBuilder = new AndiCarDialogBuilder(this, 
+    	        		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.DIALOGReport_NameTitle));
+    	        mAndiCarDialogBuilder.setView(mDialog);
+    	        mAndiCarDialogBuilder.setPositiveButton(R.string.GEN_OK, mDialogButtonlistener);
+    	        return mAndiCarDialogBuilder.create();
         }
         return null;
     }
@@ -270,7 +294,7 @@ public abstract class EditActivityBase extends BaseActivity {
             	if(mDatePickerDialog != null)
             		mDatePickerDialog.updateDate(mYear, mMonth, mDay);
                 break;
-        }
+		}
     }
 
     private DatePickerDialog.OnDateSetListener onDateSetListener =
@@ -303,6 +327,13 @@ public abstract class EditActivityBase extends BaseActivity {
                 }
             };
 
+    private DialogInterface.OnClickListener mDialogButtonlistener =
+                new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                if (whichButton == DialogInterface.BUTTON_POSITIVE) {
+                }
+            };
+        };
     private void updateDateTime() {
         mcalDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
@@ -361,10 +392,59 @@ public abstract class EditActivityBase extends BaseActivity {
      * @return
      */
     protected boolean afterSave(){
-//    	if(isCreateTemplate){
-//			DataEntryTemplate det = new DataEntryTemplate();
-//			det.createTemplate(this, mDbAdapter);
-//    	}
+    	if(isUseTemplate){
+    		try{
+	    		if(!ServiceSubscription.isSubscriptionValid(mDbAdapter, AddOnStaticValues.DATA_TEMPLATE_ID))
+	    			return true;
+	    		
+	    		long templateID = -1;
+	    		if(mDet.isCreateNew()){
+	    			templateID = 0;
+	    		}
+	    		if(mDet.isUpdateExisting())
+	    			templateID = mTemplateID;
+	    	
+	    		if(templateID == -1){
+	    			if(isFinishAfterSave)
+	    				finish();
+	    			return true;
+	    		}
+	    		
+	    		if(mDet.isCreateNew() && (etName == null || etName.getText() == null || etName.getText().toString().length() == 0)){
+	    			if(isFinishAfterSave)
+	    				finish();
+	    			return true;
+	    		}    			
+	    		
+				ContentValues cv = new ContentValues();
+				if(mDet.isCreateNew()){
+					cv.put("Name", etName.getText().toString());
+					cv.put("Comment", etName.getText().toString());
+				}
+		        int dbRetVal = ((Long)mDet.saveTemplate(templateID, cv)).intValue();
+		        String strErrMsg = null;
+				if( dbRetVal < 0){
+	                if(dbRetVal == -1) //DB Error
+	                    strErrMsg = mDbAdapter.lastErrorMessage;
+	                else //precondition error
+	                    strErrMsg = mResource.getString(-1 * dbRetVal);
+	                madbErrorAlert.setMessage(strErrMsg);
+	                madError = madbErrorAlert.create();
+	                madError.show();
+	                return false;
+				}
+    		}
+    		catch(Exception e){}
+    	}
+		if(isFinishAfterSave)
+			finish();
     	return true;
-    }
+   }
+    
+	/**
+	 * @param mTemplateID the mTemplateID to set
+	 */
+	public void setTemplateID(long mTemplateID) {
+		this.mTemplateID = mTemplateID;
+	}
 }

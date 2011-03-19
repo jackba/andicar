@@ -132,4 +132,11 @@ public class DriverEditActivity extends EditActivityBase {
         setContentView(R.layout.driver_edit_activity);
     }
 
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
+
 }

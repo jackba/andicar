@@ -119,8 +119,6 @@ public class MainActivity extends BaseActivity {
 
 	private TextView tvStatisticsHdr;
 
-	private Spinner spnCar;
-
 	private boolean exitResume = false;
 	private String appVersion;
 	private String dbVersion;
@@ -1715,5 +1713,12 @@ public class MainActivity extends BaseActivity {
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
 	}
 }

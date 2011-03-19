@@ -129,4 +129,11 @@ public class TagEditActivity extends EditActivityBase
         setContentView(R.layout.tag_edit_activity);
     }
 
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
+
 }

@@ -56,11 +56,6 @@ public class ExpenseEditActivity extends EditActivityBase {
     private AutoCompleteTextView acBPartner;
     private AutoCompleteTextView acAdress;
     private AutoCompleteTextView acTag;
-    private Spinner spnCar;
-    private Spinner spnDriver;
-    private Spinner spnCurrency;
-    private Spinner spnExpType;
-    private Spinner spnExpCategory;
     private Spinner spnUOM;
     private EditText etCarIndex;
     private EditText etUserInput;
@@ -76,10 +71,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     private LinearLayout llConversionRateZone1;
     private LinearLayout llConversionRateZone2;
 
-    private long mCurrencyId;
     private long carDefaultCurrencyId;
-    private long mExpCategoryId = 0;
-    private long mExpTypeId = 0;
     private long mUOMId = -1;
     private long mBPartnerId = 0;
     private long mAddressId = 0;
@@ -111,7 +103,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             return; //restored from previous state
 
         operationType = mBundleExtras.getString("Operation");
-        isCreateTemplate = true;
+        isUseTemplate = true;
         init();
 
         if (operationType.equals("E")) {
@@ -213,35 +205,46 @@ public class ExpenseEditActivity extends EditActivityBase {
             c.close();
         }
         else {
-            tvWarningLabel.setText("");
-            mCarId = mPreferences.getLong("CurrentCar_ID", 1);
-            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
-            mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
+        	if(mTemplateID < 0){ //no template selected
+	            tvWarningLabel.setText("");
+	            mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+	            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
+	            mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
+	            //init tag
+	            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+		            mTagId = mPreferences.getLong("LastTagId", 0);
+		            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+		            String[] selectionArgs = {Long.toString(mTagId)};
+		            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+		                        selection, selectionArgs, null, null, null);
+		            if(c.moveToFirst())
+		                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+		            c.close();
+	            }
+
+	            acAdress.setEnabled(false);
+	            acAdress.setText(null);
+	            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+	                    mResource.getString(R.string.GEN_Required).replace(":", ""));
+	            setInsertMode(INSERTMODE_AMOUNT);
+	            calculatePrice();
+        	}
+        	else{
+        		if(rbInsertModePrice.isChecked()){
+    	            setInsertMode(INSERTMODE_PRICE);
+    	            calculateAmount();
+        		}
+        		else{
+    	            setInsertMode(INSERTMODE_AMOUNT);
+    	            calculatePrice();
+        		}
+        	}
             initDateTime(System.currentTimeMillis());
             setEditable((ViewGroup) findViewById(R.id.vgRoot), true);
             setConversionRateZoneVisible(false);
-            acAdress.setEnabled(false);
-            acAdress.setText(null);
-            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
-                    mResource.getString(R.string.GEN_Required).replace(":", ""));
-
-            //init tag
-            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
-	            mTagId = mPreferences.getLong("LastTagId", 0);
-	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
-	            String[] selectionArgs = {Long.toString(mTagId)};
-	            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
-	                        selection, selectionArgs, null, null, null);
-	            if(c.moveToFirst())
-	                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
-	            c.close();
-            }
-            
         }
 
         initControls();
-        setInsertMode(INSERTMODE_AMOUNT);
-        calculatePrice();
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent(this, "ExpenseEdit", null);
     }
@@ -473,19 +476,7 @@ public class ExpenseEditActivity extends EditActivityBase {
                     if(isActivityOnLoading)
                         return;
                     mCurrencyId = spnCurrency.getSelectedItemId();
-                    if(mCurrencyId != carDefaultCurrencyId){
-                        setConversionRateZoneVisible(true);
-                    }
-                    else{
-                        setConversionRateZoneVisible(false);
-                    }
-                    conversionRate = mDbAdapter.getCurrencyRate(mCurrencyId, carDefaultCurrencyId);
-                    etConversionRate.setText("");
-                    tvConvertedAmountValue.setText("");
-                    if(conversionRate != null){
-                        etConversionRate.append(conversionRate.toString());
-                    }
-
+                    setSpecificLayout();
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -850,7 +841,6 @@ public class ExpenseEditActivity extends EditActivityBase {
 			this.startService(intent);
 		}
 		
-		finish();
         return true;
     }
 
@@ -858,4 +848,34 @@ public class ExpenseEditActivity extends EditActivityBase {
     protected void setLayout() {
         setContentView(R.layout.expense_edit_activity);
     }
+
+    protected void setSpecificLayout() {
+        if(mCurrencyId != carDefaultCurrencyId){
+            setConversionRateZoneVisible(true);
+            conversionRate = mDbAdapter.getCurrencyRate(mCurrencyId, carDefaultCurrencyId);
+            etConversionRate.setText("");
+            tvConvertedAmountValue.setText("");
+            if(conversionRate != null){
+                etConversionRate.append(conversionRate.toString());
+            }
+        }
+        else{
+            setConversionRateZoneVisible(false);
+        }
+    }
+
+    /**
+	 * @return the mUOMId
+	 */
+	public long getmUOMId() {
+		return mUOMId;
+	}
+
+	/**
+	 * @param uOMId the mUOMId to set
+	 */
+	public void setmUOMId(long uOMId) {
+		this.mUOMId = uOMId;
+		setSpinnerSelectedID(spnUOM, uOMId);
+	}
 }
