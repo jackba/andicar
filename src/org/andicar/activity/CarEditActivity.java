@@ -252,4 +252,11 @@ public class CarEditActivity extends EditActivityBase
                 MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, newId, false);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
+
 }

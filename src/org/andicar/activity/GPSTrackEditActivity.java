@@ -243,4 +243,11 @@ public class GPSTrackEditActivity extends EditActivityBase {
     protected void setLayout() {
         setContentView(R.layout.gpstrack_edit_activity);
     }
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
 }

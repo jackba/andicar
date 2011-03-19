@@ -144,4 +144,11 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
         setContentView(R.layout.expensecategory_edit_activity);
     }
 
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
+
 }

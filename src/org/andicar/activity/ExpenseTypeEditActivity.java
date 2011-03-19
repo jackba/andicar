@@ -26,7 +26,6 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  *
@@ -129,5 +128,12 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     protected void setLayout() {
         setContentView(R.layout.expensetype_edit_activity);
     }
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
 
 }

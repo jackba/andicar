@@ -136,7 +136,6 @@ public class TaskEditActivity extends EditActivityBase {
 	private boolean isTimingEnabled = true;
 	private boolean isMileageEnabled = true;
 	private boolean isRecurrent = true;
-	private boolean isFinishAfterSave = true;
 	private boolean saveSuccess = true;
 	private boolean isDeleteLinkedCarsOnSave = false;
 	private String mScheduledFor = StaticValues.TASK_SCHEDULED_FOR_BOTH;
@@ -1047,7 +1046,7 @@ public class TaskEditActivity extends EditActivityBase {
 		}
 	};
 	
-	private void setSpecificLayout(){
+	protected void setSpecificLayout(){
 		if (isRecurrent) {
 			llToDoCountZone.setVisibility(View.VISIBLE);
 			if(isTimingEnabled){

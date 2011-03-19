@@ -56,12 +56,7 @@ public class RefuelEditActivity extends EditActivityBase {
     private AutoCompleteTextView acBPartner;
     private AutoCompleteTextView acAdress;
     private AutoCompleteTextView acTag;
-    private Spinner spnCar;
-    private Spinner spnDriver;
-    private Spinner spnCurrency;
     private Spinner spnUomVolume;
-    private Spinner spnExpType;
-    private Spinner spnExpCategory;
     private EditText etCarIndex;
     private EditText etQty;
     private EditText etUserInput;
@@ -81,10 +76,7 @@ public class RefuelEditActivity extends EditActivityBase {
     private RadioButton rbInsertModePrice;
 
 
-    private long mCurrencyId = 0;
     private long carDefaultCurrencyId = 0;
-    private long mExpCategoryId = 0;
-    private long mExpTypeId = 0;
     private long carDefaultUOMVolumeId = 0;
     private long mUomVolumeId = 0;
     private long mBPartnerId = 0;
@@ -122,7 +114,7 @@ public class RefuelEditActivity extends EditActivityBase {
             return; //restoe from previous state
 
         operationType = mBundleExtras.getString("Operation");
-        isCreateTemplate = true;
+        isUseTemplate = true;
 
         init();
 
@@ -955,5 +947,12 @@ public class RefuelEditActivity extends EditActivityBase {
     protected void setLayout() {
         setContentView(R.layout.refuel_edit_activity);
     }
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
 
 }

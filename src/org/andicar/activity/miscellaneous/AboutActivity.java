@@ -54,6 +54,13 @@ public class AboutActivity extends BaseActivity{
         tvAbout2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
+
 //    View.OnClickListener mDonateClickListener = new View.OnClickListener() {
 //        public  void onClick(View v) {
 //

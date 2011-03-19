@@ -319,6 +319,12 @@
             android:name="com.andicar.addon.activity.SecureBackupConfig"
             android:label="@string/AddOn_SecureBackup_Title">
         </activity>
+
+        <activity
+            android:name="com.andicar.addon.activity.DataEntryTemplateList"
+            android:label="@string/AddOn_DataEntryPref_CategoryTitle">
+        </activity>
+
         <service android:name="com.andicar.addon.services.FileMailer" 
 			android:label="AndiCarFileMailer"
 			android:process="com.andicar.addon.services">

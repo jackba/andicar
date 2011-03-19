@@ -60,7 +60,6 @@ public class MileageEditActivity extends EditActivityBase {
     private long mGpsTrackId = -1;
     private long mTagId = 0;
     private String operationType = null;
-    private long mExpTypeId = 0;
     private BigDecimal mNewIndex = new BigDecimal("0");
     private BigDecimal mStartIndex = new BigDecimal("0");
     private BigDecimal mStopIndex = null;
@@ -78,9 +77,6 @@ public class MileageEditActivity extends EditActivityBase {
     private TextView tvCalculatedContent;
     private AutoCompleteTextView acUserComment;
     private AutoCompleteTextView acTag;
-    private Spinner spnExpType;
-    private Spinner spnCar;
-    private Spinner spnDriver;
     ArrayAdapter<String> userCommentAdapter;
     private ArrayAdapter<String> tagAdapter;
     protected ImageButton btnStartStopMileageRecord = null;
@@ -97,7 +93,7 @@ public class MileageEditActivity extends EditActivityBase {
 
 
         operationType = mBundleExtras.getString("Operation");
-        isCreateTemplate = true;
+        isUseTemplate = true;
         init();
         
         if( operationType.equals("E") ) {
@@ -768,5 +764,13 @@ public class MileageEditActivity extends EditActivityBase {
             return false;
         }
     };
+
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
+	 */
+	@Override
+	protected void setSpecificLayout() {
+	}
 
 }

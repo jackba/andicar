@@ -45,19 +45,35 @@ import android.widget.TextView;
  *
  * @author Miklos Keresztes
  */
-public class BaseActivity extends Activity {
+public abstract class BaseActivity extends Activity {
     protected MainDbAdapter mDbAdapter = null;
     protected Resources mResource = null;
     protected SharedPreferences mPreferences;
     protected AndiCarDialogBuilder madbErrorAlert;
+    
     protected AlertDialog madError;
+    protected View mDialog;
+    protected ViewGroup vgRoot;
+    protected Spinner spnCar;
+    protected Spinner spnDriver;
+    protected Spinner spnCurrency;
+    protected Spinner spnExpType;
+    protected Spinner spnExpCategory;
+    protected EditText etName = null;
+    
+
+    protected SharedPreferences.Editor mPrefEditor;
     protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport;
-    protected SharedPreferences.Editor mPrefEditor;
-    protected ViewGroup vgRoot;
     protected boolean isUseNumericInput = true;
+
     protected long mCarId = -1;
     protected long mDriverId = -1;
+    protected long mCurrencyId = -1;
+    protected long mExpCategoryId = -1;
+    protected long mExpTypeId = -1;
+
+    abstract protected void setSpecificLayout();
 
     /** Called when the activity is first created. */
     @Override
@@ -104,8 +120,20 @@ public class BaseActivity extends Activity {
 		if(fakeFocus != null)
 			fakeFocus.requestFocus();
     }
+    
+    public void setSpinnerSelectedID(Spinner sp, long id){
+    	SimpleCursorAdapter sca = (SimpleCursorAdapter)sp.getAdapter();
+    	int count = sca.getCount();
+    	
+    	for(int i = 0; i < count; i++){
+    		if(sca.getItemId(i) == id){
+    			sp.setSelection(i);
+    			return;
+    		}
+    	}
+    }
 
-    protected void initSpinner(View pSpinner, String tableName, String[] columns, String[] from,
+    public void initSpinner(View pSpinner, String tableName, String[] columns, String[] from,
             String selection, String[] selectionArgs,
             String orderBy, long selectedId, boolean addEmptyValue){
         try{
@@ -301,7 +329,56 @@ public class BaseActivity extends Activity {
         }
     }
     
+    
+    
     public ViewGroup getRootViewGroup(){
     	return vgRoot;
     }
+
+	/**
+	 * @param carId the mCarId to set
+	 */
+	public void setCarId(long carId) {
+		this.mCarId = carId;
+		if(spnCar != null)
+			setSpinnerSelectedID(spnCar, carId);
+	}
+
+	/**
+	 * @param driverId the mDriverId to set
+	 */
+	public void setDriverId(long driverId) {
+		this.mDriverId = driverId;
+		if(spnDriver != null)
+			setSpinnerSelectedID(spnDriver, driverId);
+	}
+
+	/**
+	 * @param currencyId the mCurrencyId to set
+	 */
+	public void setCurrencyId(long currencyId) {
+		this.mCurrencyId = currencyId;
+		if(spnCurrency != null){
+			setSpinnerSelectedID(spnCurrency, currencyId);
+			setSpecificLayout();
+		}
+	}
+
+	/**
+	 * @param expCategoryId the mExpCategoryId to set
+	 */
+	public void setExpCategoryId(long expCategoryId) {
+		this.mExpCategoryId = expCategoryId;
+		if(spnExpCategory != null)
+			setSpinnerSelectedID(spnExpCategory, expCategoryId);
+	}
+
+	/**
+	 * @param expTypeId the mExpTypeId to set
+	 */
+	public void setExpTypeId(long expTypeId) {
+		this.mExpTypeId = expTypeId;
+		if(spnExpType != null)
+			setSpinnerSelectedID(spnExpType, expTypeId);
+	}
 }
