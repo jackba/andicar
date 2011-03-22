@@ -117,7 +117,7 @@ public abstract class EditActivityBase extends BaseActivity {
             btnCancel.setOnClickListener(onCancelClickListener);
 
         btnOk = (ImageButton)findViewById(android.R.id.button1);
-        if(onOkClickListener != null)
+        if(onOkClickListener != null && btnOk != null)
             btnOk.setOnClickListener(onOkClickListener);
             
         vgRoot = (ViewGroup) findViewById(R.id.vgRoot);

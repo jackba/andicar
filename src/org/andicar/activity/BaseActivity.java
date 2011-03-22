@@ -336,24 +336,6 @@ public abstract class BaseActivity extends Activity {
     }
 
 	/**
-	 * @param carId the mCarId to set
-	 */
-	public void setCarId(long carId) {
-		this.mCarId = carId;
-		if(spnCar != null)
-			setSpinnerSelectedID(spnCar, carId);
-	}
-
-	/**
-	 * @param driverId the mDriverId to set
-	 */
-	public void setDriverId(long driverId) {
-		this.mDriverId = driverId;
-		if(spnDriver != null)
-			setSpinnerSelectedID(spnDriver, driverId);
-	}
-
-	/**
 	 * @param currencyId the mCurrencyId to set
 	 */
 	public void setCurrencyId(long currencyId) {

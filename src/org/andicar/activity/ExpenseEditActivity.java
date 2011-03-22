@@ -296,8 +296,8 @@ public class ExpenseEditActivity extends EditActivityBase {
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
-        spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
-        spnDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
+        spnDriver.setOnItemSelectedListener(spinnerDriverOnItemSelectedListener);
         spnCar.setOnTouchListener(spinnerOnTouchListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         spnCurrency = (Spinner) findViewById(R.id.spnCurrency);
@@ -436,39 +436,27 @@ public class ExpenseEditActivity extends EditActivityBase {
         }
     };
 
-    private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
+    private AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     if(isActivityOnLoading)
                         return;
-                    mCarId = spnCar.getSelectedItemId();
-                    mDriverId = spnDriver.getSelectedItemId();
-                    userCommentAdapter = null;
-                    userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this,
-                            android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteText(MainDbAdapter.EXPENSE_TABLE_NAME, null, mCarId, 30));
-                    acUserComment.setAdapter(userCommentAdapter);
-                    //change the currency
-                    Long newCarCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
-
-                    if(newCarCurrencyId != mCurrencyId){
-                        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                                    MainDbAdapter.isActiveCondition, null,
-                                    MainDbAdapter.GEN_COL_NAME_NAME,
-                                    newCarCurrencyId, false);
-                        mCurrencyId = newCarCurrencyId;
-                        carDefaultCurrencyId = mCurrencyId;
-                        carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
-                        conversionRate = BigDecimal.ONE;
-
-                        setConversionRateZoneVisible(false);
-                    }
+                    setCarId(arg3, false);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
 
+    private AdapterView.OnItemSelectedListener spinnerDriverOnItemSelectedListener =
+        new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if(isActivityOnLoading)
+                    return;
+                setDriverId(arg3, false);
+            }
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        };
     private AdapterView.OnItemSelectedListener spinnerCurrencyOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
@@ -878,4 +866,45 @@ public class ExpenseEditActivity extends EditActivityBase {
 		this.mUOMId = uOMId;
 		setSpinnerSelectedID(spnUOM, uOMId);
 	}
+
+	/**
+	 * @param carId the mCarId to set
+	 */
+	public void setCarId(long carId, boolean updateSpinnerSelection) {
+		this.mCarId = carId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnCar, carId);
+
+        userCommentAdapter = null;
+        userCommentAdapter = new ArrayAdapter<String>(ExpenseEditActivity.this,
+                android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.EXPENSE_TABLE_NAME, null, mCarId, 30));
+        acUserComment.setAdapter(userCommentAdapter);
+        //change the currency
+        Long newCarCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
+
+        if(newCarCurrencyId != mCurrencyId){
+            initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
+                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                        MainDbAdapter.isActiveCondition, null,
+                        MainDbAdapter.GEN_COL_NAME_NAME,
+                        newCarCurrencyId, false);
+            mCurrencyId = newCarCurrencyId;
+            carDefaultCurrencyId = mCurrencyId;
+            carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
+            conversionRate = BigDecimal.ONE;
+
+            setConversionRateZoneVisible(false);
+        }
+	}
+
+	/**
+	 * @param driverId the mDriverId to set
+	 */
+	public void setDriverId(long driverId, boolean updateSpinnerSelection) {
+		this.mDriverId = driverId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnDriver, driverId);
+	}
+
 }

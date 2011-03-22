@@ -340,9 +340,9 @@ public class MileageEditActivity extends EditActivityBase {
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
-        spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
         spnCar.setOnTouchListener(spinnerOnTouchListener);
-        spnDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnDriver.setOnItemSelectedListener(spinnerDriverOnItemSelectedListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         btnStartStopMileageRecord = (ImageButton)findViewById( R.id.btnStartStopMileageRecord );
         btnStartStopMileageRecord.setOnClickListener(onStartStopRecordClickListener);
@@ -461,7 +461,7 @@ public class MileageEditActivity extends EditActivityBase {
         setContentView(R.layout.mileage_edit_activity);
     }
 
-    private void calculateMileageOrNewIndex() throws NumberFormatException {
+    public void calculateMileageOrNewIndex() throws NumberFormatException {
         try{
             BigDecimal pNewIndex = new BigDecimal("0");
 
@@ -517,20 +517,22 @@ public class MileageEditActivity extends EditActivityBase {
             new RadioGroup.OnCheckedChangeListener() {
                     public void onCheckedChanged(RadioGroup arg0, int checkedId) {
                         if(checkedId == rbInsertModeIndex.getId()) {
-                            mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX; //new index
-                            tvUserInputLabel.setText(
-                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
-                            tvCalculatedTextLabel.setText(
-                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
-                            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+                        	setInsertMode(StaticValues.MILEAGE_INSERTMODE_INDEX);//new index
+//                            mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX; 
+//                            tvUserInputLabel.setText(
+//                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+//                            tvCalculatedTextLabel.setText(
+//                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
+//                            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
                         }
                         else {
-                            mInsertMode = StaticValues.MILEAGE_INSERTMODE_MILEAGE;
-                            tvUserInputLabel.setText(
-                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
-                            tvCalculatedTextLabel.setText(
-                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
-                            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
+                        	setInsertMode(StaticValues.MILEAGE_INSERTMODE_MILEAGE);
+//                            mInsertMode = StaticValues.MILEAGE_INSERTMODE_MILEAGE;
+//                            tvUserInputLabel.setText(
+//                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
+//                            tvCalculatedTextLabel.setText(
+//                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
+//                            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
                         }
                         SharedPreferences.Editor editor = mPreferences.edit();
                         editor.putInt("MileageInsertMode", mInsertMode);
@@ -539,6 +541,25 @@ public class MileageEditActivity extends EditActivityBase {
                     }
                 };
 
+    public void setInsertMode(int insertMode){
+    	mInsertMode = insertMode;
+    	if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX){
+            tvUserInputLabel.setText(
+                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+            tvCalculatedTextLabel.setText(
+                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
+            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+    	}
+    	else{
+            tvUserInputLabel.setText(
+                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
+            tvCalculatedTextLabel.setText(
+                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
+            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
+    	}
+    	setSpecificLayout();
+    }
+    
     private TextWatcher mileageTextWatcher =
         new TextWatcher() {
 
@@ -663,16 +684,16 @@ public class MileageEditActivity extends EditActivityBase {
 
         //mileage inserted. reinit the activity for new mileage
 
-        if(operationType.equals("N")){
-            mStartIndex = BigDecimal.valueOf(0);
-            fillGetCurrentIndex();
-
-            etUserInput.setText("");
-            mNewIndex = BigDecimal.valueOf(0);
-            mEntryMileageValue = BigDecimal.valueOf(0);
-            acUserComment.setText("");
-            calculateMileageOrNewIndex();
-        }
+//        if(operationType.equals("N")){
+//            mStartIndex = BigDecimal.valueOf(0);
+//            fillGetCurrentIndex();
+//
+//            etUserInput.setText("");
+//            mNewIndex = BigDecimal.valueOf(0);
+//            mEntryMileageValue = BigDecimal.valueOf(0);
+//            acUserComment.setText("");
+//            calculateMileageOrNewIndex();
+//        }
 
         if(mPreferences.getBoolean("RememberLastTag", false) && mTagId > 0)
     		mPrefEditor.putLong("LastTagId", mTagId);
@@ -686,7 +707,6 @@ public class MileageEditActivity extends EditActivityBase {
 		intent.putExtra("CarID", mCarId);
 		this.startService(intent);
 		
-		finish();
 		return true;
     }
 
@@ -735,28 +755,27 @@ public class MileageEditActivity extends EditActivityBase {
                 }
             };
 
-    private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
+    private AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     if(isActivityOnLoading)
                         return;
-                    mCarId = spnCar.getSelectedItemId();
-                    mDriverId = spnDriver.getSelectedItemId();
-
-                    userCommentAdapter = null;
-                    userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
-                            android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null,
-                            mCarId, 30));
-                    acUserComment.setAdapter(userCommentAdapter);
-                    mStartIndex = BigDecimal.ZERO;
-                    fillGetCurrentIndex();
-                    calculateMileageOrNewIndex();
-
+                    setCarId(arg3, false);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
+
+    private AdapterView.OnItemSelectedListener spinnerDriverOnItemSelectedListener =
+        new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if(isActivityOnLoading)
+                    return;
+                setDriverId(arg3, false);
+            }
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        };
 
     private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
         public boolean onTouch(View view, MotionEvent me) {
@@ -771,6 +790,39 @@ public class MileageEditActivity extends EditActivityBase {
 	 */
 	@Override
 	protected void setSpecificLayout() {
+    	if(etUserInput.getText().toString().length() > 0)
+    		btnStartStopMileageRecord.setVisibility(View.GONE);
+    	else
+    		btnStartStopMileageRecord.setVisibility(View.VISIBLE);
+        calculateMileageOrNewIndex();
+	}
+
+	/**
+	 * @param carId the mCarId to set
+	 */
+	public void setCarId(long carId, boolean updateSpinnerSelection) {
+		this.mCarId = carId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnCar, carId);
+
+		userCommentAdapter = null;
+        userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
+                android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null,
+                mCarId, 30));
+        acUserComment.setAdapter(userCommentAdapter);
+        mStartIndex = BigDecimal.ZERO;
+        fillGetCurrentIndex();
+        calculateMileageOrNewIndex();
+	}
+
+	/**
+	 * @param driverId the mDriverId to set
+	 */
+	public void setDriverId(long driverId, boolean updateSpinnerSelection) {
+		this.mDriverId = driverId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnDriver, driverId);
 	}
 
 }
