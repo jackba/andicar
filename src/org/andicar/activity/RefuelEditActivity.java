@@ -256,9 +256,9 @@ public class RefuelEditActivity extends EditActivityBase {
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
         spnDriver = (Spinner) findViewById(R.id.spnDriver);
-        spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
         spnCar.setOnTouchListener(spinnerOnTouchListener);
-        spnDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnDriver.setOnItemSelectedListener(spinnerDriverOnItemSelectedListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         spnCurrency = (Spinner) findViewById( R.id.spnCurrency );
         spnCurrency.setOnItemSelectedListener(spinnerCurrencyOnItemSelectedListener);
@@ -475,52 +475,27 @@ public class RefuelEditActivity extends EditActivityBase {
         }
     };
 
-    private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
+    private AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     if(isActivityOnLoading)
                         return;
-                    mCarId = spnCar.getSelectedItemId();
-                    mDriverId = spnDriver.getSelectedItemId();
-
-                    userCommentAdapter = null;
-                    userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
-                            android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
-                            mCarId, 30));
-                    acUserComment.setAdapter(userCommentAdapter);
-
-                    //change the currency
-                    long newCarCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
-                    if(newCarCurrencyId != mCurrencyId){
-                        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                                    MainDbAdapter.isActiveCondition, null,
-                                    MainDbAdapter.GEN_COL_NAME_NAME,
-                                    newCarCurrencyId, false);
-                        mCurrencyId = newCarCurrencyId;
-                        carDefaultCurrencyId = mCurrencyId;
-                        carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
-                        currencyConversionRate = BigDecimal.ONE;
-
-                        setConversionRateVisibility(false);
-                        calculatePriceAmount();
-                    }
-                    long newCarUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
-                    if(newCarUOMVolumeId != mUomVolumeId){
-                        mUomVolumeId = newCarUOMVolumeId;
-                        carDefaultUOMVolumeId = mUomVolumeId;
-                        carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
-                        initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
-                                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition, null,
-                                MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
-                        setBaseUOMQtyZoneVisibility(false);
-                    }
+                    setCarId(arg3, false);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
+
+	private AdapterView.OnItemSelectedListener spinnerDriverOnItemSelectedListener =
+	    new AdapterView.OnItemSelectedListener() {
+	        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+	            if(isActivityOnLoading)
+	                return;
+	            setDriverId(arg3, false);
+	        }
+	        public void onNothingSelected(AdapterView<?> arg0) {
+	        }
+	    };
 
     private AdapterView.OnItemSelectedListener spinnerCurrencyOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
@@ -529,22 +504,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     if(isActivityOnLoading)
                         return;
                     mCurrencyId = spnCurrency.getSelectedItemId();
-                    if(mCurrencyId != carDefaultCurrencyId){
-                        setConversionRateVisibility(true);
-                    }
-                    else{
-                        setConversionRateVisibility(false);
-                    }
-                    currencyCode = mDbAdapter.getCurrencyCode(mCurrencyId);
-//                    fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames,
-//                            mCurrencyId).getString(MainDbAdapter.CURRENCY_COL_CODE_POS);
-                    currencyConversionRate = mDbAdapter.getCurrencyRate(mCurrencyId, carDefaultCurrencyId);
-                    etConversionRate.setText("");
-                    if(currencyConversionRate != null){
-                        etConversionRate.append(currencyConversionRate.toString());
-                    }
-
-                    calculatePriceAmount();
+                    setSpecificLayout();
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -556,21 +516,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     setSpinnerTextToCode(arg0, arg3, arg1);
                     if(isActivityOnLoading)
                         return;
-                    mUomVolumeId = spnUomVolume.getSelectedItemId();
-                    if(mUomVolumeId != carDefaultUOMVolumeId){
-                        setBaseUOMQtyZoneVisibility(true);
-                    }
-                    else{
-                        setBaseUOMQtyZoneVisibility(false);
-                    }
-
-                    uomVolumeConversionRate = mDbAdapter.getUOMConversionRate(mUomVolumeId, carDefaultUOMVolumeId);
-                    if(uomVolumeConversionRate == null)
-                        btnOk.setEnabled(false);
-                    else
-                        btnOk.setEnabled(true);
-
-                    calculateBaseUOMQty();
+                    setUOMVolumeId(arg3, false);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -743,7 +689,7 @@ public class RefuelEditActivity extends EditActivityBase {
             llBaseUOMQtyZone.setVisibility(View.GONE);
     }
 
-    private void setInsertMode(int insertMode){
+    public void setInsertMode(int insertMode){
         mInsertMode = insertMode;
         if(mInsertMode == INSERTMODE_PRICE){
             tvCalculatedTextLabel.setText(mResource.getString(R.string.GEN_AmountLabel));
@@ -939,7 +885,6 @@ public class RefuelEditActivity extends EditActivityBase {
 		intent.putExtra("CarID", mCarId);
 		this.startService(intent);
 
-		finish();
 		return true;
     }
 
@@ -953,6 +898,95 @@ public class RefuelEditActivity extends EditActivityBase {
 	 */
 	@Override
 	protected void setSpecificLayout() {
+        if(mUomVolumeId != carDefaultUOMVolumeId){
+            setBaseUOMQtyZoneVisibility(true);
+        }
+        else{
+            setBaseUOMQtyZoneVisibility(false);
+        }
+
+        uomVolumeConversionRate = mDbAdapter.getUOMConversionRate(mUomVolumeId, carDefaultUOMVolumeId);
+        if(uomVolumeConversionRate == null)
+            btnOk.setEnabled(false);
+        else
+            btnOk.setEnabled(true);
+        calculateBaseUOMQty();
+
+        if(mCurrencyId != carDefaultCurrencyId){
+            setConversionRateVisibility(true);
+        }
+        else{
+            setConversionRateVisibility(false);
+        }
+        currencyCode = mDbAdapter.getCurrencyCode(mCurrencyId);
+        currencyConversionRate = mDbAdapter.getCurrencyRate(mCurrencyId, carDefaultCurrencyId);
+        etConversionRate.setText("");
+        if(currencyConversionRate != null){
+            etConversionRate.append(currencyConversionRate.toString());
+        }
+        calculatePriceAmount();
+	}
+
+	/**
+	 * @param carId the mCarId to set
+	 */
+	public void setCarId(long carId, boolean updateSpinnerSelection) {
+		this.mCarId = carId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnCar, carId);
+
+        userCommentAdapter = null;
+        userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
+                android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
+                mCarId, 30));
+        acUserComment.setAdapter(userCommentAdapter);
+
+        //change the currency
+        long newCarCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
+        if(newCarCurrencyId != mCurrencyId){
+            initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
+                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                        MainDbAdapter.isActiveCondition, null,
+                        MainDbAdapter.GEN_COL_NAME_NAME,
+                        newCarCurrencyId, false);
+            mCurrencyId = newCarCurrencyId;
+            carDefaultCurrencyId = mCurrencyId;
+            carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
+            currencyConversionRate = BigDecimal.ONE;
+
+            setConversionRateVisibility(false);
+            calculatePriceAmount();
+        }
+        long newCarUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
+        if(newCarUOMVolumeId != mUomVolumeId){
+            mUomVolumeId = newCarUOMVolumeId;
+            carDefaultUOMVolumeId = mUomVolumeId;
+            carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
+            initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
+                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition, null,
+                    MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
+            setBaseUOMQtyZoneVisibility(false);
+        }
+	}
+	
+	/**
+	 * @param driverId the mDriverId to set
+	 */
+	public void setDriverId(long driverId, boolean updateSpinnerSelection) {
+		this.mDriverId = driverId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnDriver, driverId);
+	}
+	/**
+	 * @param driverId the mDriverId to set
+	 */
+	public void setUOMVolumeId(long uomId, boolean updateSpinnerSelection) {
+	    mUomVolumeId = uomId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnUomVolume, uomId);
+	    setSpecificLayout();
 	}
 
 }
