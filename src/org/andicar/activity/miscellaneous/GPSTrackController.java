@@ -74,7 +74,8 @@ public class GPSTrackController extends EditActivityBase {
     public void onCreate(Bundle icicle) {
 
         super.onCreate(icicle);
-        setContentView(R.layout.gpstrack_controller_activity);
+        
+        isUseTemplate = true;
 
         mCtx = this;
         mCarId = mPreferences.getLong("CurrentCar_ID", 1);
@@ -83,8 +84,8 @@ public class GPSTrackController extends EditActivityBase {
         vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
         spnCar = (Spinner)findViewById(R.id.spnCar);
         spnDriver = (Spinner)findViewById(R.id.spnDriver);
-        spnCar.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
-        spnDriver.setOnItemSelectedListener(spinnerCarDriverOnItemSelectedListener);
+        spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
+        spnDriver.setOnItemSelectedListener(spinnerDriverOnItemSelectedListener);
         spnCar.setOnTouchListener(spinnerOnTouchListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
@@ -245,25 +246,28 @@ public class GPSTrackController extends EditActivityBase {
 				fillStartIndex();
 			}
    };
-   private AdapterView.OnItemSelectedListener spinnerCarDriverOnItemSelectedListener =
+
+   private AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     if(bIsActivityOnLoading)
                         return;
-                    aaUserComment = null;
-                    aaUserComment = new ArrayAdapter<String>(GPSTrackController.this,
-                            android.R.layout.simple_dropdown_item_1line,
-                            mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
-                            spnCar.getSelectedItemId(), 30));
-                    acUserComment.setAdapter(aaUserComment);
-                    mCarId = spnCar.getSelectedItemId();
-                    mDriverId = spnDriver.getSelectedItemId();
-                    fillStartIndex();
+                    setCarId(arg3, false);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
 
+    private AdapterView.OnItemSelectedListener spinnerDriverOnItemSelectedListener =
+        new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if(bIsActivityOnLoading)
+                    return;
+                setDriverId(arg3, false);
+            }
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        };
     private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
 
         public boolean onTouch(View view, MotionEvent me) {
@@ -326,7 +330,8 @@ public class GPSTrackController extends EditActivityBase {
 //                startActivity(new Intent(GPSTrackController.this, GPSTrackMap.class));
                 if(isGpsTrackOn)
                     btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_stop_24x24));
-                finish();
+                afterSave();
+//                finish();
             }
         };
     };
@@ -344,6 +349,7 @@ public class GPSTrackController extends EditActivityBase {
 	 */
 	@Override
 	protected void setLayout() {
+        setContentView(R.layout.gpstrack_controller_activity);
 	}
 
 	/* (non-Javadoc)
@@ -353,4 +359,30 @@ public class GPSTrackController extends EditActivityBase {
 	protected void setSpecificLayout() {
 	}
     
+	/**
+	 * @param carId the mCarId to set
+	 */
+	public void setCarId(long carId, boolean updateSpinnerSelection) {
+		this.mCarId = carId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnCar, carId);
+
+        aaUserComment = null;
+        aaUserComment = new ArrayAdapter<String>(GPSTrackController.this,
+                android.R.layout.simple_dropdown_item_1line,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
+                spnCar.getSelectedItemId(), 30));
+        acUserComment.setAdapter(aaUserComment);
+        fillStartIndex();
+	}
+
+	/**
+	 * @param driverId the mDriverId to set
+	 */
+	public void setDriverId(long driverId, boolean updateSpinnerSelection) {
+		this.mDriverId = driverId;
+		if(updateSpinnerSelection)
+			setSpinnerSelectedID(spnDriver, driverId);
+	}
+
 }
