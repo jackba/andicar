@@ -275,7 +275,7 @@ public abstract class EditActivityBase extends BaseActivity {
     	        mDialog = liLayoutFactory.inflate(R.layout.dialog_name, null);
     	        etName = (EditText)mDialog.findViewById(R.id.etName);
     	        mAndiCarDialogBuilder = new AndiCarDialogBuilder(this, 
-    	        		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.DIALOGReport_NameTitle));
+    	        		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.DIALOG_TemplateNameTitle));
     	        mAndiCarDialogBuilder.setView(mDialog);
     	        mAndiCarDialogBuilder.setPositiveButton(R.string.GEN_OK, mDialogButtonlistener);
     	        return mAndiCarDialogBuilder.create();
