@@ -441,7 +441,7 @@
     <string name="DIALOGReport_SendEmailLabel">"  send as email attachment"</string>
     <string name="DIALOGReport_ReportFormatLabel">"Report format:"</string>
 
-    <string name="DIALOGReport_NameTitle">"Give a name"</string>
+    <string name="DIALOG_TemplateNameTitle">"Template name"</string>
 
     <string name="DayOfWeek_0">"Sunday"</string>
     <string name="DayOfWeek_1">"Monday"</string>
@@ -514,7 +514,7 @@
     <string name="AddOn_AutoBackupService_BackupFailed">"The backup failed! Check your SDCARD."</string>
 
     <string name="AddOn_DataTemplate_Title">"Data entry templates"</string>
-    <string name="AddOn_DataTemplate_Description">"This Add-On allow you to create and use templates for your most used data entries."</string>
+    <string name="AddOn_DataTemplate_Description">"This Add-On allow you to create and apply templates for the most used data entry patterns.\nYour productivity can be dramatically increased by using templates for automatic  screen fields completion."</string>
     <string name="AddOn_DataTemplate_ApplyTemplateLbl">"Template"</string>
     <string name="AddOn_DataTemplate_SubscriptionOption1">"15 day FREE evaluation subscription."</string>
     <string name="AddOn_DataTemplate_SubscriptionOption2">"Six month subscription: [#1] [#2]"</string>
