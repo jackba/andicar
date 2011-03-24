@@ -73,7 +73,7 @@ public abstract class BaseActivity extends Activity {
     protected long mExpCategoryId = -1;
     protected long mExpTypeId = -1;
 
-    abstract protected void setSpecificLayout();
+    public abstract void setSpecificLayout();
 
     /** Called when the activity is first created. */
     @Override
@@ -123,6 +123,8 @@ public abstract class BaseActivity extends Activity {
     
     public void setSpinnerSelectedID(Spinner sp, long id){
     	SimpleCursorAdapter sca = (SimpleCursorAdapter)sp.getAdapter();
+    	if(sca == null)
+    		return;
     	int count = sca.getCount();
     	
     	for(int i = 0; i < count; i++){
@@ -340,10 +342,6 @@ public abstract class BaseActivity extends Activity {
 	 */
 	public void setCurrencyId(long currencyId) {
 		this.mCurrencyId = currencyId;
-		if(spnCurrency != null){
-			setSpinnerSelectedID(spnCurrency, currencyId);
-			setSpecificLayout();
-		}
 	}
 
 	/**
@@ -351,8 +349,6 @@ public abstract class BaseActivity extends Activity {
 	 */
 	public void setExpCategoryId(long expCategoryId) {
 		this.mExpCategoryId = expCategoryId;
-		if(spnExpCategory != null)
-			setSpinnerSelectedID(spnExpCategory, expCategoryId);
 	}
 
 	/**
@@ -360,7 +356,5 @@ public abstract class BaseActivity extends Activity {
 	 */
 	public void setExpTypeId(long expTypeId) {
 		this.mExpTypeId = expTypeId;
-		if(spnExpType != null)
-			setSpinnerSelectedID(spnExpType, expTypeId);
 	}
 }

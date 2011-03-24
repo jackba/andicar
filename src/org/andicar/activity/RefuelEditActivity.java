@@ -205,35 +205,7 @@ public class RefuelEditActivity extends EditActivityBase {
             rbInsertModePrice.setChecked(true);
         }
         else {
-            mCarId = mPreferences.getLong("CurrentCar_ID", 1);
-            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
-            mExpCategoryId = mPreferences.getLong("RefuelExpenseCategory_ID", 1);
-            mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", 1);
-            mUomVolumeId = mPreferences.getLong("CarUOMVolume_ID", 1);
-            mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
-            initDateTime(System.currentTimeMillis());
-            ckIsFullRefuel.setChecked(false);
-            carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
-            carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
-            setInsertMode(INSERTMODE_AMOUNT);
-            rbInsertModeAmount.setChecked(true);
-            acAdress.setEnabled(false);
-            acAdress.setText(null);
-            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
-                    mResource.getString(R.string.GEN_Required).replace(":", ""));
-
-            //init tag
-            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
-	            mTagId = mPreferences.getLong("LastTagId", 0);
-	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
-	            String[] selectionArgs = {Long.toString(mTagId)};
-	            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
-	                        selection, selectionArgs, null, null, null);
-	            if(c.moveToFirst())
-	                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
-	            c.close();
-            }
-            
+        	setDefaultValues();
         }
 
         initControls();
@@ -897,7 +869,7 @@ public class RefuelEditActivity extends EditActivityBase {
 	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
 	 */
 	@Override
-	protected void setSpecificLayout() {
+	public void setSpecificLayout() {
         if(mUomVolumeId != carDefaultUOMVolumeId){
             setBaseUOMQtyZoneVisibility(true);
         }
@@ -987,6 +959,55 @@ public class RefuelEditActivity extends EditActivityBase {
 		if(updateSpinnerSelection)
 			setSpinnerSelectedID(spnUomVolume, uomId);
 	    setSpecificLayout();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#setDefaultValues()
+	 */
+	@Override
+	public void setDefaultValues() {
+		setCarId(mPreferences.getLong("CurrentCar_ID", 1), true);
+//        mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+		setDriverId(mPreferences.getLong("LastDriver_ID", 1), true);
+//        mDriverId = mPreferences.getLong("LastDriver_ID", 1);
+		setExpCategoryId(mPreferences.getLong("RefuelExpenseCategory_ID", 1));
+//        mExpCategoryId = mPreferences.getLong("RefuelExpenseCategory_ID", 1);
+		setExpTypeId(mPreferences.getLong("RefuelExpenseType_ID", 1));
+//        mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", 1);
+		setUOMVolumeId(mPreferences.getLong("CarUOMVolume_ID", 1), true);
+//        mUomVolumeId = mPreferences.getLong("CarUOMVolume_ID", 1);
+		setCurrencyId(mPreferences.getLong("CarCurrency_ID", 1));
+//        mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
+        initDateTime(System.currentTimeMillis());
+        ckIsFullRefuel.setChecked(false);
+        carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
+        carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
+        setInsertMode(INSERTMODE_AMOUNT);
+        rbInsertModeAmount.setChecked(true);
+        acBPartner.setText("");
+        acAdress.setEnabled(false);
+        acAdress.setText(null);
+        acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                mResource.getString(R.string.GEN_Required).replace(":", ""));
+//        initControls();
+
+        //init tag
+        if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+            mTagId = mPreferences.getLong("LastTagId", 0);
+            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+            String[] selectionArgs = {Long.toString(mTagId)};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+                        selection, selectionArgs, null, null, null);
+            if(c.moveToFirst())
+                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+            c.close();
+        }
+        else
+        	acTag.setText("");
+        
+        etConversionRate.setText("");
+        etQty.setText("");
+        etUserInput.setText("");
 	}
 
 }

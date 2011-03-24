@@ -1719,6 +1719,6 @@ public class MainActivity extends BaseActivity {
 	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
 	 */
 	@Override
-	protected void setSpecificLayout() {
+	public void setSpecificLayout() {
 	}
 }
