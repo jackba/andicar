@@ -110,7 +110,7 @@ public class StaticValues
     public static final int DIALOG_DATE_TO_PICKER = 5;
 //    public static final int DIALOG_TIME_PICKER2 = 6;
     public static final int DIALOG_TASK_CAR_LINK = 7;
-    public static final int DIALOG_NAME = 8;
+    public static final int DIALOG_NEW_TEMPLATE = 8;
 
     public static final int NOTIF_UPDATECHECK_ID = 0;
     public static final int NOTIF_GPS_TRACK_STARTED_ID = 1;

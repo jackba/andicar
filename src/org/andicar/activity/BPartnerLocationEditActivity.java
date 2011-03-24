@@ -320,6 +320,13 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
 	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
 	 */
 	@Override
-	protected void setSpecificLayout() {
+	public void setSpecificLayout() {
+	}
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#setDefaultValues()
+	 */
+	@Override
+	public void setDefaultValues() {
 	}
 }

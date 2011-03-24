@@ -234,30 +234,7 @@ public class MileageEditActivity extends EditActivityBase {
 	            etUserInput.requestFocus();
         	}
         	else{
-        		isRecordMileage = false;
-            	tvMileageRecInProgress.setVisibility(View.GONE);
-            	btnOk.setEnabled(true);
-        		spnCar.setEnabled(true);
-        		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_start_record_24x24));
-	            mCarId = mPreferences.getLong("CurrentCar_ID", 1);
-	            mDriverId = mPreferences.getLong("LastDriver_ID", 1);
-	            mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
-	            mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", 1);
-	            rbInsertModeIndex.setChecked(true);
-	            rbInsertModeMileage.setChecked(false);
-	            //init tag
-	            if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
-		            mTagId = mPreferences.getLong("LastTagId", 0);
-		            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
-		            String[] selectionArgs = {Long.toString(mTagId)};
-		            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
-		                        selection, selectionArgs, null, null, null);
-		            if(c.moveToFirst())
-		                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
-		            c.close();
-	            }
-	            initDateTime(System.currentTimeMillis());
-	            etUserInput.requestFocus();
+        		setDefaultValues();
         	}
         }
         
@@ -281,7 +258,6 @@ public class MileageEditActivity extends EditActivityBase {
         }
     	c.close();
 
-        etUserInput.requestFocus();
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent(this, "MileageEdit", null);
     }
@@ -789,7 +765,7 @@ public class MileageEditActivity extends EditActivityBase {
 	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
 	 */
 	@Override
-	protected void setSpecificLayout() {
+	public void setSpecificLayout() {
     	if(etUserInput.getText().toString().length() > 0)
     		btnStartStopMileageRecord.setVisibility(View.GONE);
     	else
@@ -823,6 +799,42 @@ public class MileageEditActivity extends EditActivityBase {
 		this.mDriverId = driverId;
 		if(updateSpinnerSelection)
 			setSpinnerSelectedID(spnDriver, driverId);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#setDefaultValues()
+	 */
+	@Override
+	public void setDefaultValues() {
+		isRecordMileage = false;
+    	tvMileageRecInProgress.setVisibility(View.GONE);
+    	btnOk.setEnabled(true);
+		spnCar.setEnabled(true);
+		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_start_record_24x24));
+        mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+        mDriverId = mPreferences.getLong("LastDriver_ID", 1);
+        mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
+        mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", 1);
+        rbInsertModeIndex.setChecked(true);
+        rbInsertModeMileage.setChecked(false);
+        //init tag
+        if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+            mTagId = mPreferences.getLong("LastTagId", 0);
+            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+            String[] selectionArgs = {Long.toString(mTagId)};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+                        selection, selectionArgs, null, null, null);
+            if(c.moveToFirst())
+                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+            c.close();
+        }
+        else
+        	acTag.setText("");
+
+        etUserInput.setText("");
+        acUserComment.setText("");
+        initControls();
+        initDateTime(System.currentTimeMillis());
 	}
 
 }

@@ -33,6 +33,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
@@ -43,8 +44,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.andicar.addon.activity.DataEntryTemplate;
-import com.andicar.addon.activity.ServiceSubscription;
-import com.andicar.addon.utils.AddOnStaticValues;
 
 /**
  * Base class for all edit activities. Implement common functionalities:
@@ -80,12 +79,14 @@ public abstract class EditActivityBase extends BaseActivity {
     protected boolean initDateOnly = false;
 	protected boolean isFinishAfterSave = true;
     protected boolean isUseTemplate = false;
-    protected long mTemplateID = -1;
+    protected boolean isBackgroundSettingsActive = false;
     
     protected DataEntryTemplate mDet = null;
 
     abstract protected boolean saveData();
     abstract protected void setLayout();
+    abstract public void setDefaultValues();
+    
     
     @Override
     protected void onStart()
@@ -270,14 +271,14 @@ public abstract class EditActivityBase extends BaseActivity {
             	mDatePickerDialog = new DatePickerDialog(this,
                         onDateSetListener, mYear, mMonth, mDay); 
                 return mDatePickerDialog;
-            case StaticValues.DIALOG_NAME:
+            case StaticValues.DIALOG_NEW_TEMPLATE:
     	        LayoutInflater liLayoutFactory = LayoutInflater.from(this);
     	        mDialog = liLayoutFactory.inflate(R.layout.dialog_name, null);
     	        etName = (EditText)mDialog.findViewById(R.id.etName);
     	        mAndiCarDialogBuilder = new AndiCarDialogBuilder(this, 
     	        		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.DIALOG_TemplateNameTitle));
     	        mAndiCarDialogBuilder.setView(mDialog);
-    	        mAndiCarDialogBuilder.setPositiveButton(R.string.GEN_OK, mDialogButtonlistener);
+    	        mAndiCarDialogBuilder.setPositiveButton(R.string.GEN_OK, mNewTemplateDialogButtonlistener);
     	        return mAndiCarDialogBuilder.create();
         }
         return null;
@@ -327,13 +328,35 @@ public abstract class EditActivityBase extends BaseActivity {
                 }
             };
 
-    private DialogInterface.OnClickListener mDialogButtonlistener =
+    private DialogInterface.OnClickListener mNewTemplateDialogButtonlistener =
                 new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
+            	
+            	if(!isUseTemplate)
+            		return;
+            	
                 if (whichButton == DialogInterface.BUTTON_POSITIVE) {
-                }
-            };
+    				ContentValues cv = new ContentValues();
+					cv.put("Name", etName.getText().toString());
+					cv.put("Comment", etName.getText().toString());
+    		        int dbRetVal = ((Long)mDet.saveTemplate(-1, cv)).intValue();
+    		        String strErrMsg = null;
+    				if( dbRetVal < 0){
+    	                if(dbRetVal == -1) //DB Error
+    	                    strErrMsg = mDbAdapter.lastErrorMessage;
+    	                else //precondition error
+    	                    strErrMsg = mResource.getString(-1 * dbRetVal);
+    	                madbErrorAlert.setMessage(strErrMsg);
+    	                madError = madbErrorAlert.create();
+    	                madError.show();
+    				}
+    				else
+    					mDet.updateTemplateList(dbRetVal);
+    				
+        		}
+            }
         };
+        
     private void updateDateTime() {
         mcalDateTime.set(mYear, mMonth, mDay, mHour, mMinute, 0);
         mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
@@ -392,59 +415,25 @@ public abstract class EditActivityBase extends BaseActivity {
      * @return
      */
     protected boolean afterSave(){
-    	if(isUseTemplate){
-    		try{
-	    		if(!ServiceSubscription.isSubscriptionValid(mDbAdapter, AddOnStaticValues.DATA_TEMPLATE_ID))
-	    			return true;
-	    		
-	    		long templateID = -1;
-	    		if(mDet.isCreateNew()){
-	    			templateID = 0;
-	    		}
-	    		if(mDet.isUpdateExisting())
-	    			templateID = mTemplateID;
-	    	
-	    		if(templateID == -1){
-	    			if(isFinishAfterSave)
-	    				finish();
-	    			return true;
-	    		}
-	    		
-	    		if(mDet.isCreateNew() && (etName == null || etName.getText() == null || etName.getText().toString().length() == 0)){
-	    			if(isFinishAfterSave)
-	    				finish();
-	    			return true;
-	    		}    			
-	    		
-				ContentValues cv = new ContentValues();
-				if(mDet.isCreateNew()){
-					cv.put("Name", etName.getText().toString());
-					cv.put("Comment", etName.getText().toString());
-				}
-		        int dbRetVal = ((Long)mDet.saveTemplate(templateID, cv)).intValue();
-		        String strErrMsg = null;
-				if( dbRetVal < 0){
-	                if(dbRetVal == -1) //DB Error
-	                    strErrMsg = mDbAdapter.lastErrorMessage;
-	                else //precondition error
-	                    strErrMsg = mResource.getString(-1 * dbRetVal);
-	                madbErrorAlert.setMessage(strErrMsg);
-	                madError = madbErrorAlert.create();
-	                madError.show();
-	                return false;
-				}
-    		}
-    		catch(Exception e){}
-    	}
 		if(isFinishAfterSave)
 			finish();
     	return true;
    }
-    
-	/**
-	 * @param mTemplateID the mTemplateID to set
-	 */
-	public void setTemplateID(long mTemplateID) {
-		this.mTemplateID = mTemplateID;
-	}
+
+    public void setBackgroundSettingsActive(boolean value){
+    	isBackgroundSettingsActive = value;
+    }
+
+    public boolean isBackgroundSettingsActive(){
+    	return isBackgroundSettingsActive;
+    }
+
+    public View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
+
+        public boolean onTouch(View view, MotionEvent me) {
+            isBackgroundSettingsActive = false;
+            return false;
+        }
+    };
+
 }

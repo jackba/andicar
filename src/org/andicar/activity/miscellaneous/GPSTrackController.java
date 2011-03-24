@@ -268,6 +268,7 @@ public class GPSTrackController extends EditActivityBase {
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         };
+        
     private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
 
         public boolean onTouch(View view, MotionEvent me) {
@@ -356,7 +357,7 @@ public class GPSTrackController extends EditActivityBase {
 	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
 	 */
 	@Override
-	protected void setSpecificLayout() {
+	public void setSpecificLayout() {
 	}
     
 	/**
@@ -383,6 +384,13 @@ public class GPSTrackController extends EditActivityBase {
 		this.mDriverId = driverId;
 		if(updateSpinnerSelection)
 			setSpinnerSelectedID(spnDriver, driverId);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#setDefaultValues()
+	 */
+	@Override
+	public void setDefaultValues() {
 	}
 
 }

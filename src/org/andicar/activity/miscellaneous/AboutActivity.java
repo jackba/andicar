@@ -58,7 +58,7 @@ public class AboutActivity extends BaseActivity{
 	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
 	 */
 	@Override
-	protected void setSpecificLayout() {
+	public void setSpecificLayout() {
 	}
 
 //    View.OnClickListener mDonateClickListener = new View.OnClickListener() {

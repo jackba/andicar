@@ -116,7 +116,7 @@ public class MainScreenPreferenceActivity extends BaseActivity {
 	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
 	 */
 	@Override
-	protected void setSpecificLayout() {
+	public void setSpecificLayout() {
 	}
 
 }

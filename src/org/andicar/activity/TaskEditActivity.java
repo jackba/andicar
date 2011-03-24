@@ -1046,7 +1046,7 @@ public class TaskEditActivity extends EditActivityBase {
 		}
 	};
 	
-	protected void setSpecificLayout(){
+	public void setSpecificLayout(){
 		if (isRecurrent) {
 			llToDoCountZone.setVisibility(View.VISIBLE);
 			if(isTimingEnabled){
@@ -1245,4 +1245,11 @@ public class TaskEditActivity extends EditActivityBase {
         }
         return super.onContextItemSelected(item);
     }
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#setDefaultValues()
+	 */
+	@Override
+	public void setDefaultValues() {
+	}
 }
