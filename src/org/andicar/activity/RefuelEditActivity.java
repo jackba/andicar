@@ -19,33 +19,33 @@
 
 package org.andicar.activity;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import org.andicar.persistence.MainDbAdapter;
+import org.andicar.service.ToDoNotificationService;
+import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
+import org.andicar.utils.Utils;
+
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
-import android.widget.Spinner;
-import android.widget.Toast;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.service.ToDoNotificationService;
-import org.andicar.utils.StaticValues;
-import org.andicar.utils.Utils;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import org.andicar.utils.AndiCarStatistics;
+import android.widget.Toast;
 
 /**
  *
@@ -103,18 +103,16 @@ public class RefuelEditActivity extends EditActivityBase {
     private static int INSERTMODE_PRICE = 0;
     private static int INSERTMODE_AMOUNT = 1;
 
-    private boolean isActivityOnLoading = true;
-
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
+        isUseTemplate = true;
         super.onCreate(icicle);
 
         if(icicle !=null)
             return; //restoe from previous state
 
         operationType = mBundleExtras.getString("Operation");
-        isUseTemplate = true;
 
         init();
 
@@ -314,7 +312,7 @@ public class RefuelEditActivity extends EditActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
-        isActivityOnLoading = true;
+        isBackgroundSettingsActive = true;
 
         if(carDefaultCurrencyId != mCurrencyId)
             setConversionRateVisibility(true);
@@ -450,9 +448,37 @@ public class RefuelEditActivity extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    if(isActivityOnLoading)
+                    if(isBackgroundSettingsActive)
                         return;
-                    setCarId(arg3, false);
+                    setCarId(arg3);
+                    
+                    //change the currency
+                    long newCarCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
+                    if(newCarCurrencyId != mCurrencyId){
+                        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
+                                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                                    MainDbAdapter.isActiveCondition, null,
+                                    MainDbAdapter.GEN_COL_NAME_NAME,
+                                    newCarCurrencyId, false);
+                        mCurrencyId = newCarCurrencyId;
+                        carDefaultCurrencyId = mCurrencyId;
+                        carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
+                        currencyConversionRate = BigDecimal.ONE;
+
+                        setConversionRateVisibility(false);
+                        calculatePriceAmount();
+                    }
+                    long newCarUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
+                    if(newCarUOMVolumeId != mUomVolumeId){
+                        mUomVolumeId = newCarUOMVolumeId;
+                        carDefaultUOMVolumeId = mUomVolumeId;
+                        carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
+                        initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
+                                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+                                MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition, null,
+                                MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
+                        setBaseUOMQtyZoneVisibility(false);
+                    }
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -461,9 +487,9 @@ public class RefuelEditActivity extends EditActivityBase {
 	private AdapterView.OnItemSelectedListener spinnerDriverOnItemSelectedListener =
 	    new AdapterView.OnItemSelectedListener() {
 	        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-	            if(isActivityOnLoading)
+	            if(isBackgroundSettingsActive)
 	                return;
-	            setDriverId(arg3, false);
+	            setDriverId(arg3);
 	        }
 	        public void onNothingSelected(AdapterView<?> arg0) {
 	        }
@@ -473,7 +499,7 @@ public class RefuelEditActivity extends EditActivityBase {
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     setSpinnerTextToCode(arg0, arg3, arg1);
-                    if(isActivityOnLoading)
+                    if(isBackgroundSettingsActive)
                         return;
                     mCurrencyId = spnCurrency.getSelectedItemId();
                     setSpecificLayout();
@@ -486,21 +512,13 @@ public class RefuelEditActivity extends EditActivityBase {
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     setSpinnerTextToCode(arg0, arg3, arg1);
-                    if(isActivityOnLoading)
+                    if(isBackgroundSettingsActive)
                         return;
-                    setUOMVolumeId(arg3, false);
+                    setUOMVolumeId(arg3);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
-
-    private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
-
-        public boolean onTouch(View view, MotionEvent me) {
-            isActivityOnLoading = false;
-            return false;
-        }
-    };
 
     private TextWatcher bPartnerTextWatcher =
         new TextWatcher() {
@@ -902,10 +920,8 @@ public class RefuelEditActivity extends EditActivityBase {
 	/**
 	 * @param carId the mCarId to set
 	 */
-	public void setCarId(long carId, boolean updateSpinnerSelection) {
+	public void setCarId(long carId) {
 		this.mCarId = carId;
-		if(updateSpinnerSelection)
-			setSpinnerSelectedID(spnCar, carId);
 
         userCommentAdapter = null;
         userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
@@ -913,51 +929,23 @@ public class RefuelEditActivity extends EditActivityBase {
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
                 mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
+        
+        carDefaultCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
+        carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
 
-        //change the currency
-        long newCarCurrencyId = mDbAdapter.getCarCurrencyID(mCarId);
-        if(newCarCurrencyId != mCurrencyId){
-            initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                        MainDbAdapter.isActiveCondition, null,
-                        MainDbAdapter.GEN_COL_NAME_NAME,
-                        newCarCurrencyId, false);
-            mCurrencyId = newCarCurrencyId;
-            carDefaultCurrencyId = mCurrencyId;
-            carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
-            currencyConversionRate = BigDecimal.ONE;
-
-            setConversionRateVisibility(false);
-            calculatePriceAmount();
-        }
-        long newCarUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
-        if(newCarUOMVolumeId != mUomVolumeId){
-            mUomVolumeId = newCarUOMVolumeId;
-            carDefaultUOMVolumeId = mUomVolumeId;
-            carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
-            initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
-                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition, null,
-                    MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
-            setBaseUOMQtyZoneVisibility(false);
-        }
 	}
 	
 	/**
 	 * @param driverId the mDriverId to set
 	 */
-	public void setDriverId(long driverId, boolean updateSpinnerSelection) {
+	public void setDriverId(long driverId) {
 		this.mDriverId = driverId;
-		if(updateSpinnerSelection)
-			setSpinnerSelectedID(spnDriver, driverId);
 	}
 	/**
 	 * @param driverId the mDriverId to set
 	 */
-	public void setUOMVolumeId(long uomId, boolean updateSpinnerSelection) {
+	public void setUOMVolumeId(long uomId) {
 	    mUomVolumeId = uomId;
-		if(updateSpinnerSelection)
-			setSpinnerSelectedID(spnUomVolume, uomId);
 	    setSpecificLayout();
 	}
 
@@ -966,25 +954,33 @@ public class RefuelEditActivity extends EditActivityBase {
 	 */
 	@Override
 	public void setDefaultValues() {
-		setCarId(mPreferences.getLong("CurrentCar_ID", 1), true);
-//        mCarId = mPreferences.getLong("CurrentCar_ID", 1);
-		setDriverId(mPreferences.getLong("LastDriver_ID", 1), true);
-//        mDriverId = mPreferences.getLong("LastDriver_ID", 1);
+		isBackgroundSettingsActive = true;
+		
+		setCarId(mPreferences.getLong("CurrentCar_ID", 1));
+		setSpinnerSelectedID(spnCar, mCarId);
+
+		setDriverId(mPreferences.getLong("LastDriver_ID", 1));
+		setSpinnerSelectedID(spnDriver, mDriverId);
+
 		setExpCategoryId(mPreferences.getLong("RefuelExpenseCategory_ID", 1));
-//        mExpCategoryId = mPreferences.getLong("RefuelExpenseCategory_ID", 1);
+		setSpinnerSelectedID(spnExpCategory, mExpCategoryId);
+
 		setExpTypeId(mPreferences.getLong("RefuelExpenseType_ID", 1));
-//        mExpTypeId = mPreferences.getLong("RefuelExpenseType_ID", 1);
-		setUOMVolumeId(mPreferences.getLong("CarUOMVolume_ID", 1), true);
-//        mUomVolumeId = mPreferences.getLong("CarUOMVolume_ID", 1);
+		setSpinnerSelectedID(spnExpType, mExpTypeId);
+
+		setUOMVolumeId(mPreferences.getLong("CarUOMVolume_ID", 1));
+		setSpinnerSelectedID(spnUomVolume, carDefaultUOMVolumeId);
+
 		setCurrencyId(mPreferences.getLong("CarCurrency_ID", 1));
-//        mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
-        initDateTime(System.currentTimeMillis());
+		setSpinnerSelectedID(spnCurrency, carDefaultCurrencyId);
+
+		initDateTime(System.currentTimeMillis());
         ckIsFullRefuel.setChecked(false);
         carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
         carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
         setInsertMode(INSERTMODE_AMOUNT);
         rbInsertModeAmount.setChecked(true);
-        acBPartner.setText("");
+        acBPartner.setText(null);
         acAdress.setEnabled(false);
         acAdress.setText(null);
         acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
@@ -1003,11 +999,12 @@ public class RefuelEditActivity extends EditActivityBase {
             c.close();
         }
         else
-        	acTag.setText("");
+        	acTag.setText(null);
         
-        etConversionRate.setText("");
-        etQty.setText("");
-        etUserInput.setText("");
+        etConversionRate.setText(null);
+        etQty.setText(null);
+        etUserInput.setText(null);
+        acUserComment.setText(null);
 	}
 
 }

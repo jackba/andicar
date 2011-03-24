@@ -96,13 +96,13 @@ public class ExpenseEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
+        isUseTemplate = true;
         super.onCreate(icicle);
 
         if(icicle !=null)
             return; //restored from previous state
 
         operationType = mBundleExtras.getString("Operation");
-        isUseTemplate = true;
         init();
 
         if (operationType.equals("E")) {
