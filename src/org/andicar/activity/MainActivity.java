@@ -472,14 +472,15 @@ public class MainActivity extends BaseActivity {
 				whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
-			tvThreeLineListExpenseText1.setText(listCursor.getString(1)
+			if(listCursor.getString(1) != null)
+				tvThreeLineListExpenseText1.setText(listCursor.getString(1)
 					.replace(
 							"[#1]",
 							DateFormat.getDateFormat(getApplicationContext())
 									.format(listCursor.getLong(4) * 1000)));
 
-			tvThreeLineListExpenseText2.setText(listCursor
-					.getString(2)
+			if(listCursor.getString(2) != null)
+				tvThreeLineListExpenseText2.setText(listCursor.getString(2)
 					.replace(
 							"[#1]",
 							Utils.numberToString(listCursor.getDouble(5), true,
@@ -495,6 +496,7 @@ public class MainActivity extends BaseActivity {
 							Utils.numberToString(listCursor.getDouble(7), true,
 									StaticValues.DECIMALS_LENGTH,
 									StaticValues.ROUNDING_MODE_LENGTH)));
+			
 			tvThreeLineListExpenseText3.setText(listCursor.getString(listCursor
 					.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
 			btnExpenseList.setEnabled(true);
@@ -524,55 +526,58 @@ public class MainActivity extends BaseActivity {
 		gpsTrackId = -1;
 		if (listCursor != null && listCursor.moveToFirst()) {
 			gpsTrackId = listCursor.getLong(0);
-			tvThreeLineListGPSTrackText1.setText(listCursor.getString(1)
+			if(listCursor.getString(1) != null)
+				tvThreeLineListGPSTrackText1.setText(listCursor.getString(1)
 					.replace(
 							"[#1]",
 							DateFormat.getDateFormat(getApplicationContext())
 									.format(listCursor.getLong(7) * 1000)));
-			tvThreeLineListGPSTrackText2
-					.setText(listCursor
-							.getString(2)
-							.replace(
-									"[#1]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_1))
-							.replace(
-									"[#2]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_2))
-							.replace(
-									"[#3]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_3))
-							.replace(
-									"[#4]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_4))
-							.replace(
-									"[#5]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_5)
-											+ Utils.getTimeString(
-													listCursor.getLong(4),
-													false))
-							.replace(
-									"[#6]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_6)
-											+ Utils.getTimeString(
-													listCursor.getLong(5),
-													false))
-							.replace(
-									"[#7]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
-							.replace(
-									"[#8]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_8))
-							.replace(
-									"[#9]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_9))
-							.replace(
-									"[#10]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_10))
-							.replace(
-									"[#11]",
-									mResource.getString(R.string.GPSTrackReport_GPSTrackVar_11))
+			
+			if(listCursor.getString(2) != null){
+				tvThreeLineListGPSTrackText2
+						.setText(listCursor.getString(2)
+								.replace(
+										"[#1]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_1))
+								.replace(
+										"[#2]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+								.replace(
+										"[#3]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+								.replace(
+										"[#4]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+								.replace(
+										"[#5]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_5)
+												+ Utils.getTimeString(
+														listCursor.getLong(4),
+														false))
+								.replace(
+										"[#6]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_6)
+												+ Utils.getTimeString(
+														listCursor.getLong(5),
+														false))
+								.replace(
+										"[#7]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+								.replace(
+										"[#8]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+								.replace(
+										"[#9]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+								.replace(
+										"[#10]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_10))
+								.replace(
+										"[#11]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_11))
 
 					);
+			}
 			tvThreeLineListGPSTrackText3.setText(listCursor.getString(3));
 			btnGPSTrackList.setEnabled(true);
 			btnGPSTrackShowOnMap.setEnabled(true);
@@ -601,13 +606,15 @@ public class MainActivity extends BaseActivity {
 		reportDb.setReportSql("mileageListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
-			tvThreeLineListMileageText1.setText(listCursor.getString(1)
+			if(listCursor.getString(1) != null)
+				tvThreeLineListMileageText1.setText(listCursor.getString(1)
 					.replace(
 							"[#1]",
 							DateFormat.getDateFormat(getApplicationContext())
 									.format(listCursor.getLong(5) * 1000)));
-			tvThreeLineListMileageText2.setText(listCursor
-					.getString(2)
+			
+			if(listCursor.getString(2) != null)
+				tvThreeLineListMileageText2.setText(listCursor.getString(2)
 					.replace(
 							"[#1]",
 							Utils.numberToString(listCursor.getDouble(6), true,
@@ -649,12 +656,15 @@ public class MainActivity extends BaseActivity {
 		reportDb.setReportSql("refuelListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
-			tvThreeLineListRefuelText1.setText(listCursor.getString(1).replace(
+			
+			if(listCursor.getString(1) != null)
+				tvThreeLineListRefuelText1.setText(listCursor.getString(1).replace(
 					"[#1]",
 					DateFormat.getDateFormat(getApplicationContext()).format(
 							listCursor.getLong(4) * 1000)));
-			tvThreeLineListRefuelText2.setText(listCursor
-					.getString(2)
+			
+			if(listCursor.getString(2) != null)
+				tvThreeLineListRefuelText2.setText(listCursor.getString(2)
 					.replace(
 							"[#1]",
 							Utils.numberToString(listCursor.getDouble(5), true,
@@ -716,6 +726,9 @@ public class MainActivity extends BaseActivity {
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
 			String dataString = listCursor.getString(1);
+			if(dataString == null)
+				dataString = "";
+			
     		if(dataString.contains("[#5]"))
     			tvThreeLineListToDoText1.setTextColor(Color.RED);
     		else if(dataString.contains("[#15]"))
@@ -762,7 +775,8 @@ public class MainActivity extends BaseActivity {
 				}
 			}
 			time = time + listCursor.getLong(7);
-			tvThreeLineListToDoText2.setText(
+			if(listCursor.getString(2) != null)
+				tvThreeLineListToDoText2.setText(
 					listCursor.getString(2)
     					.replace("[#7]", mResource.getString(R.string.ToDo_ScheduledDateLabel)) 
     					.replace("[#8]",  
