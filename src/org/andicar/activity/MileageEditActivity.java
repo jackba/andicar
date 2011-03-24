@@ -35,7 +35,6 @@ import android.database.SQLException;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -64,7 +63,6 @@ public class MileageEditActivity extends EditActivityBase {
     private BigDecimal mStartIndex = new BigDecimal("0");
     private BigDecimal mStopIndex = null;
     private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
-    private boolean isActivityOnLoading = true;
     private boolean isRecordMileage = false;
 
     private RadioButton rbInsertModeIndex;
@@ -86,6 +84,7 @@ public class MileageEditActivity extends EditActivityBase {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
+        isUseTemplate = true;
         super.onCreate(icicle);
 
         if(icicle !=null)
@@ -93,7 +92,6 @@ public class MileageEditActivity extends EditActivityBase {
 
 
         operationType = mBundleExtras.getString("Operation");
-        isUseTemplate = true;
         init();
         
         if( operationType.equals("E") ) {
@@ -427,7 +425,7 @@ public class MileageEditActivity extends EditActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
-        isActivityOnLoading = true;
+        isBackgroundSettingsActive = true;
         fillGetCurrentIndex();
         calculateMileageOrNewIndex();
     }
@@ -734,7 +732,7 @@ public class MileageEditActivity extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    if(isActivityOnLoading)
+                    if(isBackgroundSettingsActive)
                         return;
                     setCarId(arg3, false);
                 }
@@ -745,20 +743,13 @@ public class MileageEditActivity extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerDriverOnItemSelectedListener =
         new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                if(isActivityOnLoading)
+                if(isBackgroundSettingsActive)
                     return;
                 setDriverId(arg3, false);
             }
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         };
-
-    private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
-        public boolean onTouch(View view, MotionEvent me) {
-            isActivityOnLoading = false;
-            return false;
-        }
-    };
 
 
 	/* (non-Javadoc)

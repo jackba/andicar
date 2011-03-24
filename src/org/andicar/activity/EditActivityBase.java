@@ -127,11 +127,8 @@ public abstract class EditActivityBase extends BaseActivity {
         btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
         btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
         
-//        mTemplateID = 7;
-//        if(mBundleExtras.getString("Operation").equals("N") && mTemplateID > 0){
+        if(isUseTemplate)
         	mDet = new DataEntryTemplate(this, mDbAdapter);
-//        	mDet.fillFromTemplate(mTemplateID);
-//        }
     }
 
     @Override
@@ -332,7 +329,7 @@ public abstract class EditActivityBase extends BaseActivity {
                 new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
             	
-            	if(!isUseTemplate)
+            	if(!isUseTemplate || mDet == null)
             		return;
             	
                 if (whichButton == DialogInterface.BUTTON_POSITIVE) {
