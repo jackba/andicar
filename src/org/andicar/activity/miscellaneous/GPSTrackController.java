@@ -31,7 +31,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -51,7 +50,6 @@ import android.widget.Toast;
  * @author miki
  */
 public class GPSTrackController extends EditActivityBase {
-    private boolean bIsActivityOnLoading = true;
     private ArrayAdapter<String> aaUserComment;
     private ArrayAdapter<String> tagAdapter;
     private AutoCompleteTextView acUserComment;
@@ -73,10 +71,10 @@ public class GPSTrackController extends EditActivityBase {
     @Override
     public void onCreate(Bundle icicle) {
 
+    	isUseTemplate = true;
+
         super.onCreate(icicle);
         
-        isUseTemplate = true;
-
         mCtx = this;
         mCarId = mPreferences.getLong("CurrentCar_ID", 1);
         mDriverId = mPreferences.getLong("LastDriver_ID", 1);
@@ -143,7 +141,7 @@ public class GPSTrackController extends EditActivityBase {
     @Override
     protected void onResume() {
         super.onResume();
-        bIsActivityOnLoading = true;
+        isBackgroundSettingsActive = true;
         isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
 
         if(isGpsTrackOn){
@@ -250,9 +248,9 @@ public class GPSTrackController extends EditActivityBase {
    private AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                    if(bIsActivityOnLoading)
+                    if(isBackgroundSettingsActive)
                         return;
-                    setCarId(arg3, false);
+                    setCarId(arg3);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -261,22 +259,14 @@ public class GPSTrackController extends EditActivityBase {
     private AdapterView.OnItemSelectedListener spinnerDriverOnItemSelectedListener =
         new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                if(bIsActivityOnLoading)
+                if(isBackgroundSettingsActive)
                     return;
-                setDriverId(arg3, false);
+                setDriverId(arg3);
             }
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         };
         
-    private View.OnTouchListener spinnerOnTouchListener = new View.OnTouchListener() {
-
-        public boolean onTouch(View view, MotionEvent me) {
-            bIsActivityOnLoading = false;
-            return false;
-        }
-    };
-
     private View.OnClickListener btnGPSTrackStartStopListener = new View.OnClickListener() {
         public void onClick(View v)
         {
@@ -363,10 +353,8 @@ public class GPSTrackController extends EditActivityBase {
 	/**
 	 * @param carId the mCarId to set
 	 */
-	public void setCarId(long carId, boolean updateSpinnerSelection) {
+	public void setCarId(long carId) {
 		this.mCarId = carId;
-		if(updateSpinnerSelection)
-			setSpinnerSelectedID(spnCar, carId);
 
         aaUserComment = null;
         aaUserComment = new ArrayAdapter<String>(GPSTrackController.this,
@@ -380,10 +368,8 @@ public class GPSTrackController extends EditActivityBase {
 	/**
 	 * @param driverId the mDriverId to set
 	 */
-	public void setDriverId(long driverId, boolean updateSpinnerSelection) {
+	public void setDriverId(long driverId) {
 		this.mDriverId = driverId;
-		if(updateSpinnerSelection)
-			setSpinnerSelectedID(spnDriver, driverId);
 	}
 
 	/* (non-Javadoc)
@@ -391,6 +377,33 @@ public class GPSTrackController extends EditActivityBase {
 	 */
 	@Override
 	public void setDefaultValues() {
+        setCarId(mPreferences.getLong("CurrentCar_ID", 1));
+		setSpinnerSelectedID(spnCar, mCarId);
+		fillStartIndex();
+		
+        setDriverId(mDriverId = mPreferences.getLong("LastDriver_ID", 1));
+		setSpinnerSelectedID(spnDriver, mDriverId);
+
+        ckIsUseKML.setChecked(mPreferences.getBoolean("IsUseKMLTrack", true));
+        ckIsUseGPX.setChecked(mPreferences.getBoolean("IsUseGPXTrack", true));
+        isCreateMileage = mPreferences.getBoolean("GPSTrackCreateMileage", true);
+        ckIsCreateMileage.setChecked(isCreateMileage);
+        
+        etName.setText(null);
+        acUserComment.setText(null);
+        
+        if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
+            mTagId = mPreferences.getLong("LastTagId", 0);
+            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+            String[] selectionArgs = {Long.toString(mTagId)};
+            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+                        selection, selectionArgs, null, null, null);
+            if(c.moveToFirst())
+                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+            c.close();
+        }
+        else
+        	acTag.setText(null);
 	}
 
 }
