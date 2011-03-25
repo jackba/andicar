@@ -59,70 +59,11 @@
             android:layout_marginRight="5dip"
             />
     </RelativeLayout>
-    <LinearLayout
-       	android:id="@+id/llTemplateZone"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
-	    <TextView
-	        android:layout_height="1dip"
-	        android:layout_width="fill_parent"
-	        android:background="@color/separator_bg"
-	        android:layout_marginTop="3dip"
-	        />
-	    <LinearLayout
-	        android:orientation="horizontal"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dip"
-	        android:gravity="center_vertical|center_horizontal"
-	        >
-	        <TextView
-	            android:id="@+id/tvApplyTemplate"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/AddOn_DataTemplate_ApplyTemplateLbl"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            />
-	        <Spinner 
-	        	android:id="@+id/spnTemplate"
-	            android:layout_width="90dip"
-	            android:layout_height="wrap_content"
-	            android:drawSelectorOnTop="true"
-	            android:background="@drawable/white_background"
-	            android:prompt="@string/GEN_ChooseOneTitle"
-	            />
-	        <Button
-	            android:id="@+id/btnUpdate"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="5dip"
-	            android:text="@string/GEN_Update"
-	            android:background="@drawable/btn_background_selector"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            android:layout_centerHorizontal="true"
-	            />
-	        <Button
-	            android:id="@+id/btnNew"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="10dip"
-	            android:text="@string/GEN_New"
-	            android:background="@drawable/btn_background_selector"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            android:layout_centerHorizontal="true"
-	            />
-	    </LinearLayout>
-	</LinearLayout>    
     <TextView
         android:layout_height="1dip"
         android:layout_width="fill_parent"
         android:background="@color/separator_bg"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="10dip"
         />
     <ScrollView
         android:layout_width="fill_parent"
@@ -137,11 +78,71 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dip"
             >
+		    <LinearLayout
+		       	android:id="@+id/llTemplateZone"
+		        android:orientation="vertical"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="10dip"
+		        >
+			    <LinearLayout
+			        android:orientation="horizontal"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="5dip"
+			        android:gravity="center_vertical|center_horizontal"
+			        >
+			        <TextView
+			            android:id="@+id/tvApplyTemplate"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:text="@string/AddOn_DataTemplate_ApplyTemplateLbl"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            />
+			        <Spinner 
+			        	android:id="@+id/spnTemplate"
+			            android:layout_width="90dip"
+			            android:layout_height="wrap_content"
+			            android:drawSelectorOnTop="true"
+			            android:background="@drawable/white_background"
+			            android:prompt="@string/GEN_ChooseOneTitle"
+			            />
+			        <Button
+			            android:id="@+id/btnUpdate"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginLeft="5dip"
+			            android:text="@string/GEN_Update"
+			            android:background="@drawable/btn_background_selector"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            android:layout_centerHorizontal="true"
+			            />
+			        <Button
+			            android:id="@+id/btnNew"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginLeft="10dip"
+			            android:text="@string/GEN_New"
+			            android:background="@drawable/btn_background_selector"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            android:layout_centerHorizontal="true"
+			            />
+			    </LinearLayout>
+			    <TextView
+			        android:layout_height="1dip"
+			        android:layout_width="fill_parent"
+			        android:background="@color/separator_bg"
+			        android:layout_marginTop="10dip"
+			        />
+			</LinearLayout>    
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 >
                 <TextView
                     android:id="@+id/tvCarLabel"
@@ -184,7 +185,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvNameLabel"
@@ -211,12 +212,15 @@
                 android:typeface="sans"
                 android:textColor="@android:color/white"
                 android:button="@drawable/checkbox_selector"
+                android:layout_marginTop="15dip"
+                android:layout_marginLeft="5dip"
                 />
             <LinearLayout
                 android:id="@+id/llIndexStartZone"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvIndexStartLabel"
@@ -243,7 +247,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
                 >
 	            <TextView
 	                android:id="@+id/tvTagLabel"
@@ -268,7 +272,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_UserCommentLabel"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
                 android:typeface="sans"
                 android:textColor="@android:color/white"
                 />
@@ -283,7 +287,8 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
+                android:layout_marginBottom="20dip"
                 >
                 <TextView
                     android:id="@+id/tvFileFormatLabel"
