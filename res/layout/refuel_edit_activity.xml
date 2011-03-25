@@ -27,11 +27,11 @@
     android:background="@android:color/black"
     >
     <LinearLayout
+       	android:id="@+id/fakeFocus"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_marginRight="5dip"
-       	android:id="@+id/fakeFocus"
 		android:focusable="true"
 		android:focusableInTouchMode="true" 
         />
@@ -59,70 +59,11 @@
             android:layout_marginRight="5dip"
             />
     </RelativeLayout>
-    <LinearLayout
-       	android:id="@+id/llTemplateZone"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
-	    <TextView
-	        android:layout_height="1dip"
-	        android:layout_width="fill_parent"
-	        android:background="@color/separator_bg"
-	        android:layout_marginTop="3dip"
-	        />
-	    <LinearLayout
-	        android:orientation="horizontal"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dip"
-	        android:gravity="center_vertical|center_horizontal"
-	        >
-	        <TextView
-	            android:id="@+id/tvApplyTemplate"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/AddOn_DataTemplate_ApplyTemplateLbl"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            />
-	        <Spinner 
-	        	android:id="@+id/spnTemplate"
-	            android:layout_width="90dip"
-	            android:layout_height="wrap_content"
-	            android:drawSelectorOnTop="true"
-	            android:background="@drawable/white_background"
-	            android:prompt="@string/GEN_ChooseOneTitle"
-	            />
-	        <Button
-	            android:id="@+id/btnUpdate"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="5dip"
-	            android:text="@string/GEN_Update"
-	            android:background="@drawable/btn_background_selector"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            android:layout_centerHorizontal="true"
-	            />
-	        <Button
-	            android:id="@+id/btnNew"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="10dip"
-	            android:text="@string/GEN_New"
-	            android:background="@drawable/btn_background_selector"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            android:layout_centerHorizontal="true"
-	            />
-	    </LinearLayout>
-	</LinearLayout>    
     <TextView
         android:layout_height="1dip"
         android:layout_width="fill_parent"
         android:background="@color/separator_bg"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="10dip"
         />
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -137,6 +78,66 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dip"
             >
+		    <LinearLayout
+		       	android:id="@+id/llTemplateZone"
+		        android:orientation="vertical"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="10dip"
+		        >
+			    <LinearLayout
+			        android:orientation="horizontal"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:layout_marginTop="5dip"
+			        android:gravity="center_vertical|center_horizontal"
+			        >
+			        <TextView
+			            android:id="@+id/tvApplyTemplate"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:text="@string/AddOn_DataTemplate_ApplyTemplateLbl"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            />
+			        <Spinner 
+			        	android:id="@+id/spnTemplate"
+			            android:layout_width="90dip"
+			            android:layout_height="wrap_content"
+			            android:drawSelectorOnTop="true"
+			            android:background="@drawable/white_background"
+			            android:prompt="@string/GEN_ChooseOneTitle"
+			            />
+			        <Button
+			            android:id="@+id/btnUpdate"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginLeft="5dip"
+			            android:text="@string/GEN_Update"
+			            android:background="@drawable/btn_background_selector"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            android:layout_centerHorizontal="true"
+			            />
+			        <Button
+			            android:id="@+id/btnNew"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginLeft="10dip"
+			            android:text="@string/GEN_New"
+			            android:background="@drawable/btn_background_selector"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            android:layout_centerHorizontal="true"
+			            />
+			    </LinearLayout>
+		    <TextView
+		        android:layout_height="1dip"
+		        android:layout_width="fill_parent"
+		        android:background="@color/separator_bg"
+		        android:layout_marginTop="10dip"
+		        />
+			</LinearLayout>    
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
@@ -183,7 +184,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvExpenseCategoryLabel"
@@ -223,8 +224,8 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginTop="5dip"
-                android:gravity="center_vertical"
+                android:layout_marginTop="15dip"
+                android:gravity="center_vertical|right"
                 >
                 <TextView android:id="@+id/tvDateTimeValue"
                           android:layout_width="wrap_content"
@@ -252,7 +253,7 @@
                 android:layout_height="1dip"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 />
 
             <LinearLayout
@@ -287,6 +288,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvQuantityLabel"
@@ -364,7 +366,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvCurrencyLabel"
@@ -375,7 +377,7 @@
                     android:textColor="@android:color/white"
                     />
                 <Spinner android:id="@+id/spnCurrency"
-                    android:layout_width="35dip"
+                    android:layout_width="70dip"
                     android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
                     android:layout_marginLeft="5dip"
@@ -409,14 +411,14 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 android:gravity="center_vertical"
                 >
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:checkedButton="@+id/rbInsertModeAmount"
                     android:id="@+id/rgExpenseInsertMode">
                     <RadioButton
@@ -434,7 +436,6 @@
                         android:typeface="sans"
                         android:textColor="@android:color/white"
                         android:button="@drawable/rb_selector"
-                        android:layout_marginLeft="10dip"
                         />
                 </RadioGroup>
 
@@ -499,16 +500,6 @@
                 android:layout_marginTop="5dip"
                 />
 
-            <TextView
-                android:id="@+id/tvBPartnerAdressInfoLabel"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/GEN_BPartnerAdressInfo"
-                android:typeface="sans"
-                android:layout_marginTop="5dip"
-                android:textStyle="italic"
-                android:gravity="center"
-                />
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
@@ -536,7 +527,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvBPartnerAdressLabel"
@@ -554,12 +545,22 @@
                     android:background="@drawable/white_background"
                     />
             </LinearLayout>
+            <TextView
+                android:id="@+id/tvBPartnerAdressInfoLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_BPartnerAdressInfo"
+                android:typeface="sans"
+                android:layout_marginTop="5dip"
+                android:textStyle="italic"
+                android:gravity="center"
+                />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvDocumentNoLabel"
@@ -582,14 +583,14 @@
                 android:layout_height="1dip"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 >
 	            <TextView
 	                android:id="@+id/tvTagLabel"
@@ -615,12 +616,14 @@
                 android:text="@string/GEN_UserCommentLabel"
                 android:typeface="sans"
                 android:textColor="@android:color/white"
+                android:layout_marginTop="15dip"
                 />
             <AutoCompleteTextView
                 android:id="@+id/acUserComment"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/white_background"
+                android:layout_marginBottom="20dip"
                 />
         </LinearLayout>
     </ScrollView>

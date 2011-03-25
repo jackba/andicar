@@ -32,6 +32,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -67,7 +68,6 @@ public class MileageEditActivity extends EditActivityBase {
 
     private RadioButton rbInsertModeIndex;
     private RadioButton rbInsertModeMileage;
-    private TextView tvUserInputLabel;
     private TextView tvCalculatedTextLabel;
     private TextView tvMileageRecInProgress;
     private EditText etStartIndex;
@@ -229,7 +229,9 @@ public class MileageEditActivity extends EditActivityBase {
         		}
         		etUserInput.setEnabled(false);
 	            initDateTime(System.currentTimeMillis());
-	            etUserInput.requestFocus();
+//	            etUserInput.requestFocus();
+            	if(mDet != null)
+            		mDet.setControlsEnabled(false);
         	}
         	else{
         		setDefaultValues();
@@ -283,16 +285,12 @@ public class MileageEditActivity extends EditActivityBase {
 
         if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX) {
             rbInsertModeIndex.setChecked(true);
-            tvUserInputLabel.setText(
-                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
             tvCalculatedTextLabel.setText(
                     mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
         }
         else {
             rbInsertModeMileage.setChecked(true);
-            tvUserInputLabel.setText(
-                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
             tvCalculatedTextLabel.setText(
                     mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
@@ -307,7 +305,6 @@ public class MileageEditActivity extends EditActivityBase {
         etStartIndex.addTextChangedListener(mileageTextWatcher);
         rbInsertModeIndex = (RadioButton) findViewById(R.id.rbInsertModeIndex);
         rbInsertModeMileage = (RadioButton) findViewById(R.id.rbInsertModeMileage);
-        tvUserInputLabel = ((TextView) findViewById(R.id.tvUserInputLabel));
         tvCalculatedTextLabel = ((TextView) findViewById(R.id.tvCalculatedTextLabel));
         spnExpType = (Spinner)findViewById(R.id.spnExpType);
         acUserComment = (AutoCompleteTextView)findViewById(R.id.acUserComment);
@@ -324,6 +321,7 @@ public class MileageEditActivity extends EditActivityBase {
         btnOpenGPSTrack.setOnClickListener(onStartStopRecordClickListener);
 
         tvMileageRecInProgress = (TextView) findViewById(R.id.tvMileageRecInProgress);
+        tvMileageRecInProgress.setTextColor(Color.RED);
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgMileageInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
     }
@@ -492,21 +490,9 @@ public class MileageEditActivity extends EditActivityBase {
                     public void onCheckedChanged(RadioGroup arg0, int checkedId) {
                         if(checkedId == rbInsertModeIndex.getId()) {
                         	setInsertMode(StaticValues.MILEAGE_INSERTMODE_INDEX);//new index
-//                            mInsertMode = StaticValues.MILEAGE_INSERTMODE_INDEX; 
-//                            tvUserInputLabel.setText(
-//                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
-//                            tvCalculatedTextLabel.setText(
-//                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
-//                            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
                         }
                         else {
                         	setInsertMode(StaticValues.MILEAGE_INSERTMODE_MILEAGE);
-//                            mInsertMode = StaticValues.MILEAGE_INSERTMODE_MILEAGE;
-//                            tvUserInputLabel.setText(
-//                                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
-//                            tvCalculatedTextLabel.setText(
-//                                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
-//                            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
                         }
                         SharedPreferences.Editor editor = mPreferences.edit();
                         editor.putInt("MileageInsertMode", mInsertMode);
@@ -518,15 +504,11 @@ public class MileageEditActivity extends EditActivityBase {
     public void setInsertMode(int insertMode){
     	mInsertMode = insertMode;
     	if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX){
-            tvUserInputLabel.setText(
-                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
             tvCalculatedTextLabel.setText(
                     mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
     	}
     	else{
-            tvUserInputLabel.setText(
-                    mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
             tvCalculatedTextLabel.setText(
                     mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
@@ -701,6 +683,8 @@ public class MileageEditActivity extends EditActivityBase {
 	                    	mPrefEditor.putString("MileageRec_StartIndex", etStartIndex.getText().toString());
 	                    	mPrefEditor.putString("MileageRec_Comment", acUserComment.getText().toString());
 	                    	mPrefEditor.commit();
+	                    	if(mDet != null)
+	                    		mDet.setControlsEnabled(false);
 	                    	finish();
 	                    }
 	                    else{//stop recording
@@ -719,6 +703,8 @@ public class MileageEditActivity extends EditActivityBase {
 	                		etUserInput.setEnabled(true);
 	                		acUserComment.setEnabled(true);
 	                    	btnOk.setEnabled(true);
+	                    	if(mDet != null)
+	                    		mDet.setControlsEnabled(true);
 	                    }
                 	}
                 	else if(v.getId() == R.id.btnOpenGPSTrack && mGpsTrackId > -1){

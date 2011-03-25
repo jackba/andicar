@@ -27,11 +27,11 @@
     android:background="@android:color/black"
     >
     <LinearLayout
+       	android:id="@+id/fakeFocus"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_marginRight="5dip"
-       	android:id="@+id/fakeFocus"
 		android:focusable="true"
 		android:focusableInTouchMode="true" 
         />
@@ -75,70 +75,11 @@
             android:layout_marginRight="5dip"
             />
     </RelativeLayout>
-    <LinearLayout
-       	android:id="@+id/llTemplateZone"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        >
-	    <TextView
-	        android:layout_height="1dip"
-	        android:layout_width="fill_parent"
-	        android:background="@color/separator_bg"
-	        android:layout_marginTop="3dip"
-	        />
-	    <LinearLayout
-	        android:orientation="horizontal"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="5dip"
-	        android:gravity="center_vertical|center_horizontal"
-	        >
-	        <TextView
-	            android:id="@+id/tvApplyTemplate"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="@string/AddOn_DataTemplate_ApplyTemplateLbl"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            />
-	        <Spinner 
-	        	android:id="@+id/spnTemplate"
-	            android:layout_width="90dip"
-	            android:layout_height="wrap_content"
-	            android:drawSelectorOnTop="true"
-	            android:background="@drawable/white_background"
-	            android:prompt="@string/GEN_ChooseOneTitle"
-	            />
-	        <Button
-	            android:id="@+id/btnUpdate"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="5dip"
-	            android:text="@string/GEN_Update"
-	            android:background="@drawable/btn_background_selector"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            android:layout_centerHorizontal="true"
-	            />
-	        <Button
-	            android:id="@+id/btnNew"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="10dip"
-	            android:text="@string/GEN_New"
-	            android:background="@drawable/btn_background_selector"
-	            android:typeface="sans"
-	            android:textColor="@android:color/white"
-	            android:layout_centerHorizontal="true"
-	            />
-	    </LinearLayout>
-	</LinearLayout>    
     <TextView
         android:layout_height="1dip"
         android:layout_width="fill_parent"
         android:background="@color/separator_bg"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="10dip"
         />
 
     <ScrollView
@@ -162,6 +103,67 @@
         		android:textStyle="bold|italic"
                 android:textColor="@android:color/white"
                 />
+
+		    <LinearLayout
+		       	android:id="@+id/llTemplateZone"
+		        android:orientation="vertical"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="10dip"
+		        >
+			    <LinearLayout
+			        android:orientation="horizontal"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:gravity="center_vertical|center_horizontal"
+			        >
+			        <TextView
+			            android:id="@+id/tvApplyTemplate"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:text="@string/AddOn_DataTemplate_ApplyTemplateLbl"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            />
+			        <Spinner 
+			        	android:id="@+id/spnTemplate"
+			            android:layout_width="90dip"
+			            android:layout_height="wrap_content"
+			            android:drawSelectorOnTop="true"
+			            android:background="@drawable/white_background"
+			            android:prompt="@string/GEN_ChooseOneTitle"
+			            />
+			        <Button
+			            android:id="@+id/btnUpdate"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginLeft="5dip"
+			            android:text="@string/GEN_Update"
+			            android:background="@drawable/btn_background_selector"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            android:layout_centerHorizontal="true"
+			            />
+			        <Button
+			            android:id="@+id/btnNew"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_marginLeft="10dip"
+			            android:text="@string/GEN_New"
+			            android:background="@drawable/btn_background_selector"
+			            android:typeface="sans"
+			            android:textColor="@android:color/white"
+			            android:layout_centerHorizontal="true"
+			            />
+			    </LinearLayout>
+			    <TextView
+			        android:layout_height="1dip"
+			        android:layout_width="fill_parent"
+			        android:background="@color/separator_bg"
+			        android:layout_marginTop="10dip"
+			        />
+			</LinearLayout>    
+            
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
@@ -208,7 +210,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvExpenseTypeLabel"
@@ -228,13 +230,12 @@
                          android:tag="spnExpType"
                          />
             </LinearLayout>
-            <!--date/time -->
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:gravity="center_vertical"
-                android:layout_marginTop="5dip"
+                android:gravity="center_vertical|right"
+                android:layout_marginTop="15dip"
                 >
                 <TextView
                     android:id="@+id/tvDateTimeValue"
@@ -264,7 +265,7 @@
                 android:layout_height="1dip"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="10dip"
                 />
             <TextView
                 android:id="@+id/tvStartStopIndexHdr"
@@ -281,6 +282,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 >
                 <TextView
                     android:id="@+id/tvIndexStartLabel"
@@ -289,11 +291,10 @@
                     android:text="@string/MileageEditActivity_IndexStartLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
-                    android:layout_marginLeft="40dip"
                     />
                 <EditText
                     android:id="@+id/etIndexStart"
-                    android:layout_width="fill_parent"
+                    android:layout_width="80dip"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
                     android:digits="-.1234567890"
@@ -303,52 +304,32 @@
                     android:background="@drawable/white_background"
                     android:tag="@string/MileageEditActivity_IndexStartLabel"
                     />
-            </LinearLayout>
-	
-            <RadioGroup
-                android:id="@+id/rgMileageInsertMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="10dip"
-                android:layout_marginLeft="40dip"
-                >
-                <RadioButton
-                    android:id="@+id/rbInsertModeIndex"
-                    android:text="@string/MileageEditActivity_OptionIndexLabel"
-                    style="?android:attr/textAppearanceSmall"
-                    android:typeface="sans"
-                    android:textColor="@android:color/white"
-                    android:button="@drawable/rb_selector"
-                	android:tag="rbInsertModeIndex"
-                    />
-                    <!--android:gravity="center_vertical"-->
-                <RadioButton
-                    android:id="@+id/rbInsertModeMileage"
-                    android:text="@string/MileageEditActivity_OptionMileageLabel"
-                    style="?android:attr/textAppearanceSmall"
-                    android:typeface="sans"
-                    android:textColor="@android:color/white"
-                    android:button="@drawable/rb_selector"
-                    android:layout_marginLeft="10dip"
-                	android:tag="rbInsertModeMileage"
-                    />
-            </RadioGroup>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:id="@+id/tvUserInputLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dip"
-                    android:typeface="sans"
-                    android:textColor="@android:color/white"
-                    />
+	            <RadioGroup
+	                android:id="@+id/rgMileageInsertMode"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical"
+	                android:layout_marginLeft="10dip"
+	                >
+	                <RadioButton
+	                    android:id="@+id/rbInsertModeIndex"
+	                    android:text="@string/MileageEditActivity_OptionIndexLabel"
+	                    style="?android:attr/textAppearanceSmall"
+	                    android:typeface="sans"
+	                    android:textColor="@android:color/white"
+	                    android:button="@drawable/rb_selector"
+	                	android:tag="rbInsertModeIndex"
+	                    />
+	                <RadioButton
+	                    android:id="@+id/rbInsertModeMileage"
+	                    android:text="@string/MileageEditActivity_OptionMileageLabel"
+	                    style="?android:attr/textAppearanceSmall"
+	                    android:typeface="sans"
+	                    android:textColor="@android:color/white"
+	                    android:button="@drawable/rb_selector"
+	                	android:tag="rbInsertModeMileage"
+	                    />
+	            </RadioGroup>
                 <EditText
                     android:id="@+id/etUserInput"
                     android:layout_width="fill_parent"
@@ -365,7 +346,6 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_marginTop="10dip"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/tvCalculatedTextLabel"
@@ -430,6 +410,7 @@
                 android:layout_height="fill_parent"
                 android:background="@drawable/white_background"
                	android:tag="acUserComment"
+           		android:layout_marginBottom="20dip"
                 />
         </LinearLayout>
     </ScrollView>

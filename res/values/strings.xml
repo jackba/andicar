@@ -109,7 +109,7 @@
     <string name="GEN_Required">"Required"</string>
     <string name="GEN_BPartner">"Vendor:"</string>
     <string name="GEN_Address">"Address:"</string>
-    <string name="GEN_BPartnerAdressInfo">"Enter more details in Preferences -> Partners"</string>
+    <string name="GEN_BPartnerAdressInfo">"More details in Preferences -> Partners"</string>
     <string name="GEN_City">"City:"</string>
     <string name="GEN_Region">"Region:"</string>
     <string name="GEN_Country">"Country:"</string>

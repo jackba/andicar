@@ -1664,9 +1664,9 @@ public class MainActivity extends BaseActivity {
 		menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
 				mResource.getText(R.string.MENU_AboutCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_info_details));
-		menu.add(0, StaticValues.MENU_RATE_COMMENT_ID, 0,
-				mResource.getText(R.string.MENU_RateCommentCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_star));
+//		menu.add(0, StaticValues.MENU_RATE_COMMENT_ID, 0,
+//				mResource.getText(R.string.MENU_RateCommentCaption)).setIcon(
+//				mResource.getDrawable(R.drawable.ic_menu_star));
 		menu.add(0, StaticValues.MENU_LOCALIZE_ID, 0,
 				mResource.getText(R.string.MENU_LocalizeAndiCar)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_edit));

@@ -30,6 +30,7 @@ import org.andicar.utils.Utils;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -146,10 +147,15 @@ public class ExpenseEditActivity extends EditActivityBase {
             
             String fromTable = c.getString(MainDbAdapter.EXPENSE_COL_FROMTABLE_POS);
             if(fromTable == null){
-                tvWarningLabel.setText("");
+                tvWarningLabel.setVisibility(View.GONE);
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), true);
+                if(mDet != null)
+                	mDet.setControlsEnabled(false);
             }
             else{
+                tvWarningLabel.setVisibility(View.VISIBLE);
+                if(mDet != null)
+                	mDet.setControlsEnabled(true);
                 if(fromTable.equals("Refuel")){
                     tvWarningLabel.setText(
                             mResource.getString(R.string.ExpenseEditActivity_CreatedFromWarning)
@@ -275,6 +281,8 @@ public class ExpenseEditActivity extends EditActivityBase {
         etUserInput.addTextChangedListener(userInputTextWatcher);
         etDocNo = (EditText) findViewById(R.id.etDocumentNo);
         tvWarningLabel = (TextView) findViewById(R.id.tvWarningLabel);
+        tvWarningLabel.setTextColor(Color.RED);
+        
         llConversionRateZone1 = (LinearLayout) findViewById(R.id.llConversionRateZone1);
         llConversionRateZone2 = (LinearLayout) findViewById(R.id.llConversionRateZone2);
         etConversionRate = (EditText) findViewById(R.id.etConversionRate);
