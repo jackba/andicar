@@ -182,27 +182,14 @@
 				    android:layout_marginTop="5dip" 
 			       	android:gravity="center"
 				    >
-				    <!-- 
-					<TextView
-					    android:id="@+id/tvPayPalWarning"
-					    android:layout_width="fill_parent" 
-					    android:layout_height="wrap_content" 
-				        android:typeface="sans"
-			        	android:textStyle="bold"
-				        android:textColor="@android:color/white"
-				        android:text="@string/AddOn_PayPalWarning"
-				    	android:layout_marginBottom="5dip" 
-			        	android:gravity="center"
-					    />
-					 -->
 				</LinearLayout>
 			</LinearLayout>
 	        <LinearLayout
+		        android:id="@+id/llExistingSubscriptionZone"
 	            android:orientation="vertical"
 	            android:layout_width="fill_parent"
 	            android:layout_height="fill_parent"
 		        android:layout_marginTop="5dip"
-		        android:id="@+id/llExistingSubscriptionZone"
 		        android:gravity="center"
 	            >
 				<TextView  
