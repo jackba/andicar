@@ -30,7 +30,6 @@ import org.andicar.utils.Utils;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -62,7 +61,6 @@ public class ExpenseEditActivity extends EditActivityBase {
     private EditText etDocNo;
     private EditText etConversionRate;
     private EditText etQuantity;
-    private TextView tvWarningLabel;
     private TextView tvConvertedAmountValue;
     private TextView tvConvertedAmountLabel;
     private TextView tvCalculatedTextLabel;
@@ -147,21 +145,13 @@ public class ExpenseEditActivity extends EditActivityBase {
             
             String fromTable = c.getString(MainDbAdapter.EXPENSE_COL_FROMTABLE_POS);
             if(fromTable == null){
-                tvWarningLabel.setVisibility(View.GONE);
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), true);
                 if(mDet != null)
                 	mDet.setControlsEnabled(false);
             }
             else{
-                tvWarningLabel.setVisibility(View.VISIBLE);
                 if(mDet != null)
                 	mDet.setControlsEnabled(true);
-                if(fromTable.equals("Refuel")){
-                    tvWarningLabel.setText(
-                            mResource.getString(R.string.ExpenseEditActivity_CreatedFromWarning)
-                                .replace("[#1]", mResource.getString(R.string.GEN_Refuel).toLowerCase())
-                                .replace("[#1]", mResource.getString(R.string.GEN_Refuel).toLowerCase())+ "\n");
-                }
                 setEditable((ViewGroup) findViewById(R.id.vgRoot), false);
             }
             Cursor c2 = null;
@@ -280,8 +270,6 @@ public class ExpenseEditActivity extends EditActivityBase {
         etUserInput = (EditText) findViewById(R.id.etUserInput);
         etUserInput.addTextChangedListener(userInputTextWatcher);
         etDocNo = (EditText) findViewById(R.id.etDocumentNo);
-        tvWarningLabel = (TextView) findViewById(R.id.tvWarningLabel);
-        tvWarningLabel.setTextColor(Color.RED);
         
         llConversionRateZone1 = (LinearLayout) findViewById(R.id.llConversionRateZone1);
         llConversionRateZone2 = (LinearLayout) findViewById(R.id.llConversionRateZone2);
@@ -894,8 +882,6 @@ public class ExpenseEditActivity extends EditActivityBase {
 	public void setDefaultValues() {
 		isBackgroundSettingsActive = true;
 		
-        tvWarningLabel.setText(null);
-        
         mCarId = mPreferences.getLong("CurrentCar_ID", 1);
         setSpinnerSelectedID(spnCar, mCarId);
 

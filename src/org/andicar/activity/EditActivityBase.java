@@ -216,7 +216,7 @@ public abstract class EditActivityBase extends BaseActivity {
            if(vwChild instanceof ViewGroup){
                setEditable((ViewGroup)vwChild, editable);
            }
-           if(vwChild.getId() != R.id.tvWarningLabel && vwChild.getId() != android.R.id.closeButton)
+           if(vwChild.getId() != android.R.id.closeButton)
                vwChild.setEnabled(editable);
        }
    }

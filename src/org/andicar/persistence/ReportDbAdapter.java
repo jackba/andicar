@@ -317,11 +317,12 @@ public class ReportDbAdapter extends MainDbAdapter{
                                 sqlConcatTableColumn("DefaultCurrency", CURRENCY_COL_CODE_NAME) + " || ')' " +
                         " ELSE " + "'' " +
                     " END " 
-                	
-                	
-                		+ " || ' at [#3] ' || " +
-                	sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " " +
-                        "AS " + SECOND_LINE_LIST_NAME + ", " + //#2
+                		+ " || " + 
+                    " CASE WHEN COALESCE(" + sqlConcatTableColumn(EXPENSE_TABLE_NAME, EXPENSE_COL_INDEX_NAME) + ", '') <> '' " +
+                		" THEN " + "' at [#3] ' || " + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) +
+                		" ELSE " + "''" +
+                	" END " +
+                        " AS " + SECOND_LINE_LIST_NAME + ", " + //#2
                     " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
                 	sqlConcatTableColumn(EXPENSE_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) + " " +
                         "AS " + THIRD_LINE_LIST_NAME +  ", " + //#3
