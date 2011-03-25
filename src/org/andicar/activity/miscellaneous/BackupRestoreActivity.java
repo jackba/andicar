@@ -137,6 +137,7 @@ public class BackupRestoreActivity extends BaseActivity {
                                 if(mDbAdapter.restoreDb(selectedFile)){
                                     SharedPreferences.Editor editor = mPreferences.edit();
                                     editor.putBoolean("MustClose", true);
+                                    //reset current car
                                     editor.putLong( "CurrentCar_ID", -1);
 //                                    editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();

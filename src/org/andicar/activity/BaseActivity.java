@@ -73,6 +73,8 @@ public abstract class BaseActivity extends Activity {
     protected long mExpCategoryId = -1;
     protected long mExpTypeId = -1;
 
+    protected boolean isBackgroundSettingsActive = false;
+
     public abstract void setSpecificLayout();
 
     /** Called when the activity is first created. */
@@ -155,21 +157,18 @@ public abstract class BaseActivity extends Activity {
             }
             else{
                 dbcRecordCursor = mDbAdapter.query(tableName, columns, selection, selectionArgs, null, null, orderBy);
-//                        fetchForTable( tableName, columns, whereCondition, orderBy);
             }
             
             startManagingCursor( dbcRecordCursor );
             int[] to = new int[]{android.R.id.text1};
             SimpleCursorAdapter scaCursorAdapter =
                     new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, dbcRecordCursor,
-//                    new SimpleCursorAdapter(this, android.R.layout.two_line_list_item, dbcRecordCursor,
                     from, to);
             scaCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//            scaCursorAdapter.setDropDownViewResource(android.R.layout.two_line_list_item);
             spnCurrentSpinner.setAdapter(scaCursorAdapter);
 
             if(selectedId >= 0){
-            //set the spinner to the last used id
+            //set the spinner to this id
                 dbcRecordCursor.moveToFirst();
                 for( int i = 0; i < dbcRecordCursor.getCount(); i++ ) {
                     if( dbcRecordCursor.getLong( MainDbAdapter.GEN_COL_ROWID_POS ) == selectedId) {
@@ -268,6 +267,10 @@ public abstract class BaseActivity extends Activity {
     protected AdapterView.OnItemSelectedListener spinnerOnItemSelectedListener =
             new AdapterView.OnItemSelectedListener() {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                	
+                	if(isBackgroundSettingsActive)
+                		return;
+                	
                     if(BaseActivity.this instanceof RefuelEditActivity){
                         if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
                             mPrefEditor.putLong("RefuelExpenseType_ID", arg3);

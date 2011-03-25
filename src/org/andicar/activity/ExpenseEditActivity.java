@@ -884,6 +884,8 @@ public class ExpenseEditActivity extends EditActivityBase {
 	 */
 	@Override
 	public void setDefaultValues() {
+		isBackgroundSettingsActive = true;
+		
         tvWarningLabel.setText(null);
         
         mCarId = mPreferences.getLong("CurrentCar_ID", 1);

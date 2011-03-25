@@ -79,7 +79,6 @@ public abstract class EditActivityBase extends BaseActivity {
     protected boolean initDateOnly = false;
 	protected boolean isFinishAfterSave = true;
     protected boolean isUseTemplate = false;
-    protected boolean isBackgroundSettingsActive = false;
     
     protected DataEntryTemplate mDet = null;
 

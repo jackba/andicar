@@ -313,9 +313,9 @@ public class MileageEditActivity extends EditActivityBase {
         acUserComment = (AutoCompleteTextView)findViewById(R.id.acUserComment);
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
-        spnDriver = (Spinner) findViewById(R.id.spnDriver);
         spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
         spnCar.setOnTouchListener(spinnerOnTouchListener);
+        spnDriver = (Spinner) findViewById(R.id.spnDriver);
         spnDriver.setOnItemSelectedListener(spinnerDriverOnItemSelectedListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         btnStartStopMileageRecord = (ImageButton)findViewById( R.id.btnStartStopMileageRecord );
@@ -734,7 +734,7 @@ public class MileageEditActivity extends EditActivityBase {
                 public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                     if(isBackgroundSettingsActive)
                         return;
-                    setCarId(arg3, false);
+                    setCarId(arg3);
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -745,7 +745,7 @@ public class MileageEditActivity extends EditActivityBase {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 if(isBackgroundSettingsActive)
                     return;
-                setDriverId(arg3, false);
+                setDriverId(arg3);
             }
             public void onNothingSelected(AdapterView<?> arg0) {
             }
@@ -767,10 +767,8 @@ public class MileageEditActivity extends EditActivityBase {
 	/**
 	 * @param carId the mCarId to set
 	 */
-	public void setCarId(long carId, boolean updateSpinnerSelection) {
+	public void setCarId(long carId) {
 		this.mCarId = carId;
-		if(updateSpinnerSelection)
-			setSpinnerSelectedID(spnCar, carId);
 
 		userCommentAdapter = null;
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
@@ -786,10 +784,8 @@ public class MileageEditActivity extends EditActivityBase {
 	/**
 	 * @param driverId the mDriverId to set
 	 */
-	public void setDriverId(long driverId, boolean updateSpinnerSelection) {
+	public void setDriverId(long driverId) {
 		this.mDriverId = driverId;
-		if(updateSpinnerSelection)
-			setSpinnerSelectedID(spnDriver, driverId);
 	}
 
 	/* (non-Javadoc)
@@ -797,15 +793,24 @@ public class MileageEditActivity extends EditActivityBase {
 	 */
 	@Override
 	public void setDefaultValues() {
+		isBackgroundSettingsActive = true;
+		
 		isRecordMileage = false;
     	tvMileageRecInProgress.setVisibility(View.GONE);
     	btnOk.setEnabled(true);
 		spnCar.setEnabled(true);
 		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_start_record_24x24));
-        mCarId = mPreferences.getLong("CurrentCar_ID", 1);
-        mDriverId = mPreferences.getLong("LastDriver_ID", 1);
+        
+		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+        setSpinnerSelectedID(spnCar, mCarId);
+
+        mDriverId = mPreferences.getLong("LastDriver_ID", -1);
+        setSpinnerSelectedID(spnDriver, mDriverId);
+
+        mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
+        setSpinnerSelectedID(spnExpType, mExpTypeId);
+
         mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
-        mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", 1);
         rbInsertModeIndex.setChecked(true);
         rbInsertModeMileage.setChecked(false);
         //init tag
@@ -824,8 +829,9 @@ public class MileageEditActivity extends EditActivityBase {
 
         etUserInput.setText("");
         acUserComment.setText("");
-        initControls();
+//        initControls();
         initDateTime(System.currentTimeMillis());
+        setSpecificLayout();
 	}
 
 }
