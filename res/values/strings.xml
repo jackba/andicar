@@ -203,6 +203,8 @@
     <string name="MainActivity_ToDoHeaderCaption">"Next To-Do"</string>
     <string name="MainActivity_ToDoNoDataText">"No task defined."</string>
     <string name="MainActivity_HowToMessage">"Usability"</string>
+    <string name="MainActivity_WhatsNewDialogTitle">"What's new"</string>
+
 
     <string name="DriverEditActivity_LicenseNoLabel">"License No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"The current driver can not be inactivated."</string>

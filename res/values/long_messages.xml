@@ -24,8 +24,7 @@
 
 <resources>
     <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
-        AndiCar is a free and open source car management
-        software for Android powered devices.\n
+        AndiCar is a free and open source car management software for Android powered devices.\n
         It is licensed under the terms of the GNU General Public License, version 3.\n
         See the About page for more details.\n
         Thank you for using AndiCar!
@@ -61,9 +60,6 @@
         *  For other things you can send an email to andicar.support@gmail.com.\n
     </string>
 
-<!--         You can make a donation if you enjoy using <b><i>AndiCar</i></b>.
-        All donations can be made using a PayPal account.
- -->
     <string name="LM_COPYRIGHT_HTML2">
         Thank you for using <b><i>AndiCar</i></b>.\n\n
         <b><i>Credits:</i></b>\n
@@ -92,10 +88,9 @@
    	</string>
 
     <string name="LM_UPDATE_MSG">
-        <b><i>What\'s new:</i></b>\n
-        * Various bug fixes\n
-        * <b>Limited time offer:</b> Subscribe now to Backup Service or Secure Backup starting from 0.99$\n
-        * <b>New data entry temlate Add-On:</b> This Add-On allow you to create and apply templates for the most used data entry patterns.\nYour productivity can be dramatically increased by using templates for automatic fields completion.
+        "<b><i>What\'s new:</i></b>\n\n
+        * Various bug fixes\n\n
+        * <b>Limited time offer:</b> Subscribe now to Backup Service or Secure Backup <b>starting from 0.99$ !</b>\n\n
+        * <b>Data entry temlate Add-On:</b> This Add-On allow you to create and apply templates for the most used data entry patterns. Your productivity can be dramatically increased by using templates for automatic field completion."
     </string>
-
 </resources>
