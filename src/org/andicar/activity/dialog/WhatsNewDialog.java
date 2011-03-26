@@ -21,7 +21,6 @@ import org.andicar.activity.R;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
