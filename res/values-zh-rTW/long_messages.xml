@@ -82,8 +82,10 @@
 		所記錄的訊息(里程數，支出，總用油)對於你來說是很有價值的財產。為了在資料遺失的情況下還原最近的備份，這是一種很有用的方式。
 	</string>
 
-
-<!--        <b><i>Credits:</i></b>\n
-        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
--->
+	<string name="LM_UPDATE_MSG">
+		<b><i>有何更新：</i></b>\n\n
+		* 修正多個 Bug\n\n
+		* <b>限時優惠：</b> 現在就訂閱備份服務或安全備份，起價為 0.99$\n\n
+		* <b>新的資料輸入範本增益集：</b> 此增益集允許你為常用資料的輸入模式建立及套用範本。\n由於使用範本可以為你自動完成一些欄位，你的效率將會得到顯著的提高。
+	</string>
 </resources>

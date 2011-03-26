@@ -416,13 +416,15 @@
     <string name="AddOn_SubscriptionExpired">"Deine Anmeldung für das AddOn [#1] ist abgelaufen."</string>
     <string name="AddOn_RenewSubscriptionPeriodInfo">"Die gewählte Zeit wird zu der bereits gekauften Zeit addiert."</string>
 
+    <string name="AddOn_15DayFreeSubscription">"15 Tage GRATIS Testphase."</string>
+    <string name="AddOn_SixMonthSubscription">"Sechs Monate Anmeldung: [#1] [#2]"</string>
+    <string name="AddOn_OneYearSubscription">"Einjahres Anmeldung: [#1] [#2]"</string>
+    <string name="AddOn_LifeTimeSubscription">"Lebenslange Anmeldung: [#1] [#2]"</string>
+
     <string name="AddOn_SecureBackup_Title">"Backup versenden"</string>
     <string name="AddOn_SecureBackup_Description">"Immer wenn ein Datenbank Backup erstellt wird, sendet dieser Service ein E-Mail mit dem Datenbankbackup als Attachment an eine voreingestellte E-Mail Adresse. Dadurch bleiben deine aufgenommenen Daten verfügbar auch wenn du dein Handy verlierst. Zusammen mit dem Backup Service AddOn ist das die beste Lösung für deine Datensicherheit."</string>
     <string name="AddOn_SecureBackup_TermOfService">"Wir können für Fehler durch schlechte/defekte/nicht vorhandene Internetverbindungen nicht haftbar gemacht werden. Durch schlechte Internetverbindungen kann es zu defekten Backupdateien im E-Mail Attachment kommen. Ebenso sind wir nicht Verantwortlich für gelöschte/nicht angenommene E-Mails durch dein Internetanbieter oder andere Fälle welche dazu führen dass dein E-Mail mit dem Backup nicht angenommen werden kann."</string>
     <string name="AddOn_SecureBackup_Requirements">"Voraussetzungen das der Service funktioniert: gültiger GMail Account, Internetverbindung, mobile Datenübertragung."</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"15 Tage GRATIS Testphase."</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption2">"Sechs Monate Anmeldung: [#1] [#2]"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption3">"Einjahres Anmeldung: [#1] [#2]"</string>
 
     <string name="AddOn_SecureBackup_Configure">"Gehe in die Secure Backup Einstellungen um den Service fertig zu konfigurieren."</string>
     <string name="AddOn_SecureBackup_SMTPUserFrom">"Absenderadresse (GMail Account nötig):"</string>
@@ -434,8 +436,6 @@
     <string name="AddOn_AutoBackupService_Description">"Dieser Service erlaubt es automatisch, zeitgesteuerte Backups deiner Datenbank anzulegen. Kombiniert mit dem Secure Backup AddOn die beste Lösung für deine Datensicherheit."</string>
     <string name="AddOn_AutoBackupService_TermOfService">""</string>
     <string name="AddOn_AutoBackupService_Requirements">"Voraussetzungen für den Service: freier Platz auf der SDCARD je nach Grösse deiner Datenbank und der Anzahl Backups die zu speichern sind."</string>
-    <string name="AddOn_AutoBackupService_SubscriptionOption1">"15 Tage GRATIS Anmeldung."</string>
-    <string name="AddOn_AutoBackupService_SubscriptionOption2">"Lebenslange Anmeldung: [#1] [#2]"</string>
 
     <string name="AddOn_AutoBackupService_ScheduleTitle">"Backup Service Zeitplan"</string>
     <string name="AddOn_AutoBackupService_ScheduleFrequency">"Häufigkeit:"</string>
@@ -446,7 +446,6 @@
     <string name="AddOn_AutoBackupService_NoDaySelectedMsg">"Mindestens ein Wochentag muss ausgewählt sein!"</string>
     <string name="AddOn_AutoBackupService_BackupSucceeded">"Das Backup wurde erfolgreich erstellt."</string>
     <string name="AddOn_AutoBackupService_BackupFailed">"Das Backup ist fehlgeschlagen! Überprüfe deine SDCARD."</string>
-
 
     <string name="GEN_Minutes">"Minuten"</string>
     <string name="GEN_Description">"Beschreibung"</string>

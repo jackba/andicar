@@ -472,6 +472,11 @@
  	<string name="AddOn_PreferencesCategoryTitle">"Доп. услуги"</string>
  	<string name="AddOn_SubscriptionExpireWarning">"Ваша подписка на доп. услугу [#1] закончится через [#2] дней"</string>
 
+    <string name="AddOn_15DayFreeSubscription">"15-дневная бесплатная пробная подписка."</string>
+    <string name="AddOn_SixMonthSubscription">"Полугодовая подписка: [#1] [#2]"</string>
+    <string name="AddOn_OneYearSubscription">"Годовая подписка: [#1] [#2]"</string>
+	<string name="AddOn_LifeTimeSubscription">"Срок подписки: [#1] [#2]"</string>
+
  	<string name="AddOn_SubscriptionExpired">"Ваша подписка на доп.услугу [#1] закончилась."</string>
  	<string name="AddOn_RenewSubscriptionPeriodInfo">"Выбранный период добавится к текущей подписке"</string>
 
@@ -480,9 +485,6 @@
     <string name="AddOn_SecureBackup_LongDescription">"Автоматическая загрузка ваших копий баз данных  позволит вам иметь доступ к данным даже в случае утери телефона"</string>
     <string name="AddOn_SecureBackup_TermOfService">" Мы не несем ответственности за: плохое / несуществующее / дефектное подключение к Интернету приводящее к неполным / поврежденным данным, недостаточное место для хранения  почты на вашей учетной записи Google, удаление файлов резервных копий с Google Mail или любые другие события, которые вызывают потери или делают непригодными  файлы резервного копирования."</string>
 	<string name="AddOn_SecureBackup_Requirements">"Системные требования службы: действующая учетная запись GMail, подключение к Интернету,  разрешение мобильной передачи данных"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption2">"Полугодовая подписка: [#1] [#2]"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption3">"Годовая подписка: [#1] [#2]"</string>
 
     <string name="AddOn_SecureBackup_Configure">"Перейдите  в конфигурацию безопасного копирования, чтобы ввести недостающую информацию."</string>
     <string name="AddOn_SecureBackup_SMTPUserFrom">"С адреса (требуется учетная запись GMail):"</string>
@@ -493,8 +495,6 @@
     <string name="AddOn_AutoBackupService_Title">"Услуга резервного копирования"</string>
 	<string name="AddOn_AutoBackupService_Description">" Эта услуга позволяет вам планировать ежедневные / еженедельные автоматические задачи резервного копирования баз данных. В сочетании с модулем резервного копирования она  представляет собой законченное решение для безопасности ваших данных."</string>
 	<string name="AddOn_AutoBackupService_Requirements">"Требования: свободное место на карте SD в зависимости от  размера вашей базы данных и количества существующих резервных копий."</string>
-	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15-дневная бесплатная пробная подписка."</string>
-	<string name="AddOn_AutoBackupService_SubscriptionOption2">"Срок подписки: [#1] [#2]"</string>
 
 	<string name="AddOn_AutoBackupService_ScheduleTitle">"Расписание услуги резервного копирования"</string>
  	<string name="AddOn_AutoBackupService_ScheduleFrequency">"Частота:"</string>

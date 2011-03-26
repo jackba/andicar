@@ -82,7 +82,10 @@
 		所记录的信息(里程数，支出，总用油)对于你来说是很有价值的财产。为了在数据丢失的情况下还原最近的备份，这是一种很有用的方式。
 	</string>
 
-<!--        <b><i>Credits:</i></b>\n
-        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
--->
+	<string name="LM_UPDATE_MSG">
+		<b><i>有何更新：</i></b>\n\n
+		* 修正多个 Bug\n\n
+		* <b>限时优惠：</b> 现在就订阅备份服务或安全备份，起价为 0.99$\n\n
+		* <b>新的数据输入模板插件：</b> 此插件允许你为常用数据的输入模式创建及应用模板。\n由于使用模板可以为你自动完成一些字段，你的效率将会得到显著的提高。
+	</string>
 </resources>
