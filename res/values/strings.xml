@@ -518,6 +518,8 @@
     <string name="AddOn_DataTemplate_Title">"Data entry templates"</string>
     <string name="AddOn_DataTemplate_Description">"This Add-On allow you to create and apply templates for the most used data entry patterns.\nYour productivity can be dramatically increased by using templates for automatic fields completion."</string>
     <string name="AddOn_DataTemplate_ApplyTemplateLbl">"Template"</string>
+    <string name="AddOn_DataTemplate_UpdatedMsg">"Template updated"</string>
+    <string name="AddOn_DataTemplate_CreatedMsg">"A new template created based on current values"</string>
 
     <string name="AddOn_DataEntryPref_CategoryTitle">"Data entry templates"</string>
     <string name="AddOn_DataEntryPref_ExpenseTitle">"Expense templates"</string>
