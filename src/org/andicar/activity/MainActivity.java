@@ -23,6 +23,7 @@ import java.math.RoundingMode;
 import java.util.Calendar;
 
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
+import org.andicar.activity.dialog.WhatsNewDialog;
 import org.andicar.activity.miscellaneous.AboutActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.activity.miscellaneous.GPSTrackController;
@@ -359,13 +360,17 @@ public class MainActivity extends BaseActivity {
 						getPackageName(), 0).versionCode;
 				if (!mPreferences.contains("appVersionCode")
 						|| mPreferences.getInt("appVersionCode", 0) < appVersionCode //version update
-						|| appVersion.endsWith("Beta")  // for beta testing
+//						|| appVersion.endsWith("Beta")  // for beta testing
 						) {
 
 					initPreferenceValues(); // version update => init (new)
 											// preference values
 					AndiCarServiceStarter.startServices(this);
 					AndiCarAddOnServiceStarter.startServices(this);
+					if(!isJustInstalled)
+						startActivity(new Intent(mainContext, WhatsNewDialog.class));
+				}
+				if(mPreferences.getInt("appVersionCode", 0) != appVersionCode){
 					editor.putInt("appVersionCode", appVersionCode);
 					editor.commit();
 				}
@@ -431,6 +436,7 @@ public class MainActivity extends BaseActivity {
 ////				iaView.setVisibility(View.VISIBLE);
 ////				iaView.setRefreshInterval(120); //120 seconds
 //			}
+			
 		} catch (Exception e) {
 			String logFile = "startup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
@@ -456,6 +462,7 @@ public class MainActivity extends BaseActivity {
 			madError = madbErrorAlert.create();
 			madError.show();
 		}
+		
 	}
 
 	private void fillExpenseZone() {
@@ -1418,8 +1425,6 @@ public class MainActivity extends BaseActivity {
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
 					MileageEditActivity.class);
-			// Intent mileageInsertIntent = new Intent(mainContext,
-			// TaskEditActivity.class);
 			i.putExtra("Operation", "N");
 			startActivityForResult(i,
 					ACTIVITY_MILEAGEINSERT_REQUEST_CODE);
