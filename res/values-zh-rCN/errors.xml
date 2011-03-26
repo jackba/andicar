@@ -79,6 +79,7 @@
 	<string name="ERR_056">"未知错误。"</string>
 	<string name="ERR_057">"无法压缩数据库备份！"</string>
 	<string name="ERR_058">"无法创建临时文件夹 (/sdcard/andicar/temp)。在你与 设备上创建该文件夹之前你将无法使用安全备份服务。"</string>
+	<string name="ERR_059">"备份记录。"</string>
 	<string name="ERR_060">"由于此类型正在被使用，无法被删除。"</string>
-    
+	<string name="ERR_061">"未知的待办事项！\n此任务可能被修改，已记录至待办事项列表中。"</string>    
 </resources>

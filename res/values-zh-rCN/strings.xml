@@ -141,6 +141,8 @@
 	<string name="GEN_Or2">"或"</string>
 	<string name="GEN_ToDo">"计划"</string>
 	<string name="GEN_ToDoAlert">"计划提醒"</string>
+	<string name="GEN_New">"更新"</string>
+	<string name="GEN_Update">"升级"</string>
 	
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
@@ -426,6 +428,8 @@
     <string name="DIALOGReport_DialogTitle">"报告选项"</string>
     <string name="DIALOGReport_SendEmailLabel">"  作为Email附加发送"</string>
     <string name="DIALOGReport_ReportFormatLabel">"报告格式："</string>
+	
+	<string name="DIALOG_TemplateNameTitle">"模板名"</string>
 
     <string name="DayOfWeek_0">"星期天"</string>
     <string name="DayOfWeek_1">"星期一"</string>
@@ -463,6 +467,11 @@
 	<string name="AddOn_PreferencesCategoryTitle">"附加服务"</string>
 	<string name="AddOn_SubscriptionExpireWarning">"你对 [#1] 的订阅将在 [#2] 天后到期"</string>
 
+    <string name="AddOn_15DayFreeSubscription">"15天免费的订阅评估。"</string>
+    <string name="AddOn_SixMonthSubscription">"订阅六个月：[#1] [#2]"</string>
+    <string name="AddOn_OneYearSubscription">"订阅一年：[#1] [#2]"</string>
+	<string name="AddOn_LifeTimeSubscription">"订阅的使用期限：[#1] [#2]"</string>
+
 	<string name="AddOn_SubscriptionExpired">"你对 [#1] 的订阅已过期。"</string>
 	<string name="AddOn_RenewSubscriptionPeriodInfo">"选定的时间将被添加到当前订阅"</string>
 
@@ -471,11 +480,9 @@
     <string name="AddOn_SecureBackup_LongDescription">"自动上传备份到你的 Google 账户，这样哪怕手机丢了，你也可用获取到它们"</string>
     <string name="AddOn_SecureBackup_TermOfService">"我们不对以下情况负责：极差/不存在/有问题的网络连接所导致的数据备份不完整/损坏、您的 Google 账户所拥有的储存空间不足、从Google 邮箱删除文件或是其他的方式导致备份文件丢失或不可用。"</string>
     <string name="AddOn_SecureBackup_Requirements">"服务要求：有效的 GMail 账户，网络连接，移动数据传输"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"15天免费的订阅评估。"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption2">"订阅六个月：[#1] [#2]"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption3">"订阅一年：[#1] [#2]"</string>
 
     <string name="AddOn_SecureBackup_Configure">"转至安全备份配置以输入缺失的信息。"</string>
+	<string name="AddOn_SecureBackup_Text1">"这些数据都储存在你的内部存储器中而不是 AndiCar 的数据库中。\n外部程序/应用将无法访问。"</string>
 	<string name="AddOn_SecureBackup_SMTPUserFrom">"来自 Email (需要 GMail 账户)："</string>
 	<string name="AddOn_SecureBackup_SMTPEmailTo">"发送到 Email："</string>
 	<string name="AddOn_SecureBackup_IncludeGPSTrack">"包括 GPS 轨迹文件"</string>
@@ -486,8 +493,6 @@
 	<string name="AddOn_AutoBackupService_Description">"此服务允许你计划性的设置每天/每周自动的进行数据库备份。结合安全备份插件，彻底解决你的数据安全问题。"</string>
 	<string name="AddOn_AutoBackupService_TermOfService">""</string>
 	<string name="AddOn_AutoBackupService_Requirements">"服务需要：SD卡上有足够的剩余空间，所需空间的大小取决于你数据库的大小以及现有的备份数量。"</string>
-	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15天免费的订阅评估。"</string>
-	<string name="AddOn_AutoBackupService_SubscriptionOption2">"订阅的使用期限：[#1] [#2]"</string>
 
 	<string name="AddOn_AutoBackupService_ScheduleTitle">"备份服务时间表"</string>
 	<string name="AddOn_AutoBackupService_ScheduleFrequency">"频率："</string>
@@ -500,4 +505,14 @@
 	<string name="AddOn_AutoBackupService_BackupSucceeded">"备份文件创建成功"</string>
 	<string name="AddOn_AutoBackupService_BackupFailed">"备份失败！请检查你的SD卡。"</string>
     
+	<string name="AddOn_DataTemplate_Title">"数据录入模板"</string>
+	<string name="AddOn_DataTemplate_Description">"此插件允许你为常用数据的输入模式创建及应用模板。\n由于使用模板可以为你自动完成一些字段，你的效率将会得到显著的提高。"</string>
+	<string name="AddOn_DataTemplate_ApplyTemplateLbl">"模板"</string>
+	
+	<string name="AddOn_DataEntryPref_CategoryTitle">"数据录入模板"</string>
+	<string name="AddOn_DataEntryPref_ExpenseTitle">"支出模板"</string>
+	<string name="AddOn_DataEntryPref_MileageTitle">"里程模板"</string>
+	<string name="AddOn_DataEntryPref_RefuelTitle">"燃料模板"</string>
+	<string name="AddOn_DataEntryPref_GPSTitle">"GPS 路径模板"</string>
+
 </resources>

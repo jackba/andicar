@@ -79,6 +79,8 @@
 	<string name="ERR_056">"未知錯誤。"</string>
 	<string name="ERR_057">"無法壓縮資料庫備份！"</string>
 	<string name="ERR_058">"無法建立臨時資料夾 (/sdcard/andicar/temp)。在你與 設備上建立該資料夾之前你將無法使用安全備份服務。"</string>
+	<string name="ERR_059">"備份記錄。"</string>
 	<string name="ERR_060">"由於此類型正在被使用，無法被刪除。"</string>
-    
+	<string name="ERR_061">"未知的待辦事項！\n此工作可能被修改，已記錄至待辦事項清單中。"</string>
+	    
 </resources>

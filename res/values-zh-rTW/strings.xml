@@ -141,6 +141,8 @@
 	<string name="GEN_Or2">"或"</string>
 	<string name="GEN_ToDo">"計劃"</string>
 	<string name="GEN_ToDoAlert">"計劃提醒"</string>
+	<string name="GEN_New">"更新"</string>
+	<string name="GEN_Update">"升級"</string>
 
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
@@ -427,6 +429,8 @@
     <string name="DIALOGReport_DialogTitle">"報告選項"</string>
     <string name="DIALOGReport_SendEmailLabel">"  作為Email附加傳送"</string>
     <string name="DIALOGReport_ReportFormatLabel">"報告格式："</string>
+	
+	<string name="DIALOG_TemplateNameTitle">"範本名"</string>
 
     <string name="DayOfWeek_0">"星期天"</string>
     <string name="DayOfWeek_1">"星期一"</string>
@@ -464,17 +468,20 @@
 	<string name="AddOn_PreferencesCategoryTitle">"附加服務"</string>
 	<string name="AddOn_SubscriptionExpireWarning">"你對 [#1] 的訂閱將在 [#2] 天後到期"</string>
 
+    <string name="AddOn_15DayFreeSubscription">"15天免費的訂閱評估。"</string>
+    <string name="AddOn_SixMonthSubscription">"訂閱六個月：[#1] [#2]"</string>
+    <string name="AddOn_OneYearSubscription">"訂閱一年：[#1] [#2]"</string>
+	<string name="AddOn_LifeTimeSubscription">"訂閱的使用期限：[#1] [#2]"</string>
+
 	<string name="AddOn_SubscriptionExpired">"你對 [#1] 的訂閱已過期。"</string>
 	<string name="AddOn_RenewSubscriptionPeriodInfo">"選擇的時間將被新增到目前訂閱"</string>
 
     <string name="AddOn_SecureBackup_Title">"安全備份"</string>
+    <string name="AddOn_SecureBackup_Text1">"這些資料都儲存在你的內部存儲器中而不是 AndiCar 的資料庫中。\n外部程式/套用將無法存取。"</string>
     <string name="AddOn_SecureBackup_Description">"每完成一次資料庫備份，此服務都會自動的將其作為郵件的附屬應用程式傳送到預先設定好的Email位址。通過這樣的方法，你的記錄資料能在哪怕手機都丟了的情況下都可用。結合安全備份增益集，徹底解決你的資料安全問題。"</string>
     <string name="AddOn_SecureBackup_LongDescription">"自動上傳備份到你的 Google 賬戶，這樣哪怕手機丟了，你也可用獲取到它們"</string>
     <string name="AddOn_SecureBackup_TermOfService">"我們不對以下情況負責：極差/不存在/有問題的網路連接所導致的資料備份不完整/損壞、您的 Google 賬戶所擁有的儲存空間不足、從Google 郵箱刪除檔案或是其他的方式導致備份檔案遺失或不可用。"</string>
     <string name="AddOn_SecureBackup_Requirements">"服務要求：有效的 GMail 賬戶，網路連接，移動資料傳輸"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption1">"15天免費的訂閱評估。"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption2">"訂閱六個月：[#1] [#2]"</string>
-    <string name="AddOn_SecureBackup_SubscriptionOption3">"訂閱一年：[#1] [#2]"</string>
 
 	<string name="AddOn_SecureBackup_Configure">"轉至安全備份設定以輸入缺失的訊息。"</string>
 	<string name="AddOn_SecureBackup_SMTPUserFrom">"來自 Email (需要 GMail 賬戶)："</string>
@@ -486,8 +493,6 @@
 	<string name="AddOn_AutoBackupService_Description">"此服務允許你計劃性的設定每天/每週自動的進行資料庫備份。結合安全備份增益集，徹底解決你的資料安全問題。"</string>
 	<string name="AddOn_AutoBackupService_TermOfService">""</string>
 	<string name="AddOn_AutoBackupService_Requirements">"服務需要：SD卡上有足夠的剩餘空間，所需空間的大小取決於你資料庫的大小以及現有的備份數量。"</string>
-	<string name="AddOn_AutoBackupService_SubscriptionOption1">"15天免費的訂閱評估。"</string>
-	<string name="AddOn_AutoBackupService_SubscriptionOption2">"訂閱的使用期限：[#1] [#2]"</string>
 
 	<string name="AddOn_AutoBackupService_ScheduleTitle">"備份服務時間表"</string>
 	<string name="AddOn_AutoBackupService_ScheduleFrequency">"頻率："</string>
@@ -499,4 +504,15 @@
 	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"至少需要選取一天！"</string>
 	<string name="AddOn_AutoBackupService_BackupSucceeded">"備份檔案建立成功"</string>
 	<string name="AddOn_AutoBackupService_BackupFailed">"備份失敗！請檢查你的SD卡。"</string>
+
+	<string name="AddOn_DataTemplate_Title">"資料錄入範本"</string>
+	<string name="AddOn_DataTemplate_Description">"此增益集允許你為常用資料的輸入模式建立及套用範本。\n由於使用範本可以為你自動完成一些欄位，你的效率將會得到顯著的提高。"</string>
+	<string name="AddOn_DataTemplate_ApplyTemplateLbl">"範本"</string>
+
+	<string name="AddOn_DataEntryPref_CategoryTitle">"資料錄入範本"</string>
+	<string name="AddOn_DataEntryPref_ExpenseTitle">"支出範本"</string>
+	<string name="AddOn_DataEntryPref_MileageTitle">"里程範本"</string>
+	<string name="AddOn_DataEntryPref_RefuelTitle">"燃料範本"</string>
+	<string name="AddOn_DataEntryPref_GPSTitle">"GPS 路徑範本"</string>
+
 </resources>
