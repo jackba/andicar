@@ -35,8 +35,8 @@ public class StaticValues
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     /*
      * initial install location of AndiCar: 
-     * 		Google Android Market
-     * 		Amazon App Store
+     * 		Android Market
+     * 		Amazon AppStore
      * 		Other
      * 		GoApk
      * 		Unknown
