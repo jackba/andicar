@@ -438,21 +438,26 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                 	if((i == 6 || i == 7 || i == 8) && colVal.equals("0"))
                 		colVal = "N/A";
                 	if((i == 8 || i == 9) && !colVal.equals("N/A")){
-                		days = Long.parseLong(colVal);
-                		if(days == 99999999999L)
-							colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
-                		else{
-							cal.setTimeInMillis(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
-							if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
-								colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
-							else{
-								if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
-									colVal = DateFormat.getDateFormat(this)
-														.format(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+                		try{
+	                		days = Long.parseLong(colVal);
+	                		if(days == 99999999999L)
+								colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
+	                		else{
+								cal.setTimeInMillis(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+								if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
+									colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
 								else{
-									colVal = DateFormat.format("MMM, yyyy", cal).toString();
+									if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
+										colVal = DateFormat.getDateFormat(this)
+															.format(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+									else{
+										colVal = DateFormat.format("MMM, yyyy", cal).toString();
+									}
 								}
-							}
+	                		}
+                		}
+                		catch(NumberFormatException e){
+                			colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
                 		}
                 	}
                 }
