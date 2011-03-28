@@ -336,5 +336,10 @@
 			android:process="com.andicar.addon.services">
  		</service>
 
+        <activity
+            android:name="com.andicar.addon.activity.BTDeviceList"
+            android:label="@string/AddOn_BTStarter_DeviceListActivityTitle">
+        </activity>
+
     </application>
 </manifest>

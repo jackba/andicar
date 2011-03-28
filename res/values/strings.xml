@@ -526,4 +526,7 @@
     <string name="AddOn_DataEntryPref_MileageTitle">"Mileage templates"</string>
     <string name="AddOn_DataEntryPref_RefuelTitle">"Refuel templates"</string>
     <string name="AddOn_DataEntryPref_GPSTitle">"GPS track templates"</string>
+    
+    <string name="AddOn_BTStarter_DeviceListActivityTitle">"Paired devices"</string>
+    
 </resources>
