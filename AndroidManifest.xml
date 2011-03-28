@@ -24,7 +24,7 @@
           android:versionName="3.5.8.1"
           android:installLocation="internalOnly">
 <!-- 
-	test internalOnly becouse:
+	internalOnly becouse:
 		-services
 		-BOOT_COMPLETED broadcast receiver
 	See http://developer.android.com/guide/appendix/install-location.html
