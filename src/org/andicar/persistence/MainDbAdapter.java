@@ -56,8 +56,13 @@ public class MainDbAdapter extends DB
         Cursor mCursor =
                 mDb.query( true, tableName, columns,
                             GEN_COL_ROWID_NAME + "=" + rowId, null, null, null, null, null );
-        if( mCursor != null && mCursor.moveToFirst()) {
-            return mCursor;
+        if( mCursor != null ){
+        	if(mCursor.moveToFirst())
+        		return mCursor;
+        	else{
+        		mCursor.close();
+        		return null;
+        	}
         }
         else
             return null;
@@ -1149,9 +1154,11 @@ public class MainDbAdapter extends DB
         Cursor resultCursor = mDb.rawQuery( sql, null );
         if(resultCursor.getCount() > 0)
         {
+        	resultCursor.close();
             return R.string.ERR_005;
         }
-
+        if(resultCursor != null)
+        	resultCursor.close();
         return -1;
     }
 
@@ -1458,6 +1465,7 @@ public class MainDbAdapter extends DB
             mStartIndexStr = c.getDouble(0);
         if(mStartIndexStr == null)
             mStartIndexStr = new Double("0");
+        c.close();
     	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
     }
 
@@ -1475,6 +1483,7 @@ public class MainDbAdapter extends DB
         if(c.moveToFirst() && c.getString(0) != null){
             mStartIndexStr = c.getDouble(0);
         }
+        c.close();
         if(mStartIndexStr == null)
             mStartIndexStr = new Double("0");
     	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
