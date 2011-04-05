@@ -37,6 +37,5 @@ public class CurrencyListActivity extends ListActivityBase
                 R.layout.twoline_list_activity,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.CURRENCY_COL_CODE_NAME},
                 new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
-
     }
 }
