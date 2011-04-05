@@ -1261,6 +1261,7 @@ public class DB {
 			createTaskToDoTables(db);
 
 			AddOnDBObjectDef.createAddOnDataTemplateTables(db);
+			AddOnDBObjectDef.createAddOnBTDeviceCarTable(db);
 
 			// create indexes
 			createIndexes(db);
@@ -1593,13 +1594,15 @@ public class DB {
 				AddOnDBObjectDef.upgradeTo358(db);
 			} else if (oldVersion == 357) {
 				AddOnDBObjectDef.upgradeTo358(db);
+			}else if (oldVersion == 358) {
+				AddOnDBObjectDef.upgradeTo359(db);
 			}
-//			 upgradeDbTo357(db, oldVersion);
+
 			// !!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
 
 			// create indexes
 			createIndexes(db);
-			// create the missing folders on SDCARD
+			// create folders on SDCARD
 			FileUtils fu = new FileUtils(mCtx);
 			if (fu.createFolderIfNotExists(FileUtils.ALL_FOLDER) != -1) {
 				Log.e(TAG, fu.lastError);

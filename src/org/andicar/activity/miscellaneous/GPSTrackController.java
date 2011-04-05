@@ -76,7 +76,15 @@ public class GPSTrackController extends EditActivityBase {
         super.onCreate(icicle);
         
         mCtx = this;
-        mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+        String strOperationType = null;
+        if(mBundleExtras != null){
+        	strOperationType = mBundleExtras.getString("Operation");
+	        if(strOperationType != null && strOperationType.equals("BT"))
+	        	mCarId = mBundleExtras.getLong("CarID");
+        }
+        if(mCarId <= 0L)
+        	mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+        
         mDriverId = mPreferences.getLong("LastDriver_ID", 1);
 
         vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
@@ -150,7 +158,8 @@ public class GPSTrackController extends EditActivityBase {
             setEditable(vgRoot, false);
         }
         else{
-            mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+        	if(mCarId <= 0)
+        		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
 //            mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
             btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_start_24x24));
             setEditable(vgRoot, true);
