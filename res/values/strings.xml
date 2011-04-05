@@ -527,6 +527,8 @@
     <string name="AddOn_DataEntryPref_RefuelTitle">"Refuel templates"</string>
     <string name="AddOn_DataEntryPref_GPSTitle">"GPS track templates"</string>
     
-    <string name="AddOn_BTStarter_DeviceListActivityTitle">"Paired devices"</string>
+    <string name="AddOn_BTStarter_DeviceListActivityTitle">"Linked devices"</string>
+    <string name="AddOn_BTStarter_DeviceLinkActivityTitle">"Link device to car"</string>
+    <string name="AddOn_BTStarter_DeviceLabel">"Paired devices:"</string>
     
 </resources>
