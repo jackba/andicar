@@ -516,7 +516,7 @@
     <string name="AddOn_AutoBackupService_BackupFailed">"The backup failed! Check your SDCARD."</string>
 
     <string name="AddOn_DataTemplate_Title">"Data entry templates"</string>
-    <string name="AddOn_DataTemplate_Description">"This Add-On allow you to create and apply templates for the most used data entry patterns.\nYour productivity can be dramatically increased by using templates for automatic field completion."</string>
+    <string name="AddOn_DataTemplate_Description">"This Add-On allow you to use templates for data entry.\nYour productivity can be increased by using templates for automatic field completion."</string>
     <string name="AddOn_DataTemplate_ApplyTemplateLbl">"Template"</string>
     <string name="AddOn_DataTemplate_UpdatedMsg">"Template updated"</string>
     <string name="AddOn_DataTemplate_CreatedMsg">"A new template created based on current values"</string>
@@ -527,8 +527,14 @@
     <string name="AddOn_DataEntryPref_RefuelTitle">"Refuel templates"</string>
     <string name="AddOn_DataEntryPref_GPSTitle">"GPS track templates"</string>
     
+    <string name="AddOn_BTStarter_Title">"Bluetooth link detector"</string>
+    <string name="AddOn_BTStarter_Description">"Detect when a bluetooth connection is estabilshed and start the GPS Track Controller"</string>
     <string name="AddOn_BTStarter_DeviceListActivityTitle">"Linked devices"</string>
     <string name="AddOn_BTStarter_DeviceLinkActivityTitle">"Link device to car"</string>
-    <string name="AddOn_BTStarter_DeviceLabel">"Paired devices:"</string>
+    <string name="AddOn_BTStarter_PairedDevicesLabel">"Paired devices:"</string>
+    <string name="AddOn_BTStarter_LinkedTo">"Linked to:"</string>
+    <string name="AddOn_BTStarter_NoLinkedCar">"Can not get the linked car.\nThis entry should be deleted."</string>
+    <string name="AddOn_BTStarter_LinkToCar">"Link to car:"</string>
+    
     
 </resources>

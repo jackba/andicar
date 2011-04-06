@@ -40,8 +40,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.andicar.addon.activity.ServiceSubscription;
+import com.andicar.addon.persistence.AddOnDBObjectDef;
 import com.andicar.addon.services.FileMailer;
-import com.andicar.addon.utils.AddOnDBObjectDef;
 import com.andicar.addon.utils.AddOnStaticValues;
 
 /**
