@@ -1402,6 +1402,16 @@ public class MainDbAdapter extends DB
     	return retVal;
     }
 
+    public String getCarName(long carID){
+    	Cursor c = fetchRecord(CAR_TABLE_NAME, carTableColNames, carID);
+    	String retVal = null;
+    	if(c != null){
+    		retVal = c.getString(GEN_COL_NAME_POS);
+        	c.close();
+    	}
+    	return retVal;
+    }
+
     public String getCurrencyCode(long currencyID){
     	Cursor c = fetchRecord(MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, currencyID);
     	String retVal = null;
