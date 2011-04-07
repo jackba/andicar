@@ -86,7 +86,8 @@
     <string name="ERR_059">"Duplicate record."</string>
     <string name="ERR_060">"This type can not be deleted because it is used in task(s)."</string>
     <string name="ERR_061">"Unknow To-Do!\nProbably the task was modified and the To-Do list recreated."</string>
-    
     <string name="ERR_062">"Unable to contact PayPal server. Please try again (eventually using a Wi-Fi connection)."</string>
+
+    <string name="ERR_063">"AddOn database error."</string>
     
 </resources>
