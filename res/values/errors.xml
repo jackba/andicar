@@ -89,5 +89,6 @@
     <string name="ERR_062">"Unable to contact PayPal server. Please try again (eventually using a Wi-Fi connection)."</string>
 
     <string name="ERR_063">"AddOn database error."</string>
+    <string name="ERR_064">"Your device does not have Bluetooth support!"</string>
     
 </resources>
