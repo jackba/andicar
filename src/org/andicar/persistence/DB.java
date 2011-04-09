@@ -1503,6 +1503,7 @@ public class DB {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			}
 			// AndiCar 2.0.x
 			else if (oldVersion == 200) {
@@ -1518,6 +1519,7 @@ public class DB {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			}
 			// AndiCar 2.1.x
 			else if (oldVersion == 210) {
@@ -1532,6 +1534,7 @@ public class DB {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			}
 			// AndiCar 3.0.x
 			else if (oldVersion == 300) {
@@ -1544,6 +1547,7 @@ public class DB {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			}
 			// AndiCar 3.1.x, 3.2.x
 			else if (oldVersion == 310) {
@@ -1555,6 +1559,7 @@ public class DB {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			}
 			// AndiCar 3.3.x
 			else if (oldVersion == 330) {
@@ -1565,6 +1570,7 @@ public class DB {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			}
 			// AndiCar 3.4.x
 			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again because on fresh 350 install addon tables was not created
@@ -1574,24 +1580,29 @@ public class DB {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			} else if (oldVersion == 351) {
 				AddOnDBObjectDef.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			} else if (oldVersion == 353) {
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			} else if (oldVersion == 355) {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			} else if (oldVersion == 356) {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			} else if (oldVersion == 357) {
 				AddOnDBObjectDef.upgradeTo358(db);
 			}else if (oldVersion == 358) {
