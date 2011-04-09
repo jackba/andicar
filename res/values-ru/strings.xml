@@ -3,7 +3,7 @@
 <!--
  AndiCar - a car management software for Android powered devices.
 
- Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+ Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -202,7 +202,8 @@
 	<string name="MainActivity_ToDoHeaderCaption">"Ближайшее дело"</string>
 	<string name="MainActivity_ToDoNoDataText">"Задача неопределена."</string>
 	<string name="MainActivity_HowToMessage">"Удобство"</string>
-
+	<string name="MainActivity_WhatsNewDialogTitle">"Что нового"</string>
+	
     <string name="DriverEditActivity_LicenseNoLabel">"Вод. удостоверение No.:"</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">" Текущий водитель не может быть неактивным."</string>
     <string name="DriverListActivity_InactiveDriverSelectedMessage">"Неактивный водитель не может быть выбран."</string>
@@ -515,11 +516,21 @@
 	<string name="AddOn_DataTemplate_Title">"Шаблон ввода данных"</string>
 	<string name="AddOn_DataTemplate_Description">"Это дополнение позволяет вам  создавать и применять шаблоны для наиболее часто встречающихся наборов данных.\nВаша производительность сильно повысится при использовании шаблонов автоматического заполнения полей экранной формы."</string>
 	<string name="AddOn_DataTemplate_ApplyTemplateLbl">"Шаблон"</string>
-	 
+	<string name="AddOn_DataTemplate_UpdatedMsg">"Шаблон обновлен"</string>
+	<string name="AddOn_DataTemplate_CreatedMsg">"Новый шаблон, созданный на основе текущих значений"</string>
+	
 	<string name="AddOn_DataEntryPref_CategoryTitle">"Шаблоны ввода данных"</string>
 	<string name="AddOn_DataEntryPref_ExpenseTitle">"Шаблоны расходов"</string>
 	<string name="AddOn_DataEntryPref_MileageTitle">"Шаблоны пробега"</string>
 	<string name="AddOn_DataEntryPref_RefuelTitle">"Шаблоны заправок"</string>
 	<string name="AddOn_DataEntryPref_GPSTitle">"Шаблоны треков GPS"</string>
 
+	<string name="AddOn_BTStarter_Title">"Детектор соединения Bluetooth"</string>
+	<string name="AddOn_BTStarter_Description">"Автоматическое открытие экран управления записью треков GPS,  когда будет обнаружено Bluetooth соединение с автомобилем (работает на Android 2+)"</string>
+	<string name="AddOn_BTStarter_DeviceListActivityTitle">"Соединенные устройства"</string>
+	<string name="AddOn_BTStarter_DeviceLinkActivityTitle">"Соединить устройство с автомобилем"</string>
+	<string name="AddOn_BTStarter_PairedDevicesLabel">"Сопряженные устройства:"</string>
+	<string name="AddOn_BTStarter_LinkedTo">"Соединено с:"</string>
+	<string name="AddOn_BTStarter_NoLinkedCar">"Невозможно установить связь с автомобилем.\nЭта запись должна быть удалена."</string>
+	<string name="AddOn_BTStarter_LinkToCar">"Соединить с авто:"</string>
 </resources>
