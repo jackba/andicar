@@ -127,12 +127,14 @@ public class StaticValues
     public static final int NOTIF_SECURE_BACKUP_INFO_ID = 12;
     public static final int NOTIF_SECURE_BACKUP_ERROR_ID = 13;
     public static final int NOTIF_DATA_TEMPLATE_EXPIRE_ID = 14;
+    public static final int NOTIF_BT_CONNECTION_DETECTOR_EXPIRE_ID = 14;
     
     //used for notification PendingIntents
     public static final int ACTIVITY_REQUEST_CODE_FILEMAILER = 10;
     public static final int ACTIVITY_REQUEST_CODE_BACKUPSERVICE_EXPIRE = 20;
     public static final int ACTIVITY_REQUEST_CODE_SECUREBACKUP_EXPIRE = 30;
     public static final int ACTIVITY_REQUEST_CODE_DATATEMPLATE_EXPIRE = 40;
+    public static final int ACTIVITY_REQUEST_CODE_BTCONNDETECTOR_EXPIRE = 50;
 
     /**
      * 
