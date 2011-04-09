@@ -3,7 +3,7 @@
 <!--
  AndiCar - a car management software for Android powered devices.
 
- Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+ Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
 
  This program is free software: you can redistribute it and/or modify 
  it under the terms of the GNU General Public License as published by 
@@ -528,7 +528,7 @@
     <string name="AddOn_DataEntryPref_GPSTitle">"GPS track templates"</string>
     
     <string name="AddOn_BTStarter_Title">"Bluetooth link detector"</string>
-    <string name="AddOn_BTStarter_Description">"Automatically start the GPS Track Controller when a Bluetooth connection with a car is detected (require Android 2+)"</string>
+    <string name="AddOn_BTStarter_Description">"Automatically start the GPS Track Controller when a Bluetooth connection to a car is created (require Android 2+)"</string>
     <string name="AddOn_BTStarter_DeviceListActivityTitle">"Linked devices"</string>
     <string name="AddOn_BTStarter_DeviceLinkActivityTitle">"Link device to car"</string>
     <string name="AddOn_BTStarter_PairedDevicesLabel">"Paired devices:"</string>
