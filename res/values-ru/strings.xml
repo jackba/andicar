@@ -533,4 +533,6 @@
 	<string name="AddOn_BTStarter_LinkedTo">"Соединено с:"</string>
 	<string name="AddOn_BTStarter_NoLinkedCar">"Невозможно установить связь с автомобилем.\nЭта запись должна быть удалена."</string>
 	<string name="AddOn_BTStarter_LinkToCar">"Соединить с авто:"</string>
+	<string name="AddOn_BTStarter_Requirements">"Требования для работы дополнения:\nAndroid 2+; Поддержка Bluetoothна этом устройстве"</string>
+	
 </resources>
