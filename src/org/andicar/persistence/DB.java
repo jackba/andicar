@@ -1605,6 +1605,7 @@ public class DB {
 				AddOnDBObjectDef.upgradeTo359(db);
 			} else if (oldVersion == 357) {
 				AddOnDBObjectDef.upgradeTo358(db);
+				AddOnDBObjectDef.upgradeTo359(db);
 			}else if (oldVersion == 358) {
 				AddOnDBObjectDef.upgradeTo359(db);
 			}
