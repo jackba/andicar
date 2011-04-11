@@ -88,9 +88,9 @@
    	</string>
 
     <string name="LM_UPDATE_MSG">
-        "<b><i>What\'s new:</i></b>\n\n
+        <b><i>What\'s new:</i></b>\n\n
         * Various bug fixes\n\n
-        * <b>Limited time offer:</b> Subscribe now to Backup Service or Secure Backup <b>starting from just 0.99$ !</b>\n\n
-        * <b>Bluetooth connection detector Add-On:</b> This Add-On allow you to create and apply templates for the most used data entry patterns. Your productivity can be dramatically increased by using templates for automatic field completion."
+        * <b>Limited time offer:</b> Subscribe to Backup Service or Secure Backup <b>starting from just 0.99$ !</b>\n\n
+        * <b>Bluetooth connection detector Add-On:</b> Automatically start the GPS Track Controller when a Bluetooth connection to a car is created (require Android 2+)
     </string>
 </resources>
