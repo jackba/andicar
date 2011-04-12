@@ -106,7 +106,7 @@
     <string name="GEN_Required">"必需的"</string>
     <string name="GEN_BPartner">"产商："</string>
     <string name="GEN_Address">"地址："</string>
-    <string name="GEN_BPartnerAdressInfo">"完整的信息位于 首选项 -&gt; 搭档"</string>
+    <string name="GEN_BPartnerAdressInfo">"更多详情请查看首选项 -&gt; 搭档"</string>
     <string name="GEN_City">"城市："</string>
     <string name="GEN_Region">"地区："</string>
     <string name="GEN_Country">"国家："</string>
@@ -195,7 +195,8 @@
 	<string name="MainActivity_ToDoHeaderCaption">"下一计划"</string>
 	<string name="MainActivity_ToDoNoDataText">"未定义的任务。"</string>
 	<string name="MainActivity_HowToMessage">"可用"</string>
-
+	<string name="MainActivity_WhatsNewDialogTitle">"有何更新"</string>
+	
     <string name="DriverEditActivity_LicenseNoLabel">"执照号码："</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"不能阻止当前司机的活动。"</string>
     <string name="DriverListActivity_InactiveDriverSelectedMessage">"不活动的司机。不能被选择。"</string>
@@ -457,7 +458,7 @@
     
     <!-- AddOn Services -->
     <string name="AddOn_PayPalWarning">"在付费过程中 **不要使用手机的返回键，也不要更改屏幕的显示方向**"</string>
-    <string name="AddOn_SubscribeWaiting">"正在加载PayPal付费库"</string>
+    <string name="AddOn_SubscribeWaiting">"正在连接 PayPal 服务器。根据服务器的效率，此过程可能需要一分钟。\n请稍等..."</string>
     <string name="AddOn_SubscriptionInfo">"直到 [#1] 后你即可以订阅这个服务"</string>
 	<string name="AddOn_BtnTryCaption">"开始免费评估"</string>
 	<string name="AddOn_BtnConfigureServiceCaption">"配置服务"</string>
@@ -506,13 +507,24 @@
 	<string name="AddOn_AutoBackupService_BackupFailed">"备份失败！请检查你的SD卡。"</string>
     
 	<string name="AddOn_DataTemplate_Title">"数据录入模板"</string>
-	<string name="AddOn_DataTemplate_Description">"此插件允许你为常用数据的输入模式创建及应用模板。\n由于使用模板可以为你自动完成一些字段，你的效率将会得到显著的提高。"</string>
+	<string name="AddOn_DataTemplate_Description">"此插件允许你为数据条目使用模板。\n由于使用模板可以为你自动完成一些字段，你的效率将会得到显著的提高。"</string>
 	<string name="AddOn_DataTemplate_ApplyTemplateLbl">"模板"</string>
+	<string name="AddOn_DataTemplate_UpdatedMsg">"已更新模板"</string>
+	<string name="AddOn_DataTemplate_CreatedMsg">"已根据当前值创建了一个新的模板"</string>
 	
 	<string name="AddOn_DataEntryPref_CategoryTitle">"数据录入模板"</string>
 	<string name="AddOn_DataEntryPref_ExpenseTitle">"支出模板"</string>
 	<string name="AddOn_DataEntryPref_MileageTitle">"里程模板"</string>
 	<string name="AddOn_DataEntryPref_RefuelTitle">"燃料模板"</string>
 	<string name="AddOn_DataEntryPref_GPSTitle">"GPS 路径模板"</string>
+
+	<string name="AddOn_BTStarter_Title">"蓝牙连接检测器"</string>
+	<string name="AddOn_BTStarter_Description">"当检测到与一辆汽车有一个蓝牙连接时自动启动GPS路径控制器(需要 Android 2+)"</string>
+	<string name="AddOn_BTStarter_DeviceListActivityTitle">"已连接的设备"</string>
+	<string name="AddOn_BTStarter_DeviceLinkActivityTitle">"连接设备到汽车"</string>
+	<string name="AddOn_BTStarter_PairedDevicesLabel">"已配对设备："</string>
+	<string name="AddOn_BTStarter_LinkedTo">"已连接到："</string>
+	<string name="AddOn_BTStarter_NoLinkedCar">"无法获取到已连接的汽车。\n应该删除此条目。"</string>
+	<string name="AddOn_BTStarter_LinkToCar">"连接到汽车："</string>
 
 </resources>
