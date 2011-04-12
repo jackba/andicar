@@ -82,5 +82,6 @@
 	<string name="ERR_059">"備份記錄。"</string>
 	<string name="ERR_060">"由於此類型正在被使用，無法被刪除。"</string>
 	<string name="ERR_061">"未知的待辦事項！\n此工作可能被修改，已記錄至待辦事項清單中。"</string>
-	    
+	<string name="ERR_062">"無法連接到 PayPal 伺服器。請重試(最好使用一個 Wi-Fi 連接)。"</string>
+	<string name="ERR_063">"增益集資料庫錯誤。"</string>
 </resources>

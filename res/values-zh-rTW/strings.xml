@@ -106,7 +106,7 @@
     <string name="GEN_Required">"必需的"</string>
     <string name="GEN_BPartner">"產商："</string>
     <string name="GEN_Address">"位址:"</string>
-    <string name="GEN_BPartnerAdressInfo">"完整的訊息位於 首選項 -&gt; 搭檔"</string>
+    <string name="GEN_BPartnerAdressInfo">"更多詳情請檢視首選項 -&gt; 搭檔"</string>
     <string name="GEN_City">"城市："</string>
     <string name="GEN_Region">"地區："</string>
     <string name="GEN_Country">"國家："</string>
@@ -195,6 +195,7 @@
 	<string name="MainActivity_ToDoHeaderCaption">"下一計劃"</string>
 	<string name="MainActivity_ToDoNoDataText">"未定義的工作。"</string>
 	<string name="MainActivity_HowToMessage">"可用"</string>
+	<string name="MainActivity_WhatsNewDialogTitle">"有何更新"</string>
 
     <string name="DriverEditActivity_LicenseNoLabel">"執照號碼："</string>
     <string name="DriverEditActivity_CurrentDriverInactivateMessage">"不能阻止目前司機的活動。"</string>
@@ -458,7 +459,7 @@
     
     <!-- AddOn Services -->
     <string name="AddOn_PayPalWarning">"在付費過程中 **不要使用手機的返回鍵，也不要變更屏幕的顯示方向**"</string>
-    <string name="AddOn_SubscribeWaiting">"正在載入PayPal付費庫"</string>
+    <string name="AddOn_SubscribeWaiting">"正在連接 PayPal 伺服器。根據伺服器的效率，此過程可能需要一分鐘。\n請稍等..."</string>
     <string name="AddOn_SubscriptionInfo">"直到 [#1] 後你即可以訂閱這個服務"</string>
 	<string name="AddOn_BtnTryCaption">"開始免費評估"</string>
 	<string name="AddOn_BtnConfigureServiceCaption">"設定服務"</string>
@@ -506,13 +507,24 @@
 	<string name="AddOn_AutoBackupService_BackupFailed">"備份失敗！請檢查你的SD卡。"</string>
 
 	<string name="AddOn_DataTemplate_Title">"資料錄入範本"</string>
-	<string name="AddOn_DataTemplate_Description">"此增益集允許你為常用資料的輸入模式建立及套用範本。\n由於使用範本可以為你自動完成一些欄位，你的效率將會得到顯著的提高。"</string>
+	<string name="AddOn_DataTemplate_Description">"此增益集允許你為資料項目使用範本。\n由於使用範本可以為你自動完成一些欄位，你的效率將會得到顯著的提高。"</string>
 	<string name="AddOn_DataTemplate_ApplyTemplateLbl">"範本"</string>
+	<string name="AddOn_DataTemplate_UpdatedMsg">"已更新範本"</string>
+	<string name="AddOn_DataTemplate_CreatedMsg">"已根據目前值建立了一個新的範本"</string>
 
 	<string name="AddOn_DataEntryPref_CategoryTitle">"資料錄入範本"</string>
 	<string name="AddOn_DataEntryPref_ExpenseTitle">"支出範本"</string>
 	<string name="AddOn_DataEntryPref_MileageTitle">"里程範本"</string>
 	<string name="AddOn_DataEntryPref_RefuelTitle">"燃料範本"</string>
 	<string name="AddOn_DataEntryPref_GPSTitle">"GPS 路徑範本"</string>
+
+	<string name="AddOn_BTStarter_Title">"藍牙連接偵測器"</string>
+	<string name="AddOn_BTStarter_Description">"當偵測到與一輛汽車有一個藍牙連接時自動啟動GPS路徑控制器(需要 Android 2+)"</string>
+	<string name="AddOn_BTStarter_DeviceListActivityTitle">"已連接的設備"</string>
+	<string name="AddOn_BTStarter_DeviceLinkActivityTitle">"連接設備到汽車"</string>
+	<string name="AddOn_BTStarter_PairedDevicesLabel">"已配對設備："</string>
+	<string name="AddOn_BTStarter_LinkedTo">"已連接到："</string>
+	<string name="AddOn_BTStarter_NoLinkedCar">"無法獲取到已連接的汽車。\n應該刪除此項目。"</string>
+	<string name="AddOn_BTStarter_LinkToCar">"連接到汽車："</string>
 
 </resources>
