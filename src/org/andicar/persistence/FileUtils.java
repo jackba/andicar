@@ -50,6 +50,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.widget.Toast;
 
 /**
  *
@@ -134,24 +135,16 @@ public class FileUtils {
             }
             
             if(retVal != -1){
-    	        exceptionAlertBuilder = new AndiCarDialogBuilder(mCtx, 
-    	        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mRes.getString(R.string.GEN_Error));
-                exceptionAlertBuilder.setCancelable( false );
-                exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
-                exceptionAlertBuilder.setMessage(mRes.getString(retVal));
-                exceptionAlert = exceptionAlertBuilder.create();
-                exceptionAlert.show();
+                Toast toast = Toast.makeText(mCtx,
+                        "AndiCar Error: " + mRes.getString(retVal), Toast.LENGTH_LONG);
+                toast.show();
                 return retVal;
             }
         }
         catch(SecurityException e){
-	        exceptionAlertBuilder = new AndiCarDialogBuilder(mCtx, 
-	        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mRes.getString(R.string.GEN_Error));
-            exceptionAlertBuilder.setCancelable( false );
-            exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
-            exceptionAlertBuilder.setMessage(e.getMessage());
-            exceptionAlert = exceptionAlertBuilder.create();
-            exceptionAlert.show();
+            Toast toast = Toast.makeText(mCtx,
+            		"AndiCar Error: " + e.getMessage(), Toast.LENGTH_LONG);
+            toast.show();
             return -2;
         }
         return -1;
@@ -244,13 +237,9 @@ public class FileUtils {
         } 
         catch(IOException e){
             lastError = e.getMessage();
-	        exceptionAlertBuilder = new AndiCarDialogBuilder(mCtx, 
-	        		AndiCarDialogBuilder.DIALOGTYPE_ERROR, mRes.getString(R.string.GEN_Error));
-            exceptionAlertBuilder.setCancelable( false );
-            exceptionAlertBuilder.setPositiveButton( mRes.getString(R.string.GEN_OK), null );
-            exceptionAlertBuilder.setMessage(e.getMessage());
-            exceptionAlert = exceptionAlertBuilder.create();
-            exceptionAlert.show();
+            Toast toast = Toast.makeText(mCtx,
+            		"AndiCar Error: " + e.getMessage(), Toast.LENGTH_LONG);
+            toast.show();
             return false;
         }
     }
