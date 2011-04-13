@@ -235,6 +235,11 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         gpsTrackScreen.setTitle(mRes.getString(R.string.PREF_GPSTrackTitle));
         gpsTrackScreen.setSummary(mRes.getString(R.string.PREF_GPSTrackSummary));
         gpsTrackCategory.addPreference(gpsTrackScreen);
+        CheckBoxPreference trackingInProgress = new CheckBoxPreference(this);
+        trackingInProgress.setTitle(R.string.PREF_GPSTrackingFlagValueTitle);
+        trackingInProgress.setSummary(R.string.PREF_GPSTrackingFlagValueSummary);
+        trackingInProgress.setKey("isGpsTrackOn");
+        gpsTrackCategory.addPreference(trackingInProgress);
 
         //Misc settings
         PreferenceCategory miscCategory = new PreferenceCategory(this);
