@@ -404,6 +404,8 @@
     <string name="PREF_TaskTypeSummary">"Add, delete, modify task types"</string>
     <string name="PREF_TaskTitle">"Tasks"</string>
     <string name="PREF_TaskSummary">"Add, delete, modify tasks"</string>
+    <string name="PREF_GPSTrackingFlagValueTitle">"Track flag status"</string>
+    <string name="PREF_GPSTrackingFlagValueSummary">"Use this ONLY if you are sure the tracking is not in progress!"</string>
 
     <string name="PREF_MainScreen_ShowMileageZone">"Show mileage zone"</string>
     <string name="PREF_MainScreen_ShowGPSTrackZone">"Show GPS track zone"</string>
