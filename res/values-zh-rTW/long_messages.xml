@@ -78,10 +78,6 @@
 		對於目前的資料庫，訂閱是有效的。\n你應該在處理訂閱後立即建立一個備份！
 	</string>
 	
-	<string name="AddOn_Backup_LongDescription">
-		所記錄的訊息(里程數，支出，總用油)對於你來說是很有價值的財產。為了在資料遺失的情況下還原最近的備份，這是一種很有用的方式。
-	</string>
-
 	<string name="LM_UPDATE_MSG">
 		<b><i>有何更新：</i></b>\n\n
 		* 修正多個 Bug\n\n

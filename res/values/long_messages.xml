@@ -65,7 +65,8 @@
         <b><i>Credits:</i></b>\n
         *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
         *  Russian translation by Andrey Demin - andde@rambler.ru\n
-		*  German translation by Andy Haubenschmid - andy@haubenschmid.li\n
+		*  Initial German translation by Andy Haubenschmid - andy@haubenschmid.li\n
+		*  Hungarian translation by Nagy Péter - microbilab@gmail.com\n
         \n<b><i>Copyright notice</i></b>:\n\n
         Copyright © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
         This program is free software: you can redistribute it and/or modify
@@ -83,10 +84,7 @@
     	The subscription is valid for your current database instance.
     	\nYou should create a backup immediately after the subscription process!     
     </string>
-    <string name="AddOn_Backup_LongDescription">
-    	The recorded informations (mileages, expenses, fill ups) are the most valuable assets for you. In case of database/phone loss, the only way to ensure the availability of these data is a more recent backup.    	
-   	</string>
-
+    
     <string name="LM_UPDATE_MSG">
         <b><i>What\'s new:</i></b>\n\n
         * Various bug fixes\n\n
