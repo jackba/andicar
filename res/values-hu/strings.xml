@@ -1,0 +1,527 @@
+<!--
+
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify 
+ it under the terms of the GNU General Public License as published by 
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- UI labels and messages-->
+
+<!--
+
+    Some strings contains one or more "variables". These looks like [#No] (for example [#1], [#2]).
+    These variables are parsed in the application and are replaced with a string value (a currency code, an UOM code, etc)
+
+    !!!For translators!!!:
+        If any of the translated string is longer than the English value you should
+        verify the look of the user interface (using the android emulator or any other device)
+        with the translated values.
+-->
+
+<resources>
+<string name="APP_Description">"Ingyenes és nyíltforrású autó menedzselő alkalmazás."</string>
+<string name="APP_Motto">"Menedzseld az autó(id) a nyílt forrás erejével."</string>
+<string name="APP_Activity_DriverEdit">"Vezető szerkesztése"</string>
+<string name="APP_Activity_DriverList">"Vezetők"</string>
+<string name="APP_Activity_CarEdit">"Autó szerkesztése"</string>
+<string name="APP_Activity_CarList">"Autók"</string>
+<string name="APP_Activity_Preferences">"Beállítások"</string>
+<string name="APP_Activity_GPSPreferences">"GPS nyomkövetés beállításai"</string>
+<string name="APP_Activity_ExpenseCategoryList">"Költség kategóriák"</string>
+<string name="APP_Activity_ExpenseCategoryEdit">"Költség kategóriák szerkesztése"</string>
+<string name="APP_Activity_ExpenseTypeList">"Költség típusok"</string>
+<string name="APP_Activity_ExpenseTypeEdit">"Költség típusok szerkesztése"</string>
+<string name="APP_Activity_UOMList">"Mértékegység"</string>
+<string name="APP_Activity_UOMEdit">"Mértékegységek szerkesztése"</string>
+<string name="APP_Activity_UOMConversionList">"Mértékegység konverzió"</string>
+<string name="APP_Activity_UOMConversionEdit">"Mértékegység konverzió szerkesztése"</string>
+<string name="APP_Activity_CurrencyList">"Pénznemek"</string>
+<string name="APP_Activity_CurrencyEdit">"Pénznem szerkesztése"</string>
+<string name="APP_Activity_MileageList">"Fuvarok"</string>
+<string name="APP_Activity_MileageEdit">"Fuvar hozzáadása vagy szerkesztése"</string>
+<string name="APP_Activity_RefuelList">"Tankolás"</string>
+<string name="APP_Activity_RefuelEdit">"Tankolás hozzáadása vagy szerkesztése"</string>
+<string name="APP_Activity_About">"Az AndiCarról"</string>
+<string name="APP_Activity_BackupRestore">"Biztonsági mentés / visszaállítás"</string>
+<string name="APP_Activity_ExpenseList">"Költségek"</string>
+<string name="APP_Activity_ExpenseEdit">"Költségek létrehozása vagy szerkesztése"</string>
+<string name="APP_Activity_CurrencyRateList">"Valuta árfolyamok"</string>
+<string name="APP_Activity_CurrencyRateEdit">"Valuta árfolyamok létrehozása vagy szerkesztése"</string>
+<string name="APP_Activity_GPSTrackController">"GPS nyomkövető használata"</string>
+<string name="APP_Activity_GPSTrackEdit">"GPS nyom szerkesztése"</string>
+<string name="APP_Activity_GPSTrackList">"GPS nyomok"</string>
+<string name="APP_Activity_BPartnerList">"Partnerek"</string>
+<string name="APP_Activity_BPartnerEdit">"Partner szerkesztése, lokáció"</string>
+<string name="APP_Activity_BPartnerLocationEdit">"Lokáció szerkesztése"</string>
+<string name="APP_Activity_TagList">"Címkék"</string>
+<string name="APP_Activity_TagEdit">"Címke szerkesztése"</string>
+<string name="APP_Activity_Message">"AndiCar Üzenet"</string>
+<string name="APP_Activity_TaskTypeList">"Feladat típus"</string>
+<string name="APP_Activity_TaskTypeEdit">"Feladat típus szerkesztése"</string>
+<string name="APP_Activity_TaskList">"Feladatok"</string>
+<string name="APP_Activity_TaskEdit">"Feladat létrehozása vagy szerkesztése"</string>
+<string name="APP_Activity_TodoList">"Tennivalók"</string>
+
+<string name="GEN_OK">"OK"</string>
+<string name="GEN_CANCEL">"Visszavon"</string>
+<string name="GEN_YES">"Igen"</string>
+<string name="GEN_NO">"Nem"</string>
+<string name="GEN_Done">"Megtörtént"</string>
+<string name="GEN_FillMandatory">"Töltsd ki a kötelező mezőt"</string>
+<string name="GEN_NumberFormatException">"Érvénytelen szám"</string>
+<string name="GEN_ChooseOneTitle">"Válassz egyet"</string>
+<string name="GEN_ChooseOneMessage">"Ki kell választani legalább egyet"</string>
+<string name="GEN_ChooseTitle">"Válassz"</string>
+<string name="GEN_IsActiveLabel">"Aktív"</string>
+<string name="GEN_UserCommentLabel">"Megjegyzés"</string>
+<string name="GEN_NameLabel">"Név:"</string>
+<string name="GEN_DateTimeLabel">"<b><i>Dátum és idő:</i></b>"</string>
+<string name="GEN_PickDateCaption">"Dátum változtatás"</string>
+<string name="GEN_PickTimeCaption">"Idő változtatás"</string>
+<string name="GEN_DeleteConfirmation">"Biztosan törlöd a kijelölt rekordot?"</string>
+<string name="GEN_Refuel">"Tankolás"</string>
+<string name="GEN_CarLabel">"Autó:"</string>
+<string name="GEN_DriverLabel">"Vezető:"</string>
+<string name="GEN_ExpenseTypeLabel">"Típus:"</string>
+<string name="GEN_TypeLabel">"Típus:"</string>
+<string name="GEN_DocumentNoLabel">"Dokumentum szám:"</string>
+<string name="GEN_IndexLabel">"Kilométeróra:"</string>
+<string name="GEN_QuantityLabel">"Mennyiség:"</string>
+<string name="GEN_PriceLabel">"Ár"</string>
+<string name="GEN_AmountLabel">"Öszg."</string>
+<string name="GEN_ConversionRateLabel">"Árfolyam:"</string>
+<string name="GEN_ConvertedAmountLabel">"Öszg. [#1]"</string>
+<string name="GEN_ConvertedPriceLabel">"Ár [#1]"</string>
+<string name="GEN_SelectedMessage">" kijelőlt"</string>
+<string name="GEN_CurrencyLabel">"Pénznem"</string>
+<string name="GEN_Required">"Szükséges"</string>
+<string name="GEN_BPartner">"Eladó:"</string>
+<string name="GEN_Address">"Cím:"</string>
+<string name="GEN_BPartnerAdressInfo">"További részletek a Beállítások -> Partnerek alatt"</string>
+<string name="GEN_City">"Város:"</string>
+<string name="GEN_Region">"Körzet:"</string>
+<string name="GEN_Country">"Ország:"</string>
+<string name="GEN_Contact">"Kapcsolat:"</string>
+<string name="GEN_Phone">"Telefon:"</string>
+<string name="GEN_Phone2">"Telefon 2:"</string>
+<string name="GEN_Fax">"Fax:"</string>
+<string name="GEN_Email">"Email:"</string>
+<string name="GEN_Postal">"Posta cím:"</string>
+<string name="GEN_Tag">"Címke:"</string>
+<string name="GEN_TagHint">"Rövid címke. Megjegyzés alább."</string>
+<string name="GEN_LifeTime">"Életre szóló"</string>
+<string name="GEN_CreatedOn">"Létrehozva"</string>
+<string name="GEN_Category">"Kategória:"</string>
+<string name="GEN_UOM">"Mértékegység:"</string>
+<string name="GEN_MailSent">"Levél küldés"</string>
+<string name="GEN_Password">"Jelszó"</string>
+<string name="GEN_ShowNotification">"Értesítések megjelenítése"</string>
+<string name="GEN_Error">"Hiba"</string>
+<string name="GEN_Confirm">"Megerősítés"</string>
+<string name="GEN_Info">"Info"</string>
+<string name="GEN_Warning">"Figyelmeztetés"</string>
+<string name="GEN_TaskType">"Feladat típus:"</string>
+<string name="GEN_SetDate">"Dátum/idő beállítása"</string>
+<string name="GEN_On">" "</string><!-- example on Monday -->
+<string name="GEN_Days">"nap"</string>
+<string name="GEN_Minutes">"perc"</string>
+<string name="GEN_Min">"perc"</string>
+<string name="GEN_LastDay">"utolsó nap"</string>
+<string name="GEN_Description">"Leírás"</string>
+<string name="GEN_Or">"Vagy:"</string>
+<string name="GEN_TaskLabel">"Feladat:"</string>
+<string name="GEN_StatusLabel">"Státusz:"</string>
+<string name="GEN_Mileage">"Megtett táv:"</string>
+<string name="GEN_Or2">"vagy"</string>
+<string name="GEN_ToDo">"Tennivaló"</string>
+<string name="GEN_ToDoAlert">"Tennivaló riasztás"</string>
+<string name="GEN_New">"Új"</string>
+<string name="GEN_Update">"Frissítés"</string>
+
+<string name="MENU_PreferencesCaption">"Beállítások"</string>
+<string name="MENU_AboutCaption">"AndiCarról"</string>
+<string name="MENU_DeleteCaption">"Törlés"</string>
+<string name="MENU_AddNewCaption">"Új létrehozása"</string>
+<string name="MENU_EditCaption">"Szerkesztés"</string>
+<string name="MENU_ShowInactiveCaption">"Inaktívok megjelenítése"</string>
+<string name="MENU_HideInactiveCaption">"Inaktívok eltüntetése"</string>
+<string name="MENU_SearchCaption">"Keresés/Szűrés"</string>
+<string name="MENU_CreateReportCaption">"Riport létrehozás"</string>
+<string name="MENU_SendAsEmailCaption">"Küld el emailben"</string>
+<string name="MENU_ShowOnMap">"Mutasd a térképen"</string>
+<string name="MENU_MileageCaption">"Fuvarok"</string>
+<string name="MENU_RefuelCaption">"Tankolások"</string>
+<string name="MENU_ExpenseCaption">"Költségek"</string>
+<string name="MENU_GPSTrackCaption">"GPS nyomok"</string>
+<string name="MENU_SetDefault">"Állítsd alapértelmezettre"</string>
+<string name="MENU_OpenGPSTrack">"GPS nyom megnyitás"</string>
+<string name="MENU_RateCommentCaption">"Értékelés/Megjegyzés"</string>
+<string name="MENU_AddOnServicesCaption">"Kiegészítő szolgáltatások"</string>
+<string name="MENU_LocalizeAndiCar">"AndiCar fordítás"</string>
+<string name="MENU_TaskReminderCaption">"Feladat"</string>
+<string name="MENU_TodoCaption">"Tennivaló lista"</string>
+
+<string name="MainActivity_MileageHeaderCaption">"Utolsó fuvar"</string>
+<string name="MainActivity_RefuelHeaderCaption">"Utolsó tankolás"</string>
+<string name="MainActivity_GPSTrackHeaderCaption">"Utolsó GPS nyom"</string>
+<string name="MainActivity_ExpenseHeaderCaption">"Utolsó költség"</string>
+<string name="MainActivity_StatisticsHeaderCaption">"Statisztikák  - "</string>
+<string name="MainActivity_StatisticsListLastOdoLabel">"Utolsó ismert kilométeróra állás: "</string>
+<string name="MainActivity_StatisticsAvgConsLabel">"Átl. üzemanyag fogy.: "</string>
+<string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. Az átl. üzemanyag fogyasztás az első és utolsó teljes tankolás alapján van számolva."</string>
+<string name="MainActivity_StatisticsLastConsLabel">"Utolsó üzemanyag fogy.: "</string>
+<string name="MainActivity_StatisticsLastConsNoData">"N/A. Az utolsó üzemanyag fogyasztás az utolsó két teljes tankolás alapján van számolva."</string>
+<string name="MainActivity_StatisticsTotalExpenseLabel">"Teljes költség:"</string>
+<string name="MainActivity_StatisticsMileageExpenseLabel">"Fuvarköltség:"</string>
+<string name="MainActivity_MileageNoDataText">"Nincs fuvar"</string>
+<string name="MainActivity_RefuelNoDataText">"Nincs tankolás"</string>
+<string name="MainActivity_ExpenseNoDataText">"Nincs költség"</string>
+<string name="MainActivity_ExpenseNoDataAditionalText">"This zone does not show the expenses created conjunctively with other records (refuels, etc.)"</string>
+<string name="MainActivity_NoCurrentCarMessage">"Legalább egy autó létrehozása szükséges.\n A következő képernyőn létrehozhatsz egyet.\n Több autót is létrehozhatsz a Beállítások -> Autók alatt.\n\n Figyelj az autóhoz tartozó mértékegységek és valuta helyes kiválasztására."</string>
+<string name="MainActivity_NoCurrentDriverMessage">"Legalább egy vezető létrehozása szükséges.\n A következő képernyőn létrehozhatsz egyet.\n Több vezetőt is létrehozhatsz a Beállítások -> Vezetők alatt."</string>
+<string name="MainActivity_WellcomeMessage">"Üdvözöljük az AndiCar alkalmazásban."</string>
+<string name="MainActivity_WellcomeBackMessage">"Üdvözöljük!"</string>
+<string name="MainActivity_BackupExistMessage">"Backup fájlok léteznek.\n Szeretne visszaállítani egyet?"</string>
+<string name="MainActivity_UpdateMessage">"Üzenet frissítés"</string>
+<string name="MainActivity_GPSTrackZoneNoDataText">"Nincs nyom."</string>
+<string name="MainActivity_NoMarketAccessMsg">"Az Android Market nem nyítható meg!"</string>
+<string name="MainActivity_AppVersion">"Alkalmazás verzió:"</string>
+<string name="MainActivity_DidYouKnow">"Tudta?"</string>
+<string name="MainActivity_AddOnMessage">"Az AndiCar rendelkezik egy pár hasznos kiegészítő szolgáltatással.\n Ezeket a kiegészítőket ingyen kipróbálhatod 15 napig korlátozás nélkül.\n\n Akarod látni az elérhető kiegészítőket?"</string>
+<string name="MainActivity_ToDoHeaderCaption">"Következő tennivaló"</string>
+<string name="MainActivity_ToDoNoDataText">"Nincs feladat meghatározva."</string>
+<string name="MainActivity_HowToMessage">"Használhatóság"</string>
+<string name="MainActivity_WhatsNewDialogTitle">"Újdonságok"</string>
+
+<string name="DriverEditActivity_LicenseNoLabel">"Licenc szám.:"</string>
+<string name="DriverEditActivity_CurrentDriverInactivateMessage">"A jelenlegi vezetőt nem lehet inaktiválni."</string>
+<string name="DriverListActivity_InactiveDriverSelectedMessage">"Inaktív vezető. Nem választható."</string>
+<string name="DriverListActivity_CurrentDriverDeleteMessage">"A jelenlegi vezető nem törölhető."</string>
+
+<string name="CarEditActivity_ModelLabel">"Tipus:"</string>
+<string name="CarEditActivity_LicensePlateLabel">"Rendszámtábla:"</string>
+<string name="CarEditActivity_UOMLengthLabel">"Távolsági mértékegység:"</string>
+<string name="CarEditActivity_UOMVolumeLabel">"Térfogat mértékegység:"</string>
+<string name="CarEditActivity_IndexStartLabel">"Kezdő kilométer állás:"</string>
+<string name="CarEditActivity_CurrencyLabel">"Pénznem:"</string>
+<string name="CarEditActivity_CurrentCarInactivateMessage">"A jelenlegi autót nem lehet inaktiválni."</string>
+<string name="CarListActivity_InactiveCarSelectedMessage">"Inaktív autó. Nem lehet kiválasztani."</string>
+<string name="CarListActivity_CurrentCarDeleteMessage">"A jelenlegi autó nem törölhető."</string>
+
+<string name="UOMEditActivity_CodeLabel">"Kód:"</string>
+<string name="UOMEditActivity_UOMTypeLengthTitle">"távolság"</string>
+<string name="UOMEditActivity_UOMTypeVolumeTitle">"térfogat"</string>
+
+<string name="UOMConversionEditActivity_UOMFromLabel">"megységről:"</string>
+<string name="UOMConversionEditActivity_UOMToLabel">"megységre:"</string>
+<string name="UOMConversionEditActivity_ConvertionRateLabel">"Átváltási árfolyam:"</string>
+
+<string name="CurrencyEditActivity_CodeLabel">"Kód:"</string>
+
+<string name="MileageEditActivity_IndexHeaderLabel">"Start/stop km állás vagy megtett táv"</string>
+<string name="MileageEditActivity_IndexStartLabel">"Start "</string>
+<string name="MileageEditActivity_OptionIndexLabel">"Stop"</string>
+<string name="MileageEditActivity_OptionMileageLabel">"Táv"</string>
+<string name="MileageEditActivity_InsertOkMessage">"Fuvar hozzáadva."</string>
+<string name="MileageEditActivity_UpdateOkMessage">"Fuvar frissítve."</string>
+<string name="MileageEditActivity_RecordingInProgress">"Két lépéses bevitel folyamatban van. Nyomd meg a STOP-ot, hogy befelyezd."</string>
+
+<string name="RefuelEditActivity_IsFullLabel">"Tele"</string>
+<string name="RefuelEditActivity_QtyInBaseUOMLabel">"Mennyiség alap megységben: "</string>
+<string name="RefuelEditActivity_NoConversionRateMessage">"Nincs átváltás a mértékegységekhez"</string>
+
+<string name="BackupRestoreEditActivity_BackupBtnCaption">"Mentés"</string>
+<string name="BackupRestoreEditActivity_RestoreBtnCaption">"Visszaállít"</string>
+<string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Törlés"</string>
+<string name="BackupRestoreEditActivity_BackupListLabel">"Létező biztonsági mentések:"</string>
+<string name="BackupRestoreEditActivity_BackupCreatedMessage">"Bizt. mentés elkészült."</string>
+<string name="BackupRestoreEditActivity_BackupFailedMessage">"Bizt. mentés sikertelen!"</string>
+<string name="BackupRestoreEditActivity_BackupDeleteConfirmation">"Biztos, hogy törlöd a kijelölt biztonsági mentés?"</string>
+<string name="BackupRestoreEditActivity_RestoreConfirmation">"Biztos, hogy vissza akarod állítani a kijelölt biztonsági mentést? Ez a művelet lecseréli a meglévő adatokat!"</string>
+<string name="BackupRestoreEditActivity_RestoreOKMessage">"Az adatbázis helyreállt. Az alkalmazás leáll."</string>
+
+<string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Kizárás az fuvarköltség számításából"</string>
+<string name="ExpenseCategoryEditActivity_IsFuel">"Üzemanyag"</string>
+<string name="ExpenseEditActivity_CreatedFromWarning">"Ez a költség [#1] jött létre. Megfelelő [#1] szerkesztése."</string>
+
+<string name="CurrencyRateEditActivity_CurrencyFromLabel">"Pénznemről "</string>
+<string name="CurrencyRateEditActivity_CurrencyToLabel">"Pénznemre "</string>
+<string name="CurrencyRateEditActivity_CurrencyRateLabel">"Árfolyam: 1 [#1] = "</string>
+<string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
+<string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"Fordított árfolyam: 1 [#1] = "</string>
+<string name="CurrencyRateEditActivity_MaxDecimalsLabel">"Max. engedett tizedesek: "</string>
+
+<string name="REPORTActivity_ReportCreatedMessage">"A riport sikeresen létrejött az sdcard/andicar/reports könyvtárban"</string>
+<string name="REPORTActivity_ProgressMessage">"Riport létrehozása elkezdődött. Kérem várjon..."</string>
+
+<string name="GPSTrackReport_GPSTrackVar_1">"Távolság: "</string>
+<string name="GPSTrackReport_GPSTrackVar_2">"Max. sebesség: "</string>
+<string name="GPSTrackReport_GPSTrackVar_3">"Átl. sebesség: "</string>
+<string name="GPSTrackReport_GPSTrackVar_4">"Átl. közlekedési sebesség: "</string>
+<string name="GPSTrackReport_GPSTrackVar_5">"Teljes idő: "</string>
+<string name="GPSTrackReport_GPSTrackVar_6">"Közlekedési idő: "</string>
+<string name="GPSTrackReport_GPSTrackVar_7">"Max. pontosság: "</string>
+<string name="GPSTrackReport_GPSTrackVar_8">"Min. pontosság: "</string>
+<string name="GPSTrackReport_GPSTrackVar_9">"Átl. pontosság: "</string>
+<string name="GPSTrackReport_GPSTrackVar_10">"Min. mag.: "</string>
+<string name="GPSTrackReport_GPSTrackVar_11">"Max. mag.: "</string>
+
+<string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Nyom fájlok"</string>
+<string name="GPSTrackEditActivity_TrackStatistics">"Statisztikák"</string>
+
+<string name="GPSTrackControllerActivity_StopBtnCaption">"GPS nyomköv. leállítás"</string>
+<string name="GPSTrackControllerActivity_FileFormatLabel">"Nyom fájl formátum:"</string>
+<string name="GPSTrackControllerActivity_CreateMileageLabel">"Fuvar létrehozása"</string>
+<string name="GPSTrackControllerActivity_IndexLabel">"Km állás:"</string>
+<string name="GPSTrackService_ServiceStoppedMessage">"GPS nyomköv. leállt"</string>
+<string name="GPSTrackService_GPSDisabledMessage">"Az Ön gps vevője le van tiltva!\n Kérjük engedélyezze azt."</string>
+<string name="GPSTrackService_GPSOutOfService">"GPS üzemen kívül!"</string>
+<string name="GPSTrackService_TrackInProgressTitle">"AndiCar GPS nyomkövetés"</string>
+<string name="GPSTrackService_TrackInProgressMessage">"Nyomkövetés folyamatban"</string>
+<string name="GPSTrackService_AccuracyProblemTitle">"AndiCar GPS Figyelmeztetés!"</string>
+<string name="GPSTrackService_AccuracyProblemMessage">"A pontosság a határ alatt!"</string>
+<string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS megállt!"</string>
+<string name="GPSTrackService_AutoShutDownMessage">"A GPS követés leállt, mert a kihagyott pontok százaléka ([#1]) meghaladja a határértéket ([#2])!\n  A határértéket átálíthatja a Beállítások -> Saját stop határ."</string>
+<string name="GPSTrackService_FileSystemErrorTitle">"Fájl rendszer hiba!"</string>
+
+<string name="GPSTrackShowOnMap_ProgressMessage">"Rajzolás folyamatban.\n Kérem várj..."</string>
+<string name="GPSTrackShowOnMapMenu_MapMode">"Térkép mód"</string>
+<string name="GPSTrackShowOnMapMenu_SatelliteMode">"Műhold mód"</string>
+
+<string name="BPartnerEditActivity_LocationsHeaderCaption">"Címek"</string>
+
+<string name="TaskEditActivity_OneTime">"Egyszeri"</string>
+<string name="TaskEditActivity_Recurrent">"Ismétlődő"</string>
+<string name="TaskEditActivity_RecurrentEveryLabel">"Minden"</string>
+<string name="TaskEditActivity_RecurrentFrequencyLabel">"Gyakran"</string>
+<string name="TaskEditActivity_FirstRunDependOnCar">"Különböző kezdő időpont minden kapcsolt autónak"</string>
+<string name="TaskEditActivity_TimeDriven">"Idő"</string>
+<string name="TaskEditActivity_Scheduled">"Tervezett:"</string>
+<string name="TaskEditActivity_MileageDriven">"Megtett táv"</string>
+<string name="TaskEditActivity_BothDriven">"Mindkettő"</string>
+<string name="TaskEditActivity_FirstTimeRunExplanation">"A kezdő időpont minden kapcsolodó autónak külön lesz beállítva"</string>
+<string name="TaskEditActivity_FirstMileageRunExplanation">"A kezdő kilóméter minden kapcsolodó autónak külön lesz beállítva"</string>
+<string name="TaskEditActivity_ReminderStartLabel">"Emlékeztető indulása"</string>
+<string name="TaskEditActivity_LinkedCarsLabel">"Kapcsolodó autók"</string>
+<string name="TaskEditActivity_MileageUOMText">"mérföld vagy km (autó beállításától függ)"</string>
+<string name="TaskEditActivity_FillMileage">"Adja meg a megtett távolságot!"</string>
+<string name="TaskEditActivity_FillFrequency">"Adja meg a gyakoriságot!"</string>
+<string name="TaskEditActivity_LinkedCarsOptionsHelp">"További opciók az adott autóra hosszan nyomva"</string>
+<string name="TaskEditActivity_AllCarsLinkedMsg">"Az összes aktív autó a feladathoz kapcsolva."</string>
+<string name="TaskEditActivity_NoLinkedCarsMsg">"Legalább egy autónak kapcsolódnia kell a feladathoz."</string>
+<string name="TaskEditActivity_NoCarsLinkedMsg">"Nincs aktív autó melynek az aktuális km állása kisebb mint a feladatban szereplő távolság!\n Kérjük emelje meg feladatban szereplő távolságot!"</string>
+<string name="TaskEditActivity_StartingTimeInFutureMsg">"A kezdés időpontja jövőbe mutató legyen!"</string>
+<string name="TaskEditActivity_StartingTimeLbl">"Kezdés:"</string>
+<string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"A megtett távolság gyakoriságának nagyobbnak kell lennie, mint a figyelmeztetésben."</string>
+<string name="TaskEditActivity_GeneratedToDoCountLabel">"A generált teendők száma:"</string>
+<string name="TaskEditActivity_ToDoCount">"teendő számláló"</string>
+<string name="TaskEditActivity_ToDoCountHelp">"Amikor egy teendő késznek lesz jelölve, automatikusan hozzáadódik egy új a teendők listájához."</string>
+
+<string name="TaskCarEditActivity_StartDate">"Kezdés dátuma:"</string>
+<string name="TaskCarEditActivity_StartMileage">"Kezdő kilóméter:"</string>
+<string name="TaskCarDialogActivity_Title">"Autó kapcsolása feladathoz"</string>
+
+<string name="ToDo_OverdueLabel">"Lejárt"</string>
+<string name="ToDo_ScheduledLabel">"Ütemezett"</string>
+<string name="ToDo_DoneLabel">"Kész"</string>
+<string name="ToDo_ScheduledDateLabel">"Ütemezve:"</string>
+<string name="ToDo_ScheduledMileageLabel">"Ütemezett távolság:"</string>
+<string name="ToDo_EstimatedMileageDate">"becsült dátum:"</string>
+<string name="ToDo_EstimatedMileageDateNoData">"nincs elegendő adat a dátum megbecsüléséhez!"</string>
+<string name="ToDo_EstimatedMileageDateTooFar">"Túl messze van, hogy becsülhető legyen"</string>
+<string name="ToDo_ActionHdr">"Válasz"</string>
+<string name="ToDo_PostPoneLabel">"Még "</string>
+<string name="ToDo_IsDoneCaption">"Ez a teendő kész"</string>
+<string name="ToDo_DaysLeft">"Hátralévő nap: "</string>
+<string name="ToDo_MinutesLeft">"Hátralévő perc: "</string>
+<string name="ToDo_MileageLeft">"Hátralévő kilóméter: "</string>
+<string name="ToDo_CurrentIndex">"Jelenlegi km állás: "</string>
+<string name="ToDo_IsDone">"Kész"</string>
+
+<string name="PREF_UOMCategoryTitle">"Mértékegységek"</string>
+<string name="PREF_ExpenseCategoryTitle">"Költségek"</string>
+<string name="PREF_ExpenseTypeCategoryTitle">"Költség típusok"</string>
+<string name="PREF_ExpenseTypeCategorySummary">"Költség típus szerkesztése"</string>
+<string name="PREF_CarDriverCategoryTitle">"Autók és vezetők"</string>
+<string name="PREF_CarTitle">"Autók"</string>
+<string name="PREF_CarSummary">"Autók szerkesztése."</string>
+<string name="PREF_DriverTitle">"Vezetők"</string>
+<string name="PREF_DriverSummary">"Vezetők szerkesztése."</string>
+<string name="PREF_UOMTitle">"Mértékegység"</string>
+<string name="PREF_UOMSummary">"Mértékegység szerkesztése"</string>
+<string name="PREF_UOMConversionTitle">"Mértékegység átváltás"</string>
+<string name="PREF_UOMConversionSummary">"Mértékegységek átváltásának szerkesztése"</string>
+<string name="PREF_CurrencyTitle">"Pénznemek"</string>
+<string name="PREF_CurrencySummary">"Pénznemek szerkesztése"</string>
+<string name="PREF_BackupRestoreCategoryTitle">"Biztonsági mentés / visszaállítás"</string>
+<string name="PREF_BackupRestoreTitle">"Adatbázis mentése, visszaállítása"</string>
+<string name="PREF_BackupRestoreSummary">"Biztonsági mentés az adatbázisról vagy visszaállítása egy meglévő mentésből."</string>
+<string name="PREF_ExpenseCategoryCategoryTitle">"Költség kategóriák"</string>
+<string name="PREF_ExpenseCategoryCategorySummary">"Költség kategóriák szerkesztése"</string>
+<string name="PREF_MiscCategoryTitle">"Egyéb"</string>
+<string name="PREF_MainScreenCategoryTitle">"Főképernyő beállításai"</string>
+<string name="PREF_MainScreenCategorySummary">"Főképernyő testreszabása"</string>
+<string name="PREF_CurrencyRateCategoryTitle">"Árfolyamok"</string>
+<string name="PREF_CurrencyRateCategorySummary">"Árfolyamok szerkesztése"</string>
+<string name="PREF_GPSTrackCategoryTitle">"GPS nyomkövetés"</string>
+<string name="PREF_GPSTrackTitle">"GPS nyom"</string>
+<string name="PREF_GPSTrackSummary">"GPS követés beállításai."</string>
+<string name="PREF_SendUsageTitle">"Használati statisztikák"</string>
+<string name="PREF_SendUsageSummary">"Fejlesztők segítése anoním használati statisztikákkal."</string>
+<string name="PREF_SendCrashReportsTitle">"Összeomlás jelentés"</string>
+<string name="PREF_SendCrashReportsSummary">"Segítse a fejlesztőket, hogy névtelenül elküldi az összeomlásokról készült jelentéseket."</string>
+<string name="PREF_MainScreen">"A főképernyő testreszabása"</string>
+<string name="PREF_BPartnersCategoryTitle">"Partnerek és címek"</string>
+<string name="PREF_PartnerTitle">"Partnerek"</string>
+<string name="PREF_PartnerSummary">"Partnerek és címeik szerkesztése"</string>
+<string name="PREF_UseNumericInputTitle">"Számbillenyűzet használata"</string>
+<string name="PREF_UseNumericInputSummary">"Egyszerű billenytűzet használata a numerikus mezőkhöz."</string>
+<string name="PREF_TagCategoryTitle">"Címkék"</string>
+<string name="PREF_TagCategorySummary">"Címkék szerkesztése"</string>
+<string name="PREF_RememberLastTagTitle">"Emlékezzen az utolsó címkére"</string>
+<string name="PREF_RememberLastTagSummary">"Emlékezzen az utolsó használt címkére"</string>
+<string name="PREF_AutoUpdateCheckTitle">"Frissítések keresése"</string>
+<string name="PREF_AutoUpdateCheckSummary">"Figyelmeztessen ha új verzió jelenik meg az Andicar-ból"</string>
+<string name="PREF_TaskReminderCategoryTitle">"Feladatok"</string>
+<string name="PREF_TaskTypeTitle">"Feladat típusok"</string>
+<string name="PREF_TaskTypeSummary">"Feladat típusok szerkesztése"</string>
+<string name="PREF_TaskTitle">"Feladatok"</string>
+<string name="PREF_TaskSummary">"Feladatok szerkesztése"</string>
+<string name="PREF_MainScreen_ShowMileageZone">"Fuvar zóna mutatása"</string>
+<string name="PREF_MainScreen_ShowGPSTrackZone">"GPS nyom zóna mutatása"</string>
+<string name="PREF_MainScreen_ShowRefuelZone">"Tankolási zóna mutatása"</string>
+<string name="PREF_MainScreen_ShowExpenseZone">"Költség zóna mutatása"</string>
+<string name="PREF_MainScreen_ShowStatistics">"Statistikák mutatása"</string>
+<string name="PREF_MainScreen_ShowToDoZone">"Tennivaló zóna mutatása"</string>
+<string name="PREF_AddOnCategoryTitle">"Kiegészítő szolgáltatások"</string>
+<string name="PREF_AddOnServicesTitle">"Kiegészítő szolgáltatások"</string>
+<string name="PREF_AddOnServicesSummary">"Előfizetéses szolgáltatások."</string>
+<string name="PREF_AddOnServicesSubscribe">"Fizetés PayPal-al"</string>
+<string name="PREFMainScreen_ZonesLabel">"Meglévő zónák:"</string>
+
+<string name="PREFGPSTrack_FileFormatTitle">"File formátum"</string>
+<string name="PREFGPSTrack_FileFormatSummary">"Válassz fájl formátum(okat) a nyom követéshez"</string>
+<string name="PREFGPSTrack_CSVFileFormatMessage">"CSV mindig használva van"</string>
+<string name="PREFGPSTrack_KMLFileFormatTitle">"KML"</string>
+<string name="PREFGPSTrack_KMLFileFormatSummary">"Keyhole Markup Language"</string>
+<string name="PREFGPSTrack_GPXFileFormatTitle">"GPX"</string>
+<string name="PREFGPSTrack_GPXFileFormatSummary">"GPs eXchange típus"</string>
+<string name="PREFGPSTrack_MinimumTimeTitle">"Min. idő a pontok között"</string>
+<string name="PREFGPSTrack_MinimumTimeSummary">"Min. idő két rögzített pozíció között"</string>
+<string name="PREFGPSTrack_AccuracyTitle">"Pontosság"</string>
+<string name="PREFGPSTrack_AccuracySummary">"Minimális pontosság egy valós követési ponthoz. KML és GPX formátum használatánál érvényes."</string>
+<string name="PREFGPSTrack_AutoShutDownTitle">"Önmegálítási határ"</string>
+<string name="PREFGPSTrack_AutoShutDownSummary">"Nyomkövetés leállítása ha a kihagyott pontok százalékos száma nagyobb mint ez az érték."</string>
+<string name="PREFGPSTrack_FileSplitTitle">"Követési fájl darabolása"</string>
+<string name="PREFGPSTrack_FileSplitSummary">"A követési fájl darabolása minden N pont után. 0 = kikapcsolva"</string>
+<string name="PREFGPSTrack_FileLocationMessage">"A nyomkövetési fájlai megtalálhatóak: SDCARD/andicar/gpstrack könyvtárban"</string>
+
+<string name="DIALOGSearch_DialogTitle">"Kritérium megadása"</string>
+<string name="DIALOGSearch_DateFromLabel">"Dátumtól"</string>
+<string name="DIALOGSearch_DateToLabel">"Dátumig"</string>
+<string name="DIALOGReport_DialogTitle">"Jelentés tulajdonságai"</string>
+<string name="DIALOGReport_SendEmailLabel">"  küld el e-mail csatolmányként"</string>
+<string name="DIALOGReport_ReportFormatLabel">"Formátum:"</string>
+<string name="DIALOG_TemplateNameTitle">"Sablon neve"</string>
+
+<string name="DayOfWeek_0">"Vasárnap"</string>
+<string name="DayOfWeek_1">"Hétfő"</string>
+<string name="DayOfWeek_2">"Kedd"</string>
+<string name="DayOfWeek_3">"Szerda"</string>
+<string name="DayOfWeek_4">"Csürtök"</string>
+<string name="DayOfWeek_5">"Péntek"</string>
+<string name="DayOfWeek_6">"Szombat"</string>
+
+<string name="Month_01">"Január"</string>
+<string name="Month_02">"Február"</string>
+<string name="Month_03">"Március"</string>
+<string name="Month_04">"Április"</string>
+<string name="Month_05">"Május"</string>
+<string name="Month_06">"Június"</string>
+<string name="Month_07">"Július"</string>
+<string name="Month_08">"Augusztus"</string>
+<string name="Month_09">"Szeptember"</string>
+<string name="Month_10">"Október"</string>
+<string name="Month_11">"November"</string>
+<string name="Month_12">"December"</string>
+
+<string name="Notif_UpdateTitle">"Frissítés elérhető"</string>
+<string name="Notif_UpdateMsg">"Új frissítés érhető el az AndiCar-hoz!"</string>
+<!-- AddOn Services -->
+<string name="AddOn_PayPalTransactionID">"PayPal tranzakció ID"</string>
+<string name="AddOn_SubscribeWaiting">"Kapcsolódás a PayPal szerverhez. A szerver terhelésétől függően ez néhány percig is eltarthat.\nKérem várjon..."</string>
+<string name="AddOn_SubscriptionInfo">"Erre a szolgáltatásra [#1] - ig fizetett elő."</string>
+<string name="AddOn_BtnTryCaption">"INGYENES próba indítása"</string>
+<string name="AddOn_BtnConfigureServiceCaption">"Szolgáltatás beállítása"</string>
+<string name="AddOn_BtnRenewSubscriptionCaption">"Előfizetés megújítás"</string>
+<string name="AddOn_PreferencesTitle">"Kiegészítő szolgáltatások beállítása"</string>
+<string name="AddOn_PreferencesSummary">"Kiegészítő szolgáltatások beállítása"</string>
+<string name="AddOn_PreferencesCategoryTitle">"Kiegészítő szolgáltatások"</string>
+<string name="AddOn_SubscriptionExpireWarning">"Előfizetése a [#1] kiegészítő szolgáltatásra le fog járni [#2] napon belül"</string>
+<string name="AddOn_SubscriptionExpired">"Az előfizetése a [#1] kiegészítő szolgáltatásra lejárt."</string>
+<string name="AddOn_RenewSubscriptionPeriodInfo">"A kiválasztott időszak hozzá lesz adva a jelenlegi előfizetéshez"</string>
+<string name="AddOn_15DayFreeSubscription">"15 napos INGYENES előfizetés."</string>
+<string name="AddOn_SixMonthSubscription">"6 hónapos előfizetés: [#1] [#2]"</string>
+<string name="AddOn_OneYearSubscription">"Egy éves előfizetés: [#1] [#2]"</string>
+<string name="AddOn_LifeTimeSubscription">"Életre tartó előfizetés: [#1] [#2]"</string>
+
+<string name="AddOn_SecureBackup_Title">"Biztonságos mentés"</string>
+<string name="AddOn_SecureBackup_Description">"Minden alkalommal mikor biztonsági mentés készül, ez a szolgáltatás mellékletként elküldi az előre megadott e-mail címre. Ez esetben az adatok akkor is megmaradnak, ha a telefonját ellopják. Az Automatikus mentés beépülővel együtt tökéletes biztonsági megoldást nyújt."</string>
+<string name="AddOn_SecureBackup_TermOfService">"AndiCar nem vállal felelősséget: gyenge/nem létező/hibás Internet kapcs. okozta nem teljes/hibás adatokért, kevés Google fiók tárhely, a Google levelező renszeréből törölt mentési fájlok, vagy egyéb okok amelyek miatt hibás, használhatatlan mentéi fájlok jönnek létre."</string>
+<string name="AddOn_SecureBackup_Requirements">"A szolgáltatás követelményei: érvényes GMail fiók, Internet kapcsolat, mobil adatforgalom."</string>
+<string name="AddOn_SecureBackup_Configure">"Menj a biztonsági mentés beállításaihoz és add meg a hiányzó adatokat."</string>
+<string name="AddOn_SecureBackup_Text1">"Ezek az adatok az eszköz belső memóriában vannak nem az AndiCar adatbázisban.\nKülső programoknak/szolgáltatásoknak nincs hozzáférésük."</string>
+<string name="AddOn_SecureBackup_SMTPUserFrom">"Feladó e-mail (GMail fiók szükséges):"</string>
+<string name="AddOn_SecureBackup_SMTPEmailTo">"Címzett e-mail :"</string>
+<string name="AddOn_SecureBackup_IncludeGPSTrack">"Tartalmazza a GPS követési fájlok(at) is"</string>
+<string name="AddOn_SecureBackup_IncludeReports">"Tartalmazza a generált riportokat is"</string>
+
+<string name="AddOn_AutoBackupService_Title">"Automatikus mentés"</string>
+<string name="AddOn_AutoBackupService_Description">"Ez a szolgáltatás lehetőségat ad arra, hogy napi/heti időzitett automatikus mentés készüljön az adatbázisról. A Biztonságos mentés kiegészítő szolgáltatással kombinálva tökéletes megoldás a biztonságos adatokért."</string>
+<string name="AddOn_AutoBackupService_TermOfService">""</string>
+<string name="AddOn_AutoBackupService_Requirements">"A szolgáltatás követelményei: szabad hely az SD kártyán Az adatbázis méretétől, és a biztonsági mentések számától függően."</string>
+<string name="AddOn_AutoBackupService_ScheduleTitle">"Automatikus mentés időzítése"</string>
+<string name="AddOn_AutoBackupService_ScheduleFrequency">"Gyakoriasság:"</string>
+<string name="AddOn_AutoBackupService_ScheduleHour">"Óra:"</string>
+<string name="AddOn_AutoBackupService_NoOfBackups1">"Csak az utolsó "</string>
+<string name="AddOn_AutoBackupService_NoOfBackups2">"mentés megtartása."</string>
+<string name="AddOn_AutoBackupService_NotifyIfSuccess">"Értesítés ha sikerül"</string>
+<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"Legalább egy napot ki kell választani!"</string>
+<string name="AddOn_AutoBackupService_BackupSucceeded">"Sikeres mentés!"</string>
+<string name="AddOn_AutoBackupService_BackupFailed">"Sikertelen mentés! Ellenőrizze az SD kártyát."</string>
+
+<string name="AddOn_DataTemplate_Title">"Adat beviteli sablon"</string>
+<string name="AddOn_DataTemplate_Description">"Ezzel a kiegészítővel sablonokat használhatsz az adatok bevitelénél.\nnEzáltal növelhető a produktivitás."</string>
+<string name="AddOn_DataTemplate_ApplyTemplateLbl">"Sablon"</string>
+<string name="AddOn_DataTemplate_UpdatedMsg">"Sablon frissítve"</string>
+<string name="AddOn_DataTemplate_CreatedMsg">"Új sablon létrehozva a jelenlegi értékek alapján"</string>
+
+<string name="AddOn_DataEntryPref_CategoryTitle">"Sablonok"</string>
+<string name="AddOn_DataEntryPref_ExpenseTitle">"Költség sablonok"</string>
+<string name="AddOn_DataEntryPref_MileageTitle">"Fuvar sablonok"</string>
+<string name="AddOn_DataEntryPref_RefuelTitle">"Tankolás sablonok"</string>
+<string name="AddOn_DataEntryPref_GPSTitle">"GPS nyom sablonok"</string>
+
+<string name="AddOn_BTStarter_Title">"Bluetooth csatlakozás érzékelő"</string>
+<string name="AddOn_BTStarter_Description">"A GPS Követő Kezelő automatikus indítása amikor Bluetooth kapcsolat egy autóval létrejött (min. Android 2+)"</string>
+<string name="AddOn_BTStarter_DeviceListActivityTitle">"Kapcsolt eszközök"</string>
+<string name="AddOn_BTStarter_DeviceLinkActivityTitle">"Eszköz párosítása autóhoz"</string>
+<string name="AddOn_BTStarter_PairedDevicesLabel">"Párosított eszközök:"</string>
+<string name="AddOn_BTStarter_LinkedTo">"Párosítva:"</string>
+<string name="AddOn_BTStarter_NoLinkedCar">"Nincs párosított autó.\nEzt a bejegyzést törölni kellene."</string>
+<string name="AddOn_BTStarter_LinkToCar">"Párosítás autóhoz:"</string>
+<string name="AddOn_BTStarter_Requirements">"Kiegészítő követelményei:\nAndroid 2+; Bluetooth támogatás az eszközön"</string>
+
+</resources>
