@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!--
+        < = <
+-->
+
+<resources>
+    <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
+        Az AndiCar egy ingyenes és nyílt forráskódú szoftver Android rendszerű készülékre.\n 
+        Licencelése a General Public License 3-as verziója alapján történik.\n
+        További részletekért lásd az AndiCarról oldalt.\n 
+        Köszönjük, hogy az AndiCar alkalmazást használja! 
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_USABILITY_MESSAGE">
+        Az alábbiakban néhány általános használhatósági szabályok az AndiCar alkalmazáshoz:\n 
+        * nyomd meg a telefon menü gombját a további lehetőségek eléréséhez\n 
+        * a listákban érints meg egy rekordot a szerkesztéséhez. A hosszú nyomásra jön fel a többi lehetőség\n\n 
+        ** További információért az AndiCar használatához látogasd meg a www.andicar.org ** 
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
+        Az <b><i>AndiCar</i></b> egy ingyenes és nyílt foráskódú autó menedzselő alkalmazás Android készülékekre.
+        Licencelése a General Public License 3-as verziója alapján történik.\n
+        További részletekért lásd az AndiCarról oldalt.\n 
+        Copyright © 2010-2011 Keresztes Miklós.\n
+        Köszönjük, hogy az <b><i>AndiCar</i></b> alkalmazást használja!
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML1">
+        Az <b><i>AndiCar</i></b> egy ingyenes és nyílt foráskódú autó menedzselő alkalmazás Android készülékekre.
+        Licencelése a General Public License 3-as verziója alapján történik.\n
+        *  További információért (Hogyanok, Legújabb hírek, stb.) látogasd meg a projekt web oldalát
+        <a href="http://www.andicar.org">www.andicar.org</a>.\n
+        <small>Nyomd meg az oldal frissítése gombot, ha a követkző üzenetet kapod: \"Web page not available\".</small>\n
+        *  Kérdéseidet az <b><i>AndiCar</i></b>-ral kapcsolatban tedd fel a következő forumon:
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
+        *  Hiba bejelentés esetén vagy kérések esetén ne habozz használni az <b><i>AndiCar</i></b> hiba bejelentő rendszerét: 
+        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
+        *  A projekttel kapcsolatos hírlevél feliratkozás
+        <a href="http://www.andicar.org/News/">www.andicar.org/News/</a>.\n
+        *  Egyéb esetben üzenj az andicar.support@gmail.com címre.\n
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML2">
+      Köszönjük, hogy az <b><i>AndiCar</i></b> alkalmazást használja.\n\n
+        <b><i>További résztvevők:</i></b>\n
+        *  Kínai fordítás <a href="http://goapk.com/">goapk.com</a> \n
+        *  Orosz fordítás Andrey Demin - andde@rambler.ru\n
+        *  Német fordítás Andy Haubenschmid - andy@haubenschmid.li\n
+		*  Magyar fordítás Nagy Péter - microbilab@gmail.com\n
+        \n<b><i>Copyright notice</i></b>:\n\n
+        Copyright © 2010-2011 Keresztes Miklós (miklos.keresztes@gmail.com)\n\n
+        Ez a program szabad szoftver; terjeszthető illetve módosítható a Free Software Foundation által kiadott GNU General Public License dokumentumában leírtak; 
+		akár a licenc 3-as, akár (tetszőleges) későbbi változata szerint.\n\n
+        Ez a program abban a reményben kerül közreadásra, hogy hasznos lesz, 
+		de minden egyéb GARANCIA NÉLKÜL, az ELADHATÓSÁGRA vagy VALAMELY CÉLRA VALÓ ALKALMAZHATÓSÁGRA való származtatott garanciát is beleértve. 
+		További részleteket a GNU General Public License tartalmaz.\n\n
+        A felhasználónak a programmal együtt meg kell kapnia a GNU General Public License egy példányát; 
+		ha mégsem kapta meg, akkor tekintse meg a <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a> oldalon.\n
+    </string>
+
+    <string name="AddOn_SubscriptionValidity">
+         Az előfizetés érvényes a jelenlegi adatbázis példányra.\n\n
+         Készíts biztonsági mentést a feliratkozás után!     
+    </string>
+
+  <string name="LM_UPDATE_MSG">
+        <b><i>Újdonságok:</i></b>\n\n
+        * Különbböző hibajavítások\n\n
+        * <b>Korlátozott időre szóló ajánlat:</b> Feliratkozás Backup Service vagy a Secure Backup szolgáltatásra <b>csak most 0.99$ !</b>\n\n
+        * <b>Bluetooth-kapcsolat érzékelő kiegészítő:</b> Automatikusan elindítja a GPS Track Controller-t, amikor létrejön a  Bluetooth-kapcsolat az autóval (Android 2+ szükséges).
+    </string>
+</resources>
