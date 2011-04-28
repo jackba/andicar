@@ -67,7 +67,8 @@
         <b><i>Credits:</i></b>\n
         *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
         *  Russian translation by Andrey Demin - andde@rambler.ru\n
-		*  German translation by andy@haubenschmid.li\n
+		*  Initial German translation by Andy Haubenschmid - andy@haubenschmid.li\n
+		*  Hungarian translation by Nagy Péter - microbilab@gmail.com\n
         \n<b><i>Copyright notice</i></b>:\n\n
         Copyright © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
     	Это программа является свободным программным обеспечением. Вы можете распространять и/или модифицировать её согласно условиям Стандартной Общественной Лицензии GNU, опубликованной Фондом Свободного Программного Обеспечения, версии 3 или, по Вашему желанию, любой более поздней версии.\n\n 
@@ -81,12 +82,6 @@
      	\n Вы должны создать резервную копию сразу после процесса подписки!     
 	</string>
 	
-    <string name="AddOn_Backup_LongDescription">
-        Записанная информация (пробег, расходы, заправки) является наиболее
-		ценной для вас. В случае потери базы данных единственный способ обеспечить
-		доступность этих данных - это восстановление из последней резервной копии.
-	</string>
-
 	<string name="LM_UPDATE_MSG">
 		<b><i>Что нового:</i></b>\n\n
 		* Исправлены ошибки предыдущих версий\n\n
