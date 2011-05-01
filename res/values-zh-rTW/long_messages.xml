@@ -77,11 +77,12 @@
 	<string name="AddOn_SubscriptionValidity">
 		對於目前的資料庫，訂閱是有效的。\n你應該在處理訂閱後立即建立一個備份！
 	</string>
-	
+	<!-- 
 	<string name="LM_UPDATE_MSG">
 		<b><i>有何更新：</i></b>\n\n
 		* 修正多個 Bug\n\n
 		* <b>限時優惠：</b> 現在就訂閱備份服務或安全備份，起價為 0.99$\n\n
 		* <b>藍牙連接偵測器：</b> 當偵測到與一輛汽車有一個藍牙連接時自動啟動GPS路徑控制器(需要 Android 2+)
 	</string>
+	 -->
 </resources>
