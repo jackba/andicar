@@ -86,7 +86,6 @@
   <string name="LM_UPDATE_MSG">
         <b><i>Újdonságok:</i></b>\n\n
         * Különbböző hibajavítások\n\n
-        * <b>Korlátozott időre szóló ajánlat:</b> Feliratkozás Backup Service vagy a Secure Backup szolgáltatásra <b>csak most 0.99$ !</b>\n\n
-        * <b>Bluetooth-kapcsolat érzékelő kiegészítő:</b> Automatikusan elindítja a GPS Track Controller-t, amikor létrejön a  Bluetooth-kapcsolat az autóval (Android 2+ szükséges).
+        * <b>Magyar fordítás:</b> Nagy Péter\n\n
     </string>
 </resources>

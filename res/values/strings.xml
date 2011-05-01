@@ -494,14 +494,15 @@
     <string name="AddOn_SecureBackup_Description">"Every time a database backup is created, this service automatically send it as an email attachment to a preconfigured email address. In this way your recorded data will be available even if you lose your phone. Combined with the Backup Service Add-On is the definitive solution for your data safety."</string>
     <string name="AddOn_SecureBackup_TermOfService">"AndiCar developers are not responsible for: poor/inexistent/defective Internet connectivity resulting in incomplete/corrupted data, insufficient storage space on your Google account, deletion of backup files from Google Mail or any other event which cause lose or unusable backup files."</string>
     <string name="AddOn_SecureBackup_Requirements">"Service requirements: valid GMail account, Internet connectivity, mobile data transfer."</string>
-
     <string name="AddOn_SecureBackup_Configure">"Go to the SecureBackup configuration in order to enter the missing information."</string>
     <string name="AddOn_SecureBackup_Text1">"These data are stored in your device internal memory, not in the AndiCar database.\nExternal applications/parties can not access them."</string>
     <string name="AddOn_SecureBackup_SMTPUserFrom">"From email (GMail account required):"</string>
     <string name="AddOn_SecureBackup_SMTPEmailTo">"Send to email:"</string>
     <string name="AddOn_SecureBackup_IncludeGPSTrack">"Include GPS track files"</string>
     <string name="AddOn_SecureBackup_IncludeReports">"Include generated reports"</string>
-    
+    <string name="AddOn_SecureBackup_MailSent">"Your backup file(s) have been sent."</string>
+	<string name="AddOn_SecureBackup_MailSubject">"Your AndiCar backup file(s) attached."</string>
+	    
     <string name="AddOn_AutoBackupService_Title">"Backup Service"</string>
     <string name="AddOn_AutoBackupService_Description">"This service allow you to schedule a daily/weekly automatic database backup task. Combined with the Secure Backup Add-On is the definitive solution for your data safety."</string>
     <string name="AddOn_AutoBackupService_TermOfService">""</string>

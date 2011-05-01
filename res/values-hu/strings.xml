@@ -125,7 +125,7 @@
 <string name="GEN_CreatedOn">"Létrehozva"</string>
 <string name="GEN_Category">"Kategória:"</string>
 <string name="GEN_UOM">"Mértékegység:"</string>
-<string name="GEN_MailSent">"Levél küldés"</string>
+<string name="GEN_MailSent">"Levél elküldve"</string>
 <string name="GEN_Password">"Jelszó"</string>
 <string name="GEN_ShowNotification">"Értesítések megjelenítése"</string>
 <string name="GEN_Error">"Hiba"</string>
@@ -487,6 +487,8 @@
 <string name="AddOn_SecureBackup_SMTPEmailTo">"Címzett e-mail :"</string>
 <string name="AddOn_SecureBackup_IncludeGPSTrack">"Tartalmazza a GPS követési fájlok(at) is"</string>
 <string name="AddOn_SecureBackup_IncludeReports">"Tartalmazza a generált riportokat is"</string>
+<string name="AddOn_SecureBackup_MailSent">"A biztonságos mentés sikerült."</string>
+<string name="AddOn_SecureBackup_MailSubject">"Az AndiCar biztonsági mentés csatolva van."</string>
 
 <string name="AddOn_AutoBackupService_Title">"Automatikus mentés"</string>
 <string name="AddOn_AutoBackupService_Description">"Ez a szolgáltatás lehetőségat ad arra, hogy napi/heti időzitett automatikus mentés készüljön az adatbázisról. A Biztonságos mentés kiegészítő szolgáltatással kombinálva tökéletes megoldás a biztonságos adatokért."</string>

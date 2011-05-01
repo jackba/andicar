@@ -66,7 +66,7 @@
         *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
         *  Russian translation by Andrey Demin - andde@rambler.ru\n
 		*  Initial German translation by Andy Haubenschmid - andy@haubenschmid.li\n
-		*  Hungarian translation by Nagy Péter - microbilab@gmail.com\n
+		*  Hungarian translation by Péter Nagy - microbilab@gmail.com\n
         \n<b><i>Copyright notice</i></b>:\n\n
         Copyright © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
         This program is free software: you can redistribute it and/or modify
@@ -88,7 +88,6 @@
     <string name="LM_UPDATE_MSG">
         <b><i>What\'s new:</i></b>\n\n
         * Various bug fixes\n\n
-        * <b>Limited time offer:</b> Subscribe to Backup Service or Secure Backup <b>starting from just 0.99$ !</b>\n\n
-        * <b>Bluetooth connection detector Add-On:</b> Automatically start the GPS Track Controller when a Bluetooth connection to a car is created (require Android 2+)
+        * <b>Hungarian translation</b> by Péter Nagy\n\n
     </string>
 </resources>
