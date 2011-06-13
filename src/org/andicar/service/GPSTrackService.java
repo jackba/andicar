@@ -125,7 +125,7 @@ public class GPSTrackService extends Service {
     private boolean isSendCrashReport;
     private int iFileCount = 1; //for splitting large gps files
     private int iFileSplitCount = 0;
-    private String sNonMovingTimes = "\n";
+//    private String sNonMovingTimes = "\n";
     private boolean isUseMetricUnits = true;
     private boolean isErrorStop = false;
 
@@ -878,8 +878,8 @@ public class GPSTrackService extends Service {
                     else{ //currentSpeed > 0
                         if(lFirstNonMovingTime != 0){
                             lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
-                            sNonMovingTimes = sNonMovingTimes + "" +
-                                        lFirstNonMovingTime + "," + lLastNonMovingTime + "\n";
+//                            sNonMovingTimes = sNonMovingTimes + "" +
+//                                        lFirstNonMovingTime + "," + lLastNonMovingTime + "\n";
                             //reset
                             lLastNonMovingTime = 0;
                             lFirstNonMovingTime = 0;
