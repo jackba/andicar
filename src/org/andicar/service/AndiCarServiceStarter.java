@@ -28,6 +28,7 @@ public class AndiCarServiceStarter extends BroadcastReceiver {
 			}
 			else if(rIntent.getAction().equals(Intent.ACTION_DATE_CHANGED)){
 				startServices(context);
+				AndiCarAddOnServiceStarter.startServices(context);
 			}
 		}
 		catch(Exception e){
