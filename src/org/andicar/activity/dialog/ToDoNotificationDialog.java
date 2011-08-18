@@ -250,6 +250,8 @@ public class ToDoNotificationDialog extends EditActivityBase {
 				cvData.put( MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, cal.getTimeInMillis() / 1000);
 			}
 		}
+		if(mDbAdapter == null)
+			mDbAdapter = new MainDbAdapter(this);
 		mDbAdapter.updateRecord(MainDbAdapter.TODO_TABLE_NAME, mToDoID, cvData);
 		Intent intent = new Intent(this, ToDoManagementService.class);
 		intent.putExtra("TaskID", mTaskID);
