@@ -18,10 +18,7 @@
  */
 package org.andicar.persistence;
 
-import java.util.Calendar;
-
 import org.andicar.activity.R;
-import org.andicar.service.ToDoManagementService;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -1307,46 +1304,46 @@ public class DB {
 							"'" + mResource.getString(R.string.DB_TaskType_ReminderComment) + "')";
 			db.execSQL(sql);
 			
-			Calendar cal = Calendar.getInstance();
-			if(cal.get(Calendar.HOUR_OF_DAY) > 20){
-				cal.add(Calendar.DAY_OF_YEAR, 1);
-			}
-			cal.set(Calendar.HOUR_OF_DAY, 20);
-			cal.set(Calendar.MINUTE, 0);
-			cal.set(Calendar.SECOND, 0);
-			
-			sql = " INSERT INTO " + TASK_TABLE_NAME + "( " +
-							GEN_COL_NAME_NAME + ", " +
-							GEN_COL_ISACTIVE_NAME + ", " +
-							GEN_COL_USER_COMMENT_NAME + ", " +
-							TASK_COL_TASKTYPE_ID_NAME + ", " +
-							TASK_COL_SCHEDULEDFOR_NAME + ", " +
-							TASK_COL_ISRECURRENT_NAME + ", " +
-							TASK_COL_ISDIFFERENTSTARTINGTIME_NAME + ", " +
-							TASK_COL_TIMEFREQUENCY_NAME + ", " +
-							TASK_COL_TIMEFREQUENCYTYPE_NAME + ", " +
-							TASK_COL_STARTINGTIME_NAME + ", " +
-							TASK_COL_TIMEREMINDERSTART_NAME + ", " +
-							TASK_COL_TODOCOUNT_NAME + ") " +
-					"VALUES ( " +
-							"'" + mResource.getString(R.string.DB_DemoTask_Name) + "', " +
-							"'Y', " +
-							"'" + mResource.getString(R.string.DB_DemoTask_Comment) + "', " +
-							"2, " +
-							"'T', " +
-							"'Y', " +
-							"'N', " +
-							"1, " +
-							"1, " +
-							Long.toString(cal.getTimeInMillis() / 1000) + ", " +
-							"30, " +
-							"3 )";
-
-			db.execSQL(sql);
-
-			Intent intent = new Intent(mCtx, ToDoManagementService.class);
-			mCtx.startService(intent);
-							
+//			Calendar cal = Calendar.getInstance();
+//			if(cal.get(Calendar.HOUR_OF_DAY) > 20){
+//				cal.add(Calendar.DAY_OF_YEAR, 1);
+//			}
+//			cal.set(Calendar.HOUR_OF_DAY, 20);
+//			cal.set(Calendar.MINUTE, 0);
+//			cal.set(Calendar.SECOND, 0);
+//			
+//			sql = " INSERT INTO " + TASK_TABLE_NAME + "( " +
+//							GEN_COL_NAME_NAME + ", " +
+//							GEN_COL_ISACTIVE_NAME + ", " +
+//							GEN_COL_USER_COMMENT_NAME + ", " +
+//							TASK_COL_TASKTYPE_ID_NAME + ", " +
+//							TASK_COL_SCHEDULEDFOR_NAME + ", " +
+//							TASK_COL_ISRECURRENT_NAME + ", " +
+//							TASK_COL_ISDIFFERENTSTARTINGTIME_NAME + ", " +
+//							TASK_COL_TIMEFREQUENCY_NAME + ", " +
+//							TASK_COL_TIMEFREQUENCYTYPE_NAME + ", " +
+//							TASK_COL_STARTINGTIME_NAME + ", " +
+//							TASK_COL_TIMEREMINDERSTART_NAME + ", " +
+//							TASK_COL_TODOCOUNT_NAME + ") " +
+//					"VALUES ( " +
+//							"'" + mResource.getString(R.string.DB_DemoTask_Name) + "', " +
+//							"'Y', " +
+//							"'" + mResource.getString(R.string.DB_DemoTask_Comment) + "', " +
+//							"2, " +
+//							"'T', " +
+//							"'Y', " +
+//							"'N', " +
+//							"1, " +
+//							"1, " +
+//							Long.toString(cal.getTimeInMillis() / 1000) + ", " +
+//							"30, " +
+//							"3 )";
+//
+//			db.execSQL(sql);
+//
+//			Intent intent = new Intent(mCtx, ToDoManagementService.class);
+//			mCtx.startService(intent);
+//							
 		}
 
 		private void createBPartnerTable(SQLiteDatabase db) throws SQLException {
