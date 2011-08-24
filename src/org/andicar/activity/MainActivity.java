@@ -66,7 +66,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.andicar.addon.activity.AddOnServicesList;
-import com.andicar.addon.activity.ServiceSubscription;
 import com.andicar.addon.services.AndiCarAddOnServiceStarter;
 
 /**
@@ -379,8 +378,8 @@ public class MainActivity extends BaseActivity {
 			}
 
 			// check for app update once a day
-			Long currentTime = System.currentTimeMillis();
-			Long lastTime = mPreferences.getLong("lastUpdateCheckTime", 0);
+//			Long currentTime = System.currentTimeMillis();
+//			Long lastTime = mPreferences.getLong("lastUpdateCheckTime", 0);
 //			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
 //				if ((lastTime + oneDayInMilis) < currentTime) {
 //					Intent intent = new Intent(this, UpdateCheckService.class);
@@ -395,39 +394,40 @@ public class MainActivity extends BaseActivity {
 ////			intent.putExtra("ToDoID", 22L);
 //			this.startService(intent);
 			
-			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
-			if(isJustInstalled){
-				//show the question above 10 days 
-				editor.putLong("lastAddOnCheckTime", currentTime - (5 * StaticValues.ONE_DAY_IN_MILISECONDS));
-				editor.commit();
-			}
-			else{
-				if(lastTime + (15 * StaticValues.ONE_DAY_IN_MILISECONDS) < currentTime && 
-						!ServiceSubscription.isAddOnsUsed(mDbAdapter)){
-					editor.putLong("lastAddOnCheckTime", currentTime);
-					editor.commit();
-					
-					AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
-							AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.MainActivity_DidYouKnow));
-		            builder.setMessage(mResource.getString(R.string.MainActivity_AddOnMessage));
-		            builder.setCancelable(false);
-		            builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
-		                       new DialogInterface.OnClickListener() {
-		                           public void onClick(DialogInterface dialog, int id) {
-		                        	   startActivity(new Intent(MainActivity.this, AddOnServicesList.class));
-		                        	   dialog.cancel();
-		                           }
-		                       });
-		            builder.setNegativeButton(mResource.getString(R.string.GEN_NO),
-		                        new DialogInterface.OnClickListener() {
-		                           public void onClick(DialogInterface dialog, int id) {
-		                                dialog.cancel();
-		                           }
-		                        });
-		            AlertDialog alert = builder.create();
-		            alert.show();
-				}
-			}
+			
+//			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
+//			if(isJustInstalled){
+//				//show the question above 10 days 
+//				editor.putLong("lastAddOnCheckTime", currentTime - (5 * StaticValues.ONE_DAY_IN_MILISECONDS));
+//				editor.commit();
+//			}
+//			else{
+//				if(lastTime + (15 * StaticValues.ONE_DAY_IN_MILISECONDS) < currentTime && 
+//						!ServiceSubscription.isAddOnsUsed(mDbAdapter)){
+//					editor.putLong("lastAddOnCheckTime", currentTime);
+//					editor.commit();
+//					
+//					AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
+//							AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.MainActivity_DidYouKnow));
+//		            builder.setMessage(mResource.getString(R.string.MainActivity_AddOnMessage));
+//		            builder.setCancelable(false);
+//		            builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
+//		                       new DialogInterface.OnClickListener() {
+//		                           public void onClick(DialogInterface dialog, int id) {
+//		                        	   startActivity(new Intent(MainActivity.this, AddOnServicesList.class));
+//		                        	   dialog.cancel();
+//		                           }
+//		                       });
+//		            builder.setNegativeButton(mResource.getString(R.string.GEN_NO),
+//		                        new DialogInterface.OnClickListener() {
+//		                           public void onClick(DialogInterface dialog, int id) {
+//		                                dialog.cancel();
+//		                           }
+//		                        });
+//		            AlertDialog alert = builder.create();
+//		            alert.show();
+//				}
+//			}
 			
 			//inneractive
 //			InnerActiveAdView iaView = (InnerActiveAdView) findViewById(R.id.ad1);
