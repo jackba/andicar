@@ -655,6 +655,7 @@ public class MileageEditActivity extends EditActivityBase {
     		mPrefEditor.putLong("LastTagId", mTagId);
 
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
+    	mPrefEditor.putLong("MileageInsertExpenseType_ID", spnExpType.getSelectedItemId());
 		mPrefEditor.commit();
         
 		//check if mileage todo exists

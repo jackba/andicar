@@ -868,6 +868,9 @@ public class RefuelEditActivity extends EditActivityBase {
     		mPrefEditor.putLong("LastTagId", mTagId);
     	
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
+    	mPrefEditor.putLong("RefuelExpenseCategory_ID", spnExpCategory.getSelectedItemId() );
+    	mPrefEditor.putLong("RefuelExpenseType_ID", spnExpType.getSelectedItemId() );
+    	
 		mPrefEditor.commit();
     	
 		Intent intent = new Intent(this, ToDoNotificationService.class);
