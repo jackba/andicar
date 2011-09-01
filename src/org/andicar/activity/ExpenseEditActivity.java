@@ -806,6 +806,8 @@ public class ExpenseEditActivity extends EditActivityBase {
     		mPrefEditor.putLong("LastTagId", mTagId);
     	
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
+    	mPrefEditor.putLong("ExpenseExpenseCategory_ID", spnExpCategory.getSelectedItemId() );
+    	mPrefEditor.putLong("ExpenseExpenseType_ID", spnExpType.getSelectedItemId() );
 		mPrefEditor.commit();
 
 		//check if mileage todo exists
@@ -893,6 +895,13 @@ public class ExpenseEditActivity extends EditActivityBase {
         
         mUOMId = -1;
         setSpinnerSelectedID(spnUOM, mUOMId);
+
+		setExpCategoryId(mPreferences.getLong("ExpenseExpenseCategory_ID", 1));
+		setSpinnerSelectedID(spnExpCategory, mExpCategoryId);
+
+		setExpTypeId(mPreferences.getLong("ExpenseExpenseType_ID", 1));
+		setSpinnerSelectedID(spnExpType, mExpTypeId);
+        
         
         acUserComment.setText(null);
         etUserInput.setText(null);

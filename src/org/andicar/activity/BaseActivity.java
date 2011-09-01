@@ -271,7 +271,7 @@ public abstract class BaseActivity extends Activity {
                 	if(isBackgroundSettingsActive)
                 		return;
                 	
-                    if(BaseActivity.this instanceof RefuelEditActivity){
+                    /*if(BaseActivity.this instanceof RefuelEditActivity){
                         if( ((Spinner)arg0).equals(findViewById(R.id.spnExpType))){
                             mPrefEditor.putLong("RefuelExpenseType_ID", arg3);
                             mPrefEditor.commit();
@@ -287,7 +287,7 @@ public abstract class BaseActivity extends Activity {
                             mPrefEditor.commit();
                         }
                     }
-                    else if(BaseActivity.this instanceof MainActivity){
+                    else*/ if(BaseActivity.this instanceof MainActivity){
                         if( ((Spinner)arg0).equals(findViewById(R.id.spnCar))){
                         	mCarId = arg3;
                             mPrefEditor.putLong("CurrentCar_ID", arg3);

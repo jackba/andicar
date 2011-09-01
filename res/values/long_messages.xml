@@ -88,6 +88,5 @@
     <string name="LM_UPDATE_MSG">
         <b><i>What\'s new:</i></b>\n\n
         * Various bug fixes\n\n
-        * <b>Hungarian translation</b> by Péter Nagy\n\n
     </string>
 </resources>
