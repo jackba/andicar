@@ -73,15 +73,17 @@ public class ToDoManagementService extends Service {
 			mCarID = mBundleExtras.getLong("CarID");
 			isSetJustNextRun = mBundleExtras.getBoolean("setJustNextRun");
 		}
-		
-		mDb = new MainDbAdapter(this);
-		
-		createTaskTodos();
+
+		if(!isSetJustNextRun){
+			mDb = new MainDbAdapter(this);
+			createTaskTodos();
+			mDb.close();
+		}
+
 		Intent i = new Intent(this, ToDoNotificationService.class);
 		i.putExtra("setJustNextRun", isSetJustNextRun);
 		this.startService(i);
 
-		mDb.close();
 		stopSelf();
 	}
 	
