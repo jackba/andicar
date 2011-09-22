@@ -20,8 +20,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
-          android:versionCode="3610" 
-          android:versionName="3.6.2 Beta"
+          android:versionCode="3620" 
+          android:versionName="3.6.2"
           android:installLocation="internalOnly">
 <!-- 
 	internalOnly becouse:
