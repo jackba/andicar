@@ -29,7 +29,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dip"
+        android:layout_marginRight="5dp"
         >
 
         <CheckBox
@@ -42,7 +42,7 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dip"
+            android:layout_marginTop="15dp"
             >
             <TextView
                 android:id="@+id/tvFormatLabel"
@@ -54,8 +54,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="2dip"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>

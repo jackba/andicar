@@ -32,7 +32,7 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dip"
+        android:layout_marginRight="5dp"
        	android:id="@+id/fakeFocus"
 		android:focusable="true"
 		android:focusableInTouchMode="true" 
@@ -75,7 +75,7 @@
 			android:layout_height="wrap_content"
 			android:typeface="sans"
 			android:textColor="@android:color/white"
-        	android:layout_marginLeft="5dip"
+        	android:layout_marginLeft="5dp"
         	android:gravity="left"
             />
 
@@ -86,10 +86,10 @@
 			android:layout_height="wrap_content"
 			>
 		    <TextView
-		        android:layout_height="2dip"
+		        android:layout_height="2dp"
 		        android:layout_width="fill_parent"
 		        android:background="@color/separator_bg"
-		        android:layout_marginTop="10dip"
+		        android:layout_marginTop="10dp"
 		        />
 	         <TextView
 	             android:layout_width="fill_parent"
@@ -106,7 +106,7 @@
 				android:orientation="horizontal"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="5dip"
+				android:layout_marginTop="5dp"
 				android:gravity="center_horizontal|center_vertical"
 				>
 				<TextView
@@ -120,19 +120,19 @@
 				    />
 				<EditText
 				    android:id="@+id/etPostpone"
-				    android:layout_width="50dip"
+				    android:layout_width="50dp"
 				    android:layout_height="wrap_content"
 				    android:numeric="integer"
 				    android:digits="1234567890"
 				    android:inputType="phone"
-				    android:layout_marginLeft="2dip"
+				    android:layout_marginLeft="2dp"
 				    android:background="@drawable/white_background"
 				    />
 				<TextView
 				    android:id="@+id/tvPostponeUOM"
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"
-				    android:layout_marginLeft="2dip"
+				    android:layout_marginLeft="2dp"
 				    android:typeface="sans"
 				    android:textColor="@android:color/white"
 					android:textSize="16sp"
@@ -144,8 +144,8 @@
 			    android:typeface="sans"
 			    android:textColor="@android:color/white"
 			    android:text="@string/GEN_Or"
-		        android:layout_marginTop="5dip"
-		        android:layout_marginLeft="10dip"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="10dp"
 				android:textSize="16sp"
 			    />
 	
@@ -157,24 +157,24 @@
 		        android:typeface="sans"
 		        android:textColor="@android:color/white"
 		        android:button="@drawable/checkbox_selector"
-		        android:layout_marginTop="5dip"
-		        android:layout_marginLeft="20dip"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="20dp"
 		        />
 		</LinearLayout>
 	   
 	    <TextView
-	        android:layout_height="1dip"
+	        android:layout_height="1dp"
 	        android:layout_width="fill_parent"
 	        android:background="@color/separator_bg"
-	        android:layout_marginTop="10dip"
+	        android:layout_marginTop="10dp"
 	        />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dip"
-            android:layout_marginBottom="5dip"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center_horizontal|center_vertical"
             >
 	        <ImageButton

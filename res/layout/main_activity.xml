@@ -24,7 +24,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginRight="5dip"
+    android:layout_marginRight="5dp"
     android:id="@+id/vgRoot"
     android:background="@android:color/black"
     >
@@ -39,7 +39,7 @@
         android:textStyle="bold|italic"
         android:textColor="#86CC5D"
         android:gravity="center"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="5dp"
         />
         -->
 		<ImageView
@@ -52,7 +52,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
-	        android:layout_marginTop="5dip"
+	        android:layout_marginTop="5dp"
 	        >
 		    <TextView
 		        android:id="@+id/tvCarLabel"
@@ -67,7 +67,7 @@
 	       <Spinner android:id="@+id/spnCar"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="5dip"
+	                android:layout_marginLeft="5dp"
 	                android:prompt="@string/GEN_ChooseOneTitle"
 	                android:drawSelectorOnTop="true"
 	                android:background="@drawable/white_background"
@@ -78,7 +78,7 @@
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
 	        android:gravity="center_horizontal"
-	        android:layout_marginTop="3dip"
+	        android:layout_marginTop="3dp"
 	        >
 		    <TextView
 		        android:id="@+id/tvCarIndex"
@@ -96,10 +96,10 @@
 	/>
 	 -->
     <TextView
-        android:layout_height="1dip"
+        android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:background="@color/separator_bg"
-        android:layout_marginTop="5dip"
+        android:layout_marginTop="5dp"
         />
 
 
@@ -113,8 +113,8 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginTop="5dip"
-            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
             >
 
             <LinearLayout
@@ -131,7 +131,7 @@
                     android:textStyle="bold"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:background="@color/header_bg"
                     android:gravity="center_vertical"
                     android:text="@string/MainActivity_MileageHeaderCaption"
@@ -166,14 +166,14 @@
                               android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
                     />
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnMileageList"
                                  android:layout_width="wrap_content"
@@ -192,10 +192,10 @@
                                  />
                 </RelativeLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     />
             </LinearLayout>
 
@@ -213,7 +213,7 @@
                     android:textStyle="bold"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:background="@color/header_bg"
                     android:gravity="center_vertical"
                     android:text="@string/MainActivity_ToDoHeaderCaption"
@@ -248,14 +248,14 @@
                               android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
                     />
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnToDoList"
                                  android:layout_width="wrap_content"
@@ -274,10 +274,10 @@
                                  />
                 </RelativeLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     />
             </LinearLayout>
 
@@ -295,7 +295,7 @@
                     android:textStyle="bold"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:background="@color/header_bg"
                     android:gravity="center_vertical"
                     android:text="@string/MainActivity_GPSTrackHeaderCaption"
@@ -330,7 +330,7 @@
                               android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
                     />
@@ -338,7 +338,7 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnGPSTrackList"
                                  android:layout_width="wrap_content"
@@ -365,10 +365,10 @@
                                  />
                 </RelativeLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     />
             </LinearLayout>
 
@@ -386,7 +386,7 @@
                     android:textStyle="bold"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:background="@color/header_bg"
                     android:gravity="center_vertical"
                     android:text="@string/MainActivity_RefuelHeaderCaption"
@@ -421,7 +421,7 @@
                               android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
                     />
@@ -429,7 +429,7 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnRefuelList"
                                  android:layout_width="wrap_content"
@@ -449,10 +449,10 @@
                                  />
                 </RelativeLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     />
             </LinearLayout>
             <LinearLayout
@@ -469,7 +469,7 @@
                     android:textStyle="bold"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:background="@color/header_bg"
                     android:gravity="center_vertical"
                     android:text="@string/MainActivity_ExpenseHeaderCaption"
@@ -504,7 +504,7 @@
                               android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
                     />
@@ -512,7 +512,7 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnExpenseList"
                                  android:layout_width="wrap_content"
@@ -532,10 +532,10 @@
                                  />
                 </RelativeLayout>
                 <TextView
-                    android:layout_height="1dip"
+                    android:layout_height="1dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     />
             </LinearLayout>
 
@@ -553,7 +553,7 @@
                     android:textStyle="bold"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
-                    android:layout_marginTop="10dip"
+                    android:layout_marginTop="10dp"
                     android:background="@color/header_bg"
                     android:gravity="center_vertical"
                     android:text="@string/MainActivity_StatisticsHeaderCaption"
@@ -606,10 +606,10 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_height="2dip"
+                    android:layout_height="2dp"
                     android:layout_width="fill_parent"
                     android:background="@color/separator_bg"
-                    android:layout_marginTop="5dip"
+                    android:layout_marginTop="5dp"
                     />
             </LinearLayout>
 
@@ -618,7 +618,7 @@
                 android:layout_height="fill_parent"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal|bottom"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 android:textSize="12sp"
                 android:typeface="sans"
                 android:textColor="@android:color/white"

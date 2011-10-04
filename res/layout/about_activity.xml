@@ -31,7 +31,7 @@
         android:id="@+id/llAbout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginRight="5dip"
+        android:layout_marginRight="5dp"
         android:gravity="center_horizontal"
         >
 		<ImageView

@@ -29,8 +29,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dip"
-        android:layout_marginTop="15dip"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
         >
 
         <LinearLayout
@@ -38,7 +38,7 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-        	android:layout_marginLeft="5dip"
+        	android:layout_marginLeft="5dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -52,8 +52,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="2dip"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
                 android:background="@color/search_dialog_spinner_bg"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 />
@@ -64,8 +64,8 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-        	android:layout_marginLeft="5dip"
+            android:layout_marginTop="20dp"
+        	android:layout_marginLeft="5dp"
             >
             <TextView
                 android:id="@+id/tvCarLabel"
@@ -79,8 +79,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="2dip"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
                 android:background="@color/search_dialog_spinner_bg"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 />
@@ -92,8 +92,8 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-	        android:layout_marginTop="20dip"
-       		android:layout_marginLeft="5dip"
+	        android:layout_marginTop="20dp"
+       		android:layout_marginLeft="5dp"
             >
 	        <TextView
 		        android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
 	            android:orientation="horizontal"
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_marginTop="5dip"
+	            android:layout_marginTop="5dp"
 	            android:gravity="center_vertical|right"
 	            >
 		        <TextView
@@ -120,14 +120,14 @@
 	            <ImageButton android:id="@+id/btnPickDate"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
-	                    android:layout_marginLeft="10dip"
+	                    android:layout_marginLeft="10dp"
 	                    android:background="@drawable/btnsmall_background_selector"
 	                    android:src="@drawable/icon_calendar_selector"
 	                    />
 	            <ImageButton android:id="@+id/btnPickTime"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
-	                    android:layout_marginLeft="10dip"
+	                    android:layout_marginLeft="10dp"
 	                    android:background="@drawable/btnsmall_background_selector"
 	                    android:src="@drawable/icon_clock_selector"
 	                    />
@@ -139,8 +139,8 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-       		android:layout_marginLeft="5dip"
-	        android:layout_marginTop="20dip"
+       		android:layout_marginLeft="5dp"
+	        android:layout_marginTop="20dp"
 	        android:gravity="center_vertical"
             >
 	        <TextView
@@ -158,7 +158,7 @@
                 android:digits="1234567890"
                 android:inputType="phone"
                 android:background="@drawable/white_background"
-	       		android:layout_marginLeft="5dip"
+	       		android:layout_marginLeft="5dp"
                 />
         </LinearLayout>
     </LinearLayout>

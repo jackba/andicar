@@ -22,15 +22,15 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginRight="5dip"
+    android:layout_marginRight="5dp"
     android:id="@+id/vgRoot"
     android:background="@android:color/black"
     >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_marginRight="5dip"
+        android:layout_height="0dp"
+        android:layout_marginRight="5dp"
        	android:id="@+id/fakeFocus"
 		android:focusable="true"
 		android:focusableInTouchMode="true" 
@@ -39,7 +39,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="10dp"
         >
         <ImageButton
             android:id="@android:id/closeButton"
@@ -56,14 +56,14 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_background_selector"
             android:src="@drawable/icon_done_selector"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="5dp"
             />
     </RelativeLayout>
     <TextView
-        android:layout_height="1dip"
+        android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:background="@color/separator_bg"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="10dp"
         />
 
     <ScrollView
@@ -77,20 +77,20 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="5dp"
             >
 		    <LinearLayout
 		       	android:id="@+id/llTemplateZone"
 		        android:orientation="vertical"
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_marginTop="10dip"
+		        android:layout_marginTop="10dp"
 		        >
 			    <LinearLayout
 			        android:orientation="horizontal"
 			        android:layout_width="fill_parent"
 			        android:layout_height="wrap_content"
-			        android:layout_marginTop="5dip"
+			        android:layout_marginTop="5dp"
 			        android:gravity="center_vertical|center_horizontal"
 			        >
 			        <TextView
@@ -103,7 +103,7 @@
 			            />
 			        <Spinner 
 			        	android:id="@+id/spnTemplate"
-			            android:layout_width="90dip"
+			            android:layout_width="90dp"
 			            android:layout_height="wrap_content"
 			            android:drawSelectorOnTop="true"
 			            android:background="@drawable/white_background"
@@ -113,7 +113,7 @@
 			            android:id="@+id/btnUpdate"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
-			            android:layout_marginLeft="5dip"
+			            android:layout_marginLeft="5dp"
 			            android:text="@string/GEN_Update"
 			            android:background="@drawable/btn_background_selector"
 			            android:typeface="sans"
@@ -124,7 +124,7 @@
 			            android:id="@+id/btnNew"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
-			            android:layout_marginLeft="10dip"
+			            android:layout_marginLeft="10dp"
 			            android:text="@string/GEN_New"
 			            android:background="@drawable/btn_background_selector"
 			            android:typeface="sans"
@@ -133,17 +133,17 @@
 			            />
 			    </LinearLayout>
 			    <TextView
-			        android:layout_height="1dip"
+			        android:layout_height="1dp"
 			        android:layout_width="fill_parent"
 			        android:background="@color/separator_bg"
-			        android:layout_marginTop="10dip"
+			        android:layout_marginTop="10dp"
 			        />
 			</LinearLayout>    
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-		        android:layout_marginTop="10dip"
+		        android:layout_marginTop="10dp"
                 >
                 <TextView
                     android:id="@+id/tvCarLabel"
@@ -158,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
                     />
@@ -167,7 +167,7 @@
                     android:id="@+id/tvDriverLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/GEN_DriverLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
@@ -176,7 +176,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
                     />
@@ -186,7 +186,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-		        android:layout_marginTop="15dip"
+		        android:layout_marginTop="15dp"
                 >
                 <TextView
                     android:id="@+id/tvExpenseCategoryLabel"
@@ -197,10 +197,10 @@
                     android:textColor="@android:color/white"
                     />
                 <Spinner android:id="@+id/spnExpCategory"
-                    android:layout_width="80dip"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
                     />
@@ -209,7 +209,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/GEN_TypeLabel"
-                    android:layout_marginLeft="10dip"
+                    android:layout_marginLeft="10dp"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
@@ -217,7 +217,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
                     />
@@ -226,7 +226,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-		        android:layout_marginTop="15dip"
+		        android:layout_marginTop="15dp"
                 android:gravity="center_vertical"
                 >
                 <TextView android:id="@+id/tvDateTimeValue"
@@ -239,31 +239,31 @@
                 <ImageButton android:id="@+id/btnPickDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dip"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/btn_background_selector"
                         android:src="@drawable/icon_calendar_selector"
                         />
                 <ImageButton android:id="@+id/btnPickTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dip"
+                        android:layout_marginLeft="10dp"
                         android:background="@drawable/btn_background_selector"
                         android:src="@drawable/icon_clock_selector"
                         />
             </LinearLayout>
 
             <TextView
-                android:layout_height="1dip"
+                android:layout_height="1dp"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="10dp"
                 />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="10dp"
                 >
                 <TextView
                     android:id="@+id/tvCurrencyLabel"
@@ -275,9 +275,9 @@
                     />
                 <Spinner
                 	android:id="@+id/spnCurrency"
-                    android:layout_width="80dip"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:drawSelectorOnTop="true"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
@@ -287,7 +287,7 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
 	                android:id="@+id/llConversionRateZone1"
-	                android:layout_marginLeft="5dip"
+	                android:layout_marginLeft="5dp"
 	                >
 	                <TextView
 	                    android:id="@+id/tvConversionRateLabel"
@@ -304,7 +304,7 @@
 	                    android:numeric="decimal"
 	                    android:digits="-.1234567890"
 	                    android:inputType="phone"
-	                    android:layout_marginLeft="5dip"
+	                    android:layout_marginLeft="5dp"
 	                    android:hint="@string/GEN_Required"
 	                    android:background="@drawable/white_background"
 	                    android:maxLines="1"
@@ -315,7 +315,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 >
                 <RadioGroup
@@ -349,7 +349,7 @@
                     android:numeric="decimal"
                     android:digits="-.1234567890"
                     android:inputType="phone"
-                    android:layout_marginLeft="15dip"
+                    android:layout_marginLeft="15dp"
                     android:hint="@string/GEN_Required"
                     android:background="@drawable/white_background"
                     android:tag="@string/GEN_AmountLabel"
@@ -359,7 +359,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 >
                 <TextView
                     android:id="@+id/tvQuantity"
@@ -371,12 +371,12 @@
                     />
                 <EditText
                     android:id="@+id/etQuantity"
-                    android:layout_width="100dip"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
                     android:digits="-.1234567890"
                     android:inputType="phone"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     android:tag="@string/GEN_QuantityLabel"
                     />
@@ -387,13 +387,13 @@
                     android:text="@string/GEN_UOM"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     />
                 <Spinner android:id="@+id/spnUOM"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     android:prompt="@string/GEN_ChooseOneTitle"
                     />
@@ -403,7 +403,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 >
                 <TextView
                     android:id="@+id/tvCalculatedTextLabel"
@@ -416,7 +416,7 @@
                     android:id="@+id/tvCalculatedTextContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
@@ -427,7 +427,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/llConversionRateZone2"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 >
                 <TextView
                     android:id="@+id/tvConvertedAmountLabel"
@@ -441,7 +441,7 @@
                     android:id="@+id/tvConvertedAmountValue"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
@@ -451,7 +451,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 >
                 <TextView
                     android:id="@+id/tvIndexLabel"
@@ -468,24 +468,24 @@
                     android:numeric="decimal"
                     android:digits="-.1234567890"
                     android:inputType="phone"
-                    android:layout_marginLeft="10dip"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/white_background"
                     android:tag="@string/GEN_IndexLabel"
                     />
             </LinearLayout>
 
             <TextView
-                android:layout_height="1dip"
+                android:layout_height="1dp"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dip"
+                android:layout_marginTop="15dp"
                 >
                 <TextView
                     android:id="@+id/tvBPartnerLabel"
@@ -499,7 +499,7 @@
                     android:id="@+id/acBPartner"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     />
             </LinearLayout>
@@ -508,7 +508,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dip"
+                android:layout_marginTop="15dp"
                 >
                 <TextView
                     android:id="@+id/tvBPartnerAdressLabel"
@@ -522,7 +522,7 @@
                     android:id="@+id/acAdress"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     />
             </LinearLayout>
@@ -532,7 +532,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_BPartnerAdressInfo"
                 android:typeface="sans"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 android:textStyle="italic"
                 android:gravity="center"
                 />
@@ -541,7 +541,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dip"
+                android:layout_marginTop="15dp"
                 >
                 <TextView
                     android:id="@+id/tvDocumentNoLabel"
@@ -555,23 +555,23 @@
                     android:id="@+id/etDocumentNo"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     />
             </LinearLayout>
 
             <TextView
-                android:layout_height="1dip"
+                android:layout_height="1dp"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dip"
+                android:layout_marginTop="15dp"
                 >
 	            <TextView
 	                android:id="@+id/tvTagLabel"
@@ -585,7 +585,7 @@
 	                android:id="@+id/acTag"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="5dip"
+	                android:layout_marginLeft="5dp"
 	                android:background="@drawable/white_background"
 	                android:hint="@string/GEN_TagHint"
 	                />
@@ -597,14 +597,14 @@
                 android:text="@string/GEN_UserCommentLabel"
                 android:typeface="sans"
                 android:textColor="@android:color/white"
-                android:layout_marginTop="15dip"
+                android:layout_marginTop="15dp"
                 />
             <AutoCompleteTextView
                 android:id="@+id/acUserComment"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/white_background"
-                android:layout_marginBottom="20dip"
+                android:layout_marginBottom="20dp"
                 />
         </LinearLayout>
     </ScrollView>

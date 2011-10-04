@@ -22,15 +22,15 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginRight="5dip"
+    android:layout_marginRight="5dp"
     android:id="@+id/vgRoot"
     android:background="@android:color/black"
     >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_marginRight="5dip"
+        android:layout_height="0dp"
+        android:layout_marginRight="5dp"
        	android:id="@+id/fakeFocus"
 		android:focusable="true"
 		android:focusableInTouchMode="true" 
@@ -39,7 +39,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="10dp"
         >
         <ImageButton
             android:id="@android:id/closeButton"
@@ -56,14 +56,14 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/btn_background_selector"
             android:src="@drawable/icon_done_selector"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="5dp"
             />
     </RelativeLayout>
     <TextView
-        android:layout_height="1dip"
+        android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:background="@color/separator_bg"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="10dp"
         />
     <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -76,13 +76,13 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="5dp"
             >
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 >
                 <TextView
                     android:id="@+id/tvCarLabel"
@@ -96,7 +96,7 @@
                     android:id="@+id/tvDriverLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/GEN_DriverLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
@@ -105,7 +105,7 @@
                          android:layout_width="fill_parent"
                          android:layout_height="wrap_content"
                          android:drawSelectorOnTop="true"
-                         android:layout_marginLeft="5dip"
+                         android:layout_marginLeft="5dp"
                          android:background="@drawable/white_background"
                          android:prompt="@string/GEN_ChooseOneTitle"
                          />
@@ -117,14 +117,14 @@
                 android:layout_height="wrap_content"
                 android:typeface="sans"
                 android:textColor="@android:color/white"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 />
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 >
                 <TextView
                     android:id="@+id/tvNameLabel"
@@ -138,7 +138,7 @@
                     android:id="@+id/etName"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dip"
+                    android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     />
             </LinearLayout>
@@ -146,7 +146,7 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 >
 	            <TextView
 	                android:id="@+id/tvTagLabel"
@@ -160,7 +160,7 @@
 	                android:id="@+id/acTag"
 	                android:layout_width="fill_parent"
 	                android:layout_height="wrap_content"
-	                android:layout_marginLeft="5dip"
+	                android:layout_marginLeft="5dp"
 	                android:background="@drawable/white_background"
 	                android:hint="@string/GEN_TagHint"
 	                />
@@ -169,7 +169,7 @@
                 android:id="@+id/tvUserCommentLabel"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dip"
+                android:layout_marginTop="5dp"
                 android:text="@string/GEN_UserCommentLabel"
                 android:typeface="sans"
                 android:textColor="@android:color/white"
@@ -184,7 +184,7 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="10dp"
                 >
                 <ImageButton
                     android:id="@+id/btnGPSTrackShowOnMap"
@@ -201,14 +201,14 @@
                     android:layout_alignParentRight="true"
                     android:background="@drawable/btn_background_selector"
                     android:src="@drawable/icon_mail24x24"
-                    android:layout_marginRight="5dip"
+                    android:layout_marginRight="5dp"
                     />
             </RelativeLayout>
             <TextView
-                android:layout_height="1dip"
+                android:layout_height="1dp"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="10dp"
                 />
 
             <TextView
@@ -217,7 +217,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="10dp"
                 android:background="@color/header_bg"
                 android:gravity="center_vertical"
                 android:text="@string/GPSTrackEditActivity_TrackStatistics"
@@ -235,7 +235,7 @@
 
 
             <TextView
-                android:layout_height="1dip"
+                android:layout_height="1dp"
                 android:layout_width="fill_parent"
                 android:background="@color/separator_bg"
                 />
@@ -245,7 +245,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginTop="10dip"
+                android:layout_marginTop="10dp"
                 android:background="@color/header_bg"
                 android:gravity="center_vertical"
                 android:text="@string/GPSTrackEditActivity_TrackFilesHeaderCaption"
@@ -257,8 +257,8 @@
                 android:id="@+id/llTrackFiles"
                 android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="1000dip"
-                android:layout_marginTop="5dip"
+                android:layout_height="1000dp"
+                android:layout_marginTop="5dp"
                 >
 
                 <ListView android:id="@+id/lvTrackFileList"
