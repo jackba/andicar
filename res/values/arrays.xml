@@ -137,6 +137,14 @@
 	    <item>December</item>
     </string-array>
     
+    <string-array name="ui_style_entries">
+        <item>Style 0</item>
+        <item>Style 1</item>
+    </string-array>
+    <string-array name="ui_style_values">
+        <item>s00</item>
+        <item>s01</item>
+    </string-array>
 
 </resources>
 

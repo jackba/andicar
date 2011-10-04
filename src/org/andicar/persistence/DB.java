@@ -127,12 +127,10 @@ public class DB {
 	// mileage specific columns
 	public static final String MILEAGE_COL_DATE_NAME = "Date";
 	public static final String MILEAGE_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String MILEAGE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME
-			+ "_ID";
+	public static final String MILEAGE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
 	public static final String MILEAGE_COL_INDEXSTART_NAME = "IndexStart";
 	public static final String MILEAGE_COL_INDEXSTOP_NAME = "IndexStop";
-	public static final String MILEAGE_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME
-			+ "_Length_ID";
+	public static final String MILEAGE_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME + "_Length_ID";
 	public static final String MILEAGE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME
 			+ "_ID";
 	public static final String MILEAGE_COL_GPSTRACKLOG_NAME = "GPSTrackLog";

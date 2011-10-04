@@ -44,6 +44,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,9 @@ public class MileageEditActivity extends EditActivityBase {
     private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
     private boolean isRecordMileage = false;
 
+    private RelativeLayout lCarZone;
+    private RelativeLayout lDriverZone;
+    private RelativeLayout lExpTypeZone;
     private RadioButton rbInsertModeIndex;
     private RadioButton rbInsertModeMileage;
     private TextView tvCalculatedTextLabel;
@@ -263,17 +267,66 @@ public class MileageEditActivity extends EditActivityBase {
     }
 
     private void initControls(){
-        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-                MainDbAdapter.GEN_COL_NAME_NAME,
-                mCarId, false);
-        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
-        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
-                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                mExpTypeId, false);
+    	long checkID;
+    	if(lCarZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.CAR_TABLE_NAME); 
+	    	if(checkID > -1){ //one single car
+	    		mCarId = checkID;
+	    		lCarZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lCarZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+		                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+		                MainDbAdapter.GEN_COL_NAME_NAME,
+		                mCarId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+	                MainDbAdapter.GEN_COL_NAME_NAME,
+	                mCarId, false);
+    	}
+    	if(lDriverZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.DRIVER_TABLE_NAME); 
+	    	if(checkID > -1){ //one single driver
+	    		mDriverId = checkID;
+	    		lDriverZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lDriverZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+		                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+		                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+	                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
+    	}
+
+    	if(lExpTypeZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME); 
+	    	if(checkID > -1){ //one single type
+	    		mExpTypeId = checkID;
+	    		lExpTypeZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lExpTypeZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+		                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+		                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+		                mExpTypeId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+	                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+	                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+	                mExpTypeId, false);
+    	}
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
                 android.R.layout.simple_dropdown_item_1line,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null, mCarId, 30));
@@ -298,6 +351,9 @@ public class MileageEditActivity extends EditActivityBase {
     }
     
     private void init(){
+    	lCarZone = (RelativeLayout)findViewById(R.id.lCarZone);
+        lDriverZone = (RelativeLayout)findViewById(R.id.lDriverZone);
+        lExpTypeZone = (RelativeLayout)findViewById(R.id.lExpTypeZone);
         tvCalculatedContent = (TextView) findViewById(R.id.tvCalculatedTextContent);
         etUserInput = (EditText) findViewById(R.id.etUserInput);
         etUserInput.addTextChangedListener(mileageTextWatcher);
@@ -307,6 +363,8 @@ public class MileageEditActivity extends EditActivityBase {
         rbInsertModeMileage = (RadioButton) findViewById(R.id.rbInsertModeMileage);
         tvCalculatedTextLabel = ((TextView) findViewById(R.id.tvCalculatedTextLabel));
         spnExpType = (Spinner)findViewById(R.id.spnExpType);
+        spnExpType.setOnItemSelectedListener(spinnerExpTypeOnItemSelectedListener);
+        spnExpType.setOnTouchListener(spinnerOnTouchListener);
         acUserComment = (AutoCompleteTextView)findViewById(R.id.acUserComment);
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
@@ -430,7 +488,12 @@ public class MileageEditActivity extends EditActivityBase {
 
     @Override
     protected void setLayout() {
-        setContentView(R.layout.mileage_edit_activity);
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+            setContentView(R.layout.mileage_edit_activity_s00);
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		setContentView(R.layout.mileage_edit_activity_s01);
+//    	else
+//    		setContentView(R.layout.mileage_edit_activity_l01);
     }
 
     public void calculateMileageOrNewIndex() throws NumberFormatException {
@@ -553,7 +616,7 @@ public class MileageEditActivity extends EditActivityBase {
         data.put( MainDbAdapter.MILEAGE_COL_INDEXSTART_NAME, mStartIndex.toString());
             data.put( MainDbAdapter.MILEAGE_COL_INDEXSTOP_NAME, mNewIndex.toString());
         data.put( MainDbAdapter.MILEAGE_COL_UOMLENGTH_ID_NAME, mUOMLengthId);
-        data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, spnExpType.getSelectedItemId());
+        data.put( MainDbAdapter.MILEAGE_COL_EXPENSETYPE_ID_NAME, mExpTypeId);
         data.put( MainDbAdapter.MILEAGE_COL_GPSTRACKLOG_NAME, "");
         if(acTag.getText().toString() != null && acTag.getText().toString().length() > 0){
             String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
@@ -738,6 +801,17 @@ public class MileageEditActivity extends EditActivityBase {
             }
         };
 
+    private AdapterView.OnItemSelectedListener spinnerExpTypeOnItemSelectedListener =
+        new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                if(isBackgroundSettingsActive)
+                    return;
+                setExpTypeId(arg3);
+            }
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        };
+
 
 	/* (non-Javadoc)
 	 * @see org.andicar.activity.BaseActivity#setSpecificLayout()
@@ -775,6 +849,10 @@ public class MileageEditActivity extends EditActivityBase {
 		this.mDriverId = driverId;
 	}
 
+	public void setExpTypeId(long expTypeId) {
+		this.mExpTypeId = expTypeId;
+	}
+
 	/* (non-Javadoc)
 	 * @see org.andicar.activity.EditActivityBase#setDefaultValues()
 	 */
@@ -788,13 +866,13 @@ public class MileageEditActivity extends EditActivityBase {
 		spnCar.setEnabled(true);
 		btnStartStopMileageRecord.setImageDrawable(mResource.getDrawable(R.drawable.icon_mileage_start_record_24x24));
         
-		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+		mCarId = mPreferences.getLong("CurrentCar_ID", 1);
         setSpinnerSelectedID(spnCar, mCarId);
 
-        mDriverId = mPreferences.getLong("LastDriver_ID", -1);
+        mDriverId = mPreferences.getLong("LastDriver_ID", 1);
         setSpinnerSelectedID(spnDriver, mDriverId);
 
-        mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
+        mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", 1);
         setSpinnerSelectedID(spnExpType, mExpTypeId);
 
         mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
