@@ -46,7 +46,8 @@
             android:id="@android:id/closeButton"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/icon_cancel_selector" android:layout_width="90dp"/>
+            android:src="@drawable/icon_cancel_selector" 
+            android:layout_width="90dp"/>
         <ImageButton
             android:id="@+id/btnStartStopMileageRecord"
             android:layout_height="wrap_content"
