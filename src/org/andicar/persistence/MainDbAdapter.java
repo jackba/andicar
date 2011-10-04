@@ -1496,4 +1496,28 @@ public class MainDbAdapter extends DB
             mStartIndexStr = new Double("0");
     	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
     }
+    
+    /**
+     * check if only one active record exist in a given table
+     * @param table the table where we look
+     * @return if one record exists the id of the record, otherwise -1
+     */
+    public long isSingleActiveRecord(String table){
+        String selectSql = "";
+        Cursor selectCursor;
+        long retVal = -1;
+
+        //if max == min => one single record
+        selectSql = " SELECT MAX(" + MainDbAdapter.GEN_COL_ROWID_NAME + "), MIN(" + MainDbAdapter.GEN_COL_ROWID_NAME + ") " +
+                    " FROM " + table +
+                    " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' ";
+        selectCursor = execSelectSql(selectSql, null);
+        if(selectCursor.moveToFirst()){
+        	if(selectCursor.getLong(0) == selectCursor.getLong(1)){ // one single active record
+        		retVal = selectCursor.getLong(0);
+        	}
+        }
+        selectCursor.close();
+       	return retVal;
+    }
 }

@@ -1237,6 +1237,9 @@ public class MainActivity extends BaseActivity {
 		if (!mPreferences.contains("AutoUpdateCheck")) {
 			editor.putBoolean("AutoUpdateCheck", true);
 		}
+		if (!mPreferences.contains("UIStyle")) {
+			editor.putString("UIStyle", "s01");
+		}
 
 		editor.commit();
 	}

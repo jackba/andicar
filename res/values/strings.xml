@@ -406,6 +406,8 @@
     <string name="PREF_TaskSummary">"Add, delete, modify tasks"</string>
     <string name="PREF_GPSTrackingFlagValueTitle">"Track flag status"</string>
     <string name="PREF_GPSTrackingFlagValueSummary">"Uncheck this ONLY if you are sure the tracking is not in progress!"</string>
+    <string name="PREF_UIStyleTitle">"Interface style"</string>
+    <string name="PREF_UIStyleSummary">"Change the style of the interface"</string>
 
     <string name="PREF_MainScreen_ShowMileageZone">"Show mileage zone"</string>
     <string name="PREF_MainScreen_ShowGPSTrackZone">"Show GPS track zone"</string>
