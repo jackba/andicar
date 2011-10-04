@@ -73,7 +73,7 @@
     <string name="ERR_049">"This tag can not be deleted because it is used in gps track(s)."</string>
 
     <string name="ERR_050">"Map error!"</string>
-    <string name="ERR_051">"No car selected!\n Please chose a car in the main screen."</string>
+    <string name="ERR_051">"No car selected!\n Please choose a car in the main screen."</string>
 
     <string name="ERR_052">"SMTP authentication not configured (no username)!"</string>
     <string name="ERR_053">"SMTP authentication not configured (no password)!"</string>
