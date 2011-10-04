@@ -22,7 +22,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginRight="5dip"
+    android:layout_marginRight="5dp"
     android:background="@android:color/black"
     >
     <LinearLayout
@@ -31,7 +31,7 @@
         android:layout_height="fill_parent"
         >
         <TextView
-            android:layout_height="1dip"
+            android:layout_height="1dp"
             android:layout_width="fill_parent"
             android:background="@color/separator_bg"
             android:typeface="sans"

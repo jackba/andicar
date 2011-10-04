@@ -14,13 +14,13 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="5dp"
             >
 			<TextView  
 			    android:id="@+id/tvAddOnDescription1"
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			   	android:layout_marginTop="5dip" 
+			   	android:layout_marginTop="5dp" 
 		        android:typeface="sans"
 		        android:textColor="@android:color/white"
 			    />
@@ -28,7 +28,7 @@
 			    android:id="@+id/tvAddOnDescription2"
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			   	android:layout_marginTop="5dip" 
+			   	android:layout_marginTop="5dp" 
 		        android:typeface="sans"
 		        android:textColor="@android:color/white"
 			    />
@@ -36,7 +36,7 @@
 			    android:id="@+id/tvAddOnRequirements"
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			   	android:layout_marginTop="5dip" 
+			   	android:layout_marginTop="5dp" 
 		        android:typeface="sans"
 		        android:textColor="@android:color/white"
 			    />
@@ -44,21 +44,21 @@
 			    android:id="@+id/tvAddOnTerms"
 			    android:layout_width="fill_parent" 
 			    android:layout_height="wrap_content" 
-			   	android:layout_marginTop="10dip" 
+			   	android:layout_marginTop="10dp" 
 		        android:typeface="sans"
 		        android:textColor="@android:color/white"
 			    />
 		    <TextView
-		        android:layout_height="1dip"
+		        android:layout_height="1dp"
 		        android:layout_width="fill_parent"
 		        android:background="@color/separator_bg"
-		        android:layout_marginTop="5dip"
+		        android:layout_marginTop="5dp"
 		        />
 			<TextView
 			    android:id="@+id/tvRenewPeriodInfo"
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
-			   	android:layout_marginTop="5dip" 
+			   	android:layout_marginTop="5dp" 
 		        android:typeface="sans"
 		        android:textColor="@android:color/white"
 		        android:text="@string/AddOn_RenewSubscriptionPeriodInfo"
@@ -67,7 +67,7 @@
 			    android:id="@+id/tvSubscriptionValidity"
 			    android:layout_width="wrap_content" 
 			    android:layout_height="wrap_content" 
-			   	android:layout_marginTop="5dip" 
+			   	android:layout_marginTop="5dp" 
 		        android:typeface="sans"
 		        android:textColor="@android:color/white"
 		        android:text="@string/AddOn_SubscriptionValidity"
@@ -77,13 +77,13 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 		        android:id="@+id/llCurrencyZone"
-		        android:layout_marginTop="5dip"
+		        android:layout_marginTop="5dp"
 	            >
 				<TextView  
 				    android:id="@+id/tvCurrencyLabel"
 				    android:layout_width="wrap_content" 
 				    android:layout_height="wrap_content" 
-				   	android:layout_marginTop="5dip" 
+				   	android:layout_marginTop="5dp" 
 			        android:typeface="sans"
 			        android:textColor="@android:color/white"
 			        android:text="@string/GEN_CurrencyLabel"
@@ -94,7 +94,7 @@
 			         android:orientation="horizontal"
 			         android:checkedButton="@+id/rbCurrencyUSD"
 			         android:id="@+id/rgCurrency"
-			         android:layout_marginLeft="20dip"
+			         android:layout_marginLeft="20dp"
 			         >
 			         <RadioButton
 			             android:id="@+id/rbCurrencyUSD"
@@ -107,7 +107,7 @@
 			         <RadioButton
 			             android:id="@+id/rbCurrencyEUR"
 			             style="?android:attr/textAppearanceSmall"
-			         	 android:layout_marginLeft="20dip"
+			         	 android:layout_marginLeft="20dp"
 			             android:typeface="sans"
 			             android:textColor="@android:color/white"
 			             android:button="@drawable/rb_selector"
@@ -120,7 +120,7 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="fill_parent"
 		        android:id="@+id/llNewSubscriptionZone"
-		        android:layout_marginTop="5dip"
+		        android:layout_marginTop="5dp"
 	            >
 			     <RadioGroup
 			         android:layout_width="fill_parent"
@@ -129,7 +129,7 @@
 			         android:checkedButton="@+id/rbOption2"
 			         android:id="@+id/rgSubscriptionType"
 			         android:gravity="center_vertical"
-			         android:layout_marginLeft="5dip"
+			         android:layout_marginLeft="5dp"
 			         >
 			         <RadioButton
 			             android:id="@+id/rbOption1"
@@ -159,7 +159,7 @@
 				    android:orientation="vertical"
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"
-				    android:layout_marginTop="5dip" 
+				    android:layout_marginTop="5dp" 
 			       	android:gravity="center"
 				    >
 					<Button
@@ -179,7 +179,7 @@
 				    android:orientation="vertical"
 				    android:layout_width="fill_parent"
 				    android:layout_height="wrap_content"
-				    android:layout_marginTop="5dip" 
+				    android:layout_marginTop="5dp" 
 			       	android:gravity="center"
 				    >
 				</LinearLayout>
@@ -189,7 +189,7 @@
 	            android:orientation="vertical"
 	            android:layout_width="fill_parent"
 	            android:layout_height="fill_parent"
-		        android:layout_marginTop="5dip"
+		        android:layout_marginTop="5dp"
 		        android:gravity="center"
 	            >
 				<TextView  
@@ -204,7 +204,7 @@
 				<Button
 			    	android:id="@+id/btnConfigureService"
 			        android:text="@string/AddOn_BtnConfigureServiceCaption"
-		        	android:layout_marginTop="15dip"
+		        	android:layout_marginTop="15dp"
 					android:layout_width="wrap_content" 
 					android:layout_height="wrap_content"
 		            android:background="@drawable/btn_background_selector"
@@ -215,7 +215,7 @@
 				<Button
 			    	android:id="@+id/btnRenewSubscription"
 			        android:text="@string/AddOn_BtnRenewSubscriptionCaption"
-		        	android:layout_marginTop="15dip"
+		        	android:layout_marginTop="15dp"
 					android:layout_width="wrap_content" 
 					android:layout_height="wrap_content"
 		            android:background="@drawable/btn_background_selector"
@@ -225,10 +225,10 @@
 				</Button>
 			</LinearLayout>
 		    <TextView
-		        android:layout_height="1dip"
+		        android:layout_height="1dp"
 		        android:layout_width="fill_parent"
 		        android:background="@color/separator_bg"
-		        android:layout_marginTop="10dip"
+		        android:layout_marginTop="10dp"
 		        />
 		</LinearLayout>
     </ScrollView>

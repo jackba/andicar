@@ -22,19 +22,19 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginRight="5dip"
+    android:layout_marginRight="5dp"
     android:background="@android:color/black"
     >
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="10dp"
         >
         <Button
             android:id="@+id/btnBackup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
+            android:layout_marginLeft="10dp"
             android:text="@string/BackupRestoreEditActivity_BackupBtnCaption"
             android:background="@drawable/btn_background_selector"
             android:typeface="sans"
@@ -45,7 +45,7 @@
             android:id="@+id/btnRestore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
+            android:layout_marginLeft="10dp"
             android:text="@string/BackupRestoreEditActivity_RestoreBtnCaption"
             android:background="@drawable/btn_background_selector"
             android:typeface="sans"
@@ -56,7 +56,7 @@
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dip"
+            android:layout_marginRight="10dp"
             android:text="@string/BackupRestoreEditActivity_DeleteBkBtnCaption"
             android:background="@drawable/btn_background_selector"
             android:typeface="sans"
@@ -65,16 +65,16 @@
             />
     </RelativeLayout>
     <TextView
-        android:layout_height="1dip"
+        android:layout_height="1dp"
         android:layout_width="fill_parent"
         android:background="@color/separator_bg"
-        android:layout_marginTop="10dip"
+        android:layout_marginTop="10dp"
         />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="20dip"
+        android:layout_marginTop="20dp"
         >
         <TextView
             android:layout_width="fill_parent"
@@ -85,10 +85,10 @@
             android:textColor="@android:color/white"
             />
         <TextView
-            android:layout_height="1dip"
+            android:layout_height="1dp"
             android:layout_width="fill_parent"
             android:background="@color/separator_bg"
-            android:layout_marginTop="5dip"
+            android:layout_marginTop="5dp"
             />
 
         <ListView android:id="@+id/lvBackupList"
