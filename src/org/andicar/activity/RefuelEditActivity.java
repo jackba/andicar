@@ -64,6 +64,7 @@ public class RefuelEditActivity extends EditActivityBase {
     private TextView tvConvertedAmountLabel;
     private EditText etConversionRate;
     private LinearLayout llConversionRateZone;
+    private LinearLayout llConvertedAmountZone;
     private CheckBox ckIsFullRefuel;
     private TextView tvCalculatedTextContent;
     private TextView tvCalculatedTextLabel;
@@ -252,6 +253,7 @@ public class RefuelEditActivity extends EditActivityBase {
         tvCalculatedTextLabel = (TextView) findViewById(R.id.tvCalculatedTextLabel);
         tvCalculatedTextContent = (TextView) findViewById(R.id.tvCalculatedTextContent);
         llConversionRateZone = (LinearLayout) findViewById(R.id.llConversionRateZone);
+        llConvertedAmountZone = (LinearLayout) findViewById(R.id.llConvertedAmountZone);
         rbInsertModePrice = (RadioButton) findViewById(R.id.rbInsertModePrice);
         rbInsertModeAmount = (RadioButton) findViewById(R.id.rbInsertModeAmount);
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgExpenseInsertMode);
@@ -659,13 +661,17 @@ public class RefuelEditActivity extends EditActivityBase {
 
     private void setConversionRateVisibility(boolean visible){
         if(visible){
-            llConversionRateZone.setVisibility(View.VISIBLE);
+            llConvertedAmountZone.setVisibility(View.VISIBLE);
+            if(llConversionRateZone != null)
+            	llConversionRateZone.setVisibility(View.VISIBLE);
             etConversionRate.setVisibility(View.VISIBLE);
             etConversionRate.setTag(mResource.getString(R.string.GEN_ConversionRateLabel));
             tvConversionRateLabel.setVisibility(View.VISIBLE);
 
         }else{
-            llConversionRateZone.setVisibility(View.GONE);
+            llConvertedAmountZone.setVisibility(View.GONE);
+            if(llConversionRateZone != null)
+            	llConversionRateZone.setVisibility(View.GONE);
             etConversionRate.setTag(null);
             etConversionRate.setVisibility(View.INVISIBLE);
             tvConversionRateLabel.setVisibility(View.INVISIBLE);
@@ -883,7 +889,10 @@ public class RefuelEditActivity extends EditActivityBase {
 
     @Override
     protected void setLayout() {
-        setContentView(R.layout.refuel_edit_activity);
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		setContentView(R.layout.refuel_edit_activity_s00);
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		setContentView(R.layout.refuel_edit_activity_s01);
     }
 
 	/* (non-Javadoc)
@@ -976,6 +985,7 @@ public class RefuelEditActivity extends EditActivityBase {
 
 		setCurrencyId(mPreferences.getLong("CarCurrency_ID", 1));
 		setSpinnerSelectedID(spnCurrency, carDefaultCurrencyId);
+        currencyCode = mDbAdapter.getCurrencyCode(mCurrencyId);
 
 		initDateTime(System.currentTimeMillis());
         ckIsFullRefuel.setChecked(false);
