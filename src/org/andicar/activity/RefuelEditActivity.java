@@ -982,7 +982,7 @@ public class RefuelEditActivity extends EditActivityBase {
     		mPrefEditor.putLong("LastTagId", mTagId);
     	
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
-    	mPrefEditor.putLong("RefuelExpenseCategory_ID", mExpCategoryId);
+    	mPrefEditor.putLong("RefuelExpCategory_ID", mExpCategoryId);
     	mPrefEditor.putLong("RefuelExpenseType_ID", mExpTypeId);
     	
 		mPrefEditor.commit();
@@ -1082,10 +1082,18 @@ public class RefuelEditActivity extends EditActivityBase {
 		setDriverId(mPreferences.getLong("LastDriver_ID", 1));
 		setSpinnerSelectedID(spnDriver, mDriverId);
 
-		setExpCategoryId(mPreferences.getLong("RefuelExpenseCategory_ID", 1));
+		setExpCategoryId(mPreferences.getLong("RefuelExpCategory_ID", -1));
+		if(mExpCategoryId == -1 || //mPreferences.getLong("ExpenseExpCategory_ID" not exist
+				!mDbAdapter.isIDActive(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mExpCategoryId)){ 
+			mExpCategoryId = mDbAdapter.getFirstActiveID(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + "='Y'", MainDbAdapter.GEN_COL_NAME_NAME);
+		}
 		setSpinnerSelectedID(spnExpCategory, mExpCategoryId);
 
 		setExpTypeId(mPreferences.getLong("RefuelExpenseType_ID", 1));
+		if(mExpTypeId == -1 || //mPreferences.getLong("ExpenseExpCategory_ID" not exist
+				!mDbAdapter.isIDActive(MainDbAdapter.EXPENSETYPE_TABLE_NAME, mExpTypeId)){ 
+			mExpTypeId = mDbAdapter.getFirstActiveID(MainDbAdapter.EXPENSETYPE_TABLE_NAME, null, MainDbAdapter.GEN_COL_NAME_NAME);
+		}
 		setSpinnerSelectedID(spnExpType, mExpTypeId);
 
 		setUOMVolumeId(mPreferences.getLong("CarUOMVolume_ID", 1));

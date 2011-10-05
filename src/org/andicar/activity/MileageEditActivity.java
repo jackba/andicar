@@ -872,7 +872,11 @@ public class MileageEditActivity extends EditActivityBase {
         mDriverId = mPreferences.getLong("LastDriver_ID", 1);
         setSpinnerSelectedID(spnDriver, mDriverId);
 
-        mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", 1);
+        mExpTypeId = mPreferences.getLong("MileageInsertExpenseType_ID", -1);
+		if(mExpTypeId == -1 || //mPreferences.getLong("ExpenseExpCategory_ID" not exist
+				!mDbAdapter.isIDActive(MainDbAdapter.EXPENSETYPE_TABLE_NAME, mExpTypeId)){ 
+			mExpTypeId = mDbAdapter.getFirstActiveID(MainDbAdapter.EXPENSETYPE_TABLE_NAME, null, MainDbAdapter.GEN_COL_NAME_NAME);
+		}
         setSpinnerSelectedID(spnExpType, mExpTypeId);
 
         mInsertMode = mPreferences.getInt("MileageInsertMode", 0);
