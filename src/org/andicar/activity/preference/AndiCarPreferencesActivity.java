@@ -22,21 +22,10 @@ package org.andicar.activity.preference;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.andicar.activity.BPartnerListActivity;
-import org.andicar.activity.CarListActivity;
-import org.andicar.activity.CurrencyListActivity;
-import org.andicar.activity.CurrencyRateListActivity;
-import org.andicar.activity.DriverListActivity;
-import org.andicar.activity.ExpenseCategoryListActivity;
-import org.andicar.activity.ExpenseTypeListActivity;
-import org.andicar.activity.FuelCategoryListActivity;
+import org.andicar.activity.CommonListActivity;
 import org.andicar.activity.R;
-import org.andicar.activity.TagListActivity;
-import org.andicar.activity.TaskListActivity;
-import org.andicar.activity.TaskTypeListActivity;
-import org.andicar.activity.UOMConversionListActivity;
-import org.andicar.activity.UOMListActivity;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
+import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
@@ -113,6 +102,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         PreferenceManager prefMgr = getPreferenceManager();
         prefMgr.setSharedPreferencesName(StaticValues.GLOBAL_PREFERENCE_NAME);
         PreferenceScreen prefScreenRoot = prefMgr.createPreferenceScreen(this);
+        Intent listActivity;
 
         //cars and drivers
         PreferenceCategory carDriverCategory = new PreferenceCategory(this);
@@ -120,13 +110,17 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         prefScreenRoot.addPreference(carDriverCategory);
         //cars
         PreferenceScreen carPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        carPrefScreen.setIntent(new Intent(this, CarListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.CAR_TABLE_NAME);
+        carPrefScreen.setIntent(listActivity);
         carPrefScreen.setTitle(mRes.getString(R.string.PREF_CarTitle));
         carPrefScreen.setSummary(mRes.getString(R.string.PREF_CarSummary));
         carDriverCategory.addPreference(carPrefScreen);
         //drivers
         PreferenceScreen driverPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        driverPrefScreen.setIntent(new Intent(this, DriverListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.DRIVER_TABLE_NAME);
+        driverPrefScreen.setIntent(listActivity);
         driverPrefScreen.setTitle(mRes.getString(R.string.PREF_DriverTitle));
         driverPrefScreen.setSummary(mRes.getString(R.string.PREF_DriverSummary));
         carDriverCategory.addPreference(driverPrefScreen);
@@ -156,12 +150,18 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         taskReminderCategory.setTitle(mRes.getString(R.string.PREF_TaskReminderCategoryTitle));
         prefScreenRoot.addPreference(taskReminderCategory);
         PreferenceScreen taskPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
-        taskPreferenceScreen.setIntent(new Intent(this, TaskListActivity.class));
+
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.TASK_TABLE_NAME);
+        taskPreferenceScreen.setIntent(listActivity);
         taskPreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTitle));
         taskPreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskSummary));
         taskReminderCategory.addPreference(taskPreferenceScreen);
+        
         PreferenceScreen taskTypePreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
-        taskTypePreferenceScreen.setIntent(new Intent(this, TaskTypeListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.TASKTYPE_TABLE_NAME);
+        taskTypePreferenceScreen.setIntent(listActivity);
         taskTypePreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTypeTitle));
         taskTypePreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskTypeSummary));
         taskReminderCategory.addPreference(taskTypePreferenceScreen);
@@ -172,7 +172,9 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         prefScreenRoot.addPreference(bPartnerCategory);
         //partners
         PreferenceScreen partnersPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        partnersPrefScreen.setIntent(new Intent(this, BPartnerListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.BPARTNER_TABLE_NAME);
+        partnersPrefScreen.setIntent(listActivity);
         partnersPrefScreen.setTitle(mRes.getString(R.string.PREF_PartnerTitle));
         partnersPrefScreen.setSummary(mRes.getString(R.string.PREF_PartnerSummary));
         bPartnerCategory.addPreference(partnersPrefScreen);
@@ -182,15 +184,18 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         uomPrefCategory.setTitle(mRes.getString( R.string.PREF_UOMCategoryTitle ));
         prefScreenRoot.addPreference(uomPrefCategory);
         //preference for uom
-        PreferenceScreen uomLengthPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        Intent uomLengthIntent = new Intent(this, UOMListActivity.class);
-        uomLengthPrefScreen.setIntent(uomLengthIntent);
-        uomLengthPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMTitle));
-        uomLengthPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMSummary));
-        uomPrefCategory.addPreference(uomLengthPrefScreen);
+        PreferenceScreen uomPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.UOM_TABLE_NAME);
+        uomPrefScreen.setIntent(listActivity);
+        uomPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMTitle));
+        uomPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMSummary));
+        uomPrefCategory.addPreference(uomPrefScreen);
         //uom conversions
         PreferenceScreen uomConversionPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        uomConversionPrefScreen.setIntent(new Intent(this, UOMConversionListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.UOM_CONVERSION_TABLE_NAME);
+        uomConversionPrefScreen.setIntent(listActivity);
         uomConversionPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMConversionTitle));
         uomConversionPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMConversionSummary));
         uomPrefCategory.addPreference(uomConversionPrefScreen);
@@ -202,34 +207,46 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
 
         //expense categories
         PreferenceScreen expCategoryPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        expCategoryPrefScreen.setIntent(new Intent(this, ExpenseCategoryListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.EXPENSECATEGORY_TABLE_NAME);
+        listActivity.putExtra("IsFuel", false);
+        expCategoryPrefScreen.setIntent(listActivity);
         expCategoryPrefScreen.setTitle(mRes.getString(R.string.PREF_ExpenseCategoryCategoryTitle));
         expCategoryPrefScreen.setSummary(mRes.getString(R.string.PREF_ExpenseCategoryCategorySummary));
         expenseCategory.addPreference(expCategoryPrefScreen);
 
         //expense types
         PreferenceScreen expTypePrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        expTypePrefScreen.setIntent(new Intent(this, ExpenseTypeListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.EXPENSETYPE_TABLE_NAME);
+        expTypePrefScreen.setIntent(listActivity);
         expTypePrefScreen.setTitle(mRes.getString(R.string.PREF_ExpenseTypeCategoryTitle));
         expTypePrefScreen.setSummary(mRes.getString(R.string.PREF_ExpenseTypeCategorySummary));
         expenseCategory.addPreference(expTypePrefScreen);
 
-        //expense categories
+        //fuel categories
         PreferenceScreen fuelTypePrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        fuelTypePrefScreen.setIntent(new Intent(this, FuelCategoryListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.EXPENSECATEGORY_TABLE_NAME);
+        listActivity.putExtra("IsFuel", true);
+        fuelTypePrefScreen.setIntent(listActivity);
         fuelTypePrefScreen.setTitle(mRes.getString(R.string.PREF_FuelCategoryTitle));
         fuelTypePrefScreen.setSummary(mRes.getString(R.string.PREF_FuelCategorySummary));
         expenseCategory.addPreference(fuelTypePrefScreen);
 
         //currencies
         PreferenceScreen currencyPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        currencyPrefScreen.setIntent(new Intent(this, CurrencyListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.CURRENCY_TABLE_NAME);
+        currencyPrefScreen.setIntent(listActivity);
         currencyPrefScreen.setTitle(mRes.getString(R.string.PREF_CurrencyTitle));
         currencyPrefScreen.setSummary(mRes.getString(R.string.PREF_CurrencySummary));
         expenseCategory.addPreference(currencyPrefScreen);
         //currency rates
         PreferenceScreen currencyRatePrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        currencyRatePrefScreen.setIntent(new Intent(this, CurrencyRateListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.CURRENCYRATE_TABLE_NAME);
+        currencyRatePrefScreen.setIntent(listActivity);
         currencyRatePrefScreen.setTitle(mRes.getString(R.string.PREF_CurrencyRateCategoryTitle));
         currencyRatePrefScreen.setSummary(mRes.getString(R.string.PREF_CurrencyRateCategorySummary));
         expenseCategory.addPreference(currencyRatePrefScreen);
@@ -259,7 +276,9 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
 
         //tags
         PreferenceScreen tagPrefScreen = getPreferenceManager().createPreferenceScreen(this);
-        tagPrefScreen.setIntent(new Intent(this, TagListActivity.class));
+        listActivity = new Intent(this, CommonListActivity.class);
+        listActivity.putExtra("ListSource", MainDbAdapter.TAG_TABLE_NAME);
+        tagPrefScreen.setIntent(listActivity);
         tagPrefScreen.setTitle(mRes.getString(R.string.PREF_TagCategoryTitle));
         tagPrefScreen.setSummary(mRes.getString(R.string.PREF_TagCategorySummary));
         miscCategory.addPreference(tagPrefScreen);

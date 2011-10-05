@@ -1565,8 +1565,8 @@ public class MainActivity extends BaseActivity {
 						new DialogInterface.OnClickListener() {
 
 							public void onClick(DialogInterface dialog, int id) {
-								Intent i = new Intent(MainActivity.this,
-													CarListActivity.class);
+								Intent i = new Intent(MainActivity.this, CommonListActivity.class);
+						        i.putExtra("ListSource", MainDbAdapter.CAR_TABLE_NAME);
 								i.putExtra("ExitAfterInsert", true);
 								startActivity(i);
 							}
@@ -1598,8 +1598,8 @@ public class MainActivity extends BaseActivity {
 					new DialogInterface.OnClickListener() {
 
 						public void onClick(DialogInterface dialog, int id) {
-							Intent i = new Intent(MainActivity.this,
-									DriverListActivity.class);
+							Intent i = new Intent(MainActivity.this, CommonListActivity.class);
+							i.putExtra("ListSource", MainDbAdapter.DRIVER_TABLE_NAME);
 							i.putExtra("ExitAfterInsert", true);
 							startActivity(i);
 						}
