@@ -74,7 +74,7 @@ public class ListActivityBase extends ListActivity {
     protected SharedPreferences mPreferences;
     protected SharedPreferences.Editor mPrefEditor;
     protected MainDbAdapter mDbAdapter = null;
-    protected Bundle extras = null;
+    protected Bundle mBundleExtras = null;
     protected AndiCarDialogBuilder errorAlertBuilder;
     protected AlertDialog errorAlert;
     protected boolean isSendStatistics = true;
@@ -126,12 +126,12 @@ public class ListActivityBase extends ListActivity {
 
         mViewBinder = pViewBinder;
 
-        if(extras == null) {
-            extras = getIntent().getExtras();
-            
-            if(extras != null && extras.containsKey("ExitAfterInsert"))
-            	isExitAfterInsert = extras.getBoolean("ExitAfterInsert");
-        }
+        if(mBundleExtras == null)
+            mBundleExtras = getIntent().getExtras();
+         
+        if(mBundleExtras != null && mBundleExtras.containsKey("ExitAfterInsert"))
+        	isExitAfterInsert = mBundleExtras.getBoolean("ExitAfterInsert");
+        
 
         lvBaseList = getListView();
         
@@ -343,10 +343,8 @@ public class ListActivityBase extends ListActivity {
                 else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                 }
-                else if(this instanceof ExpenseCategoryListActivity)
-                    insertIntent.putExtra("IsFuel", false);
-                else if(this instanceof FuelCategoryListActivity)
-                    insertIntent.putExtra("IsFuel", true);
+                else if(mTableName.equals(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME))
+                    insertIntent.putExtra("IsFuel", mBundleExtras.getBoolean("IsFuel"));
                 
                 insertIntent.putExtra("Operation", "N");
 
@@ -426,10 +424,8 @@ public class ListActivityBase extends ListActivity {
                 else if(mTableName.equals(MainDbAdapter.EXPENSE_TABLE_NAME)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                 }
-                else if(this instanceof ExpenseCategoryListActivity)
-                    insertIntent.putExtra("IsFuel", false);
-                else if(this instanceof FuelCategoryListActivity)
-                    insertIntent.putExtra("IsFuel", true);
+                else if(mTableName.equals(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME))
+                    insertIntent.putExtra("IsFuel", mBundleExtras.getBoolean("IsFuel"));
 
                 insertIntent.putExtra("Operation", "N");
                 startActivityForResult(insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE);

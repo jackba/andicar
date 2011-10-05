@@ -32,7 +32,6 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.text.method.DateTimeKeyListener;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
