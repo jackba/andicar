@@ -37,22 +37,22 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
     private EditText etUserComment = null;
     private CheckBox ckIsActive = null;
     private CheckBox ckIsExcludeFromMileageCost = null;
-    private CheckBox ckIsFuel = null;
-
+    private boolean mIsFuel = false;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate( Bundle icicle )
     {
         super.onCreate(icicle);
 
+        String strOperationType = mBundleExtras.getString("Operation"); //E = edit, N = new
+        mIsFuel = mBundleExtras.getBoolean("IsFuel");
+
         etName = (EditText) findViewById( R.id.etName );
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
         ckIsExcludeFromMileageCost = (CheckBox) findViewById( R.id.ckIsExcludeFromMileageCost );
-        ckIsFuel = (CheckBox) findViewById( R.id.ckIsFuel );
-
-        String strOperationType = mBundleExtras.getString("Operation"); //E = edit, N = new
-
+        
         if( strOperationType.equals( "E") ) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME,
@@ -61,7 +61,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
             String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
             String strExpCatIsExcludeFromMileageCostCheck = c.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS );
-            String strExpCatIsFuel = c.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_POS );
+            mIsFuel = c.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_POS ).equals("Y");
 
             if( strName != null ) {
                 etName.setText( strName );
@@ -75,14 +75,16 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             if( strExpCatIsExcludeFromMileageCostCheck != null ) {
                 ckIsExcludeFromMileageCost.setChecked( strExpCatIsExcludeFromMileageCostCheck.equals( "Y" ) );
             }
-            if( strExpCatIsFuel != null ) {
-                ckIsFuel.setChecked( strExpCatIsFuel.equals( "Y" ) );
-            }
             c.close();
         }
         else {
             ckIsActive.setChecked( true );
         }
+        if(mIsFuel)
+        	setTitle(R.string.APP_Activity_FuelCategoryEdit);
+        else
+        	setTitle(R.string.APP_Activity_ExpenseCategoryEdit);
+        	
 
     }
 
@@ -98,8 +100,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
                 etUserComment.getText().toString() );
         cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME,
                 (ckIsExcludeFromMileageCost.isChecked() ? "Y" : "N") );
-        cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME,
-                (ckIsFuel.isChecked() ? "Y" : "N") );
+        cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME, mIsFuel ? "Y" : "N");
 
         int dbRetVal = -1;
         String strErrMsg = null;

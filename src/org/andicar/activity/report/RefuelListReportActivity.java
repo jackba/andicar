@@ -164,7 +164,7 @@ public class RefuelListReportActivity extends ReportListActivityBase{
                     if (spnExpCategory.getSelectedItemId() != -1) {
                         whereConditions.putString(
                                 ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.REFUEL_TABLE_NAME,
-                                		MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME) + "=",
+                                		MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_NAME) + "=",
                                 String.valueOf(spnExpCategory.getSelectedItemId()));
                     }
                     if (spnExpTypeSearch.getSelectedItemId() != -1) {

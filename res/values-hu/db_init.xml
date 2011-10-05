@@ -55,12 +55,15 @@
     <string name="DB_ExpType_EmployerName">"Üzleti"</string>
     <string name="DB_ExpType_EmployerComment">"Üzleti költségek"</string>
     <!-- expense categories -->
-    <string name="DB_ExpCat_FuelName">"Üzemanyag"</string>
-    <string name="DB_ExpCat_FuelComment">"Tankolás költségei"</string>
     <string name="DB_ExpCat_ServiceName">"Szervíz"</string>
     <string name="DB_ExpCat_ServiceComment">"Szervíz költségek"</string>
     <string name="DB_ExpCat_InsuranceName">"Biztosítás"</string>
     <string name="DB_ExpCat_InsuranceComment">"Biztosítás költségei"</string>
+    <!-- fuel types -->
+    <!-- 
+    <string name="DB_ExpCat_FuelName">"Üzemanyag"</string>
+    <string name="DB_ExpCat_FuelComment">"Tankolás költségei"</string>
+    -->
     <!-- currencies -->
     <string name="DB_Curr_EUR">"Euró"</string>
     <string name="DB_Curr_USD">"US Dollár"</string>

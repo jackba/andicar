@@ -43,6 +43,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,11 @@ public class RefuelEditActivity extends EditActivityBase {
     private TextView tvConversionRateLabel;
     private RadioButton rbInsertModeAmount;
     private RadioButton rbInsertModePrice;
+
+    private RelativeLayout lCarZone;
+    private RelativeLayout lDriverZone;
+    private RelativeLayout lExpTypeZone;
+    private RelativeLayout lExpCatZone;
 
 
     private long carDefaultCurrencyId = 0;
@@ -238,7 +244,11 @@ public class RefuelEditActivity extends EditActivityBase {
         spnUomVolume.setOnItemSelectedListener(spinnerUOMOnItemSelectedListener);
         spnUomVolume.setOnTouchListener(spinnerOnTouchListener);
         spnExpType = (Spinner) findViewById(R.id.spnExpType);
+        spnExpType.setOnItemSelectedListener(spinnerExpTypeOnItemSelectedListener);
+        spnExpType.setOnTouchListener(spinnerOnTouchListener);
         spnExpCategory = (Spinner) findViewById(R.id.spnExpCategory);
+        spnExpCategory.setOnItemSelectedListener(spinnerExpCatOnItemSelectedListener);
+        spnExpCategory.setOnTouchListener(spinnerOnTouchListener);
         etCarIndex = (EditText) findViewById(R.id.etIndex);
         etQty = (EditText) findViewById(R.id.etQuantity);
         etQty.addTextChangedListener(textWatcher);
@@ -269,23 +279,99 @@ public class RefuelEditActivity extends EditActivityBase {
         currencyCode = carDefaultCurrencyCode;
         currencyConversionRate = BigDecimal.ONE;
         uomVolumeConversionRate = BigDecimal.ONE;
+        
+        lCarZone = (RelativeLayout) findViewById(R.id.lCarZone);
+        lDriverZone = (RelativeLayout) findViewById(R.id.lDriverZone);
+        lExpTypeZone = (RelativeLayout) findViewById(R.id.lExpTypeZone);
+        lExpCatZone = (RelativeLayout) findViewById(R.id.lExpCatZone);
+        
     }
 
     private void initControls() {
-        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-                MainDbAdapter.GEN_COL_NAME_NAME,
-                mCarId, false);
-        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
-        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, false);
-        initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
-                MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'Y'", null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
+    	long checkID;
+    	
+    	if(lCarZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.CAR_TABLE_NAME, null); 
+	    	if(checkID > -1){ //one single car
+	    		mCarId = checkID;
+	    		lCarZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lCarZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+		                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+		                MainDbAdapter.GEN_COL_NAME_NAME,
+		                mCarId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+	                MainDbAdapter.GEN_COL_NAME_NAME,
+	                mCarId, false);
+    	}
+    	
+    	if(lDriverZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.DRIVER_TABLE_NAME, null); 
+	    	if(checkID > -1){ //one single driver
+	    		mDriverId = checkID;
+	    		lDriverZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lDriverZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+		                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+		                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+	                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
+    	}
+
+    	if(lExpTypeZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, null); 
+	    	if(checkID > -1){ //one single type
+	    		mExpTypeId = checkID;
+	    		lExpTypeZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lExpTypeZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+		                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+		                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+		                mExpTypeId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+	                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+	                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+	                mExpTypeId, false);
+    	}
+    	
+    	if(lExpCatZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + "='Y'"); 
+	    	if(checkID > -1){ //one single type
+	    		mExpCategoryId= checkID;
+	    		lExpCatZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lExpCatZone.setVisibility(View.VISIBLE);
+	        	initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
+	                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
+	                    MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'Y'", null,
+	                    MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
+	    	}
+    	}
+    	else{
+        	initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
+                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
+                    MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'Y'", null,
+                    MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
+    	}
+
         initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" + MainDbAdapter.isActiveWithAndCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mUomVolumeId, false);
@@ -370,8 +456,8 @@ public class RefuelEditActivity extends EditActivityBase {
         outState.putInt("mInsertMode", mInsertMode);
         outState.putLong("mCarId", mCarId);
         outState.putLong("mDriverId", mDriverId);
-        outState.putLong("mExpCategoryId", spnExpCategory.getSelectedItemId());
-        outState.putLong("mExpTypeId", spnExpType.getSelectedItemId());
+        outState.putLong("mExpCategoryId", mExpCategoryId);
+        outState.putLong("mExpTypeId", mExpTypeId);
 
     }
 
@@ -521,6 +607,28 @@ public class RefuelEditActivity extends EditActivityBase {
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
+
+    private AdapterView.OnItemSelectedListener spinnerExpTypeOnItemSelectedListener =
+		    new AdapterView.OnItemSelectedListener() {
+		        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		            if(isBackgroundSettingsActive)
+		                return;
+		            setExpTypeId(arg3);
+		        }
+		        public void onNothingSelected(AdapterView<?> arg0) {
+		        }
+		    };
+
+    private AdapterView.OnItemSelectedListener spinnerExpCatOnItemSelectedListener =
+		    new AdapterView.OnItemSelectedListener() {
+		        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		            if(isBackgroundSettingsActive)
+		                return;
+		            setExpCategoryId(arg3);
+		        }
+		        public void onNothingSelected(AdapterView<?> arg0) {
+		        }
+		    };
 
     private TextWatcher bPartnerTextWatcher =
         new TextWatcher() {
@@ -715,10 +823,10 @@ public class RefuelEditActivity extends EditActivityBase {
                 mCarId);
         data.put( MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME,
                 mDriverId);
-        data.put( MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME,
-                spnExpCategory.getSelectedItemId() );
+        data.put( MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_NAME,
+                mExpCategoryId);
         data.put( MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME,
-                spnExpType.getSelectedItemId() );
+                mExpTypeId);
         data.put( MainDbAdapter.REFUEL_COL_INDEX_NAME, etCarIndex.getText().toString());
         data.put( MainDbAdapter.REFUEL_COL_QUANTITYENTERED_NAME, etQty.getText().toString());
         data.put( MainDbAdapter.REFUEL_COL_UOMVOLUMEENTERED_ID_NAME,
@@ -874,8 +982,8 @@ public class RefuelEditActivity extends EditActivityBase {
     		mPrefEditor.putLong("LastTagId", mTagId);
     	
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
-    	mPrefEditor.putLong("RefuelExpenseCategory_ID", spnExpCategory.getSelectedItemId() );
-    	mPrefEditor.putLong("RefuelExpenseType_ID", spnExpType.getSelectedItemId() );
+    	mPrefEditor.putLong("RefuelExpenseCategory_ID", mExpCategoryId);
+    	mPrefEditor.putLong("RefuelExpenseType_ID", mExpTypeId);
     	
 		mPrefEditor.commit();
     	

@@ -29,6 +29,7 @@ import org.andicar.activity.CurrencyRateListActivity;
 import org.andicar.activity.DriverListActivity;
 import org.andicar.activity.ExpenseCategoryListActivity;
 import org.andicar.activity.ExpenseTypeListActivity;
+import org.andicar.activity.FuelCategoryListActivity;
 import org.andicar.activity.R;
 import org.andicar.activity.TagListActivity;
 import org.andicar.activity.TaskListActivity;
@@ -212,6 +213,13 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         expTypePrefScreen.setTitle(mRes.getString(R.string.PREF_ExpenseTypeCategoryTitle));
         expTypePrefScreen.setSummary(mRes.getString(R.string.PREF_ExpenseTypeCategorySummary));
         expenseCategory.addPreference(expTypePrefScreen);
+
+        //expense categories
+        PreferenceScreen fuelTypePrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        fuelTypePrefScreen.setIntent(new Intent(this, FuelCategoryListActivity.class));
+        fuelTypePrefScreen.setTitle(mRes.getString(R.string.PREF_FuelCategoryTitle));
+        fuelTypePrefScreen.setSummary(mRes.getString(R.string.PREF_FuelCategorySummary));
+        expenseCategory.addPreference(fuelTypePrefScreen);
 
         //currencies
         PreferenceScreen currencyPrefScreen = getPreferenceManager().createPreferenceScreen(this);

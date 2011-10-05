@@ -57,12 +57,15 @@
     <string name="DB_ExpType_EmployerName">"Работодатель"</string>
     <string name="DB_ExpType_EmployerComment">"Расходы за счет работодателя"</string>
     <!-- expense categories -->
-    <string name="DB_ExpCat_FuelName">"Топливо"</string>
-    <string name="DB_ExpCat_FuelComment">"Расходы на заправку топливом"</string>
     <string name="DB_ExpCat_ServiceName">"Обслуживание"</string>
     <string name="DB_ExpCat_ServiceComment">"Расходы на обслуживание"</string>
     <string name="DB_ExpCat_InsuranceName">"Страховка"</string>
     <string name="DB_ExpCat_InsuranceComment">"Расходы на страховку"</string>
+    <!-- fuel types -->
+    <!-- 
+    <string name="DB_ExpCat_FuelName">"Топливо"</string>
+    <string name="DB_ExpCat_FuelComment">"Расходы на заправку топливом"</string>
+    -->
     <!-- currencies -->
     <string name="DB_Curr_EUR">"Евро"</string>
     <string name="DB_Curr_USD">"Доллар США"</string>

@@ -73,6 +73,8 @@
     <string name="APP_Activity_TaskList">"Tasks"</string>
     <string name="APP_Activity_TaskEdit">"Add or edit task"</string>
     <string name="APP_Activity_TodoList">"To-Do List"</string>
+    <string name="APP_Activity_FuelCategoryList">"Fuel categories"</string>
+    <string name="APP_Activity_FuelCategoryEdit">"Edit fuel category"</string>
 
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
@@ -87,7 +89,7 @@
     <string name="GEN_IsActiveLabel">"Active"</string>
     <string name="GEN_UserCommentLabel">"Comment"</string>
     <string name="GEN_NameLabel">"Name:"</string>
-    <string name="GEN_DateTimeLabel">"<b><i>Date and time:</i></b>"</string>
+    <string name="GEN_DateTimeLabel">"Date and time:"</string>
     <string name="GEN_PickDateCaption">"Change date"</string>
     <string name="GEN_PickTimeCaption">"Change time"</string>
     <string name="GEN_DeleteConfirmation">"Are you sure you want to delete the selected record?"</string>
@@ -242,6 +244,7 @@
     <string name="RefuelEditActivity_IsFullLabel">"Is full"</string>
     <string name="RefuelEditActivity_QtyInBaseUOMLabel">"Quantity in base UOM: "</string>
     <string name="RefuelEditActivity_NoConversionRateMessage">"No conversion rate defined for these UOM's"</string>
+    <string name="RefuelEditActivity_GasStation">"Station:"</string>
 
     <string name="BackupRestoreEditActivity_BackupBtnCaption">"Backup"</string>
     <string name="BackupRestoreEditActivity_RestoreBtnCaption">"Restore"</string>
@@ -408,6 +411,8 @@
     <string name="PREF_GPSTrackingFlagValueSummary">"Uncheck this ONLY if you are sure the tracking is not in progress!"</string>
     <string name="PREF_UIStyleTitle">"Interface style"</string>
     <string name="PREF_UIStyleSummary">"Change the style of the interface"</string>
+    <string name="PREF_FuelCategoryTitle">"Fuel categories"</string>
+    <string name="PREF_FuelCategorySummary">"Add, delete, modify fuel categories"</string>
 
     <string name="PREF_MainScreen_ShowMileageZone">"Show mileage zone"</string>
     <string name="PREF_MainScreen_ShowGPSTrackZone">"Show GPS track zone"</string>

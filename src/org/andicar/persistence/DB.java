@@ -152,7 +152,7 @@ public class DB {
 			+ "_ID";
 	public static final String REFUEL_COL_DATE_NAME = "Date";
 	public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
-	public static final String REFUEL_COL_EXPENSECATEGORY_NAME = EXPENSECATEGORY_TABLE_NAME
+	public static final String REFUEL_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME
 			+ "_ID";
 	public static final String REFUEL_COL_ISFULLREFUEL_NAME = "IsFullRefuel";
 	public static final String REFUEL_COL_QUANTITYENTERED_NAME = "QuantityEntered";
@@ -560,7 +560,7 @@ public class DB {
 			REFUEL_COL_INDEX_NAME, REFUEL_COL_QUANTITY_NAME,
 			REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
 			REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME,
-			REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_NAME,
+			REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_ID_NAME,
 			REFUEL_COL_ISFULLREFUEL_NAME, REFUEL_COL_QUANTITYENTERED_NAME,
 			REFUEL_COL_UOMVOLUMEENTERED_ID_NAME, REFUEL_COL_PRICEENTERED_NAME,
 			REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME,
@@ -819,7 +819,7 @@ public class DB {
 			+ " DATE NULL, "
 			+ REFUEL_COL_DOCUMENTNO_NAME
 			+ " TEXT NULL, "
-			+ REFUEL_COL_EXPENSECATEGORY_NAME
+			+ REFUEL_COL_EXPENSECATEGORY_ID_NAME
 			+ " INTEGER, "
 			+ REFUEL_COL_ISFULLREFUEL_NAME
 			+ " TEXT DEFAULT 'N', "
@@ -1621,12 +1621,12 @@ public class DB {
 			createExpenseCategory(db);
 			String updateSql;
 			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_EXPENSECATEGORY_NAME)) {
+					REFUEL_COL_EXPENSECATEGORY_ID_NAME)) {
 				updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_EXPENSECATEGORY_NAME + " INTEGER";
+						+ REFUEL_COL_EXPENSECATEGORY_ID_NAME + " INTEGER";
 				db.execSQL(updateSql);
 				updateSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_EXPENSECATEGORY_NAME + " = 1";
+						+ REFUEL_COL_EXPENSECATEGORY_ID_NAME + " = 1";
 				db.execSQL(updateSql);
 			}
 			if (!columnExists(db, REFUEL_TABLE_NAME,
@@ -2069,11 +2069,50 @@ public class DB {
 					+ ", " + GEN_COL_USER_COMMENT_NAME + ", "
 					+ EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + ", "
 					+ EXPENSECATEGORY_COL_ISFUEL_NAME + " " + ") ";
+
+			//fuel types
 			db.execSQL(colPart + "VALUES ( " + "'"
-					+ mResource.getString(R.string.DB_ExpCat_FuelName) + "', "
+					+ mResource.getString(R.string.DB_FuelType_Diesel1D) + "', "
 					+ "'Y', " + "'"
-					+ mResource.getString(R.string.DB_ExpCat_FuelComment)
+					+ mResource.getString(R.string.DB_FuelType_Diesel1DComment)
 					+ "', " + "'N', 'Y' )");
+			db.execSQL(colPart + "VALUES ( " + "'"
+					+ mResource.getString(R.string.DB_FuelType_Diesel2D) + "', "
+					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_Diesel2DComment)
+					+ "', " + "'N', 'Y' )");
+			db.execSQL(colPart + "VALUES ( " + "'"
+					+ mResource.getString(R.string.DB_FuelType_DieselBio) + "', "
+					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_DieselBioComment)
+					+ "', " + "'N', 'Y' )");
+			db.execSQL(colPart + "VALUES ( " + "'"
+					+ mResource.getString(R.string.DB_FuelType_DieselSynthetic) + "', "
+					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_DieselSyntheticComment)
+					+ "', " + "'N', 'Y' )");
+			db.execSQL(colPart + "VALUES ( " + "'"
+					+ mResource.getString(R.string.DB_FuelType_GasolineRegular) + "', "
+					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_GasolineRegularComment)
+					+ "', " + "'N', 'Y' )");
+			db.execSQL(colPart + "VALUES ( " + "'"
+					+ mResource.getString(R.string.DB_FuelType_GasolineMidgrade) + "', "
+					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_GasolineMidgradeComment)
+					+ "', " + "'N', 'Y' )");
+			db.execSQL(colPart + "VALUES ( " + "'"
+					+ mResource.getString(R.string.DB_FuelType_GasolinePremium) + "', "
+					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_GasolinePremiumComment)
+					+ "', " + "'N', 'Y' )");
+			db.execSQL(colPart + "VALUES ( " + "'"
+					+ mResource.getString(R.string.DB_FuelType_LPG) + "', "
+					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_LPGComment)
+					+ "', " + "'N', 'Y' )");
+			
+			
 			db.execSQL(colPart + "VALUES ( " + "'"
 					+ mResource.getString(R.string.DB_ExpCat_ServiceName)
 					+ "', " + "'Y', " + "'"
@@ -2111,7 +2150,7 @@ public class DB {
 					+ GEN_COL_NAME_NAME + ", " + GEN_COL_USER_COMMENT_NAME
 					+ ", " + GEN_COL_ISACTIVE_NAME + ", "
 					+ REFUEL_COL_CAR_ID_NAME + ", " + REFUEL_COL_DRIVER_ID_NAME
-					+ ", " + REFUEL_COL_EXPENSECATEGORY_NAME + ", "
+					+ ", " + REFUEL_COL_EXPENSECATEGORY_ID_NAME + ", "
 					+ REFUEL_COL_EXPENSETYPE_ID_NAME + ", "
 					+ REFUEL_COL_QUANTITY_NAME + " * " + REFUEL_COL_PRICE_NAME
 					+ ", " + REFUEL_COL_CURRENCY_ID_NAME + ", "

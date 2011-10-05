@@ -269,7 +269,7 @@ public class MileageEditActivity extends EditActivityBase {
     private void initControls(){
     	long checkID;
     	if(lCarZone != null){
-	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.CAR_TABLE_NAME); 
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.CAR_TABLE_NAME, null); 
 	    	if(checkID > -1){ //one single car
 	    		mCarId = checkID;
 	    		lCarZone.setVisibility(View.GONE);
@@ -289,7 +289,7 @@ public class MileageEditActivity extends EditActivityBase {
 	                mCarId, false);
     	}
     	if(lDriverZone != null){
-	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.DRIVER_TABLE_NAME); 
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.DRIVER_TABLE_NAME, null); 
 	    	if(checkID > -1){ //one single driver
 	    		mDriverId = checkID;
 	    		lDriverZone.setVisibility(View.GONE);
@@ -308,7 +308,7 @@ public class MileageEditActivity extends EditActivityBase {
     	}
 
     	if(lExpTypeZone != null){
-	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME); 
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, null); 
 	    	if(checkID > -1){ //one single type
 	    		mExpTypeId = checkID;
 	    		lExpTypeZone.setVisibility(View.GONE);

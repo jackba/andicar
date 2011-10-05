@@ -55,12 +55,28 @@
     <string name="DB_ExpType_EmployerName">"Business"</string>
     <string name="DB_ExpType_EmployerComment">"Expenses supported by your employer"</string>
     <!-- expense categories -->
-    <string name="DB_ExpCat_FuelName">"Fuel"</string>
-    <string name="DB_ExpCat_FuelComment">"Expenses with refuels"</string>
     <string name="DB_ExpCat_ServiceName">"Service"</string>
     <string name="DB_ExpCat_ServiceComment">"Expenses with services"</string>
     <string name="DB_ExpCat_InsuranceName">"Insurance"</string>
     <string name="DB_ExpCat_InsuranceComment">"Expenses with insurance"</string>
+    <!-- fuel types -->
+    <string name="DB_FuelType_Diesel1D">"Diesel 1D"</string>
+    <string name="DB_FuelType_Diesel1DComment">"Preferred for cold weather"</string>
+    <string name="DB_FuelType_Diesel2D">"Diesel 2D"</string>
+    <string name="DB_FuelType_Diesel2DComment">"Used in warmer weather"</string>
+    <string name="DB_FuelType_DieselBio">"Biodiesel"</string>
+    <string name="DB_FuelType_DieselBioComment">"Obtained from vegetable oil or animal fats"</string>
+    <string name="DB_FuelType_DieselSynthetic">"Synthetic Diesel"</string>
+    <string name="DB_FuelType_DieselSyntheticComment">"Derived from various sources such as wood, straw, corn and even garbage and food scraps"</string>
+    <string name="DB_FuelType_GasolineRegular">"Regular gasoline"</string>
+    <string name="DB_FuelType_GasolineRegularComment">"Octane rating 87"</string>
+    <string name="DB_FuelType_GasolineMidgrade">"Midgrade gasoline"</string>
+    <string name="DB_FuelType_GasolineMidgradeComment">"Octane rating 89"</string>
+    <string name="DB_FuelType_GasolinePremium">"Premium gasoline"</string>
+    <string name="DB_FuelType_GasolinePremiumComment">"Octane rating 91 - 92"</string>
+    <string name="DB_FuelType_LPG">"LPG"</string>
+    <string name="DB_FuelType_LPGComment">"Liquefied petroleum gas"</string>
+    
     <!-- currencies -->
     <string name="DB_Curr_EUR">"Euro"</string>
     <string name="DB_Curr_USD">"US Dollar"</string>

@@ -142,7 +142,7 @@ public class MainDbAdapter extends DB
                 expenseContent.put(MainDbAdapter.EXPENSE_COL_DRIVER_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME));
                 expenseContent.put(MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
-                        content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME));
+                        content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_NAME));
                 expenseContent.put(MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_NAME,
                         content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME));
                 expenseContent.put(MainDbAdapter.EXPENSE_COL_INDEX_NAME,
@@ -352,7 +352,7 @@ public class MainDbAdapter extends DB
                             expenseContent.put(MainDbAdapter.EXPENSE_COL_DRIVER_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_DRIVER_ID_NAME));
                             expenseContent.put(MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
-                                    content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_NAME));
+                                    content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_NAME));
                             expenseContent.put(MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_NAME,
                                     content.getAsString(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_NAME));
                             expenseContent.put(MainDbAdapter.EXPENSE_COL_INDEX_NAME,
@@ -933,7 +933,7 @@ public class MainDbAdapter extends DB
             //check refuels
             checkSql = "SELECT * " +
                         "FROM " + REFUEL_TABLE_NAME + " " +
-                        "WHERE " + REFUEL_COL_EXPENSECATEGORY_NAME + " = " + rowId + " " +
+                        "WHERE " + REFUEL_COL_EXPENSECATEGORY_ID_NAME + " = " + rowId + " " +
                         "LIMIT 1";
             checkCursor = mDb.rawQuery(checkSql, null);
             if(checkCursor.moveToFirst()){ //record exists
@@ -1500,9 +1500,10 @@ public class MainDbAdapter extends DB
     /**
      * check if only one active record exist in a given table
      * @param table the table where we look
+     * @param additionalWhere additional where clause to IsActive condition 
      * @return if one record exists the id of the record, otherwise -1
      */
-    public long isSingleActiveRecord(String table){
+    public long isSingleActiveRecord(String table, String additionalWhere){
         String selectSql = "";
         Cursor selectCursor;
         long retVal = -1;
@@ -1510,7 +1511,11 @@ public class MainDbAdapter extends DB
         //if max == min => one single record
         selectSql = " SELECT MAX(" + MainDbAdapter.GEN_COL_ROWID_NAME + "), MIN(" + MainDbAdapter.GEN_COL_ROWID_NAME + ") " +
                     " FROM " + table +
-                    " WHERE " + GEN_COL_ISACTIVE_NAME + "='Y' ";
+                    " WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + "='Y' ";
+        
+        if(additionalWhere != null && additionalWhere.length() > 0)
+        	selectSql = selectSql + " AND " + additionalWhere;
+        
         selectCursor = execSelectSql(selectSql, null);
         if(selectCursor.moveToFirst()){
         	if(selectCursor.getLong(0) == selectCursor.getLong(1)){ // one single active record
