@@ -53,12 +53,15 @@
     <string name="DB_ExpType_EmployerName">"雇主"</string>
     <string name="DB_ExpType_EmployerComment">"你雇主支持的费用"</string>
     <!-- expense categories -->
-    <string name="DB_ExpCat_FuelName">"燃料"</string>
-    <string name="DB_ExpCat_FuelComment">"加油费用"</string>
     <string name="DB_ExpCat_ServiceName">"服务"</string>
     <string name="DB_ExpCat_ServiceComment">"服务费用"</string>
     <string name="DB_ExpCat_InsuranceName">"保险"</string>
     <string name="DB_ExpCat_InsuranceComment">"保险费用"</string>
+    <!-- fuel types -->
+    <!-- 
+    <string name="DB_ExpCat_FuelName">"燃料"</string>
+    <string name="DB_ExpCat_FuelComment">"加油费用"</string>
+    -->
     <!-- currencies -->
     <string name="DB_Curr_EUR">"欧元"</string>
     <string name="DB_Curr_USD">"美元"</string>

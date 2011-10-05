@@ -197,6 +197,10 @@
             android:name="org.andicar.activity.ExpenseEditActivity"
             android:label="@string/APP_Activity_ExpenseEdit">
         </activity>
+        <activity
+            android:name="org.andicar.activity.FuelCategoryListActivity"
+            android:label="@string/APP_Activity_FuelCategoryList">
+        </activity>
 
         <activity
             android:name="org.andicar.activity.preference.MainScreenPreferenceActivity"
