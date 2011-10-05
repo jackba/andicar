@@ -42,6 +42,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +71,11 @@ public class ExpenseEditActivity extends EditActivityBase {
 
     private LinearLayout llConversionRateZone1;
     private LinearLayout llConversionRateZone2;
+
+    private RelativeLayout lCarZone;
+    private RelativeLayout lDriverZone;
+    private RelativeLayout lExpTypeZone;
+    private RelativeLayout lExpCatZone;
 
     private long carDefaultCurrencyId;
     private long mUOMId = -1;
@@ -210,19 +216,90 @@ public class ExpenseEditActivity extends EditActivityBase {
     }
 
     private void initControls() {
-        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
-        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
-        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpTypeId, false);
-        initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
-                MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'N'", null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
+    	long checkID;
+    	
+    	if(lCarZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.CAR_TABLE_NAME, null); 
+	    	if(checkID > -1){ //one single car
+	    		mCarId = checkID;
+	    		lCarZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lCarZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+		                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+		                MainDbAdapter.GEN_COL_NAME_NAME,
+		                mCarId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+	                MainDbAdapter.GEN_COL_NAME_NAME,
+	                mCarId, false);
+    	}
+    	
+    	if(lDriverZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.DRIVER_TABLE_NAME, null); 
+	    	if(checkID > -1){ //one single driver
+	    		mDriverId = checkID;
+	    		lDriverZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lDriverZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+		                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+		                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
+	                MainDbAdapter.GEN_COL_NAME_NAME, mDriverId, false);
+    	}
+
+    	if(lExpTypeZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.EXPENSETYPE_TABLE_NAME, null); 
+	    	if(checkID > -1){ //one single type
+	    		mExpTypeId = checkID;
+	    		lExpTypeZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lExpTypeZone.setVisibility(View.VISIBLE);
+		        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+		                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+		                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+		                mExpTypeId, false);
+	    	}
+    	}
+    	else{
+	        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME,
+	                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
+	                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+	                mExpTypeId, false);
+    	}
+    	
+    	if(lExpCatZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + "='N'"); 
+	    	if(checkID > -1){ //one single type
+	    		mExpCategoryId= checkID;
+	    		lExpCatZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lExpCatZone.setVisibility(View.VISIBLE);
+	        	initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
+	                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
+	                    MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'N'", null,
+	                    MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
+	    	}
+    	}
+    	else{
+        	initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.genColName, 
+                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
+                    MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'N'", null,
+                    MainDbAdapter.GEN_COL_NAME_NAME, mExpCategoryId, false);
+    	}
+    	
         initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.genColName,
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId, false);
@@ -264,7 +341,11 @@ public class ExpenseEditActivity extends EditActivityBase {
         spnCurrency.setOnItemSelectedListener(spinnerCurrencyOnItemSelectedListener);
         spnCurrency.setOnTouchListener(spinnerOnTouchListener);
         spnExpType = (Spinner) findViewById(R.id.spnExpType);
+        spnExpType.setOnItemSelectedListener(spinnerExpTypeOnItemSelectedListener);
+        spnExpType.setOnTouchListener(spinnerOnTouchListener);
         spnExpCategory = (Spinner) findViewById(R.id.spnExpCategory);
+        spnExpCategory.setOnItemSelectedListener(spinnerExpCatOnItemSelectedListener);
+        spnExpCategory.setOnTouchListener(spinnerOnTouchListener);
         spnUOM = (Spinner) findViewById(R.id.spnUOM);
         etCarIndex = (EditText) findViewById(R.id.etIndex);
         etUserInput = (EditText) findViewById(R.id.etUserInput);
@@ -287,6 +368,12 @@ public class ExpenseEditActivity extends EditActivityBase {
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
         carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
         carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
+
+        lCarZone = (RelativeLayout) findViewById(R.id.lCarZone);
+        lDriverZone = (RelativeLayout) findViewById(R.id.lDriverZone);
+        lExpTypeZone = (RelativeLayout) findViewById(R.id.lExpTypeZone);
+        lExpCatZone = (RelativeLayout) findViewById(R.id.lExpCatZone);
+        
     }
 
     //change the address autocomplete list when the vendor change
@@ -443,6 +530,29 @@ public class ExpenseEditActivity extends EditActivityBase {
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
             };
+
+    private AdapterView.OnItemSelectedListener spinnerExpTypeOnItemSelectedListener =
+		    new AdapterView.OnItemSelectedListener() {
+		        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		            if(isBackgroundSettingsActive)
+		                return;
+		            setExpTypeId(arg3);
+		        }
+		        public void onNothingSelected(AdapterView<?> arg0) {
+		        }
+		    };
+
+    private AdapterView.OnItemSelectedListener spinnerExpCatOnItemSelectedListener =
+		    new AdapterView.OnItemSelectedListener() {
+		        public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+		            if(isBackgroundSettingsActive)
+		                return;
+		            setExpCategoryId(arg3);
+		        }
+		        public void onNothingSelected(AdapterView<?> arg0) {
+		        }
+		    };
+
 
     private RadioGroup.OnCheckedChangeListener rgOnCheckedChangeListener  =
             new RadioGroup.OnCheckedChangeListener() {
@@ -646,9 +756,9 @@ public class ExpenseEditActivity extends EditActivityBase {
         data.put( MainDbAdapter.EXPENSE_COL_DRIVER_ID_NAME,
                 mDriverId );
         data.put( MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
-                spnExpCategory.getSelectedItemId() );
+                mExpCategoryId);
         data.put( MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_NAME,
-                spnExpType.getSelectedItemId() );
+                mExpTypeId);
         data.put( MainDbAdapter.EXPENSE_COL_INDEX_NAME, etCarIndex.getText().toString());
 
 //        data.put( MainDbAdapter.EXPENSE_COL_AMOUNTENTERED_NAME, etUserInput.getText().toString());
@@ -806,8 +916,8 @@ public class ExpenseEditActivity extends EditActivityBase {
     		mPrefEditor.putLong("LastTagId", mTagId);
     	
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
-    	mPrefEditor.putLong("ExpenseExpenseCategory_ID", spnExpCategory.getSelectedItemId() );
-    	mPrefEditor.putLong("ExpenseExpenseType_ID", spnExpType.getSelectedItemId() );
+    	mPrefEditor.putLong("ExpenseExpCategory_ID", mExpCategoryId);
+    	mPrefEditor.putLong("ExpenseExpenseType_ID", mExpTypeId);
 		mPrefEditor.commit();
 
 		//check if mileage todo exists
@@ -823,7 +933,10 @@ public class ExpenseEditActivity extends EditActivityBase {
 
     @Override
     protected void setLayout() {
-        setContentView(R.layout.expense_edit_activity);
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		setContentView(R.layout.expense_edit_activity_s00);
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		setContentView(R.layout.expense_edit_activity_s01);
     }
 
     public void setSpecificLayout() {
@@ -896,10 +1009,19 @@ public class ExpenseEditActivity extends EditActivityBase {
         mUOMId = -1;
         setSpinnerSelectedID(spnUOM, mUOMId);
 
-		setExpCategoryId(mPreferences.getLong("ExpenseExpenseCategory_ID", 1));
+        
+		setExpCategoryId(mPreferences.getLong("ExpenseExpCategory_ID", -1));
+		if(mExpCategoryId == -1 || //mPreferences.getLong("ExpenseExpCategory_ID" not exist
+				!mDbAdapter.isIDActive(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mExpCategoryId)){ 
+			mExpCategoryId = mDbAdapter.getFirstActiveID(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + "='N'", MainDbAdapter.GEN_COL_NAME_NAME);
+		}
 		setSpinnerSelectedID(spnExpCategory, mExpCategoryId);
 
 		setExpTypeId(mPreferences.getLong("ExpenseExpenseType_ID", 1));
+		if(mExpTypeId == -1 || //mPreferences.getLong("ExpenseExpCategory_ID" not exist
+				!mDbAdapter.isIDActive(MainDbAdapter.EXPENSETYPE_TABLE_NAME, mExpTypeId)){ 
+			mExpTypeId = mDbAdapter.getFirstActiveID(MainDbAdapter.EXPENSETYPE_TABLE_NAME, null, MainDbAdapter.GEN_COL_NAME_NAME);
+		}
 		setSpinnerSelectedID(spnExpType, mExpTypeId);
         
         

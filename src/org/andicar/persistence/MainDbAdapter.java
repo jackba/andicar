@@ -1525,4 +1525,51 @@ public class MainDbAdapter extends DB
         selectCursor.close();
        	return retVal;
     }
+    /**
+     * 
+     * @param table
+     * @param additionalWhere
+     * @param orderBy
+     * @return the first record ID
+     */
+    public long getFirstActiveID(String table, String additionalWhere, String orderBy){
+    	long retVal = -1;
+        String selectSql = "";
+        Cursor selectCursor;
+        selectSql = " SELECT " + MainDbAdapter.GEN_COL_ROWID_NAME +
+                " FROM " + table +
+                " WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + "='Y' ";
+    
+	    if(additionalWhere != null && additionalWhere.length() > 0)
+	    	selectSql = selectSql + " AND " + additionalWhere;
+	    
+	    if(orderBy != null && orderBy.length() > 0)
+	    	selectSql = selectSql + " ORDER BY " + orderBy;
+	    
+	    selectCursor = execSelectSql(selectSql, null);
+	    if(selectCursor.moveToFirst()){
+    		retVal = selectCursor.getLong(0);
+	    }
+	    selectCursor.close();
+    	
+    	return retVal;
+    }
+
+    public boolean isIDActive(String table, long Id){
+    	boolean retVal = false;
+        String selectSql = "";
+        Cursor selectCursor;
+        selectSql = " SELECT " + MainDbAdapter.GEN_COL_ISACTIVE_NAME +
+                " FROM " + table +
+                " WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = " + Id;
+	    
+	    selectCursor = execSelectSql(selectSql, null);
+	    if(selectCursor.moveToFirst()){
+    		retVal = selectCursor.getString(0).equals("Y");
+	    }
+	    selectCursor.close();
+    	
+    	return retVal;
+    	
+    }
 }
