@@ -315,7 +315,8 @@
 <string name="TaskEditActivity_FirstMileageRunExplanation">"A kezdő kilóméter minden kapcsolodó autónak külön lesz beállítva"</string>
 <string name="TaskEditActivity_ReminderStartLabel">"Emlékeztető indulása"</string>
 <string name="TaskEditActivity_LinkedCarsLabel">"Kapcsolodó autók"</string>
-<string name="TaskEditActivity_MileageUOMText">"mérföld vagy km (autó beállításától függ)"</string>
+<string name="TaskEditActivity_MileageUOMTextLong">"mérföld vagy km (autó beállításától függ)"</string>
+<string name="TaskEditActivity_MileageUOMText">"mérföld vagy km"</string>
 <string name="TaskEditActivity_FillMileage">"Adja meg a megtett távolságot!"</string>
 <string name="TaskEditActivity_FillFrequency">"Adja meg a gyakoriságot!"</string>
 <string name="TaskEditActivity_LinkedCarsOptionsHelp">"További opciók az adott autóra hosszan nyomva"</string>

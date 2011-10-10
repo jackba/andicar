@@ -308,7 +308,8 @@
 	<string name="TaskEditActivity_FirstTimeRunExplanation">"將會為每個已連接的車輛指定開始時間"</string>
 	<string name="TaskEditActivity_FirstMileageRunExplanation">"將會為每個已連接的車輛指定開始里程"</string>
 	<string name="TaskEditActivity_ReminderStartLabel">"以下時間前提醒"</string>
-	<string name="TaskEditActivity_MileageUOMText">"英里或千米(取決於對汽車的定義)"</string>
+	<string name="TaskEditActivity_MileageUOMTextLong">"英里或千米(取決於對汽車的定義)"</string>
+	<string name="TaskEditActivity_MileageUOMText">"英里或千米"</string>
 	<string name="TaskEditActivity_FillMileage">"填寫里程！"</string>
 	<string name="TaskEditActivity_FillFrequency">"填寫頻率！"</string>
 	<string name="TaskEditActivity_LinkedCarsOptionsHelp">"在一輛車上長按來檢視更多選項"</string>

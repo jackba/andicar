@@ -142,7 +142,10 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
 
     @Override
     protected void setLayout() {
-        setContentView(R.layout.expensecategory_edit_activity);
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		setContentView(R.layout.expensecategory_edit_activity_s00);
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		setContentView(R.layout.expensecategory_edit_activity_s01);
     }
 
 	/* (non-Javadoc)
