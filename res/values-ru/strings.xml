@@ -243,7 +243,7 @@
 
     <string name="BackupRestoreEditActivity_BackupBtnCaption">"Копировать"</string>
     <string name="BackupRestoreEditActivity_RestoreBtnCaption">"Восстановить"</string>
-    <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Удалить копию"</string>
+    <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Kопию"</string>
     <string name="BackupRestoreEditActivity_BackupListLabel">"Существующие копии:"</string>
     <string name="BackupRestoreEditActivity_BackupCreatedMessage">"Копия создана."</string>
     <string name="BackupRestoreEditActivity_BackupFailedMessage">"Не получилось создать копию!"</string>
@@ -315,7 +315,8 @@
 	<string name="TaskEditActivity_FirstTimeRunExplanation">" Время начала будет указано для каждого  автомобиля "</string>
 	<string name="TaskEditActivity_FirstMileageRunExplanation">" Начальный пробег будет указан для каждого автомобиля "</string>
 	<string name="TaskEditActivity_ReminderStartLabel">"Запустить напоминание перед"</string>
-	<string name="TaskEditActivity_MileageUOMText">"мил. или км (зависит от настроек автомобиля)"</string>
+	<string name="TaskEditActivity_MileageUOMTextLong">"мил. или км (зависит от настроек автомобиля)"</string>
+	<string name="TaskEditActivity_MileageUOMText">"мил. или км"</string>
 	<string name="TaskEditActivity_FillMileage">"Заполните пробег!"</string>
 	<string name="TaskEditActivity_FillFrequency">"Заполните частоту!"</string>
 	<string name="TaskEditActivity_LinkedCarsOptionsHelp">"Долгое нажатие на автомобиль для большего количества опций"</string>

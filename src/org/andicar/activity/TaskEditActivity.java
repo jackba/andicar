@@ -372,8 +372,14 @@ public class TaskEditActivity extends EditActivityBase {
 			" ORDER BY " + 
 				DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_NAME_NAME);
 
+    	int listLayout = R.layout.twoline_list2_activity_s01;
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		listLayout = R.layout.twoline_list2_activity_s00;
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		listLayout = R.layout.twoline_list2_activity_s01;
+
         SimpleCursorAdapter cursorAdapter =
-        	new SimpleCursorAdapter(this, R.layout.twoline_list2_activity,
+        	new SimpleCursorAdapter(this, listLayout,
         							mDbAdapter.execSelectSql(selectSql, selectionArgs),
                                     new String[]{MainDbAdapter.GEN_COL_NAME_NAME, "FirstRun"}, 
                                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}
@@ -597,7 +603,10 @@ public class TaskEditActivity extends EditActivityBase {
 
 	@Override
 	protected void setLayout() {
-		setContentView(R.layout.task_edit_activity);
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		setContentView(R.layout.task_edit_activity_s00);
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		setContentView(R.layout.task_edit_activity_s01);
 	}
 
 	protected View.OnClickListener onNewTaskTypeClickListener = new View.OnClickListener() {
@@ -666,10 +675,6 @@ public class TaskEditActivity extends EditActivityBase {
 		}
 	};
 
-//    @Override
-//    protected Dialog onCreateDialog(int id) {
-//
-//    }
 
     @Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {

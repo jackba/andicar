@@ -21,6 +21,7 @@ package org.andicar.activity;
 
 import android.os.Bundle;
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -37,6 +38,16 @@ public class CommonListActivity extends ListActivityBase
             mBundleExtras = getIntent().getExtras();
     	
     	String listSource = mBundleExtras.getString("ListSource");
+    	int twoLineListLayout = R.layout.twoline_list_activity_s01;
+
+        if(mPreferences == null)
+        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+    	
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		twoLineListLayout = R.layout.twoline_list_activity_s00;
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		twoLineListLayout = R.layout.twoline_list_activity_s01;
+
     	if(listSource.equals(MainDbAdapter.CAR_TABLE_NAME)){
 	        super.onCreate( icicle, null, CarEditActivity.class, null,
 	                MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
@@ -62,7 +73,7 @@ public class CommonListActivity extends ListActivityBase
     	else if(listSource.equals(MainDbAdapter.TASK_TABLE_NAME)){
             super.onCreate( icicle, null, TaskEditActivity.class, null,
                     MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.taskTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                    R.layout.twoline_list_activity,
+                    twoLineListLayout,
                     new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_TaskList);
@@ -70,7 +81,7 @@ public class CommonListActivity extends ListActivityBase
     	else if(listSource.equals(MainDbAdapter.TASKTYPE_TABLE_NAME)){
             super.onCreate( icicle, null, TaskTypeEditActivity.class, null,
                     MainDbAdapter.TASKTYPE_TABLE_NAME, MainDbAdapter.taskTypeTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                    R.layout.twoline_list_activity,
+                    twoLineListLayout,
                     new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_TaskTypeList);
@@ -79,7 +90,7 @@ public class CommonListActivity extends ListActivityBase
             super.onCreate( icicle, null, UOMEditActivity.class, null,
                     MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, 
                     null, MainDbAdapter.GEN_COL_NAME_NAME,
-                    R.layout.twoline_list_activity,
+                    twoLineListLayout,
                     new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.UOM_COL_CODE_NAME},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_UOMList);
@@ -89,7 +100,7 @@ public class CommonListActivity extends ListActivityBase
     	        super.onCreate( icicle, null, ExpenseCategoryEditActivity.class, null,
     	                MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.expenseCategoryTableColNames, MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + "='N'",
     	                MainDbAdapter.GEN_COL_NAME_NAME,
-    	                R.layout.twoline_list_activity,
+    	                twoLineListLayout,
     	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
     	                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
     	        setTitle(R.string.APP_Activity_ExpenseCategoryList);
@@ -98,7 +109,7 @@ public class CommonListActivity extends ListActivityBase
     	        super.onCreate( icicle, null, ExpenseCategoryEditActivity.class, null,
     	                MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.expenseCategoryTableColNames, MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + "='Y'",
     	                MainDbAdapter.GEN_COL_NAME_NAME,
-    	                R.layout.twoline_list_activity,
+    	                twoLineListLayout,
     	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
     	                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
     	        setTitle(R.string.APP_Activity_FuelCategoryList);
@@ -107,7 +118,7 @@ public class CommonListActivity extends ListActivityBase
     	else if(listSource.equals(MainDbAdapter.EXPENSETYPE_TABLE_NAME)){
             super.onCreate( icicle, null, ExpenseTypeEditActivity.class, null,
                     MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.expenseTypeTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                    R.layout.twoline_list_activity,
+                    twoLineListLayout,
                     new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_ExpenseTypeList);
@@ -115,7 +126,7 @@ public class CommonListActivity extends ListActivityBase
     	else if(listSource.equals(MainDbAdapter.CURRENCY_TABLE_NAME)){
             super.onCreate( icicle, null, CurrencyEditActivity.class, null,
                     MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                    R.layout.twoline_list_activity,
+                    twoLineListLayout,
                     new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.CURRENCY_COL_CODE_NAME},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_CurrencyList);
@@ -123,7 +134,7 @@ public class CommonListActivity extends ListActivityBase
     	else if(listSource.equals(MainDbAdapter.TAG_TABLE_NAME)){
             super.onCreate( icicle, null, TagEditActivity.class, null,
                     MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.tagTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                    R.layout.twoline_list_activity,
+                    twoLineListLayout,
                     new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_TagList);

@@ -114,8 +114,13 @@ public class ListActivityBase extends ListActivity {
 
         super.onCreate(icicle);
 
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+        if(mPreferences == null)
+        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+    	/*
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		findViewById(android.R.id.content).setBackgroundColor(android.R.color.background_light);
+    	 */
+    	isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(

@@ -112,7 +112,8 @@ public class BPartnerEditActivity extends EditActivityBase {
             selection = selection +
                                 " AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\'";
 
-        cAddressCursor = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.genColName, 
+        String columns[] = {MainDbAdapter.GEN_COL_ROWID_NAME, MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME};
+        cAddressCursor = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, columns, 
                 selection, selectionArgs, null, null, MainDbAdapter.GEN_COL_NAME_NAME);
 //                fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
 //                    MainDbAdapter.genColName, selection, MainDbAdapter.GEN_COL_NAME_NAME);
@@ -120,9 +121,14 @@ public class BPartnerEditActivity extends EditActivityBase {
 
         lvAddressList.setAdapter(null);
 
+        int listLayout = R.layout.simple_list_item_2_s01;
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		listLayout = android.R.layout.simple_list_item_2;
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		listLayout = R.layout.simple_list_item_2_s01;
         SimpleCursorAdapter listCursorAdapter =
-                new SimpleCursorAdapter(this, android.R.layout.simple_list_item_2,
-                cAddressCursor, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1});
+                new SimpleCursorAdapter(this, listLayout,
+                cAddressCursor, new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME}, new int[]{android.R.id.text1, android.R.id.text2});
         lvAddressList.setAdapter(listCursorAdapter);
     }
 
@@ -176,7 +182,10 @@ public class BPartnerEditActivity extends EditActivityBase {
 
     @Override
     protected void setLayout() {
-        setContentView(R.layout.bpartner_edit_activity);
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		setContentView(R.layout.bpartner_edit_activity_s00);
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		setContentView(R.layout.bpartner_edit_activity_s01);
     }
 
     protected AdapterView.OnItemClickListener mItemClickListener =

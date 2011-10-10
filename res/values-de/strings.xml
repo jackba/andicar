@@ -224,7 +224,7 @@
 
     <string name="BackupRestoreEditActivity_BackupBtnCaption">"Backup"</string>
     <string name="BackupRestoreEditActivity_RestoreBtnCaption">"Restore"</string>
-    <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Backup löschen"</string>
+    <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Löschen"</string>
     <string name="BackupRestoreEditActivity_BackupListLabel">"vorhandene Backups:"</string>
     <string name="BackupRestoreEditActivity_BackupCreatedMessage">"Backup erstellt."</string>
     <string name="BackupRestoreEditActivity_BackupFailedMessage">"Fehler: Backup wurde nicht erstellt!"</string>
@@ -465,7 +465,8 @@
    <string name="TaskEditActivity_FirstTimeRunExplanation">"Die Startzeit wird für jedes eingetragene Fahrzeug einzeln angegeben."</string>
    <string name="TaskEditActivity_FirstMileageRunExplanation">"Der Start - Tachostand wird für jedes Fahrzeug einzeln angegeben."</string>
    <string name="TaskEditActivity_ReminderStartLabel">"Starte Erinnerung vor"</string>
-   <string name="TaskEditActivity_MileageUOMText">"mi oder km (Abhängig von der Fahrzeugdefinition)"</string>
+   <string name="TaskEditActivity_MileageUOMTextLong">"mi oder km (Abhängig von der Fahrzeugdefinition)"</string>
+   <string name="TaskEditActivity_MileageUOMText">"mi oder km"</string>
    <string name="TaskEditActivity_FillMileage">"Strecke eintragen!"</string>
    <string name="TaskEditActivity_FillFrequency">"Wiederholung eintragen!"</string>
    <string name="TaskEditActivity_LinkedCarsOptionsHelp">"Drück' lange auf ein Fahrzeug für weitere Optionen."</string>
