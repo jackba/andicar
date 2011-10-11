@@ -7,6 +7,6 @@
 	</style>
 	
 	<style name="s01">
-    	<item name="android:colorBackground">@android:color/background_light</item>
+    	<item name="android:background">@android:color/background_light</item>
 	</style>
 </resources>

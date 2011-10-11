@@ -161,7 +161,7 @@
     <string name="MENU_HideInactiveCaption">"Hide inactive"</string>
     <string name="MENU_SearchCaption">"Search/filter"</string>
     <string name="MENU_CreateReportCaption">"Create report"</string>
-    <string name="MENU_SendAsEmailCaption">"Send as email"</string>
+    <string name="MENU_SendAsEmailCaption">"Send / Upload"</string>
     <string name="MENU_ShowOnMap">"Show on map"</string>
     <string name="MENU_MileageCaption">"Mileages"</string>
     <string name="MENU_RefuelCaption">"Refuels"</string>
@@ -450,7 +450,7 @@
     <string name="DIALOGSearch_DateToLabel">"To"</string>
 
     <string name="DIALOGReport_DialogTitle">"Report options"</string>
-    <string name="DIALOGReport_SendEmailLabel">"  send as email attachment"</string>
+    <string name="DIALOGReport_SendEmailLabel">"  send / upload"</string>
     <string name="DIALOGReport_ReportFormatLabel">"Report format:"</string>
 
     <string name="DIALOG_TemplateNameTitle">"Template name"</string>

@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/org.andicar.activity"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginRight="5dp"
+    android:id="@+id/vgRoot"
+    android:background="@android:color/background_light"
+    >
+	<ImageView
+		android:src="@drawable/main_activity_picture"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		/>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="vertical"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            >
+		    <LinearLayout
+		        android:orientation="horizontal"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_horizontal|center_vertical"
+		        android:layout_marginTop="5dp"
+		        >
+			    <TextView
+			        android:id="@+id/tvCarLabel"
+			        android:layout_height="wrap_content"
+			        android:layout_width="wrap_content"
+			        android:textStyle="bold"
+			        android:typeface="sans"
+		        	android:text="@string/GEN_CarLabel"
+		            android:textColor="@android:color/widget_edittext_dark"
+		               android:textSize="17dp"
+			        />
+		       <Spinner android:id="@+id/spnCar"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_marginLeft="5dp"
+		                android:prompt="@string/GEN_ChooseOneTitle"
+		                />
+		    </LinearLayout>
+		    <LinearLayout
+		        android:orientation="horizontal"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_vertical|center_horizontal"
+		        >
+			    <TextView
+			        android:id="@+id/tvCarIndex"
+			        android:layout_height="wrap_content"
+			        android:layout_width="wrap_content"
+			        android:typeface="sans"
+		            android:textColor="@android:color/widget_edittext_dark"
+		            android:textSize="17dp"
+			        />
+		    </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llMileageZone"
+                >
+                <TextView
+                    android:id="@+id/tvMileageHdr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:background="@color/header_bg"
+                    android:gravity="center_vertical"
+                    android:text="@string/MainActivity_MileageHeaderCaption"
+                    />
+
+                 <TextView android:id="@+id/tvThreeLineListMileageText1"
+                           android:textSize="14sp"
+                           android:textStyle="bold"
+                           android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                           android:layout_width="fill_parent"
+                           android:layout_height="wrap_content"/>
+
+                 <TextView android:id="@+id/tvThreeLineListMileageText2"
+                           android:textSize="14sp"
+                           android:textStyle="italic"
+                           android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                           android:layout_width="fill_parent"
+                           android:layout_height="wrap_content"/>
+
+                 <TextView android:id="@+id/tvThreeLineListMileageText3"
+                           android:textSize="14sp"
+                           android:textStyle="italic"
+                           android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                           android:layout_width="fill_parent"
+                           android:layout_height="wrap_content"/>
+                
+                <TextView
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:background="@android:color/background_dark"
+                    />
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    >
+                    <ImageButton android:id="@+id/btnMileageList"
+                                 android:layout_width="120dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentLeft="true"
+                                 android:src="@drawable/icon_more_selector"
+                                 />
+                    <ImageButton android:id="@+id/btnMileageInsert"
+                                 android:layout_width="120dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentRight="true"
+                                 android:layout_alignTop="@id/btnMileageList"
+                                 android:src="@drawable/icon_add_selector"
+                                 />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llToDoZone"
+                >
+                <TextView
+                    android:id="@+id/tvToDoHdr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:background="@color/header_bg"
+                    android:gravity="center_vertical"
+                    android:text="@string/MainActivity_ToDoHeaderCaption"
+                    />
+               <TextView android:id="@+id/tvThreeLineListToDoText1"
+                         android:textSize="14sp"
+                         android:textStyle="bold"
+                         android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                         android:layout_width="fill_parent"
+                         android:layout_height="wrap_content"/>
+
+               <TextView android:id="@+id/tvThreeLineListToDoText2"
+                         android:textSize="14sp"
+                         android:textStyle="italic"
+                         android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                         android:layout_width="fill_parent"
+                         android:layout_height="wrap_content"/>
+
+               <TextView android:id="@+id/tvThreeLineListToDoText3"
+                         android:textSize="14sp"
+                         android:textStyle="italic"
+                         android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                         android:layout_width="fill_parent"
+                         android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:background="@android:color/background_dark"
+                    />
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    >
+                    <ImageButton android:id="@+id/btnToDoList"
+                                 android:layout_width="120dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentLeft="true"
+                                 android:src="@drawable/icon_more_selector"
+                                 />
+                    <ImageButton android:id="@+id/btnToDoInsert"
+                                 android:layout_width="120dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentRight="true"
+                                 android:layout_alignTop="@id/btnToDoList"
+                                 android:src="@drawable/icon_add_selector"
+                                 />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llGPSTrackZone"
+                >
+                <TextView
+                    android:id="@+id/tvGPSTrackHdr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:background="@color/header_bg"
+                    android:gravity="center_vertical"
+                    android:text="@string/MainActivity_GPSTrackHeaderCaption"
+                    />
+                <TextView android:id="@+id/tvThreeLineListGPSTrackText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListGPSTrackText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListGPSTrackText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:background="@android:color/background_dark"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    >
+                    <ImageButton android:id="@+id/btnGPSTrackList"
+                                 android:layout_width="100dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentLeft="true"
+                                 android:src="@drawable/icon_more_selector"
+                                 />
+                    <ImageButton android:id="@+id/btnGPSTrackShowOnMap"
+                                 android:layout_width="100dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_centerHorizontal ="true"
+                                 android:layout_alignTop="@id/btnGPSTrackList"
+                                 android:src="@drawable/icon_map_selector"
+                                 />
+                    <ImageButton android:id="@+id/btnGPSTrackInsert"
+                                 android:layout_width="100dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentRight="true"
+                                 android:layout_alignTop="@id/btnGPSTrackList"
+                                 android:src="@drawable/icon_add_selector"
+                                 />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llRefuelZone"
+                >
+                <TextView
+                    android:id="@+id/tvRefuelHdr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:background="@color/header_bg"
+                    android:gravity="center_vertical"
+                    android:text="@string/MainActivity_RefuelHeaderCaption"
+                    />
+                <TextView android:id="@+id/tvThreeLineListRefuelText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListRefuelText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListRefuelText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:background="@android:color/background_dark"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    >
+                    <ImageButton android:id="@+id/btnRefuelList"
+                                 android:layout_width="120dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentLeft="true"
+                                 android:src="@drawable/icon_more_selector"
+                                 />
+                    <ImageButton android:id="@+id/btnRefuelInsert"
+                                 android:layout_width="120dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentRight="true"
+                                 android:layout_alignTop="@id/btnRefuelList"
+                                 android:src="@drawable/icon_add_selector"
+                                 />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llExpenseZone"
+                >
+                <TextView
+                    android:id="@+id/tvExpenseHdr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:background="@color/header_bg"
+                    android:gravity="center_vertical"
+                    android:text="@string/MainActivity_ExpenseHeaderCaption"
+                    />
+                <TextView android:id="@+id/tvThreeLineListExpenseText1"
+                          android:textSize="14sp"
+                          android:textStyle="bold"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListExpenseText2"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+
+                <TextView android:id="@+id/tvThreeLineListExpenseText3"
+                          android:textSize="14sp"
+                          android:textStyle="italic"
+                          android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:background="@android:color/background_dark"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    >
+                    <ImageButton android:id="@+id/btnExpenseList"
+                                 android:layout_width="120dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentLeft="true"
+                                 android:src="@drawable/icon_more_selector"
+                                 />
+                    <ImageButton android:id="@+id/btnExpenseInsert"
+                                 android:layout_width="120dp"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentRight="true"
+                                 android:layout_alignTop="@id/btnExpenseList"
+                                 android:src="@drawable/icon_add_selector"
+                                 />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/llStatistcsZone"
+                >
+                <TextView
+                    android:id="@+id/tvStatisticsHdr"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                    android:background="@color/header_bg"
+                    android:gravity="center_vertical"
+                    android:text="@string/MainActivity_StatisticsHeaderCaption"
+                    />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView android:id="@+id/tvStatisticsLastKnownOdometer"
+                              android:textSize="14sp"
+                              android:textStyle="italic"
+                              android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"
+                              android:text="@string/MainActivity_StatisticsListLastOdoLabel"
+                              />
+                    <TextView android:id="@+id/tvStatisticsAvgFuelEff"
+                              android:textSize="14sp"
+                              android:textStyle="italic"
+                              android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"/>
+
+                    <TextView android:id="@+id/tvStatisticsLastFuelEff"
+                              android:textSize="14sp"
+                              android:textStyle="italic"
+                              android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"/>
+
+                    <TextView android:id="@+id/tvStatisticsTotalExpenses"
+                              android:textSize="14sp"
+                              android:textStyle="italic"
+                              android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"/>
+                              
+                    <TextView android:id="@+id/tvStatisticsMileageExpense"
+                              android:textSize="14sp"
+                              android:textStyle="italic"
+                              android:typeface="sans"
+			            android:textColor="@android:color/widget_edittext_dark"
+                              android:layout_width="fill_parent"
+                              android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_height="1dp"
+                    android:layout_width="fill_parent"
+                    android:background="@android:color/background_dark"
+                    android:layout_marginTop="5dp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvShortAboutLbl"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal|bottom"
+                android:layout_marginTop="5dp"
+                android:textSize="10sp"
+                android:typeface="sans"
+	            android:textColor="@android:color/widget_edittext_dark"
+                />
+            <TextView
+                android:id="@+id/tvShortAboutAppVersion"
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:gravity="center_horizontal|bottom"
+                android:textSize="10sp"
+                android:typeface="sans"
+	            android:textColor="@android:color/widget_edittext_dark"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

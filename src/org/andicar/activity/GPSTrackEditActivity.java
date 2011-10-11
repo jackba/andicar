@@ -150,8 +150,14 @@ public class GPSTrackEditActivity extends EditActivityBase {
 
         String selection = MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=?";
         String[] selectionArgs = {Long.toString(mRowId)};
+        int layout = R.layout.oneline_list_layout_small_s01;
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		layout = R.layout.oneline_list_layout_small_s00;
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+    		layout = R.layout.oneline_list_layout_small_s01;
+
         SimpleCursorAdapter cursorAdapter =
-                new SimpleCursorAdapter(this, /*android.R.layout.simple_list_item_2*/ R.layout.oneline_list_layout_smalll,
+                new SimpleCursorAdapter(this, layout,
                                     mDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
                                             MainDbAdapter.gpsTrackDetailTableColNames, selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME),
                                     new String[]{MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME}, new int[]{R.id.tvOneLineListTextSmall});
@@ -241,7 +247,10 @@ public class GPSTrackEditActivity extends EditActivityBase {
 
     @Override
     protected void setLayout() {
-        setContentView(R.layout.gpstrack_edit_activity);
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+            setContentView(R.layout.gpstrack_edit_activity_s00);
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+            setContentView(R.layout.gpstrack_edit_activity_s01);
     }
 
 	/* (non-Javadoc)

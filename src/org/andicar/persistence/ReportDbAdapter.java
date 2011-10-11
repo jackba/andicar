@@ -497,12 +497,12 @@ public class ReportDbAdapter extends MainDbAdapter{
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
                     "'[#5]' || '; ' || " +
                     "'[#6]' || '; ' || " +
-                    "'[#7]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", 2) || " +
+                    "'[#7]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", 2) || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
                                 " THEN " + "' m; ' " +
                                 " ELSE " + "' yd; ' " +
                         " END || " +
-                    "'[#8]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", 2) || " +
+                    "'[#8]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", 2) || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
                                 " THEN " + "' m; ' " +
                                 " ELSE " + "' yd; ' " +
@@ -567,8 +567,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                     "WHEN \"6\" THEN '[#d6]' " +
                 "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + ", " +
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXACCURACY_NAME) + " AS " + GPSTRACK_COL_MINACCURACY_NAME + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + " AS " + GPSTRACK_COL_MAXACCURACY_NAME + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGACCURACY_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DISTANCE_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXSPEED_NAME) + ", " +
