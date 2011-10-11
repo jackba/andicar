@@ -149,11 +149,16 @@ public class MainActivity extends BaseActivity {
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 		try {
-			setContentView(R.layout.main_activity);
 			mainContext = this;
 			mPreferences = getSharedPreferences(
 					StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-			if(mPreferences.getAll().size() == 0)
+
+			if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+				setContentView(R.layout.main_activity_s00);
+	    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+				setContentView(R.layout.main_activity_s01);
+
+	    	if(mPreferences.getAll().size() == 0)
 				isJustInstalled = true;
 			SharedPreferences.Editor editor = mPreferences.edit();
 			
@@ -740,8 +745,8 @@ public class MainActivity extends BaseActivity {
     			tvThreeLineListToDoText1.setTextColor(Color.RED);
     		else if(dataString.contains("[#15]"))
     			tvThreeLineListToDoText1.setTextColor(Color.GREEN);
-    		else
-    			tvThreeLineListToDoText1.setTextColor(Color.WHITE);
+//    		else
+//    			tvThreeLineListToDoText1.setTextColor(Color.WHITE);
 			tvThreeLineListToDoText1.setText(
 				dataString
 					.replace("[#1]", mResource.getString(R.string.GEN_TypeLabel))

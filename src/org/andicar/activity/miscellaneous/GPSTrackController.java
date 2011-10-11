@@ -41,7 +41,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -60,7 +60,10 @@ public class GPSTrackController extends EditActivityBase {
     private CheckBox ckIsUseGPX;
     private CheckBox ckIsCreateMileage;
     private ImageButton btnGPSTrackStartStop;
-    private LinearLayout llIndexStartZone;
+    private RelativeLayout llIndexStartZone;
+    private RelativeLayout lCarZone;
+    private RelativeLayout lDriverZone;
+    
     private boolean isCreateMileage = true;
     private boolean isGpsTrackOn = false;
     private ViewGroup vgRoot;
@@ -106,7 +109,10 @@ public class GPSTrackController extends EditActivityBase {
         acTag.setAdapter(tagAdapter);
         etName = (EditText) findViewById(R.id.etName);
         etIndexStart = (EditText) findViewById(R.id.etIndexStart);
-        llIndexStartZone = (LinearLayout) findViewById(R.id.llIndexStartZone);
+        llIndexStartZone = (RelativeLayout) findViewById(R.id.llIndexStartZone);
+        lCarZone = (RelativeLayout) findViewById(R.id.lCarZone);
+        lDriverZone = (RelativeLayout) findViewById(R.id.lDriverZone);
+        
         etName.setHint(mResource.getString(R.string.GEN_CreatedOn) + " " +
 				        		DateFormat.getDateFormat(getApplicationContext()).format(System.currentTimeMillis()) + " " +
 								DateFormat.getTimeFormat(getApplicationContext()).format(System.currentTimeMillis())
@@ -136,7 +142,7 @@ public class GPSTrackController extends EditActivityBase {
 
         if(vgRoot != null)
         	setInputType(vgRoot);
-
+        initControls();
         fillStartIndex();
     }
 
@@ -164,13 +170,46 @@ public class GPSTrackController extends EditActivityBase {
             btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_start_24x24));
             setEditable(vgRoot, true);
         }
-        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                mCarId, false);
+    }
 
-        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
-                mDriverId, false);
+    private void initControls(){
+    	long checkID;
+    	if(lCarZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.CAR_TABLE_NAME, null); 
+	    	if(checkID > -1){ //one single car
+	    		mCarId = checkID;
+	    		lCarZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lCarZone.setVisibility(View.VISIBLE);
+	            initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+	                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+	                    mCarId, false);
+	    	}
+    	}
+    	else{
+            initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
+                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    mCarId, false);
+    	}
+    	if(lDriverZone != null){
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.DRIVER_TABLE_NAME, null); 
+	    	if(checkID > -1){ //one single driver
+	    		mDriverId = checkID;
+	    		lDriverZone.setVisibility(View.GONE);
+	    	}
+	    	else{
+	    		lDriverZone.setVisibility(View.VISIBLE);
+	            initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+	                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+	                    mDriverId, false);
+	    	}
+    	}
+    	else{
+            initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
+                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    mDriverId, false);
+    	}
     }
 
     @Override
@@ -349,7 +388,10 @@ public class GPSTrackController extends EditActivityBase {
 	 */
 	@Override
 	protected void setLayout() {
-        setContentView(R.layout.gpstrack_controller_activity);
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+            setContentView(R.layout.gpstrack_controller_activity_s00);
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
+            setContentView(R.layout.gpstrack_controller_activity_s01);
 	}
 
 	/* (non-Javadoc)

@@ -141,17 +141,20 @@
                     android:layout_height="wrap_content"
                     android:text="@string/GEN_CarLabel"
                     android:typeface="sans"
-		            android:textColor="@android:color/widget_edittext_dark"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
+		            android:textColor="@android:color/widget_edittext_dark"
                     android:textSize="17dp"
                     />
-                <Spinner android:id="@+id/spnCar"
-                         android:layout_height="wrap_content"
-                         android:prompt="@string/GEN_ChooseOneTitle"
-                         android:tag="spnCar"
-            			 android:layout_alignParentRight="true"
-            			android:layout_centerVertical="true" android:layout_width="220dp"/>
+                <Spinner 
+					android:id="@+id/spnCar"
+					android:layout_height="wrap_content"
+					android:prompt="@string/GEN_ChooseOneTitle"
+					android:tag="spnCar"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true" 
+					android:layout_width="220dp"
+					/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -296,7 +299,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
-                    android:digits="-.1234567890"
+                    android:digits=".1234567890"
                     android:inputType="phone"
                     android:layout_marginLeft="10dp"
                     android:hint="@string/GEN_Required"
@@ -327,7 +330,7 @@
                     android:layout_marginLeft="5dp"
 					android:layout_toRightOf="@id/tvQuantityLabel"
                     android:numeric="decimal"
-                    android:digits="-.1234567890"
+                    android:digits=".1234567890"
                     android:inputType="phone"
                     android:hint="@string/GEN_Required"
                     android:tag="@string/GEN_QuantityLabel"
@@ -426,7 +429,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
-                    android:digits="-.1234567890"
+                    android:digits=".1234567890"
                     android:inputType="phone"
                     android:layout_marginLeft="5dp"
                     android:hint="@string/GEN_Required"
@@ -468,7 +471,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
-                    android:digits="-.1234567890"
+                    android:digits=".1234567890"
                     android:inputType="phone"
                     android:hint="@string/GEN_Required"
                     android:tag="@string/GEN_PriceLabel"

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginRight="5dp"
+    android:id="@+id/vgRoot"
+    android:background="@android:color/background_light"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginRight="5dp"
+       	android:id="@+id/fakeFocus"
+		android:focusable="true"
+		android:focusableInTouchMode="true" 
+        />
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+		android:layout_marginLeft="5dp"
+		android:layout_marginRight="5dp"
+        >
+        <ImageButton
+            android:id="@android:id/closeButton"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/icon_cancel_selector"
+            />
+        <ImageButton
+            android:id="@android:id/button1"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_done_selector"
+            />
+    </RelativeLayout>
+    <TextView
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:background="@android:color/background_dark"
+        />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        >
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+	    	android:paddingLeft="5dp"
+	        android:layout_marginRight="5dp"
+            >
+		    <TextView
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/AddOn_SecureBackup_Text1"
+		        android:typeface="sans"
+		        android:textStyle="bold|italic"
+		        android:gravity="center_horizontal"
+		        android:layout_marginTop="5dp"
+		        android:textColor="@android:color/widget_edittext_dark"
+		        android:textSize="15dp"
+		        />
+		    <TextView
+		        android:layout_height="1dp"
+		        android:layout_width="fill_parent"
+		        android:background="@android:color/background_dark"
+		        android:layout_marginTop="5dp"
+		        />
+
+            <TextView
+                android:id="@+id/tvSMTPUserFrom"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/AddOn_SecureBackup_SMTPUserFrom"
+                android:typeface="sans"
+	            android:textColor="@android:color/widget_edittext_dark"
+                android:textSize="17dp"
+                />
+
+            <EditText
+                android:id="@+id/etSMTPUserFrom"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/GEN_Required"
+                android:tag="@string/AddOn_SecureBackup_SMTPUserFrom"
+                android:inputType="textEmailAddress"
+                />
+
+            <TextView
+                android:id="@+id/tvSMTPUserPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_Password"
+                android:typeface="sans"
+	            android:textColor="@android:color/widget_edittext_dark"
+                android:textSize="17dp"
+                />
+
+            <EditText
+                android:id="@+id/etSMTPUserPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/GEN_Required"
+                android:inputType="textPassword"
+                android:tag="@string/GEN_Password"
+                />
+
+            <TextView
+                android:id="@+id/tvSMTPEmailTo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/AddOn_SecureBackup_SMTPEmailTo"
+                android:typeface="sans"
+		        android:layout_marginTop="10dp"
+	            android:textColor="@android:color/widget_edittext_dark"
+                android:textSize="17dp"
+                />
+
+            <EditText
+                android:id="@+id/etSMTPEmailTo"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/GEN_Required"
+                android:tag="@string/AddOn_SecureBackup_SMTPEmailTo"
+                android:inputType="textEmailAddress"
+                />
+
+		    <TextView
+		        android:layout_height="1dp"
+		        android:layout_width="fill_parent"
+		        android:background="@android:color/background_dark"
+		        android:layout_marginTop="5dp"
+		        />
+		        
+            <CheckBox
+                android:id="@+id/ckIsIncludeGPSTrack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AddOn_SecureBackup_IncludeGPSTrack"
+                android:typeface="sans"
+	            android:textColor="@android:color/widget_edittext_dark"
+                android:textSize="17dp"
+                />
+
+            <CheckBox
+                android:id="@+id/ckIsIncludeReports"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/AddOn_SecureBackup_IncludeReports"
+                android:typeface="sans"
+	            android:textColor="@android:color/widget_edittext_dark"
+                android:textSize="17dp"
+                />
+
+            <CheckBox
+                android:id="@+id/ckIsShowNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_ShowNotification"
+                android:typeface="sans"
+	            android:textColor="@android:color/widget_edittext_dark"
+                android:textSize="17dp"
+                />
+
+		    <TextView
+		        android:layout_height="1dp"
+		        android:layout_width="fill_parent"
+		        android:background="@android:color/background_dark"
+		        android:layout_marginTop="5dp"
+		        />
+
+            <CheckBox
+                android:id="@+id/ckIsActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_IsActiveLabel"
+                android:typeface="sans"
+	            android:textColor="@android:color/widget_edittext_dark"
+                android:textSize="17dp"
+                />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

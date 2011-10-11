@@ -18,14 +18,17 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<!-- debug: android:apiKey=0aQTdJnsQSHfr3f6u5rjuLC_KIBt97Q_lTL_XcA -->
-<!-- release: android:apiKey="0aQTdJnsQSHdoTbAJ0paNl9sntpqEw8hVG6nhRg" -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
-<com.google.android.maps.MapView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/gpstrackmap"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:clickable="true"
-    android:apiKey="0aQTdJnsQSHfr3f6u5rjuLC_KIBt97Q_lTL_XcA"
-/>
+    <TextView android:id="@+id/tvOneLineListTextSmall"
+              android:textSize="14sp"
+              android:textStyle="italic"
+              android:typeface="sans"
+           	android:textColor="@android:color/widget_edittext_dark"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              />
+</LinearLayout>

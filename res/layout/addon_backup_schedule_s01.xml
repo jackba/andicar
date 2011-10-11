@@ -24,7 +24,7 @@
 	android:layout_height="fill_parent"
 	android:layout_marginRight="5dp"
 	android:id="@+id/vgRoot"
-	android:background="@android:color/black"
+	android:background="@android:color/background_light"
 	>
     <LinearLayout
         android:orientation="vertical"
@@ -38,34 +38,32 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
+    	android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         >
         <ImageButton
             android:id="@android:id/closeButton"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/btn_background_selector"
             android:src="@drawable/icon_cancel_selector"
             />
         <ImageButton
             android:id="@android:id/button1"
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/btn_background_selector"
             android:src="@drawable/icon_done_selector"
-            android:layout_marginRight="5dp"
             />
     </RelativeLayout>
     <TextView
         android:layout_height="1dp"
         android:layout_width="fill_parent"
-        android:background="@color/separator_bg"
-        android:layout_marginTop="10dp"
+        android:background="@android:color/background_dark"
+        android:layout_marginTop="5dp"
         />
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
@@ -74,31 +72,35 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+	    	android:paddingLeft="5dp"
+	        android:layout_marginRight="5dp"
             >
 
-	        <LinearLayout
-	            android:orientation="horizontal"
-	            android:layout_width="fill_parent"
-	            android:layout_height="wrap_content"
-	            android:layout_marginTop="10dp"
-	            >
+            <RelativeLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                >
 	            <TextView
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:text="@string/AddOn_AutoBackupService_ScheduleFrequency"
 	                android:typeface="sans"
-	                android:textColor="@android:color/white"
+            		android:layout_alignParentLeft="true"
+            		android:layout_centerVertical="true"
+                    android:textColor="@android:color/widget_edittext_dark"
+                    android:textSize="17dp"
 	            />
 		        <Spinner android:id="@+id/spnScheduleFrequency"
-		            android:layout_marginLeft="10dp"
-		            android:layout_width="fill_parent"
+		            android:layout_width="200dp"
 		            android:layout_height="wrap_content"
 		            android:drawSelectorOnTop="true"
-		            android:background="@drawable/white_background"
 		            android:prompt="@string/GEN_ChooseOneTitle"
+					android:layout_alignParentRight="true"
+            		android:layout_centerVertical="true" 
 		        />
-	        </LinearLayout>
+	        </RelativeLayout>
 
 			<TableLayout android:id="@+id/tlDayList"
 			    android:layout_width="fill_parent"
@@ -111,8 +113,8 @@
 		                android:layout_height="wrap_content"
 		                android:text="@string/DayOfWeek_0"
 		                android:typeface="sans"
-		                android:textColor="@android:color/white"
-		                android:button="@drawable/checkbox_selector"
+		                android:textColor="@android:color/widget_edittext_dark"
+                    	android:textSize="17dp"
 		                />
 		            <CheckBox
 		                android:id="@+id/ckDayOfWeek1"
@@ -120,9 +122,8 @@
 		                android:layout_height="wrap_content"
 		                android:text="@string/DayOfWeek_1"
 		                android:typeface="sans"
-		                android:textColor="@android:color/white"
-		                android:button="@drawable/checkbox_selector"
-		                android:layout_marginLeft="10dp"
+		                android:textColor="@android:color/widget_edittext_dark"
+                    	android:textSize="17dp"
 		                />
                 </TableRow>
 				<TableRow>
@@ -132,8 +133,8 @@
 		                android:layout_height="wrap_content"
 		                android:text="@string/DayOfWeek_2"
 		                android:typeface="sans"
-		                android:textColor="@android:color/white"
-		                android:button="@drawable/checkbox_selector"
+		                android:textColor="@android:color/widget_edittext_dark"
+                    	android:textSize="17dp"
 		                />
 		            <CheckBox
 		                android:id="@+id/ckDayOfWeek3"
@@ -141,9 +142,8 @@
 		                android:layout_height="wrap_content"
 		                android:text="@string/DayOfWeek_3"
 		                android:typeface="sans"
-		                android:textColor="@android:color/white"
-		                android:button="@drawable/checkbox_selector"
-		                android:layout_marginLeft="10dp"
+		                android:textColor="@android:color/widget_edittext_dark"
+                    	android:textSize="17dp"
 		                />
                 </TableRow>
 				<TableRow>
@@ -153,8 +153,8 @@
 		                android:layout_height="wrap_content"
 		                android:text="@string/DayOfWeek_4"
 		                android:typeface="sans"
-		                android:textColor="@android:color/white"
-		                android:button="@drawable/checkbox_selector"
+		                android:textColor="@android:color/widget_edittext_dark"
+                    	android:textSize="17dp"
 		                />
 		            <CheckBox
 		                android:id="@+id/ckDayOfWeek5"
@@ -162,9 +162,8 @@
 		                android:layout_height="wrap_content"
 		                android:text="@string/DayOfWeek_5"
 		                android:typeface="sans"
-		                android:textColor="@android:color/white"
-		                android:button="@drawable/checkbox_selector"
-		                android:layout_marginLeft="10dp"
+		                android:textColor="@android:color/widget_edittext_dark"
+                    	android:textSize="17dp"
 		                />
                 </TableRow>
 				<TableRow>
@@ -174,8 +173,8 @@
 		                android:layout_height="wrap_content"
 		                android:text="@string/DayOfWeek_6"
 		                android:typeface="sans"
-		                android:textColor="@android:color/white"
-		                android:button="@drawable/checkbox_selector"
+		                android:textColor="@android:color/widget_edittext_dark"
+                    	android:textSize="17dp"
 		                />
                 </TableRow>
             </TableLayout>
@@ -184,31 +183,32 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="fill_parent"
 	            android:gravity="center_vertical"
-	            android:layout_marginTop="10dp"
+	            android:layout_marginTop="5dp"
                >
                <TextView
-                   android:id="@+id/tvHourLabel"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:typeface="sans"
-                   android:textColor="@android:color/white"
-                   android:gravity="center_vertical"
-                   android:text="@string/AddOn_AutoBackupService_ScheduleHour"
+					android:id="@+id/tvHourLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:typeface="sans"
+					android:gravity="center_vertical"
+					android:text="@string/AddOn_AutoBackupService_ScheduleHour"
+					android:textColor="@android:color/widget_edittext_dark"
+					android:textSize="17dp"
                    />
                <TextView
-	               android:id="@+id/tvDateTimeValue"
-	               android:layout_width="wrap_content"
-	               android:layout_height="wrap_content"
-	               android:typeface="sans"
-	               android:textColor="@android:color/white"
-	               android:gravity="center_vertical"
-	            	android:layout_marginLeft="10dp"
+					android:id="@+id/tvDateTimeValue"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:typeface="sans"
+					android:gravity="center_vertical"
+					android:layout_marginLeft="5dp"
+					android:textColor="@android:color/widget_edittext_dark"
+					android:textSize="17dp"
                    />
                 <ImageButton android:id="@+id/btnPickTime"
-                        android:layout_width="wrap_content"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/btn_background_selector"
                         android:src="@drawable/icon_clock_selector"
                         />
             </LinearLayout>
@@ -218,36 +218,37 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:gravity="center_vertical"
-	            android:layout_marginTop="10dp"
+	            android:layout_marginTop="5dp"
                >
                <TextView
-                   android:id="@+id/tvKeepLast1"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:typeface="sans"
-                   android:textColor="@android:color/white"
-                   android:text="@string/AddOn_AutoBackupService_NoOfBackups1"
+					android:id="@+id/tvKeepLast1"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:typeface="sans"
+					android:text="@string/AddOn_AutoBackupService_NoOfBackups1"
+					android:textColor="@android:color/widget_edittext_dark"
+					android:textSize="16dp"
                    />
                 <EditText
                     android:id="@+id/etKeepLastNo"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="85dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
-                    android:digits="-.1234567890"
+                    android:digits="1234567890"
                     android:inputType="phone"
                     android:tag="@string/AddOn_AutoBackupService_NoOfBackups2"
                     android:hint="@string/GEN_Required"
-                    android:background="@drawable/white_background"
                     />
                <TextView
-                   android:id="@+id/tvKeepLast2"
-                   android:layout_marginLeft="10dp"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:typeface="sans"
-                   android:textColor="@android:color/white"
-                   android:text="@string/AddOn_AutoBackupService_NoOfBackups2"
+					android:id="@+id/tvKeepLast2"
+					android:layout_marginLeft="2dp"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:typeface="sans"
+					android:text="@string/AddOn_AutoBackupService_NoOfBackups2"
+					android:textColor="@android:color/widget_edittext_dark"
+					android:textSize="16dp"
                    />
             </LinearLayout>
 
@@ -257,14 +258,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/AddOn_AutoBackupService_NotifyIfSuccess"
                 android:typeface="sans"
-                android:textColor="@android:color/white"
-                android:button="@drawable/checkbox_selector"
+				android:textColor="@android:color/widget_edittext_dark"
+				android:textSize="17dp"
                 />
 		    <TextView
 		        android:layout_height="1dp"
 		        android:layout_width="fill_parent"
-		        android:background="@color/separator_bg"
-		        android:layout_marginTop="10dp"
+		        android:background="@android:color/background_dark"
+		        android:layout_marginTop="5dp"
 		        />
 
             <CheckBox
@@ -273,8 +274,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_IsActiveLabel"
                 android:typeface="sans"
-                android:textColor="@android:color/white"
-                android:button="@drawable/checkbox_selector"
+				android:textColor="@android:color/widget_edittext_dark"
+				android:textSize="17dp"
                 />
         </LinearLayout>
     </ScrollView>
