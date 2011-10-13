@@ -72,10 +72,12 @@ public class MileageListReportActivity extends ReportListActivityBase {
         else
             whereConditions = (Bundle)getLastNonConfigurationInstance();
 
+        initStyle();
+
         super.onCreate(icicle, null, MileageEditActivity.class, null,
                 MainDbAdapter.MILEAGE_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null,
-                R.layout.threeline_listreport_activity,
+                threeLineListReportActivity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
                 reportSelectName, whereConditions, new MileageListDataBinder() 
@@ -108,7 +110,7 @@ public class MileageListReportActivity extends ReportListActivityBase {
         
         LayoutInflater liLayoutFactory = LayoutInflater.from(this);
         searchView = liLayoutFactory.inflate(R.layout.search_dialog_mileage, null);
-        AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(MileageListReportActivity.this, 
+        AndiCarDialogBuilder searchDialog = new AndiCarDialogBuilder(this, 
         		AndiCarDialogBuilder.DIALOGTYPE_SEARCH, mRes.getString(R.string.DIALOGSearch_DialogTitle));
         searchDialog.setView(searchView);
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);

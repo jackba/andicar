@@ -37,6 +37,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -82,6 +83,11 @@ public class ListActivityBase extends ListActivity {
     protected boolean isExitAfterInsert = false;
     protected ListView lvBaseList = null;
     protected SimpleCursorAdapter.ViewBinder mViewBinder;
+    protected int twolineListActivity = R.layout.twoline_list_activity_s01;
+    protected int simpleListItem2 = R.layout.simple_list_item_2_s01;
+    protected int threeLineListActivity = R.layout.threeline_list_activity_s01;
+    protected int threeLineListReportActivity = R.layout.threeline_listreport_activity_s01;
+    protected String uiStyle = "s01";
 
     /** Use onCreate(Bundle icicle, OnItemClickListener mItemClickListener, Class editClass,
      *                  String tableName, String[] columns, String whereCondition, String orderByColumn,
@@ -116,11 +122,8 @@ public class ListActivityBase extends ListActivity {
 
         if(mPreferences == null)
         	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-    	/*
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		findViewById(android.R.id.content).setBackgroundColor(android.R.color.background_light);
-    	 */
-    	isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+
+        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
@@ -181,8 +184,28 @@ public class ListActivityBase extends ListActivity {
             }
             startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
         }
-
     }
+
+	protected void initStyle() {
+		if(mPreferences == null)
+        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+
+		if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00")){
+    		uiStyle = "s00";
+    		simpleListItem2 = android.R.layout.simple_list_item_2;
+    		twolineListActivity = R.layout.twoline_list_activity_s00;
+    		threeLineListActivity = R.layout.threeline_list_activity_s00;
+    		threeLineListReportActivity = R.layout.threeline_listreport_activity_s00;
+    	}
+    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01")){
+    		getListView().setBackgroundColor(Color.WHITE);
+    		uiStyle = "s01";
+    		simpleListItem2 = R.layout.simple_list_item_2_s01;
+    		twolineListActivity = R.layout.twoline_list_activity_s01;
+    		threeLineListActivity = R.layout.threeline_list_activity_s01;
+    		threeLineListReportActivity = R.layout.threeline_listreport_activity_s01;
+    	}
+	}
 
     @Override
     protected void onResume() {
