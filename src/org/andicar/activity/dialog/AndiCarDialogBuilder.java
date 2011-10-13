@@ -44,7 +44,6 @@ public class AndiCarDialogBuilder extends Builder {
 		
 		if(title != null)
 			setTitle(title);
-		
 		switch (dialogType) {
 			case DIALOGTYPE_ERROR:
 				setIcon(R.drawable.icon_dialog_error1_32x32);

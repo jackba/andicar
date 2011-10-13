@@ -23,6 +23,7 @@ import org.andicar.activity.R;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -37,6 +38,13 @@ public class ToDoListDataBinder implements SimpleCursorAdapter.ViewBinder {
     	Resources mRes = view.getResources();
     	String dataString;
     	TextView tv = (TextView) view;
+    	SharedPreferences mPreferences = view.getContext().getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+    	int color = android.R.color.widget_edittext_dark;
+    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
+    		color = Color.WHITE;
+    	else
+    		color = Color.BLACK;
+    	
     	if(columnIndex == 1) {
     		dataString = cursor.getString(1);
     		if(dataString.contains("[#5]"))
@@ -44,7 +52,7 @@ public class ToDoListDataBinder implements SimpleCursorAdapter.ViewBinder {
     		else if(dataString.contains("[#15]"))
     			tv.setTextColor(Color.GREEN);
     		else
-    			tv.setTextColor(Color.WHITE);
+    			tv.setTextColor(color);
 
     		tv.setText(
     				dataString
