@@ -169,10 +169,12 @@
                     />
                 <Spinner android:id="@+id/spnCar"
                          android:layout_height="wrap_content"
+                         android:layout_width="220dp"
                          android:prompt="@string/GEN_ChooseOneTitle"
                          android:tag="spnCar"
             			 android:layout_alignParentRight="true"
-            			android:layout_centerVertical="true" android:layout_width="220dp"/>
+            			android:layout_centerVertical="true" 
+            			/>
             </RelativeLayout>
             <RelativeLayout
             	android:id="@+id/lDriverZone"
