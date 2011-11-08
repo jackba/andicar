@@ -266,7 +266,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
 			}
 			Intent intent = new Intent(this, ToDoManagementService.class);
 			intent.putExtra("TaskID", taskID);
-			intent.putExtra("setJustNextRun", true);
+			intent.putExtra("setJustNextRun", false);
 			startService(intent);
 			finish();
 			return true;
