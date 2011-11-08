@@ -318,7 +318,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/llConversionRateZone1"
-                android:layout_marginLeft="5dp"
                 >
                 <TextView
                     android:id="@+id/tvConversionRateLabel"
@@ -400,7 +399,7 @@
                     />
                 <EditText
                     android:id="@+id/etQuantity"
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
                     android:digits=".1234567890"
@@ -408,16 +407,20 @@
                     android:layout_marginLeft="5dp"
                     android:tag="@string/GEN_QuantityLabel"
                     />
+                
+                <!-- 
                 <TextView
                     android:id="@+id/tvUOM"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/GEN_UOM"
                     android:typeface="sans"
+                	android:text="@string/GEN_UOM"
                     android:textColor="@android:color/widget_edittext_dark"
                     android:layout_marginLeft="5dp"
 					android:textSize="17dp"
                     />
+				-->
+                    
                 <Spinner android:id="@+id/spnUOM"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

@@ -380,6 +380,7 @@
                     android:background="@drawable/white_background"
                     android:tag="@string/GEN_QuantityLabel"
                     />
+                <!-- 
                 <TextView
                     android:id="@+id/tvUOM"
                     android:layout_width="wrap_content"
@@ -389,6 +390,7 @@
                     android:textColor="@android:color/white"
                     android:layout_marginLeft="5dp"
                     />
+                     -->
                 <Spinner android:id="@+id/spnUOM"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
