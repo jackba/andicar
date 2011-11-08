@@ -60,6 +60,24 @@
     <string name="DB_ExpCat_InsuranceName">"Biztosítás"</string>
     <string name="DB_ExpCat_InsuranceComment">"Biztosítás költségei"</string>
     <!-- fuel types -->
+    <!-- fuel types -->
+    <string name="DB_FuelType_Diesel1D">"Dízel 1D"</string>
+    <string name="DB_FuelType_Diesel1DComment">"Téli dízel"</string>
+    <string name="DB_FuelType_Diesel2D">"Dízel 2D"</string>
+    <string name="DB_FuelType_Diesel2DComment">"Nyári dízel"</string>
+    <string name="DB_FuelType_DieselBio">"Biodízel"</string>
+    <string name="DB_FuelType_DieselBioComment">"Biodízel"</string>
+    <string name="DB_FuelType_DieselSynthetic">"Szintétikus dízel"</string>
+    <string name="DB_FuelType_DieselSyntheticComment">"Szintétikus dízel"</string>
+    <string name="DB_FuelType_GasolineRegular">"E85"</string>
+    <string name="DB_FuelType_GasolineRegularComment">"E85 szabványos alkoholbázisú üzemanyag"</string>
+    <string name="DB_FuelType_GasolineMidgrade">"Prémium (95)"</string>
+    <string name="DB_FuelType_GasolineMidgradeComment">"95-ös benzin"</string>
+    <string name="DB_FuelType_GasolinePremium">"Prémium (100)"</string>
+    <string name="DB_FuelType_GasolinePremiumComment">"100-as benzin"</string>
+    <string name="DB_FuelType_LPG">"LPG"</string>
+    <string name="DB_FuelType_LPGComment">"Autógáz"</string>
+    
     <!-- 
     <string name="DB_ExpCat_FuelName">"Üzemanyag"</string>
     <string name="DB_ExpCat_FuelComment">"Tankolás költségei"</string>
