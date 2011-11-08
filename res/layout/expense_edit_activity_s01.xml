@@ -105,22 +105,20 @@
 			            android:layout_height="wrap_content"
 			            android:prompt="@string/GEN_ChooseOneTitle"
 			            />
-			        <Button
+			        <ImageButton
 			            android:id="@+id/btnUpdate"
-			            android:layout_width="wrap_content"
+            			android:layout_width="60dp"
 			            android:layout_height="wrap_content"
 			            android:layout_marginLeft="5dp"
-			            android:text="@string/GEN_Update"
-			            android:typeface="sans"
+            			android:src="@drawable/icon_save_selector"
 			            android:layout_centerHorizontal="true"
 			            />
-			        <Button
+			        <ImageButton
 			            android:id="@+id/btnNew"
-			            android:layout_width="wrap_content"
+            			android:layout_width="60dp"
 			            android:layout_height="wrap_content"
 			            android:layout_marginLeft="5dp"
-			            android:text="@string/GEN_New"
-			            android:typeface="sans"
+            			android:src="@drawable/icon_new_selector"
 			            android:layout_centerHorizontal="true"
 			            />
 			    </LinearLayout>

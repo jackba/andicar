@@ -2409,7 +2409,7 @@ public class DB {
 					intent.putExtra("attachName", bkFileName);
 					PendingIntent pIntent = PendingIntent.getService(mCtx, 0,
 							intent, PendingIntent.FLAG_CANCEL_CURRENT);
-					am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(),
+					am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000,
 							pIntent);
 				}
 			} catch (Exception e) {

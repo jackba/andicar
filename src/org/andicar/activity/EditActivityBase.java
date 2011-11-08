@@ -94,6 +94,7 @@ public abstract class EditActivityBase extends BaseActivity {
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryStartSession(this);
     }
+    
     @Override
     protected void onStop()
     {
