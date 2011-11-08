@@ -88,7 +88,7 @@
     <string name="GEN_IsActiveLabel">"Aktiv"</string>
     <string name="GEN_UserCommentLabel">"Kommentar"</string>
     <string name="GEN_NameLabel">"Name:"</string>
-    <string name="GEN_DateTimeLabel">"<b><i>Datum und Zeit:</i></b>"</string>
+    <string name="GEN_DateTimeLabel">"Datum und Zeit:"</string>
     <string name="GEN_PickDateCaption">"Datum ändern"</string>
     <string name="GEN_PickTimeCaption">"Zeit ändern"</string>
     <string name="GEN_DeleteConfirmation">"Bist Du sicher das du den gewählten Eintrag löschen willst?"</string>

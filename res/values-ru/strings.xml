@@ -88,7 +88,7 @@
     <string name="GEN_IsActiveLabel">"Активно"</string>
     <string name="GEN_UserCommentLabel">"Комментарий"</string>
     <string name="GEN_NameLabel">"Имя:"</string>
-    <string name="GEN_DateTimeLabel">"<b><i>Дата и время:</i></b>"</string>
+    <string name="GEN_DateTimeLabel">"Дата и время:"</string>
     <string name="GEN_PickDateCaption">"Изменить дату"</string>
     <string name="GEN_PickTimeCaption">"Изменить время"</string>
     <string name="GEN_DeleteConfirmation">"Удалить выбранную запись?"</string>
