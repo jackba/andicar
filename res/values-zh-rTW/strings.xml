@@ -83,7 +83,7 @@
     <string name="GEN_IsActiveLabel">"活動"</string>
     <string name="GEN_UserCommentLabel">"評論"</string>
     <string name="GEN_NameLabel">"名字："</string>
-    <string name="GEN_DateTimeLabel">"<b><i>日期和時間：</i></b>"</string>
+    <string name="GEN_DateTimeLabel">"日期和時間："</string>
     <string name="GEN_PickDateCaption">"變更日期"</string>
     <string name="GEN_PickTimeCaption">"變更時間"</string>
     <string name="GEN_DeleteConfirmation">"你確定要刪除選取的記錄"</string>
