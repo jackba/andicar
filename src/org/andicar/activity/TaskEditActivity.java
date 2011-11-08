@@ -140,6 +140,7 @@ public class TaskEditActivity extends EditActivityBase {
 	private boolean isDeleteLinkedCarsOnSave = false;
 	private String mScheduledFor = StaticValues.TASK_SCHEDULED_FOR_BOTH;
 	private String mLinkDialogCarSelectCondition = null;
+	private Cursor mLinkedCarsCursor = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -256,6 +257,7 @@ public class TaskEditActivity extends EditActivityBase {
 		fillLinkedCarsData();	
 	}
 
+	
 	private void init() {
 		etName = (EditText) findViewById(R.id.etName);
 		etUserComment = (EditText) findViewById(R.id.etUserComment);
@@ -378,11 +380,12 @@ public class TaskEditActivity extends EditActivityBase {
     	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
     		listLayout = R.layout.twoline_list2_activity_s01;
 
+    	mLinkedCarsCursor = mDbAdapter.execSelectSql(selectSql, selectionArgs);
         SimpleCursorAdapter cursorAdapter =
         	new SimpleCursorAdapter(this, listLayout,
-        							mDbAdapter.execSelectSql(selectSql, selectionArgs),
-                                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, "FirstRun"}, 
-                                    new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}
+        			mLinkedCarsCursor,
+                        new String[]{MainDbAdapter.GEN_COL_NAME_NAME, "FirstRun"}, 
+                        new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}
                 );
         cursorAdapter.setViewBinder(new TaskCarLinkDataBinder());
         lvLinkedCarsList.setAdapter(cursorAdapter);
@@ -1256,5 +1259,18 @@ public class TaskEditActivity extends EditActivityBase {
 	 */
 	@Override
 	public void setDefaultValues() {
+	}
+
+
+	/* (non-Javadoc)
+	 * @see org.andicar.activity.EditActivityBase#onStop()
+	 */
+	@Override
+	protected void onDestroy() {
+		super.onStop();
+		if(mLinkedCarsCursor != null)
+		try{
+			mLinkedCarsCursor.close();
+		} catch(Exception e){};
 	}
 }

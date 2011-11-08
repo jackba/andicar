@@ -196,6 +196,8 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		}
 		if(todoReportCursor != null)
 			todoReportCursor.close();
+		if(reportDb != null)
+			reportDb.close();
 	}
 
 	/* (non-Javadoc)
@@ -214,8 +216,8 @@ public class ToDoNotificationDialog extends EditActivityBase {
 
 		ContentValues cvData = new ContentValues();
 		if(ckIsDone.isChecked()){
-			cvData.put( MainDbAdapter.TODO_COL_ISDONE_NAME,
-	                (ckIsDone.isChecked() ? "Y" : "N") );
+			cvData.put( MainDbAdapter.TODO_COL_ISDONE_NAME, "Y");
+//	                (ckIsDone.isChecked() ? "Y" : "N") );
 		}
 		else{
 	        String strPostPoneFor = etPostpone.getText().toString();
@@ -255,7 +257,7 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		mDbAdapter.updateRecord(MainDbAdapter.TODO_TABLE_NAME, mToDoID, cvData);
 		Intent intent = new Intent(this, ToDoManagementService.class);
 		intent.putExtra("TaskID", mTaskID);
-		intent.putExtra("setJustNextRun", true);
+		intent.putExtra("setJustNextRun", !ckIsDone.isChecked());
 		this.startService(intent);
 		finish();
 		return true;

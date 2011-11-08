@@ -223,5 +223,6 @@ public class ToDoNotificationService extends Service {
 			AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
 			am.set(AlarmManager.RTC_WAKEUP, notifDate * 1000, pIntent);
 		}
+		c.close();
 	}
 }
