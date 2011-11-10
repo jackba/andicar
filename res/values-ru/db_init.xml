@@ -62,10 +62,22 @@
     <string name="DB_ExpCat_InsuranceName">"Страховка"</string>
     <string name="DB_ExpCat_InsuranceComment">"Расходы на страховку"</string>
     <!-- fuel types -->
-    <!-- 
-    <string name="DB_ExpCat_FuelName">"Топливо"</string>
-    <string name="DB_ExpCat_FuelComment">"Расходы на заправку топливом"</string>
-    -->
+    <string name="DB_FuelType_Diesel1D">"Дизельное топливо зимнее"</string>
+    <string name="DB_FuelType_Diesel1DComment">"Для использования в холодное время года"</string>
+    <string name="DB_FuelType_Diesel2D">"Дизельное топливо летнее"</string>
+    <string name="DB_FuelType_Diesel2DComment">"Для использования в теплое время года"</string>
+    <string name="DB_FuelType_DieselBio">"Биодизельное топливо"</string>
+    <string name="DB_FuelType_DieselBioComment">"Получаемое из растительного масла и животных жиров"</string>
+    <string name="DB_FuelType_DieselSynthetic">"Синтетическое дизельное топливо"</string>
+    <string name="DB_FuelType_DieselSyntheticComment">"Получаемое из  таких источников как древесина, опилки, кукуруза и даже мусора и пищевых отходов"</string>
+    <string name="DB_FuelType_GasolineRegular">"Бензин А-92 регуляр"</string>
+    <string name="DB_FuelType_GasolineRegularComment">"Октановое число 91 (Россия) = 87 (США)"</string>
+    <string name="DB_FuelType_GasolineMidgrade">"Бензин А-95 Евро "</string>
+    <string name="DB_FuelType_GasolineMidgradeComment">"Октановое число 95 (Россия) = 91 (США)"</string>
+    <string name="DB_FuelType_GasolinePremium">"Бензин А-98 Премиум"</string>
+    <string name="DB_FuelType_GasolinePremiumComment">"Октановое число 98 (Россия) = 93 (США) "</string>
+    <string name="DB_FuelType_LPG">"СУГ"</string>
+    <string name="DB_FuelType_LPGComment">"Сжиженный углеводородный газ"</string>
     <!-- currencies -->
     <string name="DB_Curr_EUR">"Евро"</string>
     <string name="DB_Curr_USD">"Доллар США"</string>
