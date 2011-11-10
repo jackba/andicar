@@ -360,4 +360,39 @@ public abstract class BaseActivity extends Activity {
 	public void setExpTypeId(long expTypeId) {
 		this.mExpTypeId = expTypeId;
 	}
+
+	/**
+	 * @return the mCarId
+	 */
+	public long getCarId() {
+		return mCarId;
+	}
+
+	/**
+	 * @return the mDriverId
+	 */
+	public long getDriverId() {
+		return mDriverId;
+	}
+
+	/**
+	 * @return the mCurrencyId
+	 */
+	public long getCurrencyId() {
+		return mCurrencyId;
+	}
+
+	/**
+	 * @return the mExpCategoryId
+	 */
+	public long getExpCategoryId() {
+		return mExpCategoryId;
+	}
+
+	/**
+	 * @return the mExpTypeId
+	 */
+	public long getExpTypeId() {
+		return mExpTypeId;
+	}
 }

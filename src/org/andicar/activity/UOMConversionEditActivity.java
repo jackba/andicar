@@ -72,6 +72,7 @@ public class UOMConversionEditActivity extends EditActivityBase {
             String conversionRate = c.getString( MainDbAdapter.UOM_CONVERSION_COL_RATE_POS );
             uomFromId = c.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMFROM_ID_POS );
             uomToId = c.getLong( MainDbAdapter.UOM_CONVERSION_COL_UOMTO_ID_POS );
+            c.close();
 
             if (name != null) {
                 etName.setText(name);
@@ -88,8 +89,9 @@ public class UOMConversionEditActivity extends EditActivityBase {
                         MainDbAdapter.isActiveCondition, null,
                         MainDbAdapter.GEN_COL_NAME_NAME, uomFromId, false);
 
-            uomFromType = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomFromId)
-                            .getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
+            c = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, uomFromId);
+            uomFromType = c.getString(MainDbAdapter.UOM_COL_UOMTYPE_POS);
+            c.close();
 
             initSpinner(spnUomTo, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
@@ -99,7 +101,6 @@ public class UOMConversionEditActivity extends EditActivityBase {
             if (conversionRate != null) {
                 etConversionRate.setText( conversionRate.toString() );
             }
-            c.close();
         } else {
             initSpinner(spnUomFrom, MainDbAdapter.UOM_TABLE_NAME,
                     MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
