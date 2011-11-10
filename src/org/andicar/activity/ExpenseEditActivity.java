@@ -366,8 +366,6 @@ public class ExpenseEditActivity extends EditActivityBase {
         rbInsertModeAmount = (RadioButton) findViewById(R.id.rbInsertModeAmount);
         RadioGroup rg = (RadioGroup) findViewById(R.id.rgInsertMode);
         rg.setOnCheckedChangeListener(rgOnCheckedChangeListener);
-        carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
-        carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
 
         lCarZone = (RelativeLayout) findViewById(R.id.lCarZone);
         lDriverZone = (RelativeLayout) findViewById(R.id.lDriverZone);
@@ -997,18 +995,19 @@ public class ExpenseEditActivity extends EditActivityBase {
 	public void setDefaultValues() {
 		isBackgroundSettingsActive = true;
 		
-        mCarId = mPreferences.getLong("CurrentCar_ID", 1);
+        mCarId = mPreferences.getLong("CurrentCar_ID", -1);
         setSpinnerSelectedID(spnCar, mCarId);
+        carDefaultCurrencyId = mDbAdapter.getCarCurrencyID(mCarId); 
+        carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
 
         mDriverId = mPreferences.getLong("LastDriver_ID", 1);
         setSpinnerSelectedID(spnDriver, mDriverId);
         
-        mCurrencyId = mPreferences.getLong("CarCurrency_ID", 1);
+        mCurrencyId = carDefaultCurrencyId;
         setSpinnerSelectedID(spnCurrency, mCurrencyId);
         
         mUOMId = -1;
         setSpinnerSelectedID(spnUOM, mUOMId);
-
         
 		setExpCategoryId(mPreferences.getLong("ExpenseExpCategory_ID", -1));
 		if(mExpCategoryId == -1 || //mPreferences.getLong("ExpenseExpCategory_ID" not exist
