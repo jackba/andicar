@@ -138,5 +138,13 @@
 	    <item>Декабрь</item>
     </string-array>
     
-</resources>
+	<string-array name="ui_style_entries">
+        <item>Темная</item>
+        <item>Светлая</item>
+    </string-array>
+     <string-array name="ui_style_values">
+        <item>s00</item>
+        <item>s01</item>
+    </string-array>
+ </resources>
 

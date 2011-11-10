@@ -74,7 +74,9 @@
 	<string name="APP_Activity_TaskTypeEdit">"Редактировать тип задачи"</string>
 	<string name="APP_Activity_TaskList">"Задачи"</string>
 	<string name="APP_Activity_TaskEdit">"Добавить или редактировать задачу"</string>
-
+	<string name="APP_Activity_FuelCategoryList">"Категории топлива"</string>
+    <string name="APP_Activity_FuelCategoryEdit">"Редактировать категорию топлива"</string>
+    
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Отмена"</string>
     <string name="GEN_YES">"Да"</string>
@@ -160,7 +162,7 @@
     <string name="MENU_HideInactiveCaption">"Спрятать неактивные"</string>
     <string name="MENU_SearchCaption">"Поиск/фильтр"</string>
     <string name="MENU_CreateReportCaption">"Создать отчет"</string>
-    <string name="MENU_SendAsEmailCaption">"Отправить по email"</string>
+    <string name="MENU_SendAsEmailCaption">"Отправить / загрузить"</string>
     <string name="MENU_ShowOnMap">"Показать на карте"</string>
     <string name="MENU_MileageCaption">"Поездки"</string>
     <string name="MENU_RefuelCaption">"Заправки"</string>
@@ -240,7 +242,8 @@
     <string name="RefuelEditActivity_IsFullLabel">"Полный"</string>
     <string name="RefuelEditActivity_QtyInBaseUOMLabel">"Кол-во в базовых ед.изм.: "</string>
     <string name="RefuelEditActivity_NoConversionRateMessage">"Не определено преобразования для этих единиц измерения"</string>
-
+	<string name="RefuelEditActivity_GasStation">"АЗС:"</string>
+	
     <string name="BackupRestoreEditActivity_BackupBtnCaption">"Копировать"</string>
     <string name="BackupRestoreEditActivity_RestoreBtnCaption">"Восстановить"</string>
     <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"Kопию"</string>
@@ -400,7 +403,11 @@
 	<string name="PREF_TaskTypeSummary">"Добавить, удалить, редактировать типы задач"</string>
 	<string name="PREF_TaskTitle">"Задачи"</string>
 	<string name="PREF_TaskSummary">"Добавить, удалить, редактировать задачи"</string>
-	
+	<string name="PREF_UIStyleTitle">"Тема интерфейса"</string>
+    <string name="PREF_UIStyleSummary">"Изменить тему интерфейса"</string>
+    <string name="PREF_FuelCategoryTitle">"Категории топлива"</string>
+    <string name="PREF_FuelCategorySummary">"Добавить, удалить, редактировать категорию топлива"</string>
+    
     <string name="PREF_MainScreen_ShowMileageZone">"Раздел поездок"</string>
     <string name="PREF_MainScreen_ShowGPSTrackZone">"Раздел треков GPS"</string>
     <string name="PREF_MainScreen_ShowRefuelZone">"Раздел заправок"</string>
@@ -436,7 +443,7 @@
     <string name="DIALOGSearch_DateToLabel">"До"</string>
 
     <string name="DIALOGReport_DialogTitle">"Опции отчета"</string>
-    <string name="DIALOGReport_SendEmailLabel">"  отправить как вложение по email"</string>
+    <string name="DIALOGReport_SendEmailLabel">"   отправить / загрузить"</string>
     <string name="DIALOGReport_ReportFormatLabel">"Формат отчета:"</string>
 
 	<string name="DIALOG_TemplateNameTitle">"Имя шаблона"</string>
