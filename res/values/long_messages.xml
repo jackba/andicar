@@ -88,6 +88,7 @@
     
     <string name="LM_UPDATE_MSG">
         <b><i>What\'s new:</i></b>\n\n
+        * A new, light, user interface style. Open Preferences -> Interface Style to swich between the dark (old) and light (new) style.\n\n
         * Various bug fixes\n\n
     </string>
 </resources>

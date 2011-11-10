@@ -85,6 +85,7 @@
 
   <string name="LM_UPDATE_MSG">
         <b><i>Újdonságok:</i></b>\n\n
+        * Egy új felhasználói felület. A régi (sötét) és az új (világos) felület között a Beállítások -> Felhasználói felület opcióval lehet váltani.\n\n 
         * Különbböző hibajavítások\n\n
     </string>
 </resources>
