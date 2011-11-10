@@ -273,9 +273,6 @@ public class RefuelEditActivity extends EditActivityBase {
         tvBaseUOMQtyLabel.setText(mResource.getString(R.string.RefuelEditActivity_QtyInBaseUOMLabel));
         tvBaseUOMQtyValue = (TextView) findViewById(R.id.tvBaseUOMQtyValue);
         setBaseUOMQtyZoneVisibility(false);
-        carDefaultCurrencyId = mPreferences.getLong("CarCurrency_ID", -1);
-        if(carDefaultCurrencyId != -1)
-        	carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
         currencyCode = carDefaultCurrencyCode;
         currencyConversionRate = BigDecimal.ONE;
         uomVolumeConversionRate = BigDecimal.ONE;
@@ -984,7 +981,6 @@ public class RefuelEditActivity extends EditActivityBase {
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
     	mPrefEditor.putLong("RefuelExpCategory_ID", mExpCategoryId);
     	mPrefEditor.putLong("RefuelExpenseType_ID", mExpTypeId);
-    	
 		mPrefEditor.commit();
     	
 		Intent intent = new Intent(this, ToDoNotificationService.class);
@@ -1076,10 +1072,12 @@ public class RefuelEditActivity extends EditActivityBase {
 	public void setDefaultValues() {
 		isBackgroundSettingsActive = true;
 		
-		setCarId(mPreferences.getLong("CurrentCar_ID", 1));
+		setCarId(mPreferences.getLong("CurrentCar_ID", -1));
 		setSpinnerSelectedID(spnCar, mCarId);
+        carDefaultCurrencyId =  mDbAdapter.getCarCurrencyID(mCarId);
+       	carDefaultCurrencyCode = mDbAdapter.getCurrencyCode(carDefaultCurrencyId);
 
-		setDriverId(mPreferences.getLong("LastDriver_ID", 1));
+		setDriverId(mPreferences.getLong("LastDriver_ID", -1));
 		setSpinnerSelectedID(spnDriver, mDriverId);
 
 		setExpCategoryId(mPreferences.getLong("RefuelExpCategory_ID", -1));
@@ -1096,16 +1094,16 @@ public class RefuelEditActivity extends EditActivityBase {
 		}
 		setSpinnerSelectedID(spnExpType, mExpTypeId);
 
-		setUOMVolumeId(mPreferences.getLong("CarUOMVolume_ID", 1));
-		setSpinnerSelectedID(spnUomVolume, carDefaultUOMVolumeId);
+		setUOMVolumeId(mDbAdapter.getCarUOMVolumeID(mCarId));
+		setSpinnerSelectedID(spnUomVolume, mUomVolumeId);
 
-		setCurrencyId(mPreferences.getLong("CarCurrency_ID", 1));
+		setCurrencyId(carDefaultCurrencyId);
 		setSpinnerSelectedID(spnCurrency, carDefaultCurrencyId);
         currencyCode = mDbAdapter.getCurrencyCode(mCurrencyId);
 
 		initDateTime(System.currentTimeMillis());
         ckIsFullRefuel.setChecked(false);
-        carDefaultUOMVolumeId = mDbAdapter.getCarUOMVolumeID(mCarId);
+        carDefaultUOMVolumeId = mUomVolumeId;
         carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
         setInsertMode(INSERTMODE_AMOUNT);
         rbInsertModeAmount.setChecked(true);

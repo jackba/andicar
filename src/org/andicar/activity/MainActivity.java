@@ -1424,8 +1424,6 @@ public class MainActivity extends BaseActivity {
 
 			mCarId = arg3;
 			mPrefEditor.putLong("CurrentCar_ID", arg3);
-			mPrefEditor.putLong("CarCurrency_ID",
-					mDbAdapter.getCarCurrencyID(arg3));
 			mPrefEditor.putLong("CarUOMVolume_ID",
 					mDbAdapter.getCarUOMVolumeID(arg3));
 			mPrefEditor.putLong("CarUOMLength_ID",
@@ -1579,8 +1577,6 @@ public class MainActivity extends BaseActivity {
 						MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
 				c.close();
 				mPrefEditor.putLong("CurrentCar_ID", mCarId);
-				mPrefEditor.putLong("CarCurrency_ID",
-						mDbAdapter.getCarCurrencyID(mCarId));
 				mPrefEditor.putLong("CarUOMVolume_ID",
 						mDbAdapter.getCarUOMVolumeID(mCarId));
 				mPrefEditor.putLong("CarUOMLength_ID",
