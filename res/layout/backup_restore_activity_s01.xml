@@ -93,6 +93,7 @@
                   android:choiceMode="singleChoice"
                   android:typeface="sans"
                   android:textColor="@android:color/widget_edittext_dark"
+    			android:background="@android:color/background_light"
                   />
     </LinearLayout>
 </LinearLayout>

@@ -32,6 +32,7 @@
               android:layout_height="wrap_content"
               android:typeface="sans"
               android:textColor="@android:color/widget_edittext_dark"
+			android:background="@android:color/background_light"
               />
 
     <TextView android:id="@+id/tvThreeLineListText2"
@@ -41,6 +42,7 @@
               android:layout_height="wrap_content"
               android:typeface="sans"
               android:textColor="@android:color/widget_edittext_dark"
+			android:background="@android:color/background_light"
               />
 
     <TextView android:id="@+id/tvThreeLineListText3"
