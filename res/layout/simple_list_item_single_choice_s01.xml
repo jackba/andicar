@@ -24,4 +24,5 @@
     android:checkMark="?android:attr/listChoiceIndicatorSingle"
     android:paddingLeft="6dip"
     android:paddingRight="6dip"
+	android:background="@android:color/background_light"
 />
