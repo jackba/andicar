@@ -137,7 +137,8 @@
     <string name="GEN_At">"um"</string> <!-- ex. on Monday at 1 PM -->
     <string name="GEN_Day">"Tag"</string>
     <string name="GEN_LastDay">"letzter Tag"</string>
-    
+    <string name="GEN_FuelEff">"Benzinverbrauch:"</string>
+        
     <string name="MENU_PreferencesCaption">"Einstellungen"</string>
     <string name="MENU_AboutCaption">"Über AndiCar"</string>
     <string name="MENU_DeleteCaption">"löschen"</string>
