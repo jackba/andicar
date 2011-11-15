@@ -27,6 +27,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 public class RefuelListDataBinder implements SimpleCursorAdapter.ViewBinder {
+//	private String m_fuelEffStr = "";
     @Override
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
     	if(columnIndex == 1) {
@@ -38,7 +39,7 @@ public class RefuelListDataBinder implements SimpleCursorAdapter.ViewBinder {
     		return true;
     	}
     	else if(columnIndex == 2){
-    		((TextView) view).setText(
+    		String text = 
     				cursor.getString(2)
 						.replace("[#1]", Utils.numberToString(cursor.getDouble(5) , true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
 						.replace("[#2]", Utils.numberToString(cursor.getDouble(6) , true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
@@ -46,10 +47,21 @@ public class RefuelListDataBinder implements SimpleCursorAdapter.ViewBinder {
 						.replace("[#4]", Utils.numberToString(cursor.getDouble(8) , true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
 						.replace("[#5]", Utils.numberToString(cursor.getDouble(9) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
 						.replace("[#6]", Utils.numberToString(cursor.getDouble(10) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
-						.replace("[#7]", Utils.numberToString(cursor.getDouble(11) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
-			 );
+						.replace("[#7]", Utils.numberToString(cursor.getDouble(11) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+//    		if(cursor.getString(12).equals("N") || cursor.getString(13) == null)
+//    			text = text.replace("[#8]", "; " + m_fuelEffStr + " N/A");
+//    		else{
+//    			
+//    			text = text.replace("[#8]", Utils.numberToString(cursor.getDouble(13) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
+//    		}
+    		
+    		((TextView) view).setText(text);
     		return true;
     	}
         return false;
     }
+    
+//    public void setFuelEffStr(String str){
+//    	m_fuelEffStr = str;
+//    }
 }

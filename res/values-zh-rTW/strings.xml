@@ -143,7 +143,8 @@
 	<string name="GEN_ToDoAlert">"計劃提醒"</string>
 	<string name="GEN_New">"更新"</string>
 	<string name="GEN_Update">"升級"</string>
-
+    <string name="GEN_FuelEff">"燃料平均效率： "</string>
+	    
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
     <string name="MENU_DeleteCaption">"刪除"</string>

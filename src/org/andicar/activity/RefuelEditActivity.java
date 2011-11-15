@@ -126,7 +126,8 @@ public class RefuelEditActivity extends EditActivityBase {
         if (operationType.equals("E")) {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.REFUEL_TABLE_NAME, MainDbAdapter.refuelTableColNames, mRowId);
-            mCarId = c.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS);
+            setCarId(c.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS));
+//            mCarId = c.getLong(MainDbAdapter.REFUEL_COL_CAR_ID_POS);
             mDriverId = c.getLong(MainDbAdapter.REFUEL_COL_DRIVER_ID_POS);
             mExpCategoryId = c.getLong(MainDbAdapter.REFUEL_COL_EXPENSECATEGORY_ID_POS);
             mExpTypeId = c.getLong(MainDbAdapter.REFUEL_COL_EXPENSETYPE_ID_POS);

@@ -149,6 +149,9 @@
     <string name="GEN_ToDoAlert">"Tennivaló riasztás"</string>
     <string name="GEN_New">"Új"</string>
     <string name="GEN_Update">"Frissítés"</string>
+    <string name="GEN_FuelEff">"Üzemanyag fogy.: "</string>
+        
+        
     <string name="MENU_PreferencesCaption">"Beállítások"</string>
     <string name="MENU_AboutCaption">"AndiCarról"</string>
     <string name="MENU_DeleteCaption">"Törlés"</string>
@@ -171,6 +174,7 @@
     <string name="MENU_LocalizeAndiCar">"AndiCar fordítás"</string>
     <string name="MENU_TaskReminderCaption">"Feladat"</string>
     <string name="MENU_TodoCaption">"Tennivaló lista"</string>
+    
     <string name="MainActivity_MileageHeaderCaption">"Utolsó fuvar"</string>
     <string name="MainActivity_RefuelHeaderCaption">"Utolsó tankolás"</string>
     <string name="MainActivity_GPSTrackHeaderCaption">"Utolsó GPS nyom"</string>

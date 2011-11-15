@@ -181,6 +181,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                             " || ' at [#7] ' || " +
                             sqlConcatTableColumn("CarLengthUOM", UOM_COL_CODE_NAME) +
                             " || ' (' || " + sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || ')' " +
+//                            " || '[#8] (' || " + sqlConcatTableColumn(EXPENSECATEGORY_TABLE_NAME, GEN_COL_NAME_NAME) + " || ')' " +
                             " AS " + SECOND_LINE_LIST_NAME + ", " + //#2
                 " COALESCE( " + sqlConcatTableColumn(TAG_TABLE_NAME, GEN_COL_NAME_NAME) + " || '; ', '') || " + 
             			sqlConcatTableColumn(REFUEL_TABLE_NAME, GEN_COL_USER_COMMENT_NAME) +
@@ -192,7 +193,17 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_PRICE_NAME) + " AS Price, " + //#8
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_AMOUNTENTERED_NAME) + " AS AmountEntered, " + //#9
                 sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_AMOUNT_NAME) + " AS Amount, " + //#10
-                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + " AS CarIndex " + //#11
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) + " AS CarIndex, " + //#11
+                sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_ISFULLREFUEL_NAME) + " " + //#12
+//                "( SELECT " + REFUEL_COL_INDEX_NAME + " " +
+//                	" FROM " + REFUEL_TABLE_NAME + " AS PreviousFullRefuel " +
+//                	" WHERE " + isActiveCondition + 
+//                			" AND " + REFUEL_COL_ISFULLREFUEL_NAME + " = 'Y' " +
+//                			" AND " + sqlConcatTableColumn("PreviousFullRefuel", REFUEL_COL_CAR_ID_NAME) + " = " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_CAR_ID_NAME) +
+//                			" AND " + sqlConcatTableColumn("PreviousFullRefuel", REFUEL_COL_INDEX_NAME) + " < " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_INDEX_NAME) +
+//        			" ORDER BY " + REFUEL_COL_INDEX_NAME + " DESC " +
+//        			" LIMIT 1 " +
+//                ") AS PreviousFullRefuelIndex " + //#13
             " FROM " + REFUEL_TABLE_NAME +
                     " JOIN " + EXPENSECATEGORY_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(REFUEL_TABLE_NAME, REFUEL_COL_EXPENSECATEGORY_ID_NAME) + "=" +

@@ -151,7 +151,8 @@
     <string name="GEN_ToDoAlert">"To-Do alert"</string>
     <string name="GEN_New">"New"</string>
     <string name="GEN_Update">"Update"</string>
-    
+    <string name="GEN_FuelEff">"Fuel eff.:"</string>
+        
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
     <string name="MENU_DeleteCaption">"Delete"</string>

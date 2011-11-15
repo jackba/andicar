@@ -114,7 +114,7 @@ public class ExpenseEditActivity extends EditActivityBase {
             mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
             Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSE_TABLE_NAME,
                     MainDbAdapter.expenseTableColNames, mRowId);
-            mCarId = c.getLong(MainDbAdapter.EXPENSE_COL_CAR_ID_POS);
+            setCarId(c.getLong(MainDbAdapter.EXPENSE_COL_CAR_ID_POS));
             mDriverId = c.getLong(MainDbAdapter.EXPENSE_COL_DRIVER_ID_POS);
             mExpCategoryId = c.getLong(MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_POS);
             mExpTypeId = c.getLong(MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_POS);

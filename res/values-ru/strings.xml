@@ -152,7 +152,8 @@
 	<string name="GEN_ToDoAlert">"Напоминание "</string>
 	<string name="GEN_New">"Новый"</string>
 	<string name="GEN_Update">"Обновить"</string>
-
+    <string name="GEN_FuelEff">"Pасход: "</string>
+	    
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
     <string name="MENU_DeleteCaption">"Удалить"</string>
