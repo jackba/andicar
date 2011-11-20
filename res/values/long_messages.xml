@@ -88,7 +88,10 @@
     
     <string name="LM_UPDATE_MSG">
         <b><i>What\'s new:</i></b>\n\n
-        * A new, light, user interface style. Open Preferences -> Interface Style to swich between the dark (old) and light (new) style.\n\n
+        <i>Version 3.7.0:</i>\n
+        * A new, light, user interface style. Open Preferences -> Interface Style to swich between the dark (old) and light (new) style.\n
         * Various bug fixes\n\n
+        <i>Version 3.7.0.1:</i>\n
+        * Fix ForceClose Error on starting the gps tracking with the old style interface.\n\n
     </string>
 </resources>

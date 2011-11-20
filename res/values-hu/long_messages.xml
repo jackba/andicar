@@ -85,7 +85,10 @@
 
   <string name="LM_UPDATE_MSG">
         <b><i>Újdonságok:</i></b>\n\n
-        * Egy új felhasználói felület. A régi (sötét) és az új (világos) felület között a Beállítások -> Felhasználói felület opcióval lehet váltani.\n\n 
+        <i>3.7.0-ás verzió</i>\n
+        * Egy új felhasználói felület. A régi (sötét) és az új (világos) felület között a Beállítások -> Felhasználói felület opcióval lehet váltani.\n 
         * Különbböző hibajavítások\n\n
+        <i>3.7.0.1-es verzió</i>
+        * ForceClose hibajavítás a gps nyomkövető indításakor, ha a régi felhasználói felületet használják.\n\n
     </string>
 </resources>
