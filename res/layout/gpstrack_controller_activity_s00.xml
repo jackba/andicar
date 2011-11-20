@@ -209,7 +209,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginLeft="5dp"
                 />
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/llIndexStartZone"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
@@ -223,10 +223,12 @@
                     android:text="@string/GPSTrackControllerActivity_IndexLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
+            		android:layout_alignParentLeft="true"
+            		android:layout_centerVertical="true"
                     />
                 <EditText
                     android:id="@+id/etIndexStart"
-                    android:layout_width="fill_parent"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:numeric="decimal"
                     android:digits=".1234567890"
@@ -234,8 +236,10 @@
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/white_background"
                     android:tag="@string/GPSTrackControllerActivity_IndexLabel"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
                     />
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
