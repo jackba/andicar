@@ -124,7 +124,8 @@ public class MainDbAdapter extends DB
                     retVal = -1;
                 }
                 finally{
-                    mDb.endTransaction();
+                	if(mDb.inTransaction()) //issue no: 84 (https://code.google.com/p/andicar/issues/detail?id=84) 
+                		mDb.endTransaction();
                 }
             }
             else{
@@ -404,7 +405,8 @@ public class MainDbAdapter extends DB
                     retVal = R.string.ERR_000;
                 }
                 finally{
-                    mDb.endTransaction();
+                	if(mDb.inTransaction()) //issue no: 84 (https://code.google.com/p/andicar/issues/detail?id=84) 
+                		mDb.endTransaction();
                 }
             }
             else{

@@ -23,3 +23,15 @@ syntax: regexp
 \.apk$
 syntax: regexp
 \.db$
+syntax: regexp
+\.csj$
+syntax: regexp
+^rimKeys$
+syntax: regexp
+^_Apk2BarVerifier_20111123_205131\.sum$
+syntax: regexp
+^AndiCar\.dex$
+syntax: regexp
+^AndiCar\.wrn$
+syntax: regexp
+^Apk2Bar_compatibility_excepts\.xml$
