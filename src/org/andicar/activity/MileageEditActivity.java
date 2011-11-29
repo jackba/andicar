@@ -340,12 +340,12 @@ public class MileageEditActivity extends EditActivityBase {
             rbInsertModeIndex.setChecked(true);
             tvCalculatedTextLabel.setText(
                     mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
-            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+            etUserInput.setTag(mResource.getString(R.string.GEN_StopLabel));
         }
         else {
             rbInsertModeMileage.setChecked(true);
             tvCalculatedTextLabel.setText(
-                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
+                    mResource.getString(R.string.GEN_StopLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
         }
     }
@@ -569,11 +569,11 @@ public class MileageEditActivity extends EditActivityBase {
     	if(mInsertMode == StaticValues.MILEAGE_INSERTMODE_INDEX){
             tvCalculatedTextLabel.setText(
                     mResource.getString(R.string.MileageEditActivity_OptionMileageLabel) + ": ");
-            etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionIndexLabel));
+            etUserInput.setTag(mResource.getString(R.string.GEN_StopLabel));
     	}
     	else{
             tvCalculatedTextLabel.setText(
-                    mResource.getString(R.string.MileageEditActivity_OptionIndexLabel) + ": ");
+                    mResource.getString(R.string.GEN_StopLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
     	}
     	setSpecificLayout();
