@@ -150,6 +150,8 @@
     <string name="GEN_New">"Új"</string>
     <string name="GEN_Update">"Frissítés"</string>
     <string name="GEN_FuelEff">"Üzemanyag fogy.: "</string>
+    <string name="GEN_StartLabel">"Start "</string>
+    <string name="GEN_StopLabel">"Stop"</string>
         
         
     <string name="MENU_PreferencesCaption">"Beállítások"</string>
@@ -227,8 +229,6 @@
     <string name="UOMConversionEditActivity_ConvertionRateLabel">"Átváltási árfolyam:"</string>
     <string name="CurrencyEditActivity_CodeLabel">"Kód:"</string>
     <string name="MileageEditActivity_IndexHeaderLabel">"Start/stop km állás vagy megtett táv"</string>
-    <string name="MileageEditActivity_IndexStartLabel">"Start "</string>
-    <string name="MileageEditActivity_OptionIndexLabel">"Stop"</string>
     <string name="MileageEditActivity_OptionMileageLabel">"Táv"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Fuvar hozzáadva."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Fuvar frissítve."</string>

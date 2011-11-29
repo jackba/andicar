@@ -138,6 +138,8 @@
     <string name="GEN_Day">"Tag"</string>
     <string name="GEN_LastDay">"letzter Tag"</string>
     <string name="GEN_FuelEff">"Benzinverbrauch:"</string>
+    <string name="GEN_StartLabel">"Anfang "</string>
+    <string name="GEN_StopLabel">"Ende"</string>
         
     <string name="MENU_PreferencesCaption">"Einstellungen"</string>
     <string name="MENU_AboutCaption">"Über AndiCar"</string>
@@ -212,8 +214,6 @@
     <string name="CurrencyEditActivity_CodeLabel">"Code:"</string>
 
     <string name="MileageEditActivity_IndexHeaderLabel">"Anfangs-/End-Tachostand oder gefahrene Strecke"</string>
-    <string name="MileageEditActivity_IndexStartLabel">"Anfang "</string>
-    <string name="MileageEditActivity_OptionIndexLabel">"Ende"</string>
     <string name="MileageEditActivity_OptionMileageLabel">"gefahrene Strecke"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Fahrstrecke hinzugefügt."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Fahrstrecke geändert."</string>
