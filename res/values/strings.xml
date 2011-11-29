@@ -152,6 +152,10 @@
     <string name="GEN_New">"New"</string>
     <string name="GEN_Update">"Update"</string>
     <string name="GEN_FuelEff">"Fuel eff.:"</string>
+    <string name="GEN_StartLabel">"Start "</string>
+    <string name="GEN_StopLabel">"Stop"</string>
+    <string name="GEN_PaymentFailed">"Payment failed"</string>
+    <string name="GEN_PaymentNotConfirmed">"Payment not confirmed"</string>
         
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -235,8 +239,6 @@
     <string name="CurrencyEditActivity_CodeLabel">"Code:"</string>
 
     <string name="MileageEditActivity_IndexHeaderLabel">"Start/stop odometer or mileage"</string>
-    <string name="MileageEditActivity_IndexStartLabel">"Start "</string>
-    <string name="MileageEditActivity_OptionIndexLabel">"Stop"</string>
     <string name="MileageEditActivity_OptionMileageLabel">"Mileage"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Mileage added."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Mileage updated."</string>
@@ -484,7 +486,9 @@
     <string name="AddOn_PayPalTransactionID">"PayPal Transaction ID"</string>
     <string name="AddOn_SubscribeWaiting">"Contacting PayPal server. Depending on the server availability this process can take more than a minute.\nPlease wait..."</string>
     <string name="AddOn_SubscriptionInfo">"You are subscribed to this service until: [#1]"</string>
-    <string name="AddOn_BtnTryCaption">"Start FREE evaluation"</string>
+    <string name="AddOn_SubscriptionExpiredOn">"Your subscription to this service expired on: [#1]"</string>
+    <string name="AddOn_SubscriptionWillStartOn">"Your subscription will be activated on: [#1]"</string>
+    <string name="AddOn_BtnTryCaption">"Start FREE 15 day evaluation"</string>
     <string name="AddOn_BtnConfigureServiceCaption">"Configure service"</string>
     <string name="AddOn_BtnRenewSubscriptionCaption">"Renew subscription"</string>
     <string name="AddOn_PreferencesTitle">"Configure Add-On services"</string>
@@ -492,8 +496,15 @@
     <string name="AddOn_PreferencesCategoryTitle">"Add-On services"</string>
     <string name="AddOn_SubscriptionExpireWarning">"Your subscription to the [#1] Add-On will expire in [#2] days"</string>
     <string name="AddOn_SubscriptionExpired">"Your subscription to the [#1] Add-On is expired."</string>
-    <string name="AddOn_RenewSubscriptionPeriodInfo">"The selected period will be added to the current subscription"</string>
+    <string name="AddOn_RenewSubscriptionPeriodInfo">"The new subscription period will be added to the current subscription"</string>
+    <string name="AddOn_RenewSubscriptionText">"Renew subscription using:"</string>
+    <string name="AddOn_CreateSubscriptionText">"Subscribe using:"</string>
 
+    <string name="AddOn_FortumoPriceExplanation">"The price vary across countries but is less than a pack of cigarette or a bottle of wine.\nPress the Start button to see the exact price. You can cancel the payment after.\n\nThe subscription period is one year. After this period the subscription should be renewed in order to keep this AddOn active."</string>
+    <string name="AddOn_FortumoPaymentDescription">"You are about to buy an one year subscription to [#1] AddOn"</string>
+    <string name="AddOn_FortumoPayment">"Mobile operator billing"</string>
+    <string name="AddOn_FortumoPaymentNotAvailable">"Mobile operator billing not available for your country."</string>
+        
     <string name="AddOn_15DayFreeSubscription">"15 day FREE evaluation subscription."</string>
     <string name="AddOn_SixMonthSubscription">"Six month subscription: [#1] [#2]"</string>
     <string name="AddOn_OneYearSubscription">"One year subscription: [#1] [#2]"</string>
