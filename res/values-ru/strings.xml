@@ -153,7 +153,9 @@
 	<string name="GEN_New">"Новый"</string>
 	<string name="GEN_Update">"Обновить"</string>
     <string name="GEN_FuelEff">"Pасход: "</string>
-	    
+    <string name="GEN_StartLabel">"Старт "</string>
+    <string name="GEN_StopLabel">"Остановка"</string>
+        	    
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
     <string name="MENU_DeleteCaption">"Удалить"</string>
@@ -233,8 +235,6 @@
     <string name="CurrencyEditActivity_CodeLabel">"Код:"</string>
 
     <string name="MileageEditActivity_IndexHeaderLabel">"Начало/окончание счетчика или поездки"</string>
-    <string name="MileageEditActivity_IndexStartLabel">"Старт "</string>
-    <string name="MileageEditActivity_OptionIndexLabel">"Остановка"</string>
     <string name="MileageEditActivity_OptionMileageLabel">"Расстояние"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Поездка добавлена."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Поездка обновлена."</string>

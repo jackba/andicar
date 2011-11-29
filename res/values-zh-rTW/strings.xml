@@ -144,7 +144,9 @@
 	<string name="GEN_New">"更新"</string>
 	<string name="GEN_Update">"升級"</string>
     <string name="GEN_FuelEff">"燃料平均效率： "</string>
-	    
+    <string name="GEN_StartLabel">"開始 "</string>
+    <string name="GEN_StopLabel">"停止"</string>
+        	    
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
     <string name="MENU_DeleteCaption">"刪除"</string>
@@ -224,8 +226,6 @@
     <string name="CurrencyEditActivity_CodeLabel">"代碼："</string>
 
     <string name="MileageEditActivity_IndexHeaderLabel">"啟動/停止里程表或里程"</string>
-    <string name="MileageEditActivity_IndexStartLabel">"開始 "</string>
-    <string name="MileageEditActivity_OptionIndexLabel">"停止"</string>
     <string name="MileageEditActivity_OptionMileageLabel">"里程"</string>
     <string name="MileageEditActivity_InsertOkMessage">"已新增里程數。"</string>
     <string name="MileageEditActivity_UpdateOkMessage">"已更新里程數。"</string>
