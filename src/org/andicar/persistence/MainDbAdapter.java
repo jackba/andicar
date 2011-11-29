@@ -31,7 +31,7 @@ import org.andicar.utils.StaticValues;
 import org.andicar.activity.R;
 import org.andicar.utils.AndiCarStatistics;
 
-import com.andicar.addon.persistence.AddOnDBObjectDef;
+import com.andicar.addon.persistence.AddOnDBAdapter;
 public class MainDbAdapter extends DB
 {
     SharedPreferences mPref;
@@ -321,7 +321,7 @@ public class MainDbAdapter extends DB
                 mDb.update(TASK_CAR_TABLE_NAME, isActiveContent, TASK_CAR_COL_CAR_ID_NAME + " = ?", whereArgs);
                 mDb.update(TODO_TABLE_NAME, isActiveContent, TODO_COL_CAR_ID_NAME + " = ?", whereArgs);
                 if(content.getAsString(GEN_COL_ISACTIVE_NAME).equals("N")){
-	                if(!AddOnDBObjectDef.recordUpdated(mDb, CAR_TABLE_NAME, rowId, content))
+	                if(!AddOnDBAdapter.recordUpdated(mDb, CAR_TABLE_NAME, rowId, content))
 	                	return R.string.ERR_063;
                 }
                 
@@ -721,7 +721,7 @@ public class MainDbAdapter extends DB
                     //also delete the locations
                     mDb.delete(TASK_CAR_TABLE_NAME, TASK_CAR_COL_CAR_ID_NAME + "=" + rowId, null);
                     mDb.delete(TODO_TABLE_NAME, TODO_COL_CAR_ID_NAME + "=" + rowId, null);
-                    if(!AddOnDBObjectDef.recordDeleted(mDb, CAR_TABLE_NAME, rowId))
+                    if(!AddOnDBAdapter.recordDeleted(mDb, CAR_TABLE_NAME, rowId))
                     	return R.string.ERR_063;
                     
                     checkVal = (-1 * mDb.delete(tableName, GEN_COL_ROWID_NAME + "=" + rowId, null ));
