@@ -152,6 +152,8 @@
     <string name="GEN_FuelEff">"Üzemanyag fogy.: "</string>
     <string name="GEN_StartLabel">"Start "</string>
     <string name="GEN_StopLabel">"Stop"</string>
+    <string name="GEN_PaymentFailed">"A fizetés nem sikerült"</string>
+    <string name="GEN_PaymentNotConfirmed">"A fizetés nincs megerősítve"</string>
         
         
     <string name="MENU_PreferencesCaption">"Beállítások"</string>
@@ -446,7 +448,9 @@
     <string name="AddOn_PayPalTransactionID">"PayPal tranzakció ID"</string>
     <string name="AddOn_SubscribeWaiting">"Kapcsolódás a PayPal szerverhez. A szerver terhelésétől függően ez néhány percig is eltarthat.\nKérem várjon..."</string>
     <string name="AddOn_SubscriptionInfo">"Erre a szolgáltatásra [#1] - ig fizetett elő."</string>
-    <string name="AddOn_BtnTryCaption">"INGYENES próba indítása"</string>
+    <string name="AddOn_SubscriptionExpiredOn">"Az előfizetés [#1] - én lejárt."</string>
+    <string name="AddOn_SubscriptionWillStartOn">"Az előfizetés [#1] - én lessz aktiválva."</string>
+    <string name="AddOn_BtnTryCaption">"INGYENES próba indítása (15 nap)"</string>
     <string name="AddOn_BtnConfigureServiceCaption">"Szolgáltatás beállítása"</string>
     <string name="AddOn_BtnRenewSubscriptionCaption">"Előfizetés megújítás"</string>
     <string name="AddOn_PreferencesTitle">"Kiegészítő szolgáltatások beállítása"</string>
@@ -455,6 +459,13 @@
     <string name="AddOn_SubscriptionExpireWarning">"Előfizetése a [#1] kiegészítő szolgáltatásra le fog járni [#2] napon belül"</string>
     <string name="AddOn_SubscriptionExpired">"Az előfizetése a [#1] kiegészítő szolgáltatásra lejárt."</string>
     <string name="AddOn_RenewSubscriptionPeriodInfo">"A kiválasztott időszak hozzá lesz adva a jelenlegi előfizetéshez"</string>
+    <string name="AddOn_RenewSubscriptionText">"Előfizetés megújítása:"</string>
+    <string name="AddOn_CreateSubscriptionText">"Előfizetés:"</string>
+        
+    <string name="AddOn_FortumoPriceExplanation">"Az ár országonként változik de kisebb mind egy csomag cigi vagy egy üveg bor ára.\nA pontos ár megjelenítéséért nyomja meg a Start gombot. Ez még nem jár fizetéssel.\n\nAz előfizetési periódus egy év. Ezután meg kell újítani az előfizetést, ha ezt a kiegészítést még használni akarja."</string> 
+    <string name="AddOn_FortumoPaymentDescription">"Egy éves előfizetés a [#1] kiegészítőre."</string>
+    <string name="AddOn_FortumoPayment">"Mobilszolgáltatói számlázás"</string>
+    
     <string name="AddOn_15DayFreeSubscription">"15 napos INGYENES előfizetés."</string>
     <string name="AddOn_SixMonthSubscription">"6 hónapos előfizetés: [#1] [#2]"</string>
     <string name="AddOn_OneYearSubscription">"Egy éves előfizetés: [#1] [#2]"</string>

@@ -282,7 +282,7 @@
                     android:id="@+id/tvIndexStartLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/MileageEditActivity_IndexStartLabel"
+                    android:text="@string/GEN_StartLabel"
                     android:typeface="sans"
                     android:textColor="@android:color/white"
                     />
@@ -296,7 +296,7 @@
                     android:layout_marginLeft="2dp"
                     android:hint="@string/GEN_Required"
                     android:background="@drawable/white_background"
-                    android:tag="@string/MileageEditActivity_IndexStartLabel"
+                    android:tag="@string/GEN_StartLabel"
                     />
 	            <RadioGroup
 	                android:id="@+id/rgMileageInsertMode"
@@ -307,7 +307,7 @@
 	                >
 	                <RadioButton
 	                    android:id="@+id/rbInsertModeIndex"
-	                    android:text="@string/MileageEditActivity_OptionIndexLabel"
+	                    android:text="@string/GEN_StopLabel"
 	                    style="?android:attr/textAppearanceSmall"
 	                    android:typeface="sans"
 	                    android:textColor="@android:color/white"

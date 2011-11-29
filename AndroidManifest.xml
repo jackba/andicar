@@ -21,7 +21,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
           android:versionCode="3701" 
-          android:versionName="3.7.0.1"
+          android:versionName="3.7.1 Beta"
           android:installLocation="internalOnly">
 <!-- 
 	internalOnly becouse:
@@ -38,7 +38,13 @@
 	<!-- <uses-permission android:name="android.permission.CALL_PHONE" />  -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 	<uses-permission android:name="android.permission.BLUETOOTH"/>
-	
+
+		<!-- Fortumo Required Permissions -->
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+	<uses-permission android:name="android.permission.SEND_SMS" />
+		
     
     <!-- need by secure backup -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -261,11 +267,27 @@
             android:name="com.andicar.addon.activity.AddOnServicesList"
             android:label="@string/PREF_AddOnCategoryTitle">
         </activity>
+        
+        <!-- old -->
         <activity
             android:name="com.andicar.addon.activity.ServiceSubscription">
         </activity>
-  
-		<activity 
+  		<!-- new -->
+        <activity
+            android:name="com.andicar.addon.activity.ServiceSubscriptionOptions">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.PPPayment">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.FortumoPayment">
+        </activity>
+            		<!-- Fortumo Activity -->
+		<activity android:name="com.fortumo.android.FortumoActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+		<!-- Fortumo Service -->
+		<service android:name="com.fortumo.android.FortumoService" />
+            
+        <activity 
 			android:name="com.paypal.android.MEP.PayPalActivity"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar"
 			android:configChanges="keyboardHidden|orientation">

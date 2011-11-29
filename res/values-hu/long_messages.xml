@@ -79,7 +79,7 @@
     </string>
 
     <string name="AddOn_SubscriptionValidity">
-         Az előfizetés érvényes a jelenlegi adatbázis példányra.\n\n
+         Az előfizetés a jelenlegi adatbázis példányára érvényes.\n\n
          Készíts biztonsági mentést a feliratkozás után!     
     </string>
 
