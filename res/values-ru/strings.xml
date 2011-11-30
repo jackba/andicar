@@ -155,7 +155,9 @@
     <string name="GEN_FuelEff">"Pасход: "</string>
     <string name="GEN_StartLabel">"Старт "</string>
     <string name="GEN_StopLabel">"Остановка"</string>
-        	    
+	<string name="GEN_PaymentFailed">"Платеж не состоялся"</string>
+	<string name="GEN_PaymentNotConfirmed">"Платеж не подтвержден"</string>
+
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
     <string name="MENU_DeleteCaption">"Удалить"</string>
@@ -478,21 +480,29 @@
     <string name="AddOn_PayPalTransactionID">"Номер транзакции PayPal"</string>
     <string name="AddOn_SubscribeWaiting">"Загружаю платежные библиотеки PayPal Payment"</string>
     <string name="AddOn_SubscriptionInfo">"Вы подписаны на этот сервис до: [#1]"</string>
- 	<string name="AddOn_BtnTryCaption">"Попробуйте БЕСПЛАТНО"</string>
+	<string name="AddOn_SubscriptionExpiredOn">"Ваша подписка на эту службу заканчивается: [#1]"</string>
+	<string name="AddOn_SubscriptionWillStartOn">"Ваша подписка будет активирована: [#1]"</string>
+	<string name="AddOn_BtnTryCaption">"Начните БЕСПЛАТНОЕ 15 дневное использование "</string>    
  	<string name="AddOn_BtnConfigureServiceCaption">"Настройка услуги"</string>
  	<string name="AddOn_BtnRenewSubscriptionCaption">"Обновить подписку"</string>
  	<string name="AddOn_PreferencesTitle">"Настроить доп.услуги"</string>
  	<string name="AddOn_PreferencesSummary">"Настроить ваши доп.услуги"</string>
  	<string name="AddOn_PreferencesCategoryTitle">"Доп. услуги"</string>
  	<string name="AddOn_SubscriptionExpireWarning">"Ваша подписка на доп. услугу [#1] закончится через [#2] дней"</string>
+ 	<string name="AddOn_SubscriptionExpired">"Ваша подписка на доп.услугу [#1] закончилась."</string>
+ 	<string name="AddOn_RenewSubscriptionPeriodInfo">"Новый период подписки будет добавлен к текущей подписке"</string>
+	<string name="AddOn_RenewSubscriptionText">"Возобновление подписки с:"</string>
+	<string name="AddOn_CreateSubscriptionText">"Подписка используется:"</string>
 
+	<string name="AddOn_FortumoPriceExplanation">" Цена не одинакова в разных странах, но она меньше чем пачка сигарет или бутылка вина.\nНажмите кнопку Начать чтобы увидеть цену. Потом вы можете отменить платеж.\n\n Период подписки – один год. По истечении этого периода подписка может возобновлена таким же способом как она была активирована."</string>
+	<string name="AddOn_FortumoPaymentDescription">"Покупка одного года подписки [#1] дополнения"</string>
+	<string name="AddOn_FortumoPayment">"Платеж оператору мобильной связи"</string>
+	<string name="AddOn_FortumoPaymentNotAvailable">"Платеж оператору мобильной связи в вашей стране недоступен."</string>
+	    
     <string name="AddOn_15DayFreeSubscription">"15-дневная бесплатная пробная подписка."</string>
     <string name="AddOn_SixMonthSubscription">"Полугодовая подписка: [#1] [#2]"</string>
     <string name="AddOn_OneYearSubscription">"Годовая подписка: [#1] [#2]"</string>
 	<string name="AddOn_LifeTimeSubscription">"Срок подписки: [#1] [#2]"</string>
-
- 	<string name="AddOn_SubscriptionExpired">"Ваша подписка на доп.услугу [#1] закончилась."</string>
- 	<string name="AddOn_RenewSubscriptionPeriodInfo">"Выбранный период добавится к текущей подписке"</string>
 
     <string name="AddOn_SecureBackup_Title">"Безопасное копирование"</string>
     <string name="AddOn_SecureBackup_Description">"Каждый раз, когда создается резервная копия базы данных, эта служба автоматически отправляет  резервную копию в качестве вложения электронной почты, на предварительно  указанный адрес электронной почты. Таким образом, записанные данные будут доступны, даже если вы потеряете свой телефон. В сочетании с резервным копированием этот модуль представляет собой законченное решение для безопасности ваших данных."</string>

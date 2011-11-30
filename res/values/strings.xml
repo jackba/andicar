@@ -156,6 +156,7 @@
     <string name="GEN_StopLabel">"Stop"</string>
     <string name="GEN_PaymentFailed">"Payment failed"</string>
     <string name="GEN_PaymentNotConfirmed">"Payment not confirmed"</string>
+    <string name="GEN_CarierBillingCheckWait">"Checking carier billing availability. Please wait a moment ..."</string>
         
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -499,7 +500,10 @@
     <string name="AddOn_RenewSubscriptionPeriodInfo">"The new subscription period will be added to the current subscription"</string>
     <string name="AddOn_RenewSubscriptionText">"Renew subscription using:"</string>
     <string name="AddOn_CreateSubscriptionText">"Subscribe using:"</string>
-
+    <string name="AddOn_SubscriptionBilled">"Your payment for [#1] is accepted"</string>
+    <string name="AddOn_SubscriptionNotBilled">"Your payment for [#1] is not accepted!"</string>
+    <string name="AddOn_SubscriptionPaymentPending">"Your payment is processing. The subscription will be activated after the effective billing. It can take up to 2 days."</string>
+        
     <string name="AddOn_FortumoPriceExplanation">"The price vary across countries but is less than a pack of cigarette or a bottle of wine.\nPress the Start button to see the exact price. You can cancel the payment after.\n\nThe subscription period is one year. After this period the subscription should be renewed in order to keep this AddOn active."</string>
     <string name="AddOn_FortumoPaymentDescription">"You are about to buy an one year subscription to [#1] AddOn"</string>
     <string name="AddOn_FortumoPayment">"Mobile operator billing"</string>

@@ -146,7 +146,9 @@
     <string name="GEN_FuelEff">"燃料的最近效率："</string>
     <string name="GEN_StartLabel">"开始 "</string>
     <string name="GEN_StopLabel">"停止"</string>
-        	    	
+	<string name="GEN_PaymentFailed">"支付失败"</string> 
+	<string name="GEN_PaymentNotConfirmed">"支付未得到证实"</string>
+
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
     <string name="MENU_DeleteCaption">"删除"</string>
@@ -462,7 +464,9 @@
     <string name="AddOn_PayPalWarning">"在付费过程中 **不要使用手机的返回键，也不要更改屏幕的显示方向**"</string>
     <string name="AddOn_SubscribeWaiting">"正在连接 PayPal 服务器。根据服务器的效率，此过程可能需要一分钟。\n请稍等..."</string>
     <string name="AddOn_SubscriptionInfo">"直到 [#1] 后你即可以订阅这个服务"</string>
-	<string name="AddOn_BtnTryCaption">"开始免费评估"</string>
+	<string name="AddOn_SubscriptionExpiredOn">"你的订阅这个服务即将过期: [#1]"</string> 
+	<string name="AddOn_SubscriptionWillStartOn">"你的订阅即将激活: [#1]"</string>
+	<string name="AddOn_BtnTryCaption">"开始15天的免费评估"</string>
 	<string name="AddOn_BtnConfigureServiceCaption">"配置服务"</string>
 	<string name="AddOn_BtnRenewSubscriptionCaption">"续订"</string>
 	<string name="AddOn_PreferencesTitle">"配置附加服务"</string>
@@ -476,7 +480,14 @@
 	<string name="AddOn_LifeTimeSubscription">"订阅的使用期限：[#1] [#2]"</string>
 
 	<string name="AddOn_SubscriptionExpired">"你对 [#1] 的订阅已过期。"</string>
-	<string name="AddOn_RenewSubscriptionPeriodInfo">"选定的时间将被添加到当前订阅"</string>
+	<string name="AddOn_RenewSubscriptionPeriodInfo">"新的服务将其添加到当前的订阅"</string>
+	<string name="AddOn_RenewSubscriptionText">"更新订阅:"</string> 
+	<string name="AddOn_CreateSubscriptionText">"使用中的订阅:"</string>
+
+	<string name="AddOn_FortumoPriceExplanation">"每个国家的价格各有不同，但是都比一包香烟和一瓶酒便宜.\n按启动按钮来看看确切的价格.之后，你也可以取消付款.\n\n认购期为一年. 这段时间过后,订阅应该更新以保持插件激活."</string> 
+	<string name="AddOn_FortumoPaymentDescription">"您将要购买一年期订阅[#1]"</string>
+	<string name="AddOn_FortumoPayment">"移动电话帐单"</string> 
+	<string name="AddOn_FortumoPaymentNotAvailable">"移动电话帐单在您的国家不可用."</string>
 
     <string name="AddOn_SecureBackup_Title">"安全备份"</string>
     <string name="AddOn_SecureBackup_Description">"每完成一次数据库备份，此服务都会自动的将其作为邮件的附件发送到预先配置好的Email地址。通过这样的方法，你的记录数据能在哪怕手机都丢了的情况下都可用。结合安全备份插件，彻底解决你的数据安全问题。"</string>

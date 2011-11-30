@@ -134,4 +134,13 @@
 	    <item>十二月</item>
 	</string-array>
 
+	<string-array name="ui_style_entries">
+		<item>黑暗</item>
+		<item>光明</item>
+	</string-array>
+    <string-array name="ui_style_values">
+        <item>s00</item>
+        <item>s01</item>
+    </string-array>
+	    
 </resources>

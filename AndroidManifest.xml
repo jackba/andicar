@@ -38,15 +38,22 @@
 	<!-- <uses-permission android:name="android.permission.CALL_PHONE" />  -->
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 	<uses-permission android:name="android.permission.BLUETOOTH"/>
-
-		<!-- Fortumo Required Permissions -->
+	
+	<!-- Fortumo Required Permissions -->
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.RECEIVE_SMS" />
 	<uses-permission android:name="android.permission.SEND_SMS" />
-		
-    
-    <!-- need by secure backup -->
+	<!-- This permission is granted automatically by the system, without notifying user. -->
+	<uses-permission android:name="com.demo.fortumoinappdemo.permission.PAYMENT_BROADCAST_PERMISSION" />
+	<!-- For security purposes, broadcast should be protected by permission. -->
+	<permission 
+	    android:label="Read Fortumo payment status" 
+	    android:name="com.demo.fortumoinappdemo.permission.PAYMENT_BROADCAST_PERMISSION" 
+	    android:protectionLevel="signature" 
+    />
+	
+	<!-- need by secure backup -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     
@@ -282,11 +289,24 @@
         <activity
             android:name="com.andicar.addon.activity.FortumoPayment">
         </activity>
-            		<!-- Fortumo Activity -->
-		<activity android:name="com.fortumo.android.FortumoActivity" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <!-- Fortumo -->
+ 		<activity android:name="com.fortumo.android.FortumoActivity" 
+ 		    android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 		<!-- Fortumo Service -->
 		<service android:name="com.fortumo.android.FortumoService" />
-            
+        <service android:name="com.fortumo.android.StatusUpdateService" />
+		<receiver android:name="com.fortumo.android.BillingSMSReceiver">
+              <intent-filter>
+                  <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+              </intent-filter>
+        </receiver>
+        <receiver android:name="com.andicar.addon.services.FortumoPaymentStatusChangeReceiver">
+             <intent-filter>
+                 <action android:name="com.fortumo.android.PAYMENT_STATUS_CHANGED" />
+             </intent-filter>
+        </receiver>
+                    
         <activity 
 			android:name="com.paypal.android.MEP.PayPalActivity"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar"

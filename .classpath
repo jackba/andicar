@@ -9,6 +9,6 @@
 	<classpathentry kind="lib" path="lib/mail.jar"/>
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/additionnal.jar"/>
-	<classpathentry kind="lib" path="lib/FortumoPayAndroid-7.1.257.jar"/>
+	<classpathentry kind="lib" path="lib/FortumoPayAndroid-7.1.266.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
