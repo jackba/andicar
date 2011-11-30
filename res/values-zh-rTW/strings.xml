@@ -69,7 +69,9 @@
 	<string name="APP_Activity_TaskTypeEdit">"編輯工作類型"</string>
 	<string name="APP_Activity_TaskList">"工作"</string>
 	<string name="APP_Activity_TaskEdit">"新增或編輯工作"</string>
-
+	<string name="APP_Activity_FuelCategoryList">"燃料種類"</string>
+	<string name="APP_Activity_FuelCategoryEdit">"編輯燃料種類"</string>
+	    
     <string name="GEN_OK">"確定"</string>
     <string name="GEN_CANCEL">"取消"</string>
     <string name="GEN_YES">"是"</string>
@@ -146,7 +148,9 @@
     <string name="GEN_FuelEff">"燃料平均效率： "</string>
     <string name="GEN_StartLabel">"開始 "</string>
     <string name="GEN_StopLabel">"停止"</string>
-        	    
+	<string name="GEN_PaymentFailed">"支付失敗"</string> 
+	<string name="GEN_PaymentNotConfirmed">"支付未得到證實"</string>
+
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
     <string name="MENU_DeleteCaption">"刪除"</string>
@@ -156,7 +160,7 @@
     <string name="MENU_HideInactiveCaption">"隱藏不活動的"</string>
     <string name="MENU_SearchCaption">"搜索/過濾"</string>
     <string name="MENU_CreateReportCaption">"建立報告"</string>
-    <string name="MENU_SendAsEmailCaption">"作為Email傳送"</string>
+	<string name="MENU_SendAsEmailCaption">"發送 / 上傳"</string>
     <string name="MENU_ShowOnMap">"在地圖上顯示"</string>
     <string name="MENU_MileageCaption">"行車里程"</string>
     <string name="MENU_RefuelCaption">"補給燃料"</string>
@@ -234,7 +238,8 @@
     <string name="RefuelEditActivity_IsFullLabel">"已滿"</string>
     <string name="RefuelEditActivity_QtyInBaseUOMLabel">"基本度量單位的數量： "</string>
     <string name="RefuelEditActivity_NoConversionRateMessage">"這些度量單位的轉換率未定義"</string>
-
+	<string name="RefuelEditActivity_GasStation">"站台:"</string>
+        
     <string name="BackupRestoreEditActivity_BackupBtnCaption">"備份"</string>
     <string name="BackupRestoreEditActivity_RestoreBtnCaption">"還原"</string>
     <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"刪除備份"</string>
@@ -394,7 +399,12 @@
 	<string name="PREF_TaskTypeSummary">"新增，刪除，修改工作類型"</string>
 	<string name="PREF_TaskTitle">"工作"</string>
 	<string name="PREF_TaskSummary">"新增，刪除，修改工作"</string>
+	<string name="PREF_UIStyleTitle">"界面樣式"</string>
+	<string name="PREF_UIStyleSummary">"改變界面風格"</string>
+	<string name="PREF_FuelCategoryTitle">"燃料種類"</string>
+	<string name="PREF_FuelCategorySummary">"添加, 刪除, 修改燃料種類"</string>
 
+	    
 	<string name="PREF_MainScreen_ShowMileageZone">"顯示里程區域"</string>
 	<string name="PREF_MainScreen_ShowGPSTrackZone">"顯示GPS追蹤區域"</string>
 	<string name="PREF_MainScreen_ShowRefuelZone">"顯示燃料區域"</string>
@@ -430,7 +440,7 @@
     <string name="DIALOGSearch_DateToLabel">"到"</string>
 
     <string name="DIALOGReport_DialogTitle">"報告選項"</string>
-    <string name="DIALOGReport_SendEmailLabel">"  作為Email附加傳送"</string>
+	<string name="DIALOGReport_SendEmailLabel">" 發送 / 上傳"</string>
     <string name="DIALOGReport_ReportFormatLabel">"報告格式："</string>
 	
 	<string name="DIALOG_TemplateNameTitle">"範本名"</string>
@@ -463,21 +473,30 @@
     <string name="AddOn_PayPalWarning">"在付費過程中 **不要使用手機的返回鍵，也不要變更屏幕的顯示方向**"</string>
     <string name="AddOn_SubscribeWaiting">"正在連接 PayPal 伺服器。根據伺服器的效率，此過程可能需要一分鐘。\n請稍等..."</string>
     <string name="AddOn_SubscriptionInfo">"直到 [#1] 後你即可以訂閱這個服務"</string>
-	<string name="AddOn_BtnTryCaption">"開始免費評估"</string>
+	<string name="AddOn_SubscriptionExpiredOn">"你的訂閱這個服務即將過期: [#1]"</string> 
+	<string name="AddOn_SubscriptionWillStartOn">"你的訂閱即將激活: [#1]"</string>
+	<string name="AddOn_BtnTryCaption">"開始15天的免費評估"</string>
 	<string name="AddOn_BtnConfigureServiceCaption">"設定服務"</string>
 	<string name="AddOn_BtnRenewSubscriptionCaption">"續訂"</string>
 	<string name="AddOn_PreferencesTitle">"設定附加服務"</string>
 	<string name="AddOn_PreferencesSummary">"設定你的附加服務"</string>
 	<string name="AddOn_PreferencesCategoryTitle">"附加服務"</string>
 	<string name="AddOn_SubscriptionExpireWarning">"你對 [#1] 的訂閱將在 [#2] 天後到期"</string>
-
+	<string name="AddOn_SubscriptionExpired">"你對 [#1] 的訂閱已過期。"</string>
+	<string name="AddOn_RenewSubscriptionText">"更新訂閱:"</string> 
+	<string name="AddOn_CreateSubscriptionText">"使用中的訂閱:"</string>
+	
+	<string name="AddOn_FortumoPriceExplanation">"每個國家的價格各有不同，但是都比一包香煙和一瓶酒便宜.\n按啟動按鈕來看看確切的價格.之後，你也可以取消付款.\n\n認購期為一年. 這段時間過後,訂閱應該更新以保持插件激活."</string> 
+	<string name="AddOn_FortumoPaymentDescription">"您將要購買一年期訂閱[#1]"</string>
+	<string name="AddOn_FortumoPayment">"移動電話帳單"</string> 
+	<string name="AddOn_FortumoPaymentNotAvailable">"移動電話帳單在您的國家不可用."</string>
+	    
     <string name="AddOn_15DayFreeSubscription">"15天免費的訂閱評估。"</string>
     <string name="AddOn_SixMonthSubscription">"訂閱六個月：[#1] [#2]"</string>
     <string name="AddOn_OneYearSubscription">"訂閱一年：[#1] [#2]"</string>
 	<string name="AddOn_LifeTimeSubscription">"訂閱的使用期限：[#1] [#2]"</string>
 
-	<string name="AddOn_SubscriptionExpired">"你對 [#1] 的訂閱已過期。"</string>
-	<string name="AddOn_RenewSubscriptionPeriodInfo">"選擇的時間將被新增到目前訂閱"</string>
+	<string name="AddOn_RenewSubscriptionPeriodInfo">"新的服務將其添加到當前的訂閱"</string>
 
     <string name="AddOn_SecureBackup_Title">"安全備份"</string>
     <string name="AddOn_SecureBackup_Text1">"這些資料都儲存在你的內部存儲器中而不是 AndiCar 的資料庫中。\n外部程式/套用將無法存取。"</string>

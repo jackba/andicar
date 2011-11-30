@@ -156,14 +156,15 @@
 				    />
 
 				<Button
-			    	android:id="@+id/btnPayWithPayPal"
-			        android:text="PayPal"
+			    	android:id="@+id/btnPayWithFortumo"
+			        android:text="@string/GEN_CarierBillingCheckWait"
 					android:layout_width="wrap_content" 
 					android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
 		            android:background="@drawable/btn_background_selector"
 		            android:typeface="sans"
 		            android:textColor="@android:color/white"
+		            android:enabled="false"
 					>
 				</Button>
 				<TextView  
@@ -178,8 +179,8 @@
 	        		android:gravity="center"
 				    />
 				<Button
-			    	android:id="@+id/btnPayWithFortumo"
-			        android:text="@string/AddOn_FortumoPayment"
+			    	android:id="@+id/btnPayWithPayPal"
+			        android:text="PayPal"
 					android:layout_width="wrap_content" 
 					android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"

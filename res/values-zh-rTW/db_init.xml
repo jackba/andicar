@@ -58,10 +58,23 @@
     <string name="DB_ExpCat_InsuranceName">"保險"</string>
     <string name="DB_ExpCat_InsuranceComment">"保險費用"</string>
     <!-- fuel types -->
-    <!--  
-    <string name="DB_ExpCat_FuelName">"燃料"</string>
-    <string name="DB_ExpCat_FuelComment">"加油費用"</string>
-    -->
+	<string name="DB_FuelType_Diesel1D">"柴油 1D"</string>
+	<string name="DB_FuelType_Diesel1DComment">"寒冷天氣首選"</string>
+	<string name="DB_FuelType_Diesel2D">"柴油 2D"</string>
+	<string name="DB_FuelType_Diesel2DComment">"溫暖天氣使用"</string>
+	<string name="DB_FuelType_DieselBio">"生物柴油"</string>
+	<string name="DB_FuelType_DieselBioComment">"所得的植物油或動物油脂"</string>
+	<string name="DB_FuelType_DieselSynthetic">"合成柴油"</string>
+	<string name="DB_FuelType_DieselSyntheticComment">"源自多種來源(如木材、稻草、玉米、甚至垃圾和食物殘渣)"</string>
+	<string name="DB_FuelType_GasolineRegular">"普通汽油"</string>
+	<string name="DB_FuelType_GasolineRegularComment">"辛烷值87"</string>
+	<string name="DB_FuelType_GasolineMidgrade">"Midgrade汽油"</string>
+	<string name="DB_FuelType_GasolineMidgradeComment">"辛烷值89"</string>
+	<string name="DB_FuelType_GasolinePremium">"高級汽油"</string>
+	<string name="DB_FuelType_GasolinePremiumComment">"辛烷值91 - 92"</string>
+	<string name="DB_FuelType_LPG">"LPG"</string>
+	<string name="DB_FuelType_LPGComment">"液化石油氣"</string>
+
     <!-- currencies -->
     <string name="DB_Curr_EUR">"歐元"</string>
     <string name="DB_Curr_USD">"美元"</string>
