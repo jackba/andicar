@@ -21,10 +21,12 @@ import org.andicar.activity.R;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * @author Miklos Keresztes
@@ -38,6 +40,13 @@ public class WhatsNewDialog extends Activity{
 	public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.whatsnew_dialog);
+        TextView tv = (TextView)findViewById(R.id.tvText1);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null && extras.containsKey("UpdateMsg")){
+        	CharSequence updMsg = Html.fromHtml(extras.getString("UpdateMsg"));
+        	tv.setText(updMsg);
+        }
+        
 
         getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);        
         ImageButton btnOk = (ImageButton)findViewById(android.R.id.button1);

@@ -23,8 +23,6 @@ import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -2401,15 +2399,10 @@ public class DB {
 						AddOnStaticValues.SECURE_BACKUP_ID);
 				db.close();
 				if (subsValid) {
-					AlarmManager am = (AlarmManager) mCtx
-							.getSystemService(Context.ALARM_SERVICE);
 					Intent intent = new Intent(mCtx, FileMailer.class);
 					intent.putExtra("bkFile", bkFolder);
 					intent.putExtra("attachName", bkFileName);
-					PendingIntent pIntent = PendingIntent.getService(mCtx, 0,
-							intent, PendingIntent.FLAG_CANCEL_CURRENT);
-					am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 1000,
-							pIntent);
+					mCtx.startService(intent);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

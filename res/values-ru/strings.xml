@@ -157,6 +157,7 @@
     <string name="GEN_StopLabel">"Остановка"</string>
 	<string name="GEN_PaymentFailed">"Платеж не состоялся"</string>
 	<string name="GEN_PaymentNotConfirmed">"Платеж не подтвержден"</string>
+	<string name="GEN_CarierBillingCheckWait">"Проверка возможности платежа. Пожалуйста подождите ..."</string>
 
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
@@ -493,8 +494,11 @@
  	<string name="AddOn_RenewSubscriptionPeriodInfo">"Новый период подписки будет добавлен к текущей подписке"</string>
 	<string name="AddOn_RenewSubscriptionText">"Возобновление подписки с:"</string>
 	<string name="AddOn_CreateSubscriptionText">"Подписка используется:"</string>
+	<string name="AddOn_SubscriptionBilled">"Ваш платеж за [#1] принят"</string>
+	<string name="AddOn_SubscriptionNotBilled">"Ваш платеж за [#1] не принят!"</string>
+	<string name="AddOn_SubscriptionPaymentPending">"Ваш платеж обрабатывается. Подписка будет активирована после завершения обработки платежа. Это может занять до 2-х дней."</string>
 
-	<string name="AddOn_FortumoPriceExplanation">" Цена не одинакова в разных странах, но она меньше чем пачка сигарет или бутылка вина.\nНажмите кнопку Начать чтобы увидеть цену. Потом вы можете отменить платеж.\n\n Период подписки – один год. По истечении этого периода подписка может возобновлена таким же способом как она была активирована."</string>
+	<string name="AddOn_FortumoPriceExplanation">" Цена не одинакова в разных странах, но она меньше чем пачка сигарет или бутылка вина.\nНажмите кнопку \"Pay by MOBILE\" чтобы увидеть цену. Потом вы можете отменить платеж.\n\n Период подписки – один год. По истечении этого периода подписка может возобновлена таким же способом как она была активирована."</string>
 	<string name="AddOn_FortumoPaymentDescription">"Покупка одного года подписки [#1] дополнения"</string>
 	<string name="AddOn_FortumoPayment">"Платеж оператору мобильной связи"</string>
 	<string name="AddOn_FortumoPaymentNotAvailable">"Платеж оператору мобильной связи в вашей стране недоступен."</string>
