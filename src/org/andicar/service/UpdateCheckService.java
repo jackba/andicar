@@ -22,18 +22,22 @@ import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 
 import org.andicar.activity.R;
+import org.andicar.activity.dialog.WhatsNewDialog;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.apache.http.util.ByteArrayBuffer;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -54,8 +58,13 @@ public class UpdateCheckService extends Service{
 			Thread.setDefaultUncaughtExceptionHandler(
 	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 
-//		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         try {
+        	Bundle extras = intent.getExtras();
+        	if(extras == null || extras.getBoolean("setJustNextRun") || !extras.getBoolean("AutoUpdateCheck")){
+        		setNextRun();
+        		stopSelf();
+        	}
+        	
             URL updateURL = new URL(StaticValues.VERSION_FILE_URL);
             URLConnection conn = updateURL.openConnection();
             if(conn == null)
@@ -71,17 +80,37 @@ public class UpdateCheckService extends Service{
             }
 
             /* Convert the Bytes read to a String. */
-            final String s = new String(baf.toByteArray());
+            String s = new String(baf.toByteArray());
             /* Get current Version Number */
             int curVersion = getPackageManager().getPackageInfo("org.andicar.activity", 0).versionCode;
             int newVersion = Integer.valueOf(s);
 
             /* Is a higher version than the current already out? */
-            if (newVersion > curVersion) {
-                mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+            if (newVersion > curVersion) { 
+            	//get the whats new message
+                updateURL = new URL(StaticValues.WHATS_NEW_FILE_URL);
+                conn = updateURL.openConnection();
+                if(conn == null)
+                    return;
+                is = conn.getInputStream();
+                if(is == null)
+                	return;
+                bis = new BufferedInputStream(is);
+                baf = new ByteArrayBuffer(50);
+                current = 0;
+                while((current = bis.read()) != -1){
+                     baf.append((byte)current);
+                }
+
+                /* Convert the Bytes read to a String. */
+                s = new String(baf.toByteArray());
+
+            	
+            	mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
                 notification = null;
-                Intent marketIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=pname:org.andicar.activity"));
-                PendingIntent contentIntent = PendingIntent.getActivity(UpdateCheckService.this, 0, marketIntent, 0);
+                Intent i = new Intent(this, WhatsNewDialog.class);
+                i.putExtra("UpdateMsg", s);
+                PendingIntent contentIntent = PendingIntent.getActivity(UpdateCheckService.this, 0, i, 0);
 
                 CharSequence title = getText(R.string.Notif_UpdateTitle);
                 String message = getString(R.string.Notif_UpdateMsg);
@@ -92,6 +121,7 @@ public class UpdateCheckService extends Service{
                 notification.flags |= Notification.FLAG_AUTO_CANCEL;
                 notification.setLatestEventInfo(UpdateCheckService.this, title, message, contentIntent);
                 mNM.notify(StaticValues.NOTIF_UPDATECHECK_ID, notification);
+                setNextRun();
             }
             stopSelf();
         } catch (Exception e) {
@@ -99,4 +129,17 @@ public class UpdateCheckService extends Service{
         	e.printStackTrace();
         }
 	}
+	
+	private void setNextRun(){
+		Calendar cal = Calendar.getInstance();
+		if(cal.get(Calendar.HOUR_OF_DAY) >= 18)
+			cal.add(Calendar.DAY_OF_YEAR, 1);
+		cal.set(Calendar.HOUR_OF_DAY, 20);
+		cal.set(Calendar.MINUTE, 0);
+		Intent i = new Intent(this, UpdateCheckService.class);
+		PendingIntent pIntent = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+		AlarmManager am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+		am.set(AlarmManager.RTC, cal.getTimeInMillis(), pIntent);
+	}
+	
 }

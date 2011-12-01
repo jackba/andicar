@@ -275,11 +275,6 @@
             android:label="@string/PREF_AddOnCategoryTitle">
         </activity>
         
-        <!-- old -->
-        <activity
-            android:name="com.andicar.addon.activity.ServiceSubscription">
-        </activity>
-  		<!-- new -->
         <activity
             android:name="com.andicar.addon.activity.ServiceSubscriptionOptions">
         </activity>
@@ -336,7 +331,7 @@
 			android:label="AndiCarFileMailer"
 			android:process="com.andicar.addon.services">
  		</service>
-
+            
         <activity
             android:name="com.andicar.addon.activity.BTDeviceCarList"
             android:label="@string/AddOn_BTStarter_DeviceListActivityTitle">
@@ -350,6 +345,11 @@
 				<action android:name="android.bluetooth.device.action.ACL_CONNECTED"></action>
 			</intent-filter>
 		</receiver>
-
+        <receiver android:name="com.andicar.addon.services.NetworkStatusChangeReceiver">
+			<intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action>
+			</intent-filter>
+		</receiver>
+            
     </application>
 </manifest>

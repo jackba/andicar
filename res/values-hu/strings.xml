@@ -462,7 +462,7 @@
     <string name="AddOn_RenewSubscriptionText">"Előfizetés megújítása:"</string>
     <string name="AddOn_CreateSubscriptionText">"Előfizetés:"</string>
         
-    <string name="AddOn_FortumoPriceExplanation">"Az ár országonként változik de kisebb mind egy csomag cigi vagy egy üveg bor ára.\nA pontos ár megjelenítéséért nyomja meg a Start gombot. Ez még nem jár fizetéssel.\n\nAz előfizetési periódus egy év. Ezután meg kell újítani az előfizetést, ha ezt a kiegészítést még használni akarja."</string> 
+    <string name="AddOn_FortumoPriceExplanation">"Az ár országonként változik de kisebb mind egy csomag cigi vagy egy üveg jó bor ára.\nA pontos ár megjelenítéséért nyomja meg a \"Pay by MOBILE\" gombot. Ez még nem jár fizetéssel.\n\nAz előfizetési periódus egy év. Ezután meg kell újítani az előfizetést, ha ezt a kiegészítést még használni akarja."</string> 
     <string name="AddOn_FortumoPaymentDescription">"Egy éves előfizetés a [#1] kiegészítőre."</string>
     <string name="AddOn_FortumoPayment">"Mobilszolgáltatói számlázás"</string>
     

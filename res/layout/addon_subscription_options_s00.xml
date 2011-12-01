@@ -132,7 +132,7 @@
 	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 		        android:layout_marginTop="5dp"
-		        android:gravity="center"
+		        android:gravity="center_horizontal"
 	            >
 				<TextView  
 				    android:id="@+id/tvRenewSubscription"
@@ -155,18 +155,29 @@
 	        		android:gravity="center"
 				    />
 
-				<Button
+				<ImageButton
 			    	android:id="@+id/btnPayWithFortumo"
+					android:layout_width="wrap_content" 
+					android:layout_height="wrap_content"
+			        android:layout_marginTop="5dp"
+		            android:enabled="true"
+		            android:visibility="gone"
+	            	android:src="@drawable/pay_by_fortumo"
+		            android:background="@drawable/btn_background_selector"
+					>
+				</ImageButton>
+				<TextView
+			    	android:id="@+id/txtFortumoCheck"
 			        android:text="@string/GEN_CarierBillingCheckWait"
 					android:layout_width="wrap_content" 
 					android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
-		            android:background="@drawable/btn_background_selector"
-		            android:typeface="sans"
-		            android:textColor="@android:color/white"
-		            android:enabled="false"
+			        android:typeface="sans"
+		        	android:textStyle="bold"
+			        android:textColor="@android:color/white"
+	        		android:gravity="center"
 					>
-				</Button>
+				</TextView>
 				<TextView  
 				    android:id="@+id/tvOr"
 				    android:text="@string/GEN_Or2"
@@ -177,18 +188,16 @@
 		        	android:textStyle="bold"
 			        android:textColor="@android:color/white"
 	        		android:gravity="center"
+	        		android:layout_gravity="center_horizontal"
 				    />
-				<Button
+				<ImageButton
 			    	android:id="@+id/btnPayWithPayPal"
-			        android:text="PayPal"
 					android:layout_width="wrap_content" 
 					android:layout_height="wrap_content"
 			        android:layout_marginTop="5dp"
+	            	android:src="@drawable/paypal_60x38"
 		            android:background="@drawable/btn_background_selector"
-		            android:typeface="sans"
-		            android:textColor="@android:color/white"
-					>
-				</Button>
+					/>
 				<TextView  
 				    android:id="@+id/tvRenewPeriodInfo"
 				    android:text="@string/AddOn_RenewSubscriptionPeriodInfo"

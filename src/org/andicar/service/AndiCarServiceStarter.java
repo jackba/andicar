@@ -42,6 +42,12 @@ public class AndiCarServiceStarter extends BroadcastReceiver {
 		intent.putExtra("setJustNextRun", false);
 		context.startService(intent);
 		Log.i(LOGTAG, "Done");
+
+//		Log.i(LOGTAG, "Starting UpdateCheck Notification Service...");
+//		Intent intent2 = new Intent(context, UpdateCheckService.class);
+//		intent.putExtra("setJustNextRun", true);
+//		context.startService(intent2);
+//		Log.i(LOGTAG, "Done");
 	}
 
 }
