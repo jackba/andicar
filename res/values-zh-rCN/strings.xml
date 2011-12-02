@@ -148,6 +148,7 @@
     <string name="GEN_StopLabel">"停止"</string>
 	<string name="GEN_PaymentFailed">"支付失败"</string> 
 	<string name="GEN_PaymentNotConfirmed">"支付未得到证实"</string>
+	<string name="GEN_CarierBillingCheckWait">"检查carier计费的可用性。请稍等…"</string>
 
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
@@ -483,6 +484,9 @@
 	<string name="AddOn_RenewSubscriptionPeriodInfo">"新的服务将其添加到当前的订阅"</string>
 	<string name="AddOn_RenewSubscriptionText">"更新订阅:"</string> 
 	<string name="AddOn_CreateSubscriptionText">"使用中的订阅:"</string>
+	<string name="AddOn_SubscriptionBilled">" [#1]支付已接受."</string>
+	<string name="AddOn_SubscriptionNotBilled">" [#1] 未支付成功!"</string>
+	<string name="AddOn_SubscriptionPaymentPending">"你的支付正在处理中.订阅将在有效票据生成之后可用.请耐心等待，这或许需要花费2天左右的时间."</string>
 
 	<string name="AddOn_FortumoPriceExplanation">"每个国家的价格各有不同，但是都比一包香烟和一瓶酒便宜.\n按启动按钮来看看确切的价格.之后，你也可以取消付款.\n\n认购期为一年. 这段时间过后,订阅应该更新以保持插件激活."</string> 
 	<string name="AddOn_FortumoPaymentDescription">"您将要购买一年期订阅[#1]"</string>

@@ -150,6 +150,7 @@
     <string name="GEN_StopLabel">"停止"</string>
 	<string name="GEN_PaymentFailed">"支付失敗"</string> 
 	<string name="GEN_PaymentNotConfirmed">"支付未得到證實"</string>
+	<string name="GEN_CarierBillingCheckWait">"检查carier计费的可用性。请稍等…"</string>
 
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
@@ -485,6 +486,9 @@
 	<string name="AddOn_SubscriptionExpired">"你對 [#1] 的訂閱已過期。"</string>
 	<string name="AddOn_RenewSubscriptionText">"更新訂閱:"</string> 
 	<string name="AddOn_CreateSubscriptionText">"使用中的訂閱:"</string>
+	<string name="AddOn_SubscriptionBilled">" [#1]支付已接受."</string>
+	<string name="AddOn_SubscriptionNotBilled">" [#1] 未支付成功!"</string>
+	<string name="AddOn_SubscriptionPaymentPending">"你的支付正在處理中.訂閱將在有效票據生成之後可用.請耐心等待，這或許需要花費2天左右的時間."</string>
 	
 	<string name="AddOn_FortumoPriceExplanation">"每個國家的價格各有不同，但是都比一包香煙和一瓶酒便宜.\n按啟動按鈕來看看確切的價格.之後，你也可以取消付款.\n\n認購期為一年. 這段時間過後,訂閱應該更新以保持插件激活."</string> 
 	<string name="AddOn_FortumoPaymentDescription">"您將要購買一年期訂閱[#1]"</string>
