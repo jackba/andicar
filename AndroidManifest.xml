@@ -21,7 +21,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
           android:versionCode="3710" 
-          android:versionName="3.7.1"
+          android:versionName="3.7.2 Beta"
           android:installLocation="internalOnly">
 <!-- 
 	internalOnly becouse:
@@ -44,14 +44,13 @@
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.RECEIVE_SMS" />
 	<uses-permission android:name="android.permission.SEND_SMS" />
-	<!-- This permission is granted automatically by the system, without notifying user. -->
-	<uses-permission android:name="com.demo.fortumoinappdemo.permission.PAYMENT_BROADCAST_PERMISSION" />
 	<!-- For security purposes, broadcast should be protected by permission. -->
 	<permission 
 	    android:label="Read Fortumo payment status" 
-	    android:name="com.demo.fortumoinappdemo.permission.PAYMENT_BROADCAST_PERMISSION" 
+	    android:name="com.andicar.addon.permission.PAYMENT_BROADCAST_PERMISSION" 
 	    android:protectionLevel="signature" 
     />
+	<uses-permission android:name="com.andicar.addon.permission.PAYMENT_BROADCAST_PERMISSION" />
 	
 	<!-- need by secure backup -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -70,12 +69,13 @@
 	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
 	<uses-feature android:name="android.hardware.location.network" android:required="false" />
 	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
-	
+	<uses-feature android:name="android.hardware.telephony" android:required="false" />
+		
     <application
         android:label="AndiCar"
         android:description="@string/APP_Description"
         android:icon="@drawable/car2"
-        android:debuggable="false"
+        android:debuggable="true"
     >
         <uses-library android:name="com.google.android.maps" />
 
