@@ -176,7 +176,7 @@ public class BackupRestoreActivity extends BaseActivity {
 
                                 }
                                 else{
-                                    madbErrorAlert.setMessage(mResource.getString( R.string.BackupRestoreEditActivity_BackupFailedMessage ) + "\n" +
+                                    madbErrorAlert.setMessage(mResource.getString( R.string.BackupRestoreEditActivity_RestoreFailedMessage ) + "\n" +
                                             mDbAdapter.lastErrorMessage);
                                     madError = madbErrorAlert.create();
                                     madError.show();
