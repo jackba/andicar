@@ -256,6 +256,7 @@
     <string name="BackupRestoreEditActivity_BackupListLabel">"Existing backups:"</string>
     <string name="BackupRestoreEditActivity_BackupCreatedMessage">"Backup created."</string>
     <string name="BackupRestoreEditActivity_BackupFailedMessage">"Backup creation failed!"</string>
+    <string name="BackupRestoreEditActivity_RestoreFailedMessage">"Restore failed!"</string>
     <string name="BackupRestoreEditActivity_BackupDeleteConfirmation">"Are you sure you want to delete the selected backup?"</string>
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"Are you sure you want to restore the selected backup? This action will replace your existing data!"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Your database was restored. The application will be closed."</string>
