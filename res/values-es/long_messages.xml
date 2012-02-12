@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AndiCar - Aplicación de administración de Automóviles para dispositivos Android.
+
+ Derechos de autor (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ este programa es una aplicación libre: La puedes re distribuir y/o modificar 
+ bajo los términos de  GNU Licencia Pública General como ha sido publicado por 
+ la Fundación del Software Libre, tanto la versión 3 de el Licencia, o
+ (en forma opcional) cualquier versión posterior.
+
+ este programa es distribuido en la fe de que sera útil,
+ pero SIN NINGUNA GARANTÍA; si siquiera la garantía de
+ COMERCIALIZACIÓN o buen estado para un USO  PARTICULAR.
+ Ver GNU Licencia Pública General para mas detalles.
+
+ Deberías haber recibido una copia de la Licencia Pública General, GNU
+ con este programa. De no ser así,la puedes encontrar en <http://www.gnu.org/licenses/>.
+-->
+<!--
+        < = <
+-->
+<resources>
+    <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
+        AndiCar es una aplicación de código abierto para la administración de vehículos para dispositivos Android.\n
+        Esta licenciada bajo los términos de la GNU Licencia Pública General, version 3.\n
+        Mas detalles en la página \"Acerca de\".\n
+        Gracias por usar AndiCar!
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_USABILITY_MESSAGE">
+    	Abajo veras algunas reglas de uso general para AndiCar:\n
+    	* presiona el botón del menú de tu dispositivo para ver las opciones aplicables de la pantalla apropiada\n
+    	* en las listas, presiona un registro para editarlo. Presiona y sostiene para mas opciones\n\n
+    	** visita www.andicar.org -&gt; \"How To\" para aprender acerca del uso de AndiCar **\n\n
+    	Gracias.
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
+        <b><i>AndiCar</i></b> es una aplicación de código abierto para la administración de vehículos para dispositivos Android.\n
+        Esta licenciada bajo los términos de la GNU Licencia Pública General, versión 3.\n
+        Mas detalles en la página "Acerca de".\n Derechos de autor© 2010-2011 Miklos Keresztes.\n
+        Gracias por usar<b><i>AndiCar</i></b>!
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML1">
+        <b><i>AndiCar</i></b> es una aplicación de código abierto para el manejo de vehículos para dispositivos Android. 
+         Esta licenciada bajo los términos de la GNU Licencia Pública General, versión 3.\n.\n
+        *  Para mas información (Como hacer, últimas noticias, etc.) por favor visita la página inicial del projecto en
+        <a href="http://www.andicar.org">www.andicar.org</a>.\n
+        <small>Refresca la página en tu navegador si obtienes el message\"página web no disponible\" .</small>\n
+        *  Para preguntas eres bienvenido a la lista de discusión de <b><i>AndiCar</i></b> 
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
+        *  Para reportar problemas o pedidos de mejoras on nuevas funciones no dudes en usar el sistema de reporte de <b><i>AndiCar</i></b> en
+        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
+        *  Puedes subscribirte a la las noticias del projecto en
+        <a href="http://www.andicar.org/News/">www.andicar.org/News/</a>.\n
+        *  Para cualquier otra pregunta puedes enviar un email a andicar.support@gmail.com.\n
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML2">
+        Gracias por usar <b><i>AndiCar</i></b>.\n\n
+        <b><i>Créditos:</i></b>\n
+        *  Traducción Al Chino by <a href="http://goapk.com/">goapk.com</a> \n
+        *  Traducción Al Russo: Andrey Demin - andde@rambler.ru\n
+		*  Traducción Inicial al Aleman : Andy Haubenschmid - andy@haubenschmid.li\n
+		<small>Se busca traductor :)</small>\n
+		*  Traducción al Hungaro : Péter Nagy - microbilab@gmail.com\n
+		*  Traducción al Español : Daniel Iozzi- danieliozzi@gmail.com\n
+        \n<b><i>Detalle de derechos de autor</i></b>:\n\n
+        Derechos de autor© 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
+        Esta aplicación es código libre: la puedes distribuir y/o modificar
+        bajo los términos de la GNU Licencia Pública General como ha sido publicada por la
+        Fundación de Software Libre, tanto como la versión 3 de la licencia, o (en forma opcional) nuevas versiones.\n\n
+        Esta aplicación es distribuida con la esperanza de ser útil, pero  SIN NINGUNA GARANTÍA;
+        sin siquiera la garantía explicita de COMERCIALIZACIÓN or BUEN ESTADO PARA UN PROPOSITO PARTICULAR.
+        Ver la GNU Licencia Pública General para mas detalles.\n\n
+        Deberías haber recibido una copia de la GNU Licencia Pública General con esta aplicación.
+        De no ser así, la puedes encontrar en  <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n
+        La licencia completa puede ser encontrada <a href="http://www.gnu.org/licenses/gpl.html">aquí</a>.\n
+    </string>
+
+    <string name="AddOn_SubscriptionValidity">
+    	La subscripción es valida para la instancia de de base de datos corriente.
+    	\nDeberias crear un backup inmediatamente después del proceso de subscripción!     
+    </string>
+    
+    <string name="LM_UPDATE_MSG">
+        <b><i>Que Hay de Nuevo:</i></b>\n\n
+        <i>versión 3.7.0:</i>\n
+        * Un nuevo y liviano estilo de interface de usuario. Abre Preferencias -&gt; Estilo de Interface para cambiar entre estilo oscuro (anterior) y liviano (nuevo).\n\n
+        <i>versión 3.7.1:</i>\n
+        * Una conveniente opción de facturación por proveedor de servicio para la subscription de los AddOn . Disponible en mas de 60 paises.\n\n
+        <i>Todas las actualizaciones:</i>\n
+        * Varias correcciones de errores de programación\n\n
+    </string>
+</resources>
