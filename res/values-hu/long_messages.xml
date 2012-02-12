@@ -89,7 +89,11 @@
         <i>3.7.0-ás verzió</i>\n
         * Egy új felhasználói felület. A régi (sötét) és az új (világos) felület között a Beállítások -> Felhasználói felület opcióval lehet váltani.\n 
         * Különbböző hibajavítások\n\n
-        <i>3.7.0.1-es verzió</i>
-        * ForceClose hibajavítás a gps nyomkövető indításakor, ha a régi felhasználói felületet használják.\n\n
-    </string>
+        <i>3.7.1-es verzió</i>
+        * Mobil operátoron keresztüli fizetés a kiegészítő szolgáltatásokra.\n\n
+        <i>3.7.2-es verzió</i>
+        * Spanyol fordítás Daniel Iozzi hazzájárulásával.\n\n
+        <i>Összes verzió</i>
+        * Hibajavítások.\n\n
+  </string>
 </resources>
