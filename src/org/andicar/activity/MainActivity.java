@@ -21,6 +21,8 @@ package org.andicar.activity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.activity.dialog.WhatsNewDialog;
@@ -286,6 +288,15 @@ public class MainActivity extends BaseActivity {
 			if(!mPreferences.contains("InitialInstallSource"))
 				editor.putString("InitialInstallSource", StaticValues.INITIAL_INSTALL_SOURCE);
 			editor.commit();
+
+			if(!mPreferences.contains("IsProviderSent") && isSendStatistics){
+	            AndiCarStatistics.sendFlurryStartSession(this);
+	        	Map<String, String> parameters = new HashMap<String, String>();
+				parameters.put("Provider", StaticValues.INITIAL_INSTALL_SOURCE);
+		        AndiCarStatistics.sendFlurryEvent(this, "InstallSource", parameters);
+				editor.putBoolean("IsProviderSent", true);
+				editor.commit();
+			}
 
 //			mCarId = mPreferences.getLong("CurrentCar_ID", -1);
 //			initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
