@@ -159,7 +159,7 @@ public class RefuelEditActivity extends EditActivityBase {
             else{
                 acAdress.setEnabled(false);
                 acAdress.setText(null);
-                acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                acAdress.setHint(mResource.getString(R.string.RefuelEditActivity_GasStation).replace(":", "") + " " +
                         mResource.getString(R.string.GEN_Required).replace(":", ""));
             }
             
@@ -412,7 +412,7 @@ public class RefuelEditActivity extends EditActivityBase {
         if(acBPartner.getText().toString() == null || acBPartner.getText().toString().length() == 0){
             acAdress.setEnabled(false);
             acAdress.setText(null);
-            acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+            acAdress.setHint(mResource.getString(R.string.RefuelEditActivity_GasStation).replace(":", "") + " " +
                                 mResource.getString(R.string.GEN_Required).replace(":", ""));
         }
         else{
@@ -643,7 +643,7 @@ public class RefuelEditActivity extends EditActivityBase {
                 if(edtbl.toString() == null || edtbl.toString().length() == 0){
                     acAdress.setEnabled(false);
                     acAdress.setText(null);
-                    acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+                    acAdress.setHint(mResource.getString(R.string.RefuelEditActivity_GasStation).replace(":", "") + " " +
                                         mResource.getString(R.string.GEN_Required).replace(":", ""));
                 }
                 else{
@@ -1111,7 +1111,7 @@ public class RefuelEditActivity extends EditActivityBase {
         acBPartner.setText(null);
         acAdress.setEnabled(false);
         acAdress.setText(null);
-        acAdress.setHint(mResource.getString(R.string.GEN_BPartner).replace(":", "") + " " +
+        acAdress.setHint(mResource.getString(R.string.RefuelEditActivity_GasStation).replace(":", "") + " " +
                 mResource.getString(R.string.GEN_Required).replace(":", ""));
 //        initControls();
 
