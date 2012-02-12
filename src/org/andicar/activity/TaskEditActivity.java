@@ -416,9 +416,20 @@ public class TaskEditActivity extends EditActivityBase {
 	@Override
 	protected boolean saveData() {
 		
-		if(isMileageEnabled){ 
-			if(etMileage.getText().toString() == null || etMileage.getText().toString().length() == 0 
-					|| Integer.parseInt(etMileage.getText().toString()) == 0){
+		if(isMileageEnabled){
+			try{
+				Integer.parseInt(etMileage.getText().toString());
+			}
+			catch(Exception e){
+				Toast toast = Toast.makeText(getApplicationContext(),
+						mResource.getString(R.string.ERR_065), Toast.LENGTH_SHORT);
+				toast.show();
+				etMileage.requestFocus();
+				saveSuccess = false;
+				return false;
+			}
+
+			if(etMileage.getText().toString() == null || etMileage.getText().toString().length() == 0){
 				Toast toast = Toast.makeText(getApplicationContext(),
 						mResource.getString(R.string.TaskEditActivity_FillMileage), Toast.LENGTH_SHORT);
 				toast.show();
@@ -426,6 +437,7 @@ public class TaskEditActivity extends EditActivityBase {
 				saveSuccess = false;
 				return false;
 			}
+			
 			if(etReminderMileage.getText().toString() == null || etReminderMileage.getText().toString().length() == 0){
 				etReminderMileage.setText("0");
 			}
