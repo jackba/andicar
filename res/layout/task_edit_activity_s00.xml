@@ -495,7 +495,7 @@
 	                <EditText
 	                    android:id="@+id/etMileage"
 	                    android:layout_marginLeft="10dp"
-	                    android:layout_width="70dp"
+	                    android:layout_width="140dp"
 	                    android:layout_height="wrap_content"
 	                    android:numeric="integer"
                     	android:digits="1234567890"
@@ -539,7 +539,7 @@
 	                <EditText
 	                    android:id="@+id/etReminderMileage"
 	                    android:layout_marginLeft="10dp"
-	                    android:layout_width="50dp"
+	                    android:layout_width="60dp"
 	                    android:layout_height="wrap_content"
 	                    android:numeric="integer"
                     	android:digits="1234567890"

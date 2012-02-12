@@ -41,7 +41,7 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b>是一个ANDROID设备上免费而且开源的汽车管理程序。
         授权遵循GNU公共许可证第3版的条款。\n
-        在关于页面有更多信息 \n版权所有 © 2010-2011 Miklos Keresztes.\n
+        在关于页面有更多信息 \n版权所有 © 2010-2012 Miklos Keresztes.\n
         感谢使用<b><i>AndiCar</i></b>!
     </string>
 
@@ -64,9 +64,12 @@
         <b><i>Credits:</i></b>\n
         *  中文化 <a href="http://goapk.com/">goapk.com</a> \n
         *  Russian translation by Andrey Demin - andde@rambler.ru\n
-		*  German translation by andy@haubenschmid.li\n
+		*  Initial German translation by Andy Haubenschmid - andy@haubenschmid.li\n
+		<small>Translation maintainer wanted :)</small>\n
+		*  Hungarian translation by Péter Nagy - microbilab@gmail.com\n
+        *  Spanish translation by Daniel Iozzi - danieliozzi@gmail.com\n
         \n<b><i>版权须知</i></b>:\n\n
-        版权所有 © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
+        版权所有 © 2010-2012 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
 		本程序为自由软件；您可依据自由软件基金会所发表的GNU通用公共授权条款，对本程序再次发布和/或修改；无论您依据的是本授权的第三版，或（您可选的）任一日后发行的版本。\n\n
 		本程序是基于使用目的而加以发布，然而不负任何担保责任；亦无对适售性或特定目的适用性所为的默示性担保。详情请参照GNU通用公共授权。\n\n
 		您应已收到附随于本程序的GNU通用公共授权的副本；如果没有，请参照<a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>。\n
