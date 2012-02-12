@@ -40,7 +40,7 @@
 	
 	Sie wurde unter der GNU General Public License, version 3 veröffendlicht.\n
 	Weitere Informationen in der Seite \"Über AndiCar\"\n
-	Copyright © 2010-2011 Miklos Keresztes.\n
+	Copyright © 2010-2012 Miklos Keresztes.\n
 	Danke dass du <B><I>AndiCar</I></B> benutzt.
     </string>
 
@@ -62,19 +62,18 @@
         <a href="http://www.andicar.org/News/">http://sites.google.com/site/andicarfree/News/</a> 
 	   anmelden.\n
         *  Für alles andere kannst Du ein Mail (am besten in englischer Sprache) an andicar.support@gmail.com senden.\n
-	Copyright © 2010-2011 Miklos Keresztes.\n
-
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
 	Danke dass du <B><I>AndiCar</I></B> benutzt.\n\n
         <b><i>Credits:</i></b>\n
         *  Chinesische Übersetzung durch <a href="http://goapk.com/">goapk.com</a> \n
-        *  Russische Übersetzung durch  Andrey Demin - andde@rambler.ru\n
+        *  Russische Übersetzung durch Andrey Demin - andde@rambler.ru\n
 		*  Erste Deutsche Übersetzung durch Andy Haubenschmid - andy@haubenschmid.li\n
 		*  Hungarische Übersetzung durch Péter Nagy - microbilab@gmail.com\n
+		*  Spanische Übersetzung durch Daniel Iozzi - danieliozzi@gmail.com\n 
         \n<b><i>Copyright Hinweis</i></b>:\n\n
-        Copyright © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
+        Copyright © 2010-2012 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
 		Dieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.\n\n
 		Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n\n
 		Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben. Falls nicht, siehe <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a> nach.\n

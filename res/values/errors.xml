@@ -91,4 +91,5 @@
     <string name="ERR_063">"AddOn database error."</string>
     <string name="ERR_064">"Your device does not have Bluetooth support!"</string>
     
+    <string name="ERR_065">"Invalid number. Too big."</string>
 </resources>

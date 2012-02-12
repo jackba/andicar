@@ -41,7 +41,7 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b> is a free and open source car management software for Android powered devices.
         It is licensed under the terms of the GNU General Public License, version 3.\n
-        See the About page for more details.\n Copyright © 2010-2011 Miklos Keresztes.\n
+        See the About page for more details.\n Copyright © 2010-2012 Miklos Keresztes.\n
         Thank you for using <b><i>AndiCar</i></b>!
     </string>
 
@@ -68,8 +68,9 @@
 		*  Initial German translation by Andy Haubenschmid - andy@haubenschmid.li\n
 		<small>Translation maintainer wanted :)</small>\n
 		*  Hungarian translation by Péter Nagy - microbilab@gmail.com\n
+        *  Spanish translation by Daniel Iozzi - danieliozzi@gmail.com\n
         \n<b><i>Copyright notice</i></b>:\n\n
-        Copyright © 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
+        Copyright © 2010-2012 Miklos Keresztes (miklos.keresztes@gmail.com)\n\n
         This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\n
@@ -92,6 +93,9 @@
         * A new, light, user interface style. Open Preferences -> Interface Style to swich between the dark (old) and light (new) style.\n\n
         <i>Version 3.7.1:</i>\n
         * A convenient carrier billing option for AddOn subscription. Available in more than 60 countries.\n\n
+        * Various bug fixes\n\n
+        <i>Version 3.7.2:</i>\n
+        * Spanish translation by Daniel Iozzi. Thank you Daniel for your hard work!\n\n
         <i>All Updates:</i>\n
         * Various bug fixes\n\n
     </string>
