@@ -44,6 +44,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.lang.Math;
 import org.andicar.activity.MileageEditActivity;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
@@ -73,7 +74,7 @@ public class GPSTrackService extends Service {
     private double lastGoodLocationAltitude = 0;
     private double dCurrentAccuracy = 0 ;
     private double dCurrentSpeed = 0;
-//    private double dOldSpeed = 0;
+    private double dOldSpeed = 0;
     private long lCurrentLocationTime = 0;
     private long lOldLocationTime = 0;
     private Calendar currentLocationDateTime = Calendar.getInstance();
@@ -743,17 +744,17 @@ public class GPSTrackService extends Service {
         }
 
         ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MINACCURACY_NAME, dMinAccuracy);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXACCURACY_NAME, dMaxAccuracy);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME, dAvgAccuracy);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MINALTITUDE_NAME, dMinAltitude);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME, dMaxAltitude);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MINACCURACY_NAME, (Math.round(dMinAccuracy * 100)*1d)/100); //round to 2 decimals
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXACCURACY_NAME, (Math.round(dMaxAccuracy * 100)*1d)/100);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME, (Math.round(dAvgAccuracy * 100)*1d)/100);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MINALTITUDE_NAME, (Math.round(dMinAltitude * 100)*1d)/100);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME, (Math.round(dMaxAltitude * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME, lTotalTime);
         cvData.put( MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME, lTotalMovingTime);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME, dDistance);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME, dAvgSpeed);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME, dAvgMovingSpeed);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME, dMaxSpeed);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME, (Math.round(dDistance * 100)*1d)/100);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME, (Math.round(dAvgSpeed * 100)*1d)/100);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME, (Math.round(dAvgMovingSpeed * 100)*1d)/100);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME, (Math.round(dMaxSpeed * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTRACKPOINTS_NAME, dTotalTrackPoints);
         cvData.put( MainDbAdapter.GPSTRACK_COL_INVALIDTRACKPOINTS_NAME, dTotalSkippedTrackPoints);
         
@@ -816,18 +817,21 @@ public class GPSTrackService extends Service {
                         }
                     }
                     else{
-//                    	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
-//                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
-//                    	if(acceleration > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds
-//                            isValid = false;
-//                    	}
-//                    	else{
-	                        isValid = true;
-	                        dTotalUsedTrackPoints++;
-	                        dTmpSkippedTrackPoints = 0;
-	                        bNotificationShowed = false;
-//	                    	dOldSpeed = dCurrentSpeed;
-//                    	}
+                    	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
+                    	if((lCurrentLocationTime - lOldLocationTime) / 1000 != 0){
+	                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
+	                    	
+	                    	if(Math.abs(acceleration) > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds => wrong sensor data
+	                            isValid = false;
+	                    	}
+	                    	else{
+		                        isValid = true;
+		                        dTotalUsedTrackPoints++;
+		                        dTmpSkippedTrackPoints = 0;
+		                        bNotificationShowed = false;
+		                    	dOldSpeed = dCurrentSpeed;
+	                    	}
+                    	}
                     }
 
                     if(isValid){
