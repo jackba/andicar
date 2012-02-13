@@ -87,10 +87,10 @@
     
     <string name="LM_UPDATE_MSG">
         <b><i>Que Hay de Nuevo:</i></b>\n\n
-        <i>versión 3.7.0:</i>\n
-        * Un nuevo y liviano estilo de interface de usuario. Abre Preferencias -&gt; Estilo de Interface para cambiar entre estilo oscuro (anterior) y liviano (nuevo).\n\n
         <i>versión 3.7.1:</i>\n
         * Una conveniente opción de facturación por proveedor de servicio para la subscription de los AddOn . Disponible en mas de 60 paises.\n\n
+        <i>versión 3.7.2:</i>\n
+        * Traducido al Español por Daniel Iozzi, Gracias Daniel por tu gran trabajo.
         <i>Todas las actualizaciones:</i>\n
         * Varias correcciones de errores de programación\n\n
     </string>
