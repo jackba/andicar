@@ -33,6 +33,8 @@ import android.widget.TextView;
  */
 public class AboutActivity extends BaseActivity{
 
+	protected TextView tvAbout1;
+	protected TextView tvAbout2;
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
@@ -43,18 +45,10 @@ public class AboutActivity extends BaseActivity{
             setContentView(R.layout.about_activity_s01);
         
 
-        TextView tvAbout1 = (TextView)findViewById(R.id.tvAbout1);
+        tvAbout1 = (TextView)findViewById(R.id.tvAbout1);
         tvAbout1.setMovementMethod(LinkMovementMethod.getInstance());
 
-//        ImageView imgEUR = (ImageView)findViewById(R.id.aboutDonateEUR);
-//        imgEUR.setImageResource(R.drawable.btn_donate);
-//        imgEUR.setOnClickListener(mDonateClickListener);
-//
-//        ImageView imgUSD = (ImageView)findViewById(R.id.aboutDonateUSD);
-//        imgUSD.setImageResource(R.drawable.btn_donate);
-//        imgUSD.setOnClickListener(mDonateClickListener);
-
-        TextView tvAbout2 = (TextView)findViewById(R.id.tvAbout2);
+        tvAbout2 = (TextView)findViewById(R.id.tvAbout2);
         tvAbout2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
@@ -64,33 +58,4 @@ public class AboutActivity extends BaseActivity{
 	@Override
 	public void setSpecificLayout() {
 	}
-
-//    View.OnClickListener mDonateClickListener = new View.OnClickListener() {
-//        public  void onClick(View v) {
-//
-//            ImageView srcImg = (ImageView)v;
-//            String payPalCurrency = "";
-//            if(srcImg.getId() == R.id.aboutDonateEUR){
-//                payPalCurrency = "EUR";
-//                if(isSendStatistics){
-//                    Map<String, String> parameters = new HashMap<String, String>();
-//                    parameters.put("Currency", "Eur");
-//                    AndiCarStatistics.sendFlurryEvent(AboutActivity.this, "PayPal", parameters);
-//                }
-//            }
-//            else if(srcImg.getId() == R.id.aboutDonateUSD){
-//                payPalCurrency = "USD";
-//                if(isSendStatistics){
-//                    Map<String, String> parameters = new HashMap<String, String>();
-//                    parameters.put("Currency", "USD");
-//                    AndiCarStatistics.sendFlurryEvent(AboutActivity.this, "PayPal", parameters);
-//                }
-//            }
-//            Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-//            vibrator.vibrate(100);
-//            GetPayPalActivityForAboutDonate ppa = new GetPayPalActivityForAboutDonate();
-//            Intent i = ppa.getPayPalIntent(payPalCurrency);
-//            startActivity(i);
-//        }
-//    };
 }
