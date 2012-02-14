@@ -122,8 +122,8 @@ public class MainActivity extends BaseActivity {
 	private TextView tvStatisticsHdr;
 
 	private boolean exitResume = false;
-	private String appVersion;
-	private String dbVersion;
+	protected String appVersion;
+	protected String dbVersion;
 	private boolean showMileageZone = true;
 	private boolean showGPSTrackZone = true;
 	private boolean showRefuelZone = true;
@@ -1314,13 +1314,6 @@ public class MainActivity extends BaseActivity {
 		showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
 		showToDoZone = mPreferences.getBoolean("MainActivityShowToDo", true);
 
-		CharSequence abt = mResource.getText(R.string.LM_MAIN_ACTIVITY_SHORTABOUT);
-		String versionInfo = " " + appVersion + " (DBv: " + dbVersion + ")";
-
-		((TextView) findViewById(R.id.tvShortAboutLbl)).setText(abt);
-		((TextView) findViewById(R.id.tvShortAboutAppVersion)).setText(mResource
-				.getText(R.string.MainActivity_AppVersion) + versionInfo);
-
 		fillDriverCar();
 		initZones();
 
@@ -1352,6 +1345,17 @@ public class MainActivity extends BaseActivity {
 		// madError = madbErrorAlert.create();
 		// madError.show();
 		// }
+		setShortAbout();
+
+	}
+
+	protected void setShortAbout() {
+		CharSequence abt = mResource.getText(R.string.LM_MAIN_ACTIVITY_SHORTABOUT);
+		String versionInfo = " " + appVersion + " (DBv: " + dbVersion + ")";
+
+		((TextView) findViewById(R.id.tvShortAboutLbl)).setText(abt);
+		((TextView) findViewById(R.id.tvShortAboutAppVersion)).setText(mResource
+				.getText(R.string.MainActivity_AppVersion) + versionInfo);
 	}
 
 	private void initZones() {
