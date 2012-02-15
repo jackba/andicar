@@ -35,3 +35,9 @@ syntax: regexp
 ^AndiCar\.wrn$
 syntax: regexp
 ^Apk2Bar_compatibility_excepts\.xml$
+syntax: regexp
+com.*
+syntax: regexp
+^AndroidManifest_pro\.xml$
+syntax: regexp
+^res/values/long_messages_pro\.xml$
