@@ -769,6 +769,7 @@ public class MileageEditActivity extends EditActivityBase {
 	                    	btnOk.setEnabled(true);
 	                    	if(mDet != null)
 	                    		mDet.setControlsEnabled(true);
+	                    	etUserInput.requestFocus();
 	                    }
                 	}
                 	else if(v.getId() == R.id.btnOpenGPSTrack && mGpsTrackId > -1){

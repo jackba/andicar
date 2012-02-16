@@ -420,7 +420,6 @@
     <string name="PREF_MainScreen_ShowToDoZone">"Показать зону дел"</string>
 
     <string name="PREF_AddOnCategoryTitle">"Дополнительные услуги"</string>
-    <string name="PREF_AddOnServicesTitle">"Дополнительные услуги"</string>
     <string name="PREF_AddOnServicesSummary">"Подписки, основанные на платных услугах."</string>
     <string name="PREF_AddOnServicesSubscribe">"Подписаться с помощью PayPal"</string>
 
