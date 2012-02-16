@@ -802,6 +802,9 @@ public class GPSTrackService extends Service {
                     isValid = false;
                     //
                     if(lCurrentLocationTime - lStartTime > 30000){ //leave time for GPS initialization (30 sec)
+                    	return;
+                    }
+                    else{
                         dTotalSkippedTrackPoints++;
                         dTmpSkippedTrackPoints++;
                     }
@@ -821,25 +824,27 @@ public class GPSTrackService extends Service {
 
                 if(isValid){
                     if(isFirstPoint){
-                        //write the starting point
-                        if(gpsTrackDetailKMLFileWriter != null && iFileCount == 1){ //first file
+                        //the first valid location => write the starting point
+                        if(gpsTrackDetailKMLFileWriter != null 
+                        		&& iFileCount == 1){ //this is the first track file (multiple track file can be used)
                             appendKMLStartPoint();
                             appendGOPTrackPoint();
                         }
                         isFirstPoint = false;
                     }
                     else{
+                    	//get the distance between the current and previous location
                         Location.distanceBetween(dOldLocationLatitude, dOldLocationLongitude,
                                 dCurrentLocationLatitude, dCurrentLocationLongitude, fDistanceArray);
                         
-                        double tmpDistanceBetweenLocations = fDistanceArray[0];
+                        dDistanceBetweenLocations = fDistanceArray[0];
                         if(lCurrentLocationTime - lOldLocationTime > 0)
-                        	dCurrentSpeed = tmpDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
+                        	dCurrentSpeed = dDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
                         else
                         	dCurrentSpeed = 0;
-                    	lOldLocationTime = lCurrentLocationTime;
-
-                    	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
+                        
+                    	//check acceleration. 
+                        //if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
                     	if((lCurrentLocationTime - lOldLocationTime) / 1000 != 0){
 	                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
 	                    	
@@ -854,8 +859,6 @@ public class GPSTrackService extends Service {
 		                        dTmpSkippedTrackPoints = 0;
 		                        bNotificationShowed = false;
 		                    	dOldSpeed = dCurrentSpeed;
-	                        	dDistanceBetweenLocations = tmpDistanceBetweenLocations;
-	                            dDistance = dDistance + dDistanceBetweenLocations;
 	                    	}
                     	}
                     }
@@ -872,9 +875,6 @@ public class GPSTrackService extends Service {
                     appendGOPTrackPoint();
                     gopDistance = 0;
                 }
-
-                //set the stop time on each location change => the last will be the final lTotalTimeStop
-                lStopTime = lCurrentLocationTime;
 
                 //statistics
                 //non moving time
@@ -923,6 +923,11 @@ public class GPSTrackService extends Service {
                 lastGoodLocationLatitude = dCurrentLocationLatitude;
                 lastGoodLocationLongitude = dCurrentLocationLongitude;
                 lastGoodLocationAltitude = dCurrentLocationAltitude;
+            	lOldLocationTime = lCurrentLocationTime;
+                dDistance = dDistance + dDistanceBetweenLocations;
+                //set the stop time on each location change => the last will be the final lTotalTimeStop
+                lStopTime = lCurrentLocationTime;
+
 
 //                    Log.w("GPSTrackServuce", "onLocationChanged: iFileSplitCount = " + iFileSplitCount + ", iFileCount = " + iFileCount);
 
