@@ -801,10 +801,7 @@ public class GPSTrackService extends Service {
                 if(dCurrentAccuracy > iMaxAccuracy){
                     isValid = false;
                     //
-                    if(lCurrentLocationTime - lStartTime > 30000){ //leave time for GPS initialization (30 sec)
-                    	return;
-                    }
-                    else{
+                    if(lCurrentLocationTime - lStartTime < 30000){ //leave time for GPS initialization (30 sec)
                         dTotalSkippedTrackPoints++;
                         dTmpSkippedTrackPoints++;
                     }
