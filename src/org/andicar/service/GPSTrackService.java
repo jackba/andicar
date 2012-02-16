@@ -252,6 +252,8 @@ public class GPSTrackService extends Service {
     private void createCSVFile(String fileName) throws IOException {
         gpsTrackDetailCSVFile = FileUtils.createGpsTrackDetailFile(StaticValues.CSV_FORMAT, fileName);
         gpsTrackDetailCSVFileWriter = new FileWriter(gpsTrackDetailCSVFile);
+//    	gpsTrackDetailCSVFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.CSV_FORMAT, fileName);
+    	
         //create the header
         gpsTrackDetailCSVFileWriter.append(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "," +
                                                 "Accuracy" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
@@ -279,6 +281,8 @@ public class GPSTrackService extends Service {
     private void createGOPFile(String fileName) throws IOException {
         gpsTrackDetailGOPFile = FileUtils.createGpsTrackDetailFile(StaticValues.GOP_FORMAT, fileName);
         gpsTrackDetailGOPFileWriter = new FileWriter(gpsTrackDetailGOPFile);
+//    	gpsTrackDetailGOPFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.GOP_FORMAT, fileName);
+    	
         //create the header
         gpsTrackDetailGOPFileWriter.append( "LatitudeE6" + "," +
                                                 "LongitudeE6" + "\n");
@@ -294,6 +298,8 @@ public class GPSTrackService extends Service {
     private void createGPXFile(String fileName) throws IOException{
         gpsTrackDetailGPXFile = FileUtils.createGpsTrackDetailFile(StaticValues.GPX_FORMAT, fileName);
         gpsTrackDetailGPXFileWriter = new FileWriter(gpsTrackDetailGPXFile);
+//    	gpsTrackDetailGPXFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.GPX_FORMAT, fileName);
+    	
         if(gpsTrackDetailGPXFileWriter == null)
             return;
         ContentValues cvData = new ContentValues();
@@ -324,6 +330,8 @@ public class GPSTrackService extends Service {
     private void createKMLFile(String fileName) throws IOException{
         gpsTrackDetailKMLFile = FileUtils.createGpsTrackDetailFile(StaticValues.KML_FORMAT, fileName);
         gpsTrackDetailKMLFileWriter = new FileWriter(gpsTrackDetailKMLFile);
+//    	gpsTrackDetailKMLFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.KML_FORMAT, fileName);
+    	
         if(gpsTrackDetailKMLFileWriter == null)
             return;
         String name = "";
