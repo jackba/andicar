@@ -803,7 +803,7 @@ public class GPSTrackService extends Service {
                             dTotalSkippedTrackPoints++;
                             dTmpSkippedTrackPoints++;
                         }
-                        if(dTmpSkippedTrackPoints > 10 && !bNotificationShowed){
+                        if(dTmpSkippedTrackPoints > 30 && !bNotificationShowed){
                             //notify the user
                             showNotification(StaticValues.NOTIF_GPS_ACCURACY_WARNING_ID, true);
                             bNotificationShowed = true;
@@ -816,23 +816,6 @@ public class GPSTrackService extends Service {
                             stopSelf();
                         }
                     }
-                    else{
-                    	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
-                    	if((lCurrentLocationTime - lOldLocationTime) / 1000 != 0){
-	                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
-	                    	
-	                    	if(Math.abs(acceleration) > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds => wrong sensor data
-	                            isValid = false;
-	                    	}
-	                    	else{
-		                        isValid = true;
-		                        dTotalUsedTrackPoints++;
-		                        dTmpSkippedTrackPoints = 0;
-		                        bNotificationShowed = false;
-		                    	dOldSpeed = dCurrentSpeed;
-	                    	}
-                    	}
-                    }
 
                     if(isValid){
                         if(isFirstPoint){
@@ -841,19 +824,38 @@ public class GPSTrackService extends Service {
                                 appendKMLStartPoint();
                                 appendGOPTrackPoint();
                             }
-//                            lStartTime = lCurrentLocationTime;
                             isFirstPoint = false;
                         }
                         else{
                             Location.distanceBetween(dOldLocationLatitude, dOldLocationLongitude,
                                     dCurrentLocationLatitude, dCurrentLocationLongitude, fDistanceArray);
-                            dDistanceBetweenLocations = fDistanceArray[0];
-                            dDistance = dDistance + dDistanceBetweenLocations;
+                            
+                            double tmpDistanceBetweenLocations = fDistanceArray[0];
                             if(lCurrentLocationTime - lOldLocationTime > 0)
-                            	dCurrentSpeed = dDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
+                            	dCurrentSpeed = tmpDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
                             else
                             	dCurrentSpeed = 0;
                         	lOldLocationTime = lCurrentLocationTime;
+
+                        	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
+                        	if((lCurrentLocationTime - lOldLocationTime) / 1000 != 0){
+    	                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
+    	                    	
+    	                    	if(Math.abs(acceleration) > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds => wrong sensor data
+    	                            isValid = false;
+    	                            dTotalSkippedTrackPoints++;
+    	                            dTmpSkippedTrackPoints++;
+    	                    	}
+    	                    	else{
+    		                        isValid = true;
+    		                        dTotalUsedTrackPoints++;
+    		                        dTmpSkippedTrackPoints = 0;
+    		                        bNotificationShowed = false;
+    		                    	dOldSpeed = dCurrentSpeed;
+    	                        	dDistanceBetweenLocations = tmpDistanceBetweenLocations;
+    	                            dDistance = dDistance + dDistanceBetweenLocations;
+    	                    	}
+                        	}
                         }
                     }
 
