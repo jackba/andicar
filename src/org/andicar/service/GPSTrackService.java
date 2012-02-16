@@ -107,7 +107,7 @@ public class GPSTrackService extends Service {
     private double dMaxAltitude = 0;
     private long lStartTime = 0;
     private long lStopTime = 0;
-    private double dDistance = 0;
+    private double dTotalDistance = 0;
     private double dMaxSpeed = 0;
     private double dAvgSpeed = 0;
     private double dAvgMovingSpeed = 0;
@@ -421,7 +421,7 @@ public class GPSTrackService extends Service {
                 + "<Placemark>\n"
                   + "<name><![CDATA[" + pointName + "]]></name>\n"
                   + "<description><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a>."
-                  + "<p>Distance: " + (dDistance) + (isUseMetricUnits? " km" : " mi")
+                  + "<p>Distance: " + (dTotalDistance) + (isUseMetricUnits? " km" : " mi")
                       + "]]></description>\n"
                   + "<styleUrl>" + pointStyle + "</styleUrl>\n"
                   + "<Point>\n"
@@ -717,12 +717,12 @@ public class GPSTrackService extends Service {
             dAvgAccuracy = 0;
 
         if(lStopTime - lStartTime != 0)
-            dAvgSpeed = dDistance / lTotalTime; // m/s
+            dAvgSpeed = dTotalDistance / lTotalTime; // m/s
         else
             dAvgSpeed = 0;
 
         if(lTotalMovingTime != 0)
-            dAvgMovingSpeed = dDistance / lTotalMovingTime; // m/s
+            dAvgMovingSpeed = dTotalDistance / lTotalMovingTime; // m/s
         else
             dAvgMovingSpeed = 0;
         if(!isUseMetricUnits){
@@ -731,13 +731,13 @@ public class GPSTrackService extends Service {
             dAvgAccuracy = dAvgAccuracy * 1.093613; //m to yd
             dMinAltitude = dMinAltitude * 1.093613; //m to yd
             dMaxAltitude = dMaxAltitude * 1.093613; //m to yd
-            dDistance = dDistance * 0.000621371; //m to mi
+            dTotalDistance = dTotalDistance * 0.000621371; //m to mi
             dAvgSpeed = dAvgSpeed * 2.23693; //m/s to mi/h
             dAvgMovingSpeed = dAvgMovingSpeed * 2.23693; //m/s to mi/h
             dMaxSpeed = dMaxSpeed  * 2.23693;
         }
         else{ // only m/s need to be converted to km/h
-            dDistance = dDistance * 0.001; //m to km
+            dTotalDistance = dTotalDistance * 0.001; //m to km
             dAvgSpeed = dAvgSpeed * 3.6; //m/s to km/h
             dAvgMovingSpeed = dAvgMovingSpeed * 3.6; //m/s to km/h
             dMaxSpeed = dMaxSpeed  * 3.6;
@@ -751,7 +751,7 @@ public class GPSTrackService extends Service {
         cvData.put( MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME, (Math.round(dMaxAltitude * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME, lTotalTime);
         cvData.put( MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME, lTotalMovingTime);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME, (Math.round(dDistance * 100)*1d)/100);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME, (Math.round(dTotalDistance * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME, (Math.round(dAvgSpeed * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME, (Math.round(dAvgMovingSpeed * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME, (Math.round(dMaxSpeed * 100)*1d)/100);
@@ -924,7 +924,7 @@ public class GPSTrackService extends Service {
                 lastGoodLocationLongitude = dCurrentLocationLongitude;
                 lastGoodLocationAltitude = dCurrentLocationAltitude;
             	lOldLocationTime = lCurrentLocationTime;
-                dDistance = dDistance + dDistanceBetweenLocations;
+                dTotalDistance = dTotalDistance + dDistanceBetweenLocations;
                 //set the stop time on each location change => the last will be the final lTotalTimeStop
                 lStopTime = lCurrentLocationTime;
 
