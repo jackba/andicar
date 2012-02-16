@@ -36,6 +36,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,6 +45,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.andicar.addon.activity.DataEntryTemplate;
+import com.andicar.addon.activity.SecureBackupConfig;
 
 /**
  * Base class for all edit activities. Implement common functionalities:
@@ -388,6 +390,10 @@ public abstract class EditActivityBase extends BaseActivity {
      * @return
      */
     protected boolean beforeSave(){
+    	if(this instanceof SecureBackupConfig && 
+    			!((CheckBox)findViewById(R.id.ckIsActive)).isChecked()) //inactive configuration => can be saved without smtp auth. info
+    		return true;
+    	
         String strRetVal = checkMandatory(vgRoot);
         if( strRetVal != null ) {
             Toast toast = Toast.makeText( getApplicationContext(),

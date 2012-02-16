@@ -348,7 +348,6 @@
     <string name="PREF_MainScreen_ShowStatistics">"Zeige Statistik"</string>
 
     <string name="PREF_AddOnCategoryTitle">"Premium Dienste"</string>
-    <string name="PREF_AddOnServicesTitle">"Premium Dienste"</string>
     <string name="PREF_AddOnServicesSummary">"Anmeldungen zu Kostenpflichtigen Zusatzdiensten."</string>
     <string name="PREF_AddOnServicesSubscribe">"Anmeldung über PayPal"</string>
 

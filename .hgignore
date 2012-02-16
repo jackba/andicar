@@ -41,3 +41,13 @@ syntax: regexp
 ^AndroidManifest_pro\.xml$
 syntax: regexp
 ^res/values/long_messages_pro\.xml$
+syntax: regexp
+^icon_store/gimp_work/main_activity_picture_pro\.xcf$
+syntax: regexp
+^res/drawable/main_activity_picture_pro\.png$
+syntax: regexp
+^icon_store/gimp_work/about_dialog_picture_pro\.xcf$
+syntax: regexp
+^res/drawable/about_dialog_picture_pro\.png$
+syntax: regexp
+^res/values/strings_pro\.xml$

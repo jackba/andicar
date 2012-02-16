@@ -29,6 +29,7 @@
     android:background="@android:color/background_light"
     >
 	<ImageView
+   		android:id="@+id/mainActivityPicture"
 		android:src="@drawable/main_activity_picture"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

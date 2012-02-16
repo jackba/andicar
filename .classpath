@@ -9,6 +9,6 @@
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/additionnal.jar"/>
 	<classpathentry kind="lib" path="lib/FortumoPayAndroid-7.1.266.jar"/>
-	<classpathentry kind="lib" path="lib/aao.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AndiCarAddOns"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

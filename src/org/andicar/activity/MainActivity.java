@@ -76,7 +76,7 @@ import com.andicar.addon.services.AndiCarAddOnServiceStarter;
  */
 public class MainActivity extends BaseActivity {
 
-	private Context mainContext;
+	protected Context mainContext;
 	private int ACTIVITY_MILEAGEINSERT_REQUEST_CODE = 0;
 	private int ACTIVITY_REFUELINSERT_REQUEST_CODE = 1;
 	private int ACTIVITY_EXPENSEINSERT_REQUEST_CODE = 2;
@@ -121,9 +121,9 @@ public class MainActivity extends BaseActivity {
 
 	private TextView tvStatisticsHdr;
 
-	private boolean exitResume = false;
 	protected String appVersion;
 	protected String dbVersion;
+	private boolean exitResume = false;
 	private boolean showMileageZone = true;
 	private boolean showGPSTrackZone = true;
 	private boolean showRefuelZone = true;
@@ -135,6 +135,9 @@ public class MainActivity extends BaseActivity {
 	private boolean isSendStatistics = true;
 	private boolean isSendCrashReport;
 	private boolean isJustInstalled = false;
+	
+	protected boolean isShowWhatsNew = false;
+
 	private long gpsTrackId = -1;
 	private String uiStyle = null;
 
@@ -217,7 +220,7 @@ public class MainActivity extends BaseActivity {
 					initPreferenceValues(); // version update => init (new)
 											// preference values
 	                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
-	                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.MainActivity_WellcomeBackMessage));
+	                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.MainActivity_WellcomeMessage));
 					builder.setMessage(mResource
 							.getString(R.string.MainActivity_BackupExistMessage));
 					builder.setCancelable(false);
@@ -336,7 +339,7 @@ public class MainActivity extends BaseActivity {
 					AndiCarServiceStarter.startServices(this);
 					AndiCarAddOnServiceStarter.startServices(this);
 					if(!isJustInstalled)
-						startActivity(new Intent(mainContext, WhatsNewDialog.class));
+						isShowWhatsNew = true;
 				}
 				if(mPreferences.getInt("appVersionCode", 0) != appVersionCode){
 					editor.putInt("appVersionCode", appVersionCode);
@@ -345,6 +348,8 @@ public class MainActivity extends BaseActivity {
 			} catch (NameNotFoundException ex) {
 				appVersion = "N/A";
 			}
+
+			setSpecificLayout();
 
 			// check for app update once a day
 //			Long currentTime = System.currentTimeMillis();
@@ -405,7 +410,6 @@ public class MainActivity extends BaseActivity {
 ////				iaView.setVisibility(View.VISIBLE);
 ////				iaView.setRefreshInterval(120); //120 seconds
 //			}
-			
 		} catch (Exception e) {
 			String logFile = "startup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
@@ -432,6 +436,10 @@ public class MainActivity extends BaseActivity {
 			madError.show();
 		}
 		
+	}
+
+	protected void showWhatsNew() {
+		startActivity(new Intent(mainContext, WhatsNewDialog.class));
 	}
 
 	private void initControls() {
@@ -1419,6 +1427,12 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		
+		if(isShowWhatsNew){						
+			isShowWhatsNew = false;
+			showWhatsNew();
+		}
+
 		if (isSendStatistics)
 			AndiCarStatistics.sendFlurryStartSession(this);
 	}
