@@ -153,12 +153,12 @@ public class MainActivity extends BaseActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
-		try {
+		try{
+			super.onCreate(icicle);
 			mainContext = this;
 			mPreferences = getSharedPreferences(
 					StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-
+			
 			uiStyle = mPreferences.getString("UIStyle", "s01");
 			if(uiStyle.equalsIgnoreCase("s00"))
 				setContentView(R.layout.main_activity_s00);
@@ -411,7 +411,7 @@ public class MainActivity extends BaseActivity {
 ////				iaView.setRefreshInterval(120); //120 seconds
 //			}
 		} catch (Exception e) {
-			String logFile = "startup.log";
+			String logFile = "onCreateStartup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
 			FileUtils fu = new FileUtils(mainContext);
 			Throwable cause = e.getCause();
@@ -422,16 +422,16 @@ public class MainActivity extends BaseActivity {
 				stackTrace = e.getStackTrace();
 
 			StackTraceElement stackTraceElement;
-			String stackStr = e.getMessage();
+			String stackStr = e.getClass() + ": " + e.getMessage() + '\n';
 			for (int i = 0; i < stackTrace.length; i++) {
 				stackTraceElement = stackTrace[i];
 				stackStr = stackStr + stackTraceElement.getClassName() + "."
 						+ stackTraceElement.getMethodName() + ": "
-						+ stackTraceElement.getLineNumber() + "  ";
+						+ stackTraceElement.getLineNumber() + "\n";
 			}
 			fu.writeToLogFile(stackStr, logFile);
 
-			madbErrorAlert.setMessage(e.getMessage());
+			madbErrorAlert.setMessage("An unexpected error occured!\nPlease contact the developers at andicar.support@gmail.com.\n\n" + e.getClass() + "\n" + e.getMessage());
 			madError = madbErrorAlert.create();
 			madError.show();
 		}
@@ -1283,78 +1283,76 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	protected void onResume() {
-		super.onResume();
-		if (exitResume)
-			return;
-		// try{
-		
-		if(!uiStyle.equalsIgnoreCase(mPreferences.getString("UIStyle", "s01"))){ //ui style changed
-			uiStyle = mPreferences.getString("UIStyle", "s01");
-			if(uiStyle.equalsIgnoreCase("s00"))
-				setContentView(R.layout.main_activity_s00);
-	    	else if(uiStyle.equalsIgnoreCase("s01"))
-				setContentView(R.layout.main_activity_s01);
-			initControls();
+		try{
+			super.onResume();
+			if (exitResume)
+				return;
+			// try{
+			
+			if(!uiStyle.equalsIgnoreCase(mPreferences.getString("UIStyle", "s01"))){ //ui style changed
+				uiStyle = mPreferences.getString("UIStyle", "s01");
+				if(uiStyle.equalsIgnoreCase("s00"))
+					setContentView(R.layout.main_activity_s00);
+		    	else if(uiStyle.equalsIgnoreCase("s01"))
+					setContentView(R.layout.main_activity_s01);
+				initControls();
+			}
+			isActivityOnLoading = true;
+			isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+			if (mPreferences.getBoolean("MustClose", false)) {
+				SharedPreferences.Editor editor = mPreferences.edit();
+				editor.putBoolean("MustClose", false);
+				editor.commit();
+				finish();
+			}
+	
+			mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+			initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
+					MainDbAdapter.genColName,
+					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
+					MainDbAdapter.isActiveCondition, null,
+					MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
+	
+			if (reportDb == null)
+				reportDb = new ReportDbAdapter(mainContext, null, null);
+	
+			showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
+			showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
+			showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
+			showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
+			showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
+			showToDoZone = mPreferences.getBoolean("MainActivityShowToDo", true);
+	
+			fillDriverCar();
+			initZones();
+	
+			listCursor = null;
+			setShortAbout();
+		} catch (Exception e) {
+			String logFile = "onResumeStartup.log";
+			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
+			FileUtils fu = new FileUtils(mainContext);
+			Throwable cause = e.getCause();
+			StackTraceElement[] stackTrace;
+			if (cause != null)
+				stackTrace = cause.getStackTrace();
+			else
+				stackTrace = e.getStackTrace();
+
+			StackTraceElement stackTraceElement;
+			String stackStr = e.getClass() + ": " + e.getMessage() + '\n';
+			for (int i = 0; i < stackTrace.length; i++) {
+				stackTraceElement = stackTrace[i];
+				stackStr = stackStr + stackTraceElement.getClassName() + "."
+						+ stackTraceElement.getMethodName() + ": "
+						+ stackTraceElement.getLineNumber() + "\n";
+			}
+			fu.writeToLogFile(stackStr, logFile);
+
+			madbErrorAlert.setMessage("An unexpected error occured!\nPlease contact the developers at andicar.support@gmail.com.\n\n" + e.getClass() + "\n" + e.getMessage());
+			madError = madbErrorAlert.create();
+			madError.show();
 		}
-		isActivityOnLoading = true;
-		isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-		if (mPreferences.getBoolean("MustClose", false)) {
-			SharedPreferences.Editor editor = mPreferences.edit();
-			editor.putBoolean("MustClose", false);
-			editor.commit();
-			finish();
-		}
-
-		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-		initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
-				MainDbAdapter.genColName,
-				new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-				MainDbAdapter.isActiveCondition, null,
-				MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
-
-		if (reportDb == null)
-			reportDb = new ReportDbAdapter(mainContext, null, null);
-
-		showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
-		showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
-		showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
-		showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
-		showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
-		showToDoZone = mPreferences.getBoolean("MainActivityShowToDo", true);
-
-		fillDriverCar();
-		initZones();
-
-		listCursor = null;
-		// }
-		// catch(Exception e){
-		//
-		// String logFile = StaticValues.BASE_FOLDER + "startup.log";
-		// FileUtils fu = new FileUtils(this);
-		// fu.writeToLogFile(e.getMessage(), logFile);
-		// Throwable cause = e.getCause();
-		// StackTraceElement[] stackTrace;
-		// if(cause != null)
-		// stackTrace = cause.getStackTrace();
-		// else
-		// stackTrace = e.getStackTrace();
-		//
-		// StackTraceElement stackTraceElement;
-		// String stackStr = "";
-		// for(int i = 0; i < stackTrace.length; i++) {
-		// stackTraceElement = stackTrace[i];
-		// stackStr = stackStr + stackTraceElement.getClassName() + "." +
-		// stackTraceElement.getMethodName() + ": " +
-		// stackTraceElement.getLineNumber() + "  ";
-		// }
-		// fu.writeToLogFile(stackStr, logFile);
-		//
-		// madbErrorAlert.setMessage(e.getMessage());
-		// madError = madbErrorAlert.create();
-		// madError.show();
-		// }
-		setShortAbout();
-
 	}
 
 	protected void setShortAbout() {
