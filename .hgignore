@@ -51,3 +51,5 @@ syntax: regexp
 ^res/drawable/about_dialog_picture_pro\.png$
 syntax: regexp
 ^res/values/strings_pro\.xml$
+syntax: regexp
+^icon_store/gimp_work/car2pro\.xcf$
