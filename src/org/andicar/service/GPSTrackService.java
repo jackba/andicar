@@ -809,22 +809,24 @@ public class GPSTrackService extends Service {
                 if(dCurrentAccuracy > iMaxAccuracy){
                     isValid = false;
                     //
-                    if(lCurrentLocationTime - lStartTime < 30000){ //leave time for GPS initialization (30 sec)
+                    if(lCurrentLocationTime - lStartTime > 60000){ //leave time for GPS initialization (1 min)
                         dTotalSkippedTrackPoints++;
                         dTmpSkippedTrackPoints++;
                     }
-                    if(dTmpSkippedTrackPoints > 30 && !bNotificationShowed){
-                        //notify the user
-                        showNotification(StaticValues.NOTIF_GPS_ACCURACY_WARNING_ID, true);
-                        bNotificationShowed = true;
-
-                    }
+                    
+                    //temporarry disabled
+//                    if(dTmpSkippedTrackPoints > 30 && !bNotificationShowed){
+//                        //notify the user
+//                        showNotification(StaticValues.NOTIF_GPS_ACCURACY_WARNING_ID, true);
+//                        bNotificationShowed = true;
+//
+//                    }
                     skippedPointPercentage = (dTotalSkippedTrackPoints / dTotalTrackPoints) * 100;
-                    if(skippedPointPercentage > iMaxAccuracyShutdownLimit){
-                        showNotification(StaticValues.NOTIF_GPS_ACCURACY_SHUTDOWN_ID, true);
-                        isErrorStop = true;
-                        stopSelf();
-                    }
+//                    if(skippedPointPercentage > iMaxAccuracyShutdownLimit){
+//                        showNotification(StaticValues.NOTIF_GPS_ACCURACY_SHUTDOWN_ID, true);
+//                        isErrorStop = true;
+//                        stopSelf();
+//                    }
                 }
 
                 if(isValid){
@@ -853,7 +855,7 @@ public class GPSTrackService extends Service {
                     	if((lCurrentLocationTime - lOldLocationTime) / 1000 != 0){
 	                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
 	                    	
-	                    	if(Math.abs(acceleration) > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds => wrong sensor data
+	                    	if(Math.abs(acceleration) > 3){ //a = 3 m/s2 => probably wrong sensor data
 	                            isValid = false;
 	                            dTotalSkippedTrackPoints++;
 	                            dTmpSkippedTrackPoints++;
