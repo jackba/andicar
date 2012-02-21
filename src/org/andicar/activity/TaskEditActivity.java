@@ -995,6 +995,11 @@ public class TaskEditActivity extends EditActivityBase {
 						madError.show();
 		    		}
 	    		}
+				//generate the To-Do's
+                Intent intent = new Intent(TaskEditActivity.this, ToDoManagementService.class);
+				intent.putExtra("TaskID", mRowId);
+				TaskEditActivity.this.startService(intent);
+	    		
 	    		fillLinkedCarsData();
 	        }
 	    }
