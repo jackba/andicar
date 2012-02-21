@@ -1279,7 +1279,7 @@ public class TaskEditActivity extends EditActivityBase {
 	 */
 	@Override
 	protected void onDestroy() {
-		super.onStop();
+		super.onDestroy();
 		if(mLinkedCarsCursor != null)
 		try{
 			mLinkedCarsCursor.close();
