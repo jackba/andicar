@@ -36,6 +36,7 @@ import android.util.Log;
 
 import com.andicar.addon.persistence.AddOnDBAdapter;
 import com.andicar.addon.services.FileMailer;
+import com.andicar.addon.utils.AddOnHelper;
 import com.andicar.addon.utils.AddOnStaticValues;
 
 /**
@@ -2395,8 +2396,10 @@ public class DB {
 					// exists
 			try {
 				MainDbAdapter db = new MainDbAdapter(mCtx);
-				boolean subsValid = AddOnDBAdapter.isSubscriptionValid(db,
-						AddOnStaticValues.SECURE_BACKUP_ID);
+				AddOnHelper aoh = new AddOnHelper(mCtx, AddOnStaticValues.SECURE_BACKUP_ID);
+				boolean subsValid =   aoh.isSubscriptionValid();
+//						AddOnDBAdapter.isSubscriptionValid(db,
+//						AddOnStaticValues.SECURE_BACKUP_ID);
 				db.close();
 				if (subsValid) {
 					Intent intent = new Intent(mCtx, FileMailer.class);

@@ -414,7 +414,6 @@
 	<string name="PREF_MainScreen_ShowToDoZone">"顯示計劃區域"</string>
 
     <string name="PREF_AddOnCategoryTitle">"AddOn 服務"</string>
-    <string name="PREF_AddOnServicesTitle">"AddOn 服務"</string>
     <string name="PREF_AddOnServicesSummary">"訂閱是一個需付費的服務。"</string>
     <string name="PREF_AddOnServicesSubscribe">"使用 PayPal 來訂閱"</string>
 

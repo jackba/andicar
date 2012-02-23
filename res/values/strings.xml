@@ -240,7 +240,7 @@
     <string name="CurrencyEditActivity_CodeLabel">"Code:"</string>
 
     <string name="MileageEditActivity_IndexHeaderLabel">"Start/stop odometer or mileage"</string>
-    <string name="MileageEditActivity_OptionMileageLabel">"Mileage"</string>
+    <string name="MileageEditActivity_OptionMileageLabel">"Distance"</string>
     <string name="MileageEditActivity_InsertOkMessage">"Mileage added."</string>
     <string name="MileageEditActivity_UpdateOkMessage">"Mileage updated."</string>
     <string name="MileageEditActivity_RecordingInProgress">"Two phase recording in progress. Press STOP to finalize."</string>
@@ -428,7 +428,6 @@
     <string name="PREF_MainScreen_ShowToDoZone">"Show To-Do zone"</string>
 
     <string name="PREF_AddOnCategoryTitle">"Add-On Services"</string>
-    <string name="PREF_AddOnServicesTitle">"Add-On Services"</string>
     <string name="PREF_AddOnServicesSummary">"Subscription based, payed services."</string>
     <string name="PREF_AddOnServicesSubscribe">"Subscribe with PayPal"</string>
 
