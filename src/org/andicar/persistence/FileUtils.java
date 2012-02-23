@@ -252,6 +252,18 @@ public class FileUtils {
         }
         return fileNames;
     }
+    
+    public static void deleteFolderContent(String folder){
+        File fileDir = new File(folder);
+        
+        if(!fileDir.exists())
+        	return;
+        
+        File[] files = fileDir.listFiles();
+        for (int i = 0; i < files.length; i++) {
+        	files[i].delete();
+        }
+    }
 
     public static ArrayList<String> getFileNames(String folder, String fileNameFilterPattern){
         ArrayList<String> myData = new ArrayList<String>();

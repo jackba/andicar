@@ -76,7 +76,7 @@ import com.andicar.addon.services.AndiCarAddOnServiceStarter;
  */
 public class MainActivity extends BaseActivity {
 
-	private Context mainContext;
+	protected Context mainContext;
 	private int ACTIVITY_MILEAGEINSERT_REQUEST_CODE = 0;
 	private int ACTIVITY_REFUELINSERT_REQUEST_CODE = 1;
 	private int ACTIVITY_EXPENSEINSERT_REQUEST_CODE = 2;
@@ -121,9 +121,9 @@ public class MainActivity extends BaseActivity {
 
 	private TextView tvStatisticsHdr;
 
+	protected String appVersion;
+	protected String dbVersion;
 	private boolean exitResume = false;
-	private String appVersion;
-	private String dbVersion;
 	private boolean showMileageZone = true;
 	private boolean showGPSTrackZone = true;
 	private boolean showRefuelZone = true;
@@ -135,6 +135,9 @@ public class MainActivity extends BaseActivity {
 	private boolean isSendStatistics = true;
 	private boolean isSendCrashReport;
 	private boolean isJustInstalled = false;
+	
+	protected boolean isShowWhatsNew = false;
+
 	private long gpsTrackId = -1;
 	private String uiStyle = null;
 
@@ -150,12 +153,12 @@ public class MainActivity extends BaseActivity {
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle icicle) {
-		super.onCreate(icicle);
-		try {
+		try{
+			super.onCreate(icicle);
 			mainContext = this;
 			mPreferences = getSharedPreferences(
 					StaticValues.GLOBAL_PREFERENCE_NAME, 0);
-
+			
 			uiStyle = mPreferences.getString("UIStyle", "s01");
 			if(uiStyle.equalsIgnoreCase("s00"))
 				setContentView(R.layout.main_activity_s00);
@@ -217,7 +220,7 @@ public class MainActivity extends BaseActivity {
 					initPreferenceValues(); // version update => init (new)
 											// preference values
 	                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
-	                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.MainActivity_WellcomeBackMessage));
+	                		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.MainActivity_WellcomeMessage));
 					builder.setMessage(mResource
 							.getString(R.string.MainActivity_BackupExistMessage));
 					builder.setCancelable(false);
@@ -336,7 +339,7 @@ public class MainActivity extends BaseActivity {
 					AndiCarServiceStarter.startServices(this);
 					AndiCarAddOnServiceStarter.startServices(this);
 					if(!isJustInstalled)
-						startActivity(new Intent(mainContext, WhatsNewDialog.class));
+						isShowWhatsNew = true;
 				}
 				if(mPreferences.getInt("appVersionCode", 0) != appVersionCode){
 					editor.putInt("appVersionCode", appVersionCode);
@@ -345,6 +348,8 @@ public class MainActivity extends BaseActivity {
 			} catch (NameNotFoundException ex) {
 				appVersion = "N/A";
 			}
+
+			setSpecificLayout();
 
 			// check for app update once a day
 //			Long currentTime = System.currentTimeMillis();
@@ -405,9 +410,8 @@ public class MainActivity extends BaseActivity {
 ////				iaView.setVisibility(View.VISIBLE);
 ////				iaView.setRefreshInterval(120); //120 seconds
 //			}
-			
 		} catch (Exception e) {
-			String logFile = "startup.log";
+			String logFile = "onCreateStartup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
 			FileUtils fu = new FileUtils(mainContext);
 			Throwable cause = e.getCause();
@@ -418,20 +422,24 @@ public class MainActivity extends BaseActivity {
 				stackTrace = e.getStackTrace();
 
 			StackTraceElement stackTraceElement;
-			String stackStr = e.getMessage();
+			String stackStr = e.getClass() + ": " + e.getMessage() + '\n';
 			for (int i = 0; i < stackTrace.length; i++) {
 				stackTraceElement = stackTrace[i];
 				stackStr = stackStr + stackTraceElement.getClassName() + "."
 						+ stackTraceElement.getMethodName() + ": "
-						+ stackTraceElement.getLineNumber() + "  ";
+						+ stackTraceElement.getLineNumber() + "\n";
 			}
 			fu.writeToLogFile(stackStr, logFile);
 
-			madbErrorAlert.setMessage(e.getMessage());
+			madbErrorAlert.setMessage("An unexpected error occured!\nPlease contact the developers at andicar.support@gmail.com.\n\n" + e.getClass() + "\n" + e.getMessage());
 			madError = madbErrorAlert.create();
 			madError.show();
 		}
 		
+	}
+
+	protected void showWhatsNew() {
+		startActivity(new Intent(mainContext, WhatsNewDialog.class));
 	}
 
 	private void initControls() {
@@ -1275,83 +1283,85 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	protected void onResume() {
-		super.onResume();
-		if (exitResume)
-			return;
-		// try{
-		
-		if(!uiStyle.equalsIgnoreCase(mPreferences.getString("UIStyle", "s01"))){ //ui style changed
-			uiStyle = mPreferences.getString("UIStyle", "s01");
-			if(uiStyle.equalsIgnoreCase("s00"))
-				setContentView(R.layout.main_activity_s00);
-	    	else if(uiStyle.equalsIgnoreCase("s01"))
-				setContentView(R.layout.main_activity_s01);
-			initControls();
+		try{
+			super.onResume();
+			if (exitResume)
+				return;
+			// try{
+			
+			if(!uiStyle.equalsIgnoreCase(mPreferences.getString("UIStyle", "s01"))){ //ui style changed
+				uiStyle = mPreferences.getString("UIStyle", "s01");
+				if(uiStyle.equalsIgnoreCase("s00"))
+					setContentView(R.layout.main_activity_s00);
+		    	else if(uiStyle.equalsIgnoreCase("s01"))
+					setContentView(R.layout.main_activity_s01);
+				initControls();
+			}
+			isActivityOnLoading = true;
+			isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
+			if (mPreferences.getBoolean("MustClose", false)) {
+				SharedPreferences.Editor editor = mPreferences.edit();
+				editor.putBoolean("MustClose", false);
+				editor.commit();
+				finish();
+			}
+	
+			mCarId = mPreferences.getLong("CurrentCar_ID", -1);
+			initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
+					MainDbAdapter.genColName,
+					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
+					MainDbAdapter.isActiveCondition, null,
+					MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
+	
+			if (reportDb == null)
+				reportDb = new ReportDbAdapter(mainContext, null, null);
+	
+			showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
+			showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
+			showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
+			showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
+			showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
+			showToDoZone = mPreferences.getBoolean("MainActivityShowToDo", true);
+	
+			fillDriverCar();
+			initZones();
+	
+			listCursor = null;
+			setShortAbout();
+		} catch (Exception e) {
+			String logFile = "onResumeStartup.log";
+			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
+			FileUtils fu = new FileUtils(mainContext);
+			Throwable cause = e.getCause();
+			StackTraceElement[] stackTrace;
+			if (cause != null)
+				stackTrace = cause.getStackTrace();
+			else
+				stackTrace = e.getStackTrace();
+
+			StackTraceElement stackTraceElement;
+			String stackStr = e.getClass() + ": " + e.getMessage() + '\n';
+			for (int i = 0; i < stackTrace.length; i++) {
+				stackTraceElement = stackTrace[i];
+				stackStr = stackStr + stackTraceElement.getClassName() + "."
+						+ stackTraceElement.getMethodName() + ": "
+						+ stackTraceElement.getLineNumber() + "\n";
+			}
+			fu.writeToLogFile(stackStr, logFile);
+
+			madbErrorAlert.setMessage("An unexpected error occured!\nPlease contact the developers at andicar.support@gmail.com.\n\n" + e.getClass() + "\n" + e.getMessage());
+			madError = madbErrorAlert.create();
+			madError.show();
 		}
-		isActivityOnLoading = true;
-		isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
-		if (mPreferences.getBoolean("MustClose", false)) {
-			SharedPreferences.Editor editor = mPreferences.edit();
-			editor.putBoolean("MustClose", false);
-			editor.commit();
-			finish();
-		}
+	}
 
-		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-		initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
-				MainDbAdapter.genColName,
-				new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-				MainDbAdapter.isActiveCondition, null,
-				MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
-
-		if (reportDb == null)
-			reportDb = new ReportDbAdapter(mainContext, null, null);
-
-		showMileageZone = mPreferences.getBoolean("MainActivityShowMileage", true);
-		showGPSTrackZone = mPreferences.getBoolean("MainActivityShowGPSTrack", true);
-		showRefuelZone = mPreferences.getBoolean("MainActivityShowRefuel", true);
-		showExpenseZone = mPreferences.getBoolean("MainActivityShowExpense", true);
-		showStatistcsZone = mPreferences.getBoolean("MainActivityShowStatistics", true);
-		showToDoZone = mPreferences.getBoolean("MainActivityShowToDo", true);
-
+	protected void setShortAbout() {
 		CharSequence abt = mResource.getText(R.string.LM_MAIN_ACTIVITY_SHORTABOUT);
 		String versionInfo = " " + appVersion + " (DBv: " + dbVersion + ")";
 
 		((TextView) findViewById(R.id.tvShortAboutLbl)).setText(abt);
 		((TextView) findViewById(R.id.tvShortAboutAppVersion)).setText(mResource
 				.getText(R.string.MainActivity_AppVersion) + versionInfo);
-
-		fillDriverCar();
-		initZones();
-
-		listCursor = null;
-		// }
-		// catch(Exception e){
-		//
-		// String logFile = StaticValues.BASE_FOLDER + "startup.log";
-		// FileUtils fu = new FileUtils(this);
-		// fu.writeToLogFile(e.getMessage(), logFile);
-		// Throwable cause = e.getCause();
-		// StackTraceElement[] stackTrace;
-		// if(cause != null)
-		// stackTrace = cause.getStackTrace();
-		// else
-		// stackTrace = e.getStackTrace();
-		//
-		// StackTraceElement stackTraceElement;
-		// String stackStr = "";
-		// for(int i = 0; i < stackTrace.length; i++) {
-		// stackTraceElement = stackTrace[i];
-		// stackStr = stackStr + stackTraceElement.getClassName() + "." +
-		// stackTraceElement.getMethodName() + ": " +
-		// stackTraceElement.getLineNumber() + "  ";
-		// }
-		// fu.writeToLogFile(stackStr, logFile);
-		//
-		// madbErrorAlert.setMessage(e.getMessage());
-		// madError = madbErrorAlert.create();
-		// madError.show();
-		// }
 	}
 
 	private void initZones() {
@@ -1415,6 +1425,12 @@ public class MainActivity extends BaseActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+		
+		if(isShowWhatsNew){						
+			isShowWhatsNew = false;
+			showWhatsNew();
+		}
+
 		if (isSendStatistics)
 			AndiCarStatistics.sendFlurryStartSession(this);
 	}

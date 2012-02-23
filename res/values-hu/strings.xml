@@ -396,7 +396,6 @@
     <string name="PREF_MainScreen_ShowStatistics">"Statistikák mutatása"</string>
     <string name="PREF_MainScreen_ShowToDoZone">"Tennivaló zóna mutatása"</string>
     <string name="PREF_AddOnCategoryTitle">"Kiegészítő szolgáltatások"</string>
-    <string name="PREF_AddOnServicesTitle">"Kiegészítő szolgáltatások"</string>
     <string name="PREF_AddOnServicesSummary">"Előfizetéses szolgáltatások."</string>
     <string name="PREF_AddOnServicesSubscribe">"Fizetés PayPal-al"</string>
     <string name="PREFMainScreen_ZonesLabel">"Meglévő zónák:"</string>

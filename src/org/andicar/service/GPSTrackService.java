@@ -107,7 +107,7 @@ public class GPSTrackService extends Service {
     private double dMaxAltitude = 0;
     private long lStartTime = 0;
     private long lStopTime = 0;
-    private double dDistance = 0;
+    private double dTotalDistance = 0;
     private double dMaxSpeed = 0;
     private double dAvgSpeed = 0;
     private double dAvgMovingSpeed = 0;
@@ -252,6 +252,8 @@ public class GPSTrackService extends Service {
     private void createCSVFile(String fileName) throws IOException {
         gpsTrackDetailCSVFile = FileUtils.createGpsTrackDetailFile(StaticValues.CSV_FORMAT, fileName);
         gpsTrackDetailCSVFileWriter = new FileWriter(gpsTrackDetailCSVFile);
+//    	gpsTrackDetailCSVFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.CSV_FORMAT, fileName);
+    	
         //create the header
         gpsTrackDetailCSVFileWriter.append(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "," +
                                                 "Accuracy" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
@@ -279,6 +281,8 @@ public class GPSTrackService extends Service {
     private void createGOPFile(String fileName) throws IOException {
         gpsTrackDetailGOPFile = FileUtils.createGpsTrackDetailFile(StaticValues.GOP_FORMAT, fileName);
         gpsTrackDetailGOPFileWriter = new FileWriter(gpsTrackDetailGOPFile);
+//    	gpsTrackDetailGOPFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.GOP_FORMAT, fileName);
+    	
         //create the header
         gpsTrackDetailGOPFileWriter.append( "LatitudeE6" + "," +
                                                 "LongitudeE6" + "\n");
@@ -294,6 +298,8 @@ public class GPSTrackService extends Service {
     private void createGPXFile(String fileName) throws IOException{
         gpsTrackDetailGPXFile = FileUtils.createGpsTrackDetailFile(StaticValues.GPX_FORMAT, fileName);
         gpsTrackDetailGPXFileWriter = new FileWriter(gpsTrackDetailGPXFile);
+//    	gpsTrackDetailGPXFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.GPX_FORMAT, fileName);
+    	
         if(gpsTrackDetailGPXFileWriter == null)
             return;
         ContentValues cvData = new ContentValues();
@@ -324,6 +330,8 @@ public class GPSTrackService extends Service {
     private void createKMLFile(String fileName) throws IOException{
         gpsTrackDetailKMLFile = FileUtils.createGpsTrackDetailFile(StaticValues.KML_FORMAT, fileName);
         gpsTrackDetailKMLFileWriter = new FileWriter(gpsTrackDetailKMLFile);
+//    	gpsTrackDetailKMLFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.KML_FORMAT, fileName);
+    	
         if(gpsTrackDetailKMLFileWriter == null)
             return;
         String name = "";
@@ -421,7 +429,7 @@ public class GPSTrackService extends Service {
                 + "<Placemark>\n"
                   + "<name><![CDATA[" + pointName + "]]></name>\n"
                   + "<description><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a>."
-                  + "<p>Distance: " + (dDistance) + (isUseMetricUnits? " km" : " mi")
+                  + "<p>Distance: " + (dTotalDistance) + (isUseMetricUnits? " km" : " mi")
                       + "]]></description>\n"
                   + "<styleUrl>" + pointStyle + "</styleUrl>\n"
                   + "<Point>\n"
@@ -717,12 +725,12 @@ public class GPSTrackService extends Service {
             dAvgAccuracy = 0;
 
         if(lStopTime - lStartTime != 0)
-            dAvgSpeed = dDistance / lTotalTime; // m/s
+            dAvgSpeed = dTotalDistance / lTotalTime; // m/s
         else
             dAvgSpeed = 0;
 
         if(lTotalMovingTime != 0)
-            dAvgMovingSpeed = dDistance / lTotalMovingTime; // m/s
+            dAvgMovingSpeed = dTotalDistance / lTotalMovingTime; // m/s
         else
             dAvgMovingSpeed = 0;
         if(!isUseMetricUnits){
@@ -731,13 +739,13 @@ public class GPSTrackService extends Service {
             dAvgAccuracy = dAvgAccuracy * 1.093613; //m to yd
             dMinAltitude = dMinAltitude * 1.093613; //m to yd
             dMaxAltitude = dMaxAltitude * 1.093613; //m to yd
-            dDistance = dDistance * 0.000621371; //m to mi
+            dTotalDistance = dTotalDistance * 0.000621371; //m to mi
             dAvgSpeed = dAvgSpeed * 2.23693; //m/s to mi/h
             dAvgMovingSpeed = dAvgMovingSpeed * 2.23693; //m/s to mi/h
             dMaxSpeed = dMaxSpeed  * 2.23693;
         }
         else{ // only m/s need to be converted to km/h
-            dDistance = dDistance * 0.001; //m to km
+            dTotalDistance = dTotalDistance * 0.001; //m to km
             dAvgSpeed = dAvgSpeed * 3.6; //m/s to km/h
             dAvgMovingSpeed = dAvgMovingSpeed * 3.6; //m/s to km/h
             dMaxSpeed = dMaxSpeed  * 3.6;
@@ -751,7 +759,7 @@ public class GPSTrackService extends Service {
         cvData.put( MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME, (Math.round(dMaxAltitude * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME, lTotalTime);
         cvData.put( MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME, lTotalMovingTime);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME, (Math.round(dDistance * 100)*1d)/100);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME, (Math.round(dTotalDistance * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME, (Math.round(dAvgSpeed * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME, (Math.round(dAvgMovingSpeed * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME, (Math.round(dMaxSpeed * 100)*1d)/100);
@@ -778,51 +786,79 @@ public class GPSTrackService extends Service {
             }
 //            Log.w("GPSTrackServuce", "onLocationChanged: dTotalTrackPoints = " + dTotalTrackPoints);
 
-            if (loc != null) {
-                try {
-                    dTotalTrackPoints++;
-                    dCurrentLocationLatitude = loc.getLatitude();
-                    dCurrentLocationLongitude = loc.getLongitude();
-                    dCurrentLocationAltitude = loc.getAltitude();
-                    lCurrentLocationTime = loc.getTime();
-                    dCurrentAccuracy = loc.getAccuracy();
+            if (loc == null)
+            	return;
+
+            try {
+                dTotalTrackPoints++;
+                dCurrentLocationLatitude = loc.getLatitude();
+                dCurrentLocationLongitude = loc.getLongitude();
+                dCurrentLocationAltitude = loc.getAltitude();
+                lCurrentLocationTime = loc.getTime();
+                dCurrentAccuracy = loc.getAccuracy();
 //                    dCurrentSpeed = loc.getSpeed();
-                    dCurrentLocationBearing = loc.getBearing();
+                dCurrentLocationBearing = loc.getBearing();
 
-                    if(isFirstPoint && iFileCount == 1){
-                        lStartTime = lCurrentLocationTime;
-                    	lOldLocationTime = lCurrentLocationTime;
-                    	dCurrentSpeed = 0;
+                if(isFirstPoint && iFileCount == 1){
+                    lStartTime = lCurrentLocationTime;
+                	lOldLocationTime = lCurrentLocationTime;
+                	dCurrentSpeed = 0;
 //                    	dOldSpeed = 0;
+                }
+
+                if(dCurrentAccuracy > iMaxAccuracy){
+                    isValid = false;
+                    //
+                    if(lCurrentLocationTime - lStartTime > 60000){ //leave time for GPS initialization (1 min)
+                        dTotalSkippedTrackPoints++;
+                        dTmpSkippedTrackPoints++;
                     }
+                    
+                    //temporarry disabled
+//                    if(dTmpSkippedTrackPoints > 30 && !bNotificationShowed){
+//                        //notify the user
+//                        showNotification(StaticValues.NOTIF_GPS_ACCURACY_WARNING_ID, true);
+//                        bNotificationShowed = true;
+//
+//                    }
+                    skippedPointPercentage = (dTotalSkippedTrackPoints / dTotalTrackPoints) * 100;
+//                    if(skippedPointPercentage > iMaxAccuracyShutdownLimit){
+//                        showNotification(StaticValues.NOTIF_GPS_ACCURACY_SHUTDOWN_ID, true);
+//                        isErrorStop = true;
+//                        stopSelf();
+//                    }
+                }
 
-                    if(dCurrentAccuracy > iMaxAccuracy){
-                        isValid = false;
-                        //
-                        if(lCurrentLocationTime - lStartTime > 30000){ //leave time for GPS initialization (30 sec)
-                            dTotalSkippedTrackPoints++;
-                            dTmpSkippedTrackPoints++;
+                if(isValid){
+                    if(isFirstPoint){
+                        //the first valid location => write the starting point
+                        if(gpsTrackDetailKMLFileWriter != null 
+                        		&& iFileCount == 1){ //this is the first track file (multiple track file can be used)
+                            appendKMLStartPoint();
+                            appendGOPTrackPoint();
                         }
-                        if(dTmpSkippedTrackPoints > 10 && !bNotificationShowed){
-                            //notify the user
-                            showNotification(StaticValues.NOTIF_GPS_ACCURACY_WARNING_ID, true);
-                            bNotificationShowed = true;
-
-                        }
-                        skippedPointPercentage = (dTotalSkippedTrackPoints / dTotalTrackPoints) * 100;
-                        if(skippedPointPercentage > iMaxAccuracyShutdownLimit){
-                            showNotification(StaticValues.NOTIF_GPS_ACCURACY_SHUTDOWN_ID, true);
-                            isErrorStop = true;
-                            stopSelf();
-                        }
+                        isFirstPoint = false;
                     }
                     else{
-                    	//check acceleration. if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
+                    	//get the distance between the current and previous location
+                        Location.distanceBetween(dOldLocationLatitude, dOldLocationLongitude,
+                                dCurrentLocationLatitude, dCurrentLocationLongitude, fDistanceArray);
+                        
+                        dDistanceBetweenLocations = fDistanceArray[0];
+                        if(lCurrentLocationTime - lOldLocationTime > 0)
+                        	dCurrentSpeed = dDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
+                        else
+                        	dCurrentSpeed = 0;
+                        
+                    	//check acceleration. 
+                        //if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
                     	if((lCurrentLocationTime - lOldLocationTime) / 1000 != 0){
 	                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
 	                    	
-	                    	if(Math.abs(acceleration) > 13.88){ //13.88 m/s2 = 0 to 100 km/h in 2 seconds => wrong sensor data
+	                    	if(Math.abs(acceleration) > 3){ //a = 3 m/s2 => probably wrong sensor data
 	                            isValid = false;
+	                            dTotalSkippedTrackPoints++;
+	                            dTmpSkippedTrackPoints++;
 	                    	}
 	                    	else{
 		                        isValid = true;
@@ -833,114 +869,94 @@ public class GPSTrackService extends Service {
 	                    	}
                     	}
                     }
+                }
 
-                    if(isValid){
-                        if(isFirstPoint){
-                            //write the starting point
-                            if(gpsTrackDetailKMLFileWriter != null && iFileCount == 1){ //first file
-                                appendKMLStartPoint();
-                                appendGOPTrackPoint();
-                            }
-//                            lStartTime = lCurrentLocationTime;
-                            isFirstPoint = false;
-                        }
-                        else{
-                            Location.distanceBetween(dOldLocationLatitude, dOldLocationLongitude,
-                                    dCurrentLocationLatitude, dCurrentLocationLongitude, fDistanceArray);
-                            dDistanceBetweenLocations = fDistanceArray[0];
-                            dDistance = dDistance + dDistanceBetweenLocations;
-                            if(lCurrentLocationTime - lOldLocationTime > 0)
-                            	dCurrentSpeed = dDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
-                            else
-                            	dCurrentSpeed = 0;
-                        	lOldLocationTime = lCurrentLocationTime;
-                        }
-                    }
+                appendCSVTrackPoint(isValid);
 
-                    appendCSVTrackPoint(isValid);
+                if(!isValid)
+                    return;
 
-                    if(!isValid)
-                        return;
+                //for drawing on the map add only a minimum 5 m distanced point from the previous point - performance reason
+                gopDistance = gopDistance + dDistanceBetweenLocations;
+                if(gopDistance >= 5){
+                    appendGOPTrackPoint();
+                    gopDistance = 0;
+                }
 
-                    //for drawing on the map add only a minimum 5 m distanced point from the previous point - performance reason
-                    gopDistance = gopDistance + dDistanceBetweenLocations;
-                    if(gopDistance >= 5){
-                        appendGOPTrackPoint();
-                        gopDistance = 0;
-                    }
-
-                    //set the stop time on each location change => the last will be the final lTotalTimeStop
-                    lStopTime = lCurrentLocationTime;
-
-                    //statistics
-                    //non moving time
-                    if(dCurrentSpeed == 0){
-                        if(lFirstNonMovingTime == 0)
-                            lFirstNonMovingTime = lCurrentLocationTime;
-                        lLastNonMovingTime = lCurrentLocationTime;
-                    }
-                    else{ //currentSpeed > 0
-                        if(lFirstNonMovingTime != 0){
-                            lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
+                //statistics
+                //non moving time
+                if(dCurrentSpeed == 0){
+                    if(lFirstNonMovingTime == 0)
+                        lFirstNonMovingTime = lCurrentLocationTime;
+                    lLastNonMovingTime = lCurrentLocationTime;
+                }
+                else{ //currentSpeed > 0
+                    if(lFirstNonMovingTime != 0){
+                        lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
 //                            sNonMovingTimes = sNonMovingTimes + "" +
 //                                        lFirstNonMovingTime + "," + lLastNonMovingTime + "\n";
-                            //reset
-                            lLastNonMovingTime = 0;
-                            lFirstNonMovingTime = 0;
-                        }
+                        //reset
+                        lLastNonMovingTime = 0;
+                        lFirstNonMovingTime = 0;
                     }
+                }
 
-                    if(dCurrentAccuracy < dMinAccuracy)
-                        dMinAccuracy = dCurrentAccuracy;
-                    if(dCurrentAccuracy > dMaxAccuracy)
-                        dMaxAccuracy = dCurrentAccuracy;
+                if(dCurrentAccuracy < dMinAccuracy)
+                    dMinAccuracy = dCurrentAccuracy;
+                if(dCurrentAccuracy > dMaxAccuracy)
+                    dMaxAccuracy = dCurrentAccuracy;
 
-                    //at the end of the tracking fAvgAccuracy will be fAvgAccuracy / iTrackPointCount
-                    dAvgAccuracy = dAvgAccuracy + dCurrentAccuracy;
+                //at the end of the tracking fAvgAccuracy will be fAvgAccuracy / iTrackPointCount
+                dAvgAccuracy = dAvgAccuracy + dCurrentAccuracy;
 
-                    if(dCurrentLocationAltitude < dMinAltitude)
-                        dMinAltitude = dCurrentLocationAltitude;
-                    if(dCurrentLocationAltitude > dMaxAltitude)
-                        dMaxAltitude = dCurrentLocationAltitude;
+                if(dCurrentLocationAltitude < dMinAltitude)
+                    dMinAltitude = dCurrentLocationAltitude;
+                if(dCurrentLocationAltitude > dMaxAltitude)
+                    dMaxAltitude = dCurrentLocationAltitude;
 
-                    if(dCurrentSpeed > dMaxSpeed){
-                		dMaxSpeed = dCurrentSpeed;
-                    }
+                if(dCurrentSpeed > dMaxSpeed){
+            		dMaxSpeed = dCurrentSpeed;
+                }
 
-                    if(gpsTrackDetailKMLFileWriter != null && dDistanceBetweenLocations != 0)
-                        appendKMLTrackPoint();
+                if(gpsTrackDetailKMLFileWriter != null && dDistanceBetweenLocations != 0)
+                    appendKMLTrackPoint();
 
-                    if(gpsTrackDetailGPXFileWriter != null  && dDistanceBetweenLocations != 0){
-                        appendGPXTrackPoint();
-                    }
+                if(gpsTrackDetailGPXFileWriter != null  && dDistanceBetweenLocations != 0){
+                    appendGPXTrackPoint();
+                }
 
-                    dOldLocationLatitude = dCurrentLocationLatitude;
-                    dOldLocationLongitude = dCurrentLocationLongitude;
-                    lastGoodLocationLatitude = dCurrentLocationLatitude;
-                    lastGoodLocationLongitude = dCurrentLocationLongitude;
-                    lastGoodLocationAltitude = dCurrentLocationAltitude;
+                dOldLocationLatitude = dCurrentLocationLatitude;
+                dOldLocationLongitude = dCurrentLocationLongitude;
+                lastGoodLocationLatitude = dCurrentLocationLatitude;
+                lastGoodLocationLongitude = dCurrentLocationLongitude;
+                lastGoodLocationAltitude = dCurrentLocationAltitude;
+            	lOldLocationTime = lCurrentLocationTime;
+                dTotalDistance = dTotalDistance + dDistanceBetweenLocations;
+                //set the stop time on each location change => the last will be the final lTotalTimeStop
+                lStopTime = lCurrentLocationTime;
+
 
 //                    Log.w("GPSTrackServuce", "onLocationChanged: iFileSplitCount = " + iFileSplitCount + ", iFileCount = " + iFileCount);
 
-                    //split the track files
-                    if(iFileSplitCount > 0){
-                        if(dTotalTrackPoints >= (iFileCount * iFileSplitCount)){
-                            closeFiles(false);
-                            iFileCount++;
-                            isFirstPoint = true;
-                            createFiles();
-                            appendKMLStartPoint();
-                            appendKMLTrackPoint();
-                        }
+                //split the track files
+                if(iFileSplitCount > 0){
+                    if(dTotalTrackPoints >= (iFileCount * iFileSplitCount)){
+                        closeFiles(false);
+                        iFileCount++;
+                        isFirstPoint = true;
+                        createFiles();
+                        appendKMLStartPoint();
+                        appendKMLTrackPoint();
                     }
                 }
-                catch(IOException ex) {
-                    Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
-                    Toast.makeText(GPSTrackService.this, "File error!\n" + ex.getMessage(), Toast.LENGTH_LONG).show();
-                    isErrorStop = true;
-                    stopSelf();
-                }
             }
+            catch(IOException ex) {
+                Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
+                Toast.makeText(GPSTrackService.this, "File error!\n" + ex.getMessage(), Toast.LENGTH_LONG).show();
+                isErrorStop = true;
+                stopSelf();
+            }
+            
         }
 
         @Override

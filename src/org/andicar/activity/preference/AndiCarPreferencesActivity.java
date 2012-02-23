@@ -41,7 +41,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 
-import com.andicar.addon.activity.AddOnPreferences;
+import com.andicar.addon.utils.AddOnHelper;
 
 
 /**
@@ -136,14 +136,12 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         bkRestoreCategory.addPreference(bkRestorePrefScreen);
 
         //AddOn preferences
-        PreferenceCategory addOnCategory = new PreferenceCategory(this);
-        addOnCategory.setTitle(mRes.getString(R.string.AddOn_PreferencesCategoryTitle));
-        prefScreenRoot.addPreference(addOnCategory);
-        PreferenceScreen addOnPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
-        addOnPreferenceScreen.setIntent(new Intent(this, AddOnPreferences.class));
-        addOnPreferenceScreen.setTitle(mRes.getString(R.string.AddOn_PreferencesTitle));
-        addOnPreferenceScreen.setSummary(mRes.getString(R.string.AddOn_PreferencesSummary));
-        addOnCategory.addPreference(addOnPreferenceScreen);
+        AddOnHelper aoh = new AddOnHelper(this, 0);
+        if(aoh.getAddOns(true).size() > 0 ){
+	        PreferenceCategory addOnCategory = new PreferenceCategory(this);
+	        prefScreenRoot.addPreference(addOnCategory);
+	        aoh.createPreference(addOnCategory, this);
+        }
 
         //Tasks/Reminders/Todos
         PreferenceCategory taskReminderCategory = new PreferenceCategory(this);

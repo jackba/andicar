@@ -405,7 +405,6 @@
 	<string name="PREF_MainScreen_ShowToDoZone">"显示计划区域"</string>
 	
     <string name="PREF_AddOnCategoryTitle">"AddOn 服务"</string>
-    <string name="PREF_AddOnServicesTitle">"AddOn 服务"</string>
     <string name="PREF_AddOnServicesSummary">"订阅是一个需付费的服务。"</string>
     <string name="PREF_AddOnServicesSubscribe">"使用 PayPal 来订阅"</string>
 
