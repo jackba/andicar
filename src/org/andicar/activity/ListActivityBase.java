@@ -81,6 +81,7 @@ public class ListActivityBase extends ListActivity {
     protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport = true;
     protected boolean isExitAfterInsert = false;
+    protected boolean isInsertDisplayed = false;
     protected ListView lvBaseList = null;
     protected SimpleCursorAdapter.ViewBinder mViewBinder;
     protected int twolineListActivity = R.layout.twoline_list_activity_s01;
@@ -173,17 +174,17 @@ public class ListActivityBase extends ListActivity {
 
         fillData();
 
-        if((getListAdapter() == null || getListAdapter().getCount() == 0)
-                	&& mInsertClass != null) {
-            long currentCarID = mPreferences.getLong("CurrentCar_ID", -1);
-            
-            Intent i = new Intent(this, mInsertClass);
-            i.putExtra("Operation", "N");
-            if(mInsertClass.equals(MileageEditActivity.class)){
-                i.putExtra("CurrentCar_ID", currentCarID);
-            }
-            startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
-        }
+//        if((getListAdapter() == null || getListAdapter().getCount() == 0)
+//                	&& mInsertClass != null) {
+//            long currentCarID = mPreferences.getLong("CurrentCar_ID", -1);
+//            
+//            Intent i = new Intent(this, mInsertClass);
+//            i.putExtra("Operation", "N");
+//            if(mInsertClass.equals(MileageEditActivity.class)){
+//                i.putExtra("CurrentCar_ID", currentCarID);
+//            }
+//            startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
+//        }
     }
 
 	protected void initStyle() {
@@ -210,6 +211,24 @@ public class ListActivityBase extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        if((getListAdapter() == null || getListAdapter().getCount() == 0)
+            	&& mInsertClass != null) {
+        	if(!isInsertDisplayed){
+        		isInsertDisplayed = true;
+		        long currentCarID = mPreferences.getLong("CurrentCar_ID", -1);
+		        Intent i = new Intent(this, mInsertClass);
+		        i.putExtra("Operation", "N");
+		        if(mInsertClass.equals(MileageEditActivity.class)){
+		            i.putExtra("CurrentCar_ID", currentCarID);
+		        }
+		        startActivityForResult(i, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
+        	}
+        	else{
+        		finish();
+        	}
+	    }
+        
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);
