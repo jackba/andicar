@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- UI labels and messages-->
+<!--
+    Some strings contains one or more "variables". These looks like [#No] (for example [#1], [#2]).
+    These variables are parsed in the application and are replaced with a string value (a currency code, an UOM code, etc)
+
+    !!!For translators!!!:
+        If any of the translated string is longer than the english value you should
+        verify the look of the user interface (using the android emulator or any other device)
+        with the translated values.
+-->
+<resources>
+    <string name="APP_Description">"免费和开放源码的汽车管理软件。"</string>
+    <string name="APP_Motto">"使用这个强大的开源软件管理你的汽车。"</string>
+    <string name="APP_Activity_DriverEdit">"编辑司机"</string>
+    <string name="APP_Activity_DriverList">"司机"</string>
+    <string name="APP_Activity_CarEdit">"编辑汽车"</string>
+    <string name="APP_Activity_CarList">"汽车"</string>
+    <string name="APP_Activity_Preferences">"首选项"</string>
+    <string name="APP_Activity_GPSPreferences">"GPS 追踪首选项"</string>
+    <string name="APP_Activity_ExpenseCategoryList">"支出类别"</string>
+    <string name="APP_Activity_ExpenseCategoryEdit">"编辑支出类别"</string>
+    <string name="APP_Activity_ExpenseTypeList">"支出类型"</string>
+    <string name="APP_Activity_ExpenseTypeEdit">"编辑支出类型"</string>
+    <string name="APP_Activity_UOMList">"度量单位"</string>
+    <string name="APP_Activity_UOMEdit">"编辑度量单位"</string>
+    <string name="APP_Activity_UOMConversionList">"度量单位转换"</string>
+    <string name="APP_Activity_UOMConversionEdit">"编辑度量单位转换"</string>
+    <string name="APP_Activity_CurrencyList">"货币"</string>
+    <string name="APP_Activity_CurrencyEdit">"编辑货币"</string>
+    <string name="APP_Activity_MileageList">"行车里程"</string>
+    <string name="APP_Activity_MileageEdit">"添加或编辑行车里程"</string>
+    <string name="APP_Activity_RefuelList">"补给燃料"</string>
+    <string name="APP_Activity_RefuelEdit">"添加或编辑补给燃料"</string>
+    <string name="APP_Activity_About">"关于 AndiCar"</string>
+    <string name="APP_Activity_BackupRestore">"备份/还原"</string>
+    <string name="APP_Activity_ExpenseList">"支出"</string>
+    <string name="APP_Activity_ExpenseEdit">"添加或编辑支出"</string>
+    <string name="APP_Activity_CurrencyRateList">"货币汇率"</string>
+    <string name="APP_Activity_CurrencyRateEdit">"添加或编辑货币汇率"</string>
+    <string name="APP_Activity_GPSTrackController">"GPS 追踪控制"</string>
+    <string name="APP_Activity_GPSTrackEdit">"编辑GPS追踪"</string>
+    <string name="APP_Activity_GPSTrackList">"GPS 追踪"</string>
+    <string name="APP_Activity_BPartnerList">"搭档"</string>
+    <string name="APP_Activity_BPartnerEdit">"编辑搭档，位置"</string>
+    <string name="APP_Activity_BPartnerLocationEdit">"编辑位置"</string>
+    <string name="APP_Activity_TagList">"标签"</string>
+    <string name="APP_Activity_TagEdit">"编辑标签"</string>
+    <string name="APP_Activity_Message">"AndiCar 信息"</string>
+	<string name="APP_Activity_TaskTypeList">"任务类型"</string>
+	<string name="APP_Activity_TaskTypeEdit">"编辑任务类型"</string>
+	<string name="APP_Activity_TaskList">"任务"</string>
+	<string name="APP_Activity_TaskEdit">"添加或编辑任务"</string>
+
+    <string name="GEN_OK">"确定"</string>
+    <string name="GEN_CANCEL">"取消"</string>
+    <string name="GEN_YES">"是"</string>
+    <string name="GEN_NO">"否"</string>
+    <string name="GEN_Done">"完成"</string>
+    <string name="GEN_FillMandatory">"填写必填字段"</string>
+    <string name="GEN_NumberFormatException">"无效数字"</string>
+    <string name="GEN_ChooseOneTitle">"选择一个"</string>
+    <string name="GEN_ChooseOneMessage">"你必需选择至少一个"</string>
+    <string name="GEN_ChooseTitle">"选择"</string>
+    <string name="GEN_IsActiveLabel">"活动"</string>
+    <string name="GEN_UserCommentLabel">"评论"</string>
+    <string name="GEN_NameLabel">"名字："</string>
+    <string name="GEN_DateTimeLabel">"日期和时间："</string>
+    <string name="GEN_PickDateCaption">"更改日期"</string>
+    <string name="GEN_PickTimeCaption">"更改时间"</string>
+    <string name="GEN_DeleteConfirmation">"你确定要删除选中的记录"</string>
+    <string name="GEN_Refuel">"补给燃料"</string>
+    <string name="GEN_CarLabel">"汽车："</string>
+    <string name="GEN_DriverLabel">"司机："</string>
+    <!-- <string name="GEN_ExpenseCategoryLabel">"支出类别："</string>  -->
+    <string name="GEN_ExpenseTypeLabel">"支出类型："</string>
+    <string name="GEN_TypeLabel">"类型："</string>
+    <string name="GEN_DocumentNoLabel">"文档编号："</string>
+    <string name="GEN_IndexLabel">"里程表："</string>
+    <string name="GEN_QuantityLabel">"值："</string>
+    <string name="GEN_PriceLabel">"价格"</string>
+    <string name="GEN_AmountLabel">"合计"</string>
+    <string name="GEN_ConversionRateLabel">"比率："</string>
+    <string name="GEN_ConvertedAmountLabel">"转换总额 [#1]"</string>
+    <string name="GEN_ConvertedPriceLabel">"价格 [#1]"</string>
+    <string name="GEN_SelectedMessage">" 选中的"</string>
+    <string name="GEN_CurrencyLabel">"货币"</string>
+    <string name="GEN_Required">"必需的"</string>
+    <string name="GEN_BPartner">"产商："</string>
+    <string name="GEN_Address">"地址："</string>
+    <string name="GEN_BPartnerAdressInfo">"更多详情请查看首选项 -&gt; 搭档"</string>
+    <string name="GEN_City">"城市："</string>
+    <string name="GEN_Region">"地区："</string>
+    <string name="GEN_Country">"国家："</string>
+    <string name="GEN_Contact">"联系人："</string>
+    <string name="GEN_Phone">"电话："</string>
+    <string name="GEN_Phone2">"电话2："</string>
+    <string name="GEN_Fax">"传真："</string>
+    <string name="GEN_Email">"Email："</string>
+    <string name="GEN_Postal">"邮寄："</string>
+    <string name="GEN_Tag">"标签："</string>
+    <string name="GEN_TagHint">"短标签。在下面写评论。"</string>
+	<string name="GEN_LifeTime">"使用期限"</string>
+	<string name="GEN_MailSent">"邮件已发送"</string>
+	<string name="GEN_Password">"密码"</string>
+	<string name="GEN_ShowNotification">"显示通知"</string>
+	<string name="GEN_Error">"错误"</string>
+	<string name="GEN_Confirm">"确认"</string>
+	<string name="GEN_Info">"信息"</string>
+	<string name="GEN_Warning">"警告"</string>
+	<string name="GEN_TaskType">"任务类型"</string>
+	<string name="GEN_SetDate">"设定日期/时间"</string>
+	<string name="GEN_On">"在"</string> <!-- ex. on Monday -->
+	<string name="GEN_Days">"天"</string>
+	<string name="GEN_Minutes">"分钟"</string>
+	<string name="GEN_Min">"分钟"</string>
+	<string name="GEN_LastDay">"最后一天"</string>
+	<string name="GEN_Description">"描述"</string>
+	<string name="GEN_Or">"或："</string>
+	<string name="GEN_TaskLabel">"任务："</string>
+	<string name="GEN_StatusLabel">"状态："</string>
+	<string name="GEN_Mileage">"里程："</string>
+	<string name="GEN_Or2">"或"</string>
+	<string name="GEN_ToDo">"计划"</string>
+	<string name="GEN_ToDoAlert">"计划提醒"</string>
+	<string name="GEN_New">"更新"</string>
+	<string name="GEN_Update">"升级"</string>
+    <string name="GEN_FuelEff">"燃料的最近效率："</string>
+    <string name="GEN_StartLabel">"开始 "</string>
+    <string name="GEN_StopLabel">"停止"</string>
+	<string name="GEN_PaymentFailed">"支付失败"</string> 
+	<string name="GEN_PaymentNotConfirmed">"支付未得到证实"</string>
+	<string name="GEN_CarierBillingCheckWait">"检查carier计费的可用性。请稍等…"</string>
+
+    <string name="MENU_PreferencesCaption">"首选项"</string>
+    <string name="MENU_AboutCaption">"关于"</string>
+    <string name="MENU_DeleteCaption">"删除"</string>
+    <string name="MENU_AddNewCaption">"添加"</string>
+    <string name="MENU_EditCaption">"编辑"</string>
+    <string name="MENU_ShowInactiveCaption">"显示不活动的"</string>
+    <string name="MENU_HideInactiveCaption">"隐藏不活动的"</string>
+    <string name="MENU_SearchCaption">"搜索/过滤"</string>
+    <string name="MENU_CreateReportCaption">"创建报告"</string>
+    <string name="MENU_SendAsEmailCaption">"作为Email发送"</string>
+    <string name="MENU_ShowOnMap">"在地图上显示"</string>
+    <string name="MENU_MileageCaption">"行车里程"</string>
+    <string name="MENU_RefuelCaption">"补给燃料"</string>
+    <string name="MENU_ExpenseCaption">"支出"</string>
+    <string name="MENU_GPSTrackCaption">"GPS 追踪"</string>
+    <string name="MENU_SetDefault">"设置默认"</string>
+	<string name="MENU_RateCommentCaption">"评分/评论"</string>
+	<string name="MENU_AddOnServicesCaption">"附加服务"</string>
+	<string name="MENU_TodoCaption">"计划列表"</string>
+	<string name="MENU_ToDoDoneCaption">"已完成"</string>
+
+    <string name="MainActivity_MileageHeaderCaption">"最后里程"</string>
+    <string name="MainActivity_RefuelHeaderCaption">"上次加油"</string>
+    <string name="MainActivity_GPSTrackHeaderCaption">"GPS的最后追踪"</string>
+    <string name="MainActivity_ExpenseHeaderCaption">"最仅花费"</string>
+    <string name="MainActivity_StatisticsHeaderCaption">"统计已登记的 "</string>
+    <string name="MainActivity_StatisticsListLastOdoLabel">"最后所知的里程表："</string>
+    <string name="MainActivity_StatisticsAvgConsLabel">"燃料平均效率： "</string>
+    <string name="MainActivity_StatisticsAvgConsNoDataText">"N/A. 这个平均消耗是由里程数以及起始和最后燃料的总量计算出来的。"</string>
+    <string name="MainActivity_StatisticsLastConsLabel">"燃料的最近效率："</string>
+	<string name="MainActivity_StatisticsLastConsNoData">"N/A。最新的燃油效率是使用最近两次加满油后的使用情况进行计算的。"</string>
+    <string name="MainActivity_StatisticsTotalExpenseLabel">"总支出："</string>
+    <string name="MainActivity_StatisticsMileageExpenseLabel">"里程费用："</string>
+    <string name="MainActivity_MileageNoDataText">"没有这辆车的里程记录"</string>
+    <string name="MainActivity_RefuelNoDataText">"没有这辆车的加油记录"</string>
+    <string name="MainActivity_ExpenseNoDataText">"没有这辆车的支出记录"</string>
+    <string name="MainActivity_ExpenseNoDataAditionalText">"这个区域不显示被其他相连的记录创建的费用。(燃料，等等)"</string>
+    <string name="MainActivity_NoCurrentCarMessage">"未选中汽车。在接下来的一个页面你可以选择/定义一个。"</string>
+    <string name="MainActivity_NoCurrentDriverMessage">"未选中司机。在接下来的一个页面你可以选择/定义一个。"</string>
+    <string name="MainActivity_WellcomeMessage">"欢迎使用 AndiCar。"</string>
+    <string name="MainActivity_WellcomeBackMessage">"欢迎回来！"</string>
+    <string name="MainActivity_BackupExistMessage">"备份文件存在\n你是否要用它进行还原？"</string>
+    <string name="MainActivity_UpdateMessage">"更新消息"</string>
+    <string name="MainActivity_GPSTrackZoneNoDataText">"无追踪。"</string>
+    <string name="MainActivity_NoMarketAccessMsg">"无法打开Android市场！"</string>
+    <string name="MainActivity_AppVersion">"程序版本："</string>
+    <string name="MainActivity_DidYouKnow">"你知道么?"</string>
+	<string name="MainActivity_AddOnMessage">"AndiCar支持一些插件服务，所有的插件能够免费试用。\n\n想要看看可用插件的列表么?"</string>
+	<string name="MainActivity_ToDoHeaderCaption">"下一计划"</string>
+	<string name="MainActivity_ToDoNoDataText">"未定义的任务。"</string>
+	<string name="MainActivity_HowToMessage">"可用"</string>
+	<string name="MainActivity_WhatsNewDialogTitle">"有何更新"</string>
+	
+    <string name="DriverEditActivity_LicenseNoLabel">"执照号码："</string>
+    <string name="DriverEditActivity_CurrentDriverInactivateMessage">"不能阻止当前司机的活动。"</string>
+    <string name="DriverListActivity_InactiveDriverSelectedMessage">"不活动的司机。不能被选择。"</string>
+    <string name="DriverListActivity_CurrentDriverDeleteMessage">"当前司机不能被删除。"</string>
+
+    <string name="CarEditActivity_ModelLabel">"型号："</string>
+    <string name="CarEditActivity_LicensePlateLabel">"汽车牌照："</string>
+    <string name="CarEditActivity_UOMLengthLabel">"距离的度量单位："</string>
+    <string name="CarEditActivity_UOMVolumeLabel">"容量的度量单位："</string>
+    <string name="CarEditActivity_IndexStartLabel">"初始里程表："</string>
+    <string name="CarEditActivity_CurrencyLabel">"默认货币："</string>
+    <string name="CarEditActivity_CurrentCarInactivateMessage">"不能阻止当前汽车的活动。"</string>
+    <string name="CarListActivity_InactiveCarSelectedMessage">"不活动的汽车。不能被选择。"</string>
+    <string name="CarListActivity_CurrentCarDeleteMessage">"当前车辆不能被删除。"</string>
+
+    <string name="UOMEditActivity_CodeLabel">"代码："</string>
+    <string name="UOMEditActivity_UOMTypeLengthTitle">"距离"</string>
+    <string name="UOMEditActivity_UOMTypeVolumeTitle">"容量"</string>
+
+    <string name="UOMConversionEditActivity_UOMFromLabel">"从度量单位："</string>
+    <string name="UOMConversionEditActivity_UOMToLabel">"到度量单位："</string>
+    <string name="UOMConversionEditActivity_ConvertionRateLabel">"转换率："</string>
+
+    <string name="CurrencyEditActivity_CodeLabel">"代码："</string>
+
+    <string name="MileageEditActivity_IndexHeaderLabel">"启动/停止里程表或里程"</string>
+    <string name="MileageEditActivity_OptionMileageLabel">"里程"</string>
+    <string name="MileageEditActivity_InsertOkMessage">"已添加里程数。"</string>
+    <string name="MileageEditActivity_UpdateOkMessage">"已更新里程数。"</string>
+    <string name="MileageEditActivity_RecordingInProgress">"记录正在进行中！"</string>
+
+    <string name="RefuelEditActivity_IsFullLabel">"已满"</string>
+    <string name="RefuelEditActivity_QtyInBaseUOMLabel">"基本度量单位的数量： "</string>
+    <string name="RefuelEditActivity_NoConversionRateMessage">"这些度量单位的转换率未定义"</string>
+
+    <string name="BackupRestoreEditActivity_BackupBtnCaption">"备份"</string>
+    <string name="BackupRestoreEditActivity_RestoreBtnCaption">"还原"</string>
+    <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">"删除备份"</string>
+    <string name="BackupRestoreEditActivity_BackupListLabel">"已存在备份："</string>
+    <string name="BackupRestoreEditActivity_BackupCreatedMessage">"已创建备份："</string>
+    <string name="BackupRestoreEditActivity_BackupFailedMessage">"备份创建失败！"</string>
+    <string name="BackupRestoreEditActivity_BackupDeleteConfirmation">"你确定你要删除选中的备份？"</string>
+    <string name="BackupRestoreEditActivity_RestoreConfirmation">"你确定你想要从选择的备份中还原？此操作会替换你的已有数据！"</string>
+    <string name="BackupRestoreEditActivity_RestoreOKMessage">"你的数据库已被还原。此程序即将关闭。"</string>
+
+    <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"计算排除里程费用"</string>
+    <string name="ExpenseEditActivity_CreatedFromWarning">"这个费用是由 [#1] 创建。\n编辑与之相对应的 [#1]."</string>
+
+    <string name="CurrencyRateEditActivity_CurrencyFromLabel">"从货币 "</string>
+    <string name="CurrencyRateEditActivity_CurrencyToLabel">"到货币 "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateLabel">"汇率： 1 [#1] = "</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
+    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">"逆汇率： 1 [#1] = "</string>
+    <string name="CurrencyRateEditActivity_MaxDecimalsLabel">"最大允许的十进制数： "</string>
+
+    <string name="REPORTActivity_ReportCreatedMessage">"你的报告已经成功创建到 sdcard/andicar/reports"</string>
+    <string name="REPORTActivity_ProgressMessage">"已开始创建报告。请稍等..."</string>
+
+
+
+    <string name="GPSTrackReport_GPSTrackVar_1">"距离： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_2">"最大速度： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_3">"平均速度： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_4">"平均移动速度： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_5">"总时间： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_6">"移动时间： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_7">"最大精确度： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_8">"最小精确度： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_9">"平均精确度： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_10">"最小改变： "</string>
+    <string name="GPSTrackReport_GPSTrackVar_11">"最大改变： "</string>
+
+    <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"追踪文件"</string>
+    <string name="GPSTrackEditActivity_TrackStatistics">"统计"</string>
+
+    <string name="GPSTrackControllerActivity_StopBtnCaption">"停止 GPS 追踪"</string>
+    <string name="GPSTrackControllerActivity_FileFormatLabel">"追踪文件格式："</string>
+    <string name="GPSTrackControllerActivity_CreateMileageLabel">"创建行车里程"</string>
+    <string name="GPSTrackControllerActivity_IndexLabel">"起始里程表："</string>
+
+    <string name="GPSTrackService_ServiceStoppedMessage">"GPS 追踪已停止"</string>
+    <string name="GPSTrackService_GPSDisabledMessage">"你的GPS是禁用的！\n请开启它。"</string>
+    <string name="GPSTrackService_GPSOutOfService">"GPS服务供应商停止服务！"</string>
+    <string name="GPSTrackService_TrackInProgressTitle">"AndiCar GPS 追踪中"</string>
+    <string name="GPSTrackService_TrackInProgressMessage">"追踪进程"</string>
+    <string name="GPSTrackService_AccuracyProblemTitle">"AndiCar GPS 警告！"</string>
+    <string name="GPSTrackService_AccuracyProblemMessage">"精确度超过了限制！"</string>
+    <string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS 已停止！"</string>
+    <string name="GPSTrackService_AutoShutDownMessage">"GPS追踪已被停止，因为跳跃点百分比([#1])超过了限制([#2])!\n你可以在 首选项-&gt;自停止限制 中调整这个限制。"</string>
+
+    <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar 文件系统错误！"</string>
+
+    <string name="GPSTrackShowOnMap_ProgressMessage">"正在进行绘图。\n请稍等..."</string>
+    <string name="GPSTrackShowOnMapMenu_MapMode">"地图模式"</string>
+    <string name="GPSTrackShowOnMapMenu_SatelliteMode">"卫星模式"</string>
+
+    <string name="BPartnerEditActivity_LocationsHeaderCaption">"定位"</string>
+
+	<string name="TaskEditActivity_OneTime">"一次"</string>
+	<string name="TaskEditActivity_Recurrent">"循环"</string>
+	<string name="TaskEditActivity_RecurrentEveryLabel">"每次"</string>
+	<string name="TaskEditActivity_RecurrentFrequencyLabel">"频率"</string>
+	<string name="TaskEditActivity_FirstRunDependOnCar">"为每辆车设置不同的开始时间"</string>
+	<string name="TaskEditActivity_TimeDriven">"时间"</string>
+	<string name="TaskEditActivity_MileageDriven">"里程"</string>
+	<string name="TaskEditActivity_BothDriven">"两者"</string>
+	<string name="TaskEditActivity_FirstTimeRunExplanation">"将会为每个已连接的车辆指定起始时间"</string>
+	<string name="TaskEditActivity_FirstMileageRunExplanation">"将会为每个已连接的车辆指定起始里程"</string>
+	<string name="TaskEditActivity_ReminderStartLabel">"以下时间前提醒"</string>
+	<string name="TaskEditActivity_MileageUOMTextLong">"英里或千米(取决于对汽车的定义)"</string>
+	<string name="TaskEditActivity_MileageUOMText">"英里或千米"</string>
+	<string name="TaskEditActivity_FillMileage">"填写里程！"</string>
+	<string name="TaskEditActivity_FillFrequency">"填写频率！"</string>
+	<string name="TaskEditActivity_LinkedCarsOptionsHelp">"在一辆车上长按来查看更多选项"</string>
+	<string name="TaskEditActivity_AllCarsLinkedMsg">"所有活动的车辆都已连接到此任务。"</string>
+	<string name="TaskEditActivity_NoLinkedCarsMsg">"必须连接至少一辆车到这个任务。"</string>
+	<string name="TaskEditActivity_NoCarsLinkedMsg">"没有活动车辆的当前里程数小于任务里程！\n请提高任务的里程。"</string>
+	<string name="TaskEditActivity_StartingTimeInFutureMsg">"起始时间必须是未来的一个时间！"</string>
+	<string name="TaskEditActivity_StartingTimeLbl">"起始时间："</string>
+	<string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"里程频率必须大于大提醒"</string>
+	<string name="TaskEditActivity_GeneratedToDoCountLabel">"自动生成下一个"</string>
+	<string name="TaskEditActivity_ToDoCount">"计划数"</string>
+	<string name="TaskEditActivity_ToDoCountHelp">"当标记一个计划为已完成时，将自动追加一个新的到计划列表中"</string>
+
+	<string name="TaskCarEditActivity_StartDate">"起始日期："</string>
+	<string name="TaskCarEditActivity_StartMileage">"起始里程："</string>
+	<string name="TaskCarDialogActivity_Title">"连接车辆到任务"</string>
+
+	<string name="ToDo_OverdueLabel">"超期："</string>
+	<string name="ToDo_ScheduledLabel">"如期："</string>
+	<string name="ToDo_DoneLabel">"完成"</string>
+	<string name="ToDo_ScheduledDateLabel">"定于："</string>
+	<string name="ToDo_ScheduledMileageLabel">"预定里程："</string>
+	<string name="ToDo_EstimatedMileageDate">"估计："</string>
+	<string name="ToDo_EstimatedMileageDateNoData">"估计日期中没有足够的记录"</string>
+	<string name="ToDo_EstimatedMileageDateTooFar">"预计太远"</string>
+	<string name="ToDo_ActionHdr">"动作"</string>
+	<string name="ToDo_PostPoneLabel">"以下时间后提醒我："</string>
+	<string name="ToDo_IsDoneCaption">"此计划已完成"</string>
+	<string name="ToDo_DaysLeft">"剩余天数："</string>
+	<string name="ToDo_MinutesLeft">"剩余分钟："</string>
+	<string name="ToDo_MileageLeft">"剩余里程："</string>
+	<string name="ToDo_CurrentIndex">"当前里程表："</string>
+	<string name="ToDo_IsDone">"已完成"</string>
+
+    <string name="PREF_UOMCategoryTitle">"度量单位"</string>
+    <string name="PREF_ExpenseCategoryTitle">"支出"</string>
+    <string name="PREF_ExpenseTypeCategoryTitle">"支出类型"</string>
+    <string name="PREF_ExpenseTypeCategorySummary">"添加、删除、修改支出类型"</string>
+    <string name="PREF_CarDriverCategoryTitle">"汽车和司机"</string>
+    <string name="PREF_CarTitle">"汽车"</string>
+	<string name="PREF_CarSummary">"添加，删除，修改车辆。"</string>
+	<string name="PREF_DriverSummary">"添加，删除，修改司机。"</string>
+    <string name="PREF_UOMTitle">"度量单位"</string>
+    <string name="PREF_UOMSummary">"添加、删除、修改度量单位"</string>
+    <string name="PREF_UOMConversionTitle">"度量单位转换"</string>
+    <string name="PREF_UOMConversionSummary">"添加、删除、修改转换的度量单位"</string>
+    <string name="PREF_CurrencyTitle">"货币"</string>
+    <string name="PREF_CurrencySummary">"添加、删除、修改货币"</string>
+    <string name="PREF_BackupRestoreCategoryTitle">"备份/还原"</string>
+    <string name="PREF_BackupRestoreTitle">"备份或还原你的数据库"</string>
+    <string name="PREF_BackupRestoreSummary">"创建一个你数据库的备份，或者从一个已存在的备份文件中还原。"</string>
+    <string name="PREF_ExpenseCategoryCategoryTitle">"支出类别"</string>
+    <string name="PREF_ExpenseCategoryCategorySummary">"添加、删除、修改支出类别"</string>
+    <string name="PREF_MiscCategoryTitle">"杂项"</string>
+    <string name="PREF_MainScreenCategoryTitle">"主界面首选项"</string>
+    <string name="PREF_MainScreenCategorySummary">"定制你的主界面"</string>
+    <string name="PREF_CurrencyRateCategoryTitle">"货币汇率"</string>
+    <string name="PREF_CurrencyRateCategorySummary">"添加、删除、修改货币汇率"</string>
+    <string name="PREF_GPSTrackCategoryTitle">"GPS 追踪中"</string>
+    <string name="PREF_GPSTrackTitle">"GPS 追踪"</string>
+    <string name="PREF_GPSTrackSummary">"GPS追踪的其他选项。"</string>
+    <string name="PREF_SendUsageTitle">"使用统计"</string>
+    <string name="PREF_SendUsageSummary">"匿名发送使用统计，以帮助开发者。"</string>
+    <string name="PREF_SendCrashReportsTitle">"崩溃报告"</string>
+    <string name="PREF_SendCrashReportsSummary">"匿名发送崩溃报告，以帮助开发者。"</string>
+    <string name="PREF_MainScreen">"定制你的主界面"</string>
+    <string name="PREF_BPartnersCategoryTitle">"搭档和定位"</string>
+    <string name="PREF_PartnerTitle">"搭档"</string>
+    <string name="PREF_PartnerSummary">"添加、删除、修改和定位"</string>
+    <string name="PREF_UseNumericInputTitle">"使用数字键盘"</string>
+    <string name="PREF_UseNumericInputSummary">"对于需要输入数字的区域使用一个简单的键盘。"</string>
+    <string name="PREF_TagCategoryTitle">"标签"</string>
+    <string name="PREF_TagCategorySummary">"添加，删除，修改标签"</string>
+    <string name="PREF_RememberLastTagTitle">"记住上次标签"</string>
+    <string name="PREF_RememberLastTagSummary">"记住上次使用的标签"</string>
+    <string name="PREF_AutoUpdateCheckTitle">"检查更新"</string>
+	<string name="PREF_AutoUpdateCheckSummary">"检查并在有新版本的 AndiCar 发布时通知我"</string>
+	<string name="PREF_TaskReminderCategoryTitle">"任务"</string>
+	<string name="PREF_TaskTypeTitle">"任务类型"</string>
+	<string name="PREF_TaskTypeSummary">"添加，删除，修改任务类型"</string>
+	<string name="PREF_TaskTitle">"任务"</string>
+	<string name="PREF_TaskSummary">"添加，删除，修改任务"</string>
+
+	<string name="PREF_MainScreen_ShowMileageZone">"显示里程区域"</string>
+	<string name="PREF_MainScreen_ShowGPSTrackZone">"显示GPS追踪区域"</string>
+	<string name="PREF_MainScreen_ShowRefuelZone">"显示燃料区域"</string>
+	<string name="PREF_MainScreen_ShowExpenseZone">"显示支出区域"</string>
+	<string name="PREF_MainScreen_ShowStatistics">"显示数据统计"</string>
+	<string name="PREF_MainScreen_ShowToDoZone">"显示计划区域"</string>
+	
+    <string name="PREF_AddOnCategoryTitle">"AddOn 服务"</string>
+    <string name="PREF_AddOnServicesTitle">"AddOn 服务"</string>
+    <string name="PREF_AddOnServicesSummary">"订阅是一个需付费的服务。"</string>
+    <string name="PREF_AddOnServicesSubscribe">"使用 PayPal 来订阅"</string>
+
+    <string name="PREFMainScreen_ZonesLabel">"已存在的区域："</string>
+    <string name="PREFGPSTrack_FileFormatTitle">"文件格式"</string>
+    <string name="PREFGPSTrack_FileFormatSummary">"选择追踪记录要是使用的文件格式"</string>
+    <string name="PREFGPSTrack_CSVFileFormatMessage">"CSV 是经常使用的格式‘"</string>
+    <string name="PREFGPSTrack_KMLFileFormatTitle">"KML"</string>
+    <string name="PREFGPSTrack_KMLFileFormatSummary">"Keyhole 标记语言"</string>
+    <string name="PREFGPSTrack_GPXFileFormatTitle">"GPX"</string>
+    <string name="PREFGPSTrack_GPXFileFormatSummary">"GPS交换格式"</string>
+    <string name="PREFGPSTrack_MinimumTimeTitle">"两个点之间的最小时间"</string>
+    <string name="PREFGPSTrack_MinimumTimeSummary">"你两个位置记录之间的最小时间"</string>
+    <string name="PREFGPSTrack_AccuracyTitle">"精确度"</string>
+    <string name="PREFGPSTrack_AccuracySummary">"对于一个有效的追踪点的最小精确度。一般使用 KML 和 GPX 格式记录。."</string>
+    <string name="PREFGPSTrack_AutoShutDownTitle">"自停止限制"</string>
+    <string name="PREFGPSTrack_AutoShutDownSummary">"当跳跃点超过此值时自动停止追踪。"</string>
+    <string name="PREFGPSTrack_FileSplitTitle">"追踪文件分割"</string>
+    <string name="PREFGPSTrack_FileSplitSummary">"在N个追踪点后分割追踪文件。设置为0则表示禁用此项。"</string>
+    <string name="PREFGPSTrack_FileLocationMessage">"你的追踪记录文件位于/SDCARD/andicar/gpstrack folder"</string>
+
+    <string name="DIALOGSearch_DialogTitle">"输入标准"</string>
+    <string name="DIALOGSearch_DateFromLabel">"从"</string>
+    <string name="DIALOGSearch_DateToLabel">"到"</string>
+
+    <string name="DIALOGReport_DialogTitle">"报告选项"</string>
+    <string name="DIALOGReport_SendEmailLabel">"  作为Email附加发送"</string>
+    <string name="DIALOGReport_ReportFormatLabel">"报告格式："</string>
+	
+	<string name="DIALOG_TemplateNameTitle">"模板名"</string>
+
+    <string name="DayOfWeek_0">"星期天"</string>
+    <string name="DayOfWeek_1">"星期一"</string>
+    <string name="DayOfWeek_2">"星期二"</string>
+    <string name="DayOfWeek_3">"星期三"</string>
+    <string name="DayOfWeek_4">"星期四"</string>
+    <string name="DayOfWeek_5">"星期五"</string>
+    <string name="DayOfWeek_6">"星期六"</string>
+
+    <string name="Month_01">"一月"</string>
+    <string name="Month_02">"二月"</string>
+    <string name="Month_03">"三月"</string>
+    <string name="Month_04">"四月"</string>
+    <string name="Month_05">"五月"</string>
+    <string name="Month_06">"六月"</string>
+    <string name="Month_07">"七月"</string>
+    <string name="Month_08">"八月"</string>
+    <string name="Month_09">"九月"</string>
+    <string name="Month_10">"十月"</string>
+    <string name="Month_11">"十一月"</string>
+    <string name="Month_12">"十二月"</string>
+
+    <string name="Notif_UpdateTitle">"有更新可用"</string>
+    <string name="Notif_UpdateMsg">"AndiCar 的一个更新版本已可用！"</string>
+    
+    <!-- AddOn Services -->
+    <string name="AddOn_PayPalWarning">"在付费过程中 **不要使用手机的返回键，也不要更改屏幕的显示方向**"</string>
+    <string name="AddOn_SubscribeWaiting">"正在连接 PayPal 服务器。根据服务器的效率，此过程可能需要一分钟。\n请稍等..."</string>
+    <string name="AddOn_SubscriptionInfo">"直到 [#1] 后你即可以订阅这个服务"</string>
+	<string name="AddOn_SubscriptionExpiredOn">"你的订阅这个服务即将过期: [#1]"</string> 
+	<string name="AddOn_SubscriptionWillStartOn">"你的订阅即将激活: [#1]"</string>
+	<string name="AddOn_BtnTryCaption">"开始15天的免费评估"</string>
+	<string name="AddOn_BtnConfigureServiceCaption">"配置服务"</string>
+	<string name="AddOn_BtnRenewSubscriptionCaption">"续订"</string>
+	<string name="AddOn_PreferencesTitle">"配置附加服务"</string>
+	<string name="AddOn_PreferencesSummary">"配置你的附加服务"</string>
+	<string name="AddOn_PreferencesCategoryTitle">"附加服务"</string>
+	<string name="AddOn_SubscriptionExpireWarning">"你对 [#1] 的订阅将在 [#2] 天后到期"</string>
+
+    <string name="AddOn_15DayFreeSubscription">"15天免费的订阅评估。"</string>
+    <string name="AddOn_SixMonthSubscription">"订阅六个月：[#1] [#2]"</string>
+    <string name="AddOn_OneYearSubscription">"订阅一年：[#1] [#2]"</string>
+	<string name="AddOn_LifeTimeSubscription">"订阅的使用期限：[#1] [#2]"</string>
+
+	<string name="AddOn_SubscriptionExpired">"你对 [#1] 的订阅已过期。"</string>
+	<string name="AddOn_RenewSubscriptionPeriodInfo">"新的服务将其添加到当前的订阅"</string>
+	<string name="AddOn_RenewSubscriptionText">"更新订阅:"</string> 
+	<string name="AddOn_CreateSubscriptionText">"使用中的订阅:"</string>
+	<string name="AddOn_SubscriptionBilled">" [#1]支付已接受."</string>
+	<string name="AddOn_SubscriptionNotBilled">" [#1] 未支付成功!"</string>
+	<string name="AddOn_SubscriptionPaymentPending">"你的支付正在处理中.订阅将在有效票据生成之后可用.请耐心等待，这或许需要花费2天左右的时间."</string>
+
+	<string name="AddOn_FortumoPriceExplanation">"每个国家的价格各有不同，但是都比一包香烟和一瓶酒便宜.\n按启动按钮来看看确切的价格.之后，你也可以取消付款.\n\n认购期为一年. 这段时间过后,订阅应该更新以保持插件激活."</string> 
+	<string name="AddOn_FortumoPaymentDescription">"您将要购买一年期订阅[#1]"</string>
+	<string name="AddOn_FortumoPayment">"移动电话帐单"</string> 
+	<string name="AddOn_FortumoPaymentNotAvailable">"移动电话帐单在您的国家不可用."</string>
+
+    <string name="AddOn_SecureBackup_Title">"安全备份"</string>
+    <string name="AddOn_SecureBackup_Description">"每完成一次数据库备份，此服务都会自动的将其作为邮件的附件发送到预先配置好的Email地址。通过这样的方法，你的记录数据能在哪怕手机都丢了的情况下都可用。结合安全备份插件，彻底解决你的数据安全问题。"</string>
+    <string name="AddOn_SecureBackup_LongDescription">"自动上传备份到你的 Google 账户，这样哪怕手机丢了，你也可用获取到它们"</string>
+    <string name="AddOn_SecureBackup_TermOfService">"我们不对以下情况负责：极差/不存在/有问题的网络连接所导致的数据备份不完整/损坏、您的 Google 账户所拥有的储存空间不足、从Google 邮箱删除文件或是其他的方式导致备份文件丢失或不可用。"</string>
+    <string name="AddOn_SecureBackup_Requirements">"服务要求：有效的 GMail 账户，网络连接，移动数据传输"</string>
+
+    <string name="AddOn_SecureBackup_Configure">"转至安全备份配置以输入缺失的信息。"</string>
+	<string name="AddOn_SecureBackup_Text1">"这些数据都储存在你的内部存储器中而不是 AndiCar 的数据库中。\n外部程序/应用将无法访问。"</string>
+	<string name="AddOn_SecureBackup_SMTPUserFrom">"来自 Email (需要 GMail 账户)："</string>
+	<string name="AddOn_SecureBackup_SMTPEmailTo">"发送到 Email："</string>
+	<string name="AddOn_SecureBackup_IncludeGPSTrack">"包括 GPS 轨迹文件"</string>
+	<string name="AddOn_SecureBackup_IncludeReports">"包括生成的报告"</string>
+    
+    
+	<string name="AddOn_AutoBackupService_Title">"备份服务"</string>
+	<string name="AddOn_AutoBackupService_Description">"此服务允许你计划性的设置每天/每周自动的进行数据库备份。结合安全备份插件，彻底解决你的数据安全问题。"</string>
+	<string name="AddOn_AutoBackupService_TermOfService">""</string>
+	<string name="AddOn_AutoBackupService_Requirements">"服务需要：SD卡上有足够的剩余空间，所需空间的大小取决于你数据库的大小以及现有的备份数量。"</string>
+
+	<string name="AddOn_AutoBackupService_ScheduleTitle">"备份服务时间表"</string>
+	<string name="AddOn_AutoBackupService_ScheduleFrequency">"频率："</string>
+	<string name="AddOn_AutoBackupService_ScheduleHour">"小时："</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups1">"仅保留最新的"</string>
+	<string name="AddOn_AutoBackupService_NoOfBackups2">"备份。"</string>
+	<string name="AddOn_AutoBackupService_NotifyIfSuccess">"成功时进行通知"</string>
+	<string name="AddOn_AutoBackupService_NotifyIfFailure">"失败时进行通知"</string>
+	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"至少需要选择一天！"</string>
+	<string name="AddOn_AutoBackupService_BackupSucceeded">"备份文件创建成功"</string>
+	<string name="AddOn_AutoBackupService_BackupFailed">"备份失败！请检查你的SD卡。"</string>
+    
+	<string name="AddOn_DataTemplate_Title">"数据录入模板"</string>
+	<string name="AddOn_DataTemplate_Description">"此插件允许你为数据条目使用模板。\n由于使用模板可以为你自动完成一些字段，你的效率将会得到显著的提高。"</string>
+	<string name="AddOn_DataTemplate_ApplyTemplateLbl">"模板"</string>
+	<string name="AddOn_DataTemplate_UpdatedMsg">"已更新模板"</string>
+	<string name="AddOn_DataTemplate_CreatedMsg">"已根据当前值创建了一个新的模板"</string>
+	
+	<string name="AddOn_DataEntryPref_CategoryTitle">"数据录入模板"</string>
+	<string name="AddOn_DataEntryPref_ExpenseTitle">"支出模板"</string>
+	<string name="AddOn_DataEntryPref_MileageTitle">"里程模板"</string>
+	<string name="AddOn_DataEntryPref_RefuelTitle">"燃料模板"</string>
+	<string name="AddOn_DataEntryPref_GPSTitle">"GPS 路径模板"</string>
+
+	<string name="AddOn_BTStarter_Title">"蓝牙连接检测器"</string>
+	<string name="AddOn_BTStarter_Description">"当检测到与一辆汽车有一个蓝牙连接时自动启动GPS路径控制器(需要 Android 2+)"</string>
+	<string name="AddOn_BTStarter_DeviceListActivityTitle">"已连接的设备"</string>
+	<string name="AddOn_BTStarter_DeviceLinkActivityTitle">"连接设备到汽车"</string>
+	<string name="AddOn_BTStarter_PairedDevicesLabel">"已配对设备："</string>
+	<string name="AddOn_BTStarter_LinkedTo">"已连接到："</string>
+	<string name="AddOn_BTStarter_NoLinkedCar">"无法获取到已连接的汽车。\n应该删除此条目。"</string>
+	<string name="AddOn_BTStarter_LinkToCar">"连接到汽车："</string>
+
+</resources>

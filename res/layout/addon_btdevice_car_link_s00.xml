@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginRight="5dp"
+    android:id="@+id/vgRoot"
+    android:background="@android:color/black"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginRight="5dp"
+       	android:id="@+id/fakeFocus"
+		android:focusable="true"
+		android:focusableInTouchMode="true" 
+        />
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+        <ImageButton
+            android:id="@android:id/closeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_cancel_selector"
+            />
+        <ImageButton
+            android:id="@android:id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_background_selector"
+            android:src="@drawable/icon_done_selector"
+            android:layout_marginRight="5dp"
+            />
+    </RelativeLayout>
+    <TextView
+        android:layout_height="1dp"
+        android:layout_width="fill_parent"
+        android:background="@color/separator_bg"
+        android:layout_marginTop="10dp"
+        />
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="vertical"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            >
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/AddOn_BTStarter_PairedDevicesLabel"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                />
+                <Spinner android:id="@+id/spnBTPairedDevices"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:background="@drawable/white_background"
+                    android:prompt="@string/GEN_ChooseOneTitle"
+                />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/AddOn_BTStarter_LinkToCar"
+                    android:typeface="sans"
+                    android:textColor="@android:color/white"
+                />
+                <Spinner android:id="@+id/spnCar"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true"
+                    android:background="@drawable/white_background"
+                    android:prompt="@string/GEN_ChooseOneTitle"
+                />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/ckIsActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_IsActiveLabel"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                android:button="@drawable/checkbox_selector"
+                />
+
+            <TextView
+                android:id="@+id/tvUserCommentLabel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_UserCommentLabel"
+                android:typeface="sans"
+                android:textColor="@android:color/white"
+                />
+            <EditText
+                android:id="@+id/etUserComment"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_background"
+                />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

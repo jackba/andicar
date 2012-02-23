@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - Aplicación de administración de Automóviles para dispositivos Android.
+
+ Derechos de autor (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ Este programa es una aplicación libre: La puedes re distribuir y/o modificar 
+ bajo los términos de  GNU Licencia Pública General como ha sido publicado por 
+ la Fundación del Software Libre, tanto la versión 3 de el Licencia, o
+ (en forma opcional) cualquier versión posterior.
+
+ este programa es distribuido en la fe de que sera útil,
+ pero SIN NINGUNA GARANTÍA; si siquiera la garantía de
+ COMERCIALIZACIÓN o buen estado para un USO  PARTICULAR.
+ Ver GNU Licencia Pública General para mas detalles.
+
+ Deberías haber recibido una copia de la Licencia Pública General, GNU
+ con este programa. De no ser así,la puedes encontrar en <http://www.gnu.org/licenses/>.
+-->
+<!--Inicio de cadenas de la base de datos-->
+<resources>
+    <!-- UOM's -->
+    <string name="DB_UOM_KmName">"Kilómetro"</string>
+    <string name="DB_UOM_KmComment">"Kilómetro"</string>
+    <string name="DB_UOM_MiName">"Milla"</string>
+    <string name="DB_UOM_MiComment">"Milla"</string>
+    <string name="DB_UOM_LName">"Liter"</string>
+    <string name="DB_UOM_LComment">"Liter"</string>
+    <string name="DB_UOM_USGName">"Galón USA"</string>
+    <string name="DB_UOM_USGComment">"Galón Americano"</string>
+    <string name="DB_UOM_GBGName">"Galón Imperial"</string>
+    <string name="DB_UOM_GBGComment">"Galón Imperial"</string>
+    <!-- UOM Conversions -->
+    <string name="DB_UOMConv_MiToKmName">"millas a kilómetros"</string>
+    <string name="DB_UOMConv_MiToKmComment">"Millas a Kilómetros"</string>
+    <string name="DB_UOMConv_KmToMiName">"kilómetros a millas"</string>
+    <string name="DB_UOMConv_KmToMiComment">"kilómetros a Millas"</string>
+    <string name="DB_UOMConv_USGToLName">"Galones USA a litros"</string>
+    <string name="DB_UOMConv_USGToLComment">"Galones a Litros"</string>
+    <string name="DB_UOMConv_LToUSGName">"litros A Galones Americanos"</string>
+    <string name="DB_UOMConv_LToUSGComment">"Litros a Galones Americanos"</string>
+    <string name="DB_UOMConv_GBGToLName">"Galones GB a litros"</string>
+    <string name="DB_UOMConv_GBGToLComment">"Galón Imperial a Litros"</string>
+    <string name="DB_UOMConv_LToGBGName">"litros a Galones GB"</string>
+    <string name="DB_UOMConv_LToGBGComment">"Litros a Galón Imperial"</string>
+    <string name="DB_UOMConv_GBGToUSGName">"Galón Imperial a Galón Americano"</string>
+    <string name="DB_UOMConv_GBGToUSGComment">"Galón Imperial a Galón Americano"</string>
+    <string name="DB_UOMConv_USGToGBGName">"Galón Americano a Galón Imperial"</string>
+    <string name="DB_UOMConv_USGToGBGComment">"Galón Americano a Galón Imperial"</string>
+    <!-- expense types -->
+    <string name="DB_ExpType_PersonalName">"Personal"</string>
+    <string name="DB_ExpType_PersonalComment">"Gastos Personales"</string>
+    <string name="DB_ExpType_EmployerName">"Negocios"</string>
+    <string name="DB_ExpType_EmployerComment">"Gastos de Negocio"</string>
+    <!-- expense categories -->
+    <string name="DB_ExpCat_ServiceName">"Servicio"</string>
+    <string name="DB_ExpCat_ServiceComment">"Gastos del Servicio"</string>
+    <string name="DB_ExpCat_InsuranceName">"Seguro"</string>
+    <string name="DB_ExpCat_InsuranceComment">"Gastos del Seguro"</string>
+    <!-- fuel types -->
+    <string name="DB_FuelType_Diésel1D">"Diésel 1D"</string>
+    <string name="DB_FuelType_Diésel1DComment">"Preferido en bajas temperaturas"</string>
+    <string name="DB_FuelType_Diésel2D">"Diésel 2D"</string>
+    <string name="DB_FuelType_Diésel2DComment">"Preferido en altas temperaturas"</string>
+    <string name="DB_FuelType_DiéselBio">"Diésel Biológico"</string>
+    <string name="DB_FuelType_DiéselBioComment">"Obtenido de aceites vegetales o grasas animales"</string>
+    <string name="DB_FuelType_DiéselSynthetic">"Diésel Sintético"</string>
+    <string name="DB_FuelType_DiéselSyntheticComment">"Derivado de varias fuentes como madera, maiz y posiblemente desperdicios"</string>
+    <string name="DB_FuelType_GasolineRegular">"Gasolina Regular"</string>
+    <string name="DB_FuelType_GasolineRegularComment">"Gasolina 87 Octanos"</string>
+    <string name="DB_FuelType_GasolineMidgrade">"Gasolina moderada"</string>
+    <string name="DB_FuelType_GasolineMidgradeComment">"Gasolina 89 Octanos"</string>
+    <string name="DB_FuelType_GasolinePremium">"Gasolina Especial"</string>
+    <string name="DB_FuelType_GasolinePremiumComment">"Gasolina 91,92 Octanos"</string>
+    <string name="DB_FuelType_LPG">"GNC"</string>
+    <string name="DB_FuelType_LPGComment">"Gas Natural Comprimido"</string>
+    
+    <!-- currencies -->
+    <string name="DB_Curr_EUR">"Euro"</string>
+    <string name="DB_Curr_USD">"Dolar Americano"</string>
+    <string name="DB_Curr_HUF">"Florín húngaro"</string>
+    <string name="DB_Curr_RON">"Leu Rumano"</string>
+    <string name="DB_Curr_AUD">"Dolares Australiano"</string>
+    <string name="DB_Curr_CAD">"Dolares Canadiense"</string>
+    <string name="DB_Curr_CHF">"Francos Suizos"</string>
+    <string name="DB_Curr_CNY">"Yuan Chino"</string>
+    <string name="DB_Curr_GBP">"libra Esterlina"</string>
+    <string name="DB_Curr_JPY">"Yen Japones"</string>
+    <string name="DB_Curr_RUB">"Rublo Ruso"</string>
+    <string name="DB_Curr_INR">"Rupia India"</string>
+    <string name="DB_Curr_ARS">"Peso Argentino"</string>
+    <string name="DB_Curr_BRL">"Real Brasileño"</string>
+    <string name="DB_Curr_BGL">"Leva Búlgara"</string>
+    <string name="DB_Curr_XAF">"Franco de África Central"</string>
+    <string name="DB_Curr_COP">"Peso Colombiano"</string>
+    <string name="DB_Curr_HRK">"Corona Croata"</string>
+    <string name="DB_Curr_CZK">"Corona Checa"</string>
+    <string name="DB_Curr_DKK">"Corona Danesa"</string>
+    <string name="DB_Curr_EGP">"Libra Egipcia"</string>
+    <string name="DB_Curr_EEK">"Kroon Estonio"</string>
+    <string name="DB_Curr_GEL">"Lari Georgiano"</string>
+    <string name="DB_Curr_HKD">"Dolares Hong Kong"</string>
+    <string name="DB_Curr_ILS">"Shekel Israeli"</string>
+    <string name="DB_Curr_KRW">"Won Korea del Sur"</string>
+    <string name="DB_Curr_MXN">"Peso Mejicano"</string>
+    <string name="DB_Curr_NOK">"Corona Noruega"</string>
+    <string name="DB_Curr_PLN">"złoty Polaco"</string>
+    <string name="DB_Curr_SAR">"Riyal Arabia Saudita"</string>
+    <string name="DB_Curr_ZAR">"Rand Sudafricano"</string>
+    <string name="DB_Curr_SEK">"Corona Sueca"</string>
+    <string name="DB_Curr_TRY">"lira Turca"</string>
+    <string name="DB_Curr_UAH">"hryvnia Ucrania"</string>
+    <string name="DB_Curr_AED">"Dirham Marroqui"</string>
+    
+    <!-- default tag -->
+    <string name="DB_Tag_Default">"Por defecto"</string>
+
+    <string name="DB_TaskType_ServiceName">"Servicio"</string>
+    <string name="DB_TaskType_ServiceComment">"Mantenimiento Recurrente"</string>
+    <string name="DB_TaskType_ReminderName">"Recordatorio"</string>
+    <string name="DB_TaskType_ReminderComment">"Recordatorio de Tareas Generales"</string>
+    <string name="DB_DemoTask_Name">"Kilómetros Diarios"</string>
+    <string name="DB_DemoTask_Comment">"Has entrado tus kilómetros Diarios?\nEsta es una tarea de demostración. La Puedes modificar o borrar desde Preferencias -&gt; Tareas."</string> <!-- \n is a New Line character-->
+    
+    
+</resources>

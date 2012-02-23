@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 - 2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="org.andicar.activity"
+          android:versionCode="3720" 
+          android:versionName="3.7.2"
+          android:installLocation="internalOnly">
+<!-- 
+	internalOnly becouse:
+		-services
+		-BOOT_COMPLETED broadcast receiver
+	See http://developer.android.com/guide/appendix/install-location.html
+ -->          
+    <uses-sdk android:minSdkVersion="4" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<!-- <uses-permission android:name="android.permission.CALL_PHONE" />  -->
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+	<uses-permission android:name="android.permission.BLUETOOTH"/>
+	
+	<!-- Fortumo Required Permissions -->
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.RECEIVE_SMS" />
+	<uses-permission android:name="android.permission.SEND_SMS" />
+	<!-- For security purposes, broadcast should be protected by permission. -->
+	<permission 
+	    android:label="Read Fortumo payment status" 
+	    android:name="com.andicar.addon.permission.PAYMENT_BROADCAST_PERMISSION" 
+	    android:protectionLevel="signature" 
+    />
+	<uses-permission android:name="com.andicar.addon.permission.PAYMENT_BROADCAST_PERMISSION" />
+	
+	<!-- need by secure backup -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- required by PayPal activity -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <supports-screens 
+    	android:smallScreens="true"
+        android:normalScreens="true" 
+        android:largeScreens="true"
+    	android:anyDensity="true"/>
+	
+	<uses-feature android:name="android.hardware.location" android:required="false" />
+	<uses-feature android:name="android.hardware.location.gps" android:required="false" />
+	<uses-feature android:name="android.hardware.location.network" android:required="false" />
+	<uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+	<uses-feature android:name="android.hardware.telephony" android:required="false" />
+		
+    <application
+        android:label="AndiCar"
+        android:description="@string/APP_Description"
+        android:icon="@drawable/car2"
+        android:debuggable="true"
+    >
+        <uses-library android:name="com.google.android.maps" />
+
+        <receiver android:name="org.andicar.service.AndiCarServiceStarter">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED"></action>
+				<action android:name="android.intent.action.DATE_CHANGED"></action>
+			</intent-filter>
+		</receiver>
+		 
+        <service android:name="org.andicar.service.GPSTrackService" />
+        <service android:name="org.andicar.service.UpdateCheckService" />
+        <service android:name="org.andicar.service.ToDoManagementService" /> 
+        <service android:name="org.andicar.service.ToDoNotificationService" /> 
+        
+        <activity android:name="org.andicar.activity.MainActivity"
+                  android:label="AndiCar"
+                  android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.CommonListActivity">
+        </activity>
+        
+        <activity
+            android:name="org.andicar.activity.DriverEditActivity"
+            android:label="@string/APP_Activity_DriverEdit">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.CarEditActivity"
+            android:label="@string/APP_Activity_CarEdit">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.preference.AndiCarPreferencesActivity"
+            android:label="@string/APP_Activity_Preferences">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.preference.GPSPreferencesActivity"
+            android:label="@string/APP_Activity_GPSPreferences">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.ExpenseTypeEditActivity"
+            android:label="@string/APP_Activity_ExpenseTypeEdit">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.UOMEditActivity"
+            android:label="@string/APP_Activity_UOMEdit">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.UOMConversionEditActivity"
+            android:label="@string/APP_Activity_UOMConversionEdit">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.CurrencyEditActivity"
+            android:label="@string/APP_Activity_CurrencyEdit">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.report.MileageListReportActivity"
+            android:label="@string/APP_Activity_MileageList">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.MileageEditActivity"
+            android:label="@string/APP_Activity_MileageEdit">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.report.RefuelListReportActivity"
+            android:label="@string/APP_Activity_RefuelList">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.RefuelEditActivity"
+            android:label="@string/APP_Activity_RefuelEdit">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.miscellaneous.AboutActivity"
+            android:label="@string/APP_Activity_About">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.miscellaneous.BackupRestoreActivity"
+            android:label="@string/APP_Activity_BackupRestore">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.ExpenseCategoryEditActivity"
+            android:label="@string/APP_Activity_ExpenseCategoryEdit">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.report.ExpensesListReportActivity"
+            android:label="@string/APP_Activity_ExpenseList">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.ExpenseEditActivity"
+            android:label="@string/APP_Activity_ExpenseEdit">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.preference.MainScreenPreferenceActivity"
+            android:label="@string/PREF_MainScreen">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.CurrencyRateEditActivity"
+            android:label="@string/APP_Activity_CurrencyRateEdit">
+        </activity>
+
+       <activity
+            android:name="org.andicar.activity.miscellaneous.GPSTrackMap"
+            android:label=""
+            android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+
+       <activity
+            android:name="org.andicar.activity.miscellaneous.GPSTrackController"
+            android:label="@string/APP_Activity_GPSTrackController">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.report.GPSTrackListReportActivity"
+            android:label="@string/APP_Activity_GPSTrackList">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.GPSTrackEditActivity"
+            android:label="@string/APP_Activity_GPSTrackEdit">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.BPartnerEditActivity"
+            android:label="@string/APP_Activity_BPartnerEdit">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.BPartnerLocationEditActivity"
+            android:label="@string/APP_Activity_BPartnerLocationEdit">
+        </activity>
+
+        <activity
+            android:name="org.andicar.activity.TagEditActivity"
+            android:label="@string/APP_Activity_TagEdit">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.miscellaneous.MessageActivity"
+            android:label="@string/APP_Activity_Message">
+        </activity>
+        
+        <activity 
+            android:name="org.andicar.activity.TaskTypeEditActivity"
+            android:label="@string/APP_Activity_TaskTypeEdit">
+        </activity>
+
+        <activity 
+            android:name="org.andicar.activity.TaskEditActivity"
+            android:label="@string/APP_Activity_TaskEdit">
+        </activity>
+        <activity 
+            android:name="org.andicar.activity.report.ToDoListReportActivity"
+            android:label="@string/APP_Activity_TodoList">
+        </activity>
+        
+        <activity 
+        	android:theme="@android:style/Theme.Dialog"
+        	android:label=""
+            android:name="org.andicar.activity.dialog.ToDoNotificationDialog">
+        </activity>
+
+        <activity 
+        	android:theme="@style/AndiCarDialog"
+        	android:label="@string/MainActivity_WhatsNewDialogTitle"
+            android:name="org.andicar.activity.dialog.WhatsNewDialog">
+        </activity>
+
+        <!-- AddOn Services -->
+        <service android:name="com.andicar.addon.services.BackupService" 
+			android:label="AndiCarBackupService"
+			android:process="com.andicar.addon.services">
+ 		</service>
+
+        <service android:name="com.andicar.addon.services.CheckSubscriptionsService" 
+			android:label="AndiCarCheckSubscription"
+			android:process="com.andicar.addon.services">
+ 		</service>
+
+        <activity
+            android:name="com.andicar.addon.activity.AddOnServicesList"
+            android:label="@string/PREF_AddOnCategoryTitle">
+        </activity>
+        
+        <activity
+            android:name="com.andicar.addon.activity.ServiceSubscriptionOptions">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.PPPayment">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.FortumoPayment">
+        </activity>
+
+        <!-- Fortumo -->
+ 		<activity android:name="com.fortumo.android.FortumoActivity" 
+ 		    android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+		<!-- Fortumo Service -->
+		<service android:name="com.fortumo.android.FortumoService" />
+        <service android:name="com.fortumo.android.StatusUpdateService" />
+		<receiver android:name="com.fortumo.android.BillingSMSReceiver">
+              <intent-filter>
+                  <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+              </intent-filter>
+        </receiver>
+        <receiver android:name="com.andicar.addon.services.FortumoPaymentStatusChangeReceiver">
+             <intent-filter>
+                 <action android:name="com.fortumo.android.PAYMENT_STATUS_CHANGED" />
+             </intent-filter>
+        </receiver>
+                    
+        <activity 
+			android:name="com.paypal.android.MEP.PayPalActivity"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar"
+			android:configChanges="keyboardHidden|orientation">
+        </activity>
+
+        <activity
+            android:name="com.andicar.addon.activity.AddOnPreferences"
+            android:label="@string/AddOn_PreferencesTitle">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.BackupSchedule"
+            android:label="@string/AddOn_AutoBackupService_ScheduleTitle">
+        </activity>
+
+        <activity
+            android:name="com.andicar.addon.activity.SecureBackupConfig"
+            android:label="@string/AddOn_SecureBackup_Title">
+        </activity>
+
+        <activity
+            android:name="com.andicar.addon.activity.DataEntryTemplateList"
+            android:label="@string/AddOn_DataEntryPref_CategoryTitle">
+        </activity>
+
+        <service android:name="com.andicar.addon.services.FileMailer" 
+			android:label="AndiCarFileMailer"
+			android:process="com.andicar.addon.services">
+ 		</service>
+            
+        <activity
+            android:name="com.andicar.addon.activity.BTDeviceCarList"
+            android:label="@string/AddOn_BTStarter_DeviceListActivityTitle">
+        </activity>
+        <activity
+            android:name="com.andicar.addon.activity.BTDeviceCarLink"
+            android:label="@string/AddOn_BTStarter_DeviceLinkActivityTitle">
+        </activity>
+        <receiver android:name="com.andicar.addon.services.AndiCarBTConnectionReceiver">
+			<intent-filter>
+				<action android:name="android.bluetooth.device.action.ACL_CONNECTED"></action>
+			</intent-filter>
+		</receiver>
+        <receiver android:name="com.andicar.addon.services.NetworkStatusChangeReceiver">
+			<intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action>
+			</intent-filter>
+		</receiver>
+            
+    </application>
+</manifest>

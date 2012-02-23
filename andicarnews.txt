@@ -1,0 +1,6 @@
+<b><i>What's new:</i></b><br><br>
+<i>Version 3.7.0:</i><br>
+* A new, light, user interface style. Open Preferences -> Interface Style to swich between the dark (old) and light (new) style.<br>
+* Various bug fixes<br><br>
+<i>Version 3.7.1:</i><br>
+* A convenient carrier billing option for AddOn subscription. Available in more than 60 countries.<br>

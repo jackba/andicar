@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+ Translated to German on 24.02.2011 by andy@haubenschmid.li
+-->
+
+<!--
+        < = <
+-->
+
+<resources>
+    <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
+	AndiCar ist eine freie, OpenSource Fahrzeug Management
+	Software für Android basierte Geräte.\n
+	
+	Sie wurde unter der GNU General Public License, version 3 veröffendlicht.\n
+	Weitere Informationen in der Seite \"Über AndiCar\"\n
+	Danke dass du <B><I>AndiCar</I></B> benutzt.
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
+	<B><I>AndiCar</I></B> ist eine freie, OpenSource Fahrzeug Management
+	Software für Android basierte Geräte.\n
+	
+	Sie wurde unter der GNU General Public License, version 3 veröffendlicht.\n
+	Weitere Informationen in der Seite \"Über AndiCar\"\n
+	Copyright © 2010-2012 Miklós Keresztes.\n
+	Danke dass du <B><I>AndiCar</I></B> benutzt.
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML1">
+	<B><I>AndiCar</I></B> ist eine freie, OpenSource Fahrzeug Management
+	Software für Android Geräte.\n
+	
+	Sie wurde unter der GNU General Public License, version 3 veröffendlicht.\n
+
+        *  Weitere Informationen (How To, letzte Neuigkeiten, etc.) findest Du auf der Homepage des Projekts unter
+        <a href="http://www.andicar.org">http://sites.google.com/site/andicarfree/</a>.\n
+        <small>Aktualisiere die Seite in Deinem Browser wenn du die Fehlermeldung \"Web page not available\" bekommst.</small>\n
+        *  Wenn Du Fragen hast, wende Dich an die <b><i>AndiCar</i></b> Diskussionsgruppe auf
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
+        *  Für Fehlerberichte oder wenn Du zusätzliche Features möchtest, dann schreib ein kurzes Mail an die 	
+	   <b><i>AndiCar</i></b> Wunschliste unter
+        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
+        *  Du kannst Dich für den Projekt Newsletter unter 
+        <a href="http://www.andicar.org/News/">http://sites.google.com/site/andicarfree/News/</a> 
+	   anmelden.\n
+        *  Für alles andere kannst Du ein Mail (am besten in englischer Sprache) an andicar.support@gmail.com senden.\n
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML2">
+	Danke dass du <B><I>AndiCar</I></B> benutzt.\n\n
+        <b><i>Credits:</i></b>\n
+        *  Chinesische Übersetzung durch <a href="http://goapk.com/">goapk.com</a> \n
+        *  Russische Übersetzung durch Andrey Demin - andde@rambler.ru\n
+		*  Erste Deutsche Übersetzung durch Andy Haubenschmid - andy@haubenschmid.li\n
+		*  Hungarische Übersetzung durch Péter Nagy - microbilab@gmail.com\n
+		*  Spanische Übersetzung durch Daniel Iozzi - danieliozzi@gmail.com\n 
+        \n<b><i>Copyright Hinweis</i></b>:\n\n
+        Copyright © 2010-2012 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
+		Dieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.\n\n
+		Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n\n
+		Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben. Falls nicht, siehe <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a> nach.\n
+		Die gesamte Lizenz kann <a href="http://www.gnu.org/licenses/gpl.html">HIER</a> gefunden werden.\n
+    </string>
+
+    <string name="AddOn_SubscriptionValidity">
+	Die Registrierung ist für die aktuelle Datenbankinstanz gültig.\n
+	Leg gleich nach der Registrierung ein Backup Deiner Datenbank an!
+    </string>
+
+</resources>

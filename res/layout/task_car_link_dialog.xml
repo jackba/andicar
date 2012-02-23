@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:id="@+id/vgRoot"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="15dp"
+        >
+
+        <LinearLayout
+           	android:id="@+id/llTaskZone"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+        	android:layout_marginLeft="5dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_TaskLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <Spinner
+            	android:id="@+id/spnTask"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
+                android:background="@color/search_dialog_spinner_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+           	android:id="@+id/llCarZone"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+        	android:layout_marginLeft="5dp"
+            >
+            <TextView
+                android:id="@+id/tvCarLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/GEN_CarLabel"
+	            android:typeface="sans"
+	            android:textColor="@android:color/white"
+                />
+            <Spinner android:id="@+id/spnCar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawSelectorOnTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="2dp"
+                android:background="@color/search_dialog_spinner_bg"
+                android:prompt="@string/GEN_ChooseOneTitle"
+                />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llStartingDateZone"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+       		android:layout_marginLeft="5dp"
+            >
+	        <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/TaskCarEditActivity_StartDate"
+		        android:typeface="sans"
+		        android:textColor="@android:color/white"
+	        />
+	        <LinearLayout
+	            android:orientation="horizontal"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="5dp"
+	            android:gravity="center_vertical|right"
+	            >
+		        <TextView
+			         android:id="@+id/tvFirstRunDate"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:text="@string/GEN_SetDate"
+			         android:typeface="sans"
+			         android:textColor="@android:color/white"
+		        />
+	            <ImageButton android:id="@+id/btnPickDate"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="10dp"
+	                    android:background="@drawable/btnsmall_background_selector"
+	                    android:src="@drawable/icon_calendar_selector"
+	                    />
+	            <ImageButton android:id="@+id/btnPickTime"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="10dp"
+	                    android:background="@drawable/btnsmall_background_selector"
+	                    android:src="@drawable/icon_clock_selector"
+	                    />
+	        </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llStartingMileageZone"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+       		android:layout_marginLeft="5dp"
+	        android:layout_marginTop="20dp"
+	        android:gravity="center_vertical"
+            >
+	        <TextView
+		         android:layout_width="wrap_content"
+		         android:layout_height="wrap_content"
+		         android:text="@string/TaskCarEditActivity_StartMileage"
+		         android:typeface="sans"
+		         android:textColor="@android:color/white"
+	        />
+            <EditText
+                android:id="@+id/etIndexStart"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:numeric="decimal"
+                android:digits="1234567890"
+                android:inputType="phone"
+                android:background="@drawable/white_background"
+	       		android:layout_marginLeft="5dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

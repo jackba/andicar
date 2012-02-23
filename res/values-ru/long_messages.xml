@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ Translated to Russian by Andrey Demin, andde@rambler.ru
+-->
+
+<!--
+        < = <
+-->
+
+<resources>
+    <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
+        AndiCar -  это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, 
+		предназначенное для устройств на платформе Android \n
+		Она лицензирована в  соответствии с GNU General Public License, версия 3.
+		Смотрите больше информации на странице О программе.\n
+		Спасибо за использование AndiCar!
+    </string>
+
+	<string name="LM_MAIN_ACTIVITY_USABILITY_MESSAGE">
+            Ниже приведены некоторые общие правила для удобства пользования AndiCar:\n
+            * нажмите кнопку Меню чтобы увидеть описание опций на отдельном экране\n
+            * в списке нажмите на запись чтобы редактировать ее. Долгое нажатие  - для большего числа опций\n\n
+            ** посетите www.andicar.org -> \"Чтобы\" узнать больше про использование AndiCar **\n\n
+            Спасибо.
+    </string>
+    
+    <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
+    	<b><i>AndiCar</i></b> - это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, предназначенная для устройств на платформе Android
+        Она лицензирована в  соответствии с GNU General Public License, версия 3.\n
+        Смотрите больше информации на странице О программе.\nCopyright © 2010-2012 Miklós Keresztes.\n
+        Спасибо за использование <b><i>AndiCar</i></b>!
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML1">
+        <b><i>AndiCar</i></b> - это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, 
+		предназначенное для устройств на платформе Android. Она лицензирована в  соответствии с GNU General Public License.\n
+        *  Для получения подробной информации (как использовать, последние новости и т.д.) пожалуйста посетите домашнюю страницу проекта 
+        <a href="http://www.andicar.org">www.andicar.org</a>\n
+        <small> Обновите страницу в своем браузере, если вы получили сообщение "Web page not available".</small>\n
+        *  Свои вопросы задайте в дискуссионной группе <b><i>AndiCar</i></b> на
+        <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
+        *  Для сообщениий об ошибках  и предложений по улучшению программы, не стесняйтесь использовать справочную систему <b><i>AndiCar</i></b> на
+        <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
+        *  Вы можете подписаться на новости проекта на странице
+        <a href="http://www.andicar.org/News/">www.andicar.org/News/</a>.\n
+        *  Для решения прочих вопросов вы можете отправить письмо на andicar.support@gmail.com.\n
+    </string>
+
+    <string name="LM_COPYRIGHT_HTML2">
+        Thank you for using <b><i>AndiCar</i></b>.\n\n
+        <b><i>Credits:</i></b>\n
+        *  Chinese translation by <a href="http://goapk.com/">goapk.com</a> \n
+        *  Russian translation by Andrey Demin - andde@rambler.ru\n
+		*  Initial German translation by Andy Haubenschmid - andy@haubenschmid.li\n
+		*  Hungarian translation by Nagy Péter - microbilab@gmail.com\n
+        *  Spanish translation by Daniel Iozzi - danieliozzi@gmail.com\n
+        \n<b><i>Copyright notice</i></b>:\n\n
+        Copyright © 2010-2012 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
+    	Это программа является свободным программным обеспечением. Вы можете распространять и/или модифицировать её согласно условиям Стандартной Общественной Лицензии GNU, опубликованной Фондом Свободного Программного Обеспечения, версии 3 или, по Вашему желанию, любой более поздней версии.\n\n 
+    	Эта программа распространяется в надежде, что она будет полезной, но БЕЗ ВСЯКИХ ГАРАНТИЙ, в том числе подразумеваемых гарантий ТОВАРНОГО СОСТОЯНИЯ ПРИ ПРОДАЖЕ и ГОДНОСТИ ДЛЯ ОПРЕДЕЛЁННОГО ПРИМЕНЕНИЯ. Смотрите Стандартную Общественную Лицензию GNU для получения дополнительной информации.\n\n 
+    	Вы должны были получить копию Стандартной Общественной Лицензии GNU вместе с программой. В случае её отсутствия, посмотрите <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n
+        The whole license can be found <a href="http://www.gnu.org/licenses/gpl.html">here</a>.\n
+    </string>
+
+    <string name="AddOn_SubscriptionValidity">
+		Подписка действует для текущего экземпляра базы данных..
+     	\n Вы должны создать резервную копию сразу после процесса подписки!     
+	</string>
+	
+	<!-- 
+	<string name="LM_UPDATE_MSG">
+		<b><i>Что нового:</i></b>\n\n
+		* Исправлены ошибки предыдущих версий\n\n
+		* <b>Ограниченное предложение:</b> Подпишитесь на сервис резервного копирования  или безопасного копирования по стоимости  от 0.99$\n\n
+		* <b>Детектор соединения Bluetooth:</b> Автоматическое открытие экран управления записью треков GPS, когда будет обнаружено Bluetooth соединение с автомобилем (работает на Android 2+)
+	</string>
+	 -->
+</resources>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 - 2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:id="@+id/vgRoot"
+    >
+<!-- 
+    android:background="@android:color/black"
+ -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+       	android:id="@+id/fakeFocus"
+		android:focusable="true"
+		android:focusableInTouchMode="true" 
+        >
+        <TextView
+            android:id="@+id/tvText1"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:typeface="sans"
+			android:textColor="@android:color/white"
+        	android:gravity="center_horizontal"
+            />
+        <TextView
+            android:id="@+id/tvText2"
+			android:textSize="16sp"
+			android:textStyle="bold"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:typeface="sans"
+			android:textColor="@android:color/white"
+        	android:gravity="center_horizontal"
+            />
+        <TextView
+            android:id="@+id/tvText3"
+			android:textSize="16sp"
+			android:textStyle="italic"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:typeface="sans"
+			android:textColor="@android:color/white"
+        	android:gravity="center_horizontal"
+            />
+        <TextView
+            android:id="@+id/tvText4"
+			android:textSize="14sp"
+			android:textStyle="italic"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:typeface="sans"
+			android:textColor="@android:color/white"
+        	android:layout_marginLeft="5dp"
+        	android:gravity="left"
+            />
+
+		<LinearLayout
+		    android:id="@+id/llActionZone"
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			>
+		    <TextView
+		        android:layout_height="2dp"
+		        android:layout_width="fill_parent"
+		        android:background="@color/separator_bg"
+		        android:layout_marginTop="10dp"
+		        />
+	         <TextView
+	             android:layout_width="fill_parent"
+	             android:layout_height="wrap_content"
+	             android:textSize="14sp"
+	             android:textStyle="bold"
+	             android:typeface="sans"
+	             android:textColor="@android:color/white"
+	             android:background="@color/header_bg"
+	             android:gravity="center_vertical|center_horizontal"
+	             android:text="@string/ToDo_ActionHdr"
+	             />
+			<LinearLayout
+				android:orientation="horizontal"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp"
+				android:gravity="center_horizontal|center_vertical"
+				>
+				<TextView
+				    android:id="@+id/tvPostponeLabel"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="@string/ToDo_PostPoneLabel"
+				    android:typeface="sans"
+				    android:textColor="@android:color/white"
+					android:textSize="16sp"
+				    />
+				<EditText
+				    android:id="@+id/etPostpone"
+				    android:layout_width="50dp"
+				    android:layout_height="wrap_content"
+				    android:numeric="integer"
+				    android:digits="1234567890"
+				    android:inputType="phone"
+				    android:layout_marginLeft="2dp"
+				    android:background="@drawable/white_background"
+				    />
+				<TextView
+				    android:id="@+id/tvPostponeUOM"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:layout_marginLeft="2dp"
+				    android:typeface="sans"
+				    android:textColor="@android:color/white"
+					android:textSize="16sp"
+				    />
+			</LinearLayout>
+			<TextView
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:typeface="sans"
+			    android:textColor="@android:color/white"
+			    android:text="@string/GEN_Or"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="10dp"
+				android:textSize="16sp"
+			    />
+	
+		    <CheckBox
+		        android:id="@+id/ckIsDone"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/ToDo_IsDoneCaption"
+		        android:typeface="sans"
+		        android:textColor="@android:color/white"
+		        android:button="@drawable/checkbox_selector"
+		        android:layout_marginTop="5dp"
+		        android:layout_marginLeft="20dp"
+		        />
+		</LinearLayout>
+	   
+	    <TextView
+	        android:layout_height="1dp"
+	        android:layout_width="fill_parent"
+	        android:background="@color/separator_bg"
+	        android:layout_marginTop="10dp"
+	        />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:gravity="center_horizontal|center_vertical"
+            >
+	        <ImageButton
+	            android:id="@android:id/button1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/btn_background_selector"
+	            android:src="@drawable/icon_done_selector"
+	            />
+    	</LinearLayout>
+    </LinearLayout>
+</ScrollView>

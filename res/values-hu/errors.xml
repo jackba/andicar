@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Error messages -->
+
+<resources>
+    <string name="ERR_000">"Adatbázis hiba."</string>
+    <string name="ERR_001">"A kezdő index már benne van egy megtett távban"</string>
+    <string name="ERR_002">"Stop/Új index már benne van egy megtett távban"</string>
+    <string name="ERR_003">"A megtett táv átlapolódik egy megtett távval"</string>
+    <string name="ERR_004">"Stop/Új index-nek nagyobbnak kell lennie mint a kezdő indexnek"</string>
+    <string name="ERR_005">"Konverziós ráta már létezik"</string>
+    <string name="ERR_006">"Hiba a rekord létrehozásakor!"</string>
+    <string name="ERR_008">"Hibás dátum/idő formátum!"</string>
+    <string name="ERR_009">"Ez a vezető nem törölhető, mert létező fuvar hivatkozik rá."</string>
+    <string name="ERR_010">"Ez a vezető nem törölhető, mert létező tankolás hivatkozik rá."</string>
+    <string name="ERR_011">"Ez az autó nem törölhető, mert létező fuvar hivatkozik rá."</string>
+    <string name="ERR_012">"Ez az autó nem törölhető, mert létező tankolás hivatkozik rá."</string>
+    <string name="ERR_013">"Ez az mértékegység nem törölhető, mert létező fuvar hivatkozik rá."</string>
+    <string name="ERR_014">"Ez az mértékegység nem törölhető, mert létező tankolás hivatkozik rá."</string>
+    <string name="ERR_015">"Ez az mértékegység nem törölhető, mert mértékegység konvertálás hivatkozik rá."</string>
+    <string name="ERR_016">"Ez a valuta nem törölhető, mert létező autó hivatkozik rá."</string>
+    <string name="ERR_017">"Ez a valuta nem törölhető, mert létező tankolás hivatkozik rá."</string>
+    <string name="ERR_018">"Ez a tipus nem törölhető, mert létező fuvar hivatkozik rá."</string>
+    <string name="ERR_019">"Ez a tipus nem törölhető, mert létező tankolás hivatkozik rá."</string>
+    <string name="ERR_020">"Az SD kártya nem található. Nem tudsz riportot, gps nyomokövetést illetve biztonsági másolatot létrehozni!"</string>
+    <string name="ERR_021">"A riportok könyvtára (/sdcard/andicar/reports) nem hozható létre. Nem mentheted el a riportokat addig, amíg nem hozod létre ezt a könyvtárat."</string>
+    <string name="ERR_022">"Riport fájl nem hozható létre!"</string>
+    <string name="ERR_023">"Fájl írási hiba!"</string>
+    <string name="ERR_024">"A biztonsági mentések könyvtára nem hozható létre (/sdcard/andicar/backup). Nem csinálhatsz biztonsági másolatot addig, amíg nem hozod létre ezt a könyvtárat."</string>
+    <string name="ERR_025">"A mértékegység nem deaktiválható, mert egy aktív autó használja."</string>
+    <string name="ERR_026">"Az árfolyam nem deaktiválható, mert egy aktív autó használja"</string>
+    <string name="ERR_027">"Ez a kategória nem törölhető, mert tankolási adatok hivatkoznak rá.</string>
+    <string name="ERR_028">"Ez a kategória nem törölhető, mert költségek hivatkoznak rá.</string>
+    <string name="ERR_029">"Ez a konverziós ráta már létezik ezekre a pénznemekre."</string>
+    <string name="ERR_030">"Ez a költség nem törölhető, mert tankolás által lett létrehozva.\n A tankolás adatait kell törölni."</string>
+    <string name="ERR_031">"Nem hozhatsz létre konverziót ugyanazokkal a mértékegységekkel."</string>
+    <string name="ERR_032">"Nem hozhatsz létre konverziót ugyanazokkal a valutákkal."</string>
+    <string name="ERR_033">"A GPS nyomkövetés könyvtára nem hozható létre (/sdcard/andicar/gpstrack). Nem használhatod a gps nyomkövetést addig, amíg nem hozod létre ezt a könyvtárat."</string>
+    <string name="ERR_034">"Fájl rendszer hiba!\n Ellenőrizd az SD kártyád."</string>
+    <string name="ERR_035">"Érvénytelen riport."</string>
+    <string name="ERR_036">"Nyomkövetési fájl nem található vagy üres!"</string>
+    <string name="ERR_037">"Ismeretlen autó!\n Ha ez a hiba továbbra is jelentkezik jelezd a következő címen: https://code.google.com/p/andicar/issues/entry"</string>
+    <string name="ERR_038">"Ez az árfolyam nen törölhető mert az adataira hivatkozás van a költségekben."</string>
+    <string name="ERR_039">"Ez a vezető nem törölhető, mert az adataira költségek hivatkoznak."</string>
+    <string name="ERR_040">"Ez az autó nem törölhető, mert az adataira költségek hivatkoznak."</string>
+    <string name="ERR_041">"Ez a költség típus nem törölhető, mert adataira költésgek hivatkoznak."</string>
+    <string name="ERR_042">"Ez a partner nem törölhető, mert adataira tankolások hivatkoznak."</string>
+    <string name="ERR_043">"Ez a partner nem törölhető, mert adataira költségek hivatkoznak."</string>
+    <string name="ERR_044">"Ez a hely nem törölhető, mert adataira tankolások hivatkoznak."</string>
+    <string name="ERR_045">"Ez a hely nem törölhető, mert adataira költségek hivatkoznak."</string>
+
+    <string name="ERR_046">"Ez a címke nem törölhető, mert adataira fuvarok hivatkoznak."</string>
+    <string name="ERR_047">"Ez a címke nem törölhető, mert adataira tankolások hivatkoznak."</string>
+    <string name="ERR_048">"Ez a címke nem törölhető, mert adataira költségek hivatkoznak."</string>
+    <string name="ERR_049">"Ez a címke nem törölhető, mert adataira gps nyomkövetés hivatkozik."</string>
+
+    <string name="ERR_050">"Térkép hiba!"</string>
+    <string name="ERR_051">"Nincs kiválasztott autó!\nVálassz egyet a fő képernyőn.</string>
+
+    <string name="ERR_052">"SMTP autentikáció nincs beállítva (nincs felhasználónév)!"</string>
+    <string name="ERR_053">"SMTP autentikáció nincs beállítva (nincs jelszó)!"</string>
+    <string name="ERR_054">"SMTP autentikáció nincs beállítva (nincs cél email cím)!"</string>
+    <string name="ERR_055">"Email küldés sikertelen."</string>
+    <string name="ERR_056">"Ismeretlen hiba."</string>
+    <string name="ERR_057">"Biztonsági mentés tömörítése sikertelen!"</string>
+
+    <string name="ERR_058">"Az ideiglenes könyvtár nem hozható létre (/sdcard/andicar/temp). Nem használható a SecureBecup szolgáltatás, amíg nem hozod létre a könyvtárat."</string>
+    <string name="ERR_059">"Dupla rekord."</string>
+    <string name="ERR_060">"Ez a típus nem törölhető, mert a feladatokban hivatkozás található rá."</string>
+    <string name="ERR_061">"Ismeretlen feladat!\nValószínüleg a feladat módosítva lett és a feladat lista újra létre lett hozva."</string>
+    <string name="ERR_062">"Nem jött létre a kapcsolat a PayPal szerverrel. Próbáld meg mégegyszer (esetleg Wifi kapcsolaton keresztül)."</string>
+
+    <string name="ERR_063">"AddOn adatbázis hiba."</string>
+    <string name="ERR_064">"Az eszközöd nem támogatja a Bluetooth-t!"</string>
+    
+</resources>

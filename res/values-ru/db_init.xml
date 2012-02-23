@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ Translated to Russian by Andrey Demin, andde@rambler.ru
+-->
+
+<!-- Database initialization strings-->
+
+<resources>
+    <!-- UOM's -->
+    <string name="DB_UOM_KmName">"Километр"</string>
+    <string name="DB_UOM_KmComment">"Километр"</string>
+    <string name="DB_UOM_MiName">"Миля"</string>
+    <string name="DB_UOM_MiComment">"Миля"</string>
+    <string name="DB_UOM_LName">"Литр"</string>
+    <string name="DB_UOM_LComment">"Литр"</string>
+    <string name="DB_UOM_USGName">"Галлон США"</string>
+    <string name="DB_UOM_USGComment">"Галлон США для жидкостей"</string>
+    <string name="DB_UOM_GBGName">"Имперский галлон"</string>
+    <string name="DB_UOM_GBGComment">"Имперский галлон (Великобритания)"</string>
+    <!-- UOM Conversions -->
+    <string name="DB_UOMConv_MiToKmName">"мил в км"</string>
+    <string name="DB_UOMConv_MiToKmComment">"Мили в Километры"</string>
+    <string name="DB_UOMConv_KmToMiName">"км в мил"</string>
+    <string name="DB_UOMConv_KmToMiComment">"Километры в Мили"</string>
+    <string name="DB_UOMConv_USGToLName">"гал США в лит"</string>
+    <string name="DB_UOMConv_USGToLComment">"Галлоны США в Литры"</string>
+    <string name="DB_UOMConv_LToUSGName">"лит в гал США"</string>
+    <string name="DB_UOMConv_LToUSGComment">"Литры в Галлоны США"</string>
+    <string name="DB_UOMConv_GBGToLName">"имп гал в лит"</string>
+    <string name="DB_UOMConv_GBGToLComment">"Имперские галлоны в Литры"</string>
+    <string name="DB_UOMConv_LToGBGName">"лит в имп гал"</string>
+    <string name="DB_UOMConv_LToGBGComment">"Литры в Имперские галлоны"</string>
+    <string name="DB_UOMConv_GBGToUSGName">"имп гал в гал США"</string>
+    <string name="DB_UOMConv_GBGToUSGComment">"Имперские галлоны в Галлоны США"</string>
+    <string name="DB_UOMConv_USGToGBGName">"гал США в имп гал"</string>
+    <string name="DB_UOMConv_USGToGBGComment">"Галлоны США в Имперские галлоны"</string>
+    <!-- expense types -->
+    <string name="DB_ExpType_PersonalName">"Личные"</string>
+    <string name="DB_ExpType_PersonalComment">"Расходы за личный счет"</string>
+    <string name="DB_ExpType_EmployerName">"Работодатель"</string>
+    <string name="DB_ExpType_EmployerComment">"Расходы за счет работодателя"</string>
+    <!-- expense categories -->
+    <string name="DB_ExpCat_ServiceName">"Обслуживание"</string>
+    <string name="DB_ExpCat_ServiceComment">"Расходы на обслуживание"</string>
+    <string name="DB_ExpCat_InsuranceName">"Страховка"</string>
+    <string name="DB_ExpCat_InsuranceComment">"Расходы на страховку"</string>
+    <!-- fuel types -->
+    <string name="DB_FuelType_Diesel1D">"Дизельное топливо зимнее"</string>
+    <string name="DB_FuelType_Diesel1DComment">"Для использования в холодное время года"</string>
+    <string name="DB_FuelType_Diesel2D">"Дизельное топливо летнее"</string>
+    <string name="DB_FuelType_Diesel2DComment">"Для использования в теплое время года"</string>
+    <string name="DB_FuelType_DieselBio">"Биодизельное топливо"</string>
+    <string name="DB_FuelType_DieselBioComment">"Получаемое из растительного масла и животных жиров"</string>
+    <string name="DB_FuelType_DieselSynthetic">"Синтетическое дизельное топливо"</string>
+    <string name="DB_FuelType_DieselSyntheticComment">"Получаемое из  таких источников как древесина, опилки, кукуруза и даже мусора и пищевых отходов"</string>
+    <string name="DB_FuelType_GasolineRegular">"Бензин А-92 регуляр"</string>
+    <string name="DB_FuelType_GasolineRegularComment">"Октановое число 91 (Россия) = 87 (США)"</string>
+    <string name="DB_FuelType_GasolineMidgrade">"Бензин А-95 Евро "</string>
+    <string name="DB_FuelType_GasolineMidgradeComment">"Октановое число 95 (Россия) = 91 (США)"</string>
+    <string name="DB_FuelType_GasolinePremium">"Бензин А-98 Премиум"</string>
+    <string name="DB_FuelType_GasolinePremiumComment">"Октановое число 98 (Россия) = 93 (США) "</string>
+    <string name="DB_FuelType_LPG">"СУГ"</string>
+    <string name="DB_FuelType_LPGComment">"Сжиженный углеводородный газ"</string>
+    <!-- currencies -->
+    <string name="DB_Curr_EUR">"Евро"</string>
+    <string name="DB_Curr_USD">"Доллар США"</string>
+    <string name="DB_Curr_HUF">"Венгерский форинт"</string>
+    <string name="DB_Curr_RON">"Румынский лей (новый)"</string>
+    <string name="DB_Curr_AUD">"Австралийский доллар"</string>
+    <string name="DB_Curr_CAD">"Канадский доллар"</string>
+    <string name="DB_Curr_CHF">"Швейцарский франк"</string>
+    <string name="DB_Curr_CNY">"Китайский юань"</string>
+    <string name="DB_Curr_GBP">"Фунты Великобритании"</string>
+    <string name="DB_Curr_JPY">"Японская йена"</string>
+    <string name="DB_Curr_RUB">"Российский рубль"</string>
+    <string name="DB_Curr_INR">"Индийская рупия"</string>
+    <string name="DB_Curr_ARS">"Аргентинский песо"</string>
+    <string name="DB_Curr_BRL">"Бразильский реал"</string>
+    <string name="DB_Curr_BGL">"Болгарский лев"</string>
+    <string name="DB_Curr_XAF">"Центрально-африканский франк"</string>
+    <string name="DB_Curr_COP">"Колумбийский песо"</string>
+    <string name="DB_Curr_HRK">"Хорватская куна"</string>
+    <string name="DB_Curr_CZK">"Чешская крона"</string>
+    <string name="DB_Curr_DKK">"Датская крона"</string>
+    <string name="DB_Curr_EGP">"Египетский фунт"</string>
+    <string name="DB_Curr_EEK">"Эстонская крона"</string>
+    <string name="DB_Curr_GEL">"Грузинский лари"</string>
+    <string name="DB_Curr_HKD">"Гонконгский доллар"</string>
+    <string name="DB_Curr_ILS">"Израильский шекель"</string>
+    <string name="DB_Curr_KRW">"Южно-корейская вона"</string>
+    <string name="DB_Curr_MXN">"Мексиканское песо"</string>
+    <string name="DB_Curr_NOK">"Норвежская крона"</string>
+    <string name="DB_Curr_PLN">"Польский злотый"</string>
+    <string name="DB_Curr_SAR">"Риал сайдовкой Аравии"</string>
+    <string name="DB_Curr_ZAR">"Южно-африканский ранд"</string>
+    <string name="DB_Curr_SEK">"Шведская крона"</string>
+    <string name="DB_Curr_TRY">"Турецкая лира"</string>
+    <string name="DB_Curr_UAH">"Украинская гривна"</string>
+    <string name="DB_Curr_AED">"Дирхам ОАЭ"</string>
+    
+    <!-- default tag -->
+    <string name="DB_Tag_Default">"По умолчанию"</string>
+    
+	<string name="DB_TaskType_ServiceName">"Сервис"</string>
+    <string name="DB_TaskType_ServiceComment">"Периодическое обслуживание "</string>
+    <string name="DB_TaskType_ReminderName">"Напоминание"</string>
+    <string name="DB_TaskType_ReminderComment">"Напоминание для общих задач"</string>
+    <string name="DB_DemoTask_Name">"Ежедневный пробег"</string>
+    <string name="DB_DemoTask_Comment">"Вы ввели свой ежедневный пробег?\nЭто демонстрационная задача. Вы можете ее редактировать или удалить  из меню Настройки -> Задачи."</string> <!-- \n символ новой строки-->
+
+</resources>
