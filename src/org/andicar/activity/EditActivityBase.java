@@ -29,13 +29,17 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateFormat;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -69,6 +73,11 @@ public abstract class EditActivityBase extends BaseActivity {
     protected ImageButton btnPickTime = null;
     protected TimePickerDialog mTimePickerDialog = null;
     protected DatePickerDialog mDatePickerDialog = null;
+    protected EditText etDocNo = null;
+    protected AutoCompleteTextView acUserComment = null;
+    protected AutoCompleteTextView acTag = null;
+    protected AutoCompleteTextView acBPartner;
+    protected AutoCompleteTextView acAdress;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
@@ -439,4 +448,65 @@ public abstract class EditActivityBase extends BaseActivity {
         }
     };
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onKeyUp(int, android.view.KeyEvent)
+	 */
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+        	
+        	if((event.getFlags() & KeyEvent.FLAG_EDITOR_ACTION ) != KeyEvent.FLAG_EDITOR_ACTION ) //enter key pressed instead of Next/Done
+        		return false;
+        	
+        	if(acBPartner != null && acBPartner.hasFocus()){
+        		if(acBPartner.getText().length() > 0){
+        			if(acAdress != null){
+        				acAdress.requestFocus();
+        				return true;
+        			}
+        			else if(acTag != null){
+        				acTag.requestFocus();
+                        return true;
+            		}
+        			else if(acUserComment != null){
+            			acUserComment.requestFocus();
+                        return true;
+            		}
+        		}
+        		else{
+        			if(acTag != null){
+        				acTag.requestFocus();
+                        return true;
+            		}
+        			else if(acUserComment != null){
+            			acUserComment.requestFocus();
+                        return true;
+            		}
+        		}
+        	}
+        	else if(acAdress != null && acAdress.hasFocus()){
+    			if(acTag != null){
+    				acTag.requestFocus();
+                    return true;
+        		}
+    			else if(acUserComment != null){
+        			acUserComment.requestFocus();
+                    return true;
+        		}
+        	}
+        	else if (acTag != null && acTag.hasFocus()) {
+        		if(acUserComment != null){
+        			acUserComment.requestFocus();
+                    return true;
+        		}
+            }
+            else if (acUserComment != null && acUserComment.hasFocus()) {
+                    //closes soft keyboard (user pressed "Done")
+                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(acUserComment.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    return true;
+            }
+        }
+        return false; 
+    }
 }

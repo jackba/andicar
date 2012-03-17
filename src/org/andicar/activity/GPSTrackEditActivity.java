@@ -47,8 +47,6 @@ public class GPSTrackEditActivity extends EditActivityBase {
     private TextView tvCarLabel;
     private Spinner spnDriver;
     private EditText etName;
-    private AutoCompleteTextView acUserComment;
-    private AutoCompleteTextView acTag;
     private ListView lvTrackFileList;
     private TextView tvTrackStats;
     private ImageButton btnGPSTrackShowOnMap;
