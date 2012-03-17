@@ -52,14 +52,9 @@ import android.widget.Toast;
  * @author miki
  */
 public class ExpenseEditActivity extends EditActivityBase {
-    private AutoCompleteTextView acUserComment;
-    private AutoCompleteTextView acBPartner;
-    private AutoCompleteTextView acAdress;
-    private AutoCompleteTextView acTag;
     private Spinner spnUOM;
     private EditText etCarIndex;
     private EditText etUserInput;
-    private EditText etDocNo;
     private EditText etConversionRate;
     private EditText etQuantity;
     private TextView tvConvertedAmountValue;

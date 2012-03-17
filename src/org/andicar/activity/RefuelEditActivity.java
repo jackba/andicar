@@ -53,15 +53,10 @@ import android.widget.Toast;
  * @author miki
  */
 public class RefuelEditActivity extends EditActivityBase {
-    private AutoCompleteTextView acUserComment;
-    private AutoCompleteTextView acBPartner;
-    private AutoCompleteTextView acAdress;
-    private AutoCompleteTextView acTag;
     private Spinner spnUomVolume;
     private EditText etCarIndex;
     private EditText etQty;
     private EditText etUserInput;
-    private EditText etDocNo;
     private TextView tvConvertedAmountLabel;
     private EditText etConversionRate;
     private LinearLayout llConversionRateZone;

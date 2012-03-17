@@ -77,8 +77,6 @@ public class MileageEditActivity extends EditActivityBase {
     private EditText etStartIndex;
     private EditText etUserInput;
     private TextView tvCalculatedContent;
-    private AutoCompleteTextView acUserComment;
-    private AutoCompleteTextView acTag;
     ArrayAdapter<String> userCommentAdapter;
     private ArrayAdapter<String> tagAdapter;
     protected ImageButton btnStartStopMileageRecord = null;

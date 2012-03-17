@@ -52,8 +52,6 @@ import android.widget.Toast;
 public class GPSTrackController extends EditActivityBase {
     private ArrayAdapter<String> aaUserComment;
     private ArrayAdapter<String> tagAdapter;
-    private AutoCompleteTextView acUserComment;
-    private AutoCompleteTextView acTag;
     private EditText etName;
     private EditText etIndexStart;
     private CheckBox ckIsUseKML;
