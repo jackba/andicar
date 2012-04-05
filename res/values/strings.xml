@@ -563,6 +563,4 @@
     <string name="AddOn_BTStarter_NoLinkedCar">"Can not get the linked car.\nThis entry should be deleted."</string>
     <string name="AddOn_BTStarter_LinkToCar">"Link to car:"</string>
     <string name="AddOn_BTStarter_Requirements">"AddOn requirements:\nAndroid 2+; Bluetooth support on this device"</string>
-    
-    
 </resources>
