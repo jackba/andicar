@@ -1283,11 +1283,12 @@ public class TaskEditActivity extends EditActivityBase {
 	 * @see org.andicar.activity.EditActivityBase#onStop()
 	 */
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
+	protected void onPause() {
+		super.onPause();
 		if(mLinkedCarsCursor != null)
 		try{
 			mLinkedCarsCursor.close();
 		} catch(Exception e){};
 	}
+	
 }
