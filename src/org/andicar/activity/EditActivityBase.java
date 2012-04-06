@@ -464,6 +464,10 @@ public abstract class EditActivityBase extends BaseActivity {
         				acAdress.requestFocus();
         				return true;
         			}
+        			else if(etDocNo != null){
+        				etDocNo.requestFocus();
+                        return true;
+        			}
         			else if(acTag != null){
         				acTag.requestFocus();
                         return true;
@@ -474,6 +478,10 @@ public abstract class EditActivityBase extends BaseActivity {
             		}
         		}
         		else{
+        			if(etDocNo != null){
+        				etDocNo.requestFocus();
+                        return true;
+        			}
         			if(acTag != null){
         				acTag.requestFocus();
                         return true;
@@ -485,12 +493,26 @@ public abstract class EditActivityBase extends BaseActivity {
         		}
         	}
         	else if(acAdress != null && acAdress.hasFocus()){
-    			if(acTag != null){
+    			if(etDocNo != null){
+    				etDocNo.requestFocus();
+                    return true;
+    			}
+    			else if(acTag != null){
     				acTag.requestFocus();
                     return true;
         		}
     			else if(acUserComment != null){
         			acUserComment.requestFocus();
+                    return true;
+        		}
+        	}
+        	else if(etDocNo != null && etDocNo.hasFocus()){
+    			if(acTag != null){
+    				acTag.requestFocus();
+                    return true;
+    			}
+    			else if(acUserComment != null){
+    				acUserComment.requestFocus();
                     return true;
         		}
         	}
