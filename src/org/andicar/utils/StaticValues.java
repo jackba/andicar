@@ -44,7 +44,7 @@ public class StaticValues
      * 		GoApk
      * 		Unknown
      */
-    public static final String INITIAL_INSTALL_SOURCE = "Unknown";
+    public static final String INSTALL_SOURCE = "Unknown";
     
     public static final int MENU_PREFERENCES_ID = 10;
     public static final int MENU_REPORTS_ID = 11;
