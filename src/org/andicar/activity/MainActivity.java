@@ -1365,6 +1365,9 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void initZones() {
+		if(reportDb == null)
+			reportDb = new ReportDbAdapter(mainContext, null, null);		
+		
 		// fill mileage zone data
 		if (showMileageZone) {
 			findViewById(R.id.llMileageZone).setVisibility(View.VISIBLE);
