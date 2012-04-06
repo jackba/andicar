@@ -428,6 +428,18 @@ public class TaskEditActivity extends EditActivityBase {
 				saveSuccess = false;
 				return false;
 			}
+			
+			try{
+				Integer.parseInt(etReminderMileage.getText().toString());
+			}
+			catch(Exception e){
+				Toast toast = Toast.makeText(getApplicationContext(),
+						mResource.getString(R.string.ERR_065), Toast.LENGTH_SHORT);
+				toast.show();
+				etReminderMileage.requestFocus();
+				saveSuccess = false;
+				return false;
+			}
 
 			if(etMileage.getText().toString() == null || etMileage.getText().toString().length() == 0){
 				Toast toast = Toast.makeText(getApplicationContext(),
@@ -450,7 +462,6 @@ public class TaskEditActivity extends EditActivityBase {
 				saveSuccess = false;
 				return false;
 			}
-
 		}
 
 		if(isTimingEnabled && isRecurrent){
