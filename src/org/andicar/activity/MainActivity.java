@@ -211,7 +211,7 @@ public class MainActivity extends BaseActivity {
 
 			if (isJustInstalled) {
 				exitResume = true;
-				editor.putString("InitialInstallSource", StaticValues.INITIAL_INSTALL_SOURCE);
+				editor.putString("InitialInstallSource", StaticValues.INSTALL_SOURCE);
 				editor.commit();
 				// test if backups exists
 				if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null
@@ -289,13 +289,13 @@ public class MainActivity extends BaseActivity {
 			}
 			
 			if(!mPreferences.contains("InitialInstallSource"))
-				editor.putString("InitialInstallSource", StaticValues.INITIAL_INSTALL_SOURCE);
+				editor.putString("InitialInstallSource", StaticValues.INSTALL_SOURCE);
 			editor.commit();
 
 			if(!mPreferences.contains("IsProviderSent") && isSendStatistics){
 	            AndiCarStatistics.sendFlurryStartSession(this);
 	        	Map<String, String> parameters = new HashMap<String, String>();
-				parameters.put("Provider", StaticValues.INITIAL_INSTALL_SOURCE);
+				parameters.put("Provider", StaticValues.INSTALL_SOURCE);
 		        AndiCarStatistics.sendFlurryEvent(this, "InstallSource", parameters);
 				editor.putBoolean("IsProviderSent", true);
 				editor.commit();
@@ -1277,7 +1277,7 @@ public class MainActivity extends BaseActivity {
 		if (!mPreferences.contains("UIStyle")) {
 			editor.putString("UIStyle", "s01");
 		}
-
+		editor.putString("CurrentInstallSource", StaticValues.INSTALL_SOURCE);
 		editor.commit();
 	}
 
