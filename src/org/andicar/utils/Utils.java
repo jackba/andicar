@@ -35,6 +35,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 
 import com.google.android.maps.GeoPoint;
 
@@ -204,7 +205,9 @@ public class Utils {
         Cursor c = reportDbAdapter.fetchReport(1);
         if(c.moveToFirst()){
             String emailText =
-                    c.getString(c.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME)) + "\n" +
+                    c.getString(c.getColumnIndex(ReportDbAdapter.FIRST_LINE_LIST_NAME))
+                    	.replace("[#1]", DateFormat.getDateFormat(ctx.getApplicationContext())
+            				.format(c.getLong(7) * 1000))+ "\n" +
                     c.getString(c.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
                         .replace("[#1]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_1))
                         .replace("[#2]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_2))
