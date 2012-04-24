@@ -120,8 +120,8 @@ public class GPSTrackService extends Service {
     private double dTotalTrackPoints = 0;
     private double dTotalSkippedTrackPoints = 0;
     private double dTotalUsedTrackPoints = 0;
-    private double dTmpSkippedTrackPoints = 0;
-    private boolean bNotificationShowed = false;
+//    private double dTmpSkippedTrackPoints = 0;
+//    private boolean bNotificationShowed = false;
     private double skippedPointPercentage = 0;
     private boolean isSendCrashReport;
     private int iFileCount = 1; //for splitting large gps files
@@ -811,7 +811,7 @@ public class GPSTrackService extends Service {
                     //
                     if(lCurrentLocationTime - lStartTime > 60000){ //leave time for GPS initialization (1 min)
                         dTotalSkippedTrackPoints++;
-                        dTmpSkippedTrackPoints++;
+//                        dTmpSkippedTrackPoints++;
                     }
                     
                     //temporarry disabled
@@ -858,13 +858,13 @@ public class GPSTrackService extends Service {
 	                    	if(Math.abs(acceleration) > 3){ //a = 3 m/s2 => probably wrong sensor data
 	                            isValid = false;
 	                            dTotalSkippedTrackPoints++;
-	                            dTmpSkippedTrackPoints++;
+//	                            dTmpSkippedTrackPoints++;
 	                    	}
 	                    	else{
 		                        isValid = true;
 		                        dTotalUsedTrackPoints++;
-		                        dTmpSkippedTrackPoints = 0;
-		                        bNotificationShowed = false;
+//		                        dTmpSkippedTrackPoints = 0;
+//		                        bNotificationShowed = false;
 		                    	dOldSpeed = dCurrentSpeed;
 	                    	}
                     	}
