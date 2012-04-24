@@ -36,12 +36,10 @@ public class StaticValues
     /*
      * initial install location of AndiCar: 
      * 		Android Market
-     * 		Amazon AppStore
      * 		SamsungApps
      * 		SlideME
-     * 		Handster
-     * 		Other
      * 		GoApk
+     * 		Other
      * 		Unknown
      */
     public static final String INSTALL_SOURCE = "Unknown";
