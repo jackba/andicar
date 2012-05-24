@@ -43,7 +43,7 @@ public class StaticValues
      * 		Other
      * 		Unknown
      */
-    public static final String INSTALL_SOURCE = "LGSmartWorld";
+    public static final String INSTALL_SOURCE = "Unknown";
     
     public static final int MENU_PREFERENCES_ID = 10;
     public static final int MENU_REPORTS_ID = 11;
