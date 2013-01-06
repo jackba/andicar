@@ -323,6 +323,8 @@
 	                	android:tag="rbInsertModeIndex"
 		            	android:textColor="@android:color/widget_edittext_dark"
                     	android:textSize="17dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 	                    />
 	                <RadioButton
 	                    android:id="@+id/rbInsertModeMileage"
@@ -333,6 +335,8 @@
 	                	android:tag="rbInsertModeMileage"
 		            	android:textColor="@android:color/widget_edittext_dark"
                     	android:textSize="17dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
 	                    />
 	            </RadioGroup>
                 <EditText

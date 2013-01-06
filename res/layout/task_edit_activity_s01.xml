@@ -184,6 +184,8 @@
                     android:typeface="sans"
 	                android:textColor="@android:color/widget_edittext_dark"
 	                android:textSize="17dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
                 <RadioButton
                     android:id="@+id/rbOneTime"
@@ -192,6 +194,8 @@
 	                android:textColor="@android:color/widget_edittext_dark"
 	                android:textSize="17dp"
                     android:layout_marginLeft="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
             </RadioGroup>
 
@@ -221,6 +225,8 @@
                     android:typeface="sans"
 	                android:textColor="@android:color/widget_edittext_dark"
 	                android:textSize="17dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
                 <RadioButton
                     android:id="@+id/rbMileageDriven"
@@ -229,6 +235,8 @@
                     android:layout_marginLeft="10dp"
 	                android:textColor="@android:color/widget_edittext_dark"
 	                android:textSize="17dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
                 <RadioButton
                     android:id="@+id/rbTimeAndMileageDriven"
@@ -237,6 +245,8 @@
                     android:layout_marginLeft="10dp"
 	                android:textColor="@android:color/widget_edittext_dark"
 	                android:textSize="17dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     />
             </RadioGroup>
 
