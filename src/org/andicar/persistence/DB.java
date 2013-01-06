@@ -18,7 +18,7 @@
  */
 package org.andicar.persistence;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.service.FileMailer;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;

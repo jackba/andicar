@@ -51,7 +51,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.FileUtils;
 import org.andicar.utils.StaticValues;

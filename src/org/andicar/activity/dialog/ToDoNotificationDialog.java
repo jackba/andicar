@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 
 import org.andicar.activity.EditActivityBase;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.service.ToDoManagementService;

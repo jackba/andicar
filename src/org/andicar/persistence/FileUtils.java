@@ -38,7 +38,7 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;

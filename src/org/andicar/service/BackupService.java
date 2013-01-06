@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;

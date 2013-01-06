@@ -24,7 +24,7 @@ package org.andicar.activity;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.miscellaneous.GPSTrackController;
 import org.andicar.persistence.AddOnDBAdapter;
 import org.andicar.persistence.MainDbAdapter;

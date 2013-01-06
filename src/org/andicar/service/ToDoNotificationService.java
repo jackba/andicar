@@ -17,7 +17,7 @@
  */
 package org.andicar.service;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.dialog.ToDoNotificationDialog;
 import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;

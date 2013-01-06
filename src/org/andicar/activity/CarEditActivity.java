@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
 
 import android.content.ContentValues;
 import android.content.Intent;

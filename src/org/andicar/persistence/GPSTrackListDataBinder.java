@@ -23,7 +23,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.utils.Utils;
 
 public class GPSTrackListDataBinder implements SimpleCursorAdapter.ViewBinder {

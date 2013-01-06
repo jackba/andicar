@@ -17,7 +17,7 @@
  */
 package org.andicar.activity.dialog;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;

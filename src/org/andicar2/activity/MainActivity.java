@@ -16,7 +16,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.andicar.activity;
+package org.andicar2.activity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -24,6 +24,13 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.andicar.activity.AddOnServicesList;
+import org.andicar.activity.BaseActivity;
+import org.andicar.activity.CommonListActivity;
+import org.andicar.activity.ExpenseEditActivity;
+import org.andicar.activity.MileageEditActivity;
+import org.andicar.activity.RefuelEditActivity;
+import org.andicar.activity.TaskEditActivity;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.activity.dialog.WhatsNewDialog;
 import org.andicar.activity.miscellaneous.AboutActivity;

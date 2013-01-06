@@ -21,7 +21,7 @@
  */
 package org.andicar.activity;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.persistence.AddOnDBAdapter;
 import org.andicar.persistence.BTDeviceCarListDataBinder;
 import org.andicar.persistence.MainDbAdapter;

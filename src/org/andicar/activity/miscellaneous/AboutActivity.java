@@ -20,7 +20,7 @@
 package org.andicar.activity.miscellaneous;
 
 import org.andicar.activity.BaseActivity;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;

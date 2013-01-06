@@ -22,7 +22,7 @@ package org.andicar.activity.miscellaneous;
 import java.math.BigDecimal;
 
 import org.andicar.activity.EditActivityBase;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.service.GPSTrackService;

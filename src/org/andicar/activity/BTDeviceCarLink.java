@@ -25,7 +25,7 @@ package org.andicar.activity;
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.persistence.AddOnDBAdapter;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarStatistics;

@@ -19,7 +19,7 @@
 
 package org.andicar.persistence;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 
 import android.content.res.Resources;
 import android.database.Cursor;

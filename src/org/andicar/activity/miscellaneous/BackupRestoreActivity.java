@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.andicar.activity.BaseActivity;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.FileUtils;
 import org.andicar.service.AndiCarServiceStarter;

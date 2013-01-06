@@ -24,6 +24,8 @@ import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.MainActivity;
+import org.andicar2.activity.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
