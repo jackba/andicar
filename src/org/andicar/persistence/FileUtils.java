@@ -221,14 +221,20 @@ public class FileUtils {
         FileChannel in = null;
         FileChannel out = null;
         try {
-            in = new FileInputStream(source).getChannel();
-            out = new FileOutputStream(dest).getChannel();
+            FileInputStream fileInputStream = new FileInputStream(source);
+			in = fileInputStream.getChannel();
+            FileOutputStream fileOutputStream = new FileOutputStream(dest);
+			out = fileOutputStream.getChannel();
 
             long size = in.size();
             MappedByteBuffer buf = in.map(FileChannel.MapMode.READ_ONLY, 0, size);
 
             out.write(buf);
             
+            if(fileInputStream != null)
+            	fileInputStream.close();
+            if(fileOutputStream != null)
+            	fileOutputStream.close();
             if (in != null)
                 in.close();
             if (out != null)
