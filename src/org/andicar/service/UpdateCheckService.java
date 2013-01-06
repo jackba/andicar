@@ -24,7 +24,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Calendar;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.dialog.WhatsNewDialog;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;

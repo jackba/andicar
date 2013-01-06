@@ -24,6 +24,7 @@ import java.util.Calendar;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

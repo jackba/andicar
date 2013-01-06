@@ -22,7 +22,7 @@ package org.andicar.activity.report;
 import java.util.Calendar;
 
 import org.andicar.activity.ListActivityBase;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;

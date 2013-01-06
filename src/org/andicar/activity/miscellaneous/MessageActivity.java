@@ -17,7 +17,7 @@
  */
 package org.andicar.activity.miscellaneous;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 
 import android.app.Activity;
 import android.os.Bundle;

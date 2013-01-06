@@ -20,7 +20,7 @@
 package org.andicar.activity.report;
 
 import org.andicar.activity.MileageEditActivity;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.MileageListDataBinder;

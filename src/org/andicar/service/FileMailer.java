@@ -24,7 +24,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.miscellaneous.MessageActivity;
 import org.andicar.persistence.AddOnDBAdapter;
 import org.andicar.persistence.FileUtils;

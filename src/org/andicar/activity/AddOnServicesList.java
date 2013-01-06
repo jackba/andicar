@@ -22,6 +22,7 @@ package org.andicar.activity;
 
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
 
 import android.content.Intent;
 import android.content.res.Resources;

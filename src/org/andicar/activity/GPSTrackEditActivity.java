@@ -24,6 +24,7 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.Utils;
+import org.andicar2.activity.R;
 
 import android.content.ContentValues;
 import android.content.Intent;

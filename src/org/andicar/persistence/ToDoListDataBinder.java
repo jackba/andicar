@@ -19,7 +19,7 @@ package org.andicar.persistence;
 
 import java.util.Calendar;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 

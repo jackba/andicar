@@ -31,7 +31,7 @@ import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.widget.Toast;
 import org.andicar.utils.StaticValues;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.utils.AndiCarExceptionHandler;
 
 

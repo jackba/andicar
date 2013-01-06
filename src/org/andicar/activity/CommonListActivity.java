@@ -22,6 +22,7 @@ package org.andicar.activity;
 import android.os.Bundle;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
 
 /**
  *

@@ -22,7 +22,7 @@ package org.andicar.activity.preference;
 import org.andicar.activity.BTDeviceCarList;
 import org.andicar.activity.BackupSchedule;
 import org.andicar.activity.DataEntryTemplateList;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.SecureBackupConfig;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;

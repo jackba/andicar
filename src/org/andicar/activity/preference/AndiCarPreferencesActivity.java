@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.andicar.activity.CommonListActivity;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;

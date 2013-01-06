@@ -24,7 +24,7 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Calendar;
 
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;

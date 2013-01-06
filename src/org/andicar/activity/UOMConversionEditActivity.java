@@ -20,6 +20,7 @@
 package org.andicar.activity;
 
 import org.andicar.persistence.MainDbAdapter;
+import org.andicar2.activity.R;
 
 import android.content.ContentValues;
 import android.database.Cursor;

@@ -27,6 +27,7 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.TaskCarLinkDataBinder;
 import org.andicar.service.ToDoManagementService;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;

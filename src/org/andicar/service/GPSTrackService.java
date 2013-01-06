@@ -39,7 +39,7 @@ import android.widget.Toast;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.andicar.activity.miscellaneous.GPSTrackController;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;

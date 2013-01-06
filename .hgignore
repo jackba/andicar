@@ -51,3 +51,5 @@ syntax: regexp
 ^icon_store/gimp_work/main_activity_picture_pro\.xcf$
 syntax: regexp
 ^\.metadata$
+syntax: regexp
+^gen/org/andicar2/activity/BuildConfig\.java$

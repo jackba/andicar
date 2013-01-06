@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import org.andicar.utils.StaticValues;
-import org.andicar.activity.R;
+import org.andicar2.activity.R;
 import org.andicar.utils.AndiCarStatistics;
 
 public class MainDbAdapter extends DB

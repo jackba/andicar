@@ -28,6 +28,7 @@ import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
+import org.andicar2.activity.R;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
