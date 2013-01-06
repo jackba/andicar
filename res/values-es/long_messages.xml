@@ -39,7 +39,7 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b> es una aplicación de código abierto para la administración de vehículos para dispositivos Android.\n
         Esta licenciada bajo los términos de la GNU Licencia Pública General, versión 3.\n
-        Mas detalles en la página "Acerca de".\n Derechos de autor© 2010-2011 Miklós Keresztes.\n
+        Mas detalles en la página "Acerca de".\n Derechos de autor© 2010-2013 Miklós Keresztes.\n
         Gracias por usar<b><i>AndiCar</i></b>!
     </string>
 
@@ -63,12 +63,13 @@
         <b><i>Créditos:</i></b>\n
         *  Traducción Al Chino by <a href="http://goapk.com/">goapk.com</a> \n
         *  Traducción Al Russo: Andrey Demin - andde@rambler.ru\n
-		*  Traducción Inicial al Aleman : Andy Haubenschmid - andy@haubenschmid.li\n
+		*  Traducción Inicial al Aleman: Andy Haubenschmid - andy@haubenschmid.li\n
 		<small>Se busca traductor :)</small>\n
-		*  Traducción al Hungaro : Péter Nagy - microbilab@gmail.com\n
-		*  Traducción al Español : Daniel Iozzi- danieliozzi@gmail.com\n
+		*  Traducción al Hungaro: Péter Nagy - microbilab@gmail.com\n
+		*  Traducción al Español: Daniel Iozzi- danieliozzi@gmail.com\n
+		*  Traducción al Rumano: Doru Butnaru - budo8002@gmail.com\n
         \n<b><i>Detalle de derechos de autor</i></b>:\n\n
-        Derechos de autor© 2010-2011 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
+        Derechos de autor© 2010-2013 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
         Esta aplicación es código libre: la puedes distribuir y/o modificar
         bajo los términos de la GNU Licencia Pública General como ha sido publicada por la
         Fundación de Software Libre, tanto como la versión 3 de la licencia, o (en forma opcional) nuevas versiones.\n\n
@@ -80,18 +81,4 @@
         La licencia completa puede ser encontrada <a href="http://www.gnu.org/licenses/gpl.html">aquí</a>.\n
     </string>
 
-    <string name="AddOn_SubscriptionValidity">
-    	La subscripción es valida para la instancia de de base de datos corriente.
-    	\nDeberias crear un backup inmediatamente después del proceso de subscripción!     
-    </string>
-    
-    <string name="LM_UPDATE_MSG">
-        <b><i>Que Hay de Nuevo:</i></b>\n\n
-        <i>versión 3.7.1:</i>\n
-        * Una conveniente opción de facturación por proveedor de servicio para la subscription de los AddOn . Disponible en mas de 60 paises.\n\n
-        <i>versión 3.7.2:</i>\n
-        * Traducido al Español por Daniel Iozzi, Gracias Daniel por tu gran trabajo.
-        <i>Todas las actualizaciones:</i>\n
-        * Varias correcciones de errores de programación\n\n
-    </string>
 </resources>

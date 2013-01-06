@@ -41,7 +41,7 @@
         Az <b><i>AndiCar</i></b> egy ingyenes és nyílt foráskódú autó menedzselő alkalmazás Android készülékekre.
         Licencelése a General Public License 3-as verziója alapján történik.\n
         További részletekért lásd az AndiCarról oldalt.\n 
-        Copyright © 2010-2012 Keresztes Miklós.\n
+        Copyright © 2010-2013 Keresztes Miklós.\n
         Köszönjük, hogy az <b><i>AndiCar</i></b> alkalmazást használja!
     </string>
 
@@ -68,8 +68,9 @@
         *  Német fordítás Andy Haubenschmid - andy@haubenschmid.li\n
 		*  Magyar fordítás Nagy Péter - microbilab@gmail.com\n
 		*  Spanyol fordítás Daniel Iozzi - danieliozzi@gmail.com\n
+		*  Román fordítás Doru Butnaru - budo8002@gmail.com\n
         \n<b><i>Copyright notice</i></b>:\n\n
-        Copyright © 2010-2012 Keresztes Miklós (miklos.keresztes@gmail.com)\n\n
+        Copyright © 2010-2013 Keresztes Miklós (miklos.keresztes@gmail.com)\n\n
         Ez a program szabad szoftver; terjeszthető illetve módosítható a Free Software Foundation által kiadott GNU General Public License dokumentumában leírtak; 
 		akár a licenc 3-as, akár (tetszőleges) későbbi változata szerint.\n\n
         Ez a program abban a reményben kerül közreadásra, hogy hasznos lesz, 
@@ -79,21 +80,11 @@
 		ha mégsem kapta meg, akkor tekintse meg a <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a> oldalon.\n
     </string>
 
-    <string name="AddOn_SubscriptionValidity">
-         Az előfizetés a jelenlegi adatbázis példányára érvényes.\n\n
-         Készíts biztonsági mentést a feliratkozás után!     
-    </string>
-
-  <string name="LM_UPDATE_MSG">
-        <b><i>Újdonságok:</i></b>\n\n
-        <i>3.7.0-ás verzió</i>\n
-        * Egy új felhasználói felület. A régi (sötét) és az új (világos) felület között a Beállítások -> Felhasználói felület opcióval lehet váltani.\n 
-        * Különbböző hibajavítások\n\n
-        <i>3.7.1-es verzió</i>\n
-        * Mobil operátoron keresztüli fizetés a kiegészítő szolgáltatásokra.\n\n
-        <i>3.7.2-es verzió</i>\n
-        * Spanyol fordítás Daniel Iozzi hazzájárulásával.\n\n
-        <i>Összes verzió</i>\n
-        * Hibajavítások.
-  </string>
+	<string name="LM_UPDATE_MSG">
+	      <b><i>Újdonságok:</i></b>\n\n
+	      <i>4.0.0-ás verzió</i>\n
+	      * Román fordítás Doru Butnaru.\n
+	      * Az összes eddig fizetős kiagészítő mostantol ingyenesen használható. 
+	      * Különbböző hibajavítások\n\n
+	</string>
 </resources>

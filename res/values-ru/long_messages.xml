@@ -43,7 +43,7 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
     	<b><i>AndiCar</i></b> - это бесплатная программа с открытым кодом для учета расходов на содержание автомобилей, предназначенная для устройств на платформе Android
         Она лицензирована в  соответствии с GNU General Public License, версия 3.\n
-        Смотрите больше информации на странице О программе.\nCopyright © 2010-2012 Miklós Keresztes.\n
+        Смотрите больше информации на странице О программе.\nCopyright © 2010-2013 Miklós Keresztes.\n
         Спасибо за использование <b><i>AndiCar</i></b>!
     </string>
 
@@ -70,25 +70,13 @@
 		*  Initial German translation by Andy Haubenschmid - andy@haubenschmid.li\n
 		*  Hungarian translation by Nagy Péter - microbilab@gmail.com\n
         *  Spanish translation by Daniel Iozzi - danieliozzi@gmail.com\n
+        *  Roumanian translation by Doru Butnaru - budo8002@gmail.com\n
         \n<b><i>Copyright notice</i></b>:\n\n
-        Copyright © 2010-2012 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
+        Copyright © 2010-2013 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
     	Это программа является свободным программным обеспечением. Вы можете распространять и/или модифицировать её согласно условиям Стандартной Общественной Лицензии GNU, опубликованной Фондом Свободного Программного Обеспечения, версии 3 или, по Вашему желанию, любой более поздней версии.\n\n 
     	Эта программа распространяется в надежде, что она будет полезной, но БЕЗ ВСЯКИХ ГАРАНТИЙ, в том числе подразумеваемых гарантий ТОВАРНОГО СОСТОЯНИЯ ПРИ ПРОДАЖЕ и ГОДНОСТИ ДЛЯ ОПРЕДЕЛЁННОГО ПРИМЕНЕНИЯ. Смотрите Стандартную Общественную Лицензию GNU для получения дополнительной информации.\n\n 
     	Вы должны были получить копию Стандартной Общественной Лицензии GNU вместе с программой. В случае её отсутствия, посмотрите <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n
         The whole license can be found <a href="http://www.gnu.org/licenses/gpl.html">here</a>.\n
     </string>
 
-    <string name="AddOn_SubscriptionValidity">
-		Подписка действует для текущего экземпляра базы данных..
-     	\n Вы должны создать резервную копию сразу после процесса подписки!     
-	</string>
-	
-	<!-- 
-	<string name="LM_UPDATE_MSG">
-		<b><i>Что нового:</i></b>\n\n
-		* Исправлены ошибки предыдущих версий\n\n
-		* <b>Ограниченное предложение:</b> Подпишитесь на сервис резервного копирования  или безопасного копирования по стоимости  от 0.99$\n\n
-		* <b>Детектор соединения Bluetooth:</b> Автоматическое открытие экран управления записью треков GPS, когда будет обнаружено Bluetooth соединение с автомобилем (работает на Android 2+)
-	</string>
-	 -->
 </resources>
