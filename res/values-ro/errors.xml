@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!-- Error messages -->
+
+<resources>
+    <string name="ERR_000">"Eroare la baza de date."</string>
+    <string name="ERR_001">"Indexul de start este inclus intr-un Kilometraj existent"</string>
+    <string name="ERR_002">"Stop/New indexul este inclus intr-un Kilometraj existent"</string>
+    <string name="ERR_003">"Noul Kilometraj se suprapune cu un Kilometraj existent"</string>
+    <string name="ERR_004">"Stop/New indexul trebuie sa fie mai mare decat cel existent"</string>
+    <string name="ERR_005">"Rata de conversie exista deja"</string>
+    <string name="ERR_006">"Inregistrare eronata!"</string>
+    <string name="ERR_008">"Format invalid data/timp!"</string>
+    <string name="ERR_009">"Acest conducator nu poate fi sters deoarece este folosit in completarea Kilometrajelor."</string>
+    <string name="ERR_010">"Acest conducator nu poate fi sters deoarece este folosit in completarea Alimentarilor."</string>
+    <string name="ERR_011">"Aceasta masina nu poate fi stearsa deoarece este folosita in completarea Kilometrajelor."</string>
+    <string name="ERR_012">"Aceasta masina nu poate fi stearsa deoarece este folosita in completarea Alimentarilor."</string>
+    <string name="ERR_013">"Aceasta UM nu poate fi stearsa deoarece este folosita in completarea Kilometrajelor."</string>
+    <string name="ERR_014">"Aceasta UM nu poate fi stearsa deoarece este folosita in completarea Alimentarilor."</string>
+    <string name="ERR_015">"Aceasta UM nu poate fi stearsa deoarece este folosita in conversiile de UM."</string>
+    <string name="ERR_016">"Aceasta moneda nu poate fi stearsa deoarece este folosita in definitiile masinii."</string>
+    <string name="ERR_017">"Aceasta moneda nu poate fi stearsa deoarece este folosita in Alimentari."</string>
+    <string name="ERR_018">"Acest tip de moneda nu poate fi stersa deoarece este folosita in Kilometraje."</string>
+    <string name="ERR_019">"Acest tip de moneda nu poate fi stersa deoarece este folosita in Alimentari."</string>
+    <string name="ERR_020">"SDCARD not found. Nu se pot crea rapoarte, trasee GPS si copii ale bazei de date!"</string>
+    <string name="ERR_021">"Fisierul Reports (/sdcard/andicar/reports) nu poate fi creat. Nu se poate salva local pana cand nu este creat acest fisier."</string>
+    <string name="ERR_022">"Nu se poate crea fisierul cu rapoarte!"</string>
+    <string name="ERR_023">"Eroare la scrierea fisierului!"</string>
+    <string name="ERR_024">"Copia fisierului (/sdcard/andicar/backup) nu poate fi creata. Nu se poate crea o copie a bazei de date pana cand nu este creat acest fisier."</string>
+    <string name="ERR_025">"UM nu poate fi dezactivata deoarece este folosita in definirea masinii active."</string>
+    <string name="ERR_026">"Moneda nu poate fi dezactivata deoarece este folosita in definirea masinii active."</string>
+    <string name="ERR_027">"Aceasta categorie nu poate fi stearsa deoarece este folosita in Alimentari."</string>
+    <string name="ERR_028">"Aceasta categorie nu poate fi stearsa deoarece este folosita in Monede."</string>
+    <string name="ERR_029">"Rata de conversie este deja definita intre aceste monede."</string>
+    <string name="ERR_030">"Aceasta plata nu poate fi stearsa deoarece a fost creata in Alimentare.\n Trebuie stearsa alimentarea."</string>
+    <string name="ERR_031">"Nu se poate defini rata de conversie intre aceleasi UM."</string>
+    <string name="ERR_032">"Nu se pot defini conversii intre acealeasi monede."</string>
+    <string name="ERR_033">"Fisierul traseu GPS (/sdcard/andicar/gpstrack) nu poate fi creat.Nu se poate salva fisierul cu trasee GPS pana cand nu este creat acest fisier in memorie."</string>
+    <string name="ERR_034">"Eroare de fisier de sistem!\n Varificati-va SDCARD."</string>
+    <string name="ERR_035">"Raport invalid."</string>
+    <string name="ERR_036">"Fisierul cu trasee este gol!"</string>
+    <string name="ERR_037">"Masina nedefinita!\n Daca eroarea persista, raporteaza la https://code.google.com/p/andicar/issues/entry"</string>
+    <string name="ERR_038">"Aceasta plata nu poate fi stersa deoarece este folosita in Cheltuieli."</string>
+    <string name="ERR_039">"Acest conducator auto nu poate fi sters deoarece este folosit in Cheltuieli."</string>
+    <string name="ERR_040">"Aceasta masina nu poate fi stearsa deoarece este folosita in Cheltuieli."</string>
+    <string name="ERR_041">"Acest tip de plata nu poate fi stersa deoarece este folosita in Cheltuieli."</string>
+    <string name="ERR_042">"Acest partener nu poate fi sters deoarece este folosit in Alimentari."</string>
+    <string name="ERR_043">"Acest partener nu poate fi sters deoarece este folosit in Cheltuieli."</string>
+    <string name="ERR_044">"Aceasta locatie nu poate fi stearsa deoarece este folosita in Alimentari."</string>
+    <string name="ERR_045">"Aceasta locatie nu poate fi stearsa deoarece este folosita in Cheltuieli."</string>
+
+    <string name="ERR_046">"Aceasta eticheta nu poate fi stearsa deoarece este folosita in Kilometraje."</string>
+    <string name="ERR_047">"Aceasta eticheta nu poate fi stearsa deoarece este folosita in Alimentari."</string>
+    <string name="ERR_048">"Aceasta eticheta nu poate fi stearsa deoarece este folosita in Cheltuieli."</string>
+    <string name="ERR_049">"Aceasta eticheta nu poate fi stearsa deoarece este folosita in Trasee GPS."</string>
+
+    <string name="ERR_050">"Eroare de harta!"</string>
+    <string name="ERR_051">"Nicio masina selectata!\n Alegeti o masina din ecranul principal."</string>
+
+    <string name="ERR_052">"Autentificare SMTP gresita (fara username)!"</string>
+    <string name="ERR_053">"Autentificare SMTP gresita (fara password)!"</string>
+    <string name="ERR_054">"Autentificare SMTP gresita (fara mail destinatie)!"</string>
+    <string name="ERR_055">"Nu aputut fi trimis Email."</string>
+    <string name="ERR_056">"Eroare necunoscuta."</string>
+    <string name="ERR_057">"Compresie esuata a bazei de date!"</string>
+
+    <string name="ERR_058">"Fisierul temporar (/sdcard/andicar/temp) nu a putut fi creat. Nu poti folosi serviciul SecureBecup  pana cand acest fisier nu este creat in memorie."</string>
+    <string name="ERR_059">"Inregistrare dubla."</string>
+    <string name="ERR_060">"Acest tip nu poate fi sters deoarece este folosit in Actiuni."</string>
+    <string name="ERR_061">"Programare necunoscuta!\nProbabil ca actiunea a fost modificata iar lista de programari recreata."</string>
+    <string name="ERR_062">"Nu poate fi facuta legatura cu serverul PayPal. Incearca mai tarziu (eventual folosind o conexiune Wi-Fi)."</string>
+
+    <string name="ERR_063">"Eroare AddOn."</string>
+    <string name="ERR_064">"Dispozitivul dvs. nu suporta Bluetooth!"</string>
+    
+    <string name="ERR_065">"Numar invalid. Prea lung."</string>
+
+    <string name="ERR_066">"A avut loc o eroare!\nContactati dezvoltatorii."</string>
+</resources>
