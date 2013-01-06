@@ -169,7 +169,6 @@
 	<string name="MENU_RateCommentCaption">"评分/评论"</string>
 	<string name="MENU_AddOnServicesCaption">"附加服务"</string>
 	<string name="MENU_TodoCaption">"计划列表"</string>
-	<string name="MENU_ToDoDoneCaption">"已完成"</string>
 
     <string name="MainActivity_MileageHeaderCaption">"最后里程"</string>
     <string name="MainActivity_RefuelHeaderCaption">"上次加油"</string>
@@ -461,7 +460,6 @@
     <string name="Notif_UpdateMsg">"AndiCar 的一个更新版本已可用！"</string>
     
     <!-- AddOn Services -->
-    <string name="AddOn_PayPalWarning">"在付费过程中 **不要使用手机的返回键，也不要更改屏幕的显示方向**"</string>
     <string name="AddOn_SubscribeWaiting">"正在连接 PayPal 服务器。根据服务器的效率，此过程可能需要一分钟。\n请稍等..."</string>
     <string name="AddOn_SubscriptionInfo">"直到 [#1] 后你即可以订阅这个服务"</string>
 	<string name="AddOn_SubscriptionExpiredOn">"你的订阅这个服务即将过期: [#1]"</string> 
@@ -494,7 +492,6 @@
 
     <string name="AddOn_SecureBackup_Title">"安全备份"</string>
     <string name="AddOn_SecureBackup_Description">"每完成一次数据库备份，此服务都会自动的将其作为邮件的附件发送到预先配置好的Email地址。通过这样的方法，你的记录数据能在哪怕手机都丢了的情况下都可用。结合安全备份插件，彻底解决你的数据安全问题。"</string>
-    <string name="AddOn_SecureBackup_LongDescription">"自动上传备份到你的 Google 账户，这样哪怕手机丢了，你也可用获取到它们"</string>
     <string name="AddOn_SecureBackup_TermOfService">"我们不对以下情况负责：极差/不存在/有问题的网络连接所导致的数据备份不完整/损坏、您的 Google 账户所拥有的储存空间不足、从Google 邮箱删除文件或是其他的方式导致备份文件丢失或不可用。"</string>
     <string name="AddOn_SecureBackup_Requirements">"服务要求：有效的 GMail 账户，网络连接，移动数据传输"</string>
 
@@ -517,7 +514,6 @@
 	<string name="AddOn_AutoBackupService_NoOfBackups1">"仅保留最新的"</string>
 	<string name="AddOn_AutoBackupService_NoOfBackups2">"备份。"</string>
 	<string name="AddOn_AutoBackupService_NotifyIfSuccess">"成功时进行通知"</string>
-	<string name="AddOn_AutoBackupService_NotifyIfFailure">"失败时进行通知"</string>
 	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"至少需要选择一天！"</string>
 	<string name="AddOn_AutoBackupService_BackupSucceeded">"备份文件创建成功"</string>
 	<string name="AddOn_AutoBackupService_BackupFailed">"备份失败！请检查你的SD卡。"</string>

@@ -171,7 +171,6 @@
 	<string name="MENU_RateCommentCaption">"評分/評論"</string>
 	<string name="MENU_AddOnServicesCaption">"附加服務"</string>
 	<string name="MENU_TodoCaption">"計劃清單"</string>
-	<string name="MENU_ToDoDoneCaption">"已完成"</string>
 
     <string name="MainActivity_MileageHeaderCaption">"最後里程"</string>
     <string name="MainActivity_RefuelHeaderCaption">"上次加油"</string>
@@ -470,7 +469,6 @@
     <string name="Notif_UpdateMsg">"AndiCar 的一個更新版本已可用！"</string>
     
     <!-- AddOn Services -->
-    <string name="AddOn_PayPalWarning">"在付費過程中 **不要使用手機的返回鍵，也不要變更屏幕的顯示方向**"</string>
     <string name="AddOn_SubscribeWaiting">"正在連接 PayPal 伺服器。根據伺服器的效率，此過程可能需要一分鐘。\n請稍等..."</string>
     <string name="AddOn_SubscriptionInfo">"直到 [#1] 後你即可以訂閱這個服務"</string>
 	<string name="AddOn_SubscriptionExpiredOn">"你的訂閱這個服務即將過期: [#1]"</string> 
@@ -504,7 +502,6 @@
     <string name="AddOn_SecureBackup_Title">"安全備份"</string>
     <string name="AddOn_SecureBackup_Text1">"這些資料都儲存在你的內部存儲器中而不是 AndiCar 的資料庫中。\n外部程式/套用將無法存取。"</string>
     <string name="AddOn_SecureBackup_Description">"每完成一次資料庫備份，此服務都會自動的將其作為郵件的附屬應用程式傳送到預先設定好的Email位址。通過這樣的方法，你的記錄資料能在哪怕手機都丟了的情況下都可用。結合安全備份增益集，徹底解決你的資料安全問題。"</string>
-    <string name="AddOn_SecureBackup_LongDescription">"自動上傳備份到你的 Google 賬戶，這樣哪怕手機丟了，你也可用獲取到它們"</string>
     <string name="AddOn_SecureBackup_TermOfService">"我們不對以下情況負責：極差/不存在/有問題的網路連接所導致的資料備份不完整/損壞、您的 Google 賬戶所擁有的儲存空間不足、從Google 郵箱刪除檔案或是其他的方式導致備份檔案遺失或不可用。"</string>
     <string name="AddOn_SecureBackup_Requirements">"服務要求：有效的 GMail 賬戶，網路連接，移動資料傳輸"</string>
 
@@ -525,7 +522,6 @@
 	<string name="AddOn_AutoBackupService_NoOfBackups1">"僅保留最新的"</string>
 	<string name="AddOn_AutoBackupService_NoOfBackups2">"備份。"</string>
 	<string name="AddOn_AutoBackupService_NotifyIfSuccess">"成功時進行通知"</string>
-	<string name="AddOn_AutoBackupService_NotifyIfFailure">"失敗時進行通知"</string>
 	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"至少需要選取一天！"</string>
 	<string name="AddOn_AutoBackupService_BackupSucceeded">"備份檔案建立成功"</string>
 	<string name="AddOn_AutoBackupService_BackupFailed">"備份失敗！請檢查你的SD卡。"</string>

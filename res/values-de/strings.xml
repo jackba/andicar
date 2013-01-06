@@ -130,12 +130,9 @@
     <string name="GEN_MailSent">"Mail gesendet"</string>
     <string name="GEN_Password">"Passwort"</string>
     <string name="GEN_ShowNotification">"Zeige Benachrichtigung"</string>
-    <string name="GEN_TaskTypeLabel">"Aufgabenart:"</string>
-    <string name="GEN_RepeatingHdr">"Wiederholung"</string>
+    <string name="GEN_TaskType">"Aufgabenart:"</string>
     <string name="GEN_SetDate">"Datum/Zeit setzen"</string>
     <string name="GEN_On">"am"</string> <!-- ex. on Monday -->
-    <string name="GEN_At">"um"</string> <!-- ex. on Monday at 1 PM -->
-    <string name="GEN_Day">"Tag"</string>
     <string name="GEN_LastDay">"letzter Tag"</string>
     <string name="GEN_FuelEff">"Benzinverbrauch:"</string>
     <string name="GEN_StartLabel">"Anfang "</string>
@@ -286,10 +283,9 @@
     <string name="BPartnerEditActivity_LocationsHeaderCaption">"Orte"</string>
 
     <string name="TaskEditActivity_OneTime">"Einmal am"</string>
-    <string name="TaskEditActivity_Recurent">"Wiederholend"</string>
-    <string name="TaskEditActivity_RecurentEveryLabel">"Jeden"</string>
-    <string name="TaskEditActivity_RecurentfrequencyLabel">"Wiederholung"</string>
-    <string name="TaskEditActivity_MoreExact">"genauer "</string>
+    <string name="TaskEditActivity_Recurrent">"Wiederholend"</string>
+    <string name="TaskEditActivity_RecurrentEveryLabel">"Jeden"</string>
+    <string name="TaskEditActivity_RecurrentFrequencyLabel">"Wiederholung"</string>
 
     <string name="PREF_UOMCategoryTitle">"Einheiten"</string>
     <string name="PREF_ExpenseCategoryTitle">"Kosten"</string>
@@ -402,8 +398,6 @@
     <string name="Notif_UpdateMsg">"Es gibt eine neue Version von AndiCar.!"</string>
     
     <!-- AddOn Services -->
-    <string name="AddOn_PayPalWarning">"Während des Bezahlungsprozesses **BENUTZE NICHT DIE ZURÜCK-TASTE UND ÄNDERE NICHT DIE DISPLAYAUSRICHTUNG**"</string>
-    <string name="AddOn_PayPalTransactionID">"PayPal Transaction ID"</string>
     <string name="AddOn_SubscribeWaiting">"Lade PayPal Zahlungsbibliotheken"</string>
     <string name="AddOn_SubscriptionInfo">"Du bist für diesen Service angemeldet bis: [#1]"</string>
     <string name="AddOn_BtnTryCaption">"Starte GRATIS Testphase"</string>

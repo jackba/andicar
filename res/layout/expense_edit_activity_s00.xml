@@ -70,7 +70,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:id="@+id/vgRoot"
         >
 
         <LinearLayout
@@ -326,6 +325,8 @@
                         android:typeface="sans"
                         android:textColor="@android:color/white"
                         android:button="@drawable/rb_selector"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
                         />
                     <RadioButton
                         android:id="@+id/rbInsertModePrice"
@@ -334,6 +335,8 @@
                         android:typeface="sans"
                         android:textColor="@android:color/white"
                         android:button="@drawable/rb_selector"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         />
                 </RadioGroup>
                 <EditText

@@ -476,8 +476,6 @@
     <string name="Notif_UpdateMsg">"Обновление программы AndiCar доступно для скачивания!"</string>
     
     <!-- AddOn Services -->
-    <string name="AddOn_PayPalWarning">"В период осуществления платежа ** НЕ ИСПОЛЬЗУЙТЕ НА ТЕЛЕФОНЕ КЛАВИШУ ВОЗВРАТА И НЕ ИЗМЕНЯЙТЕ ОРИЕНТАЦИЮ ЭКРАНА ТЕЛЕФОНА**"</string>
-    <string name="AddOn_PayPalTransactionID">"Номер транзакции PayPal"</string>
     <string name="AddOn_SubscribeWaiting">"Загружаю платежные библиотеки PayPal Payment"</string>
     <string name="AddOn_SubscriptionInfo">"Вы подписаны на этот сервис до: [#1]"</string>
 	<string name="AddOn_SubscriptionExpiredOn">"Ваша подписка на эту службу заканчивается: [#1]"</string>
@@ -508,9 +506,8 @@
 	<string name="AddOn_LifeTimeSubscription">"Срок подписки: [#1] [#2]"</string>
 
     <string name="AddOn_SecureBackup_Title">"Безопасное копирование"</string>
-    <string name="AddOn_SecureBackup_Description">"Каждый раз, когда создается резервная копия базы данных, эта служба автоматически отправляет  резервную копию в качестве вложения электронной почты, на предварительно  указанный адрес электронной почты. Таким образом, записанные данные будут доступны, даже если вы потеряете свой телефон. В сочетании с резервным копированием этот модуль представляет собой законченное решение для безопасности ваших данных."</string>
 	<string name="AddOn_SecureBackup_Text1">"Эти данные сохранены во внутренней памяти вашего устройства, не в базе данных AndiCar.\nВнешние приложения не имеют доступа к ним."</string>
-    <string name="AddOn_SecureBackup_LongDescription">"Автоматическая загрузка ваших копий баз данных  позволит вам иметь доступ к данным даже в случае утери телефона"</string>
+    <string name="AddOn_SecureBackup_Description">"Автоматическая загрузка ваших копий баз данных  позволит вам иметь доступ к данным даже в случае утери телефона"</string>
     <string name="AddOn_SecureBackup_TermOfService">" Мы не несем ответственности за: плохое / несуществующее / дефектное подключение к Интернету приводящее к неполным / поврежденным данным, недостаточное место для хранения  почты на вашей учетной записи Google, удаление файлов резервных копий с Google Mail или любые другие события, которые вызывают потери или делают непригодными  файлы резервного копирования."</string>
 	<string name="AddOn_SecureBackup_Requirements">"Системные требования службы: действующая учетная запись GMail, подключение к Интернету,  разрешение мобильной передачи данных"</string>
 
@@ -530,7 +527,6 @@
 	<string name="AddOn_AutoBackupService_NoOfBackups1">"Оставлять только посл."</string>
 	<string name="AddOn_AutoBackupService_NoOfBackups2">"коп."</string>
 	<string name="AddOn_AutoBackupService_NotifyIfSuccess">"Сообщить об успехе"</string>
-	<string name="AddOn_AutoBackupService_NotifyIfFailure">"Сообщить о неудаче"</string>
 	<string name="AddOn_AutoBackupService_NoDaySelectedMsg">"По крайней мере, один день должен быть выбран!"</string>
 	<string name="AddOn_AutoBackupService_BackupSucceeded">"Резервная копия создана успешно"</string>
 	<string name="AddOn_AutoBackupService_BackupFailed">"Неудача резервного копирования! Проверьте свою карту SD."</string>
