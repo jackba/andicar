@@ -20,8 +20,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar.activity"
-          android:versionCode="3741" 
-          android:versionName="3.7.5 Beta"
+          android:versionCode="4000" 
+          android:versionName="4.0.0 Beta"
           android:installLocation="internalOnly">
 <!-- 
 	internalOnly becouse:
@@ -29,7 +29,9 @@
 		-BOOT_COMPLETED broadcast receiver
 	See http://developer.android.com/guide/appendix/install-location.html
  -->          
-    <uses-sdk android:minSdkVersion="4" />
+    <uses-sdk android:minSdkVersion="5" 
+        		android:targetSdkVersion="15"/>
+    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -42,15 +44,6 @@
 	<!-- Fortumo Required Permissions -->
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-	<uses-permission android:name="android.permission.RECEIVE_SMS" />
-	<uses-permission android:name="android.permission.SEND_SMS" />
-	<!-- For security purposes, broadcast should be protected by permission. -->
-	<permission 
-	    android:label="Read Fortumo payment status" 
-	    android:name="com.andicar.addon.permission.PAYMENT_BROADCAST_PERMISSION" 
-	    android:protectionLevel="signature" 
-    />
-	<uses-permission android:name="com.andicar.addon.permission.PAYMENT_BROADCAST_PERMISSION" />
 	
 	<!-- need by secure backup -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -75,8 +68,8 @@
         android:label="AndiCar"
         android:description="@string/APP_Description"
         android:icon="@drawable/car2"
-        android:debuggable="true"
-    >
+        android:allowBackup="true"
+    android:debuggable="true">
         <uses-library android:name="com.google.android.maps" />
 
         <receiver android:name="org.andicar.service.AndiCarServiceStarter">
@@ -260,92 +253,54 @@
         </activity>
 
         <!-- AddOn Services -->
-        <service android:name="com.andicar.addon.services.BackupService" 
+        <service android:name="org.andicar.service.BackupService" 
 			android:label="AndiCarBackupService"
-			android:process="com.andicar.addon.services">
- 		</service>
-
-        <service android:name="com.andicar.addon.services.CheckSubscriptionsService" 
-			android:label="AndiCarCheckSubscription"
-			android:process="com.andicar.addon.services">
+			android:process="org.andicar.service">
  		</service>
 
         <activity
-            android:name="com.andicar.addon.activity.AddOnServicesList"
+            android:name="org.andicar.activity.AddOnServicesList"
             android:label="@string/PREF_AddOnCategoryTitle">
         </activity>
         
         <activity
-            android:name="com.andicar.addon.activity.ServiceSubscriptionOptions">
-        </activity>
-        <activity
-            android:name="com.andicar.addon.activity.PPPayment">
-        </activity>
-        <activity
-            android:name="com.andicar.addon.activity.FortumoPayment">
-        </activity>
-
-        <!-- Fortumo -->
- 		<activity android:name="com.fortumo.android.FortumoActivity" 
- 		    android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
-		<!-- Fortumo Service -->
-		<service android:name="com.fortumo.android.FortumoService" />
-        <service android:name="com.fortumo.android.StatusUpdateService" />
-		<receiver android:name="com.fortumo.android.BillingSMSReceiver">
-              <intent-filter>
-                  <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-              </intent-filter>
-        </receiver>
-        <receiver android:name="com.andicar.addon.services.FortumoPaymentStatusChangeReceiver">
-             <intent-filter>
-                 <action android:name="com.fortumo.android.PAYMENT_STATUS_CHANGED" />
-             </intent-filter>
-        </receiver>
-                    
-        <activity 
-			android:name="com.paypal.android.MEP.PayPalActivity"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar"
-			android:configChanges="keyboardHidden|orientation">
-        </activity>
-
-        <activity
-            android:name="com.andicar.addon.activity.AddOnPreferences"
+            android:name="org.andicar.activity.preference.AddOnPreferences"
             android:label="@string/AddOn_PreferencesTitle">
         </activity>
         <activity
-            android:name="com.andicar.addon.activity.BackupSchedule"
+            android:name="org.andicar.activity.BackupSchedule"
             android:label="@string/AddOn_AutoBackupService_ScheduleTitle">
         </activity>
 
         <activity
-            android:name="com.andicar.addon.activity.SecureBackupConfig"
+            android:name="org.andicar.activity.SecureBackupConfig"
             android:label="@string/AddOn_SecureBackup_Title">
         </activity>
 
         <activity
-            android:name="com.andicar.addon.activity.DataEntryTemplateList"
+            android:name="org.andicar.activity.DataEntryTemplateList"
             android:label="@string/AddOn_DataEntryPref_CategoryTitle">
         </activity>
 
-        <service android:name="com.andicar.addon.services.FileMailer" 
+        <service android:name="org.andicar.service.FileMailer" 
 			android:label="AndiCarFileMailer"
-			android:process="com.andicar.addon.services">
+			android:process="org.andicar.service">
  		</service>
             
         <activity
-            android:name="com.andicar.addon.activity.BTDeviceCarList"
+            android:name="org.andicar.activity.BTDeviceCarList"
             android:label="@string/AddOn_BTStarter_DeviceListActivityTitle">
         </activity>
         <activity
-            android:name="com.andicar.addon.activity.BTDeviceCarLink"
+            android:name="org.andicar.activity.BTDeviceCarLink"
             android:label="@string/AddOn_BTStarter_DeviceLinkActivityTitle">
         </activity>
-        <receiver android:name="com.andicar.addon.services.AndiCarBTConnectionReceiver">
+        <receiver android:name="org.andicar.service.AndiCarBTConnectionReceiver">
 			<intent-filter>
 				<action android:name="android.bluetooth.device.action.ACL_CONNECTED"></action>
 			</intent-filter>
 		</receiver>
-        <receiver android:name="com.andicar.addon.services.NetworkStatusChangeReceiver">
+        <receiver android:name="org.andicar.service.NetworkStatusChangeReceiver">
 			<intent-filter>
 				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"></action>
 			</intent-filter>
