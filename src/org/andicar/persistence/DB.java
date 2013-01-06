@@ -19,6 +19,7 @@
 package org.andicar.persistence;
 
 import org.andicar.activity.R;
+import org.andicar.service.FileMailer;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
@@ -33,11 +34,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import com.andicar.addon.persistence.AddOnDBAdapter;
-import com.andicar.addon.services.FileMailer;
-import com.andicar.addon.utils.AddOnHelper;
-import com.andicar.addon.utils.AddOnStaticValues;
 
 /**
  * Database object names and database creation/update
@@ -1491,7 +1487,6 @@ public class DB {
 				upgradeDbTo330(db, oldVersion);
 				upgradeDbTo340(db, oldVersion);
 				upgradeDbTo350(db, oldVersion);
-				AddOnDBAdapter.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
@@ -1507,7 +1502,6 @@ public class DB {
 				upgradeDbTo330(db, oldVersion);
 				upgradeDbTo340(db, oldVersion);
 				upgradeDbTo350(db, oldVersion);
-				AddOnDBAdapter.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
@@ -1522,7 +1516,6 @@ public class DB {
 				upgradeDbTo330(db, oldVersion);
 				upgradeDbTo340(db, oldVersion);
 				upgradeDbTo350(db, oldVersion);
-				AddOnDBAdapter.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
@@ -1535,7 +1528,6 @@ public class DB {
 				upgradeDbTo330(db, oldVersion);
 				upgradeDbTo340(db, oldVersion);
 				upgradeDbTo350(db, oldVersion);
-				AddOnDBAdapter.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
@@ -1547,7 +1539,6 @@ public class DB {
 				upgradeDbTo330(db, oldVersion);
 				upgradeDbTo340(db, oldVersion);
 				upgradeDbTo350(db, oldVersion);
-				AddOnDBAdapter.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
@@ -1558,7 +1549,6 @@ public class DB {
 			else if (oldVersion == 330) {
 				upgradeDbTo340(db, oldVersion);
 				upgradeDbTo350(db, oldVersion);
-				AddOnDBAdapter.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
@@ -1568,14 +1558,12 @@ public class DB {
 			// AndiCar 3.4.x
 			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again because on fresh 350 install addon tables was not created
 				upgradeDbTo350(db, oldVersion);
-				AddOnDBAdapter.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 			} else if (oldVersion == 351) {
-				AddOnDBAdapter.upgradeTo353(db);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
@@ -2395,18 +2383,10 @@ public class DB {
 		} else { // send backup file as email att. if secure backup subscription
 					// exists
 			try {
-				MainDbAdapter db = new MainDbAdapter(mCtx);
-				AddOnHelper aoh = new AddOnHelper(mCtx, AddOnStaticValues.SECURE_BACKUP_ID);
-				boolean subsValid =   aoh.isSubscriptionValid();
-//						AddOnDBAdapter.isSubscriptionValid(db,
-//						AddOnStaticValues.SECURE_BACKUP_ID);
-				db.close();
-				if (subsValid) {
-					Intent intent = new Intent(mCtx, FileMailer.class);
-					intent.putExtra("bkFile", bkFolder);
-					intent.putExtra("attachName", bkFileName);
-					mCtx.startService(intent);
-				}
+				Intent intent = new Intent(mCtx, FileMailer.class);
+				intent.putExtra("bkFile", bkFolder);
+				intent.putExtra("attachName", bkFileName);
+				mCtx.startService(intent);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

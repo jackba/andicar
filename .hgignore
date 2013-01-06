@@ -49,3 +49,5 @@ syntax: regexp
 ^icon_store/gimp_work/car2pro\.xcf$
 syntax: regexp
 ^icon_store/gimp_work/main_activity_picture_pro\.xcf$
+syntax: regexp
+^\.metadata$

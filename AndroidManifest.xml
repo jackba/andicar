@@ -69,7 +69,7 @@
         android:description="@string/APP_Description"
         android:icon="@drawable/car2"
         android:allowBackup="true"
-    android:debuggable="true">
+    >
         <uses-library android:name="com.google.android.maps" />
 
         <receiver android:name="org.andicar.service.AndiCarServiceStarter">

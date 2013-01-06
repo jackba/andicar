@@ -27,11 +27,12 @@ import android.database.SQLException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import org.andicar.utils.StaticValues;
 import org.andicar.activity.R;
 import org.andicar.utils.AndiCarStatistics;
 
-import com.andicar.addon.persistence.AddOnDBAdapter;
 public class MainDbAdapter extends DB
 {
     SharedPreferences mPref;
@@ -242,7 +243,7 @@ public class MainDbAdapter extends DB
                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                 "FROM " + CURRENCY_TABLE_NAME + " " +
                 "WHERE UPPER( " + CURRENCY_COL_CODE_NAME + ") = ? ";
-	        String[] selectionArgs = {content.getAsString(CURRENCY_COL_CODE_NAME).toUpperCase()};
+	        String[] selectionArgs = {content.getAsString(CURRENCY_COL_CODE_NAME).toUpperCase(Locale.US)};
 	        Cursor c = execSelectSql(checkSelect, selectionArgs);
 	        if(c.moveToFirst()){ //duplicate currency code
 	            c.close();
@@ -270,7 +271,7 @@ public class MainDbAdapter extends DB
                 "SELECT " + GEN_COL_ROWID_NAME + " " +
                 "FROM " + UOM_TABLE_NAME + " " +
                 "WHERE UPPER( " + UOM_COL_CODE_NAME + ") = ? ";
-	        String[] selectionArgs = {content.getAsString(UOM_COL_CODE_NAME).toUpperCase()};
+	        String[] selectionArgs = {content.getAsString(UOM_COL_CODE_NAME).toUpperCase(Locale.US)};
 	        Cursor c = execSelectSql(checkSelect, selectionArgs);
 	        if(c.moveToFirst()){ //duplicate currency code
 	            c.close();
@@ -1496,7 +1497,7 @@ public class MainDbAdapter extends DB
                 && c.moveToNext() && c.getString(0) != null)
             mStartIndexStr = c.getDouble(0);
         if(mStartIndexStr == null)
-            mStartIndexStr = new Double("0");
+            mStartIndexStr = Double.valueOf("0");
         c.close();
     	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
     }
@@ -1517,7 +1518,7 @@ public class MainDbAdapter extends DB
         }
         c.close();
         if(mStartIndexStr == null)
-            mStartIndexStr = new Double("0");
+            mStartIndexStr = Double.valueOf("0");
     	return new BigDecimal(mStartIndexStr).setScale(StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH);
     }
     
