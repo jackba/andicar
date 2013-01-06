@@ -41,7 +41,7 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b>是一個ANDROID設備上免費而且開源的汽車管理程式。
         授權遵循GNU公共授權第3版的條款。\n
-        在關於頁面有更多訊息 \n版權所有 c 2010-2012 Miklós Keresztes.\n
+        在關於頁面有更多訊息 \n版權所有 c 2010-2013 Miklós Keresztes.\n
         感謝使用<b><i>AndiCar</i></b>!
     </string>
 
@@ -68,24 +68,13 @@
 		<small>Translation maintainer wanted :)</small>\n
 		*  Hungarian translation by Péter Nagy - microbilab@gmail.com\n
         *  Spanish translation by Daniel Iozzi - danieliozzi@gmail.com\n
+        *  Roumanian translation by Doru Butnaru - budo8002@gmail.com\n
         \n<b><i>版權須知</i></b>:\n\n
-        版權所有 c 2010-2012 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
+        版權所有 c 2010-2013 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
 		本程式爲自由軟體；您可依據自由軟體基金會所發表的GNU通用公共授權條款，對本程式再次發佈和/或修改；無論您依據的是本授權的第三版，或（您可選的）任一日後發行的版本。\n\n
 		本程式是基於使用目的而加以發佈，然而不負任何擔保責任；亦無對適售性或特定目的適用性所爲的默示性擔保。詳情請參照GNU通用公共授權。\n\n
 		您應已收到附隨於本程式的GNU通用公共授權的副本；如果沒有，請參照\n\n
         <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>。\n
         授權全部內容見 <a href="http://www.gnu.org/licenses/gpl.html"></a>。\n
     </string>
-
-	<string name="AddOn_SubscriptionValidity">
-		對於目前的資料庫，訂閱是有效的。\n你應該在處理訂閱後立即建立一個備份！
-	</string>
-	<!-- 
-	<string name="LM_UPDATE_MSG">
-		<b><i>有何更新：</i></b>\n\n
-		* 修正多個 Bug\n\n
-		* <b>限時優惠：</b> 現在就訂閱備份服務或安全備份，起價為 0.99$\n\n
-		* <b>藍牙連接偵測器：</b> 當偵測到與一輛汽車有一個藍牙連接時自動啟動GPS路徑控制器(需要 Android 2+)
-	</string>
-	 -->
 </resources>

@@ -41,7 +41,7 @@
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
         <b><i>AndiCar</i></b>este un software gratuit Open Source de management auto pentru dispozitivele ce ruleaza sistemul Android.
         Este licentiat in concordanta cu termenii GNU General Public License, version 3.\n
-        Vezi pagine Despre pentru mai multe detalii.\n Copyright © 2010-2012 Miklós Keresztes.\n
+        Vezi pagine Despre pentru mai multe detalii.\n Copyright © 2010-2013 Miklós Keresztes.\n
         Multumim ca folositi <b><i>AndiCar</i></b>!
     </string>
 
@@ -70,7 +70,7 @@
         *  Traducere in Spaniola de Daniel Iozzi - danieliozzi@gmail.com\n
         *  Traducere in Romana de db - budo8002@gmail.com\n
         \n<b><i>Copyright notice</i></b>:\n\n
-        Copyright © 2010-2012 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
+        Copyright © 2010-2013 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
     	Acest program este liber; îl puteţi redistribui și/sau modifica în conformitate cu termenii Licenţei Publice Generale GNU, așa cum este publicată de către Free Software Foundation; fie versiunea 3 a Licenţei, fie (la latitudinea dumneavoastră) orice versiune ulterioară.\n
     	Acest program este distribuit cu speranţa că va fi util, dar FĂRĂ NICI O GARANŢIE; fără măcar garanţia implicită de
     	vandabilitate sau CONFORMITATE UNUI ANUMIT SCOP. A se vedea Licenţa Publică Generală GNU pentru detalii.\n
@@ -78,16 +78,11 @@
         Licenţa completă se poate citi <a href="http://www.gnu.org/licenses/gpl.html">aici</a>.\n
     </string>
 
-    <string name="AddOn_SubscriptionValidity">
-    	Abonamentul este valabil pentru baza de date curenta.
-    	\Trebuie sa faceti o copie imediat dupa procesul de abonare!     
-    </string>
-    
     <string name="LM_UPDATE_MSG">
         <b><i>Ce este nou:</i></b>\n\n
-        <i>Version 3.7.3:</i>\n
-        * Imbunatatiri Traseu GPS.Uneori viteza maxima era inregistrata gresit.\n\n
-        <i>Version 3.7.4, 3.7.4.1:</i>\n
+        <i>Versiunea 4.0.0:</i>\n
+        * Traducere în limba română de Doru Butnaru\n
+        * Toate extensiile sunt de acum disponibile gratis.
         * Au fost remediate diverse erori
     </string>
 </resources>
