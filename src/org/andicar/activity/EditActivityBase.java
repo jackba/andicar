@@ -48,9 +48,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.andicar.addon.activity.DataEntryTemplate;
-import com.andicar.addon.activity.SecureBackupConfig;
-
 /**
  * Base class for all edit activities. Implement common functionalities:
  *  -onCreate:

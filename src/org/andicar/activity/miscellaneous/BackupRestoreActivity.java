@@ -27,6 +27,7 @@ import org.andicar.activity.BaseActivity;
 import org.andicar.activity.R;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.FileUtils;
+import org.andicar.service.AndiCarServiceStarter;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
@@ -40,9 +41,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import com.andicar.addon.services.AndiCarAddOnServiceStarter;
-
 
 /**
  *
@@ -152,7 +150,7 @@ public class BackupRestoreActivity extends BaseActivity {
 //                                    editor.putLong( "CurrentDriver_ID", -1);
                                     editor.commit();
                                     try{
-                                    	AndiCarAddOnServiceStarter.startServices(BackupRestoreActivity.this);
+                                    	AndiCarServiceStarter.startServices(BackupRestoreActivity.this, "BackupService");
                                     }
                                     catch(Exception e){}
                                     if(isSendStatistics){

@@ -1,4 +1,4 @@
-/**
+/*
  *  AndiCar - a car management software for Android powered devices.
  *
  *  Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
@@ -66,9 +66,6 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.andicar.addon.activity.AddOnServicesList;
-import com.andicar.addon.services.AndiCarAddOnServiceStarter;
 
 /**
  * 
@@ -301,13 +298,6 @@ public class MainActivity extends BaseActivity {
 				editor.commit();
 			}
 
-//			mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-//			initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
-//					MainDbAdapter.genColName,
-//					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-//					MainDbAdapter.isActiveCondition, null,
-//					MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
-
 			try {
 				appVersion = getPackageManager().getPackageInfo(
 						getPackageName(), 0).versionName;
@@ -336,8 +326,7 @@ public class MainActivity extends BaseActivity {
 
 					initPreferenceValues(); // version update => init (new)
 											// preference values
-					AndiCarServiceStarter.startServices(this);
-					AndiCarAddOnServiceStarter.startServices(this);
+					AndiCarServiceStarter.startServices(this, "All");
 					if(!isJustInstalled)
 						isShowWhatsNew = true;
 				}
@@ -351,65 +340,6 @@ public class MainActivity extends BaseActivity {
 
 			setSpecificLayout();
 
-			// check for app update once a day
-//			Long currentTime = System.currentTimeMillis();
-//			Long lastTime = mPreferences.getLong("lastUpdateCheckTime", 0);
-//			if (mPreferences.getBoolean("AutoUpdateCheck", true)) {
-//				if ((lastTime + oneDayInMilis) < currentTime) {
-//					Intent intent = new Intent(this, UpdateCheckService.class);
-//					this.startService(intent);
-//					editor.putLong("lastUpdateCheckTime", lastTime);
-//					editor.commit();
-//				}
-//			}
-
-			//debug
-//			Intent intent = new Intent(this, ToDoNotificationService.class);
-////			intent.putExtra("ToDoID", 22L);
-//			this.startService(intent);
-			
-			
-//			lastTime = mPreferences.getLong("lastAddOnCheckTime", 0);
-//			if(isJustInstalled){
-//				//show the question above 10 days 
-//				editor.putLong("lastAddOnCheckTime", currentTime - (5 * StaticValues.ONE_DAY_IN_MILISECONDS));
-//				editor.commit();
-//			}
-//			else{
-//				if(lastTime + (15 * StaticValues.ONE_DAY_IN_MILISECONDS) < currentTime && 
-//						!ServiceSubscription.isAddOnsUsed(mDbAdapter)){
-//					editor.putLong("lastAddOnCheckTime", currentTime);
-//					editor.commit();
-//					
-//					AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
-//							AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mResource.getString(R.string.MainActivity_DidYouKnow));
-//		            builder.setMessage(mResource.getString(R.string.MainActivity_AddOnMessage));
-//		            builder.setCancelable(false);
-//		            builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
-//		                       new DialogInterface.OnClickListener() {
-//		                           public void onClick(DialogInterface dialog, int id) {
-//		                        	   startActivity(new Intent(MainActivity.this, AddOnServicesList.class));
-//		                        	   dialog.cancel();
-//		                           }
-//		                       });
-//		            builder.setNegativeButton(mResource.getString(R.string.GEN_NO),
-//		                        new DialogInterface.OnClickListener() {
-//		                           public void onClick(DialogInterface dialog, int id) {
-//		                                dialog.cancel();
-//		                           }
-//		                        });
-//		            AlertDialog alert = builder.create();
-//		            alert.show();
-//				}
-//			}
-			
-			//inneractive
-//			InnerActiveAdView iaView = (InnerActiveAdView) findViewById(R.id.ad1);
-//			if(iaView != null){
-//				iaView.setVisibility(View.GONE);
-////				iaView.setVisibility(View.VISIBLE);
-////				iaView.setRefreshInterval(120); //120 seconds
-//			}
 		} catch (Exception e) {
 			String logFile = "onCreateStartup.log";
 			FileUtils.deleteFile(StaticValues.BASE_FOLDER + logFile);
