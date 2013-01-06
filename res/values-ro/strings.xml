@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ AndiCar - a car management software for Android powered devices.
+
+ Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+
+ This program is free software: you can redistribute it and/or modify 
+ it under the terms of the GNU General Public License as published by 
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ Translated to Romanian on 05.08.2012 by budo8002@gmail.comTranslated to German on 24.02.2011 by andy@haubenschmid.li
+-->
+
+<!-- UI labels and messages-->
+<!--
+    Some strings contains one or more "variables". These looks like [#No] (for example [#1], [#2]).
+    These variables are parsed in the application and are replaced with a string value (a currency code, an UOM code, etc)
+
+    !!!For translators!!!:
+        If any of the translated string is longer than the English value you should
+        verify the look of the user interface (using the android emulator or any other device)
+        with the translated values.
+-->
+
+<resources>
+    <string name="APP_Description">&quot;Software de management autovehicule gratis si OpenSource.&quot;</string>
+    <string name="APP_Motto">&quot;Gestionati-va masinile folosind un OpenSource.&quot;</string>
+    <string name="APP_Activity_DriverEdit">&quot;Setare conducator auto&quot;</string>
+    <string name="APP_Activity_DriverList">&quot;Conducatori auto&quot;</string>
+    <string name="APP_Activity_CarEdit">&quot;Setare autovehicul&quot;</string>
+    <string name="APP_Activity_CarList">&quot;Autovehicule&quot;</string>
+    <string name="APP_Activity_Preferences">&quot;Preferinte&quot;</string>
+    <string name="APP_Activity_GPSPreferences">&quot;Preferinte trasee GPS&quot;</string>
+    <string name="APP_Activity_ExpenseCategoryList">&quot;Categorii cheltuieli&quot;</string>
+    <string name="APP_Activity_ExpenseCategoryEdit">"Edit expense category"</string>
+    <string name="APP_Activity_ExpenseTypeList">&quot;Tipuri de cheltuieli&quot;</string>
+    <string name="APP_Activity_ExpenseTypeEdit">&quot;Setare tipuri cheltuieli&quot;</string>
+    <string name="APP_Activity_UOMList">&quot;Unitati de masura(UM)&quot;</string>
+    <string name="APP_Activity_UOMEdit">&quot;Setare UM&quot;</string>
+    <string name="APP_Activity_UOMConversionList">&quot;Conversie UM&quot;</string>
+    <string name="APP_Activity_UOMConversionEdit">&quot;Setare conversie UM &quot;</string>
+    <string name="APP_Activity_CurrencyList">&quot;Moneda&quot;</string>
+    <string name="APP_Activity_CurrencyEdit">&quot;Setare moneda&quot;</string>
+    <string name="APP_Activity_MileageList">&quot;Kilometraje&quot;</string>
+    <string name="APP_Activity_MileageEdit">&quot;Adaugare sau editare kilometraj&quot;</string>
+    <string name="APP_Activity_RefuelList">&quot;Alimentari&quot;</string>
+    <string name="APP_Activity_RefuelEdit">&quot;Adaugare sau editare alimentare&quot;</string>
+    <string name="APP_Activity_About">&quot;Despre AndiCar&quot;</string>
+    <string name="APP_Activity_BackupRestore">"Backup / restore"</string>
+    <string name="APP_Activity_ExpenseList">&quot;Cheltuieli&quot;</string>
+    <string name="APP_Activity_ExpenseEdit">&quot;Adaugare sau editare cheltuieli&quot;</string>
+    <string name="APP_Activity_CurrencyRateList">&quot;Rata de schimb&quot;</string>
+    <string name="APP_Activity_CurrencyRateEdit">&quot;Adaugare sau editare rate de schimb&quot;</string>
+    <string name="APP_Activity_GPSTrackController">&quot;Control traseu GPS &quot;</string>
+    <string name="APP_Activity_GPSTrackEdit">&quot;Editare traseu GPS &quot;</string>
+    <string name="APP_Activity_GPSTrackList">&quot;Trasee GPS&quot;</string>
+    <string name="APP_Activity_BPartnerList">&quot;Parteneri&quot;</string>
+    <string name="APP_Activity_BPartnerEdit">&quot;Editare partner, locatie&quot;</string>
+    <string name="APP_Activity_BPartnerLocationEdit">&quot;Editare locatie&quot;</string>
+    <string name="APP_Activity_TagList">&quot;Etichete&quot;</string>
+    <string name="APP_Activity_TagEdit">&quot;Editare eticheta&quot;</string>
+    <string name="APP_Activity_Message">&quot;Mesaj AndiCar&quot;</string>
+    <string name="APP_Activity_TaskTypeList">&quot;Tipuri actiuni&quot;</string>
+    <string name="APP_Activity_TaskTypeEdit">&quot;Editare tip actiune&quot;</string>
+    <string name="APP_Activity_TaskList">&quot;Actiuni&quot;</string>
+    <string name="APP_Activity_TaskEdit">&quot;Adaugare sau editare actiune&quot;</string>
+    <string name="APP_Activity_TodoList">&quot;Lista programari&quot;</string>
+    <string name="APP_Activity_FuelCategoryList">&quot;Categorii combustibil&quot;</string>
+    <string name="APP_Activity_FuelCategoryEdit">&quot;Editare categorie combustibil&quot;</string>
+
+    <string name="GEN_OK">"OK"</string>
+    <string name="GEN_CANCEL">"Cancel"</string>
+    <string name="GEN_YES">&quot;Da&quot;</string>
+    <string name="GEN_NO">&quot;Nu&quot;</string>
+    <string name="GEN_Done">&quot;Executat&quot;</string>
+    <string name="GEN_FillMandatory">&quot;Completare obligatorie&quot;</string>
+    <string name="GEN_NumberFormatException">&quot;Numar invalid&quot;</string>
+    <string name="GEN_ChooseOneTitle">&quot;Alege&quot;</string>
+    <string name="GEN_ChooseOneMessage">&quot;Faceti cel putin o alegere&quot;</string>
+    <string name="GEN_ChooseTitle">&quot;Alege&quot;</string>
+    <string name="GEN_IsActiveLabel">&quot;Activ&quot;</string>
+    <string name="GEN_UserCommentLabel">&quot;Comentariu&quot;</string>
+    <string name="GEN_NameLabel">&quot;Nume:&quot;</string>
+    <string name="GEN_DateTimeLabel">&quot;Data si ora&quot;</string>
+    <string name="GEN_PickDateCaption">&quot;Schimba data&quot;</string>
+    <string name="GEN_PickTimeCaption">&quot;Schimba ora&quot;</string>
+    <string name="GEN_DeleteConfirmation">&quot;Sigur vrei sa stergi?&quot;</string>
+    <string name="GEN_Refuel">&quot;Alimentare&quot;</string>
+    <string name="GEN_CarLabel">&quot;Masina:&quot;</string>
+    <string name="GEN_DriverLabel">&quot;Sofer:&quot;</string>
+    <string name="GEN_ExpenseTypeLabel">&quot;Tip:&quot;</string>
+    <string name="GEN_TypeLabel">&quot;Tip:&quot;</string>
+    <string name="GEN_DocumentNoLabel">&quot;Document nr.:&quot;</string>
+    <string name="GEN_IndexLabel">&quot;Odometru:&quot;</string>
+    <string name="GEN_QuantityLabel">&quot;Cantitate:&quot;</string>
+    <string name="GEN_PriceLabel">&quot;Pret&quot;</string>
+    <string name="GEN_AmountLabel">&quot;Cant.&quot;</string>
+    <string name="GEN_ConversionRateLabel">&quot;Rata:&quot;</string>
+    <string name="GEN_ConvertedAmountLabel">&quot;Cant. [#1]&quot;</string>
+    <string name="GEN_ConvertedPriceLabel">&quot;Pret [#1]&quot;</string>
+    <string name="GEN_SelectedMessage">&quot; selectat&quot;</string>
+    <string name="GEN_CurrencyLabel">&quot;Moneda&quot;</string>
+    <string name="GEN_Required">&quot;Necesar&quot;</string>
+    <string name="GEN_BPartner">"Vendor:"</string>
+    <string name="GEN_Address">&quot;Adresa:&quot;</string>
+    <string name="GEN_BPartnerAdressInfo">&quot;Detalii in Preferinte -&gt; Parteneri&quot;</string>
+    <string name="GEN_City">&quot;Oras:&quot;</string>
+    <string name="GEN_Region">&quot;Judet:&quot;</string>
+    <string name="GEN_Country">&quot;Tara:&quot;</string>
+    <string name="GEN_Contact">"Contact:"</string>
+    <string name="GEN_Phone">&quot;Tel:&quot;</string>
+    <string name="GEN_Phone2">&quot;Tel 2:&quot;</string>
+    <string name="GEN_Fax">"Fax:"</string>
+    <string name="GEN_Email">"Email:"</string>
+    <string name="GEN_Postal">&quot;Cod:&quot;</string>
+    <string name="GEN_Tag">&quot;Eticheta:&quot;</string>
+    <string name="GEN_TagHint">&quot;Indiciu. Scrie un comentariu.&quot;</string>
+    <string name="GEN_LifeTime">&quot;Durata&quot;</string>
+    <string name="GEN_CreatedOn">&quot;Creat in&quot;</string>
+    <string name="GEN_Category">&quot;Categorie:&quot;</string>
+    <string name="GEN_UOM">&quot;UM:&quot;</string>
+    <string name="GEN_MailSent">&quot;Mail trimis&quot;</string>
+    <string name="GEN_Password">&quot;Parola&quot;</string>
+    <string name="GEN_ShowNotification">&quot;Arata notificare&quot;</string>
+    <string name="GEN_Error">&quot;Eroare&quot;</string>
+    <string name="GEN_Confirm">&quot;Confirmare&quot;</string>
+    <string name="GEN_Info">"Info"</string>
+    <string name="GEN_Warning">&quot;Atentie&quot;</string>
+    <string name="GEN_TaskType">&quot;Tip actiune:&quot;</string>
+    <string name="GEN_SetDate">&quot;Set data/ora&quot;</string>
+    <string name="GEN_On">&quot;La&quot;</string> <!-- example on Monday -->
+    <string name="GEN_Days">&quot;zile&quot;</string>
+    <string name="GEN_Minutes">&quot;minute&quot;</string>
+    <string name="GEN_Min">"min"</string>
+    <string name="GEN_LastDay">&quot;ultima zi&quot;</string>
+    <string name="GEN_Description">&quot;Descriere&quot;</string>
+    <string name="GEN_Or">&quot;Sau:&quot;</string>
+    <string name="GEN_TaskLabel">&quot;Actiune:&quot;</string>
+    <string name="GEN_StatusLabel">"Status:"</string>
+    <string name="GEN_Mileage">&quot;kilometri:&quot;</string>
+    <string name="GEN_Or2">&quot;sau&quot;</string>
+    <string name="GEN_ToDo">&quot;Programare&quot;</string>
+    <string name="GEN_ToDoAlert">&quot;Alerta programare&quot;</string>
+    <string name="GEN_New">&quot;Nou&quot;</string>
+    <string name="GEN_Update">"Update"</string>
+    <string name="GEN_FuelEff">&quot;Ef.consum:&quot;</string>
+    <string name="GEN_StartLabel">"Start "</string>
+    <string name="GEN_StopLabel">"Stop"</string>
+    <string name="GEN_PaymentFailed">&quot;Plata esuata&quot;</string>
+    <string name="GEN_PaymentNotConfirmed">&quot;Plata neconfirmata&quot;</string>
+    <string name="GEN_CarierBillingCheckWait">&quot;Verificare disponibilitate plata.Asteptati ...&quot;</string>
+        
+    <string name="MENU_PreferencesCaption">&quot;Preferinte&quot;</string>
+    <string name="MENU_AboutCaption">&quot;Despre&quot;</string>
+    <string name="MENU_DeleteCaption">&quot;Sterge&quot;</string>
+    <string name="MENU_AddNewCaption">&quot;Adauga&quot;</string>
+    <string name="MENU_EditCaption">&quot;Editeaza&quot;</string>
+    <string name="MENU_ShowInactiveCaption">&quot;Arata inactive&quot;</string>
+    <string name="MENU_HideInactiveCaption">&quot;Ascunde inactive&quot;</string>
+    <string name="MENU_SearchCaption">&quot;Cauta/filtreaza&quot;</string>
+    <string name="MENU_CreateReportCaption">&quot;Creeaza raport&quot;</string>
+    <string name="MENU_SendAsEmailCaption">&quot;Trimite / Incarca&quot;</string>
+    <string name="MENU_ShowOnMap">&quot;Arata pe harta&quot;</string>
+    <string name="MENU_MileageCaption">&quot;Kilometraje&quot;</string>
+    <string name="MENU_RefuelCaption">&quot;Alimentari&quot;</string>
+    <string name="MENU_ExpenseCaption">&quot;Cheltuieli&quot;</string>
+    <string name="MENU_GPSTrackCaption">&quot;Trasee GPS&quot;</string>
+    <string name="MENU_SetDefault">&quot;Setari uzuale&quot;</string>
+    <string name="MENU_OpenGPSTrack">&quot;Porneste traseu GPS&quot;</string>
+    <string name="MENU_RateCommentCaption">&quot;Comentariu&quot;</string>
+    <string name="MENU_AddOnServicesCaption">&quot;Servicii suplimentare&quot;</string>
+    <string name="MENU_LocalizeAndiCar">&quot;Traducere AndiCar&quot;</string>
+    <string name="MENU_TaskReminderCaption">&quot;Actiune&quot;</string>
+    <string name="MENU_TodoCaption">&quot;Lista programari&quot;</string>
+
+    <string name="MainActivity_MileageHeaderCaption">&quot;Ultimul kilometraj&quot;</string>
+    <string name="MainActivity_RefuelHeaderCaption">&quot;Ultima alimentare&quot;</string>
+    <string name="MainActivity_GPSTrackHeaderCaption">&quot;Ultimul traseu GPS&quot;</string>
+    <string name="MainActivity_ExpenseHeaderCaption">&quot;Ultima plata&quot;</string>
+    <string name="MainActivity_StatisticsHeaderCaption">&quot;Statistici &quot;</string>
+    <string name="MainActivity_StatisticsListLastOdoLabel">&quot;Ultimul odometru stiut: &quot;</string>
+    <string name="MainActivity_StatisticsAvgConsLabel">&quot;Consum mediu.: &quot;</string>
+    <string name="MainActivity_StatisticsAvgConsNoDataText">&quot;N/A. Media consumului este calculata pentru prima si ultima alimentare.&quot;</string>
+    <string name="MainActivity_StatisticsLastConsLabel">&quot;Ultimul consum: &quot;</string>
+    <string name="MainActivity_StatisticsLastConsNoData">&quot;N/A. Ultimul consum este calculat pentru ultimele doua alimentari.&quot;</string>
+    <string name="MainActivity_StatisticsTotalExpenseLabel">&quot;Total cheltuieli:&quot;</string>
+    <string name="MainActivity_StatisticsMileageExpenseLabel">&quot;Cheltuieli KM.:&quot;</string>
+    <string name="MainActivity_MileageNoDataText">&quot;Lipsa km pentru aceasta masina&quot;</string>
+    <string name="MainActivity_RefuelNoDataText">&quot;Lipsa alimentare pentru aceasta masina&quot;</string>
+    <string name="MainActivity_ExpenseNoDataText">&quot;Lipsa cheltuieli pentru aceasta masina&quot;</string>
+    <string name="MainActivity_ExpenseNoDataAditionalText">&quot;Aici nu sunt cheltuielile in concordanta cu alte inregistrari (alimenatri, etc.)&quot;</string>
+    <string name="MainActivity_NoCurrentCarMessage">&quot;Trebuie creata cel putin o masina.\n In fereastra urmatoare poti crea una.\n Din  Preferinte pot fi create mai multe masini -&gt;Autovehicule.\n\n Atentie la alegerea monedei si a unitatii de masura.&quot;</string>
+    <string name="MainActivity_NoCurrentDriverMessage">&quot;Trebuie creat cel putin un conducator auto.\nPoti crea unul in fereastra urmatoare.\n Mai multi conducatori pot fi creati din Preferinte -&gt; Conducatori auto.&quot;</string>
+    <string name="MainActivity_WellcomeMessage">"Welcome to AndiCar."</string>
+    <string name="MainActivity_WellcomeBackMessage">"Welcome back!"</string>
+    <string name="MainActivity_BackupExistMessage">&quot;Exista backup fisier.\n Doresti o refacere fisier?&quot;</string>
+    <string name="MainActivity_UpdateMessage">&quot;Update mesaj&quot;</string>
+    <string name="MainActivity_GPSTrackZoneNoDataText">&quot;Nu sunt trasee.&quot;</string>
+    <string name="MainActivity_NoMarketAccessMsg">&quot;Nu se deschide Android Market!&quot;</string>
+    <string name="MainActivity_AppVersion">&quot;Versiune aplicatie:&quot;</string>
+    <string name="MainActivity_DidYouKnow">&quot;Stiati?&quot;</string>
+    <string name="MainActivity_AddOnMessage">&quot;AndiCar are cateva servicii suplimentare.\n Acestea pot fi incercate gratis, fara limitari pana la  15 zile.\n\n Vrei sa vezi lista acestor servicii supplimentare?&quot;</string>
+    <string name="MainActivity_ToDoHeaderCaption">&quot;Urmatoare programare&quot;</string>
+    <string name="MainActivity_ToDoNoDataText">&quot;Nu sunt definite actiuni.&quot;</string>
+    <string name="MainActivity_HowToMessage">&quot;Utilizare&quot;</string>
+    <string name="MainActivity_WhatsNewDialogTitle">&quot;Noutati&quot;</string>
+
+
+    <string name="DriverEditActivity_LicenseNoLabel">&quot;Nr.auto:&quot;</string>
+    <string name="DriverEditActivity_CurrentDriverInactivateMessage">&quot;Conducatorul auto curent nu poate fi dezactivat.&quot;</string>
+    <string name="DriverListActivity_InactiveDriverSelectedMessage">Conducatorul curent nu poate fi sters</string>
+    <string name="DriverListActivity_CurrentDriverDeleteMessage">&quot;Conducatorul curent nu poate fi sters.&quot;</string>
+
+    <string name="CarEditActivity_ModelLabel">"Model:"</string>
+    <string name="CarEditActivity_LicensePlateLabel">&quot;Nr.inmatriculare:&quot;</string>
+    <string name="CarEditActivity_UOMLengthLabel">&quot;UM pentru distanta:&quot;</string>
+    <string name="CarEditActivity_UOMVolumeLabel">&quot;UM pentru volum:&quot;</string>
+    <string name="CarEditActivity_IndexStartLabel">&quot;Odometru initial:&quot;</string>
+    <string name="CarEditActivity_CurrencyLabel">&quot;Moneda implicita:&quot;</string>
+    <string name="CarEditActivity_CurrentCarInactivateMessage">&quot;Masina curenta nu poate fi dezactivata.&quot;</string>
+    <string name="CarListActivity_InactiveCarSelectedMessage">&quot;Masina inactiva.Nu poate fi selectata.&quot;</string>
+    <string name="CarListActivity_CurrentCarDeleteMessage">&quot;Masina curenta nu poate fi stearsa.&quot;</string>
+
+    <string name="UOMEditActivity_CodeLabel">&quot;Cod:&quot;</string>
+    <string name="UOMEditActivity_UOMTypeLengthTitle">&quot;distanta&quot;</string>
+    <string name="UOMEditActivity_UOMTypeVolumeTitle">&quot;volum&quot;</string>
+
+    <string name="UOMConversionEditActivity_UOMFromLabel">&quot;Din um:&quot;</string>
+    <string name="UOMConversionEditActivity_UOMToLabel">&quot;In um:&quot;</string>
+    <string name="UOMConversionEditActivity_ConvertionRateLabel">&quot;Rata de schimb:&quot;</string>
+
+    <string name="CurrencyEditActivity_CodeLabel">&quot;Cod:&quot;</string>
+
+    <string name="MileageEditActivity_IndexHeaderLabel">&quot;Start/stop odometru sau kilometraj&quot;</string>
+    <string name="MileageEditActivity_OptionMileageLabel">&quot;Distanta&quot;</string>
+    <string name="MileageEditActivity_InsertOkMessage">&quot;Kilometraj adaugat.&quot;</string>
+    <string name="MileageEditActivity_UpdateOkMessage">&quot;Kilometraj actualizat.&quot;</string>
+    <string name="MileageEditActivity_RecordingInProgress">&quot;Inregistrare in curs. Apasa STOP pentru finalizare.&quot;</string>
+
+    <string name="RefuelEditActivity_IsFullLabel">&quot;Este plinl&quot;</string>
+    <string name="RefuelEditActivity_QtyInBaseUOMLabel">&quot;Cantitate (UM): &quot;</string>
+    <string name="RefuelEditActivity_NoConversionRateMessage">&quot;Nu sunt definite conversii pentru aceste UM&quot;</string>
+    <string name="RefuelEditActivity_GasStation">&quot;Statie:&quot;</string>
+
+    <string name="BackupRestoreEditActivity_BackupBtnCaption">"Backup"</string>
+    <string name="BackupRestoreEditActivity_RestoreBtnCaption">&quot;Refacere&quot;</string>
+    <string name="BackupRestoreEditActivity_DeleteBkBtnCaption">&quot;Sterge&quot;</string>
+    <string name="BackupRestoreEditActivity_BackupListLabel">&quot;Fisiere backup:&quot;</string>
+    <string name="BackupRestoreEditActivity_BackupCreatedMessage">&quot;Backup creat.&quot;</string>
+    <string name="BackupRestoreEditActivity_BackupFailedMessage">&quot;Creare backup esuata!&quot;</string>
+    <string name="BackupRestoreEditActivity_RestoreFailedMessage">&quot;Refacere esuata!&quot;</string>
+    <string name="BackupRestoreEditActivity_BackupDeleteConfirmation">&quot;Sigur vrei sa stergi fisierul de backup selectat?&quot;</string>
+    <string name="BackupRestoreEditActivity_RestoreConfirmation">&quot;Sigur vrei refacerea fisierului? Aceasta actiune va sterge datele existente!&quot;</string>
+    <string name="BackupRestoreEditActivity_RestoreOKMessage">&quot;Baza de date a fost recreata. Aplicatia se va inchide.&quot;</string>
+
+    <string name="ExpenseCategoryEditActivity_IsExcludeLabel">&quot;Exclude din costul per Km&quot;</string>
+    <string name="ExpenseCategoryEditActivity_IsFuel">&quot;Este combutibil&quot;</string>
+
+    <string name="ExpenseEditActivity_CreatedFromWarning">&quot;Aceasta plata a fost creata de la [#1]. Editeaza corespunzator [#1].&quot;</string>
+
+    <string name="CurrencyRateEditActivity_CurrencyFromLabel">&quot;Din moneda &quot;</string>
+    <string name="CurrencyRateEditActivity_CurrencyToLabel">&quot;In moneda &quot;</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateLabel">&quot;Rata: 1 [#1] = &quot;</string>
+    <string name="CurrencyRateEditActivity_CurrencyRateToLabel">" %"</string>
+    <string name="CurrencyRateEditActivity_InverseCurrencyRateLabel">&quot;Rata inversa: 1 [#1] = &quot;</string>
+    <string name="CurrencyRateEditActivity_MaxDecimalsLabel">&quot;Max. zecimale permise: &quot;</string>
+
+    <string name="REPORTActivity_ReportCreatedMessage">&quot;Raportul a fost creat cu succes in sdcard/andicar/reports&quot;</string>
+    <string name="REPORTActivity_ProgressMessage">&quot;Creare raport in desfasurare. Asteptati...&quot;</string>
+
+
+
+    <string name="GPSTrackReport_GPSTrackVar_1">&quot;Distanta: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_2">&quot;Viteza max.: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_3">&quot;Viteza medie: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_4">&quot;Viteza medie de deplasare: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_5">&quot;Timp total: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_6">&quot;Timp deplasare: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_7">&quot;Acuratete maxima: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_8">&quot;Acuratete minima: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_9">&quot;Acuratete medie: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_10">&quot;Alt.min.: &quot;</string>
+    <string name="GPSTrackReport_GPSTrackVar_11">&quot;Alt.max.: &quot;</string>
+
+    <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">&quot;Fisiere trasee&quot;</string>
+    <string name="GPSTrackEditActivity_TrackStatistics">&quot;Statistici&quot;</string>
+
+    <string name="GPSTrackControllerActivity_StopBtnCaption">&quot;Stop traseu GPS &quot;</string>
+    <string name="GPSTrackControllerActivity_FileFormatLabel">&quot;Format fisier traseu:&quot;</string>
+    <string name="GPSTrackControllerActivity_CreateMileageLabel">&quot;Creaza kilometraj&quot;</string>
+    <string name="GPSTrackControllerActivity_IndexLabel">&quot;Start odometru:&quot;</string>
+
+    <string name="GPSTrackService_ServiceStoppedMessage">&quot;Inregistrare GPS oprita&quot;</string>
+    <string name="GPSTrackService_GPSDisabledMessage">&quot;GPS-ul este dezactivat!\n Activeaza-l!.&quot;</string>
+    <string name="GPSTrackService_GPSOutOfService">"GPS Service provider out of service!"</string>
+    <string name="GPSTrackService_TrackInProgressTitle">&quot;Inregistrare GPS AndiCar &quot;</string>
+    <string name="GPSTrackService_TrackInProgressMessage">&quot;Inregistrare in progres&quot;</string>
+    <string name="GPSTrackService_AccuracyProblemTitle">&quot;AndiCar GPS in alarma!&quot;</string>
+    <string name="GPSTrackService_AccuracyProblemMessage">&quot;Acuratetea este in afara limitei!&quot;</string>
+    <string name="GPSTrackService_AutoShutDownTitle">&quot;AndiCar GPS Oprit!&quot;</string>
+    <string name="GPSTrackService_AutoShutDownMessage">&quot;Inregistrarea GPS oprita deoarece procentul punctelor pierdute ([#1])este peste limita ([#2])!\n Poti ajusta limita din Preferinte -&gt; Limita auto-stop.&quot;</string>
+    <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar File System Error!"</string>
+
+    <string name="GPSTrackShowOnMap_ProgressMessage">&quot;Proces in progres.\n Asteptati...&quot;</string>
+    <string name="GPSTrackShowOnMapMenu_MapMode">&quot;Mod harta&quot;</string>
+    <string name="GPSTrackShowOnMapMenu_SatelliteMode">&quot;Mod satelit&quot;</string>
+
+    <string name="BPartnerEditActivity_LocationsHeaderCaption">&quot;Locatii&quot;</string>
+
+    <string name="TaskEditActivity_OneTime">&quot;O singura data&quot;</string>
+    <string name="TaskEditActivity_Recurrent">&quot;Recurent&quot;</string>
+    <string name="TaskEditActivity_RecurrentEveryLabel">&quot;La fiecare&quot;</string>
+    <string name="TaskEditActivity_RecurrentFrequencyLabel">&quot;Repetare&quot;</string>
+    <string name="TaskEditActivity_FirstRunDependOnCar">&quot;Timp de pornire diferit pentru fiecare masina&quot;</string>
+    <string name="TaskEditActivity_TimeDriven">&quot;Timp&quot;</string>
+    <string name="TaskEditActivity_Scheduled">&quot;Programat pentru:&quot;</string>
+    <string name="TaskEditActivity_MileageDriven">&quot;Kilometraj&quot;</string>
+    <string name="TaskEditActivity_BothDriven">&quot;Ambele&quot;</string>
+    <string name="TaskEditActivity_FirstTimeRunExplanation">&quot;Timpul de pornire va fi specificat pentru fiecare masina&quot;</string>
+    <string name="TaskEditActivity_FirstMileageRunExplanation">&quot;Kilometrajul de pornire va fi specificat pentru fiecare masina&quot;</string>
+    <string name="TaskEditActivity_ReminderStartLabel">&quot;Start reminder inainte&quot;</string>
+    <string name="TaskEditActivity_LinkedCarsLabel">&quot;Masini active&quot;</string>
+    <string name="TaskEditActivity_MileageUOMTextLong">&quot;mi sau km (functie de definirea masinii)&quot;</string>
+    <string name="TaskEditActivity_MileageUOMText">&quot;mi sau km&quot;</string>
+    <string name="TaskEditActivity_FillMileage">&quot;Completeaza kilometrajul!&quot;</string>
+    <string name="TaskEditActivity_FillFrequency">&quot;Completeaza frecventa!&quot;</string>
+    <string name="TaskEditActivity_LinkedCarsOptionsHelp">&quot;Pentru optiuni, apasa lung pe masina&quot;</string>
+    <string name="TaskEditActivity_AllCarsLinkedMsg">&quot;Toate masinile active sunt legate ala aceasta actiune.&quot;</string>
+    <string name="TaskEditActivity_NoLinkedCarsMsg">&quot;Cel putin o masina trebuie legata la aceasta actiune.&quot;</string>
+    <string name="TaskEditActivity_NoCarsLinkedMsg">&quot;Nu sunt masini active cu kilometrajul curent mai mic decat cel al actiunii!\n Creste kilometrajul actiunii.&quot;</string>
+    <string name="TaskEditActivity_StartingTimeInFutureMsg">&quot;Timpul de pornire al actiunii trebuie sa fie ulterior!&quot;</string>
+    <string name="TaskEditActivity_StartingTimeLbl">"Starting time:"</string>
+    <string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"Genereaza automat urmatorul"</string>
+    <string name="TaskEditActivity_GeneratedToDoCountLabel">&quot;Genereaza automat urmatorul&quot;</string>
+    <string name="TaskEditActivity_ToDoCount">&quot;contor programare &quot;</string>
+    <string name="TaskEditActivity_ToDoCountHelp">&quot;Cand se face o Programare, una noua va fi automat anexata listei de Programari.&quot;</string>
+        
+    <string name="TaskCarEditActivity_StartDate">&quot;Data pornire:&quot;</string>
+    <string name="TaskCarEditActivity_StartMileage">&quot;Kilometraj plecare:&quot;</string>
+    <string name="TaskCarDialogActivity_Title">&quot;Adauga masina la Actiune&quot;</string>
+    
+    <string name="ToDo_OverdueLabel">&quot;Restanta&quot;</string>
+    <string name="ToDo_ScheduledLabel">&quot;Programat&quot;</string>
+    <string name="ToDo_DoneLabel">&quot;Executat&quot;</string>
+    <string name="ToDo_ScheduledDateLabel">&quot;Programat pentru:&quot;</string>
+    <string name="ToDo_ScheduledMileageLabel">&quot;Programare kilometraj:&quot;</string>
+    <string name="ToDo_EstimatedMileageDate">&quot;estimat pentru:&quot;</string>
+    <string name="ToDo_EstimatedMileageDateNoData">&quot;inregistrari insuficiente pentru o data estimata&quot;</string>
+    <string name="ToDo_EstimatedMileageDateTooFar">&quot;nu poate fi facuta o estimare&quot;</string>
+    <string name="ToDo_ActionHdr">&quot;Actiune&quot;</string>
+    <string name="ToDo_PostPoneLabel">&quot;Aminteste-mi dupa:&quot;</string>
+    <string name="ToDo_IsDoneCaption">&quot;Aceasta Programare s-a executat&quot;</string>
+    <string name="ToDo_DaysLeft">&quot;Zile ramase: &quot;</string>
+    <string name="ToDo_MinutesLeft">&quot;Minute ramase: &quot;</string>
+    <string name="ToDo_MileageLeft">&quot;Kilometri ramasi: &quot;</string>
+    <string name="ToDo_CurrentIndex">&quot;Odometru curent: &quot;</string>
+    <string name="ToDo_IsDone">&quot;Executat&quot;</string>
+
+    <string name="PREF_UOMCategoryTitle">&quot;Unitati de masura&quot;</string>
+    <string name="PREF_ExpenseCategoryTitle">&quot;Cheltuieli&quot;</string>
+    <string name="PREF_ExpenseTypeCategoryTitle">&quot;Tipuri cheltuieli&quot;</string>
+    <string name="PREF_ExpenseTypeCategorySummary">&quot;Adauga, modifica, sterge tipuri cheltuieli&quot;</string>
+    <string name="PREF_CarDriverCategoryTitle">&quot;Masini si conducatori auto&quot;</string>
+    <string name="PREF_CarTitle">&quot;Masini&quot;</string>
+    <string name="PREF_CarSummary">&quot;Adauga, sterge, modifica masini.&quot;</string>
+    <string name="PREF_DriverTitle">&quot;Cosnducatori auto&quot;</string>
+    <string name="PREF_DriverSummary">&quot;Adauga, sterge, modifica conducatori auto.&quot;</string>
+    <string name="PREF_UOMTitle">&quot;UM&quot;</string>
+    <string name="PREF_UOMSummary">&quot;Adauga, sterge, modifica unitati de masura&quot;</string>
+    <string name="PREF_UOMConversionTitle">&quot;Conversie UM&quot;</string>
+    <string name="PREF_UOMConversionSummary">&quot;Adauga, sterge, modifica rata de conversie intre UM&quot;</string>
+    <string name="PREF_CurrencyTitle">&quot;Monede&quot;</string>
+    <string name="PREF_CurrencySummary">&quot;Adauga, sterge, modifica moneda&quot;</string>
+    <string name="PREF_BackupRestoreCategoryTitle">"Backup / restore"</string>
+    <string name="PREF_BackupRestoreTitle">&quot;Backup sau restore baza de date&quot;</string>
+    <string name="PREF_BackupRestoreSummary">&quot;Creaza o noua baza de date sau copie dupa un backup existent.&quot;</string>
+    <string name="PREF_ExpenseCategoryCategoryTitle">&quot;Categorii cheltuieli&quot;</string>
+    <string name="PREF_ExpenseCategoryCategorySummary">&quot;Adauga, sterge, modifica, categorii cheltuieli&quot;</string>
+    <string name="PREF_MiscCategoryTitle">&quot;Diverse&quot;</string>
+    <string name="PREF_MainScreenCategoryTitle">&quot;Preferinte ecran principal&quot;</string>
+    <string name="PREF_MainScreenCategorySummary">&quot;Personalizeaza ecranul principal&quot;</string>
+    <string name="PREF_CurrencyRateCategoryTitle">&quot;Rate de schimb&quot;</string>
+    <string name="PREF_CurrencyRateCategorySummary">&quot;Adauga, sterge, modifica rate de schimb&quot;</string>
+    <string name="PREF_GPSTrackCategoryTitle">&quot;Urmarire GPS&quot;</string>
+    <string name="PREF_GPSTrackTitle">&quot;Traseu GPS&quot;</string>
+    <string name="PREF_GPSTrackSummary">&quot;Diverse optiuni de urmarire GPS.&quot;</string>
+    <string name="PREF_SendUsageTitle">&quot;Utilizare statistici&quot;</string>
+    <string name="PREF_SendUsageSummary">&quot;Ajuta dezvoltatorul trimitand statistici de utilizare in mod anonim.&quot;</string>
+    <string name="PREF_SendCrashReportsTitle">&quot;Rapoarte defecte&quot;</string>
+    <string name="PREF_SendCrashReportsSummary">&quot;Ajuta dezvoltatorul trimitand rapoarte de defecte in mod anonim.&quot;</string>
+    <string name="PREF_MainScreen">&quot;Personalizeaza ecranul principal&quot;</string>
+    <string name="PREF_BPartnersCategoryTitle">&quot;Parteneri si locatii&quot;</string>
+    <string name="PREF_PartnerTitle">&quot;Parteneri&quot;</string>
+    <string name="PREF_PartnerSummary">&quot;Adauga, sterge, modifica parteneri si locatii&quot;</string>
+    <string name="PREF_UseNumericInputTitle">&quot;Foloseste tastatura numerica&quot;</string>
+    <string name="PREF_UseNumericInputSummary">&quot;Foloseste tastatura simplificata pentru rubricile numerice.&quot;</string>
+    <string name="PREF_TagCategoryTitle">Adauga, sterge, modifica</string>
+    <string name="PREF_TagCategorySummary">&quot;Adauga, sterge, modifica etichete&quot;</string>
+    <string name="PREF_RememberLastTagTitle">&quot;Aminteste ultima eticheta&quot;</string>
+    <string name="PREF_RememberLastTagSummary">&quot;Aminteste ultima eticheta folosita&quot;</string>
+    <string name="PREF_AutoUpdateCheckTitle">&quot;Verifica update-uri&quot;</string>
+    <string name="PREF_AutoUpdateCheckSummary">&quot;Verifica si notifica-ma daca este disponibila o versiune noua AndiCar&quot;</string>
+    <string name="PREF_TaskReminderCategoryTitle">&quot;Actiuni&quot;</string>
+    <string name="PREF_TaskTypeTitle">&quot;Tipuri de actiuni&quot;</string>
+    <string name="PREF_TaskTypeSummary">&quot;Adauga, sterge, modifica tipuri de actiuni&quot;</string>
+    <string name="PREF_TaskTitle">&quot;Actiuni&quot;</string>
+    <string name="PREF_TaskSummary">&quot;Adauga, sterge, modifica actiuni&quot;</string>
+    <string name="PREF_GPSTrackingFlagValueTitle">&quot;Status punct traseu&quot;</string>
+    <string name="PREF_GPSTrackingFlagValueSummary">&quot;Deselecteaza DOAR dacaesti sigur ca nu se inregistreaza!&quot;</string>
+    <string name="PREF_UIStyleTitle">&quot;Stil interfata&quot;</string>
+    <string name="PREF_UIStyleSummary">&quot;Schimba stilul interfetei&quot;</string>
+    <string name="PREF_FuelCategoryTitle">&quot;Categorii combustibil&quot;</string>
+    <string name="PREF_FuelCategorySummary">&quot;Adauga, sterge, modifica categorii combustibil&quot;</string>
+
+    <string name="PREF_MainScreen_ShowMileageZone">Arata rubrica Kilometraj</string>
+    <string name="PREF_MainScreen_ShowGPSTrackZone">&quot;Arata rubrica Traseu GPS&quot;</string>
+    <string name="PREF_MainScreen_ShowRefuelZone">&quot;Arata rubrica Alimentare&quot;</string>
+    <string name="PREF_MainScreen_ShowExpenseZone">&quot;Arata rubrica Cheltuieli&quot;</string>
+    <string name="PREF_MainScreen_ShowStatistics">&quot;Arata statistici&quot;</string>
+    <string name="PREF_MainScreen_ShowToDoZone">&quot;Arata rubrica Programari&quot;</string>
+
+    <string name="PREF_AddOnCategoryTitle">&quot;Servicii Add-On &quot;</string>
+    <string name="PREF_AddOnServicesSummary">&quot;Pe baza de abonament, servicii platite.&quot;</string>
+    <string name="PREF_AddOnServicesSubscribe">&quot;Aboneaza-te prin PayPal&quot;</string>
+
+    <string name="PREFMainScreen_ZonesLabel">&quot;Rubrici existente:&quot;</string>
+    <string name="PREFGPSTrack_FileFormatTitle">&quot;Format fisier&quot;</string>
+    <string name="PREFGPSTrack_FileFormatSummary">&quot;Alege formatul pentru traseul GPS&quot;</string>
+    <string name="PREFGPSTrack_CSVFileFormatMessage">&quot;CSV este folosit intotdeauna&quot;</string>
+    <string name="PREFGPSTrack_KMLFileFormatTitle">"KML"</string>
+    <string name="PREFGPSTrack_KMLFileFormatSummary">"Keyhole Markup Language"</string>
+    <string name="PREFGPSTrack_GPXFileFormatTitle">"GPX"</string>
+    <string name="PREFGPSTrack_GPXFileFormatSummary">"GPs eXchange format"</string>
+    <string name="PREFGPSTrack_MinimumTimeTitle">&quot;Timpul min. intre doua puncte&quot;</string>
+    <string name="PREFGPSTrack_MinimumTimeSummary">&quot;Timpul minim intre doua inregistrari ale pozitiei&quot;</string>
+    <string name="PREFGPSTrack_AccuracyTitle">&quot;Precizie&quot;</string>
+    <string name="PREFGPSTrack_AccuracySummary">&quot;Precizia minima pentru un punct valid inregistrat. Folosit pentru inregistrare in format KML si GPX .&quot;</string>
+    <string name="PREFGPSTrack_AutoShutDownTitle">&quot;Limita oprire automata&quot;</string>
+    <string name="PREFGPSTrack_AutoShutDownSummary">&quot;Oprire inregistrare daca procentul de puncte omise este mai mare decat aceasta valoare.&quot;</string>
+    <string name="PREFGPSTrack_FileSplitTitle">&quot;Fisier inregistrare descompus&quot;</string>
+    <string name="PREFGPSTrack_FileSplitSummary">&quot;Descompune fisierul de inregistrare dupa fiecare N puncte. Seteaza 0 pentru invalidare.&quot;</string>
+    <string name="PREFGPSTrack_FileLocationMessage">&quot;Fisierele cu trasee sunt in SDCARD/andicar/gpstrack folder&quot;</string>
+
+    <string name="DIALOGSearch_DialogTitle">&quot;Introdu criteriul&quot;</string>
+    <string name="DIALOGSearch_DateFromLabel">&quot;De la&quot;</string>
+    <string name="DIALOGSearch_DateToLabel">&quot;La&quot;</string>
+
+    <string name="DIALOGReport_DialogTitle">&quot;Optiuni raport&quot;</string>
+    <string name="DIALOGReport_SendEmailLabel">&quot;  trimite / incarca&quot;</string>
+    <string name="DIALOGReport_ReportFormatLabel">&quot;Format raport:&quot;</string>
+
+    <string name="DIALOG_TemplateNameTitle">&quot;Nume sablon&quot;</string>
+
+    <string name="DayOfWeek_0">&quot;Duminica&quot;</string>
+    <string name="DayOfWeek_1">&quot;Luni&quot;</string>
+    <string name="DayOfWeek_2">&quot;Marti&quot;</string>
+    <string name="DayOfWeek_3">&quot;Miercuri&quot;</string>
+    <string name="DayOfWeek_4">&quot;Joi&quot;</string>
+    <string name="DayOfWeek_5">&quot;Vineri&quot;</string>
+    <string name="DayOfWeek_6">&quot;Sambata&quot;</string>
+
+    <string name="Month_01">&quot;Ianuarie&quot;</string>
+    <string name="Month_02">&quot;Februarie&quot;</string>
+    <string name="Month_03">&quot;Martie&quot;</string>
+    <string name="Month_04">&quot;Aprilie&quot;</string>
+    <string name="Month_05">&quot;Mai&quot;</string>
+    <string name="Month_06">&quot;Iunie&quot;</string>
+    <string name="Month_07">&quot;Iulie&quot;</string>
+    <string name="Month_08">"August"</string>
+    <string name="Month_09">&quot;Septembrie&quot;</string>
+    <string name="Month_10">&quot;Octombrie&quot;</string>
+    <string name="Month_11">&quot;Noiembrie&quot;</string>
+    <string name="Month_12">&quot;Decembrie&quot;</string>
+
+    <string name="Notif_UpdateTitle">&quot;Update-uri disponibile&quot;</string>
+    <string name="Notif_UpdateMsg">&quot;Un update pentru AndiCar este disponibil!&quot;</string>
+    
+    <!-- AddOn Services -->
+    <string name="AddOn_PayPalTransactionID">&quot;ID Tranzactie PayPal&quot;</string>
+    <string name="AddOn_SubscribeWaiting">&quot;Se contacteaza serverul PayPal. In functie de disponibilitatea serverului aceasta poate dura peste un minut.\nAsteptati...&quot;</string>
+    <string name="AddOn_SubscriptionInfo">&quot;V-ati abonat la acest serviciu pana la: [#1]&quot;</string>
+    <string name="AddOn_SubscriptionExpiredOn">&quot;Abonamentul dvs. a expirat la : [#1]&quot;</string>
+    <string name="AddOn_SubscriptionWillStartOn">&quot;Abonamentul se va activa la: [#1]&quot;</string>
+    <string name="AddOn_BtnTryCaption">&quot;Start GRATIS pentru 15 zile de evaluare&quot;</string>
+    <string name="AddOn_BtnConfigureServiceCaption">&quot;Configurati serviciul&quot;</string>
+    <string name="AddOn_BtnRenewSubscriptionCaption">&quot;Reinnoiti abonamentul&quot;</string>
+    <string name="AddOn_PreferencesTitle">&quot;Configurati serviciul Add-On &quot;</string>
+    <string name="AddOn_PreferencesSummary">&quot;Configurati serviciile dvs. Add-On &quot;</string>
+    <string name="AddOn_PreferencesCategoryTitle">&quot;Servicii Add-On &quot;</string>
+    <string name="AddOn_SubscriptionExpireWarning">&quot;Abonamentul dvs. pentru [#1] Add-On va expira in [#2] zile&quot;</string>
+    <string name="AddOn_SubscriptionExpired">&quot;Abonamentul dvs. la [#1] Add-On a expirat.&quot;</string>
+    <string name="AddOn_RenewSubscriptionPeriodInfo">"Reinnoiti abonamentul:"</string>
+    <string name="AddOn_RenewSubscriptionText">&quot;Reinnoiti abonamentul folosind:&quot;</string>
+    <string name="AddOn_CreateSubscriptionText">&quot;Abonati-va folosind:&quot;</string>
+    <string name="AddOn_SubscriptionBilled">&quot;Plata pentrur [#1] a fost acceptata&quot;</string>
+    <string name="AddOn_SubscriptionNotBilled">&quot;Plata pentru [#1] nu a fost acceptata!&quot;</string>
+    <string name="AddOn_SubscriptionPaymentPending">&quot;Plata este in desfasurare. Abonamentul va fi accestat  dupa plata efectiva. Poate dura pana la 2 zile.&quot;</string>
+        
+    <string name="AddOn_FortumoPriceExplanation">&quot;Pretul poate varia de la tara la tara dar este mai putin decat un pachet de tigari sau un vin bun.\nApasa butonul \&quot;Pay by MOBILE\&quot; pentru a vedea exact pretul. Ulterior se poate anula plata.\n\nPerioada de abonare este de un an. Dupa aceasta perioada trebuie reinnoit abonamentul pentru a pastra activ acest AddOn.&quot;</string>
+    <string name="AddOn_FortumoPaymentDescription">&quot;Sunteţi pe cale să cumparati un abonament pe un an la [#1] AddOn&quot;</string>
+    <string name="AddOn_FortumoPayment">&quot;Operator facturare&quot;</string>
+    <string name="AddOn_FortumoPaymentNotAvailable">&quot;Operatorul de facturare nu este disponibil in tara dvs.&quot;</string>
+        
+    <string name="AddOn_15DayFreeSubscription">&quot;Perioada de testare GRATIS de 15 zile.&quot;</string>
+    <string name="AddOn_SixMonthSubscription">&quot;Abonament 6 luni: [#1] [#2]&quot;</string>
+    <string name="AddOn_OneYearSubscription">&quot;Abonare 1 an: [#1] [#2]&quot;</string>
+    <string name="AddOn_LifeTimeSubscription">Service requirements</string>
+
+    <string name="AddOn_SecureBackup_Title">"Secure Backup"</string>
+    <string name="AddOn_SecureBackup_Description">&quot;La fiecare backup al bazei de date, acest serviciu o va trimite ca atasament catre o adresa preconfigurata. In acest fel datele dvs. vor fi disponibile chiar veti pierde telefonul. Combinand cu Add-On-ul Backup Service este solutia definitiva pentru siguranta datelor dvs.&quot;</string>
+    <string name="AddOn_SecureBackup_TermOfService">&quot;Dezvoltatorul AndiCar nu este responsabil pentru conexiunea la internet slaba/inexistenta/defectuoasa, avand ca rezultat date incomplete/corupte ,pentru spatiul de stocare insuficient de pe contul dvs. Google , pentru stergerea fisierelor de backup din Google Mail sau pentru orice alt  eveniment care poate cauza pierderea fisierelor de backup.&quot;</string>
+    <string name="AddOn_SecureBackup_Requirements">&quot;Cerinte necesare: cont valid GMail , Conexiune Internet , transfer date mobile.&quot;</string>
+    <string name="AddOn_SecureBackup_Configure">&quot;Mergi la configurarea SecureBackup pentru a introduce informatiile lipsa.&quot;</string>
+    <string name="AddOn_SecureBackup_Text1">&quot;Aceste informatii sunt stocate memoria interna a device-ului dvs, nu in baza de date a AndiCar.\nAplicatii externe nu le poate accesa&quot;</string>
+    <string name="AddOn_SecureBackup_SMTPUserFrom">&quot;De la email (este necesar cont GMail):&quot;</string>
+    <string name="AddOn_SecureBackup_SMTPEmailTo">&quot;Trimite la email:&quot;</string>
+    <string name="AddOn_SecureBackup_IncludeGPSTrack">&quot;Include fisierele GPS &quot;</string>
+    <string name="AddOn_SecureBackup_IncludeReports">&quot;Include rapoartele generate&quot;</string>
+    <string name="AddOn_SecureBackup_MailSent">&quot;Fisierele de  backup au fost trimise.&quot;</string>
+	<string name="AddOn_SecureBackup_MailSubject">&quot;Fisierele de backup AndiCar au fost atasate.&quot;</string>
+	    
+    <string name="AddOn_AutoBackupService_Title">&quot;Serviciu Backup&quot;</string>
+    <string name="AddOn_AutoBackupService_Description">&quot;Acest serviciu permite o programare automata zilnica/saptamanala pentru backup. In combinatie cu Add-On-ul Secure Backup  reprezinta o solutie perfecta pentru siguranta datelor dvs.&quot;</string>
+    <string name="AddOn_AutoBackupService_TermOfService">""</string>
+    <string name="AddOn_AutoBackupService_Requirements">"Service requirements: free space on the SDCARD depending on your database size and the number of existing backups."</string>
+
+    <string name="AddOn_AutoBackupService_ScheduleTitle">&quot;Serviciu programare Backup&quot;</string>
+    <string name="AddOn_AutoBackupService_ScheduleFrequency">&quot;Repetitie:&quot;</string>
+    <string name="AddOn_AutoBackupService_ScheduleHour">&quot;Ora:&quot;</string>
+    <string name="AddOn_AutoBackupService_NoOfBackups1">&quot;Pastreaza doar ultimul&quot;</string>
+    <string name="AddOn_AutoBackupService_NoOfBackups2">&quot;copii.&quot;</string>
+    <string name="AddOn_AutoBackupService_NotifyIfSuccess">&quot;Notifica daca este OK&quot;</string>
+    <string name="AddOn_AutoBackupService_NoDaySelectedMsg">&quot;Trebuie selectata cel putin o zi!&quot;</string>
+    <string name="AddOn_AutoBackupService_BackupSucceeded">&quot;Copia a fost creata!&quot;</string>
+    <string name="AddOn_AutoBackupService_BackupFailed">&quot;Copiere esuata! Verificati-va SDCARD.&quot;</string>
+
+    <string name="AddOn_DataTemplate_Title">&quot;Sablon introducere date&quot;</string>
+    <string name="AddOn_DataTemplate_Description">&quot;Acest Add-On va permite sa folositi sabloane pentru introducerea datelor.\nEficienta poate fi crescuta prin folosirea sabloanelor la introducerea datelor.&quot;</string>
+    <string name="AddOn_DataTemplate_ApplyTemplateLbl">&quot;Sablon&quot;</string>
+    <string name="AddOn_DataTemplate_UpdatedMsg">&quot;Sablon actualizat&quot;</string>
+    <string name="AddOn_DataTemplate_CreatedMsg">&quot;A fost creat un nou sablon pe baza valorilor curente&quot;</string>
+
+    <string name="AddOn_DataEntryPref_CategoryTitle">&quot;Sabloane introducere date&quot;</string>
+    <string name="AddOn_DataEntryPref_ExpenseTitle">&quot;Sabloane cheltuieli&quot;</string>
+    <string name="AddOn_DataEntryPref_MileageTitle">&quot;Sabloane kilometraje&quot;</string>
+    <string name="AddOn_DataEntryPref_RefuelTitle">&quot;Sabloane alimentari&quot;</string>
+    <string name="AddOn_DataEntryPref_GPSTitle">&quot;Sabloane trasee GPS&quot;</string>
+    
+    <string name="AddOn_BTStarter_Title">&quot;Detector legatura Bluetooth&quot;</string>
+    <string name="AddOn_BTStarter_Description">&quot;Pornire automata a GPS Track Controller la detectarea unei conexiuni Bluetooth  (e necesar Android 2+)&quot;</string>
+    <string name="AddOn_BTStarter_DeviceListActivityTitle">&quot;Aparate conectate&quot;</string>
+    <string name="AddOn_BTStarter_DeviceLinkActivityTitle">&quot;Aparat conectat la masina&quot;</string>
+    <string name="AddOn_BTStarter_PairedDevicesLabel">&quot;Aparate imperecheate:&quot;</string>
+    <string name="AddOn_BTStarter_LinkedTo">&quot;Legat cu:&quot;</string>
+    <string name="AddOn_BTStarter_NoLinkedCar">&quot;Nu se poate conecta la masina.\nComanda trebuie stearsa.&quot;</string>
+    <string name="AddOn_BTStarter_LinkToCar">&quot;Legatura cu masina:&quot;</string>
+    <string name="AddOn_BTStarter_Requirements">&quot;AddOn necesar:\nAndroid 2+; Bluetooth pentru ecast aparat&quot;</string>
+</resources>
