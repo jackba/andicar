@@ -1,4 +1,4 @@
- /**
+ /*
  * AndiCar - car management software for Android powered devices
  * Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
  * 
