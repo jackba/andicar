@@ -59,10 +59,7 @@ public class BackupRestoreActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-    		setContentView(R.layout.backup_restore_activity_s00);
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		setContentView(R.layout.backup_restore_activity_s01);
+   		setContentView(R.layout.backup_restore_activity_s01);
 
         btnBackup = (Button) findViewById(R.id.btnBackup);
         btnBackup.setOnClickListener(btnBkClickListener);
@@ -86,14 +83,8 @@ public class BackupRestoreActivity extends BaseActivity {
             return;
         }
         
-        int listLayout = R.layout.simple_list_item_single_choice_s01;
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-    		listLayout = android.R.layout.simple_list_item_single_choice;
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		listLayout = R.layout.simple_list_item_single_choice_s01;
-    	
         ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this,
-        		listLayout, bkFileList);
+        		android.R.layout.simple_list_item_single_choice, bkFileList);
         lvBackupList.setAdapter(listAdapter);
         lvBackupList.setItemsCanFocus(false);
         lvBackupList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);

@@ -24,13 +24,12 @@
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
     android:id="@+id/vgRoot"
-    android:background="@android:color/background_light"
     >
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/llAbout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
     	android:paddingLeft="5dp"
         android:layout_marginRight="5dp"
         android:gravity="center_horizontal"
@@ -40,12 +39,12 @@
 			android:src="@drawable/about_dialog_picture"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
+			android:contentDescription="@string/APP_Description"
 			/>
         
 	    <TextView
 	        android:layout_height="1dp"
 	        android:layout_width="fill_parent"
-	        android:background="@android:color/background_dark"
 	        android:layout_marginTop="2dp"
 	        />
 
@@ -55,50 +54,15 @@
             android:layout_height="wrap_content"
             android:gravity="fill"
             android:typeface="sans"
-            android:textColor="@android:color/widget_edittext_dark"
             android:text="@string/LM_COPYRIGHT_HTML1"
 	        android:layout_marginTop="2dp"
             />
-        <!-- 
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:stretchColumns="1"
-            >
-
-            <TableRow>
-                <TextView
-                    android:text="EUR"
-                    android:gravity="center_horizontal"
-                    android:typeface="sans"
-                    android:textColor="@android:color/white"
-                    />
-                <TextView
-                    android:text="USD"
-                    android:gravity="center_horizontal"
-                    android:typeface="sans"
-                    android:textColor="@android:color/white"
-                    />
-            </TableRow>
-
-            <TableRow>
-                <ImageView
-                    android:id="@+id/aboutDonateEUR"
-                    />
-                <ImageView
-                    android:id="@+id/aboutDonateUSD"
-                    />
-            </TableRow>
-        </TableLayout>
-         -->
         <TextView
             android:id="@+id/tvAbout2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="fill"
             android:typeface="sans"
-            android:textColor="@android:color/widget_edittext_dark"
             android:text="@string/LM_COPYRIGHT_HTML2"
             />
     </LinearLayout>

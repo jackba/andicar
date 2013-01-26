@@ -47,10 +47,6 @@ public class MainScreenPreferenceActivity extends BaseActivity {
         super.onCreate(icicle);
         mPrefEditor = mPreferences.edit();
         mResource = getResources();
-//    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-//            setContentView( R.layout.main_screen_preference_activity_s00);
-//    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-//            setContentView( R.layout.main_screen_preference_activity_s01);
         setContentView( R.layout.main_screen_preference_activity);
         
         fillZonesList();
@@ -66,13 +62,6 @@ public class MainScreenPreferenceActivity extends BaseActivity {
         mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowExpenseZone));
         mainScreenZones.add(mResource.getString(R.string.PREF_MainScreen_ShowStatistics));
 
-//        int layout = R.layout.simple_list_item_multiple_choice_s01;
-//    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-//    		layout = android.R.layout.simple_list_item_multiple_choice;
-//    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-//    		layout = R.layout.simple_list_item_multiple_choice_s01;
-        
-        
         ArrayAdapter<String> listAdapter =
                 new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice /*layout*/, mainScreenZones);
 

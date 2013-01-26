@@ -23,7 +23,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/vgRoot"
-    android:background="@android:color/background_light"
     >
 
     <LinearLayout
@@ -89,10 +88,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/AddOn_BTStarter_PairedDevicesLabel"
                     android:typeface="sans"
-		            android:textColor="@android:color/widget_edittext_dark"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                 />
                 <Spinner android:id="@+id/spnBTPairedDevices"
 					android:layout_width="180dp"
@@ -114,10 +112,9 @@
                     android:layout_height="wrap_content"
                     android:text="@string/AddOn_BTStarter_LinkToCar"
                     android:typeface="sans"
-		            android:textColor="@android:color/widget_edittext_dark"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                 />
                 <Spinner android:id="@+id/spnCar"
                     android:layout_width="180dp"
@@ -134,8 +131,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_IsActiveLabel"
                 android:typeface="sans"
-	            android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 />
 
             <TextView
@@ -144,13 +140,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_UserCommentLabel"
                 android:typeface="sans"
-	            android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 />
             <EditText
                 android:id="@+id/etUserComment"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 />
         </LinearLayout>
     </ScrollView>

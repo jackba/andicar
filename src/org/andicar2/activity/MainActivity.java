@@ -143,7 +143,6 @@ public class MainActivity extends BaseActivity {
 	protected boolean isShowWhatsNew = false;
 
 	private long gpsTrackId = -1;
-	private String uiStyle = null;
 
 	@Override
 	protected void onPause() {
@@ -163,11 +162,7 @@ public class MainActivity extends BaseActivity {
 			mPreferences = getSharedPreferences(
 					StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 			
-			uiStyle = mPreferences.getString("UIStyle", "s01");
-			if(uiStyle.equalsIgnoreCase("s00"))
-				setContentView(R.layout.main_activity_s00);
-	    	else if(uiStyle.equalsIgnoreCase("s01"))
-				setContentView(R.layout.main_activity_s01);
+			setContentView(R.layout.main_activity_s01);
 
 	    	if(mPreferences.getAll().size() == 0)
 				isJustInstalled = true;
@@ -704,10 +699,7 @@ public class MainActivity extends BaseActivity {
 				dataString = "";
 
 			int color = android.R.color.widget_edittext_dark;
-	    	if(uiStyle.equalsIgnoreCase("s00"))
-	    		color = Color.WHITE;
-	    	else
-	    		color = Color.BLACK;
+    		color = Color.BLACK;
 			
     		if(dataString.contains("[#5]"))
     			tvThreeLineListToDoText1.setTextColor(Color.RED);
@@ -1211,9 +1203,6 @@ public class MainActivity extends BaseActivity {
 		if (!mPreferences.contains("AutoUpdateCheck")) {
 			editor.putBoolean("AutoUpdateCheck", true);
 		}
-		if (!mPreferences.contains("UIStyle")) {
-			editor.putString("UIStyle", "s01");
-		}
 		editor.putString("CurrentInstallSource", StaticValues.INSTALL_SOURCE);
 		editor.commit();
 	}
@@ -1226,14 +1215,8 @@ public class MainActivity extends BaseActivity {
 				return;
 			// try{
 			
-			if(!uiStyle.equalsIgnoreCase(mPreferences.getString("UIStyle", "s01"))){ //ui style changed
-				uiStyle = mPreferences.getString("UIStyle", "s01");
-				if(uiStyle.equalsIgnoreCase("s00"))
-					setContentView(R.layout.main_activity_s00);
-		    	else if(uiStyle.equalsIgnoreCase("s01"))
-					setContentView(R.layout.main_activity_s01);
-				initControls();
-			}
+			setContentView(R.layout.main_activity_s01);
+			initControls();
 			isActivityOnLoading = true;
 			isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
 			if (mPreferences.getBoolean("MustClose", false)) {

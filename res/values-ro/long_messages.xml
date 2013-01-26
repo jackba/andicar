@@ -80,7 +80,9 @@
 
     <string name="LM_UPDATE_MSG">
         <b><i>Ce este nou:</i></b>\n\n
-        <i>Versiunea 4.0.0:</i>\n
+        \n\n<i>Versiunea 4.0.1:</i>\n
+        * Remedieri în interfață
+        \n\n<i>Versiunea 4.0.0:</i>\n
         * Traducere în limba română de Doru Butnaru\n
         * Toate extensiile sunt de acum disponibile gratis.
         * Au fost remediate diverse erori

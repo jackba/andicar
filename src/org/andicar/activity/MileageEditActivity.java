@@ -487,12 +487,7 @@ public class MileageEditActivity extends EditActivityBase {
 
     @Override
     protected void setLayout() {
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-            setContentView(R.layout.mileage_edit_activity_s00);
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		setContentView(R.layout.mileage_edit_activity_s01);
-//    	else
-//    		setContentView(R.layout.mileage_edit_activity_l01);
+   		setContentView(R.layout.mileage_edit_activity_s01);
     }
 
     public void calculateMileageOrNewIndex() throws NumberFormatException {

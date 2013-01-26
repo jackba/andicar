@@ -82,7 +82,9 @@
 
 	<string name="LM_UPDATE_MSG">
 	      <b><i>Újdonságok:</i></b>\n\n
-	      <i>4.0.0-ás verzió</i>\n
+	      <i>4.0.1-ás verzió</i>\n
+	      * UI hibajavítások (nem vagy nehezen olvasható szöveg)
+	      \n\n<i>4.0.0-ás verzió</i>\n
 	      * Román fordítás Doru Butnaru.\n
 	      * Az összes eddig fizetős kiagészítő mostantol ingyenesen használható. 
 	      * Különbböző hibajavítások\n\n

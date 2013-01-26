@@ -123,10 +123,6 @@ public class BPartnerEditActivity extends EditActivityBase {
         lvAddressList.setAdapter(null);
 
         int listLayout = R.layout.simple_list_item_2_s01;
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-    		listLayout = android.R.layout.simple_list_item_2;
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		listLayout = R.layout.simple_list_item_2_s01;
         SimpleCursorAdapter listCursorAdapter =
                 new SimpleCursorAdapter(this, listLayout,
                 cAddressCursor, new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME}, new int[]{android.R.id.text1, android.R.id.text2});
@@ -183,10 +179,7 @@ public class BPartnerEditActivity extends EditActivityBase {
 
     @Override
     protected void setLayout() {
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-    		setContentView(R.layout.bpartner_edit_activity_s00);
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		setContentView(R.layout.bpartner_edit_activity_s01);
+   		setContentView(R.layout.bpartner_edit_activity_s01);
     }
 
     protected AdapterView.OnItemClickListener mItemClickListener =

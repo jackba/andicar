@@ -39,10 +39,7 @@ public class AboutActivity extends BaseActivity{
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-            setContentView(R.layout.about_activity_s00);
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-            setContentView(R.layout.about_activity_s01);
+        setContentView(R.layout.about_activity_s01);
         
 
         tvAbout1 = (TextView)findViewById(R.id.tvAbout1);
