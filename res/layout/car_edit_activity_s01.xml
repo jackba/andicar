@@ -23,7 +23,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/vgRoot"
-    android:background="@android:color/background_light"
     >
 
     <LinearLayout
@@ -92,8 +91,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <EditText
                     android:id="@+id/etName"
@@ -119,8 +117,7 @@
             		android:layout_centerVertical="true"
                     android:text="@string/CarEditActivity_LicensePlateLabel"
                     android:typeface="sans"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <EditText
                     android:id="@+id/etCarRegNo"
@@ -147,16 +144,14 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <EditText
                     android:id="@+id/etIndexStart"
                     android:layout_width="160dp"
                     android:layout_height="wrap_content"
-                    android:numeric="decimal"
+                    android:inputType="numberDecimal"
                     android:digits=".1234567890"
-                    android:inputType="phone"
                     android:tag="@string/CarEditActivity_IndexStartLabel"
                     android:hint="@string/GEN_Required"
 					android:layout_alignParentRight="true"
@@ -177,8 +172,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                 />
                 <Spinner android:id="@+id/spnUomLength"
                     android:layout_width="160dp"
@@ -201,8 +195,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                 />
                 <Spinner android:id="@+id/spnUomVolume"
                     android:layout_width="160dp"
@@ -227,8 +220,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                 />
                 <Spinner android:id="@+id/spnCurrency"
                     android:layout_marginLeft="10dp"
@@ -254,8 +246,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_IsActiveLabel"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 />
 
             <RelativeLayout
@@ -269,8 +260,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/CarEditActivity_ModelLabel"
                     android:typeface="sans"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
                     />
@@ -279,7 +269,8 @@
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
 					android:layout_alignParentRight="true"
-            		android:layout_centerVertical="true" 
+            		android:layout_centerVertical="true"
+            		android:inputType="text" 
                     />
             </RelativeLayout>
 
@@ -289,13 +280,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_UserCommentLabel"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 />
             <EditText
                 android:id="@+id/etUserComment"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+           		android:inputType="text" 
                 />
         </LinearLayout>
     </ScrollView>

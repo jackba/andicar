@@ -376,10 +376,6 @@ public class TaskEditActivity extends EditActivityBase {
 				DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_NAME_NAME);
 
     	int listLayout = R.layout.twoline_list2_activity_s01;
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-    		listLayout = R.layout.twoline_list2_activity_s00;
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		listLayout = R.layout.twoline_list2_activity_s01;
 
     	mLinkedCarsCursor = mDbAdapter.execSelectSql(selectSql, selectionArgs);
         SimpleCursorAdapter cursorAdapter =
@@ -630,10 +626,7 @@ public class TaskEditActivity extends EditActivityBase {
 
 	@Override
 	protected void setLayout() {
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-    		setContentView(R.layout.task_edit_activity_s00);
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		setContentView(R.layout.task_edit_activity_s01);
+   		setContentView(R.layout.task_edit_activity_s01);
 	}
 
 	protected View.OnClickListener onNewTaskTypeClickListener = new View.OnClickListener() {

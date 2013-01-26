@@ -23,7 +23,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/vgRoot"
-    android:background="@android:color/background_light"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -60,7 +59,6 @@
     <TextView
         android:layout_height="1dp"
         android:layout_width="fill_parent"
-        android:background="@android:color/background_dark"
         />
     <ScrollView
         android:layout_width="fill_parent"
@@ -71,7 +69,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
 	    	android:paddingLeft="5dp"
 	        android:layout_marginRight="5dp"
             >
@@ -88,8 +86,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/GEN_CarLabel"
                     android:typeface="sans"
-		            android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <TextView
                     android:id="@+id/tvDriverLabel"
@@ -98,8 +95,7 @@
                     android:layout_marginLeft="10dp"
                     android:text="@string/GEN_DriverLabel"
                     android:typeface="sans"
-		            android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <Spinner android:id="@+id/spnDriver"
                          android:layout_width="fill_parent"
@@ -115,8 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:typeface="sans"
-	            android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 />
 
@@ -126,13 +121,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_NameLabel"
                 android:typeface="sans"
-	            android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 />
             <EditText
                 android:id="@+id/etName"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 />
 
            <TextView
@@ -141,8 +136,7 @@
                android:layout_height="wrap_content"
                android:text="@string/GEN_Tag"
                android:typeface="sans"
-	            android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+               android:textSize="17sp"
                />
            <AutoCompleteTextView
                android:id="@+id/acTag"
@@ -157,8 +151,7 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/GEN_UserCommentLabel"
                 android:typeface="sans"
-	            android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 />
             <AutoCompleteTextView
                 android:id="@+id/acUserComment"
@@ -186,13 +179,14 @@
                     android:src="@drawable/icon_mail24x24"
                     />
             </RelativeLayout>
+
             <TextView
                 android:layout_height="1dp"
                 android:layout_width="fill_parent"
                 android:background="@android:color/background_dark"
                 android:layout_marginTop="5dp"
                 />
-
+            
             <TextView
                 android:id="@+id/tvTrackStatsHdr"
                 android:layout_width="fill_parent"
@@ -200,11 +194,9 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
-                android:background="@color/header_bg"
                 android:gravity="center_vertical"
                 android:text="@string/GPSTrackEditActivity_TrackStatistics"
                 android:typeface="sans"
-                android:textColor="@android:color/white"
                 />
             <TextView 
 				android:id="@+id/tvTrackStats"
@@ -213,7 +205,6 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:typeface="sans"
-				android:textColor="@android:color/widget_edittext_dark"
 				/>
 
             <TextView
@@ -228,11 +219,9 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
-                android:background="@color/header_bg"
                 android:gravity="center_vertical"
                 android:text="@string/GPSTrackEditActivity_TrackFilesHeaderCaption"
                 android:typeface="sans"
-                android:textColor="@android:color/white"
                 />
 
             <LinearLayout

@@ -23,36 +23,26 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:layout_marginRight="5dp"
-    android:background="@android:color/black"
     >
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
-        <TextView
-            android:layout_height="1dp"
-            android:layout_width="fill_parent"
-            android:background="@color/separator_bg"
-            android:typeface="sans"
-            android:textColor="@android:color/white"
-            />
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:text="@string/PREFMainScreen_ZonesLabel"
-            android:typeface="sans"
-            android:textColor="@android:color/white"
-            />
-
-        <ListView android:id="@+id/lvZones"
-                  android:layout_width="fill_parent"
-                  android:layout_height="fill_parent"
-                  android:drawSelectorOnTop="false"
-                  android:choiceMode="multipleChoice"
-                  android:typeface="sans"
-                  android:textColor="@android:color/white"
-                  />
-    </LinearLayout>
+	<TextView
+	    android:layout_height="1dp"
+	    android:layout_width="fill_parent"
+	    android:background="@color/separator_bg"
+	    android:typeface="sans"
+	    />
+	<TextView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:textStyle="bold"
+	    android:text="@string/PREFMainScreen_ZonesLabel"
+	    android:typeface="sans"
+	    />
+	
+	<ListView android:id="@+id/lvZones"
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:drawSelectorOnTop="false"
+         android:choiceMode="multipleChoice"
+         android:typeface="sans"
+         />
 </LinearLayout>

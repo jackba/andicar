@@ -20,7 +20,7 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar2.activity"
-          android:versionCode="4000" 
+          android:versionCode="4001" 
           android:versionName="4.0.1 Beta"
           android:installLocation="internalOnly">
 <!-- 
@@ -29,8 +29,8 @@
 		-BOOT_COMPLETED broadcast receiver
 	See http://developer.android.com/guide/appendix/install-location.html
  -->          
-    <uses-sdk android:minSdkVersion="5" 
-        		android:targetSdkVersion="15"/>
+    <uses-sdk android:minSdkVersion="7" 
+        		android:targetSdkVersion="17"/>
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -69,6 +69,7 @@
         android:description="@string/APP_Description"
         android:icon="@drawable/car2"
         android:allowBackup="true"
+        android:theme="@style/AppTheme"
     >
         <uses-library android:name="com.google.android.maps" />
 
@@ -86,7 +87,7 @@
         
         <activity android:name="org.andicar2.activity.MainActivity"
                   android:label="AndiCarPro"
-                  android:theme="@android:style/Theme.NoTitleBar">
+                  android:theme="@style/MainScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

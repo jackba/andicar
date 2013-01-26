@@ -22,7 +22,6 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:background="@android:color/black"
               >
 
     <TextView android:id="@+id/tvTwoLineListReportText1"
@@ -31,7 +30,6 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:typeface="sans"
-              android:textColor="@android:color/white"
               />
 
     <TextView android:id="@+id/tvTwoLineListReportText2"
@@ -40,6 +38,5 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:typeface="sans"
-              android:textColor="@android:color/white"
               />
 </LinearLayout>

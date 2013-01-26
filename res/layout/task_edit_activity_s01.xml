@@ -23,7 +23,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/vgRoot"
-    android:background="@android:color/background_light"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -88,8 +87,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/GEN_TaskType"
                     android:typeface="sans"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                 />
                 <Spinner android:id="@+id/spnTaskType"
                     android:layout_marginLeft="10dp"
@@ -102,7 +100,6 @@
 		            android:id="@+id/btnNewTaskType"
 		            android:layout_width="70dp"
 		            android:layout_height="wrap_content"
-		            android:layout_alignParentRight="true"
 		            android:src="@drawable/icon_add_selector"
 		            android:layout_marginLeft="5dp"
 		            />
@@ -122,8 +119,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <EditText
                     android:id="@+id/etName"
@@ -142,8 +138,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_IsActiveLabel"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 />
 
@@ -153,14 +148,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_Description"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 />
             <EditText
                 android:id="@+id/etUserComment"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 />
 
 		    <TextView
@@ -182,8 +177,7 @@
                     android:id="@+id/rbRecurent"
                     android:text="@string/TaskEditActivity_Recurrent"
                     android:typeface="sans"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -191,8 +185,7 @@
                     android:id="@+id/rbOneTime"
                     android:text="@string/TaskEditActivity_OneTime"
                     android:typeface="sans"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
                     android:layout_marginLeft="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -203,10 +196,9 @@
 		        android:layout_marginTop="5dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:textStyle="bold|italic"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
                 android:gravity="center_vertical"
                 android:text="@string/TaskEditActivity_Scheduled"
                 />
@@ -223,8 +215,7 @@
                     android:id="@+id/rbTimeDriven"
                     android:text="@string/TaskEditActivity_TimeDriven"
                     android:typeface="sans"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -233,8 +224,7 @@
                     android:text="@string/TaskEditActivity_MileageDriven"
                     android:typeface="sans"
                     android:layout_marginLeft="10dp"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -243,8 +233,7 @@
                     android:text="@string/TaskEditActivity_BothDriven"
                     android:typeface="sans"
                     android:layout_marginLeft="10dp"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     />
@@ -271,8 +260,7 @@
 					android:text="@string/TaskEditActivity_FirstRunDependOnCar"
 					android:typeface="sans"
 					android:checked="true"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
 				/>
 	            <LinearLayout
 	                android:orientation="vertical"
@@ -292,17 +280,15 @@
 		                    android:layout_height="wrap_content"
 		                    android:typeface="sans"
 		                    android:text="@string/TaskEditActivity_RecurrentEveryLabel"
-			                android:textColor="@android:color/widget_edittext_dark"
-			                android:textSize="17dp"
+			                android:textSize="17sp"
 		                    />
 		                <EditText
 		                    android:id="@+id/etFrequency"
 		                    android:layout_marginLeft="10dp"
 		                    android:layout_width="50dp"
 		                    android:layout_height="wrap_content"
-		                    android:numeric="integer"
 	                    	android:digits="1234567890"
-		                    android:inputType="phone"
+		                    android:inputType="numberDecimal"
 		                    android:tag="@string/TaskEditActivity_RecurrentFrequencyLabel"
 		                    android:text="1"
 		                    />
@@ -322,8 +308,7 @@
 	                    android:typeface="sans"
 	                    android:text="@string/TaskEditActivity_FirstTimeRunExplanation"
 	                    android:gravity="center_horizontal"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
 	
 		            <LinearLayout
@@ -338,8 +323,7 @@
 		                    android:layout_width="wrap_content"
 		                    android:layout_height="wrap_content"
 		                    android:typeface="sans"
-			                android:textColor="@android:color/widget_edittext_dark"
-			                android:textSize="17dp"
+			                android:textSize="17sp"
 		                    />
 			            <LinearLayout
 			                android:orientation="horizontal"
@@ -365,8 +349,7 @@
 			                    android:typeface="sans"
 			                    android:gravity="center_vertical"
 			                    android:text="@string/GEN_SetDate"
-				                android:textColor="@android:color/widget_edittext_dark"
-				                android:textSize="17dp"
+				                android:textSize="17sp"
 			                    />
 			                <ImageButton android:id="@+id/btnPickDate"
 			                        android:layout_width="wrap_content"
@@ -398,8 +381,7 @@
 			                android:typeface="sans"
 			                android:gravity="center_vertical"
 			                android:text="@string/GEN_Or"
-			                android:textColor="@android:color/widget_edittext_dark"
-			                android:textSize="17dp"
+			                android:textSize="17sp"
 			                />
 						<CheckBox
 							android:id="@+id/ckOnLastDay"
@@ -408,8 +390,7 @@
 							android:text="@string/GEN_LastDay"
 							android:typeface="sans"
 							android:layout_marginLeft="10dp"
-			                android:textColor="@android:color/widget_edittext_dark"
-			                android:textSize="17dp"
+			                android:textSize="17sp"
 						/>
 		            </LinearLayout>
 
@@ -427,17 +408,15 @@
 	                    android:layout_height="wrap_content"
 	                    android:typeface="sans"
 	                    android:text="@string/TaskEditActivity_ReminderStartLabel"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
 	                <EditText
 	                    android:id="@+id/etTimeReminder"
 	                    android:layout_marginLeft="10dp"
 	                    android:layout_width="50dp"
 	                    android:layout_height="wrap_content"
-	                    android:numeric="integer"
                     	android:digits="1234567890"
-	                    android:inputType="phone"
+	                    android:inputType="number"
 	                    android:text="3"
 	                    />
 	                <TextView
@@ -446,8 +425,7 @@
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginLeft="10dp"
 	                    android:typeface="sans"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
             	</LinearLayout>
             </LinearLayout>
@@ -461,8 +439,7 @@
                 android:text="@string/GEN_Or"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 />
 
             <LinearLayout
@@ -487,8 +464,7 @@
 	                    android:typeface="sans"
 	                    android:gravity="center_vertical"
 	                    android:text="@string/GEN_On"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
 	                <TextView
 	                    android:id="@+id/tvMileageLabelEvery"
@@ -496,19 +472,16 @@
 	                    android:layout_height="wrap_content"
 	                    android:typeface="sans"
 	                    android:gravity="center_vertical"
-	                    android:text="@string/TaskEditActivity_RecurrentEveryLabel"
 	                	android:layout_marginLeft="5dp"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
 	                <EditText
 	                    android:id="@+id/etMileage"
 	                    android:layout_marginLeft="10dp"
 	                    android:layout_width="140dp"
 	                    android:layout_height="wrap_content"
-	                    android:numeric="integer"
                     	android:digits="1234567890"
-	                    android:inputType="phone"
+	                    android:inputType="number"
 	                    />
 	                <TextView
 	                    android:layout_width="fill_parent"
@@ -516,8 +489,7 @@
 	                    android:typeface="sans"
 	                    android:text="@string/TaskEditActivity_MileageUOMText"
 	                    android:layout_marginLeft="10dp"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
 	            </LinearLayout>
                 <TextView
@@ -527,8 +499,7 @@
                     android:typeface="sans"
                     android:text="@string/TaskEditActivity_FirstMileageRunExplanation"
                     android:gravity="center_horizontal"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
                     />
 	            
 	            <LinearLayout
@@ -544,17 +515,15 @@
 	                    android:layout_height="wrap_content"
 	                    android:typeface="sans"
 	                    android:text="@string/TaskEditActivity_ReminderStartLabel"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
 	                <EditText
 	                    android:id="@+id/etReminderMileage"
 	                    android:layout_marginLeft="10dp"
 	                    android:layout_width="60dp"
 	                    android:layout_height="wrap_content"
-	                    android:numeric="integer"
                     	android:digits="1234567890"
-	                    android:inputType="phone"
+	                    android:inputType="number"
 	                    android:text="300"
 	                    />
 	                <TextView
@@ -564,8 +533,7 @@
 	                    android:layout_marginLeft="10dp"
 	                    android:typeface="sans"
 	                    android:text="@string/TaskEditActivity_MileageUOMText"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
             	</LinearLayout>
             </LinearLayout>
@@ -595,8 +563,7 @@
 	                    android:layout_height="wrap_content"
 	                    android:typeface="sans"
 	                    android:text="@string/TaskEditActivity_GeneratedToDoCountLabel"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 	                    />
 		            <LinearLayout
 		                android:orientation="horizontal"
@@ -609,9 +576,8 @@
 		                    android:layout_marginLeft="5dp"
 		                    android:layout_width="50dp"
 		                    android:layout_height="wrap_content"
-		                    android:numeric="integer"
 		                   	android:digits="1234567890"
-		                    android:inputType="phone"
+		                    android:inputType="number"
 		                    android:text="3"
 		                    />
 		                <TextView
@@ -620,8 +586,7 @@
 		                    android:typeface="sans"
 		                    android:layout_marginLeft="5dp"
 		                    android:text="@string/GEN_ToDo"
-			                android:textColor="@android:color/widget_edittext_dark"
-			                android:textSize="17dp"
+			                android:textSize="17sp"
 		                    />
 	            	</LinearLayout>
 	            </LinearLayout>
@@ -631,8 +596,7 @@
 	                android:typeface="sans"
 	                android:text="@string/TaskEditActivity_ToDoCountHelp"
 	                android:gravity="center_horizontal"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
 	                />
            	</LinearLayout>
             
@@ -661,8 +625,7 @@
 			            android:typeface="sans"
 			            android:text="@string/TaskEditActivity_LinkedCarsLabel"
 		            	android:layout_marginTop="7dp"
-		                android:textColor="@android:color/widget_edittext_dark"
-		                android:textSize="17dp"
+		                android:textSize="17sp"
 			            />
 			        <ImageButton
 			            android:id="@+id/btnLinkCar"
@@ -693,8 +656,7 @@
 		            android:typeface="sans"
 		            android:text="@string/TaskEditActivity_LinkedCarsOptionsHelp"
 	            	android:gravity="center_horizontal"
-	                android:textColor="@android:color/widget_edittext_dark"
-	                android:textSize="17dp"
+	                android:textSize="17sp"
 		            />
 			    <TextView
 			        android:layout_height="1dp"
@@ -715,7 +677,6 @@
 	                android:layout_width="fill_parent"
 	                android:layout_height="fill_parent"
 	                android:drawSelectorOnTop="false"
-	                android:textColor="@android:color/widget_edittext_dark"
                 	/>
 	        </LinearLayout>
         </LinearLayout>

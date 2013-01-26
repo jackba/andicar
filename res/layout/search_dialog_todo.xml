@@ -54,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_TaskLabel"
 	            android:typeface="sans"
-	            android:textColor="@android:color/white"
                 />
             <Spinner android:id="@+id/spnTask"
                 android:layout_width="fill_parent"
@@ -62,7 +61,6 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@color/search_dialog_spinner_bg"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
@@ -79,7 +77,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_CarLabel"
 	            android:typeface="sans"
-	            android:textColor="@android:color/white"
                 />
             <Spinner android:id="@+id/spnCarSearch"
                 android:layout_width="fill_parent"
@@ -87,7 +84,6 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
-                android:background="@color/search_dialog_spinner_bg"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
@@ -104,7 +100,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/DIALOGSearch_DateFromLabel"
 	            android:typeface="sans"
-	            android:textColor="@android:color/white"
                 />
             <TextView
                 android:id="@+id/tvDateFromSearch"
@@ -114,7 +109,6 @@
                 android:layout_marginRight="2dp"
                 android:gravity="center_horizontal"
 	            android:typeface="sans"
-	            android:textColor="@android:color/white"
                 />
             <ImageButton android:id="@+id/btnPickDateFrom"
                     android:layout_width="wrap_content"
@@ -122,6 +116,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/btn_background_selector"
                     android:src="@drawable/icon_calendar_selector"
+                    android:contentDescription="@string/DIALOGSearch_DateFromLabel"
                     />
         </LinearLayout>
         <LinearLayout
@@ -136,7 +131,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/DIALOGSearch_DateToLabel"
 	            android:typeface="sans"
-	            android:textColor="@android:color/white"
                 />
             <TextView
                 android:id="@+id/tvDateToSearch"
@@ -146,7 +140,6 @@
                 android:layout_marginRight="2dp"
                 android:gravity="center_horizontal"
 	            android:typeface="sans"
-	            android:textColor="@android:color/white"
                 />
             <ImageButton android:id="@+id/btnPickDateTo"
                     android:layout_width="wrap_content"
@@ -154,6 +147,7 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/btn_background_selector"
                     android:src="@drawable/icon_calendar_selector"
+                    android:contentDescription="@string/DIALOGSearch_DateToLabel"
                     />
         </LinearLayout>
         <LinearLayout
@@ -168,7 +162,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_UserCommentLabel"
 	            android:typeface="sans"
-	            android:textColor="@android:color/white"
                 />
             <EditText
                 android:id="@+id/etUserCommentSearch"
@@ -176,7 +169,7 @@
                 android:layout_width="fill_parent"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@android:drawable/editbox_background"
+                android:inputType="text"
                 />
         </LinearLayout>
 
@@ -192,7 +185,6 @@
 	             android:layout_height="wrap_content"
 	             android:text="@string/ToDo_IsDone"
 	             android:typeface="sans"
-	             android:textColor="@android:color/white"
 	             />
             <Spinner android:id="@+id/spnIsActive"
                 android:layout_width="fill_parent"
@@ -200,7 +192,6 @@
                 android:drawSelectorOnTop="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="2dp"
-                android:background="@color/search_dialog_spinner_bg"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 android:entries="@array/isactive_values"
                 />

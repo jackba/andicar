@@ -23,7 +23,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/vgRoot"
-    android:background="@android:color/background_light"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -90,8 +89,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <EditText
                     android:id="@+id/etName"
@@ -118,8 +116,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <EditText
                     android:id="@+id/etAddress"
@@ -146,8 +143,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acCity"
@@ -171,8 +167,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acPostal"
@@ -197,8 +192,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acRegion"
@@ -222,8 +216,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acCountry"
@@ -254,8 +247,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acContact"
@@ -279,8 +271,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acPhone1"
@@ -305,8 +296,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acPhone2"
@@ -331,8 +321,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acEmail"
@@ -351,37 +340,6 @@
             		android:layout_centerVertical="true"
                     />
             </RelativeLayout>
-<!-- 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                >
-                <ImageButton
-                    android:id="@+id/btnCallPhone1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:background="@drawable/btn_background_selector"
-                    android:src="@drawable/icon_phone24x24_1"
-                    />
-                <ImageButton
-                    android:id="@+id/btnCallPhone2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal ="true"
-                    android:background="@drawable/btn_background_selector"
-                    android:src="@drawable/icon_phone24x24_2"
-                    />
-                <ImageButton
-                    android:id="@+id/btnEmail"
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/icon_mail24x24"
-                    />
-            </RelativeLayout>
- -->                    
             <RelativeLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
@@ -396,8 +354,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
                 <AutoCompleteTextView
                     android:id="@+id/acFax"
@@ -415,14 +372,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_UserCommentLabel"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 />
             <EditText
                 android:id="@+id/etUserComment"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:inputType="text"
                 />
             <TextView
                 android:layout_height="1dp"
@@ -437,8 +394,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_IsActiveLabel"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 />
 

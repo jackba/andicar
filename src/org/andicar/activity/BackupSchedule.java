@@ -243,10 +243,7 @@ public class BackupSchedule extends EditActivityBase {
 	 */
 	@Override
 	protected void setLayout() {
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-    		setContentView(R.layout.addon_backup_schedule_s00);
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-    		setContentView(R.layout.addon_backup_schedule_s01);
+		setContentView(R.layout.addon_backup_schedule_s01);
 	}
 
 

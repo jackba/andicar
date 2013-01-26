@@ -69,7 +69,7 @@
 		<small>Translation maintainer wanted :)</small>\n
 		*  Hungarian translation by Péter Nagy - microbilab@gmail.com\n
         *  Spanish translation by Daniel Iozzi - danieliozzi@gmail.com\n
-        *  Roumanian translation by Doru Butnaru - budo8002@gmail.com\n
+        *  Romanian translation by Doru Butnaru - budo8002@gmail.com\n
         \n<b><i>Copyright notice</i></b>:\n\n
         Copyright © 2010-2013 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
         This program is free software: you can redistribute it and/or modify
@@ -85,8 +85,10 @@
 
     <string name="LM_UPDATE_MSG">
         <b><i>What\'s new:</i></b>\n\n
-        <i>Version 4.0.0:</i>\n
-        * Roumanian translation by Doru Butnaru\n
+        <i>Version 4.0.1:</i>\n
+        * UI bugfixing (unreadable text on some devices)
+        \n\n<i>Version 4.0.0:</i>\n
+        * Romanian translation by Doru Butnaru\n
         * All add-on is available starting with this version for free!
         * Various bug fixes
     </string>

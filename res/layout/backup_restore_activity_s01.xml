@@ -22,7 +22,6 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@android:color/background_light"
     >
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -38,14 +37,12 @@
             android:layout_height="wrap_content"
             android:text="@string/BackupRestoreEditActivity_BackupBtnCaption"
             android:typeface="sans"
-            android:textColor="@android:color/widget_edittext_dark"
             android:layout_alignParentLeft="true"
             />
         <Button
             android:id="@+id/btnRestore"
             android:text="@string/BackupRestoreEditActivity_RestoreBtnCaption"
             android:typeface="sans"
-            android:textColor="@android:color/widget_edittext_dark"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content" 
             android:layout_width="wrap_content"/>
@@ -55,7 +52,6 @@
             android:layout_height="wrap_content"
             android:text="@string/BackupRestoreEditActivity_DeleteBkBtnCaption"
             android:typeface="sans"
-            android:textColor="@android:color/widget_edittext_dark"
             android:layout_alignParentRight="true"
             />
     </RelativeLayout>
@@ -77,12 +73,10 @@
             android:textStyle="bold"
             android:text="@string/BackupRestoreEditActivity_BackupListLabel"
             android:typeface="sans"
-            android:textColor="@android:color/widget_edittext_dark"
             />
         <TextView
             android:layout_height="1dp"
             android:layout_width="fill_parent"
-            android:background="@android:color/background_dark"
             android:layout_marginTop="5dp"
             />
 
@@ -92,8 +86,6 @@
                   android:drawSelectorOnTop="false"
                   android:choiceMode="singleChoice"
                   android:typeface="sans"
-                  android:textColor="@android:color/widget_edittext_dark"
-    			android:background="@android:color/background_light"
                   />
     </LinearLayout>
 </LinearLayout>

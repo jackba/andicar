@@ -390,10 +390,7 @@ public class GPSTrackController extends EditActivityBase {
 	 */
 	@Override
 	protected void setLayout() {
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-            setContentView(R.layout.gpstrack_controller_activity_s00);
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
-            setContentView(R.layout.gpstrack_controller_activity_s01);
+		setContentView(R.layout.gpstrack_controller_activity_s01);
 	}
 
 	/* (non-Javadoc)

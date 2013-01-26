@@ -45,9 +45,6 @@ public class BTDeviceCarList extends ListActivityBase {
         	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 
     	int twoLineListLayout = R.layout.twoline_list_activity_s01;
-    	if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00"))
-    		twoLineListLayout = R.layout.twoline_list_activity_s00;
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01"))
     		twoLineListLayout = R.layout.twoline_list_activity_s01;
     	
         super.onCreate( icicle, null, BTDeviceCarLink.class, null,

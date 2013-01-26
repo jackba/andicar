@@ -20,7 +20,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:mode="twoLine"
-	android:background="@android:color/background_light"
 >
     
 	<TextView android:id="@android:id/text1"
@@ -29,8 +28,6 @@
         android:layout_marginLeft="6dip"
         android:layout_marginTop="6dip"
 		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:textColor="@android:color/widget_edittext_dark"
-		android:background="@android:color/background_light"
 	/>
 		
 	<TextView android:id="@android:id/text2"
@@ -39,8 +36,6 @@
 		android:layout_below="@android:id/text1"
         android:layout_alignLeft="@android:id/text1"
 		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:textColor="@android:color/widget_edittext_dark"
-		android:background="@android:color/background_light"
 	/>
 
 </TwoLineListItem>

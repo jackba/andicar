@@ -98,12 +98,8 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
-        public static final int header_bg=0x7f050002;
-        public static final int label_bg=0x7f050001;
-        public static final int mandatory_bg=0x7f050000;
-        public static final int red=0x7f050005;
-        public static final int search_dialog_spinner_bg=0x7f050004;
-        public static final int separator_bg=0x7f050003;
+        public static final int header_bg=0x7f050000;
+        public static final int separator_bg=0x7f050001;
     }
     public static final class drawable {
         public static final int about_dialog_picture=0x7f020000;
@@ -208,8 +204,8 @@ public final class R {
     }
     public static final class id {
         public static final int aboutDialogPicture=0x7f080002;
-        public static final int acAdress=0x7f08007e;
-        public static final int acBPartner=0x7f08007c;
+        public static final int acAdress=0x7f080082;
+        public static final int acBPartner=0x7f080080;
         public static final int acCity=0x7f080030;
         public static final int acContact=0x7f080038;
         public static final int acCountry=0x7f080036;
@@ -219,8 +215,8 @@ public final class R {
         public static final int acPhone2=0x7f08003c;
         public static final int acPostal=0x7f080032;
         public static final int acRegion=0x7f080034;
-        public static final int acTag=0x7f080083;
-        public static final int acUserComment=0x7f080084;
+        public static final int acTag=0x7f080087;
+        public static final int acUserComment=0x7f080088;
         public static final int btnBackup=0x7f080025;
         public static final int btnDelete=0x7f080027;
         public static final int btnEmail=0x7f08003f;
@@ -234,10 +230,10 @@ public final class R {
         public static final int btnMileageInsert=0x7f0800a0;
         public static final int btnMileageList=0x7f08009f;
         public static final int btnNew=0x7f080061;
-        public static final int btnNewCurrency=0x7f080049;
+        public static final int btnNewCurrency=0x7f08004a;
         public static final int btnNewTaskType=0x7f0800f4;
         public static final int btnOpenGPSTrack=0x7f0800cb;
-        public static final int btnPickDate=0x7f080069;
+        public static final int btnPickDate=0x7f08006d;
         public static final int btnPickDateFrom=0x7f0800e5;
         public static final int btnPickDateTo=0x7f0800e8;
         public static final int btnPickTime=0x7f080011;
@@ -271,14 +267,14 @@ public final class R {
         public static final int ckNotifyIfSuccess=0x7f080015;
         public static final int ckOnLastDay=0x7f080106;
         public static final int etAddress=0x7f08002e;
-        public static final int etCarModel=0x7f08004b;
+        public static final int etCarModel=0x7f08004c;
         public static final int etCarRegNo=0x7f080043;
         public static final int etCode=0x7f08004e;
-        public static final int etConversionRate=0x7f08006c;
+        public static final int etConversionRate=0x7f080070;
         public static final int etCurrencyRate=0x7f080054;
-        public static final int etDocumentNo=0x7f080081;
+        public static final int etDocumentNo=0x7f080085;
         public static final int etFrequency=0x7f0800ff;
-        public static final int etIndex=0x7f08007a;
+        public static final int etIndex=0x7f08007e;
         public static final int etIndexStart=0x7f080045;
         public static final int etKeepLastNo=0x7f080013;
         public static final int etLicenseNo=0x7f08005c;
@@ -286,29 +282,29 @@ public final class R {
         public static final int etName=0x7f08002a;
         public static final int etNoOfNextToDo=0x7f080114;
         public static final int etPostpone=0x7f080127;
-        public static final int etQuantity=0x7f080072;
+        public static final int etQuantity=0x7f080076;
         public static final int etReminderMileage=0x7f080111;
         public static final int etSMTPEmailTo=0x7f080021;
         public static final int etSMTPUserFrom=0x7f08001d;
         public static final int etSMTPUserPassword=0x7f08001f;
         public static final int etTimeReminder=0x7f080108;
-        public static final int etUserComment=0x7f08001a;
+        public static final int etUserComment=0x7f08001b;
         public static final int etUserCommentSearch=0x7f0800e9;
-        public static final int etUserInput=0x7f080070;
+        public static final int etUserInput=0x7f080074;
         public static final int fakeFocus=0x7f080005;
         public static final int gpstrackmap=0x7f080097;
-        public static final int lCarZone=0x7f08001b;
-        public static final int lDriverZone=0x7f080085;
-        public static final int lExpCatZone=0x7f080087;
-        public static final int lExpTypeZone=0x7f080086;
+        public static final int lCarZone=0x7f080017;
+        public static final int lDriverZone=0x7f080063;
+        public static final int lExpCatZone=0x7f080069;
+        public static final int lExpTypeZone=0x7f080066;
         public static final int llAbout=0x7f080001;
         public static final int llActionZone=0x7f080125;
         public static final int llBaseUOMQtyZone=0x7f0800d4;
         public static final int llCarZone=0x7f0800ef;
-        public static final int llConversionRateZone=0x7f0800d9;
-        public static final int llConversionRateZone1=0x7f08006a;
-        public static final int llConversionRateZone2=0x7f080076;
-        public static final int llConvertedAmountZone=0x7f0800d8;
+        public static final int llConversionRateZone=0x7f0800d7;
+        public static final int llConversionRateZone1=0x7f08006e;
+        public static final int llConversionRateZone2=0x7f08007a;
+        public static final int llConvertedAmountZone=0x7f0800d9;
         public static final int llExpenseZone=0x7f0800b6;
         public static final int llGPSTrackZone=0x7f0800a8;
         public static final int llIndexStartZone=0x7f08008c;
@@ -338,29 +334,29 @@ public final class R {
         public static final int lvTrackFileList=0x7f080096;
         public static final int lvZones=0x7f0800c6;
         public static final int mainActivityPicture=0x7f080098;
-        public static final int rbInsertModeAmount=0x7f08006d;
+        public static final int rbInsertModeAmount=0x7f080071;
         public static final int rbInsertModeIndex=0x7f0800cf;
         public static final int rbInsertModeMileage=0x7f0800d0;
-        public static final int rbInsertModePrice=0x7f08006f;
+        public static final int rbInsertModePrice=0x7f080073;
         public static final int rbMileageDriven=0x7f0800fa;
         public static final int rbOneTime=0x7f0800f7;
         public static final int rbRecurent=0x7f0800f6;
         public static final int rbTimeAndMileageDriven=0x7f0800fb;
         public static final int rbTimeDriven=0x7f0800f9;
-        public static final int rgExpenseInsertMode=0x7f0800d7;
-        public static final int rgInsertMode=0x7f08006e;
+        public static final int rgExpenseInsertMode=0x7f0800d8;
+        public static final int rgInsertMode=0x7f080072;
         public static final int rgMileageInsertMode=0x7f0800ce;
         public static final int rgRepeating=0x7f0800f5;
         public static final int rgScheduleType=0x7f0800f8;
-        public static final int spnBTPairedDevices=0x7f080017;
-        public static final int spnCar=0x7f080018;
+        public static final int spnBTPairedDevices=0x7f080018;
+        public static final int spnCar=0x7f080019;
         public static final int spnCarSearch=0x7f0800e2;
-        public static final int spnCurrency=0x7f080048;
+        public static final int spnCurrency=0x7f080049;
         public static final int spnCurrencyFrom=0x7f080050;
         public static final int spnCurrencyTo=0x7f080052;
-        public static final int spnDriver=0x7f080064;
+        public static final int spnDriver=0x7f080065;
         public static final int spnDriverSearch=0x7f0800e1;
-        public static final int spnExpCategory=0x7f080066;
+        public static final int spnExpCategory=0x7f08006b;
         public static final int spnExpCategorySearch=0x7f0800de;
         public static final int spnExpType=0x7f080068;
         public static final int spnExpTypeSearch=0x7f0800e0;
@@ -371,51 +367,51 @@ public final class R {
         public static final int spnTask=0x7f0800eb;
         public static final int spnTaskType=0x7f0800f3;
         public static final int spnTemplate=0x7f08005f;
-        public static final int spnUOM=0x7f080073;
-        public static final int spnUomFrom=0x7f080130;
+        public static final int spnUOM=0x7f080077;
+        public static final int spnUomFrom=0x7f08012f;
         public static final int spnUomLength=0x7f080046;
-        public static final int spnUomTo=0x7f080131;
-        public static final int spnUomType=0x7f08012f;
+        public static final int spnUomTo=0x7f080130;
+        public static final int spnUomType=0x7f08012e;
         public static final int spnUomVolume=0x7f080047;
         public static final int tlDayList=0x7f080007;
         public static final int tvAbout1=0x7f080003;
         public static final int tvAbout2=0x7f080004;
         public static final int tvAddressLabel=0x7f08002d;
         public static final int tvApplyTemplate=0x7f08005e;
-        public static final int tvBPartnerAdressInfoLabel=0x7f08007f;
-        public static final int tvBPartnerAdressLabel=0x7f08007d;
-        public static final int tvBPartnerLabel=0x7f08007b;
+        public static final int tvBPartnerAdressInfoLabel=0x7f080083;
+        public static final int tvBPartnerAdressLabel=0x7f080081;
+        public static final int tvBPartnerLabel=0x7f08007f;
         public static final int tvBaseUOMQtyLabel=0x7f0800d5;
         public static final int tvBaseUOMQtyValue=0x7f0800d6;
-        public static final int tvCalculatedTextContent=0x7f080075;
-        public static final int tvCalculatedTextLabel=0x7f080074;
+        public static final int tvCalculatedTextContent=0x7f080079;
+        public static final int tvCalculatedTextLabel=0x7f080078;
         public static final int tvCarIndex=0x7f080099;
         public static final int tvCarLabel=0x7f080062;
         public static final int tvCarRegNoLabel=0x7f080042;
         public static final int tvCityLabel=0x7f08002f;
         public static final int tvCodeLabel=0x7f08004d;
         public static final int tvContactLabel=0x7f080037;
-        public static final int tvConversionRateLabel=0x7f08006b;
-        public static final int tvConvertedAmountLabel=0x7f080077;
-        public static final int tvConvertedAmountValue=0x7f080078;
+        public static final int tvConversionRateLabel=0x7f08006f;
+        public static final int tvConvertedAmountLabel=0x7f08007b;
+        public static final int tvConvertedAmountValue=0x7f08007c;
         public static final int tvCountryLabel=0x7f080035;
         public static final int tvCurrencyFrom=0x7f08004f;
-        public static final int tvCurrencyLabel=0x7f08004c;
+        public static final int tvCurrencyLabel=0x7f080048;
         public static final int tvCurrencyRateLabel=0x7f080053;
         public static final int tvCurrencyRateToLabel=0x7f080055;
         public static final int tvCurrencyTo=0x7f080051;
         public static final int tvDateFromLabel=0x7f0800e3;
         public static final int tvDateFromSearch=0x7f0800e4;
-        public static final int tvDateTimeLabel=0x7f080088;
+        public static final int tvDateTimeLabel=0x7f08006c;
         public static final int tvDateTimeValue=0x7f080010;
         public static final int tvDateToLabel=0x7f0800e6;
         public static final int tvDateToSearch=0x7f0800e7;
-        public static final int tvDocumentNoLabel=0x7f080080;
-        public static final int tvDriverLabel=0x7f080063;
+        public static final int tvDocumentNoLabel=0x7f080084;
+        public static final int tvDriverLabel=0x7f080064;
         public static final int tvEmailLabel=0x7f08003d;
         public static final int tvExpCategoryLabel=0x7f0800dd;
         public static final int tvExpTypeLabel=0x7f0800df;
-        public static final int tvExpenseCategoryLabel=0x7f080065;
+        public static final int tvExpenseCategoryLabel=0x7f08006a;
         public static final int tvExpenseHdr=0x7f0800b7;
         public static final int tvExpenseTypeLabel=0x7f080067;
         public static final int tvFaxLabel=0x7f080040;
@@ -426,7 +422,7 @@ public final class R {
         public static final int tvFormatLabel=0x7f0800db;
         public static final int tvGPSTrackHdr=0x7f0800a9;
         public static final int tvHourLabel=0x7f08000f;
-        public static final int tvIndexLabel=0x7f080079;
+        public static final int tvIndexLabel=0x7f08007d;
         public static final int tvIndexStartLabel=0x7f080044;
         public static final int tvInverseRateLabel=0x7f080056;
         public static final int tvInverseRateToLabel=0x7f080058;
@@ -443,7 +439,7 @@ public final class R {
         public static final int tvMileageLabelEvery=0x7f08010d;
         public static final int tvMileageLabelOn=0x7f08010c;
         public static final int tvMileageRecInProgress=0x7f0800cc;
-        public static final int tvModelLabel=0x7f08004a;
+        public static final int tvModelLabel=0x7f08004b;
         public static final int tvName=0x7f08005a;
         public static final int tvNameLabel=0x7f080029;
         public static final int tvOneLineListTextSmall=0x7f0800d1;
@@ -454,7 +450,7 @@ public final class R {
         public static final int tvPostalLabel=0x7f080031;
         public static final int tvPostponeLabel=0x7f080126;
         public static final int tvPostponeUOM=0x7f080128;
-        public static final int tvQuantity=0x7f080071;
+        public static final int tvQuantity=0x7f080075;
         public static final int tvQuantityLabel=0x7f0800d2;
         public static final int tvRefuelHdr=0x7f0800b0;
         public static final int tvRegionLabel=0x7f080033;
@@ -472,7 +468,7 @@ public final class R {
         public static final int tvStatisticsLastKnownOdometer=0x7f0800bf;
         public static final int tvStatisticsMileageExpense=0x7f0800c3;
         public static final int tvStatisticsTotalExpenses=0x7f0800c2;
-        public static final int tvTagLabel=0x7f080082;
+        public static final int tvTagLabel=0x7f080086;
         public static final int tvTaskLabel=0x7f0800ea;
         public static final int tvText1=0x7f080121;
         public static final int tvText2=0x7f080122;
@@ -501,97 +497,65 @@ public final class R {
         public static final int tvThreeLineListToDoText2=0x7f0800a4;
         public static final int tvThreeLineListToDoText3=0x7f0800a5;
         public static final int tvTimeReminderUnitLbl=0x7f080109;
-        public static final int tvTitle=0x7f08012a;
         public static final int tvToDoHdr=0x7f0800a2;
         public static final int tvTrackFilesHdr=0x7f080094;
         public static final int tvTrackStats=0x7f080093;
         public static final int tvTrackStatsHdr=0x7f080092;
-        public static final int tvTwoLineListReportText1=0x7f08012d;
-        public static final int tvTwoLineListReportText2=0x7f08012e;
-        public static final int tvTwoLineListText1=0x7f08012b;
-        public static final int tvTwoLineListText2=0x7f08012c;
+        public static final int tvTwoLineListReportText1=0x7f08012c;
+        public static final int tvTwoLineListReportText2=0x7f08012d;
+        public static final int tvTwoLineListText1=0x7f08012a;
+        public static final int tvTwoLineListText2=0x7f08012b;
         public static final int tvUserComment=0x7f080059;
-        public static final int tvUserCommentLabel=0x7f080019;
+        public static final int tvUserCommentLabel=0x7f08001a;
         public static final int vgRoot=0x7f080000;
     }
     public static final class layout {
-        public static final int about_activity_s00=0x7f030000;
-        public static final int about_activity_s01=0x7f030001;
-        public static final int addon_backup_schedule_s00=0x7f030002;
-        public static final int addon_backup_schedule_s01=0x7f030003;
-        public static final int addon_btdevice_car_link_s00=0x7f030004;
-        public static final int addon_btdevice_car_link_s01=0x7f030005;
-        public static final int addon_secure_bk_config_s00=0x7f030006;
-        public static final int addon_secure_bk_config_s01=0x7f030007;
-        public static final int backup_restore_activity_s00=0x7f030008;
-        public static final int backup_restore_activity_s01=0x7f030009;
-        public static final int bpartner_edit_activity_s00=0x7f03000a;
-        public static final int bpartner_edit_activity_s01=0x7f03000b;
-        public static final int bpartner_location_edit_activity_s00=0x7f03000c;
-        public static final int bpartner_location_edit_activity_s01=0x7f03000d;
-        public static final int car_edit_activity_s00=0x7f03000e;
-        public static final int car_edit_activity_s01=0x7f03000f;
-        public static final int currency_edit_activity_s00=0x7f030010;
-        public static final int currency_edit_activity_s01=0x7f030011;
-        public static final int currencyrate_edit_activity_s00=0x7f030012;
-        public static final int currencyrate_edit_activity_s01=0x7f030013;
-        public static final int dialog_name=0x7f030014;
-        public static final int driver_edit_activity_s00=0x7f030015;
-        public static final int driver_edit_activity_s01=0x7f030016;
-        public static final int expense_edit_activity_s00=0x7f030017;
-        public static final int expense_edit_activity_s01=0x7f030018;
-        public static final int expensecategory_edit_activity_s00=0x7f030019;
-        public static final int expensecategory_edit_activity_s01=0x7f03001a;
-        public static final int expensetype_edit_activity_s00=0x7f03001b;
-        public static final int expensetype_edit_activity_s01=0x7f03001c;
-        public static final int gpstrack_controller_activity_s00=0x7f03001d;
-        public static final int gpstrack_controller_activity_s01=0x7f03001e;
-        public static final int gpstrack_edit_activity_s00=0x7f03001f;
-        public static final int gpstrack_edit_activity_s01=0x7f030020;
-        public static final int gpstrack_map=0x7f030021;
-        public static final int main_activity_s00=0x7f030022;
-        public static final int main_activity_s01=0x7f030023;
-        public static final int main_screen_preference_activity=0x7f030024;
-        public static final int message_activity=0x7f030025;
-        public static final int mileage_edit_activity_s00=0x7f030026;
-        public static final int mileage_edit_activity_s01=0x7f030027;
-        public static final int oneline_list_layout_small_s00=0x7f030028;
-        public static final int oneline_list_layout_small_s01=0x7f030029;
-        public static final int refuel_edit_activity_s00=0x7f03002a;
-        public static final int refuel_edit_activity_s01=0x7f03002b;
-        public static final int report_options_dialog=0x7f03002c;
-        public static final int search_dialog_expense=0x7f03002d;
-        public static final int search_dialog_gpstrack=0x7f03002e;
-        public static final int search_dialog_mileage=0x7f03002f;
-        public static final int search_dialog_refuel=0x7f030030;
-        public static final int search_dialog_todo=0x7f030031;
-        public static final int simple_list_item_2_s00=0x7f030032;
-        public static final int simple_list_item_2_s01=0x7f030033;
-        public static final int simple_list_item_multiple_choice_s01=0x7f030034;
-        public static final int simple_list_item_single_choice_s01=0x7f030035;
-        public static final int tag_edit_activity_s00=0x7f030036;
-        public static final int tag_edit_activity_s01=0x7f030037;
-        public static final int task_car_link_dialog=0x7f030038;
-        public static final int task_edit_activity_s00=0x7f030039;
-        public static final int task_edit_activity_s01=0x7f03003a;
-        public static final int tasktype_edit_activity_s00=0x7f03003b;
-        public static final int tasktype_edit_activity_s01=0x7f03003c;
-        public static final int threeline_list_activity_s00=0x7f03003d;
-        public static final int threeline_list_activity_s01=0x7f03003e;
-        public static final int threeline_listreport_activity_s00=0x7f03003f;
-        public static final int threeline_listreport_activity_s01=0x7f030040;
-        public static final int todo_notification_dialog=0x7f030041;
-        public static final int todonotif_titlebar=0x7f030042;
-        public static final int twoline_list2_activity_s00=0x7f030043;
-        public static final int twoline_list2_activity_s01=0x7f030044;
-        public static final int twoline_list_activity_s00=0x7f030045;
-        public static final int twoline_list_activity_s01=0x7f030046;
-        public static final int twoline_listreport_activity=0x7f030047;
-        public static final int uom_edit_activity_s00=0x7f030048;
-        public static final int uom_edit_activity_s01=0x7f030049;
-        public static final int uomconversion_edit_activity_s00=0x7f03004a;
-        public static final int uomconversion_edit_activity_s01=0x7f03004b;
-        public static final int whatsnew_dialog=0x7f03004c;
+        public static final int about_activity_s01=0x7f030000;
+        public static final int addon_backup_schedule_s01=0x7f030001;
+        public static final int addon_btdevice_car_link_s01=0x7f030002;
+        public static final int addon_secure_bk_config_s01=0x7f030003;
+        public static final int backup_restore_activity_s01=0x7f030004;
+        public static final int bpartner_edit_activity_s01=0x7f030005;
+        public static final int bpartner_location_edit_activity_s01=0x7f030006;
+        public static final int car_edit_activity_s01=0x7f030007;
+        public static final int currency_edit_activity_s01=0x7f030008;
+        public static final int currencyrate_edit_activity_s01=0x7f030009;
+        public static final int dialog_name=0x7f03000a;
+        public static final int driver_edit_activity_s01=0x7f03000b;
+        public static final int expense_edit_activity_s01=0x7f03000c;
+        public static final int expensecategory_edit_activity_s01=0x7f03000d;
+        public static final int expensetype_edit_activity_s01=0x7f03000e;
+        public static final int gpstrack_controller_activity_s01=0x7f03000f;
+        public static final int gpstrack_edit_activity_s01=0x7f030010;
+        public static final int gpstrack_map=0x7f030011;
+        public static final int main_activity_s01=0x7f030012;
+        public static final int main_screen_preference_activity=0x7f030013;
+        public static final int message_activity=0x7f030014;
+        public static final int mileage_edit_activity_s01=0x7f030015;
+        public static final int oneline_list_layout_small_s01=0x7f030016;
+        public static final int refuel_edit_activity_s01=0x7f030017;
+        public static final int report_options_dialog=0x7f030018;
+        public static final int search_dialog_expense=0x7f030019;
+        public static final int search_dialog_gpstrack=0x7f03001a;
+        public static final int search_dialog_mileage=0x7f03001b;
+        public static final int search_dialog_refuel=0x7f03001c;
+        public static final int search_dialog_todo=0x7f03001d;
+        public static final int simple_list_item_2_s01=0x7f03001e;
+        public static final int simple_list_item_multiple_choice_s01=0x7f03001f;
+        public static final int simple_list_item_single_choice_s01=0x7f030020;
+        public static final int tag_edit_activity_s01=0x7f030021;
+        public static final int task_car_link_dialog=0x7f030022;
+        public static final int task_edit_activity_s01=0x7f030023;
+        public static final int tasktype_edit_activity_s01=0x7f030024;
+        public static final int threeline_list_activity_s01=0x7f030025;
+        public static final int threeline_listreport_activity_s01=0x7f030026;
+        public static final int todo_notification_dialog=0x7f030027;
+        public static final int twoline_list2_activity_s01=0x7f030028;
+        public static final int twoline_list_activity_s01=0x7f030029;
+        public static final int twoline_listreport_activity=0x7f03002a;
+        public static final int uom_edit_activity_s01=0x7f03002b;
+        public static final int uomconversion_edit_activity_s01=0x7f03002c;
+        public static final int whatsnew_dialog=0x7f03002d;
     }
     public static final class string {
         public static final int APP_Activity_About=0x7f0600bd;
@@ -1355,5 +1319,54 @@ public final class R {
     }
     public static final class style {
         public static final int AndiCarDialog=0x7f070000;
+        /** 
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        
+
+        Base application theme for API 11+. This theme completely replaces
+        AppBaseTheme from res/values/styles.xml on API 11+ devices.
+    
+ API 11 theme customizations can go here. 
+
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    
+ API 14 theme customizations can go here. 
+
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    
+ API 14 theme customizations can go here. 
+
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    
+ API 14 theme customizations can go here. 
+         */
+        public static final int AppBaseTheme=0x7f070001;
+        /**  Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+         */
+        public static final int AppTheme=0x7f070002;
+        /**  MainScreen theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ MainScreen theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ MainScreen theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ MainScreen theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
+ MainScreen theme. 
+<style name="MainScreenTheme" parent="android:Theme.Holo.Light.NoActionBar">
+    </style>
+ 
+ All customizations that are NOT specific to a particular API-level can go here. 
+         */
+        public static final int MainScreenTheme=0x7f070003;
     }
 }

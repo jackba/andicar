@@ -25,7 +25,6 @@
     android:layout_height="fill_parent"
     android:layout_marginRight="5dp"
     android:id="@+id/vgRoot"
-    android:background="@android:color/background_light"
     >
 	<ImageView
    		android:id="@+id/mainActivityPicture"
@@ -46,7 +45,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             >
@@ -64,8 +63,7 @@
 			        android:textStyle="bold"
 			        android:typeface="sans"
 		        	android:text="@string/GEN_CarLabel"
-		            android:textColor="@android:color/widget_edittext_dark"
-		            android:textSize="17dp"
+		            android:textSize="17sp"
 			        />
 		       <Spinner android:id="@+id/spnCar"
 		                android:layout_height="wrap_content"
@@ -85,8 +83,7 @@
 			        android:layout_height="wrap_content"
 			        android:layout_width="wrap_content"
 			        android:typeface="sans"
-		            android:textColor="@android:color/widget_edittext_dark"
-		            android:textSize="17dp"
+		            android:textSize="17sp"
 			        />
 		    </LinearLayout>
             <LinearLayout
@@ -112,7 +109,6 @@
                            android:textSize="14sp"
                            android:textStyle="bold"
                            android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                            android:layout_width="fill_parent"
                            android:layout_height="wrap_content"/>
 
@@ -120,7 +116,6 @@
                            android:textSize="14sp"
                            android:textStyle="italic"
                            android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                            android:layout_width="fill_parent"
                            android:layout_height="wrap_content"/>
 
@@ -128,7 +123,6 @@
                            android:textSize="14sp"
                            android:textStyle="italic"
                            android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                            android:layout_width="fill_parent"
                            android:layout_height="wrap_content"/>
                 
@@ -180,7 +174,6 @@
                          android:textSize="14sp"
                          android:textStyle="bold"
                          android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                          android:layout_width="fill_parent"
                          android:layout_height="wrap_content"/>
 
@@ -188,7 +181,6 @@
                          android:textSize="14sp"
                          android:textStyle="italic"
                          android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                          android:layout_width="fill_parent"
                          android:layout_height="wrap_content"/>
 
@@ -196,7 +188,6 @@
                          android:textSize="14sp"
                          android:textStyle="italic"
                          android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                          android:layout_width="fill_parent"
                          android:layout_height="wrap_content"/>
                 <TextView
@@ -247,7 +238,6 @@
                           android:textSize="14sp"
                           android:textStyle="bold"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
 
@@ -255,7 +245,6 @@
                           android:textSize="14sp"
                           android:textStyle="italic"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
 
@@ -263,7 +252,6 @@
                           android:textSize="14sp"
                           android:textStyle="italic"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
                 <TextView
@@ -322,7 +310,6 @@
                           android:textSize="14sp"
                           android:textStyle="bold"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
 
@@ -330,7 +317,6 @@
                           android:textSize="14sp"
                           android:textStyle="italic"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
 
@@ -338,7 +324,6 @@
                           android:textSize="14sp"
                           android:textStyle="italic"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
                 <TextView
@@ -389,7 +374,6 @@
                           android:textSize="14sp"
                           android:textStyle="bold"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
 
@@ -397,7 +381,6 @@
                           android:textSize="14sp"
                           android:textStyle="italic"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
 
@@ -405,7 +388,6 @@
                           android:textSize="14sp"
                           android:textStyle="italic"
                           android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                           android:layout_width="fill_parent"
                           android:layout_height="wrap_content"/>
                 <TextView
@@ -462,7 +444,6 @@
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"
                               android:text="@string/MainActivity_StatisticsListLastOdoLabel"
@@ -471,7 +452,6 @@
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
 
@@ -479,7 +459,6 @@
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
 
@@ -487,7 +466,6 @@
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
                               
@@ -495,7 +473,6 @@
                               android:textSize="14sp"
                               android:textStyle="italic"
                               android:typeface="sans"
-			            android:textColor="@android:color/widget_edittext_dark"
                               android:layout_width="fill_parent"
                               android:layout_height="wrap_content"/>
                 </LinearLayout>
@@ -516,7 +493,6 @@
                 android:layout_marginTop="5dp"
                 android:textSize="10sp"
                 android:typeface="sans"
-	            android:textColor="@android:color/widget_edittext_dark"
                 />
             <TextView
                 android:id="@+id/tvShortAboutAppVersion"
@@ -525,7 +501,6 @@
                 android:gravity="center_horizontal|bottom"
                 android:textSize="10sp"
                 android:typeface="sans"
-	            android:textColor="@android:color/widget_edittext_dark"
                 android:layout_marginBottom="10dp"
                 />
         </LinearLayout>

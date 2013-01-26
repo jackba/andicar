@@ -20,7 +20,6 @@
 
 package org.andicar.activity;
 
-import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 import org.andicar2.activity.R;
 
@@ -38,14 +37,12 @@ import android.preference.PreferenceScreen;
 public class AddOnServicesList extends PreferenceActivity {
 	
 	protected Resources mResource = null;
-	private boolean isSendStatistics = true;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mResource = getResources();
-        isSendStatistics =  getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendUsageStatistics", true);
         setPreferenceScreen(createPreferenceHierarchy());
     }
 
@@ -83,22 +80,5 @@ public class AddOnServicesList extends PreferenceActivity {
         prefScreenRoot.addPreference(btConnectionDetector);
 
         return prefScreenRoot;
-    }
-
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        if(isSendStatistics){
-            AndiCarStatistics.sendFlurryStartSession(this);
-	        AndiCarStatistics.sendFlurryEvent(this, "AddOnServiceList", null);
-        }
-    }
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEndSession(this);
     }
 }

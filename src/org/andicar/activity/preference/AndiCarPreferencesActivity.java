@@ -293,16 +293,6 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         mainScreenPref.setSummary(mRes.getString(R.string.PREF_MainScreenCategorySummary));
         miscCategory.addPreference(mainScreenPref);
 
-        // UI Template
-        ListPreference uiStyle = new ListPreference(this);
-        uiStyle.setEntries(R.array.ui_style_entries);
-        uiStyle.setEntryValues(R.array.ui_style_values);
-        uiStyle.setDialogTitle(R.string.GEN_ChooseOneTitle);
-        uiStyle.setKey("UIStyle");
-        uiStyle.setTitle(R.string.PREF_UIStyleTitle);
-        uiStyle.setSummary(R.string.PREF_UIStyleSummary);
-        miscCategory.addPreference(uiStyle);
-
         //numeric input type
         CheckBoxPreference useNumericInput = new CheckBoxPreference(this);
         useNumericInput.setTitle(R.string.PREF_UseNumericInputTitle);

@@ -24,7 +24,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:id="@+id/vgRoot"
-    android:background="@android:color/background_light"
     >
     <LinearLayout
         android:orientation="vertical"
@@ -91,8 +90,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
 
                 <EditText
@@ -120,8 +118,7 @@
                     android:typeface="sans"
             		android:layout_alignParentLeft="true"
             		android:layout_centerVertical="true"
-                    android:textColor="@android:color/widget_edittext_dark"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     />
 
                 <EditText
@@ -141,8 +138,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_IsActiveLabel"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:layout_marginTop="5dp"
                 />
 
@@ -152,14 +148,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/GEN_UserCommentLabel"
                 android:typeface="sans"
-                android:textColor="@android:color/widget_edittext_dark"
-                android:textSize="17dp"
                 android:layout_marginTop="5dp"
                 />
             <EditText
                 android:id="@+id/etUserComment"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+           		android:inputType="text" 
                 />
         </LinearLayout>
     </ScrollView>

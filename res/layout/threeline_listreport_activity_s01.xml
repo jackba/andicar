@@ -22,7 +22,6 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:background="@android:color/background_light"
               android:id="@+id/tvThreeLineListReport"
               >
 
@@ -32,7 +31,6 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:typeface="sans"
-              android:textColor="@android:color/widget_edittext_dark"
               />
 
     <TextView android:id="@+id/tvThreeLineListReportText2"
@@ -41,7 +39,6 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:typeface="sans"
-              android:textColor="@android:color/widget_edittext_dark"
               />
 
     <TextView android:id="@+id/tvThreeLineListReportText3"
@@ -50,6 +47,5 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:typeface="sans"
-              android:textColor="@android:color/widget_edittext_dark"
               />
 </LinearLayout>

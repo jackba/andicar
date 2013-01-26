@@ -192,21 +192,12 @@ public class ListActivityBase extends ListActivity {
 		if(mPreferences == null)
         	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 
-		if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s00")){
-    		uiStyle = "s00";
-    		simpleListItem2 = android.R.layout.simple_list_item_2;
-    		twolineListActivity = R.layout.twoline_list_activity_s00;
-    		threeLineListActivity = R.layout.threeline_list_activity_s00;
-    		threeLineListReportActivity = R.layout.threeline_listreport_activity_s00;
-    	}
-    	else if(mPreferences.getString("UIStyle", "s01").equalsIgnoreCase("s01")){
-    		getListView().setBackgroundColor(Color.WHITE);
-    		uiStyle = "s01";
-    		simpleListItem2 = R.layout.simple_list_item_2_s01;
-    		twolineListActivity = R.layout.twoline_list_activity_s01;
-    		threeLineListActivity = R.layout.threeline_list_activity_s01;
-    		threeLineListReportActivity = R.layout.threeline_listreport_activity_s01;
-    	}
+		getListView().setBackgroundColor(Color.WHITE);
+		uiStyle = "s01";
+		simpleListItem2 = R.layout.simple_list_item_2_s01;
+		twolineListActivity = R.layout.twoline_list_activity_s01;
+		threeLineListActivity = R.layout.threeline_list_activity_s01;
+		threeLineListReportActivity = R.layout.threeline_listreport_activity_s01;
 	}
 
     @Override
