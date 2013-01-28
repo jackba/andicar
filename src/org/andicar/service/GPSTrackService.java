@@ -19,6 +19,7 @@
 
 package org.andicar.service;
 
+import android.content.Context;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -150,7 +151,7 @@ public class GPSTrackService extends Service {
 
     @Override
     public void onCreate() {
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         mResource = getResources();
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)

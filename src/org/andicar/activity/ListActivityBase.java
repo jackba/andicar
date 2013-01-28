@@ -30,6 +30,7 @@ import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 import org.andicar2.activity.R;
 
+import android.content.Context;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
@@ -123,7 +124,7 @@ public class ListActivityBase extends ListActivity {
         super.onCreate(icicle);
 
         if(mPreferences == null)
-        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
 
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
@@ -190,7 +191,7 @@ public class ListActivityBase extends ListActivity {
 
 	protected void initStyle() {
 		if(mPreferences == null)
-        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
 
 		getListView().setBackgroundColor(Color.WHITE);
 		uiStyle = "s01";

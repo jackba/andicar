@@ -30,7 +30,7 @@ public class AndiCarBTConnectionReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		if(context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+		if(context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("SendCrashReport", true))
 			Thread.setDefaultUncaughtExceptionHandler(
 	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), context));
 		try{

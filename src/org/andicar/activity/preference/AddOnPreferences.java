@@ -27,6 +27,7 @@ import org.andicar.activity.SecureBackupConfig;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -51,7 +52,7 @@ public class AddOnPreferences extends PreferenceActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         mRes = getResources();
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)

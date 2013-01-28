@@ -29,6 +29,7 @@ import org.andicar2.activity.R;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -84,7 +85,7 @@ public abstract class BaseActivity extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)

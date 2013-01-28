@@ -32,6 +32,7 @@ import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
+import android.content.Context;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -81,7 +82,7 @@ public class DataEntryTemplate{
 
 	public DataEntryTemplate(EditActivityBase ea, MainDbAdapter db) {
 		mActivity = ea;
-		mPreferences = mActivity.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+		mPreferences = mActivity.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
 		
 		mResource = mActivity.getResources();
 		

@@ -23,6 +23,7 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.StaticValues;
 
+import android.content.Context;
 import android.app.Service;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -63,7 +64,7 @@ public class ToDoManagementService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
-		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("SendCrashReport", true))
 			Thread.setDefaultUncaughtExceptionHandler(
 	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 		

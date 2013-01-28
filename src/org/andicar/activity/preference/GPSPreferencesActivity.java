@@ -18,6 +18,7 @@
 
 package org.andicar.activity.preference;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -50,7 +51,7 @@ public class GPSPreferencesActivity extends PreferenceActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         mRes = getResources();
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)

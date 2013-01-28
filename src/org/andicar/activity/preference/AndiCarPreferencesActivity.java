@@ -30,12 +30,12 @@ import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
@@ -56,7 +56,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)

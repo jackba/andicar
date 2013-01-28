@@ -109,7 +109,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         mapOverlays = mapView.getOverlays();
         mExtras = getIntent().getExtras();
         mResource = getResources();
-        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         showMode = mPreferences.getString("GPSTrackShowMode", "M");
 
         SavedData data = (SavedData)getLastNonConfigurationInstance();
