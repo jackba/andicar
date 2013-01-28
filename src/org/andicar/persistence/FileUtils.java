@@ -74,7 +74,7 @@ public class FileUtils {
         lastError = null;
         mCtx = ctx;
         mRes = mCtx.getResources();
-        if(mCtx != null && mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+        if(mCtx != null && mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("SendCrashReport", true))
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), mCtx));
     }

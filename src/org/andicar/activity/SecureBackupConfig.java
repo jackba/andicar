@@ -83,10 +83,16 @@ public class SecureBackupConfig extends EditActivityBase {
 	protected boolean saveData() {
 
 		if(ckIsActive.isChecked()){
+			String value = "";
 	        mPrefEditor = mPreferences.edit();
-	        mPrefEditor.putString("smtpAuthUserName", ((EditText)findViewById(R.id.etSMTPUserFrom)).getText().toString());
-	        mPrefEditor.putString("smtpAuthPassword", ((EditText)findViewById(R.id.etSMTPUserPassword)).getText().toString());
-	        mPrefEditor.putString("bkFileToEmailAddress", ((EditText)findViewById(R.id.etSMTPEmailTo)).getText().toString());
+	        value = ((EditText)findViewById(R.id.etSMTPUserFrom)).getText().toString();
+	        mPrefEditor.putString("smtpAuthUserName", value);
+	        value = "";
+	        value = ((EditText)findViewById(R.id.etSMTPUserPassword)).getText().toString();
+	        mPrefEditor.putString("smtpAuthPassword", value);
+	        value = "";
+	        value = ((EditText)findViewById(R.id.etSMTPEmailTo)).getText().toString();
+	        mPrefEditor.putString("bkFileToEmailAddress", value);
 	        mPrefEditor.commit();
 		}
 

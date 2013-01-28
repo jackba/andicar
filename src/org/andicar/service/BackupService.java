@@ -70,7 +70,7 @@ public class BackupService extends Service {
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 		//check subscription validity
-		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("SendCrashReport", true))
 			Thread.setDefaultUncaughtExceptionHandler(
 	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 
@@ -186,7 +186,7 @@ public class BackupService extends Service {
 		Intent i = new Intent(this, BackupRestoreActivity.class);
 
 		if(db.backupDb(null, "abk_")){
-			if( getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0)
+			if( getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS)
 					.getBoolean("AddOn_AutoBackupService_NotifyIfSuccess", true)){
 			    notification = new Notification(R.drawable.icon_sys_info, 
 			    		"AndiCar " + getString(R.string.AddOn_AutoBackupService_Title),

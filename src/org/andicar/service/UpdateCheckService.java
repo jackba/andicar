@@ -54,7 +54,7 @@ public class UpdateCheckService extends Service{
 	public void onStart(Intent intent, int startId) {
 		super.onStart(intent, startId);
 
-		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+		if(getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("SendCrashReport", true))
 			Thread.setDefaultUncaughtExceptionHandler(
 	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
 

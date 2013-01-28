@@ -28,6 +28,7 @@ import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
+import android.content.Context;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -62,7 +63,7 @@ public class MileageListReportActivity extends ReportListActivityBase {
     @Override
     public void onCreate(Bundle icicle) {
         reportSelectName = "mileageListViewSelect";
-        mCarId = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getLong("CurrentCar_ID", 0);
+        mCarId = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getLong("CurrentCar_ID", 0);
         if(icicle == null){
             whereConditions = new Bundle();
             whereConditions.putString(

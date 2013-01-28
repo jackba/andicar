@@ -34,7 +34,7 @@ public class NetworkStatusChangeReceiver extends BroadcastReceiver {
 	public void onReceive(Context ctx, Intent intent) {
 		NetworkInfo networkInfo = intent.getParcelableExtra(ConnectivityManager.EXTRA_NETWORK_INFO);
 		if(networkInfo.isConnected()) {
-			SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+			SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
 			if(!mPreferences.getBoolean("SecureBkSuccess", true)){
 				if(mPreferences.contains("SecureBkFile") && mPreferences.getString("SecureBkFile", "").length() > 0 && mPreferences.contains("SecureBkAttName")){
 //					editor.putString("SecureBkAttName", attachName);

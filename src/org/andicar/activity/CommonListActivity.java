@@ -19,6 +19,7 @@
 
 package org.andicar.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
@@ -41,7 +42,7 @@ public class CommonListActivity extends ListActivityBase
     	String listSource = mBundleExtras.getString("ListSource");
     	
         if(mPreferences == null)
-        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
 
         initStyle();
     	

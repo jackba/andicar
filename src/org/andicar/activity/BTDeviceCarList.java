@@ -27,6 +27,7 @@ import org.andicar.persistence.BTDeviceCarListDataBinder;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.StaticValues;
 
+import android.content.Context;
 import android.os.Bundle;
 
 
@@ -42,7 +43,7 @@ public class BTDeviceCarList extends ListActivityBase {
     		mDbAdapter = new MainDbAdapter(this);
 
     	if(mPreferences == null)
-        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
 
     	int twoLineListLayout = R.layout.twoline_list_activity_s01;
     		twoLineListLayout = R.layout.twoline_list_activity_s01;

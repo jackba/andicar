@@ -40,7 +40,7 @@ public class BTConnectionReceiver {
     protected WakeLock mWakeLock = null;
 
 	public void onReceive(Context context, Intent intent) {
-		if(context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendCrashReport", true))
+		if(context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("SendCrashReport", true))
 			Thread.setDefaultUncaughtExceptionHandler(
 	                    new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), context));
 		try{
@@ -50,7 +50,7 @@ public class BTConnectionReceiver {
 			
 			if (intent.getAction().equals(BluetoothDevice.ACTION_ACL_CONNECTED)) {
 				//check if GPS track active
-				boolean isGpsTrackOn = context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("isGpsTrackOn", false);
+				boolean isGpsTrackOn = context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("isGpsTrackOn", false);
 				if(isGpsTrackOn)
 					return;
 //	        	toast = Toast.makeText( context, "BT connected", Toast.LENGTH_SHORT );
@@ -72,7 +72,7 @@ public class BTConnectionReceiver {
 						return;
 					if(c.moveToFirst()){ //linked car exist
 						try{
-							if(context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0).getBoolean("SendUsageStatistics", true)){
+							if(context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("SendUsageStatistics", true)){
 					            AndiCarStatistics.sendFlurryStartSession(context);
 						        AndiCarStatistics.sendFlurryEvent(context, "BTStarterUsed", null);
 					        }

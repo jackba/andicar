@@ -43,7 +43,7 @@ public class MainDbAdapter extends DB
     {
         super(ctx);
         mCtx = ctx;
-        mPref = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+        mPref = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         isSendCrashReport = mPref.getBoolean("SendCrashReport", true);
     }
 

@@ -34,7 +34,7 @@ public class AndiCarExceptionHandler
     }
 
     public void uncaughtException(Thread thread, Throwable thrwbl) {
-    	SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, 0);
+    	SharedPreferences mPreferences = mCtx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
     	boolean isPayPal = false;
         Throwable cause = thrwbl.getCause();
         StackTraceElement[] stackTrace;
