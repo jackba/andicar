@@ -85,6 +85,11 @@
 
     <string name="LM_UPDATE_MSG">
         <b><i>What\'s new:</i></b>\n\n
+        <i>Version 4.0.3:</i>\n
+        * Bugfixing: on some versions of Android and Devices the title bar / action bar 
+        was invisible on the main screen => was impossible to reach the application menu
+        <i>Version 4.0.2:</i>\n
+        * Bugfixing on GPS Track show on map
         <i>Version 4.0.1:</i>\n
         * UI bugfixing (unreadable text on some devices)
         \n\n<i>Version 4.0.0:</i>\n
