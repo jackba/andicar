@@ -360,6 +360,8 @@ public class ToDoManagementService extends Service {
 					}
 				}
 				while(nextToDoCalendar.getTimeInMillis() < System.currentTimeMillis()){
+					@SuppressWarnings("unused")
+					String test = taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS);
 					setNextToDoCalendar(nextToDoCalendar, frequencyType, timeFrequency, isLastDayOfMonth);
 				}
 				

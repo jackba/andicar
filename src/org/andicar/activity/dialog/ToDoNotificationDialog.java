@@ -216,6 +216,19 @@ public class ToDoNotificationDialog extends EditActivityBase {
 
 		ContentValues cvData = new ContentValues();
 		if(ckIsDone.isChecked()){
+			boolean isRecurrentTask = false;
+			if(mTaskID > 0){
+				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_TABLE_NAME, 
+						MainDbAdapter.taskTableColNames, mTaskID);
+				isRecurrentTask = c.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
+				try{c.close();} catch(Exception e){};
+			}
+			if(!isRecurrentTask){ //if not recurrent => delete the to-do & task
+				mDbAdapter.deleteRecord(MainDbAdapter.TODO_TABLE_NAME, mToDoID);
+				mDbAdapter.deleteRecord(MainDbAdapter.TASK_TABLE_NAME, mTaskID);
+				return true;
+			}
+			
 			cvData.put( MainDbAdapter.TODO_COL_ISDONE_NAME, "Y");
 //	                (ckIsDone.isChecked() ? "Y" : "N") );
 		}
