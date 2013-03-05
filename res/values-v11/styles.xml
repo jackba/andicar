@@ -9,7 +9,7 @@
     </style>
 
     <!-- MainScreen theme. -->
-    <style name="MainScreenTheme" parent="android:Theme.Holo.Light.NoActionBar">
+    <style name="MainScreenTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     
