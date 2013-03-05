@@ -77,14 +77,4 @@
     	Ar trebui să fi primit o copie a Licenţei Publice Generale GNU împreună cu acest program. În caz contrar, consultaţi <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n
         Licenţa completă se poate citi <a href="http://www.gnu.org/licenses/gpl.html">aici</a>.\n
     </string>
-
-    <string name="LM_UPDATE_MSG">
-        <b><i>Ce este nou:</i></b>\n\n
-        \n\n<i>Versiunea 4.0.1:</i>\n
-        * Remedieri în interfață
-        \n\n<i>Versiunea 4.0.0:</i>\n
-        * Traducere în limba română de Doru Butnaru\n
-        * Toate extensiile sunt de acum disponibile gratis.
-        * Au fost remediate diverse erori
-    </string>
 </resources>
