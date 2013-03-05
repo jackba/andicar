@@ -246,6 +246,28 @@ public class ToDoListReportActivity extends ReportListActivityBase{
 		if(item.getItemId() != StaticValues.CONTEXT_MENU_TODO_DONE_ID)
 			return super.onContextItemSelected(item);
 		else{
+			//check if task is one time => if yes delete the to-do and the task
+			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, 
+					MainDbAdapter.todoTableColNames, mLongClickId);
+			long taskID = 0;
+			boolean isRecurrentTask = false;
+			if(c != null){
+				taskID = c.getLong(MainDbAdapter.TODO_COL_TASK_ID_POS);
+				try{c.close();} catch(Exception e){};
+			}
+			if(taskID > 0){
+				c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_TABLE_NAME, 
+						MainDbAdapter.taskTableColNames, taskID);
+				isRecurrentTask = c.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
+				try{c.close();} catch(Exception e){};
+			}
+			if(!isRecurrentTask){ //if not recurrent => delete the to-do & task
+				mDbAdapter.deleteRecord(MainDbAdapter.TODO_TABLE_NAME, mLongClickId);
+				mDbAdapter.deleteRecord(MainDbAdapter.TASK_TABLE_NAME, taskID);
+				fillData();
+				return true;
+			}
+			
 			ContentValues data = new ContentValues();
 			data.put(MainDbAdapter.TODO_COL_ISDONE_NAME, "Y");
 			int updResult = mDbAdapter.updateRecord(MainDbAdapter.TODO_TABLE_NAME, mLongClickId, data);
@@ -258,12 +280,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
 				errorAlert = errorAlertBuilder.create();
 				errorAlert.show();
 			}
-			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, mLongClickId);
-			long taskID = 0;
-			if(c != null){
-				taskID = c.getLong(MainDbAdapter.TODO_COL_TASK_ID_POS);
-				c.close();
-			}
+
 			Intent intent = new Intent(this, ToDoManagementService.class);
 			intent.putExtra("TaskID", taskID);
 			intent.putExtra("setJustNextRun", false);
