@@ -396,7 +396,7 @@ public class GPSTrackService extends Service {
                   + " </Point>\n"
                 + "</Placemark>\n"
                 + "<Placemark>\n"
-                + "<name><![CDATA[" + gpsTrackDetailKMLFile.getName() + "]]></name>\n"
+                + "<name><![CDATA[Track file #" + iFileCount + "]]></name>\n"
                 + "<description><![CDATA[]]></description>\n"
                 + "<styleUrl>#track</styleUrl>\n"
                 + "<MultiGeometry>\n"
