@@ -349,13 +349,13 @@ public class GPSTrackService extends Service {
         
         if(iFileCount == 1){ //first file
             name = sName;
-            pointName = "Start";
+            pointName = "Start trip";
             pointStyle = "#sh_green-circle";
             pointDescription = "Start of trip '" + sName + "'";
         }
         else{
-            name = sName + " (part " + iFileCount + ")";
-            pointName = "(Part " + iFileCount + " start)";
+            name = sName + " part #" + iFileCount;
+            pointName = "Start of part #" + iFileCount;
             pointStyle = "#icon28";
             pointDescription = "";
         }
@@ -415,11 +415,11 @@ public class GPSTrackService extends Service {
             String pointName = "";
             String pointStyle = "";
             if(isLastFile){ //first file
-                pointName = "(End)";
+                pointName = "End trip";
                 pointStyle = "#sh_red-circle";
             }
             else{
-                pointName = "(Part " + iFileCount + " end)";
+                pointName = "End of part #" + iFileCount;
                 pointStyle = "#icon28";
             }
 
@@ -436,17 +436,23 @@ public class GPSTrackService extends Service {
                 + "</LineString>\n"
                 + "</MultiGeometry>\n"
                 + "</Placemark>\n"
-//            if(isLastFile)
-//                footerTxt = footerTxt
                 + "<Placemark>\n"
-                  + "<name><![CDATA[" + pointName + "]]></name>\n"
-                  + "<description><![CDATA[End of trip '" + sName + "'"
-                  +"\nDistance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi")
-                  +"\nMax. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-                  +"\nAvg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-                  +"\nAvg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-                  +"\nTotal time: " + Utils.getTimeString(lTotalTime, false)
-                  +"\nTotal moving time: " + Utils.getTimeString(lTotalMovingTime, false)
+                  + "<name><![CDATA[" + pointName + "]]></name>\n";
+            	if(isLastFile){
+            		footerTxt = footerTxt
+	                    + "<description><![CDATA[End of trip '" + sName + "'"
+	    				+ "\nDistance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi")
+	    				+ "\nMax. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "\nAvg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "\nAvg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "\nTotal time: " + Utils.getTimeString(lTotalTime, false)
+		                + "\nTotal moving time: " + Utils.getTimeString(lTotalMovingTime, false);
+            	}
+            	else{
+            		footerTxt = footerTxt
+                        + "<description><![CDATA[End of part " + iFileCount;
+            	};
+            	footerTxt = footerTxt 
                       + "]]></description>\n"
                   + "<styleUrl>" + pointStyle + "</styleUrl>\n"
                   + "<Point>\n"
