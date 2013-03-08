@@ -117,6 +117,8 @@ public class GPSTrackService extends Service {
     private double dMaxSpeed = 0;
     private double dAvgSpeed = 0;
     private double dAvgMovingSpeed = 0;
+    private long lTotalTime = 0;
+    private long lTotalMovingTime = 0;
     private boolean isFirstPoint = true;
     private long lFirstNonMovingTime = 0;
     private long lLastNonMovingTime = 0;
@@ -325,8 +327,8 @@ public class GPSTrackService extends Service {
                     + "xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\" "
                         + "xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\">\n"
                 + "<trk>\n"
-                + "<name><![CDATA[" + sName +"]]></name>\n"
-                + "<desc><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a> on an Android powered device]]></desc>\n"
+                + "<name><![CDATA[Trip record for '" + sName +"']]></name>\n"
+                + "<desc><![CDATA[Created by <a href='http://www.andicar.org'>AndiCar</a>]]></desc>\n"
                 + "<number>" + gpsTrackId + "_" + iFileCount + "</number>\n"
                 + "<topografix:color>c0c0c0</topografix:color>\n"
                 + "<trkseg>\n"
@@ -343,15 +345,19 @@ public class GPSTrackService extends Service {
         String name = "";
         String pointName = "";
         String pointStyle = "";
+        String pointDescription = "";
+        
         if(iFileCount == 1){ //first file
             name = sName;
-            pointName = "(Start)";
+            pointName = "Start";
             pointStyle = "#sh_green-circle";
+            pointDescription = "Start of trip '" + sName + "'";
         }
         else{
             name = sName + " (part " + iFileCount + ")";
             pointName = "(Part " + iFileCount + " start)";
             pointStyle = "#icon28";
+            pointDescription = "";
         }
         ContentValues cvData = new ContentValues();
         cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
@@ -365,16 +371,16 @@ public class GPSTrackService extends Service {
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<kml xmlns=\"http://earth.google.com/kml/2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n"
             + "<Document>\n"
-            + "<atom:author><atom:name>Tracks running on AndiCar</atom:name></atom:author>\n"
+            + "<atom:author><atom:name>Track recorded by AndiCar</atom:name></atom:author>\n"
             + "<name><![CDATA[" + name + "]]></name>\n"
-            + "<description><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a>]]></description>\n"
+            + "<description><![CDATA[Created by <a href='http://www.andicar.org'>AndiCar</a>]]></description>\n"
             + "<Style id=\"track\"><LineStyle><color>7f0000ff</color><width>4</width></LineStyle></Style>\n"
             + "<Style id=\"sh_green-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/grn-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
             + "<Style id=\"sh_red-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/red-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
             + "<Style id=\"icon28\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/pal4/icon28.png</href></Icon><hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
             + "<Placemark>\n"
               + "<name><![CDATA[" + pointName + "]]></name>\n"
-              + "<description><![CDATA[]]></description>\n"
+              + "<description><![CDATA[" + pointDescription + "]]></description>\n"
               + "<styleUrl>"+ pointStyle + "</styleUrl>\n"
               + "<Point>\n");
 
@@ -434,8 +440,13 @@ public class GPSTrackService extends Service {
 //                footerTxt = footerTxt
                 + "<Placemark>\n"
                   + "<name><![CDATA[" + pointName + "]]></name>\n"
-                  + "<description><![CDATA[Created by <a href='http://sites.google.com/site/andicarfree'>AndiCar</a>."
-                  + "<p>Distance: " + (dTotalDistance) + (isUseMetricUnits? " km" : " mi")
+                  + "<description><![CDATA[End of trip '" + sName + "'"
+                  +"\nDistance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi")
+                  +"\nMax. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+                  +"\nAvg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+                  +"\nAvg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+                  +"\nTotal time: " + Utils.getTimeString(lTotalTime, false)
+                  +"\nTotal moving time: " + Utils.getTimeString(lTotalMovingTime, false)
                       + "]]></description>\n"
                   + "<styleUrl>" + pointStyle + "</styleUrl>\n"
                   + "<Point>\n"
@@ -513,6 +524,15 @@ public class GPSTrackService extends Service {
     }
 
     private void appendGPXTrackPoint() throws IOException {
+    	double tmpSpeed;
+    	BigDecimal speed;
+        if(!isUseMetricUnits){
+            tmpSpeed = dCurrentSpeed * 2.23693; //m/s to mi/h
+        }
+        else{ // only m/s need to be converted to km/h
+            tmpSpeed = dCurrentSpeed * 3.6; //m/s to mi/h
+        }
+        speed = BigDecimal.valueOf(tmpSpeed).setScale(1, BigDecimal.ROUND_HALF_DOWN);
         currentLocationDateTime.setTimeInMillis(lCurrentLocationTime);
         currentLocationDateTimeGPXStr =
                 currentLocationDateTime.get(Calendar.YEAR) + "-" +
@@ -526,6 +546,7 @@ public class GPSTrackService extends Service {
                     "\" lon=\"" + dCurrentLocationLongitude +
                     "\">\n" + "<ele>" + dCurrentLocationAltitude + "</ele>\n" +
                     "<time>" + currentLocationDateTimeGPXStr + "</time>\n" +
+                    "<cmt>Current speed: " + speed.toPlainString() + (isUseMetricUnits? " km/h" : " mi/h") + "</cmt>\n" +
                 "</trkpt>\n");
     }
 
@@ -717,12 +738,12 @@ public class GPSTrackService extends Service {
 
     private void updateStatistics(){
         
-    	long lTotalTime = (lStopTime - lStartTime) / 1000; //in seconds; lStopTime & lStartTime are in miliseconds
+    	lTotalTime = (lStopTime - lStartTime) / 1000; //in seconds; lStopTime & lStartTime are in miliseconds
         
         if(lLastNonMovingTime != 0 && lFirstNonMovingTime != 0)
             lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
         
-        long lTotalMovingTime = lTotalTime - (lTotalNonMovingTime / 1000); //lTotalNonMovingTime is in milisecond
+        lTotalMovingTime = lTotalTime - (lTotalNonMovingTime / 1000); //lTotalNonMovingTime is in milisecond
 
         if(dTotalUsedTrackPoints != 0)
             //at this moment dAvgAccuracy = SUM(CurrentAccuracy)
