@@ -76,6 +76,7 @@ public abstract class EditActivityBase extends BaseActivity {
     protected AutoCompleteTextView acTag = null;
     protected AutoCompleteTextView acBPartner;
     protected AutoCompleteTextView acAdress;
+//    protected ActionBar mActionBar = null;
     protected int mYear;
     protected int mMonth;
     protected int mDay;
@@ -115,7 +116,8 @@ public abstract class EditActivityBase extends BaseActivity {
     /** 
      * Use instead onCreate(Bundle icicle, int layoutResID, View.OnClickListener btnOkClickListener)
      */
-    @Override
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB)  //sdk = 11
+	@Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setLayout();
@@ -138,8 +140,49 @@ public abstract class EditActivityBase extends BaseActivity {
         
         if(isUseTemplate)
         	mDet = new DataEntryTemplate(this, mDbAdapter);
+        
+//        if(android.os.Build.VERSION.SDK_INT >= 11 && 
+//        	(this instanceof ExpenseEditActivity ||
+//        			this instanceof MileageEditActivity ||
+//        			this instanceof GPSTrackEditActivity ||
+//        			this instanceof RefuelEditActivity)){
+//        	mActionBar = getActionBar();
+//    		mActionBar.setDisplayHomeAsUpEnabled(true);
+//        	
+//    	}
+//        else 
+//        	mActionBar = null;
     }
 
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//    	switch (item.getItemId()){
+//    	case android.R.id.home:
+//    		Intent intent = null;
+//    		if(this instanceof ExpenseEditActivity){
+//    			intent = new Intent(this, ExpensesListReportActivity.class);
+//    		}
+//    		else if(this instanceof MileageEditActivity){
+//    			intent = new Intent(this, MileageListReportActivity.class);
+//    		}
+//    		else if(this instanceof GPSTrackEditActivity){
+//    			intent = new Intent(this, GPSTrackListReportActivity.class);
+//    		}
+//    		else if(this instanceof RefuelEditActivity){
+//    			intent = new Intent(this, RefuelListReportActivity.class);
+//    		}
+//    		if(intent != null){
+//				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//				startActivity(intent);
+//    		}
+//    		break;
+//    	default:
+//    		break;
+//    	}
+//
+//    	return true;
+//	} 
+//    
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
