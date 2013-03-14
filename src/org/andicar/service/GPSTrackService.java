@@ -441,13 +441,13 @@ public class GPSTrackService extends Service {
             	if(isLastFile){
             		footerTxt = footerTxt
 	                    + "<description><![CDATA[End of trip '" + sName + "'"
-	    				+ "\nDistance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi")
-	    				+ "\nMax. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "\nAvg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "\nAvg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "\nTotal time: " + Utils.getTimeString(lTotalTime, false)
-		                + "\nTotal moving time: " + Utils.getTimeString(lTotalMovingTime, false)
-	                	+ "\n\nTrack recorded by <a href='http://www.andicar.org'><b>AndiCar</b></a>";
+	    				+ "<br><br>Distance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi")
+	    				+ "<br>Max. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "<br>Avg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "<br>Avg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "<br>Total time: " + Utils.getTimeString(lTotalTime, false)
+		                + "<br>Total moving time: " + Utils.getTimeString(lTotalMovingTime, false)
+	                	+ "<br><br>Track recorded by <a href='http://www.andicar.org'><b>AndiCar</b></a>";
             		
             	}
             	else{
