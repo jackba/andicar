@@ -60,7 +60,7 @@
     <application
         android:label="AndiCarPro"
         android:description="@string/APP_Description"
-        android:icon="@drawable/car2"
+        android:icon="@drawable/car2inverted"
         android:allowBackup="true"
         android:theme="@style/AppTheme"
     >
@@ -80,7 +80,8 @@
         
         <activity android:name="org.andicar2.activity.MainActivity"
                   android:label="AndiCarPro"
-                  android:theme="@style/MainScreenTheme">
+                  android:theme="@style/MainScreenTheme"
+                  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

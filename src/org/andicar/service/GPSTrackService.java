@@ -446,7 +446,9 @@ public class GPSTrackService extends Service {
 		                + "\nAvg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
 		                + "\nAvg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
 		                + "\nTotal time: " + Utils.getTimeString(lTotalTime, false)
-		                + "\nTotal moving time: " + Utils.getTimeString(lTotalMovingTime, false);
+		                + "\nTotal moving time: " + Utils.getTimeString(lTotalMovingTime, false)
+	                	+ "\n\nTrack recorded by <a href='http://www.andicar.org'><b>AndiCar</b></a>";
+            		
             	}
             	else{
             		footerTxt = footerTxt
