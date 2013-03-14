@@ -18,6 +18,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
+    <!-- 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -26,7 +27,6 @@
     android:layout_marginRight="5dp"
     android:id="@+id/vgRoot"
     >
-    <!-- 
 	<ImageView
    		android:id="@+id/mainActivityPicture"
 		android:src="@drawable/main_activity_picture"
@@ -41,16 +41,17 @@
 	    />
 	 -->
     <ScrollView
+    	xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scrollbars="vertical"
+    	android:id="@+id/vgRoot"
         >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
             >
 		    <LinearLayout
 		        android:orientation="horizontal"
@@ -508,4 +509,3 @@
                 />
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
