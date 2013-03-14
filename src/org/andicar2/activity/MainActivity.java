@@ -379,11 +379,11 @@ public class MainActivity extends BaseActivity {
 		spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
 		spnCar.setOnTouchListener(spinnerOnTouchListener);
 		btnMileageList = (ImageButton) findViewById(R.id.btnMileageList);
-		btnMileageList.setOnClickListener(btnListMileageClickListener);
+		btnMileageList.setOnClickListener(btnMileageListClickListener);
 		btnMileageInsert = (ImageButton) findViewById(R.id.btnMileageInsert);
 		btnMileageInsert.setOnClickListener(btnInsertMileageClickListener);
 		btnRefuelList = (ImageButton) findViewById(R.id.btnRefuelList);
-		btnRefuelList.setOnClickListener(btnListRefuelClickListener);
+		btnRefuelList.setOnClickListener(btnRefuelListClickListener);
 		btnRefuelInsert = (ImageButton) findViewById(R.id.btnRefuelInsert);
 		btnRefuelInsert.setOnClickListener(btnInsertRefuelClickListener);
 		btnExpenseList = (ImageButton) findViewById(R.id.btnExpenseList);
@@ -391,14 +391,14 @@ public class MainActivity extends BaseActivity {
 		btnExpenseInsert = (ImageButton) findViewById(R.id.btnExpenseInsert);
 		btnExpenseInsert.setOnClickListener(btnInsertExpenseClickListener);
 		btnToDoList = (ImageButton) findViewById(R.id.btnToDoList);
-		btnToDoList.setOnClickListener(btnListToDoClickListener);
+		btnToDoList.setOnClickListener(btnToDoListClickListener);
 		btnToDoInsert = (ImageButton) findViewById(R.id.btnToDoInsert);
 		btnToDoInsert.setOnClickListener(btnInsertToDoClickListener);
 		btnGPSTrackInsert = (ImageButton) findViewById(R.id.btnGPSTrackInsert);
 		btnGPSTrackInsert
 				.setOnClickListener(btnInsertGPSTrackClickListener);
 		btnGPSTrackList = (ImageButton) findViewById(R.id.btnGPSTrackList);
-		btnGPSTrackList.setOnClickListener(btnListGPSTrackClickListener);
+		btnGPSTrackList.setOnClickListener(btnGPSTrackListClickListener);
 		btnGPSTrackShowOnMap = (ImageButton) findViewById(R.id.btnGPSTrackShowOnMap);
 		btnGPSTrackShowOnMap
 				.setOnClickListener(btnShowOnMapGPSTrackClickListener);
@@ -1394,7 +1394,7 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnListMileageClickListener = new OnClickListener() {
+	private OnClickListener btnMileageListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
@@ -1414,7 +1414,7 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnListRefuelClickListener = new OnClickListener() {
+	private OnClickListener btnRefuelListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
@@ -1456,7 +1456,7 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnListToDoClickListener = new OnClickListener() {
+	private OnClickListener btnToDoListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
@@ -1487,7 +1487,7 @@ public class MainActivity extends BaseActivity {
 		}
 	};
 
-	private OnClickListener btnListGPSTrackClickListener = new OnClickListener() {
+	private OnClickListener btnGPSTrackListClickListener = new OnClickListener() {
 
 		public void onClick(View arg0) {
 			Intent i = new Intent(mainContext,
