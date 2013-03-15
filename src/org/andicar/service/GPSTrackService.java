@@ -328,8 +328,8 @@ public class GPSTrackService extends Service {
                         + "xsi:schemaLocation=\"http://www.topografix.com/GPX/1/0 http://www.topografix.com/GPX/1/0/gpx.xsd http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\">\n"
                 + "<trk>\n"
                 + "<name><![CDATA[Trip record for '" + sName +"']]></name>\n"
-                + "<desc><![CDATA[Created by <a href='http://www.andicar.org'>AndiCar</a>]]></desc>\n"
-                + "<number>" + gpsTrackId + "_" + iFileCount + "</number>\n"
+                + "<desc><![CDATA[Recorded with <a href='http://www.andicar.org'>AndiCar</a>]]></desc>\n"
+//                + "<number>" + gpsTrackId + "_" + iFileCount + "</number>\n" //not a valid number
                 + "<topografix:color>c0c0c0</topografix:color>\n"
                 + "<trkseg>\n"
             );
@@ -371,9 +371,9 @@ public class GPSTrackService extends Service {
             "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
             + "<kml xmlns=\"http://earth.google.com/kml/2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">\n"
             + "<Document>\n"
-            + "<atom:author><atom:name>Track recorded by AndiCar</atom:name></atom:author>\n"
+            + "<atom:author><atom:name>AndiCar</atom:name></atom:author>\n"
             + "<name><![CDATA[" + name + "]]></name>\n"
-            + "<description><![CDATA[Created by <a href='http://www.andicar.org'>AndiCar</a>]]></description>\n"
+            + "<description><![CDATA[Recorded with <a href='http://www.andicar.org'>AndiCar</a>]]></description>\n"
             + "<Style id=\"track\"><LineStyle><color>7f0000ff</color><width>4</width></LineStyle></Style>\n"
             + "<Style id=\"sh_green-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/grn-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
             + "<Style id=\"sh_red-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/red-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
@@ -447,7 +447,7 @@ public class GPSTrackService extends Service {
 		                + "<br>Avg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
 		                + "<br>Total time: " + Utils.getTimeString(lTotalTime, false)
 		                + "<br>Total moving time: " + Utils.getTimeString(lTotalMovingTime, false)
-	                	+ "<br><br>Track recorded by <a href='http://www.andicar.org'><b>AndiCar</b></a>";
+	                	+ "<br><br>Recorded with <a href='http://www.andicar.org'><b>AndiCar</b></a>";
             		
             	}
             	else{
