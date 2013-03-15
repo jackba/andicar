@@ -176,7 +176,7 @@
     <string name="MENU_SetDefault">"Set default"</string>
     <string name="MENU_OpenGPSTrack">"Open GPS track"</string>
     <string name="MENU_RateCommentCaption">"Rate/Comment"</string>
-    <string name="MENU_AddOnServicesCaption">"Add-On Services"</string>
+    <string name="MENU_AddOnServicesCaption">"Extensions</string>
     <string name="MENU_LocalizeAndiCar">"Translate AndiCar"</string>
     <string name="MENU_TaskReminderCaption">"Task"</string>
     <string name="MENU_TodoCaption">"To-Do List"</string>
@@ -427,7 +427,7 @@
     <string name="PREF_MainScreen_ShowStatistics">"Show statistics"</string>
     <string name="PREF_MainScreen_ShowToDoZone">"Show To-Do zone"</string>
 
-    <string name="PREF_AddOnCategoryTitle">"Add-On Services"</string>
+    <string name="PREF_AddOnCategoryTitle">"Extensions"</string>
     <string name="PREF_AddOnServicesSummary">"Subscription based, payed services."</string>
     <string name="PREF_AddOnServicesSubscribe">"Subscribe with PayPal"</string>
 
@@ -543,7 +543,7 @@
     <string name="AddOn_AutoBackupService_BackupFailed">"The backup failed! Check your SDCARD."</string>
 
     <string name="AddOn_DataTemplate_Title">"Data entry templates"</string>
-    <string name="AddOn_DataTemplate_Description">"This Add-On allow you to use templates for data entry.\nYour productivity can be increased by using templates for automatic field completion."</string>
+    <string name="AddOn_DataTemplate_Description">"This extension allow you to use templates for data entry.\nYour productivity can be increased by using templates for automatic field completion."</string>
     <string name="AddOn_DataTemplate_ApplyTemplateLbl">"Template"</string>
     <string name="AddOn_DataTemplate_UpdatedMsg">"Template updated"</string>
     <string name="AddOn_DataTemplate_CreatedMsg">"A new template created based on current values"</string>
