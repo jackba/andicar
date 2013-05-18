@@ -151,6 +151,7 @@
                     android:layout_height="wrap_content"
 					android:layout_alignParentRight="true"
             		android:layout_centerVertical="true" 
+        			android:textColor="@android:color/primary_text_light"
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -175,6 +176,7 @@
                     android:layout_height="wrap_content"
 					android:layout_alignParentRight="true"
             		android:layout_centerVertical="true" 
+        			android:textColor="@android:color/primary_text_light"
                     />
             </RelativeLayout>
 
@@ -200,6 +202,7 @@
                     android:layout_height="wrap_content"
 					android:layout_alignParentRight="true"
             		android:layout_centerVertical="true" 
+        			android:textColor="@android:color/primary_text_light"
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -224,6 +227,7 @@
                     android:layout_height="wrap_content"
 					android:layout_alignParentRight="true"
             		android:layout_centerVertical="true" 
+        			android:textColor="@android:color/primary_text_light"
                     />
             </RelativeLayout>
             
@@ -255,6 +259,7 @@
                     android:layout_height="wrap_content"
 					android:layout_alignParentRight="true"
             		android:layout_centerVertical="true" 
+        			android:textColor="@android:color/primary_text_light"
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -280,6 +285,7 @@
                     android:inputType="phone"
 					android:layout_alignParentRight="true"
             		android:layout_centerVertical="true" 
+        			android:textColor="@android:color/primary_text_light"
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -305,6 +311,7 @@
                     android:inputType="phone"
 					android:layout_alignParentRight="true"
             		android:layout_centerVertical="true" 
+        			android:textColor="@android:color/primary_text_light"
                     />
             </RelativeLayout>
             <RelativeLayout
@@ -330,6 +337,7 @@
 					android:layout_toRightOf="@id/tvEmailLabel"
             		android:layout_centerVertical="true" 
                 	android:layout_marginLeft="5dp"
+        			android:textColor="@android:color/primary_text_light"
                     />
                 <ImageButton
                     android:id="@+id/btnEmail"
@@ -363,6 +371,7 @@
                     android:inputType="phone"
 					android:layout_alignParentRight="true"
             		android:layout_centerVertical="true" 
+        			android:textColor="@android:color/primary_text_light"
                     />
             </RelativeLayout>
 

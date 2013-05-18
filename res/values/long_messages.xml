@@ -84,16 +84,7 @@
     </string>
 
     <string name="LM_UPDATE_MSG">
-        <i><b>Version 4.0.3:</b></i>\n
-        * Bugfixing: on some versions of Android and devices the title bar / action bar 
-        was invisible on the main screen => impossible to open the application menu
-        \n\n<i><b>Version 4.0.2:</b></i>\n
-        * Bugfixing on GPS Track show on map
-        \n\n<i><b>Version 4.0.1:</b></i>\n
-        * UI bugfixing (unreadable text on some devices)
-        \n\n<i><b>Version 4.0.0:</b></i>\n
-        * Romanian translation by Doru Butnaru\n
-        * All add-on is available starting with this version for free!\n
-        * Various bug fixes
+        <i><b>Version 4.0.4:</b></i>\n
+        * UI bugfixing for devices with Android 2.+
     </string>
 </resources>

@@ -130,7 +130,7 @@ public class RefuelListReportActivity extends ReportListActivityBase{
         spnDriverSearch = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
         initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME, null, null, -1);
         acTag = ((AutoCompleteTextView) searchView.findViewById( R.id.acTag ));
-        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);

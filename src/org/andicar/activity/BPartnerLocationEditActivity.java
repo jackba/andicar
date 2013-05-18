@@ -161,47 +161,47 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
     }
 
     private void initControls(){
-        cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_CITY_NAME,
                     -1, 0));
         acCity.setAdapter(cityAdapter);
 
-        regionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        regionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_REGION_NAME,
                     -1, 0));
         acRegion.setAdapter(regionAdapter);
 
-        countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_COUNTRY_NAME,
                     -1, 0));
         acCountry.setAdapter(countryAdapter);
 
-        contactAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        contactAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_CONTACTPERSON_NAME,
                     -1, 0));
         acContact.setAdapter(contactAdapter);
 
-        emailAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        emailAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_EMAIL_NAME,
                     -1, 0));
         acEmail.setAdapter(emailAdapter);
 
-        phoneAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        phoneAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_PHONE_NAME,
                     mBPartnerId, 0));
         acPhone1.setAdapter(phoneAdapter);
 
-        phone2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        phone2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_PHONE2_NAME,
                     mBPartnerId, 0));
         acPhone2.setAdapter(phone2Adapter);
 
-        postalAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        postalAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_POSTAL_NAME,
                     -1, 0));
         acPostal.setAdapter(postalAdapter);
 
-        faxAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        faxAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_FAX_NAME,
                     mBPartnerId, 0));
         acFax.setAdapter(faxAdapter);

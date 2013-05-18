@@ -373,19 +373,19 @@ public class RefuelEditActivity extends EditActivityBase {
                 new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null,
                 MainDbAdapter.GEN_COL_NAME_NAME, mCurrencyId, false);
 
-        userCommentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        userCommentAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
                 mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
-        bpartnerNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        bpartnerNameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_TABLE_NAME, null,
                 0, 0));
         acBPartner.setAdapter(bpartnerNameAdapter);
-        addressAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        addressAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME,
                 mBPartnerId, 0));
         acAdress.setAdapter(addressAdapter);
-        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
@@ -518,7 +518,7 @@ public class RefuelEditActivity extends EditActivityBase {
                     mBPartnerId = Long.parseLong(bPartnerIdStr);
                 else
                     mBPartnerId = 0;
-                addressAdapter = new ArrayAdapter<String>(RefuelEditActivity.this, android.R.layout.simple_dropdown_item_1line,
+                addressAdapter = new ArrayAdapter<String>(RefuelEditActivity.this, android.R.layout.simple_list_item_1,
                         mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME,
                         mBPartnerId, 0));
                 acAdress.setAdapter(addressAdapter);
@@ -1035,7 +1035,7 @@ public class RefuelEditActivity extends EditActivityBase {
 
         userCommentAdapter = null;
         userCommentAdapter = new ArrayAdapter<String>(RefuelEditActivity.this,
-                android.R.layout.simple_dropdown_item_1line,
+                android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.REFUEL_TABLE_NAME, null,
                 mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
