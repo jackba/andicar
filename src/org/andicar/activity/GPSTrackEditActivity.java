@@ -74,7 +74,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
         btnGPSTrackShowOnMap.setOnClickListener(mBtnShowOnMapListener);
 
         userCommentAdapter = new ArrayAdapter<String>(GPSTrackEditActivity.this,
-                android.R.layout.simple_dropdown_item_1line,
+                android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
                 mPreferences.getLong("CurrentCar_ID", -1), 30));
         acUserComment.setAdapter(userCommentAdapter);
@@ -94,7 +94,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
 
         
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
-        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);

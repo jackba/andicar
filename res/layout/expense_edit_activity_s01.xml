@@ -498,6 +498,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+        			android:textColor="@android:color/primary_text_light"
                     />
             </LinearLayout>
 
@@ -520,6 +521,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+        			android:textColor="@android:color/primary_text_light"
                     />
             </LinearLayout>
             <TextView
@@ -577,6 +579,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:hint="@string/GEN_TagHint"
+       			android:textColor="@android:color/primary_text_light"
                 />
             <TextView
                 android:id="@+id/tvUserCommentLabel"
@@ -592,6 +595,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+       			android:textColor="@android:color/primary_text_light"
                 />
         </LinearLayout>
     </ScrollView>

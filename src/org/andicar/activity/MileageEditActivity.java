@@ -327,10 +327,10 @@ public class MileageEditActivity extends EditActivityBase {
 	                mExpTypeId, false);
     	}
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
-                android.R.layout.simple_dropdown_item_1line,
+                android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null, mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
-        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
@@ -690,7 +690,7 @@ public class MileageEditActivity extends EditActivityBase {
             toast.show();
             userCommentAdapter = null;
             userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
-                    android.R.layout.simple_dropdown_item_1line,
+                    android.R.layout.simple_list_item_1,
                     mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null, mCarId, 30));
             acUserComment.setAdapter(userCommentAdapter);
         }
@@ -828,7 +828,7 @@ public class MileageEditActivity extends EditActivityBase {
 
 		userCommentAdapter = null;
         userCommentAdapter = new ArrayAdapter<String>(MileageEditActivity.this,
-                android.R.layout.simple_dropdown_item_1line,
+                android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.MILEAGE_TABLE_NAME, null,
                 mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);

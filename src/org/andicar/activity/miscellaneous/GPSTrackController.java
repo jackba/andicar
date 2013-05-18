@@ -100,12 +100,12 @@ public class GPSTrackController extends EditActivityBase {
         spnCar.setOnTouchListener(spinnerOnTouchListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
-        aaUserComment = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        aaUserComment = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
                 		mCarId, 30));
         acUserComment.setAdapter(aaUserComment);
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
-        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,
+        tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
@@ -408,7 +408,7 @@ public class GPSTrackController extends EditActivityBase {
 
         aaUserComment = null;
         aaUserComment = new ArrayAdapter<String>(GPSTrackController.this,
-                android.R.layout.simple_dropdown_item_1line,
+                android.R.layout.simple_list_item_1,
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
                 spnCar.getSelectedItemId(), 30));
         acUserComment.setAdapter(aaUserComment);
