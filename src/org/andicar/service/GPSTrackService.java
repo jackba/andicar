@@ -540,7 +540,15 @@ public class GPSTrackService extends Service {
         else{ // only m/s need to be converted to km/h
             tmpSpeed = dCurrentSpeed * 3.6; //m/s to mi/h
         }
-        speed = BigDecimal.valueOf(tmpSpeed).setScale(1, BigDecimal.ROUND_HALF_DOWN);
+        
+        try{
+        	speed = BigDecimal.valueOf(tmpSpeed).setScale(1, BigDecimal.ROUND_HALF_DOWN);
+        }
+        catch(NumberFormatException e)
+        {
+        	return;
+        }
+        
         currentLocationDateTime.setTimeInMillis(lCurrentLocationTime);
         currentLocationDateTimeGPXStr =
                 currentLocationDateTime.get(Calendar.YEAR) + "-" +
