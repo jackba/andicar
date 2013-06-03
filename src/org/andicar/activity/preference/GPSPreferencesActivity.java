@@ -114,17 +114,6 @@ public class GPSPreferencesActivity extends PreferenceActivity {
         gpsTrackMaxAccuracy.setSummary(R.string.PREFGPSTrack_AccuracySummary);
         prefScreenRoot.addPreference(gpsTrackMaxAccuracy);
 
-        // Maximum deviation (accuracy)
-        //temporarry disabled
-//        ListPreference gpsTrackMaxAccuracyShutdownLimit = new ListPreference(this);
-//        gpsTrackMaxAccuracyShutdownLimit.setEntries(R.array.gpstrack_preference_maxaccuracyshutdownlimit_entries);
-//        gpsTrackMaxAccuracyShutdownLimit.setEntryValues(R.array.gpstrack_preference_maxaccuracyshutdownlimit_values);
-//        gpsTrackMaxAccuracyShutdownLimit.setDialogTitle(R.string.GEN_ChooseOneTitle);
-//        gpsTrackMaxAccuracyShutdownLimit.setKey("GPSTrackMaxAccuracyShutdownLimit");
-//        gpsTrackMaxAccuracyShutdownLimit.setTitle(R.string.PREFGPSTrack_AutoShutDownTitle);
-//        gpsTrackMaxAccuracyShutdownLimit.setSummary(R.string.PREFGPSTrack_AutoShutDownSummary);
-//        prefScreenRoot.addPreference(gpsTrackMaxAccuracyShutdownLimit);
-
         EditTextPreference tpSplitFile = new EditTextPreference(this);
         tpSplitFile.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
             //check the value entered. must be an integer.
