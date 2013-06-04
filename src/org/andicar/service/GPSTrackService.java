@@ -136,7 +136,7 @@ public class GPSTrackService extends Service {
     private boolean isUseMetricUnits = true;
     private boolean isErrorStop = false;
     
-    private boolean isEnableDebugLog = true;
+    private boolean isEnableDebugLog = false;
     
     private long csvPointsCount = 0;
     private long kmlPointsCount = 0;
@@ -159,7 +159,10 @@ public class GPSTrackService extends Service {
     @Override
     public void onCreate() {
     	if(isEnableDebugLog)
-    		logDebugInfo("onCreate() started");
+    		logDebugInfo("onCreate() started", new Throwable());
+    	
+    	if(gpsTrackId > 0)
+    		return;
     	
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         mResource = getResources();
@@ -232,7 +235,7 @@ public class GPSTrackService extends Service {
 
         gpsTrackId = mDbAdapter.createRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, cvData);
     	if(isEnableDebugLog)
-    		logDebugInfo("onCreate(): Track saved in DB gpsTrackId = " + gpsTrackId);
+    		logDebugInfo("onCreate(): Track saved in DB gpsTrackId = " + gpsTrackId, null);
 
         long lMileId = mDbAdapter.getIdFromCode(MainDbAdapter.UOM_TABLE_NAME, "mi");
         long lCarUomId = mDbAdapter.getCarUOMLengthID(mCarId);
@@ -297,7 +300,7 @@ public class GPSTrackService extends Service {
         gpsTrackDetailCSVFileWriter.flush();
         
     	if(isEnableDebugLog)
-    		logDebugInfo("createCSVFile: File created. gpsTrackDetailCSVFile = " + fileName);
+    		logDebugInfo("createCSVFile: File created. gpsTrackDetailCSVFile = " + fileName, null);
         
     }
 
@@ -319,7 +322,7 @@ public class GPSTrackService extends Service {
         gpsTrackDetailGOPFileWriter.flush();
 
     	if(isEnableDebugLog)
-    		logDebugInfo("createGOPFile: File created. gpsTrackDetailGOPFile = " + fileName);
+    		logDebugInfo("createGOPFile: File created. gpsTrackDetailGOPFile = " + fileName, null);
 
     }
 
@@ -356,7 +359,7 @@ public class GPSTrackService extends Service {
         gpsTrackDetailGPXFileWriter.flush();
 
     	if(isEnableDebugLog)
-    		logDebugInfo("createGPXFile: File created. gpsTrackDetailGPXFile = " + fileName);
+    		logDebugInfo("createGPXFile: File created. gpsTrackDetailGPXFile = " + fileName, null);
 
     }
 
@@ -412,14 +415,14 @@ public class GPSTrackService extends Service {
         gpsTrackDetailKMLFileWriter.flush();
 
     	if(isEnableDebugLog)
-    		logDebugInfo("createKMLFile: File created. gpsTrackDetailKMLFile = " + fileName);
+    		logDebugInfo("createKMLFile: File created. gpsTrackDetailKMLFile = " + fileName, null);
 
     }
 
     private void appendKMLStartPoint(){
         if(gpsTrackDetailKMLFileWriter == null){
         	if(isEnableDebugLog)
-        		logDebugInfo("appendKMLStartPoint: File writer is NULL!");
+        		logDebugInfo("appendKMLStartPoint: File writer is NULL!", null);
             return;
         }
         try{
@@ -437,19 +440,19 @@ public class GPSTrackService extends Service {
                 + "<coordinates>\n");
 
         	if(isEnableDebugLog)
-        		logDebugInfo("appendKMLStartPoint: Start poin added");
+        		logDebugInfo("appendKMLStartPoint: Start poin added", null);
 
         }
         catch(IOException e){
         	if(isEnableDebugLog)
-        		logDebugInfo("appendKMLStartPoint: Exception = " + e.getMessage());
+        		logDebugInfo("appendKMLStartPoint: Exception = " + e.getMessage(), null);
         }
     }
 
     private void appendKMLFooter(boolean isLastFile){
         if(gpsTrackDetailKMLFileWriter == null){
         	if(isEnableDebugLog)
-        		logDebugInfo("appendKMLFooter: File writer is NULL!");
+        		logDebugInfo("appendKMLFooter: File writer is NULL!", null);
             return;
         }
         try{
@@ -509,19 +512,19 @@ public class GPSTrackService extends Service {
             gpsTrackDetailKMLFileWriter.append(footerTxt);
 
             if(isEnableDebugLog)
-        		logDebugInfo("appendKMLFooter: Footer added");
+        		logDebugInfo("appendKMLFooter: Footer added", null);
             
         }
         catch(IOException e){
         	if(isEnableDebugLog)
-        		logDebugInfo("appendKMLFooter: Exception = " + e.getMessage());
+        		logDebugInfo("appendKMLFooter: Exception = " + e.getMessage(), null);
         }
     }
 
     private void appendGPXFooter(){
         if(gpsTrackDetailGPXFileWriter == null){
         	if(isEnableDebugLog)
-        		logDebugInfo("appendGPXFooter: File writer is NULL!");
+        		logDebugInfo("appendGPXFooter: File writer is NULL!", null);
             return;
         }
         try{
@@ -532,11 +535,11 @@ public class GPSTrackService extends Service {
             );
 
             if(isEnableDebugLog)
-        		logDebugInfo("appendGPXFooter: Footer added");
+        		logDebugInfo("appendGPXFooter: Footer added", null);
         }
         catch(IOException e){
         	if(isEnableDebugLog)
-        		logDebugInfo("appendGPXFooter: Exception = " + e.getMessage());
+        		logDebugInfo("appendGPXFooter: Exception = " + e.getMessage(), null);
         }
     }
 
@@ -656,7 +659,7 @@ public class GPSTrackService extends Service {
     private void createFiles() throws IOException {
     	
     	if(isEnableDebugLog)
-    		logDebugInfo("createFiles() started");
+    		logDebugInfo("createFiles() started", null);
 
     	String fileName = gpsTrackId + "_" + Utils.pad(iFileCount, 3);
         if(mDbAdapter == null)
@@ -683,13 +686,13 @@ public class GPSTrackService extends Service {
         }
 
         if(isEnableDebugLog)
-    		logDebugInfo("createFiles() terminated");
+    		logDebugInfo("createFiles() terminated", null);
     }
 
     private void closeFiles(boolean isLastFile) {
         try {
             if(isEnableDebugLog)
-        		logDebugInfo("closeFiles started");
+        		logDebugInfo("closeFiles started", null);
 
             if(gpsTrackDetailCSVFileWriter != null) {
                 gpsTrackDetailCSVFileWriter.flush();
@@ -710,11 +713,11 @@ public class GPSTrackService extends Service {
                 gpsTrackDetailGPXFileWriter.close();
             }
             if(isEnableDebugLog)
-        		logDebugInfo("closeFiles terminated");
+        		logDebugInfo("closeFiles terminated", null);
         }
         catch(IOException ex) {
             if(isEnableDebugLog)
-        		logDebugInfo("closeFiles exception: " + ex.getMessage());
+        		logDebugInfo("closeFiles exception: " + ex.getMessage(), null);
             Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
             showNotification(StaticValues.NOTIF_FILESYSTEM_ERROR_ID, true);
         }
@@ -724,9 +727,13 @@ public class GPSTrackService extends Service {
     public void onDestroy() {
         // Cancel the persistent notifications.
         if(isEnableDebugLog)
-    		logDebugInfo("onDestroy() started");
+    		logDebugInfo("onDestroy() started", null);
         
-        mNM.cancelAll(); //R.string.GPSTrackService_TrackInProgressMessage);
+        mLocationManager.removeUpdates(mLocationListener);
+        mLocationManager = null;
+        
+//        mNM.cancelAll(); //R.string.GPSTrackService_TrackInProgressMessage);
+        stopForeground(true);
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putBoolean("isGpsTrackOn", false);
         editor.commit();
@@ -739,8 +746,6 @@ public class GPSTrackService extends Service {
         }
         closeFiles(true);
         
-        mLocationManager.removeUpdates(mLocationListener);
-        mLocationManager = null;
         if(mPreferences.getBoolean("GPSTrackCreateMileage", true) && !isErrorStop){
             Intent mileageInsertIntent = new Intent(GPSTrackService.this, MileageEditActivity.class);
             mileageInsertIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -750,7 +755,7 @@ public class GPSTrackService extends Service {
             startActivity(mileageInsertIntent);
         }
         if(isEnableDebugLog)
-    		logDebugInfo("onDestroy() terminated");
+    		logDebugInfo("onDestroy() terminated", null);
     }
 
     @Override
@@ -851,13 +856,14 @@ public class GPSTrackService extends Service {
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
 
-        mNM.notify(what, notification);
+//        mNM.notify(what, notification);
+        startForeground(what, notification);
     }
 
     private void updateStatistics(){
 
     	if(isEnableDebugLog)
-    		logDebugInfo("updateStatistics() started");
+    		logDebugInfo("updateStatistics() started", null);
         
     	lTotalTime = (lStopTime - lStartTime) / 1000; //in seconds; lStopTime & lStartTime are in miliseconds
         
@@ -919,7 +925,7 @@ public class GPSTrackService extends Service {
         mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, gpsTrackId, cvData);
         
     	if(isEnableDebugLog)
-    		logDebugInfo("updateStatistics() terminated");
+    		logDebugInfo("updateStatistics() terminated", null);
     }
 
     private class AndiCarLocationListener implements LocationListener
@@ -930,7 +936,7 @@ public class GPSTrackService extends Service {
             double gopDistance = 0;
             if(gpsTrackDetailCSVFileWriter == null){
             	if(isEnableDebugLog)
-            		logDebugInfo("onLocationChanged: Error: gpsTrackDetailCSVFileWriter == null");
+            		logDebugInfo("onLocationChanged: Error: gpsTrackDetailCSVFileWriter == null", null);
             	
                 Toast.makeText(GPSTrackService.this, "No File Writer!", Toast.LENGTH_LONG).show();
                 isErrorStop = true;
@@ -941,7 +947,7 @@ public class GPSTrackService extends Service {
 
             if (loc == null){
             	if(isEnableDebugLog)
-            		logDebugInfo("onLocationChanged: Error: loc == null");
+            		logDebugInfo("onLocationChanged: Error: loc == null", null);
             	return;
             }
 
@@ -1093,7 +1099,7 @@ public class GPSTrackService extends Service {
             }
             catch(IOException ex) {
             	if(isEnableDebugLog)
-            		logDebugInfo("onLocationChanged: Exception: " + ex.getMessage());
+            		logDebugInfo("onLocationChanged: Exception: " + ex.getMessage(), null);
             	
                 Logger.getLogger(GPSTrackService.class.getName()).log(Level.SEVERE, null, ex);
                 Toast.makeText(GPSTrackService.this, "File error!\n" + ex.getMessage(), Toast.LENGTH_LONG).show();
@@ -1126,12 +1132,19 @@ public class GPSTrackService extends Service {
         }
     }
 
-    private void logDebugInfo(String msg){
+    private void logDebugInfo(String msg, Throwable t){
     	try{
 	        debugLogFile = new File(StaticValues.TEMP_FOLDER + "gpsDBG" + System.currentTimeMillis() + ".log");
 	        debugLogFileWriter = new FileWriter(debugLogFile);
 	        msg = Utils.getDateStr(true, true, true) + " -> " + msg;
-	        debugLogFileWriter.append(msg);
+	        debugLogFileWriter.append(msg + "\n");
+	        if(t != null){
+	        	StackTraceElement[] e = t.getStackTrace();
+	        	for (int i = 0; i < e.length; i++) {
+					StackTraceElement stackTraceElement = e[i];
+					debugLogFileWriter.append(stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + ": " + stackTraceElement.getLineNumber() + "\n");
+				}
+	        }
 	        debugLogFileWriter.flush();
 	        debugLogFileWriter.close();
     	}
