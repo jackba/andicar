@@ -245,7 +245,8 @@ public class MainActivity extends BaseActivity {
 					AlertDialog alert = builder.create();
 					alert.show();
 
-				} else {
+				}
+				else {
 					exitResume = true;
 					initPreferenceValues(); // init preference values
 	                AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 

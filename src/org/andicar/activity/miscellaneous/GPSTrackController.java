@@ -212,6 +212,16 @@ public class GPSTrackController extends EditActivityBase {
                     new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
                     mDriverId, false);
     	}
+
+    	if(acAdress != null)
+        	acAdress.setOnKeyListener(this);
+        if(acBPartner != null)
+        	acBPartner.setOnKeyListener(this);
+        if(acTag != null)
+        	acTag.setOnKeyListener(this);
+        if(acUserComment != null)
+        	acUserComment.setOnKeyListener(this);
+    	
     }
 
     @Override
