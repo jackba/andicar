@@ -347,6 +347,16 @@ public class MileageEditActivity extends EditActivityBase {
                     mResource.getString(R.string.GEN_StopLabel) + ": ");
             etUserInput.setTag(mResource.getString(R.string.MileageEditActivity_OptionMileageLabel));
         }
+
+        if(acAdress != null)
+        	acAdress.setOnKeyListener(this);
+        if(acBPartner != null)
+        	acBPartner.setOnKeyListener(this);
+        if(acTag != null)
+        	acTag.setOnKeyListener(this);
+        if(acUserComment != null)
+        	acUserComment.setOnKeyListener(this);
+        
     }
     
     private void init(){

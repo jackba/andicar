@@ -159,6 +159,16 @@ public class GPSTrackEditActivity extends EditActivityBase {
                                     new String[]{MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME}, new int[]{R.id.tvOneLineListTextSmall});
 
         lvTrackFileList.setAdapter(cursorAdapter);
+        
+        if(acAdress != null)
+        	acAdress.setOnKeyListener(this);
+        if(acBPartner != null)
+        	acBPartner.setOnKeyListener(this);
+        if(acTag != null)
+        	acTag.setOnKeyListener(this);
+        if(acUserComment != null)
+        	acUserComment.setOnKeyListener(this);
+        
 
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent(this, "GPSTrackEdit", null);

@@ -318,6 +318,16 @@ public class ExpenseEditActivity extends EditActivityBase {
                 mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
+        
+        if(acAdress != null)
+        	acAdress.setOnKeyListener(this);
+        if(acBPartner != null)
+        	acBPartner.setOnKeyListener(this);
+        if(acTag != null)
+        	acTag.setOnKeyListener(this);
+        if(acUserComment != null)
+        	acUserComment.setOnKeyListener(this);
+        
     }
 
     private void init() {
