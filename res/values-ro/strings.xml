@@ -290,7 +290,9 @@
     <string name="GPSTrackReport_GPSTrackVar_9">&quot;Acuratete medie: &quot;</string>
     <string name="GPSTrackReport_GPSTrackVar_10">&quot;Alt.min.: &quot;</string>
     <string name="GPSTrackReport_GPSTrackVar_11">&quot;Alt.max.: &quot;</string>
-
+    <string name="GPSTrackReport_GPSTrackVar_12">"Timp de pauză: "</string>
+    
+    
     <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">&quot;Fisiere trasee&quot;</string>
     <string name="GPSTrackEditActivity_TrackStatistics">&quot;Statistici&quot;</string>
 
@@ -309,7 +311,10 @@
     <string name="GPSTrackService_AutoShutDownTitle">&quot;AndiCar GPS Oprit!&quot;</string>
     <string name="GPSTrackService_AutoShutDownMessage">&quot;Inregistrarea GPS oprita deoarece procentul punctelor pierdute ([#1])este peste limita ([#2])!\n Poti ajusta limita din Preferinte -&gt; Limita auto-stop.&quot;</string>
     <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar File System Error!"</string>
-
+    <string name="GPSTrackService_TrackPausedTitle">"AndiCar GPS suspendat"</string>
+    <string name="GPSTrackService_TrackPausedMessage">"Inregistrarea temporar oprita"</string>
+    
+    
     <string name="GPSTrackShowOnMap_ProgressMessage">&quot;Proces in progres.\n Asteptati...&quot;</string>
     <string name="GPSTrackShowOnMapMenu_MapMode">&quot;Mod harta&quot;</string>
     <string name="GPSTrackShowOnMapMenu_SatelliteMode">&quot;Mod satelit&quot;</string>

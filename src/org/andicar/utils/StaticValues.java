@@ -30,7 +30,7 @@ import android.os.Environment;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 359;
+    public static final int DATABASE_VERSION = 400;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     /*
@@ -130,6 +130,7 @@ public class StaticValues
     public static final int NOTIF_SECURE_BACKUP_ERROR_ID = 13;
     public static final int NOTIF_DATA_TEMPLATE_EXPIRE_ID = 14;
     public static final int NOTIF_BT_CONNECTION_DETECTOR_EXPIRE_ID = 15;
+    public static final int NOTIF_GPS_PAUSED_ID = 16;
     
     //used for notification PendingIntents
     public static final int ACTIVITY_REQUEST_CODE_FILEMAILER = 10;
@@ -186,4 +187,7 @@ public class StaticValues
     public static final int TASK_TIMEFREQUENCYTYPE_YEARLY = 4;
     
     public static final long ONE_DAY_IN_MILISECONDS = 86400000;
+
+    public static final int MSG_GPS_TRACK_SERVICE_PAUSE = 2;
+    public static final int MSG_GPS_TRACK_SERVICE_RESUME = 3;
 }

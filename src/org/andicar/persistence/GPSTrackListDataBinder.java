@@ -46,6 +46,8 @@ public class GPSTrackListDataBinder implements SimpleCursorAdapter.ViewBinder {
                             Utils.getTimeString(cursor.getLong(4), false))
                     .replace("[#6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
                             Utils.getTimeString(cursor.getLong(5), false))
+                    .replace("[#12]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_12) +
+                            Utils.getTimeString(cursor.getLong(8), false))
                     .replace("[#7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                     .replace("[#8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                     .replace("[#9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))

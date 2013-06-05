@@ -19,42 +19,46 @@
 
 package org.andicar.service;
 
-import android.content.Context;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.Location;
-import android.location.LocationProvider;
-import android.os.Binder;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.widget.Toast;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.andicar.activity.miscellaneous.GPSTrackController;
-import org.andicar2.activity.R;
-import org.andicar.persistence.FileUtils;
-import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.StaticValues;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Locale;
-import java.lang.Math;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.andicar.activity.MileageEditActivity;
+import org.andicar.activity.miscellaneous.GPSTrackController;
+import org.andicar.persistence.FileUtils;
+import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
+import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
+import org.andicar2.activity.R;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.os.Binder;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.widget.Toast;
 
 /**
  *
@@ -120,7 +124,11 @@ public class GPSTrackService extends Service {
     private double dAvgMovingSpeed = 0;
     private long lTotalTime = 0;
     private long lTotalMovingTime = 0;
+    private long lTotalPauseTime = 0;
+    private long lCurrentPauseStartTime = 0;
+    private long lCurrentPauseEndTime = 0;
     private boolean isFirstPoint = true;
+    private boolean isFirstPointAfterResume = false;
     private long lFirstNonMovingTime = 0;
     private long lLastNonMovingTime = 0;
     private long lTotalNonMovingTime = 0;
@@ -588,11 +596,12 @@ public class GPSTrackService extends Service {
         
     }
 
-    private void appendGOPTrackPoint() throws IOException {
+    private void appendGOPTrackPoint(String pointType) throws IOException {
 
         gpsTrackDetailGOPFileWriter.append(
-                (int)(dCurrentLocationLatitude * 1E6)+ "," +
-                (int)(dCurrentLocationLongitude * 1E6) + "\n");
+                (int)(dCurrentLocationLatitude * 1E6) + "," +
+                (int)(dCurrentLocationLongitude * 1E6) + "," + 
+                		pointType + "\n");
 
         gopPointsCount++;
         if(gopPointsCount == 20){
@@ -758,15 +767,6 @@ public class GPSTrackService extends Service {
     		logDebugInfo("onDestroy() terminated", null);
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
-    }
-
-    // This is the object that receives interactions from clients.  See
-    // RemoteService for a more complete example.
-    private final IBinder mBinder = new LocalBinder();
-
     /**
      * Show a notification while this service is running.
      */
@@ -855,6 +855,18 @@ public class GPSTrackService extends Service {
             if(showToast)
                 Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
+        else if(what == StaticValues.NOTIF_GPS_PAUSED_ID){
+            title = getText(R.string.GPSTrackService_TrackPausedTitle);
+            message = getString(R.string.GPSTrackService_TrackPausedMessage);
+            notification = new Notification(R.drawable.andicar_gps_paused, message,
+                    System.currentTimeMillis());
+            notification.flags |= Notification.DEFAULT_LIGHTS;
+            notification.flags |= Notification.DEFAULT_SOUND;
+
+            notification.setLatestEventInfo(this, title, message, contentIntent);
+            if(showToast)
+                Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
 
 //        mNM.notify(what, notification);
         startForeground(what, notification);
@@ -870,7 +882,10 @@ public class GPSTrackService extends Service {
         if(lLastNonMovingTime != 0 && lFirstNonMovingTime != 0)
             lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
         
-        lTotalMovingTime = lTotalTime - (lTotalNonMovingTime / 1000); //lTotalNonMovingTime is in milisecond
+        if(lCurrentPauseStartTime > 0)
+        	lTotalPauseTime = lTotalPauseTime + (lCurrentPauseStartTime - lCurrentLocationTime);
+        
+        lTotalMovingTime = lTotalTime - lTotalPauseTime - (lTotalNonMovingTime / 1000); //lTotalNonMovingTime is in milisecond
 
         if(dTotalUsedTrackPoints != 0)
             //at this moment dAvgAccuracy = SUM(CurrentAccuracy)
@@ -879,7 +894,7 @@ public class GPSTrackService extends Service {
             dAvgAccuracy = 0;
 
         if(lStopTime - lStartTime != 0)
-            dAvgSpeed = dTotalDistance / lTotalTime; // m/s
+            dAvgSpeed = dTotalDistance / (lTotalTime - lTotalPauseTime); // m/s
         else
             dAvgSpeed = 0;
 
@@ -919,6 +934,7 @@ public class GPSTrackService extends Service {
         cvData.put( MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME, (Math.round(dMaxSpeed * 100)*1d)/100);
         cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTRACKPOINTS_NAME, dTotalTrackPoints);
         cvData.put( MainDbAdapter.GPSTRACK_COL_INVALIDTRACKPOINTS_NAME, dTotalSkippedTrackPoints);
+        cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALPAUSETIME_NAME, lTotalPauseTime);
         
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);
@@ -932,8 +948,10 @@ public class GPSTrackService extends Service {
     {
         @Override
         public void onLocationChanged(Location loc) {
+        	
             boolean isValid = true;
             double gopDistance = 0;
+            
             if(gpsTrackDetailCSVFileWriter == null){
             	if(isEnableDebugLog)
             		logDebugInfo("onLocationChanged: Error: gpsTrackDetailCSVFileWriter == null", null);
@@ -983,7 +1001,7 @@ public class GPSTrackService extends Service {
                         		&& iFileCount == 1){ //this is the first track file (multiple track file can be used)
                             appendKMLStartPoint();
                         }
-                        appendGOPTrackPoint();
+                        appendGOPTrackPoint("SP"); //Start Point 
                         isFirstPoint = false;
                     }
                     else{
@@ -992,29 +1010,34 @@ public class GPSTrackService extends Service {
                                 dCurrentLocationLatitude, dCurrentLocationLongitude, fDistanceArray);
                         
                         dDistanceBetweenLocations = fDistanceArray[0];
-                        if(lCurrentLocationTime - lOldLocationTime > 0)
-                        	dCurrentSpeed = dDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
-                        else
-                        	dCurrentSpeed = 0;
                         
-                    	//check acceleration. 
-                        //if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
-                    	if((lCurrentLocationTime - lOldLocationTime) / 1000 != 0){
-	                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
-	                    	
-	                    	if(Math.abs(acceleration) > 13){ //a > 13 m/s2  (0 to 100 km/h in less than 2 second) => probably wrong sensor data or wrong vehicle type (rocket or Dragster :-) )
-	                            isValid = false;
-	                            dTotalSkippedTrackPoints++;
-//	                            dTmpSkippedTrackPoints++;
-	                    	}
-	                    	else{
-		                        isValid = true;
-		                        dTotalUsedTrackPoints++;
-//		                        dTmpSkippedTrackPoints = 0;
-//		                        bNotificationShowed = false;
-		                    	dOldSpeed = dCurrentSpeed;
+                    	if(!isFirstPointAfterResume){
+	                        if(lCurrentLocationTime - lOldLocationTime > 0)
+	                        	dCurrentSpeed = dDistanceBetweenLocations / ((lCurrentLocationTime - lOldLocationTime) / 1000);
+	                        else
+	                        	dCurrentSpeed = 0;
+                        
+	                    	//check acceleration. 
+	                        //if too big (wrong data from the gps sensor) ignore the current location (see issue #32)
+	                    	if((lCurrentLocationTime - lOldLocationTime) / 1000 != 0){
+		                    	double acceleration = (dCurrentSpeed - dOldSpeed)/((lCurrentLocationTime - lOldLocationTime) / 1000);
+		                    	
+		                    	if(Math.abs(acceleration) > 13){ //a > 13 m/s2  (0 to 100 km/h in less than 2 second) => probably wrong sensor data or wrong vehicle type (rocket or Dragster :-) )
+		                            isValid = false;
+		                            dTotalSkippedTrackPoints++;
+		                    	}
+		                    	else{
+			                        isValid = true;
+			                        dTotalUsedTrackPoints++;
+			                    	dOldSpeed = dCurrentSpeed;
+		                    	}
 	                    	}
                     	}
+                    	else{
+                            appendGOPTrackPoint("PEP"); //Pause End Point
+	                    	dCurrentSpeed = 0;
+	                    	lCurrentPauseEndTime = lCurrentLocationTime;
+	                	}
                     }
                 }
 
@@ -1026,26 +1049,34 @@ public class GPSTrackService extends Service {
                 //for drawing on the map add only a minimum 5 m distanced point from the previous point - performance reason
                 gopDistance = gopDistance + dDistanceBetweenLocations;
                 if(gopDistance >= 5){
-                    appendGOPTrackPoint();
+                    appendGOPTrackPoint("NP"); //Normal Point
                     gopDistance = 0;
                 }
 
                 //statistics
-                //non moving time
-                if(dCurrentSpeed == 0){
-                    if(lFirstNonMovingTime == 0)
-                        lFirstNonMovingTime = lCurrentLocationTime;
-                    lLastNonMovingTime = lCurrentLocationTime;
-                }
-                else{ //currentSpeed > 0
-                    if(lFirstNonMovingTime != 0){
-                        lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
-//                            sNonMovingTimes = sNonMovingTimes + "" +
-//                                        lFirstNonMovingTime + "," + lLastNonMovingTime + "\n";
-                        //reset
-                        lLastNonMovingTime = 0;
-                        lFirstNonMovingTime = 0;
-                    }
+            	if(!isFirstPointAfterResume){
+                    //non moving time
+	                if(dCurrentSpeed == 0){
+	                    if(lFirstNonMovingTime == 0)
+	                        lFirstNonMovingTime = lCurrentLocationTime;
+	                    lLastNonMovingTime = lCurrentLocationTime;
+	                }
+	                else{ //currentSpeed > 0
+	                    if(lFirstNonMovingTime != 0){
+	                        lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
+	//                            sNonMovingTimes = sNonMovingTimes + "" +
+	//                                        lFirstNonMovingTime + "," + lLastNonMovingTime + "\n";
+	                        //reset
+	                        lLastNonMovingTime = 0;
+	                        lFirstNonMovingTime = 0;
+	                    }
+	                }
+            	}
+                else{
+                    lTotalPauseTime = lTotalPauseTime + (lCurrentPauseStartTime - lCurrentPauseEndTime);
+                    lCurrentPauseStartTime = 0;
+                    lCurrentPauseEndTime = 0;
+                    isFirstPointAfterResume = false;
                 }
 
                 if(dCurrentAccuracy < dMinAccuracy)
@@ -1152,5 +1183,51 @@ public class GPSTrackService extends Service {
     	{};
     }
 
+    /**
+     * Handler of incoming messages from controller.
+     */
+    class IncomingHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case StaticValues.MSG_GPS_TRACK_SERVICE_PAUSE:
+                    mLocationManager.removeUpdates(mLocationListener);
+                    showNotification(StaticValues.NOTIF_GPS_PAUSED_ID, false);
+                    try{
+                    	appendGOPTrackPoint("PSP"); //Pause Start Point
+                    }catch(IOException e){}
+                    lCurrentPauseStartTime = lCurrentLocationTime;
+                    if(lFirstNonMovingTime != 0){
+                        lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
+                        //reset
+                        lLastNonMovingTime = 0;
+                        lFirstNonMovingTime = 0;
+                    }
+                    break;
+                case StaticValues.MSG_GPS_TRACK_SERVICE_RESUME:
+                    isFirstPointAfterResume = true;
+                    mLocationManager.requestLocationUpdates(
+                            LocationManager.GPS_PROVIDER, Long.parseLong(mPreferences.getString("GPSTrackMinTime", "0")), 0, mLocationListener);
+                    showNotification(StaticValues.NOTIF_GPS_TRACK_STARTED_ID, false);
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    }
 
+    /**
+     * Target we publish for clients to send messages to IncomingHandler.
+     */
+    final Messenger mMessenger = new Messenger(new IncomingHandler());
+
+    /**
+     * When binding to the service, we return an interface to our messenger
+     * for sending messages to the service.
+     */
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mMessenger.getBinder();
+    }
+    
 }

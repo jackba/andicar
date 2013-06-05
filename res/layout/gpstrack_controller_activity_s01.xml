@@ -49,6 +49,13 @@
             android:src="@drawable/icon_cancel_selector"
             />
         <ImageButton
+            android:id="@+id/btnPauseResumeGpsTrack"
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/icon_pause24x24"
+            />
+        <ImageButton
             android:id="@+id/btnStartStopGpsTrack"
             android:layout_width="90dp"
             android:layout_height="wrap_content"

@@ -508,6 +508,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                                 sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + " || '/h; ' || " +
                     "'[#5]' || '; ' || " +
                     "'[#6]' || '; ' || " +
+                    "'[#12]' || '; ' || " +
                     "'[#7]' || ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINACCURACY_NAME) + ", 2) || " +
                         " CASE WHEN UPPER(" + sqlConcatTableColumn(UOM_TABLE_NAME, UOM_COL_CODE_NAME) + ") == 'KM' " +
                                 " THEN " + "' m; ' " +
@@ -542,7 +543,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                 "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTIME_NAME) + ", 2) AS " + FOURTH_LINE_LIST_NAME + ", " + //#4
                 "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MOVINGTIME_NAME)  + ", 2) AS " + FIFTH_LINE_LIST_NAME + ", " + //#5
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_NAME_NAME) + ", " + //#6
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + " AS Seconds " + //#7
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DATE_NAME) + " AS Seconds, " + //#7
+                "ROUND(" + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALPAUSETIME_NAME)  + ", 2) AS " + GPSTRACK_COL_TOTALPAUSETIME_NAME + //#8
             " FROM " + GPSTRACK_TABLE_NAME +
                     " JOIN " + DRIVER_TABLE_NAME +
                         " ON " + sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_DRIVER_ID_NAME) + "=" +

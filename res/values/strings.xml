@@ -289,7 +289,8 @@
     <string name="GPSTrackReport_GPSTrackVar_9">"Avg. accuracy: "</string>
     <string name="GPSTrackReport_GPSTrackVar_10">"Min. alt.: "</string>
     <string name="GPSTrackReport_GPSTrackVar_11">"Max. alt.: "</string>
-
+    <string name="GPSTrackReport_GPSTrackVar_12">"Pause time: "</string>
+    
     <string name="GPSTrackEditActivity_TrackFilesHeaderCaption">"Track files"</string>
     <string name="GPSTrackEditActivity_TrackStatistics">"Statistics"</string>
 
@@ -308,7 +309,9 @@
     <string name="GPSTrackService_AutoShutDownTitle">"AndiCar GPS Stopped!"</string>
     <string name="GPSTrackService_AutoShutDownMessage">"GPS Tracking was stopped because the skipped points percent ([#1]) is over the limit ([#2])!\n You can adjust the limit in the Preferences -> Self stop limit."</string>
     <string name="GPSTrackService_FileSystemErrorTitle">"AndiCar File System Error!"</string>
-
+    <string name="GPSTrackService_TrackPausedTitle">"AndiCar GPS Tracking Paused"</string>
+    <string name="GPSTrackService_TrackPausedMessage">"Tracking paused"</string>
+    
     <string name="GPSTrackShowOnMap_ProgressMessage">"Drawing in progress.\n Please wait..."</string>
     <string name="GPSTrackShowOnMapMenu_MapMode">"Map mode"</string>
     <string name="GPSTrackShowOnMapMenu_SatelliteMode">"Satellite mode"</string>

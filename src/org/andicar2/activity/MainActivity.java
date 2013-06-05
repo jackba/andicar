@@ -531,6 +531,12 @@ public class MainActivity extends BaseActivity {
 														listCursor.getLong(5),
 														false))
 								.replace(
+										"[#12]",
+										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_12)
+												+ Utils.getTimeString(
+														listCursor.getLong(8),
+														false))
+								.replace(
 										"[#7]",
 										mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
 								.replace(
