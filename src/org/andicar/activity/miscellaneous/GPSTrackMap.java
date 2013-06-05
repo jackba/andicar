@@ -202,7 +202,8 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             }
             int latitudeE6;
             int longitudeE6;
-            int c1;
+//            int c1;
+            String[] gopData;
             boolean isFirst = true;
             try{
             	for(String trackFile : trackFiles) {
@@ -214,10 +215,13 @@ public class GPSTrackMap extends MapActivity implements Runnable{
                         if(trackLine.length() == 0 ||
                                 trackLine.contains("Latitude")) //header line
                             continue;
-                        c1 = trackLine.indexOf(",");
+//                        c1 = trackLine.indexOf(",");
+                        gopData = trackLine.split(",");
                         if(isFirst){
-                            latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
-                            longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
+//                            latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
+//                            longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
+                            latitudeE6 = Integer.parseInt(gopData[0]);
+                            longitudeE6 = Integer.parseInt(gopData[1]);
                             maxLatitude = latitudeE6;
                             minLatitude = maxLatitude;
                             maxLongitude = longitudeE6;
@@ -226,8 +230,10 @@ public class GPSTrackMap extends MapActivity implements Runnable{
                             isFirst = false;
                             continue;
                         }
-                        latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
-                        longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
+//                        latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
+//                        longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
+                        latitudeE6 = Integer.parseInt(gopData[0]);
+                        longitudeE6 = Integer.parseInt(gopData[1]);
                         trackPoints.add(new GeoPoint(latitudeE6, longitudeE6));
                         if( latitudeE6 > maxLatitude)
                             maxLatitude = latitudeE6;

@@ -29,11 +29,17 @@ import org.andicar.service.GPSTrackService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Message;
+import android.os.Messenger;
+import android.os.RemoteException;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,16 +68,24 @@ public class GPSTrackController extends EditActivityBase {
     private CheckBox ckIsUseGPX;
     private CheckBox ckIsCreateMileage;
     private ImageButton btnGPSTrackStartStop;
+    private ImageButton btnGPSTrackPauseResume;
     private RelativeLayout llIndexStartZone;
     private RelativeLayout lCarZone;
     private RelativeLayout lDriverZone;
     
     private boolean isCreateMileage = true;
     private boolean isGpsTrackOn = false;
+    private boolean isGpsTrackPaused = false;
     private ViewGroup vgRoot;
     private long mTagId = 0;
     private Context mCtx = null;
+    
+    /** Messenger for communicating with the service. */
+    Messenger mService = null;
 
+    /** Flag indicating whether we have called bind on the service. */
+    boolean isBound;
+    
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
@@ -125,6 +139,8 @@ public class GPSTrackController extends EditActivityBase {
         ckIsUseGPX.setChecked(mPreferences.getBoolean("IsUseGPXTrack", true));
         btnGPSTrackStartStop = (ImageButton) findViewById(R.id.btnStartStopGpsTrack);
         btnGPSTrackStartStop.setOnClickListener(btnGPSTrackStartStopListener);
+        btnGPSTrackPauseResume = (ImageButton) findViewById(R.id.btnPauseResumeGpsTrack);
+        btnGPSTrackPauseResume.setOnClickListener(btnGPSTrackPauseResumeListener);
         ckIsCreateMileage = (CheckBox) findViewById(R.id.ckIsCreateMileage);
         isCreateMileage = mPreferences.getBoolean("GPSTrackCreateMileage", true);
         ckIsCreateMileage.setChecked(isCreateMileage);
@@ -151,6 +167,8 @@ public class GPSTrackController extends EditActivityBase {
     @Override
     protected void onStop() {
         super.onStop();
+        if(isBound)
+        	unbindService(mConnection);
         saveState();
     }
 
@@ -159,17 +177,28 @@ public class GPSTrackController extends EditActivityBase {
         super.onResume();
         isBackgroundSettingsActive = true;
         isGpsTrackOn = mPreferences.getBoolean("isGpsTrackOn", false);
+        isGpsTrackPaused = mPreferences.getBoolean("isGpsTrackPaused", false);
 
         if(isGpsTrackOn){
             btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_stop_24x24));
+            
+            if(isGpsTrackPaused)
+            	btnGPSTrackPauseResume.setImageDrawable(mResource.getDrawable(R.drawable.icon_resume24x24));
+            else
+            	btnGPSTrackPauseResume.setImageDrawable(mResource.getDrawable(R.drawable.icon_pause24x24));
+            
+            btnGPSTrackPauseResume.setVisibility(View.VISIBLE);
             restoreState();
             setEditable(vgRoot, false);
+           	bindService(new Intent(GPSTrackController.this, GPSTrackService.class), mConnection, Context.BIND_WAIVE_PRIORITY);            	
         }
         else{
         	if(mCarId <= 0)
         		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
 //            mDriverId = mPreferences.getLong("CurrentDriver_ID", -1);
             btnGPSTrackStartStop.setImageDrawable(mResource.getDrawable(R.drawable.icon_record_gps_start_24x24));
+            btnGPSTrackPauseResume.setVisibility(View.GONE);
+        	mPrefEditor.putBoolean("isGpsTrackPaused", false);
             setEditable(vgRoot, true);
         }
     }
@@ -274,6 +303,7 @@ public class GPSTrackController extends EditActivityBase {
 
            if(!(child.getId() == R.id.ckIsCreateMileage
                    || child.getId() == R.id.btnStartStopGpsTrack
+                   || child.getId() == R.id.btnPauseResumeGpsTrack
                    || child.getId() == R.id.etIndexStart))
                child.setEnabled(editable);
        }
@@ -466,4 +496,54 @@ public class GPSTrackController extends EditActivityBase {
         	acTag.setText(null);
 	}
 
+    private View.OnClickListener btnGPSTrackPauseResumeListener = new View.OnClickListener() {
+        public void onClick(View v)
+        {
+        	if(!isBound || mService == null)
+        		return;
+
+        	isGpsTrackPaused = mPreferences.getBoolean("isGpsTrackPaused", false);
+
+            Message msg;
+            try {
+                if(isGpsTrackPaused){
+                	msg = Message.obtain(null, StaticValues.MSG_GPS_TRACK_SERVICE_RESUME, 0, 0);
+                	btnGPSTrackPauseResume.setImageDrawable(mResource.getDrawable(R.drawable.icon_pause24x24));
+                	mPrefEditor.putBoolean("isGpsTrackPaused", false);
+                }
+                else{
+                	msg = Message.obtain(null, StaticValues.MSG_GPS_TRACK_SERVICE_PAUSE, 0, 0);
+                	btnGPSTrackPauseResume.setImageDrawable(mResource.getDrawable(R.drawable.icon_resume24x24));
+                	mPrefEditor.putBoolean("isGpsTrackPaused", true);
+                }
+                mPrefEditor.commit();
+                
+                mService.send(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }            
+        };
+    };
+
+    /**
+     * Class for interacting with the main interface of the service.
+     */
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the object we can use to
+            // interact with the service.  We are communicating with the
+            // service using a Messenger, so here we get a client-side
+            // representation of that from the raw IBinder object.
+            mService = new Messenger(service);
+            isBound = true;
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            mService = null;
+            isBound = false;
+        }
+    };
 }

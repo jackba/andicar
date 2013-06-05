@@ -109,14 +109,10 @@ public class DB {
 	
 	// uom specific column names
 	public static final String UOM_COL_CODE_NAME = "Code";
-	public static final String UOM_COL_UOMTYPE_NAME = "UOMType"; // V - Volume
-																	// or L -
-																	// Length
+	public static final String UOM_COL_UOMTYPE_NAME = "UOMType"; // V - Volume or L - Length
 	// uom conversion specific column names
-	public static final String UOM_CONVERSION_COL_UOMFROM_ID_NAME = UOM_TABLE_NAME
-			+ "_From_ID";
-	public static final String UOM_CONVERSION_COL_UOMTO_ID_NAME = UOM_TABLE_NAME
-			+ "_To_ID";
+	public static final String UOM_CONVERSION_COL_UOMFROM_ID_NAME = UOM_TABLE_NAME + "_From_ID";
+	public static final String UOM_CONVERSION_COL_UOMTO_ID_NAME = UOM_TABLE_NAME + "_To_ID";
 	public static final String UOM_CONVERSION_COL_RATE_NAME = "ConvertionRate";
 	// mileage specific columns
 	public static final String MILEAGE_COL_DATE_NAME = "Date";
@@ -125,48 +121,34 @@ public class DB {
 	public static final String MILEAGE_COL_INDEXSTART_NAME = "IndexStart";
 	public static final String MILEAGE_COL_INDEXSTOP_NAME = "IndexStop";
 	public static final String MILEAGE_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME + "_Length_ID";
-	public static final String MILEAGE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME
-			+ "_ID";
+	public static final String MILEAGE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
 	public static final String MILEAGE_COL_GPSTRACKLOG_NAME = "GPSTrackLog";
 	public static final String MILEAGE_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
 	// currencies
 	public static final String CURRENCY_COL_CODE_NAME = "Code";
 	// refuel
 	public static final String REFUEL_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String REFUEL_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME
-			+ "_ID";
-	public static final String REFUEL_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME
-			+ "_ID";
+	public static final String REFUEL_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
+	public static final String REFUEL_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
 	public static final String REFUEL_COL_INDEX_NAME = "CarIndex";
 	public static final String REFUEL_COL_QUANTITY_NAME = "Quantity";
-	public static final String REFUEL_COL_UOMVOLUME_ID_NAME = UOM_TABLE_NAME
-			+ "_Volume_ID";
+	public static final String REFUEL_COL_UOMVOLUME_ID_NAME = UOM_TABLE_NAME + "_Volume_ID";
 	public static final String REFUEL_COL_PRICE_NAME = "Price";
-	public static final String REFUEL_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME
-			+ "_ID";
+	public static final String REFUEL_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
 	public static final String REFUEL_COL_DATE_NAME = "Date";
 	public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
-	public static final String REFUEL_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME
-			+ "_ID";
+	public static final String REFUEL_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
 	public static final String REFUEL_COL_ISFULLREFUEL_NAME = "IsFullRefuel";
 	public static final String REFUEL_COL_QUANTITYENTERED_NAME = "QuantityEntered";
-	public static final String REFUEL_COL_UOMVOLUMEENTERED_ID_NAME = UOM_TABLE_NAME
-			+ "_EnteredVolume_ID";
+	public static final String REFUEL_COL_UOMVOLUMEENTERED_ID_NAME = UOM_TABLE_NAME + "_EnteredVolume_ID";
 	public static final String REFUEL_COL_PRICEENTERED_NAME = "PriceEntered";
-	public static final String REFUEL_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME
-			+ "_Entered_ID";
-	public static final String REFUEL_COL_CURRENCYRATE_NAME = "CurrencyRate"; // CurrencyEntered
-																				// ->
-																				// Car
-																				// Base
-																				// Currency
+	public static final String REFUEL_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
+	public static final String REFUEL_COL_CURRENCYRATE_NAME = "CurrencyRate"; // CurrencyEntered -> Car Base Currency
 	public static final String REFUEL_COL_UOMVOLCONVERSIONRATE_NAME = "UOMVolumeConversionRate";
 	public static final String REFUEL_COL_AMOUNT_NAME = "Amount";
 	public static final String REFUEL_COL_AMOUNTENTERED_NAME = "AmountEntered";
-	public static final String REFUEL_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME
-			+ "_ID";
-	public static final String REFUEL_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME
-			+ "_ID";
+	public static final String REFUEL_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
+	public static final String REFUEL_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
 	public static final String REFUEL_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
 
 	// expense category
@@ -174,81 +156,60 @@ public class DB {
 	public static final String EXPENSECATEGORY_COL_ISFUEL_NAME = "IsFuel";
 	// car expenses
 	public static final String EXPENSE_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME
-			+ "_ID";
-	public static final String EXPENSE_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME
-			+ "_ID";
-	public static final String EXPENSE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME
-			+ "_ID";
+	public static final String EXPENSE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
+	public static final String EXPENSE_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
+	public static final String EXPENSE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
 	public static final String EXPENSE_COL_AMOUNT_NAME = "Amount";
-	public static final String EXPENSE_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME
-			+ "_ID";
+	public static final String EXPENSE_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
 	public static final String EXPENSE_COL_DATE_NAME = "Date";
 	public static final String EXPENSE_COL_DOCUMENTNO_NAME = "DocumentNo";
 	public static final String EXPENSE_COL_INDEX_NAME = "CarIndex";
 	public static final String EXPENSE_COL_FROMTABLE_NAME = "FromTable";
 	public static final String EXPENSE_COL_FROMRECORD_ID_NAME = "FromRecordId";
 	public static final String EXPENSE_COL_AMOUNTENTERED_NAME = "AmountEntered";
-	public static final String EXPENSE_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME
-			+ "_Entered_ID";
-	public static final String EXPENSE_COL_CURRENCYRATE_NAME = "CurrencyRate"; // CurrencyEntered
-																				// ->
-																				// Car
-																				// Base
-																				// Currency
+	public static final String EXPENSE_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
+	public static final String EXPENSE_COL_CURRENCYRATE_NAME = "CurrencyRate"; // CurrencyEntered -> Car Base Currency
 	public static final String EXPENSE_COL_QUANTITY_NAME = "Quantity";
 	public static final String EXPENSE_COL_PRICE_NAME = "Price";
 	public static final String EXPENSE_COL_PRICEENTERED_NAME = "PriceEntered";
 	public static final String EXPENSE_COL_UOM_ID_NAME = UOM_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME
-			+ "_ID";
-	public static final String EXPENSE_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME
-			+ "_ID";
+	public static final String EXPENSE_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
+	public static final String EXPENSE_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
 	public static final String EXPENSE_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
 
 	// currency rate
-	public static final String CURRENCYRATE_COL_FROMCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME
-			+ "_From_ID";
-	public static final String CURRENCYRATE_COL_TOCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME
-			+ "_To_ID";
+	public static final String CURRENCYRATE_COL_FROMCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_From_ID";
+	public static final String CURRENCYRATE_COL_TOCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_To_ID";
 	public static final String CURRENCYRATE_COL_RATE_NAME = "Rate";
 	public static final String CURRENCYRATE_COL_INVERSERATE_NAME = "InverseRate";
 
 	// gps track
-	public static final String GPSTRACK_COL_CAR_ID_NAME = CAR_TABLE_NAME
-			+ "_ID";
-	public static final String GPSTRACK_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME
-			+ "_ID";
-	public static final String GPSTRACK_COL_MILEAGE_ID_NAME = MILEAGE_TABLE_NAME
-			+ "_ID";
+	public static final String GPSTRACK_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
+	public static final String GPSTRACK_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
+	public static final String GPSTRACK_COL_MILEAGE_ID_NAME = MILEAGE_TABLE_NAME + "_ID";
 	public static final String GPSTRACK_COL_DATE_NAME = "Date";
 	public static final String GPSTRACK_COL_MINACCURACY_NAME = "MinAccuracy";
 	public static final String GPSTRACK_COL_AVGACCURACY_NAME = "AvgAccuracy";
 	public static final String GPSTRACK_COL_MAXACCURACY_NAME = "MaxAccuracy";
 	public static final String GPSTRACK_COL_MINALTITUDE_NAME = "MinAltitude";
 	public static final String GPSTRACK_COL_MAXALTITUDE_NAME = "MaxAltitude";
-	public static final String GPSTRACK_COL_TOTALTIME_NAME = "TotalTime"; // in
-																			// seconds
-	public static final String GPSTRACK_COL_MOVINGTIME_NAME = "MovingTime"; // in
-																			// seconds
+	public static final String GPSTRACK_COL_TOTALTIME_NAME = "TotalTime"; // in seconds
+	public static final String GPSTRACK_COL_MOVINGTIME_NAME = "MovingTime"; // in seconds
 	public static final String GPSTRACK_COL_DISTANCE_NAME = "Distance";
 	public static final String GPSTRACK_COL_MAXSPEED_NAME = "MaxSpeed";
 	public static final String GPSTRACK_COL_AVGSPEED_NAME = "AvgSpeed";
 	public static final String GPSTRACK_COL_AVGMOVINGSPEED_NAME = "AvgMovingSpeed";
 	public static final String GPSTRACK_COL_TOTALTRACKPOINTS_NAME = "TotalTrackPoints";
 	public static final String GPSTRACK_COL_INVALIDTRACKPOINTS_NAME = "InvalidTrackPoints";
-	public static final String GPSTRACK_COL_TAG_ID_NAME = TAG_TABLE_NAME
-			+ "_ID";
+	public static final String GPSTRACK_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
+	public static final String GPSTRACK_COL_TOTALPAUSETIME_NAME = "TotalPauseTime"; // in seconds
 
 	// gps track detail
-	public static final String GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME = GPSTRACK_TABLE_NAME
-			+ "_ID";
+	public static final String GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME = GPSTRACK_TABLE_NAME + "_ID";
 	public static final String GPSTRACKDETAIL_COL_FILE_NAME = "File";
-	public static final String GPSTRACKDETAIL_COL_FILEFORMAT_NAME = "Format"; // see
-																				// StaticValues.gpsTrackFormat...
+	public static final String GPSTRACKDETAIL_COL_FILEFORMAT_NAME = "Format"; // see StaticValues.gpsTrackFormat...
 	// business partner location
-	public static final String BPARTNER_LOCATION_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME
-			+ "_ID";
+	public static final String BPARTNER_LOCATION_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
 	public static final String BPARTNER_LOCATION_COL_ADDRESS_NAME = "Address";
 	public static final String BPARTNER_LOCATION_COL_POSTAL_NAME = "Postal";
 	public static final String BPARTNER_LOCATION_COL_CITY_NAME = "City";
@@ -467,6 +428,8 @@ public class DB {
 	public static final int GPSTRACK_COL_TOTALTRACKPOINTS_POS = 19;
 	public static final int GPSTRACK_COL_INVALIDTRACKPOINTS_POS = 20;
 	public static final int GPSTRACK_COL_TAG_ID_POS = 21;
+	public static final int GPSTRACK_COL_TOTALPAUSETIME_POS = 22;
+		
 	// gps track detail
 	public static final int GPSTRACKDETAIL_COL_GPSTRACK_ID_POS = 4;
 	public static final int GPSTRACKDETAIL_COL_FILE_POS = 5;
@@ -600,7 +563,8 @@ public class DB {
 			GPSTRACK_COL_DISTANCE_NAME, GPSTRACK_COL_MAXSPEED_NAME,
 			GPSTRACK_COL_AVGSPEED_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME,
 			GPSTRACK_COL_TOTALTRACKPOINTS_NAME,
-			GPSTRACK_COL_INVALIDTRACKPOINTS_NAME, GPSTRACK_COL_TAG_ID_NAME };
+			GPSTRACK_COL_INVALIDTRACKPOINTS_NAME, GPSTRACK_COL_TAG_ID_NAME,
+			GPSTRACK_COL_TOTALPAUSETIME_NAME};
 
 	public static final String[] gpsTrackDetailTableColNames = {
 			GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
@@ -648,10 +612,8 @@ public class DB {
 
 	public static final String[] genColName = { GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME };
 	public static final String[] genColRowId = { GEN_COL_ROWID_NAME };
-	public static final String isActiveCondition = " " + GEN_COL_ISACTIVE_NAME
-			+ "='Y' ";
-	public static final String isActiveWithAndCondition = " AND"
-			+ isActiveCondition + " ";
+	public static final String isActiveCondition = " " + GEN_COL_ISACTIVE_NAME + "='Y' ";
+	public static final String isActiveWithAndCondition = " AND" + isActiveCondition + " ";
 
 	/**
 	 * Database creation sql statements
@@ -972,7 +934,11 @@ public class DB {
 			+ " INTEGER NULL, "
 			+ GPSTRACK_COL_INVALIDTRACKPOINTS_NAME
 			+ " INTEGER NULL, "
-			+ GPSTRACK_COL_TAG_ID_NAME + " INTEGER NULL " + ");";
+			+ GPSTRACK_COL_TAG_ID_NAME 
+			+ " INTEGER NULL, " 
+			+ GPSTRACK_COL_TOTALPAUSETIME_NAME 
+			+ " INTEGER NULL "
+			+ ");";
 
 	protected static final String GPSTRACKDETAIL_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
 			+ GPSTRACKDETAIL_TABLE_NAME
@@ -1492,6 +1458,7 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			}
 			// AndiCar 2.0.x
 			else if (oldVersion == 200) {
@@ -1507,6 +1474,7 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			}
 			// AndiCar 2.1.x
 			else if (oldVersion == 210) {
@@ -1521,6 +1489,7 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			}
 			// AndiCar 3.0.x
 			else if (oldVersion == 300) {
@@ -1533,6 +1502,7 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			}
 			// AndiCar 3.1.x, 3.2.x
 			else if (oldVersion == 310) {
@@ -1544,6 +1514,7 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			}
 			// AndiCar 3.3.x
 			else if (oldVersion == 330) {
@@ -1554,6 +1525,7 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			}
 			// AndiCar 3.4.x
 			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again because on fresh 350 install addon tables was not created
@@ -1563,32 +1535,41 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			} else if (oldVersion == 351) {
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			} else if (oldVersion == 353) {
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			} else if (oldVersion == 355) {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			} else if (oldVersion == 356) {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			} else if (oldVersion == 357) {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
 			}else if (oldVersion == 358) {
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo400(db, oldVersion);
+			}else if (oldVersion == 359) {
+				upgradeDbTo400(db, oldVersion);
 			}
 
 			// !!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
@@ -2032,6 +2013,22 @@ public class DB {
 			sql = "DROP TABLE IF EXISTS " + TODO_TABLE_NAME;
 			db.execSQL(sql);
 			createTaskToDoTables(db);
+		}
+
+		private void upgradeDbTo400(SQLiteDatabase db, int oldVersion) throws SQLException {
+			String updSql = null;
+			if (!columnExists(db, GPSTRACK_TABLE_NAME,
+					GPSTRACK_COL_TOTALPAUSETIME_NAME)) {
+				updSql = "ALTER TABLE " + GPSTRACK_TABLE_NAME + " ADD "
+						+ GPSTRACK_COL_TOTALPAUSETIME_NAME
+						+ " NUMBER NULL ";
+				db.execSQL(updSql);
+
+				updSql = "UPDATE " + GPSTRACK_TABLE_NAME + " SET "
+						+ GPSTRACK_COL_TOTALPAUSETIME_NAME + " = 0";
+
+				db.execSQL(updSql);
+			}
 		}
 
 		private boolean columnExists(SQLiteDatabase db, String table,

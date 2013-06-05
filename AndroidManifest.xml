@@ -24,7 +24,7 @@
           android:versionName="4.0.5 Beta"
           android:installLocation="internalOnly">
 <!-- 
-	internalOnly becouse:
+	internalOnly because:
 		-services
 		-BOOT_COMPLETED broadcast receiver
 	See http://developer.android.com/guide/appendix/install-location.html
