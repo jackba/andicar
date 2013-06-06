@@ -115,7 +115,7 @@ public class StaticValues
     public static final int DIALOG_NEW_TEMPLATE = 8;
 
     public static final int NOTIF_UPDATECHECK_ID = 0;
-    public static final int NOTIF_GPS_TRACK_STARTED_ID = 1;
+    public static final int NOTIF_GPS_TRACKING_STARTED_ID = 1;
     public static final int NOTIF_GPS_ACCURACY_WARNING_ID = 2;
     public static final int NOTIF_FILESYSTEM_ERROR_ID = 3;
     public static final int NOTIF_GPS_ACCURACY_SHUTDOWN_ID = 4;

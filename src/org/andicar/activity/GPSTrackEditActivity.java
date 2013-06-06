@@ -130,20 +130,20 @@ public class GPSTrackEditActivity extends EditActivityBase {
             tvTrackStats.setText(
                     c.getString(c.getColumnIndex(ReportDbAdapter.SECOND_LINE_LIST_NAME))
                     .replace("[#1]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_1))
-                    .replace("[#2]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_2))
-                    .replace("[#3]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_3))
-                    .replace("[#4]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_4))
-                    .replace("[#5]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
+                    .replace("[#2]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_2))
+                    .replace("[#3]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_3))
+                    .replace("[#4]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_4))
+                    .replace("[#5]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_5) +
                             Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
-                    .replace("[#6]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
+                    .replace("[#6]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
                             Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
-                    .replace("[#12]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_12) +
+                    .replace("[#12]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_12) +
                             Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.GPSTRACK_COL_TOTALPAUSETIME_NAME)), false))
-                    .replace("[#7]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
-                    .replace("[#8]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_8))
-                    .replace("[#9]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_9))
-                    .replace("[#10]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_10))
-                    .replace("[#11]", mResource.getString(R.string.GPSTrackReport_GPSTrackVar_11))
+                    .replace("[#7]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
+                    .replace("[#8]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_8))
+                    .replace("[#9]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_9))
+                    .replace("[#10]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_10))
+                    .replace("[#11]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_11))
                     );
         }
         c.close();

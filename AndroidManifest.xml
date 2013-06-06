@@ -24,7 +24,7 @@
           android:versionName="4.0.5 Beta"
           android:installLocation="internalOnly">
 <!-- 
-	internalOnly because:
+	internalOnly becouse:
 		-services
 		-BOOT_COMPLETED broadcast receiver
 	See http://developer.android.com/guide/appendix/install-location.html
@@ -39,7 +39,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-	
+	<uses-permission android:name="android.permission.BLUETOOTH"/>
+		
 	<!-- need by secure backup -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -73,6 +74,13 @@
 		</receiver>
 		 
         <service android:name="org.andicar.service.GPSTrackService" />
+        <!-- 
+        <receiver android:name="org.andicar.service.GPSTrackService$GPSControlReceiver">
+			<intent-filter>
+				<action android:name="org.andicar.activity.miscellaneous.gpstrackcontrol"></action>
+			</intent-filter>
+		</receiver>
+		 -->
         <service android:name="org.andicar.service.UpdateCheckService" />
         <service android:name="org.andicar.service.ToDoManagementService" /> 
         <service android:name="org.andicar.service.ToDoNotificationService" /> 

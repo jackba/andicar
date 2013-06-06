@@ -39,7 +39,6 @@ import org.andicar.utils.Utils;
 import org.andicar2.activity.R;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ContentValues;
@@ -58,6 +57,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
+import android.text.format.DateFormat;
 import android.widget.Toast;
 
 /**
@@ -66,7 +66,6 @@ import android.widget.Toast;
  */
 public class GPSTrackService extends Service {
 
-    private NotificationManager mNM;
     private SharedPreferences mPreferences;
     protected MainDbAdapter mDbAdapter = null;
     protected Resources mResource = null;
@@ -127,6 +126,7 @@ public class GPSTrackService extends Service {
     private long lTotalPauseTime = 0;
     private long lCurrentPauseStartTime = 0;
     private long lCurrentPauseEndTime = 0;
+    private long lCurrentPauseTime = 0;
     private boolean isFirstPoint = true;
     private boolean isFirstPointAfterResume = false;
     private long lFirstNonMovingTime = 0;
@@ -179,7 +179,6 @@ public class GPSTrackService extends Service {
             Thread.setDefaultUncaughtExceptionHandler(
                     new AndiCarExceptionHandler(Thread.getDefaultUncaughtExceptionHandler(), this));
         
-        mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Toast.makeText(this, R.string.GPSTrackService_GPSDisabledMessage, Toast.LENGTH_SHORT).show();
@@ -257,7 +256,7 @@ public class GPSTrackService extends Service {
             createFiles();
 
             // Display a notification about us starting.  We put an icon in the status bar.
-            showNotification(StaticValues.NOTIF_GPS_TRACK_STARTED_ID, false);
+            showNotification(StaticValues.NOTIF_GPS_TRACKING_STARTED_ID, false);
             SharedPreferences.Editor editor = mPreferences.edit();
             editor.putBoolean("isGpsTrackOn", true);
             editor.commit();
@@ -318,8 +317,7 @@ public class GPSTrackService extends Service {
 //    	gpsTrackDetailGOPFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.GOP_FORMAT, fileName);
     	
         //create the header
-        gpsTrackDetailGOPFileWriter.append( "LatitudeE6" + "," +
-                                                "LongitudeE6" + "\n");
+        gpsTrackDetailGOPFileWriter.append( "LatitudeE6,LongitudeE6,PointType\n");
 
         ContentValues cvData = new ContentValues();
         cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
@@ -378,23 +376,15 @@ public class GPSTrackService extends Service {
     	
         if(gpsTrackDetailKMLFileWriter == null)
             return;
-        String name = "";
-        String pointName = "";
-        String pointStyle = "";
-        String pointDescription = "";
         
+        String name = "";
         if(iFileCount == 1){ //first file
             name = sName;
-            pointName = "Start trip";
-            pointStyle = "#sh_green-circle";
-            pointDescription = "Start of trip '" + sName + "'<br>" + Utils.getDateStr(true, true, true);
         }
         else{
             name = sName + " part #" + iFileCount;
-            pointName = "Start of part #" + iFileCount;
-            pointStyle = "#icon28";
-            pointDescription = "";
         }
+        
         ContentValues cvData = new ContentValues();
         cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
         cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.KML_FORMAT);
@@ -414,12 +404,8 @@ public class GPSTrackService extends Service {
             + "<Style id=\"sh_green-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/grn-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
             + "<Style id=\"sh_red-circle\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/paddle/red-circle.png</href></Icon><hotSpot x=\"32\" y=\"1\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
             + "<Style id=\"icon28\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/pal4/icon28.png</href></Icon><hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>\n"
-            + "<Placemark>\n"
-              + "<name><![CDATA[" + pointName + "]]></name>\n"
-              + "<description><![CDATA[" + pointDescription + "]]></description>\n"
-              + "<styleUrl>"+ pointStyle + "</styleUrl>\n"
-              + "<Point>\n");
-        
+            + "<Style id=\"icon29\"><IconStyle><scale>1.3</scale><Icon><href>http://maps.google.com/mapfiles/kml/pal4/icon29.png</href></Icon><hotSpot x=\"20\" y=\"2\" xunits=\"pixels\" yunits=\"pixels\"/></IconStyle></Style>"
+        	);
         gpsTrackDetailKMLFileWriter.flush();
 
     	if(isEnableDebugLog)
@@ -434,10 +420,31 @@ public class GPSTrackService extends Service {
             return;
         }
         try{
+            String pointName = "";
+            String pointStyle = "";
+            String pointDescription = "";
+            
+            if(iFileCount == 1){ //first file
+                pointName = "Start trip";
+                pointStyle = "#sh_green-circle";
+                pointDescription = "Start of trip '" + sName + "'<br>" + 
+                		DateFormat.getDateFormat(getApplicationContext()).format(lStartTime) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStartTime);
+            }
+            else{
+                pointName = "Start of part #" + iFileCount;
+                pointStyle = "#icon28";
+                pointDescription = "";
+            }
+        	
             gpsTrackDetailKMLFileWriter.append(
-                 "<coordinates>" + dCurrentLocationLongitude + "," + dCurrentLocationLatitude + "," +
+                "<Placemark>\n"
+                + "<name><![CDATA[" + pointName + "]]></name>\n"
+                + "<description><![CDATA[" + pointDescription + "]]></description>\n"
+                + "<styleUrl>"+ pointStyle + "</styleUrl>\n"
+                + "<Point>\n"
+                + "<coordinates>" + dCurrentLocationLongitude + "," + dCurrentLocationLatitude + "," +
                             dCurrentLocationAltitude + "</coordinates>\n"
-                  + " </Point>\n"
+                + "</Point>\n"
                 + "</Placemark>\n"
                 + "<Placemark>\n"
                 + "<name><![CDATA[Track file #" + iFileCount + "]]></name>\n"
@@ -492,22 +499,27 @@ public class GPSTrackService extends Service {
                   + "<name><![CDATA[" + pointName + "]]></name>\n";
             	if(isLastFile){
             		footerTxt = footerTxt
-	                    + "<description><![CDATA[End of trip '" + sName + "'<br>" + Utils.getDateStr(true, true, true)
-	    				+ "<br><br>Distance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi")
-	    				+ "<br>Max. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "<br>Avg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "<br>Avg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "<br>Total time: " + Utils.getTimeString(lTotalTime, false)
-		                + "<br>Total moving time: " + Utils.getTimeString(lTotalMovingTime, false)
-	                	+ "<br><br>Recorded with <a href='http://www.andicar.org'><b>AndiCar</b></a>";
+	                    + "<description>\n<![CDATA[End of trip '" + sName + "'<br>" + Utils.getDateStr(true, true, true)
+	                    + "\n<br>Start at: " +DateFormat.getDateFormat(getApplicationContext()).format(lStartTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStartTime * 1000)
+	                    + "\n<br>End at: " +DateFormat.getDateFormat(getApplicationContext()).format(lStopTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStopTime * 1000)
+	                    + "\n<hr>"
+	    				+ "\nDistance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi")
+	    				+ "\n<br>Max. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "\n<br>Avg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "\n<br>Avg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
+		                + "\n<br>Total time: " + Utils.getTimeString(lTotalTime, false)
+		                + "\n<br>Total moving time: " + Utils.getTimeString(lTotalMovingTime, false)
+		                + "\n<br>Pause: " + Utils.getTimeString(lTotalPauseTime, false)
+	                    + "\n<hr>"
+	                	+ "\nRecorded with <a href='http://www.andicar.org'><b>AndiCar</b></a>";
             		
             	}
             	else{
             		footerTxt = footerTxt
-                        + "<description><![CDATA[End of part " + iFileCount;
+                        + "\n<description><![CDATA[End of part " + iFileCount;
             	};
             	footerTxt = footerTxt 
-                      + "]]></description>\n"
+                      + "]]>\n</description>\n"
                   + "<styleUrl>" + pointStyle + "</styleUrl>\n"
                   + "<Point>\n"
                     + "<coordinates>" + lastGoodLocationLongitude + "," + lastGoodLocationLatitude + "," +
@@ -526,6 +538,100 @@ public class GPSTrackService extends Service {
         catch(IOException e){
         	if(isEnableDebugLog)
         		logDebugInfo("appendKMLFooter: Exception = " + e.getMessage(), null);
+        }
+    }
+
+    /**
+     * Create a pause placemaker
+     * @param pointType: PS - Pause Start; PE - Pause End; P - Pause (one point for Start and End)
+     */
+    private void appendKMLPausePoint(){
+        if(gpsTrackDetailKMLFileWriter == null){
+        	if(isEnableDebugLog)
+        		logDebugInfo("appendKMLPausePoint: File writer is NULL!", null);
+            return;
+        }
+        try{
+
+            String kmlTxt = "";
+            if(dDistanceBetweenLocations <= 10) // if the distance between the pause starting point and ending poin is less than 10m create a single pause point
+            {
+                kmlTxt = 
+                	"\n</coordinates>\n"
+	                + "</LineString>\n"
+	                + "</MultiGeometry>\n"
+	                + "</Placemark>\n"
+	                
+	                + "<Placemark>\n"
+	                + "<name><![CDATA[Pause]]></name>\n"
+	                + "<description>\n<![CDATA[Pause for " + Utils.getTimeString(lCurrentPauseTime / 1000,false)
+		    				+ "\n<br>From: " + DateFormat.getDateFormat(getApplicationContext()).format(lCurrentPauseStartTime) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lCurrentPauseStartTime)
+		    				+ "\n<br>To: " + DateFormat.getDateFormat(getApplicationContext()).format(lCurrentPauseEndTime) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lCurrentPauseEndTime)
+	                + "]]>\n</description>\n"
+	                + "<styleUrl>#icon29</styleUrl>\n"
+	                + "<Point>\n"
+	                    + "<coordinates>" + lastGoodLocationLongitude + "," + lastGoodLocationLatitude + "," +
+	                            lastGoodLocationAltitude + "</coordinates>\n"
+	                + "</Point>\n"
+	                + "</Placemark>\n"
+	                
+		            + "<Placemark>\n"
+		            + "<name><![CDATA[Track file #" + iFileCount + " (continuation)]]></name>\n"
+		            + "<description><![CDATA[]]></description>\n"
+		            + "<styleUrl>#track</styleUrl>\n"
+		            + "<MultiGeometry>\n"
+		            + "<LineString>\n"
+		            + "<coordinates>\n";
+	            
+            	gpsTrackDetailKMLFileWriter.append(kmlTxt);
+            }
+            else{ //create two points for pause (Start and End)
+                kmlTxt = 
+                    	"\n</coordinates>\n"
+    	                + "</LineString>\n"
+    	                + "</MultiGeometry>\n"
+    	                + "</Placemark>\n"
+    	                
+    	                + "<Placemark>\n"
+    	                + "<name><![CDATA[Pause start]]></name>\n"
+    	                + "<description>\n<![CDATA[Pause start at: " + DateFormat.getDateFormat(getApplicationContext()).format(lCurrentPauseStartTime) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lCurrentPauseStartTime)
+    	                + "]]>\n</description>\n"
+    	                + "<styleUrl>#icon29</styleUrl>\n"
+    	                + "<Point>\n"
+    	                    + "<coordinates>" + lastGoodLocationLongitude + "," + lastGoodLocationLatitude + "," + lastGoodLocationAltitude + "</coordinates>\n"
+    	                + "</Point>\n"
+    	                + "</Placemark>\n"
+    	                
+    	                + "<Placemark>\n"
+    	                + "<name><![CDATA[Pause end]]></name>\n"
+    	                + "<description>\n<![CDATA["
+    	                + "\nPause duration: " + Utils.getTimeString(lCurrentPauseTime / 1000,false)
+		    				+ "\n\n<br><br>From: " + DateFormat.getDateFormat(getApplicationContext()).format(lCurrentPauseStartTime) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lCurrentPauseStartTime)
+		    				+ "\n<br>To: " + DateFormat.getDateFormat(getApplicationContext()).format(lCurrentPauseEndTime) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lCurrentPauseEndTime)
+    	                + "]]>\n</description>\n"
+    	                + "<styleUrl>#icon29</styleUrl>\n"
+    	                + "<Point>\n"
+    	                    + "<coordinates>" + dCurrentLocationLongitude + "," + dCurrentLocationLatitude + "," + dCurrentLocationAltitude + "</coordinates>\n"
+    	                + "</Point>\n"
+    	                + "</Placemark>\n"
+
+    	                + "<Placemark>\n"
+    		            + "<name><![CDATA[Track file #" + iFileCount + " (continuation)]]></name>\n"
+    		            + "<description><![CDATA[]]></description>\n"
+    		            + "<styleUrl>#track</styleUrl>\n"
+    		            + "<MultiGeometry>\n"
+    		            + "<LineString>\n"
+    		            + "<coordinates>\n";
+    	            
+    	            	gpsTrackDetailKMLFileWriter.append(kmlTxt);
+            }
+            if(isEnableDebugLog)
+        		logDebugInfo("appendKMLPausePoint: Point added", null);
+            
+        }
+        catch(IOException e){
+        	if(isEnableDebugLog)
+        		logDebugInfo("appendKMLPausePoint: Exception = " + e.getMessage(), null);
         }
     }
 
@@ -656,7 +762,7 @@ public class GPSTrackService extends Service {
         gpsTrackDetailKMLFileWriter.append(
                 dCurrentLocationLongitude + "," +
                 dCurrentLocationLatitude + "," +
-                dCurrentLocationAltitude + " ");
+                dCurrentLocationAltitude + " \n");
 
         kmlPointsCount++;
         if(kmlPointsCount == 20){
@@ -746,6 +852,8 @@ public class GPSTrackService extends Service {
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putBoolean("isGpsTrackOn", false);
         editor.commit();
+        lCurrentPauseStartTime = 0;
+        lCurrentPauseEndTime = 0;
         //update the statistics for the track
         updateStatistics();
         //close the database
@@ -778,7 +886,7 @@ public class GPSTrackService extends Service {
         contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, GPSTrackController.class), 0);
 
-        if(what == StaticValues.NOTIF_GPS_TRACK_STARTED_ID){
+        if(what == StaticValues.NOTIF_GPS_TRACKING_STARTED_ID){
             title = getText(R.string.GPSTrackService_TrackInProgressTitle);
             message = getString(R.string.GPSTrackService_TrackInProgressMessage);
 
@@ -877,15 +985,20 @@ public class GPSTrackService extends Service {
     	if(isEnableDebugLog)
     		logDebugInfo("updateStatistics() started", null);
         
-    	lTotalTime = (lStopTime - lStartTime) / 1000; //in seconds; lStopTime & lStartTime are in miliseconds
+    	lStartTime = lStartTime / 1000; //convert to second
+    	lStopTime = lStopTime / 1000; //convert to second
+    	lTotalTime = lStopTime - lStartTime;
         
         if(lLastNonMovingTime != 0 && lFirstNonMovingTime != 0)
             lTotalNonMovingTime = lTotalNonMovingTime + (lLastNonMovingTime - lFirstNonMovingTime);
         
         if(lCurrentPauseStartTime > 0)
-        	lTotalPauseTime = lTotalPauseTime + (lCurrentPauseStartTime - lCurrentLocationTime);
+        	lTotalPauseTime = lTotalPauseTime + (lCurrentLocationTime - lCurrentPauseStartTime);
         
-        lTotalMovingTime = lTotalTime - lTotalPauseTime - (lTotalNonMovingTime / 1000); //lTotalNonMovingTime is in milisecond
+        lTotalNonMovingTime = lTotalNonMovingTime / 1000; //convert to second
+        lTotalPauseTime = lTotalPauseTime / 1000; //convert to second
+        
+        lTotalMovingTime = lTotalTime - lTotalPauseTime - lTotalNonMovingTime; 
 
         if(dTotalUsedTrackPoints != 0)
             //at this moment dAvgAccuracy = SUM(CurrentAccuracy)
@@ -1073,7 +1186,12 @@ public class GPSTrackService extends Service {
 	                }
             	}
                 else{
-                    lTotalPauseTime = lTotalPauseTime + (lCurrentPauseStartTime - lCurrentPauseEndTime);
+                	lCurrentPauseTime = lCurrentPauseEndTime - lCurrentPauseStartTime;
+                    lTotalPauseTime = lTotalPauseTime + lCurrentPauseTime;
+                    
+                    if(gpsTrackDetailKMLFileWriter != null)
+                        appendKMLPausePoint();
+                    
                     lCurrentPauseStartTime = 0;
                     lCurrentPauseEndTime = 0;
                     isFirstPointAfterResume = false;
@@ -1142,6 +1260,9 @@ public class GPSTrackService extends Service {
 
         @Override
         public void onProviderDisabled(String provider) {
+        	if(lCurrentPauseStartTime > 0) //tracking in pause
+        		return;
+        	
             if(provider.equals(LocationManager.GPS_PROVIDER)){
                 showNotification(StaticValues.NOTIF_GPS_DISABLED_ID, false);
 //                stopSelf();
@@ -1150,15 +1271,18 @@ public class GPSTrackService extends Service {
 
         @Override
         public void onProviderEnabled(String provider) {
-            mNM.cancel(StaticValues.NOTIF_GPS_DISABLED_ID);
+        	if(lCurrentPauseStartTime > 0) //tracking in pause
+        		return;
+        	showNotification(StaticValues.NOTIF_GPS_TRACKING_STARTED_ID, false);
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-            if(provider.equals(LocationManager.GPS_PROVIDER)
-                    && status == LocationProvider.OUT_OF_SERVICE){
-                showNotification(StaticValues.NOTIF_GPS_OUTOFSERVICE_ID, false);
-//                stopSelf();
+            if(provider.equals(LocationManager.GPS_PROVIDER)){
+                if(status == LocationProvider.OUT_OF_SERVICE)
+                	showNotification(StaticValues.NOTIF_GPS_OUTOFSERVICE_ID, false);
+                if(status == LocationProvider.AVAILABLE)
+                	showNotification(StaticValues.NOTIF_GPS_TRACKING_STARTED_ID, false);
             }
         }
     }
@@ -1186,7 +1310,7 @@ public class GPSTrackService extends Service {
     /**
      * Handler of incoming messages from controller.
      */
-    class IncomingHandler extends Handler {
+    class IncomingMessageHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -1208,7 +1332,11 @@ public class GPSTrackService extends Service {
                     isFirstPointAfterResume = true;
                     mLocationManager.requestLocationUpdates(
                             LocationManager.GPS_PROVIDER, Long.parseLong(mPreferences.getString("GPSTrackMinTime", "0")), 0, mLocationListener);
-                    showNotification(StaticValues.NOTIF_GPS_TRACK_STARTED_ID, false);
+
+                    if (!mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                        showNotification(StaticValues.NOTIF_GPS_DISABLED_ID, false);
+                    else
+                    	showNotification(StaticValues.NOTIF_GPS_TRACKING_STARTED_ID, false);
                     break;
                 default:
                     super.handleMessage(msg);
@@ -1219,7 +1347,7 @@ public class GPSTrackService extends Service {
     /**
      * Target we publish for clients to send messages to IncomingHandler.
      */
-    final Messenger mMessenger = new Messenger(new IncomingHandler());
+    final Messenger mMessenger = new Messenger(new IncomingMessageHandler());
 
     /**
      * When binding to the service, we return an interface to our messenger

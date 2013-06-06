@@ -491,7 +491,7 @@ public class ReportDbAdapter extends MainDbAdapter{
 		                                                    sqlConcatTableColumn("TotalMileageExpenses", EXPENSE_COL_CAR_ID_NAME) +
         " WHERE 1=1 ";
         
-    //used in main activity and mileage list activity
+    //used in main activity and GPS Track list activity
     public static String gpsTrackListViewSelect =
             "SELECT " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GEN_COL_ROWID_NAME) + ", " + //#0
@@ -589,8 +589,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_AVGSPEED_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MINALTITUDE_NAME) + ", " +
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MOVINGTIME_NAME) + ", " +
-                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTIME_NAME) + ", " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTIME_NAME) + " AS '" + GPSTRACK_COL_TOTALTIME_NAME + " [s]', " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MOVINGTIME_NAME) + " AS '" + GPSTRACK_COL_MOVINGTIME_NAME + " [s]', " +
+                sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALPAUSETIME_NAME) + " AS '" + GPSTRACK_COL_TOTALPAUSETIME_NAME + " [s]', " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_TOTALTRACKPOINTS_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_INVALIDTRACKPOINTS_NAME) + ", " +
                 sqlConcatTableColumn(GPSTRACK_TABLE_NAME, GPSTRACK_COL_MILEAGE_ID_NAME) + ", " +
