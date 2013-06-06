@@ -138,7 +138,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnMileageList"
                                  android:layout_width="100dp"
@@ -202,7 +201,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnToDoList"
                                  android:layout_width="100dp"
@@ -267,7 +265,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnGPSTrackList"
                                  android:layout_width="100dp"
@@ -339,7 +336,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnRefuelList"
                                  android:layout_width="100dp"
@@ -403,7 +399,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnExpenseList"
                                  android:layout_width="100dp"
@@ -505,7 +500,27 @@
                 android:gravity="center_horizontal|bottom"
                 android:textSize="10sp"
                 android:typeface="sans"
-                android:layout_marginBottom="10dp"
                 />
-        </LinearLayout>
+            
+            <TextView
+                android:layout_height="1dp"
+                android:layout_width="fill_parent"
+                android:background="@android:color/background_dark"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                />
+            
+            <TextView
+                android:id="@+id/tvMotto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:gravity="center_horizontal"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:textColor="@color/my_red"
+                android:text="Manage your cars with the power of open source"
+                />
+            </LinearLayout>
     </ScrollView>

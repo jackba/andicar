@@ -24,12 +24,13 @@
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
     android:id="@+id/vgRoot"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     >
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
         >
 	    <LinearLayout
 	        android:orientation="vertical"
@@ -57,8 +58,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
@@ -80,13 +79,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:drawSelectorOnTop="true"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="2dp"
                 android:prompt="@string/GEN_ChooseOneTitle"
                 />
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -98,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/DIALOGSearch_DateFromLabel"
 	            android:typeface="sans"
+	            android:layout_centerVertical="true"
                 />
             <TextView
                 android:id="@+id/tvDateFromSearch"
@@ -107,18 +105,19 @@
                 android:layout_marginRight="2dp"
                 android:gravity="center_horizontal"
 	            android:typeface="sans"
+	            android:layout_centerVertical="true"
+	            android:layout_toRightOf="@id/tvDateFromLabel"
                 />
             <ImageButton android:id="@+id/btnPickDateFrom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/btn_background_selector"
-                    android:src="@drawable/icon_calendar_selector"
-                    android:contentDescription="@string/DIALOGSearch_DateFromLabel"
-                    />
-        </LinearLayout>
+           		android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_calendar_selector"
+                android:contentDescription="@string/DIALOGSearch_DateFromLabel"
+            	android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -130,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/DIALOGSearch_DateToLabel"
 	            android:typeface="sans"
+	            android:layout_centerVertical="true"
                 />
             <TextView
                 android:id="@+id/tvDateToSearch"
@@ -139,16 +139,17 @@
                 android:layout_marginRight="2dp"
                 android:gravity="center_horizontal"
 	            android:typeface="sans"
+	            android:layout_centerVertical="true"
+	            android:layout_toRightOf="@id/tvDateToSearch"
                 />
             <ImageButton android:id="@+id/btnPickDateTo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/btn_background_selector"
-                    android:src="@drawable/icon_calendar_selector"
-                    android:contentDescription="@string/DIALOGSearch_DateToLabel"
-                    />
-        </LinearLayout>
+           		android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/icon_calendar_selector"
+                android:contentDescription="@string/DIALOGSearch_DateToLabel"
+            	android:layout_alignParentRight="true"
+                />
+        </RelativeLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -167,8 +168,6 @@
                 android:id="@+id/etUserCommentSearch"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="2dp"
                 android:inputType="text"
                 />
         </LinearLayout>
@@ -190,9 +189,7 @@
 	             android:id="@+id/acTag"
 	             android:layout_width="fill_parent"
 	             android:layout_height="wrap_content"
-	             android:layout_marginLeft="5dp"
-                 android:layout_marginRight="2dp"
-   				android:textColor="@android:color/primary_text_light"
+   				 android:textColor="@android:color/primary_text_light"
 	             />
         </LinearLayout>
 
