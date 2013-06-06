@@ -217,6 +217,8 @@ public class Utils {
                                 Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FOURTH_LINE_LIST_NAME)), false))
                         .replace("[#6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
                                 Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
+                        .replace("[#12]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_12) +
+                                Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.GPSTRACK_COL_TOTALPAUSETIME_NAME)), false))
                         .replace("[#7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                         .replace("[#8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                         .replace("[#9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))

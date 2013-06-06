@@ -18,6 +18,20 @@
 
 package org.andicar.activity.miscellaneous;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.andicar.activity.dialog.AndiCarDialogBuilder;
+import org.andicar.persistence.FileUtils;
+import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -43,18 +57,6 @@ import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.Projection;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import org.andicar2.activity.R;
-import org.andicar.activity.dialog.AndiCarDialogBuilder;
-import org.andicar.persistence.FileUtils;
-import org.andicar.utils.StaticValues;
 
 /**
  *
@@ -66,7 +68,6 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     protected Resources mResource = null;
     protected AndiCarDialogBuilder madbErrorAlert;
     protected AlertDialog madError;
-    protected ArrayList<GeoPoint> trackPoints;
     protected Projection projection;
     protected Path path = null;
     protected Paint mPaint = null;
@@ -82,8 +83,19 @@ public class GPSTrackMap extends MapActivity implements Runnable{
     private String showMode = "M";
     protected Menu optionsMenu;
 
+    private class GOPPoint{
+    	public GeoPoint geoPoint;
+    	public String pointType;
+    	
+    	public GOPPoint(GeoPoint gp, String pt){
+    		this.geoPoint = gp;
+    		this.pointType = pt;
+    	}
+    }
+    protected ArrayList<GOPPoint> gopPoints;
+
     protected class SavedData{
-        public ArrayList<GeoPoint> trackPoints;
+        public ArrayList<GOPPoint> gopPoints;
         public int maxLatitude = 0;
         public int minLatitude = 0;
         public int maxLongitude = 0;
@@ -115,15 +127,15 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         SavedData data = (SavedData)getLastNonConfigurationInstance();
         
         if(data != null){
-            trackPoints = data.trackPoints;
+            gopPoints = data.gopPoints;
             maxLatitude = data.maxLatitude;
             minLatitude = data.minLatitude;
             maxLongitude = data.maxLongitude;
             minLongitude = data.minLongitude;
         }
         
-        if(trackPoints == null)
-            trackPoints = new ArrayList<GeoPoint>();
+        if(gopPoints == null)
+            gopPoints = new ArrayList<GOPPoint>();
         //get the the track id
         trackId = mExtras.getString("gpsTrackId");
 //        trackId ="99";
@@ -166,9 +178,9 @@ public class GPSTrackMap extends MapActivity implements Runnable{
 
     @Override
     public Object onRetainNonConfigurationInstance() {
-        //save existing data whwn the activity restart (for example on screen orientation change)
+        //save existing data when the activity restart (for example on screen orientation change)
         final SavedData data = new SavedData();
-        data.trackPoints = trackPoints;
+        data.gopPoints = gopPoints;
         data.maxLatitude = maxLatitude;
         data.minLatitude = minLatitude;
         data.maxLongitude = maxLongitude;
@@ -186,7 +198,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             return;
         }
         
-        if(trackPoints.size() == 0){ //trackpoints are not loaded
+        if(gopPoints.size() == 0){ //trackpoints are not loaded
             FileInputStream trackInputStream;
             DataInputStream trackData;
             BufferedReader trackBufferedReader;
@@ -202,6 +214,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             }
             int latitudeE6;
             int longitudeE6;
+            String pointType;
 //            int c1;
             String[] gopData;
             boolean isFirst = true;
@@ -215,26 +228,25 @@ public class GPSTrackMap extends MapActivity implements Runnable{
                         if(trackLine.length() == 0 ||
                                 trackLine.contains("Latitude")) //header line
                             continue;
-//                        c1 = trackLine.indexOf(",");
+
                         gopData = trackLine.split(",");
+                        latitudeE6 = Integer.parseInt(gopData[0]);
+                        longitudeE6 = Integer.parseInt(gopData[1]);
+                        if(gopData.length > 2)
+                        	pointType = gopData[2];
+                        else
+                        	pointType = "NP"; //Normal Point
+                        
                         if(isFirst){
-//                            latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
-//                            longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
-                            latitudeE6 = Integer.parseInt(gopData[0]);
-                            longitudeE6 = Integer.parseInt(gopData[1]);
                             maxLatitude = latitudeE6;
                             minLatitude = maxLatitude;
                             maxLongitude = longitudeE6;
                             minLongitude = maxLongitude;
-                            trackPoints.add(new GeoPoint(latitudeE6, longitudeE6));
                             isFirst = false;
                             continue;
                         }
-//                        latitudeE6 = Integer.parseInt(trackLine.substring(0, c1));
-//                        longitudeE6 = Integer.parseInt(trackLine.substring(c1 + 1, trackLine.length()));
-                        latitudeE6 = Integer.parseInt(gopData[0]);
-                        longitudeE6 = Integer.parseInt(gopData[1]);
-                        trackPoints.add(new GeoPoint(latitudeE6, longitudeE6));
+                        gopPoints.add(new GOPPoint(new GeoPoint(latitudeE6, longitudeE6), pointType));
+
                         if( latitudeE6 > maxLatitude)
                             maxLatitude = latitudeE6;
                         if(latitudeE6 < minLatitude)
@@ -254,10 +266,10 @@ public class GPSTrackMap extends MapActivity implements Runnable{
         }
 
         try{
-	        if(trackPoints.size() >= 1){
-	            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(0), R.drawable.icon_start_point, "Start"));
+	        if(gopPoints.size() >= 1){
+	            mapOverlays.add(new DrawableMapOverlay(this, gopPoints.get(0), R.drawable.icon_start_point, "Start"));
 	            mapOverlays.add(new TrackRouteOverlay());
-	            mapOverlays.add(new DrawableMapOverlay(this, trackPoints.get(trackPoints.size() - 1),
+	            mapOverlays.add(new DrawableMapOverlay(this, gopPoints.get(gopPoints.size() - 1),
 	                    R.drawable.icon_stop_point, "Stop"));
 	            mapView.postInvalidate();
 	            mMapController.zoomToSpan(
@@ -336,17 +348,18 @@ public class GPSTrackMap extends MapActivity implements Runnable{
             Point p1 = new Point();
             Point p2 = new Point();
 
-            GeoPoint gp1 = null;
+            GOPPoint gp1 = null;
 
-            for(GeoPoint gp : trackPoints){
+            for(GOPPoint gp : gopPoints){
                 if(gp1 == null)
                     gp1 = gp;
                 else{
-                        projection.toPixels(gp1, p1);
-                        projection.toPixels(gp, p2);
-                        path.moveTo(p1.x, p1.y);
-                        path.lineTo(p2.x,p2.y);
-                        gp1 = gp;
+                    projection.toPixels(gp1.geoPoint, p1);
+                    projection.toPixels(gp.geoPoint, p2);
+                    path.moveTo(p1.x, p1.y);
+                    if(!gp1.pointType.equals("PSP")) // PSP = PauseStartPoint do not draw line between pause points
+                    	path.lineTo(p2.x,p2.y);
+                    gp1 = gp;
                 }
             }
             canvas.drawPath(path, mPaint);
@@ -355,7 +368,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
 
     public class DrawableMapOverlay extends Overlay {
 
-        private final GeoPoint geoPoint;
+        private final GOPPoint gopPoint;
         private final Context context;
         private final int drawable;
         private String text;
@@ -365,9 +378,9 @@ public class GPSTrackMap extends MapActivity implements Runnable{
          * @param geoPoint the geographical point where the overlay is located
          * @param drawable the ID of the desired drawable
          */
-        public DrawableMapOverlay(Context context, GeoPoint geoPoint, int drawable, String text) {
+        public DrawableMapOverlay(Context context, GOPPoint gopPoint, int drawable, String text) {
             this.context = context;
-            this.geoPoint = geoPoint;
+            this.gopPoint = gopPoint;
             this.drawable = drawable;
             this.text = text;
         }
@@ -378,7 +391,7 @@ public class GPSTrackMap extends MapActivity implements Runnable{
 
             // Convert geo coordinates to screen pixels
             Point screenPoint = new Point();
-            mapView.getProjection().toPixels(geoPoint, screenPoint);
+            mapView.getProjection().toPixels(gopPoint.geoPoint, screenPoint);
 
             // Read the image
             Bitmap markerImage = BitmapFactory.decodeResource(context.getResources(), drawable);
