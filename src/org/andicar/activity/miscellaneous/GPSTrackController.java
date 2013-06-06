@@ -29,6 +29,7 @@ import org.andicar.service.GPSTrackService;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 
+import android.R.id;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -304,7 +305,8 @@ public class GPSTrackController extends EditActivityBase {
            if(!(child.getId() == R.id.ckIsCreateMileage
                    || child.getId() == R.id.btnStartStopGpsTrack
                    || child.getId() == R.id.btnPauseResumeGpsTrack
-                   || child.getId() == R.id.etIndexStart))
+                   || child.getId() == R.id.etIndexStart
+                   || child.getId() == id.closeButton))
                child.setEnabled(editable);
        }
    }

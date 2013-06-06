@@ -17,27 +17,6 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<!-- 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/vgRoot"
-    >
-	<ImageView
-   		android:id="@+id/mainActivityPicture"
-		android:src="@drawable/main_activity_picture"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-		/>
-	 
-	<TextView
-	    android:layout_height="1dp"
-	    android:layout_width="fill_parent"
-	    android:background="@android:color/background_dark"
-	    />
-	-->
     <ScrollView
     	xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -138,19 +117,19 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnMileageList"
                                  android:layout_width="100dp"
                                  android:layout_height="45dp"
                                  android:layout_alignParentLeft="true"
+                                 android:layout_centerVertical="true"
                                  android:src="@drawable/icon_more_selector"
                                  />
                     <ImageButton android:id="@+id/btnMileageInsert"
                                  android:layout_width="100dp"
                                  android:layout_height="45dp"
                                  android:layout_alignParentRight="true"
-                                 android:layout_alignTop="@id/btnMileageList"
+                                 android:layout_centerVertical="true"
                                  android:src="@drawable/icon_add_selector"
                                  />
                 </RelativeLayout>
@@ -202,7 +181,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnToDoList"
                                  android:layout_width="100dp"
@@ -267,7 +245,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnGPSTrackList"
                                  android:layout_width="100dp"
@@ -339,7 +316,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnRefuelList"
                                  android:layout_width="100dp"
@@ -403,7 +379,6 @@
                 <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     >
                     <ImageButton android:id="@+id/btnExpenseList"
                                  android:layout_width="100dp"
@@ -491,7 +466,7 @@
 
             <TextView
                 android:id="@+id/tvShortAboutLbl"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal|bottom"
                 android:layout_marginTop="5dp"
@@ -500,12 +475,33 @@
                 />
             <TextView
                 android:id="@+id/tvShortAboutAppVersion"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
                 android:gravity="center_horizontal|bottom"
                 android:textSize="10sp"
                 android:typeface="sans"
                 android:layout_marginBottom="10dp"
                 />
-        </LinearLayout>
+
+            <TextView
+                android:layout_height="1dp"
+                android:layout_width="fill_parent"
+                android:background="@android:color/background_dark"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                />
+            
+            <TextView
+                android:id="@+id/tvMotto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:gravity="center_horizontal"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:typeface="sans"
+                android:textColor="@color/my_red"
+                android:text="Manage your cars with the power of open source"
+                />
+            </LinearLayout>
     </ScrollView>
