@@ -1183,9 +1183,9 @@ public class DB {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
             //create drivers table
-            db.execSQL(DRIVER_TABLE_CREATE_SQL);
+            createDriverTable(db);
 			// create cars table
-			db.execSQL(CAR_TABLE_CREATE_SQL);
+			createCarTable(db);
 			createUOMTable(db);
 
 			// create uom conversions table
@@ -1232,6 +1232,27 @@ public class DB {
 			// Log.e(TAG, ex.getMessage());
 			// }
 
+		}
+
+		/**
+		 * @param db
+		 */
+		private void createCarTable(SQLiteDatabase db) {
+			db.execSQL(CAR_TABLE_CREATE_SQL);
+		}
+
+		/**
+		 * @param db
+		 */
+		private void createDriverTable(SQLiteDatabase db) {
+			db.execSQL(DRIVER_TABLE_CREATE_SQL);
+			String sql = 
+					"INSERT INTO " + DRIVER_TABLE_NAME + "( " +
+								GEN_COL_NAME_NAME + ", " +
+								GEN_COL_ISACTIVE_NAME + ", " +
+								GEN_COL_USER_COMMENT_NAME + ") " +
+					" VALUES( 'I', 'Y', 'Customize me')";
+			db.execSQL(sql);
 		}
 
 		private void createTaskToDoTables(SQLiteDatabase db) throws SQLException {
