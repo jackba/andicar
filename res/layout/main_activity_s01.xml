@@ -501,7 +501,7 @@
                 android:textStyle="bold"
                 android:typeface="sans"
                 android:textColor="@color/my_red"
-                android:text="Manage your cars with the power of open source"
+                android:text="Manage your cars with the power of open source."
                 />
             </LinearLayout>
     </ScrollView>
