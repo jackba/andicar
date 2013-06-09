@@ -20,6 +20,7 @@ package org.andicar2.activity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -135,6 +136,7 @@ public class MainActivity extends BaseActivity {
 	private boolean showStatistcsZone = true;
 	private boolean showToDoZone = true;
 	private boolean isActivityOnLoading = true;
+	private boolean isCarDefined = true;
 
 	private boolean isSendStatistics = true;
 	private boolean isSendCrashReport;
@@ -143,6 +145,8 @@ public class MainActivity extends BaseActivity {
 	protected boolean isShowWhatsNew = false;
 
 	private long gpsTrackId = -1;
+	
+	private ArrayList<MenuItem> mMenuItems = new ArrayList<MenuItem>();
 
 	@Override
 	protected void onPause() {
@@ -162,10 +166,11 @@ public class MainActivity extends BaseActivity {
 			mPreferences = getSharedPreferences(
 					StaticValues.GLOBAL_PREFERENCE_NAME, 0);
 			
-			setContentView(R.layout.main_activity_s01);
 
 	    	if(mPreferences.getAll().size() == 0)
 				isJustInstalled = true;
+			setContentView(R.layout.main_activity_s01);
+	    		
 			SharedPreferences.Editor editor = mPreferences.edit();
 			
 			mResource = getResources();
@@ -429,6 +434,12 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void fillExpenseZone() {
+		if(!isCarDefined){
+			btnExpenseList.setEnabled(false);
+			btnExpenseInsert.setEnabled(false);
+			return;
+		}
+		
 		listCursor = null;
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
@@ -483,6 +494,13 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void fillGpsZone() {
+		if(!isCarDefined){
+			btnGPSTrackInsert.setEnabled(false);
+			btnGPSTrackList.setEnabled(false);
+			btnGPSTrackShowOnMap.setEnabled(false);
+			return;
+		}
+
 		listCursor = null;
 		Bundle whereConditions = new Bundle();
 		whereConditions.clear();
@@ -570,6 +588,12 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void fillMileageZone() {
+		if(!isCarDefined){
+			btnMileageInsert.setEnabled(false);
+			btnMileageList.setEnabled(false);
+			return;
+		}
+		
 		listCursor = null;
 		Bundle whereConditions = new Bundle();
 		whereConditions = new Bundle();
@@ -622,6 +646,12 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void fillRefuelZone() {
+		if(!isCarDefined){
+			btnRefuelInsert.setEnabled(false);
+			btnRefuelList.setEnabled(false);
+			return;
+		}
+		
 		listCursor = null;
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
@@ -691,6 +721,12 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void fillToDoZone(){
+		if(!isCarDefined){
+			btnToDoInsert.setEnabled(false);
+			btnToDoList.setEnabled(false);
+			return;
+		}
+
 		listCursor = null;
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
@@ -1299,8 +1335,13 @@ public class MainActivity extends BaseActivity {
 		if (showMileageZone) {
 			findViewById(R.id.llMileageZone).setVisibility(View.VISIBLE);
 			fillMileageZone();
-		} else
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(0).setVisible(false);
+		} else{
 			findViewById(R.id.llMileageZone).setVisibility(View.GONE);
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(0).setVisible(true);
+		}
 
 		// fill gps track zone data
 		if (showGPSTrackZone) {
@@ -1309,23 +1350,53 @@ public class MainActivity extends BaseActivity {
 			if (mPreferences.getBoolean("isGpsTrackOn", false))
 				btnGPSTrackInsert.setEnabled(false);
 			else
-				btnGPSTrackInsert.setEnabled(true);
-		} else
+			{
+				if(isCarDefined)
+					btnGPSTrackInsert.setEnabled(true);
+			}
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(1).setVisible(false);
+		} else{
 			findViewById(R.id.llGPSTrackZone).setVisibility(View.GONE);
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(1).setVisible(true);
+		}
 
 		// fill refuel zone data
 		if (showRefuelZone) {
 			findViewById(R.id.llRefuelZone).setVisibility(View.VISIBLE);
 			fillRefuelZone();
-		} else
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(2).setVisible(false);
+		} else{
 			findViewById(R.id.llRefuelZone).setVisibility(View.GONE);
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(2).setVisible(true);
+		}
 
 		// fill expense zone data
 		if (showExpenseZone) {
 			findViewById(R.id.llExpenseZone).setVisibility(View.VISIBLE);
 			fillExpenseZone();
-		} else
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(3).setVisible(false);
+		} else{
 			findViewById(R.id.llExpenseZone).setVisibility(View.GONE);
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(3).setVisible(true);
+		}
+
+		// fill to do zone
+		if (showToDoZone) {
+			findViewById(R.id.llToDoZone).setVisibility(View.VISIBLE);
+			fillToDoZone();
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(4).setVisible(false);
+		} else{
+			findViewById(R.id.llToDoZone).setVisibility(View.GONE);
+			if(mMenuItems != null && mMenuItems.size() > 0)
+				mMenuItems.get(4).setVisible(true);
+		}
 
 		// fill statistics zone
 		if (showStatistcsZone) {
@@ -1334,12 +1405,6 @@ public class MainActivity extends BaseActivity {
 		} else
 			findViewById(R.id.llStatistcsZone).setVisibility(View.GONE);
 
-		// fill statistics zone
-		if (showToDoZone) {
-			findViewById(R.id.llToDoZone).setVisibility(View.VISIBLE);
-			fillToDoZone();
-		} else
-			findViewById(R.id.llToDoZone).setVisibility(View.GONE);
 	}
 
 	@Override
@@ -1539,8 +1604,20 @@ public class MainActivity extends BaseActivity {
 				mPrefEditor.putLong("CarUOMLength_ID",
 						mDbAdapter.getCarUOMLengthID(mCarId));
 				mPrefEditor.commit();
+				isCarDefined = true;
+				if(mMenuItems != null && mMenuItems.size() > 0){
+					for(int i = 0; i < mMenuItems.size(); i++) {
+						mMenuItems.get(i).setEnabled(true);
+					}
+				}
 			} 
 			else {
+				isCarDefined = false;
+				if(mMenuItems != null && mMenuItems.size() > 0){
+					for(int i = 0; i < mMenuItems.size(); i++) {
+						mMenuItems.get(i).setEnabled(false);
+					}
+				}
                 AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
                 		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.GEN_Info));
 				builder.setMessage(mResource
@@ -1548,7 +1625,6 @@ public class MainActivity extends BaseActivity {
 				builder.setCancelable(false);
 				builder.setPositiveButton(mResource.getString(R.string.GEN_OK),
 						new DialogInterface.OnClickListener() {
-
 							public void onClick(DialogInterface dialog, int id) {
 								Intent i = new Intent(MainActivity.this, CommonListActivity.class);
 						        i.putExtra("ListSource", MainDbAdapter.CAR_TABLE_NAME);
@@ -1556,6 +1632,12 @@ public class MainActivity extends BaseActivity {
 								startActivity(i);
 							}
 						});
+				builder.setNegativeButton(mResource.getString(R.string.GEN_CANCEL),
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								isCarDefined = false;
+							}
+					});
 				AlertDialog alert = builder.create();
 				alert.show();
 				btnMileageList.setEnabled(false);
@@ -1633,33 +1715,38 @@ public class MainActivity extends BaseActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, StaticValues.MENU_MILEAGE_ID, 0,
+		if(mMenuItems != null)
+			mMenuItems = new ArrayList<MenuItem>();
+		else
+			mMenuItems.clear();
+		
+		mMenuItems.add(menu.add(0, StaticValues.MENU_MILEAGE_ID, 0,
 				mResource.getText(R.string.MENU_MileageCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_mileage));
-		menu.add(0, StaticValues.MENU_GPSTRACK_ID, 0,
+				mResource.getDrawable(R.drawable.ic_menu_mileage)).setEnabled(isCarDefined).setVisible(!showMileageZone)); //#0
+		mMenuItems.add(menu.add(0, StaticValues.MENU_GPSTRACK_ID, 0,
 				mResource.getText(R.string.MENU_GPSTrackCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_gpstrack));
-		menu.add(0, StaticValues.MENU_REFUEL_ID, 0,
+				mResource.getDrawable(R.drawable.ic_menu_gpstrack)).setEnabled(isCarDefined).setVisible(!showGPSTrackZone)); //#1
+		mMenuItems.add(menu.add(0, StaticValues.MENU_REFUEL_ID, 0,
 				mResource.getText(R.string.MENU_RefuelCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_refuel));
-		menu.add(0, StaticValues.MENU_EXPENSES_ID, 0,
+				mResource.getDrawable(R.drawable.ic_menu_refuel)).setEnabled(isCarDefined).setVisible(!showRefuelZone)); //#2
+		mMenuItems.add(menu.add(0, StaticValues.MENU_EXPENSES_ID, 0,
 				mResource.getText(R.string.MENU_ExpenseCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_expenses));
-		menu.add(0, StaticValues.MENU_TODO_ID, 0,
+				mResource.getDrawable(R.drawable.ic_menu_expenses)).setEnabled(isCarDefined).setVisible(!showExpenseZone)); //#3
+		mMenuItems.add(menu.add(0, StaticValues.MENU_TODO_ID, 0,
 				mResource.getText(R.string.MENU_TodoCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_task));
-		menu.add(0, StaticValues.MENU_ADDON_ID, 0,
+				mResource.getDrawable(R.drawable.ic_menu_task)).setEnabled(isCarDefined).setVisible(!showToDoZone)); //#4
+		mMenuItems.add(menu.add(0, StaticValues.MENU_ADDON_ID, 0,
 				mResource.getText(R.string.MENU_AddOnServicesCaption)).setIcon(
-				mResource.getDrawable(R.drawable.ic_menu_star));
+				mResource.getDrawable(R.drawable.ic_menu_star)).setEnabled(isCarDefined)); //#5
 		menu.add(0, StaticValues.MENU_PREFERENCES_ID, 0,
 				mResource.getText(R.string.MENU_PreferencesCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_preferences));
 		menu.add(0, StaticValues.MENU_ABOUT_ID, 0,
 				mResource.getText(R.string.MENU_AboutCaption)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_info_details));
-//		menu.add(0, StaticValues.MENU_RATE_COMMENT_ID, 0,
-//				mResource.getText(R.string.MENU_RateCommentCaption)).setIcon(
-//				mResource.getDrawable(R.drawable.ic_menu_star));
+		mMenuItems.add(menu.add(0, StaticValues.MENU_RATE_COMMENT_ID, 0,
+				mResource.getText(R.string.MENU_RateCommentCaption)).setIcon(
+				mResource.getDrawable(R.drawable.ic_menu_star)).setEnabled(isCarDefined));
 		menu.add(0, StaticValues.MENU_LOCALIZE_ID, 0,
 				mResource.getText(R.string.MENU_LocalizeAndiCar)).setIcon(
 				mResource.getDrawable(R.drawable.ic_menu_edit));
@@ -1687,7 +1774,7 @@ public class MainActivity extends BaseActivity {
 			try {
 				startActivity(new Intent(
 						Intent.ACTION_VIEW,
-						Uri.parse("market://search?q=pname:org.andicar.activity")));
+						Uri.parse("market://search?q=pname:org.andicar2.activity")));
 			} catch (Exception e) {
 	            AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
 	            		AndiCarDialogBuilder.DIALOGTYPE_WARNING, mResource.getString(R.string.GEN_Warning));
