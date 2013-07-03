@@ -230,6 +230,8 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"Bist Du Dir sicher dass Du dieses Backup wiederherstellen willst? Dadurch werden ALLE deine aktuellen Daten durch die im Backup überschrieben!"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Deine Datenbank wurde wiederhergestellt. Die Anwendung schliesst sich jetzt."</string>
 
+    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Berechnen erstattung"</string>
+    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Von der Kosten pro Strecke Berechnung ausschliessen"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"ist Benzin"</string>
 

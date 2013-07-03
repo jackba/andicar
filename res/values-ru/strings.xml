@@ -258,6 +258,8 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"Действительно востановить выбранную копию? Это действие заменит все ваши существующие данные!"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Ваша база данных восстановлена из копии. Программа будет закрыта."</string>
 
+    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Рассчитать возмещения"</string>
+    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"исключить из расчета стоимости поездки"</string>
     <string name="ExpenseEditActivity_CreatedFromWarning">"Эти расходы созданы на основе [#1].\nРедактируйте соответствующую [#1]."</string>
 

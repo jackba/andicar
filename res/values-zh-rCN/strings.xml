@@ -247,6 +247,8 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"你确定你想要从选择的备份中还原？此操作会替换你的已有数据！"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"你的数据库已被还原。此程序即将关闭。"</string>
 
+    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"计算报销"</string>
+    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"计算排除里程费用"</string>
     <string name="ExpenseEditActivity_CreatedFromWarning">"这个费用是由 [#1] 创建。\n编辑与之相对应的 [#1]."</string>
 

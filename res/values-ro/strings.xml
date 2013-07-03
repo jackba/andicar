@@ -262,6 +262,8 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">&quot;Sigur vrei refacerea fisierului? Aceasta actiune va sterge datele existente!&quot;</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">&quot;Baza de date a fost recreata. Aplicatia se va inchide.&quot;</string>
 
+    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Calculează rambursare"</string>
+    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">&quot;Exclude din costul per Km&quot;</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">&quot;Este combutibil&quot;</string>
 
