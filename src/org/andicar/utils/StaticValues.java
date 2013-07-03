@@ -30,7 +30,7 @@ import android.os.Environment;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 400;
+    public static final int DATABASE_VERSION = 401;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     /*
