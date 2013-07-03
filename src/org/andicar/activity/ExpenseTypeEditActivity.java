@@ -37,6 +37,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     private EditText etName = null;
     private EditText etUserComment = null;
     private CheckBox ckIsActive = null;
+    private CheckBox ckIsCalculateReimbursement = null;
 
     /** Called when the activity is first created. */
     @Override
@@ -47,6 +48,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         etName = (EditText) findViewById( R.id.etName );
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
+        ckIsCalculateReimbursement = (CheckBox) findViewById( R.id.ckIsCalculateReimbursement);
 
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
 
@@ -56,6 +58,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
                     MainDbAdapter.expenseTypeTableColNames, mRowId);
             String name = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
             String isActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String isCalculateReimbursement = c.getString( MainDbAdapter.EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_POS );
             String userComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
 
             if( name != null ) {
@@ -64,6 +67,11 @@ public class ExpenseTypeEditActivity extends EditActivityBase
             if( isActive != null ) {
                 ckIsActive.setChecked( isActive.equals( "Y" ) );
             }
+
+            if( isCalculateReimbursement != null ) {
+            	ckIsCalculateReimbursement.setChecked( isCalculateReimbursement.equals( "Y" ) );
+            }
+
             if( userComment != null ) {
                 etUserComment.setText( userComment );
             }
@@ -71,6 +79,7 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         }
         else {
             ckIsActive.setChecked( true );
+            ckIsCalculateReimbursement.setChecked(false);
         }
 
     }
@@ -81,6 +90,8 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.GEN_COL_NAME_NAME,
                 etName.getText().toString());
+        data.put( MainDbAdapter.EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME,
+                (ckIsCalculateReimbursement.isChecked() ? "Y" : "N") );
         data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
                 (ckIsActive.isChecked() ? "Y" : "N") );
         data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
