@@ -499,19 +499,37 @@ public class GPSTrackService extends Service {
                   + "<name><![CDATA[" + pointName + "]]></name>\n";
             	if(isLastFile){
             		footerTxt = footerTxt
-	                    + "<description>\n<![CDATA[End of trip '" + sName + "'<br>" + Utils.getDateStr(true, true, true)
-	                    + "\n<br>Start at: " +DateFormat.getDateFormat(getApplicationContext()).format(lStartTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStartTime * 1000)
-	                    + "\n<br>End at: " +DateFormat.getDateFormat(getApplicationContext()).format(lStopTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStopTime * 1000)
-	                    + "\n<hr>"
-	    				+ "\nDistance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi")
-	    				+ "\n<br>Max. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "\n<br>Avg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "\n<br>Avg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h")
-		                + "\n<br>Total time: " + Utils.getTimeString(lTotalTime, false)
-		                + "\n<br>Total moving time: " + Utils.getTimeString(lTotalMovingTime, false)
-		                + "\n<br>Pause: " + Utils.getTimeString(lTotalPauseTime, false)
-	                    + "\n<hr>"
-	                	+ "\nRecorded with <a href='http://www.andicar.org'><b>AndiCar</b></a>";
+	                    + "<description>\n<![CDATA[End of trip '" + sName + "'<br>" + Utils.getDateStr(true, true, true);
+            			try{
+            				footerTxt = footerTxt + "\n<br>Start at: " +DateFormat.getDateFormat(getApplicationContext()).format(lStartTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStartTime * 1000);
+            			} catch(Exception e){};
+            			try{
+            				footerTxt = footerTxt + "\n<br>End at: " +DateFormat.getDateFormat(getApplicationContext()).format(lStopTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStopTime * 1000);
+            			} catch(Exception e){};
+            			footerTxt = footerTxt + "\n<hr>";
+            			try{
+            				footerTxt = footerTxt + "\nDistance: " + (BigDecimal.valueOf(dTotalDistance).setScale(2, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km" : " mi");
+            			} catch(Exception e){};
+            			try{
+            				footerTxt = footerTxt + "\n<br>Max. speed: " + (BigDecimal.valueOf(dMaxSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h");
+            			} catch(Exception e){};
+            			try{
+            				footerTxt = footerTxt + "\n<br>Avg. speed: " + (BigDecimal.valueOf(dAvgSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h");
+            			} catch(Exception e){};
+            			try{
+            				footerTxt = footerTxt + "\n<br>Avg. moving speed: " + (BigDecimal.valueOf(dAvgMovingSpeed).setScale(0, BigDecimal.ROUND_HALF_DOWN).toString()) + (isUseMetricUnits? " km/h" : " mi/h");
+            			} catch(Exception e){};
+            			try{
+            				footerTxt = footerTxt + "\n<br>Total time: " + Utils.getTimeString(lTotalTime, false);
+            			} catch(Exception e){};
+            			try{
+            				footerTxt = footerTxt + "\n<br>Total moving time: " + Utils.getTimeString(lTotalMovingTime, false);
+            			} catch(Exception e){};
+            			try{
+            				footerTxt = footerTxt + "\n<br>Pause: " + Utils.getTimeString(lTotalPauseTime, false);
+            			} catch(Exception e){};
+            			footerTxt = footerTxt + "\n<hr>" 
+            			+ "\nRecorded with <a href='http://www.andicar.org'><b>AndiCar</b></a>";
             		
             	}
             	else{
