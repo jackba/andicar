@@ -89,6 +89,9 @@ public class DB {
 	public static final String TASK_TABLE_NAME = "DEF_TASK";
 	public static final String TASK_CAR_TABLE_NAME = "TASK_CAR";
 	public static final String TODO_TABLE_NAME = "TASK_TODO";
+	//link table between cars and reimbursement rates
+	public static final String REIMBURSEMENT_CAR_RATES_TABLE_NAME = "REIMBURSEMENT_CAR";
+	
 	
 	// column names. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
@@ -124,6 +127,8 @@ public class DB {
 	public static final String MILEAGE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
 	public static final String MILEAGE_COL_GPSTRACKLOG_NAME = "GPSTrackLog";
 	public static final String MILEAGE_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
+	public static final String MILEAGE_COL_REIMBURSEMENT_RATE_NAME = "ReimbursementRate";
+	public static final String MILEAGE_COL_REIMBURSEMENT_VALUE_NAME = "ReimbursementValue";
 	// currencies
 	public static final String CURRENCY_COL_CODE_NAME = "Code";
 	// refuel
@@ -150,6 +155,9 @@ public class DB {
 	public static final String REFUEL_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
 	public static final String REFUEL_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
 	public static final String REFUEL_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
+
+	// expense type
+	public static final String EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME = "IsCalculateReimbursement";
 
 	// expense category
 	public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
@@ -316,12 +324,17 @@ public class DB {
 	public static final String TASK_CAR_COL_FIRSTRUN_DATE_NAME = "FirstRunDate";
 	public static final String TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME = "FirstRunMileage";
 
+	public static final String REIMBURSEMENT_CAR_RATES_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
+	public static final String REIMBURSEMENT_CAR_RATES_COL_EXPENSETYPE_ID_NAME = EXPENSE_TABLE_NAME + "_ID";
+	public static final String REIMBURSEMENT_CAR_RATES_COL_RATE_NAME = "Rate";
+
 	// column positions. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
 	public static final int GEN_COL_ROWID_POS = 0;
 	public static final int GEN_COL_NAME_POS = 1;
 	public static final int GEN_COL_ISACTIVE_POS = 2;
 	public static final int GEN_COL_USER_COMMENT_POS = 3;
+	
 	// driver specidfic column positions
 	public static final int DRIVER_COL_LICENSE_NO_POS = 4;
 	// car specific column positions
@@ -350,6 +363,9 @@ public class DB {
 	public static final int MILEAGE_COL_EXPENSETYPE_ID_POS = 10;
 	public static final int MILEAGE_COL_GPSTRACKLOG_POS = 11;
 	public static final int MILEAGE_COL_TAG_ID_POS = 12;
+	public static final int MILEAGE_COL_REIMBURSEMENT_RATE_POS = 13;
+	public static final int MILEAGE_COL_REIMBURSEMENT_VALUE_POS = 14;
+
 	// currencies
 	public static int CURRENCY_COL_CODE_POS = 4;
 	// refuel
@@ -377,6 +393,8 @@ public class DB {
 	public static final int REFUEL_COL_BPARTNER_LOCATION_ID_POS = 25;
 	public static final int REFUEL_COL_TAG_ID_POS = 26;
 
+	public static final int EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_POS = 4;
+	
 	// expense category
 	public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
 	public static final int EXPENSECATEGORY_COL_ISFUEL_POS = 5;
@@ -474,6 +492,11 @@ public class DB {
 	public static final int TODO_COL_DONEDATE_POS = 11;
 	public static final int TODO_COL_ISSTOPNOTIFICATION_POS = 12;
 
+	public static final int REIMBURSEMENT_CAR_RATES_COL_CAR_ID_POS = 4;
+	public static final int REIMBURSEMENT_CAR_RATES_COL_EXPENSETYPE_ID_POS = 5;
+	public static final int REIMBURSEMENT_CAR_RATES_COL_RATE_POS = 6;
+
+
 	public static final String[] driverTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
 			GEN_COL_USER_COMMENT_NAME, DRIVER_COL_LICENSE_NO_NAME };
@@ -496,7 +519,8 @@ public class DB {
 
 	public static final String[] expenseTypeTableColNames = {
 			GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME };
+			GEN_COL_USER_COMMENT_NAME,
+			EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME};
 
 	public static final String[] mileageTableColNames = { GEN_COL_ROWID_NAME,
 			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
@@ -610,6 +634,12 @@ public class DB {
 		TODO_COL_NOTIFICATIONDATE_NAME, TODO_COL_NOTIFICATIONMILEAGE_NAME,  
 		TODO_COL_ISDONE_NAME, TODO_COL_DONEDATE_NAME, TODO_COL_ISSTOPNOTIFICATION_NAME};
 
+	public static final String[] reimbursementCarRatesTableColNames = { GEN_COL_ROWID_NAME,
+			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
+			GEN_COL_USER_COMMENT_NAME, 
+			REIMBURSEMENT_CAR_RATES_COL_CAR_ID_NAME, REIMBURSEMENT_CAR_RATES_COL_EXPENSETYPE_ID_NAME,
+			REIMBURSEMENT_CAR_RATES_COL_RATE_NAME};
+
 	public static final String[] genColName = { GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME };
 	public static final String[] genColRowId = { GEN_COL_ROWID_NAME };
 	public static final String isActiveCondition = " " + GEN_COL_ISACTIVE_NAME + "='Y' ";
@@ -700,7 +730,9 @@ public class DB {
 			+ GEN_COL_ISACTIVE_NAME
 			+ " TEXT DEFAULT 'Y', "
 			+ GEN_COL_USER_COMMENT_NAME
-			+ " TEXT NULL "
+			+ " TEXT NULL, "
+			+ EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME
+			+ " TEXT NOT NULL DEFAULT 'N' "
 			+ ");";
 	protected static final String MILEAGE_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
 			+ MILEAGE_TABLE_NAME
@@ -729,7 +761,13 @@ public class DB {
 			+ " INTEGER NOT NULL, "
 			+ MILEAGE_COL_GPSTRACKLOG_NAME
 			+ " TEXT NULL, "
-			+ MILEAGE_COL_TAG_ID_NAME + " INTEGER NULL " + ");";
+			+ MILEAGE_COL_TAG_ID_NAME 
+			+ " INTEGER NULL, " 
+			+ MILEAGE_COL_REIMBURSEMENT_RATE_NAME 
+			+ " NUMERIC NOT NULL, "
+			+ MILEAGE_COL_REIMBURSEMENT_VALUE_NAME 
+			+ " NUMERIC NOT NULL "
+			+ ");";
 	protected static final String CURRENCY_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
 			+ CURRENCY_TABLE_NAME
 			+ " ( "
@@ -1117,6 +1155,25 @@ public class DB {
 		+ " TEXT DEFAULT 'N' "
 		+ ");";
 
+	protected static final String REIMBURSEMENT_CAR_RATES_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
+			+ REIMBURSEMENT_CAR_RATES_TABLE_NAME
+			+ " ( "
+			+ GEN_COL_ROWID_NAME
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ GEN_COL_NAME_NAME
+			+ " TEXT NOT NULL, "
+			+ GEN_COL_ISACTIVE_NAME
+			+ " TEXT DEFAULT 'Y', "
+			+ GEN_COL_USER_COMMENT_NAME
+			+ " TEXT NULL, "
+			+ REIMBURSEMENT_CAR_RATES_COL_CAR_ID_NAME
+			+ " INTEGER NOT NULL, "
+			+ REIMBURSEMENT_CAR_RATES_COL_EXPENSETYPE_ID_NAME
+			+ " INTEGER NOT NULL, "
+			+ REIMBURSEMENT_CAR_RATES_COL_RATE_NAME
+			+ " NUMBER NOT NULL DEFAULT 0 "
+			+ ");";
+
 	/**
 	 * Constructor - takes the context to allow the database to be
 	 * opened/created
@@ -1217,6 +1274,8 @@ public class DB {
 
 			AddOnDBAdapter.createAddOnDataTemplateTables(db);
 			AddOnDBAdapter.createAddOnBTDeviceCarTable(db);
+			
+			createReimbursementCarRatesTable(db);
 
 			// create indexes
 			createIndexes(db);
@@ -1458,6 +1517,10 @@ public class DB {
 			db.execSQL(TAG_TABLE_CREATE_SQL);
 		}
 
+		private void createReimbursementCarRatesTable(SQLiteDatabase db) throws SQLException {
+			db.execSQL(REIMBURSEMENT_CAR_RATES_TABLE_CREATE_SQL);
+		}
+		
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -1480,6 +1543,7 @@ public class DB {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			}
 			// AndiCar 2.0.x
 			else if (oldVersion == 200) {
@@ -1496,6 +1560,7 @@ public class DB {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			}
 			// AndiCar 2.1.x
 			else if (oldVersion == 210) {
@@ -1511,6 +1576,7 @@ public class DB {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			}
 			// AndiCar 3.0.x
 			else if (oldVersion == 300) {
@@ -1523,6 +1589,7 @@ public class DB {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
+				upgradeDbTo401(db, oldVersion);
 				upgradeDbTo400(db, oldVersion);
 			}
 			// AndiCar 3.1.x, 3.2.x
@@ -1536,6 +1603,7 @@ public class DB {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			}
 			// AndiCar 3.3.x
 			else if (oldVersion == 330) {
@@ -1547,6 +1615,7 @@ public class DB {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			}
 			// AndiCar 3.4.x
 			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again because on fresh 350 install addon tables was not created
@@ -1557,6 +1626,7 @@ public class DB {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			} else if (oldVersion == 351) {
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
@@ -1564,6 +1634,7 @@ public class DB {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			} else if (oldVersion == 353) {
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
@@ -1571,26 +1642,34 @@ public class DB {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			} else if (oldVersion == 355) {
 				upgradeDbTo356(db, oldVersion);
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			} else if (oldVersion == 356) {
 				upgradeDbTo357(db, oldVersion);
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			} else if (oldVersion == 357) {
 				AddOnDBAdapter.upgradeTo358(db);
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			}else if (oldVersion == 358) {
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
 			}else if (oldVersion == 359) {
 				upgradeDbTo400(db, oldVersion);
+				upgradeDbTo401(db, oldVersion);
+			}else if (oldVersion == 400) {
+				upgradeDbTo401(db, oldVersion);
 			}
 
 			// !!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
@@ -2048,6 +2127,32 @@ public class DB {
 				updSql = "UPDATE " + GPSTRACK_TABLE_NAME + " SET "
 						+ GPSTRACK_COL_TOTALPAUSETIME_NAME + " = 0";
 
+				db.execSQL(updSql);
+			}
+		}
+
+		private void upgradeDbTo401(SQLiteDatabase db, int oldVersion) throws SQLException {
+			String updSql = null;
+			createReimbursementCarRatesTable(db);
+			if (!columnExists(db, EXPENSETYPE_TABLE_NAME,
+					EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME)) {
+				updSql = "ALTER TABLE " + EXPENSETYPE_TABLE_NAME + " ADD "
+						+ EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME
+						+ " TEXT NOT NULL DEFAULT 'N'";
+				db.execSQL(updSql);
+			}
+			if (!columnExists(db, MILEAGE_TABLE_NAME,
+					MILEAGE_COL_REIMBURSEMENT_RATE_NAME)) {
+				updSql = "ALTER TABLE " + MILEAGE_TABLE_NAME + " ADD "
+						+ MILEAGE_COL_REIMBURSEMENT_RATE_NAME
+						+ " NUMERIC NOT NULL DEFAULT 0";
+				db.execSQL(updSql);
+			}
+			if (!columnExists(db, MILEAGE_TABLE_NAME,
+					MILEAGE_COL_REIMBURSEMENT_VALUE_NAME)) {
+				updSql = "ALTER TABLE " + MILEAGE_TABLE_NAME + " ADD "
+						+ MILEAGE_COL_REIMBURSEMENT_VALUE_NAME
+						+ " NUMERIC NOT NULL DEFAULT 0";
 				db.execSQL(updSql);
 			}
 		}
