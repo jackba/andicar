@@ -248,6 +248,9 @@
     <string name="BackupRestoreEditActivity_BackupDeleteConfirmation">"Biztos, hogy törlöd a kijelölt biztonsági mentés?"</string>
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"Biztos, hogy vissza akarod állítani a kijelölt biztonsági mentést? Ez a művelet lecseréli a meglévő adatokat!"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Az adatbázis helyreállt. Az alkalmazás leáll."</string>
+
+    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Számolj visszatérítést"</string>
+    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Kizárás az fuvarköltség számításából"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"Üzemanyag"</string>
     <string name="ExpenseEditActivity_CreatedFromWarning">"Ez a költség [#1] jött létre. Megfelelő [#1] szerkesztése."</string>
