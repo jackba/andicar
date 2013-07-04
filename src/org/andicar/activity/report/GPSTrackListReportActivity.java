@@ -66,7 +66,7 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
         if(icicle == null){
             whereConditions = new Bundle();
             whereConditions.putString(
-                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK, MainDbAdapter.COL_NAME_GPSTRACK__CAR_ID) + "=",
                     mCarId.toString() );
         }
         else
@@ -75,7 +75,7 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
         initStyle();
 
         super.onCreate( icicle, null, GPSTrackEditActivity.class, GPSTrackController.class,
-                MainDbAdapter.GPSTRACK_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
+                MainDbAdapter.TABLE_NAME_GPSTRACK, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null, threeLineListReportActivity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
@@ -117,12 +117,12 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
         tvDateFromSearch = (TextView) searchView.findViewById(R.id.tvDateFromSearch);
         tvDateToSearch = (TextView) searchView.findViewById(R.id.tvDateToSearch);
         spnCarSearch = (Spinner) searchView.findViewById(R.id.spnCarSearch);
-        initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME, null, null, mCarId);
+        initSpinner(spnCarSearch, MainDbAdapter.TABLE_NAME_CAR, null, null, mCarId);
         spnDriverSearch = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
-        initSpinner(spnDriverSearch, MainDbAdapter.DRIVER_TABLE_NAME, null, null, -1);
+        initSpinner(spnDriverSearch, MainDbAdapter.TABLE_NAME_DRIVER, null, null, -1);
         acTag = ((AutoCompleteTextView) searchView.findViewById( R.id.acTag ));
         tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_TAG, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
         acTag.setText("%");
@@ -155,47 +155,47 @@ public class GPSTrackListReportActivity extends ReportListActivityBase{
                     whereConditions.clear();
                     if (etUserCommentSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
-                                MainDbAdapter.GEN_COL_USER_COMMENT_NAME) + " LIKE ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK,
+                                MainDbAdapter.COL_NAME_GEN_USER_COMMENT) + " LIKE ",
                                 etUserCommentSearch.getText().toString());
                     }
                     if (tvDateFromSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
-                                MainDbAdapter.GPSTRACK_COL_DATE_NAME) + " >= ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK,
+                                MainDbAdapter.COL_NAME_GPSTRACK__DATE) + " >= ",
                                 Long.toString(Utils.decodeDateStr(tvDateFromSearch.getText().toString(),
                                 StaticValues.DATE_DECODE_TO_ZERO) / 1000));
                     }
                     if (tvDateToSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
-                                MainDbAdapter.GPSTRACK_COL_DATE_NAME) + " <= ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK,
+                                MainDbAdapter.COL_NAME_GPSTRACK__DATE) + " <= ",
                                 Long.toString(Utils.decodeDateStr(tvDateToSearch.getText().toString(),
                                 StaticValues.DATE_DECODE_TO_24) / 1000));
                     }
                     if (spnCarSearch.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
-                                MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK,
+                                MainDbAdapter.COL_NAME_GPSTRACK__CAR_ID) + "=",
                                 String.valueOf(spnCarSearch.getSelectedItemId()));
                     }
                     if (spnDriverSearch.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
-                                MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK,
+                                MainDbAdapter.COL_NAME_GPSTRACK__DRIVER_ID) + "=",
                                 String.valueOf(spnDriverSearch.getSelectedItemId()));
                     }
                     if (acTag.getText().toString() != null) {
                     	if(acTag.getText().toString().length() == 0)
                             whereConditions.putString(
-                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME,
-                                    							MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME) + " is ",
+                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK,
+                                    							MainDbAdapter.COL_NAME_GPSTRACK__TAG_ID) + " is ",
                                     "null");
                     	else
                             whereConditions.putString(
                             		"COALESCE( " +
-	                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TAG_TABLE_NAME,
-	                                    							MainDbAdapter.GEN_COL_NAME_NAME) + ", '') LIKE ",
+	                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TAG,
+	                                    							MainDbAdapter.COL_NAME_GEN_NAME) + ", '') LIKE ",
         							acTag.getText().toString());
                     }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);

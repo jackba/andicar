@@ -75,34 +75,34 @@ public class CarEditActivity extends EditActivityBase
         BigDecimal bdStartIndex = null;
 
         if( operation.equals( "E") ) {
-            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, mRowId);
-            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String strCarModel = c.getString( MainDbAdapter.CAR_COL_MODEL_POS );
-            String strRegistrationNo = c.getString( MainDbAdapter.CAR_COL_REGISTRATIONNO_POS );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.COL_NAME_GEN_ROWID );
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_LIST_CAR_TABLE, mRowId);
+            String strName = c.getString( MainDbAdapter.COL_POS_GEN_NAME );
+            String strIsActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
+            String strUserComment = c.getString( MainDbAdapter.COL_POS_GEN_USER_COMMENT );
+            String strCarModel = c.getString( MainDbAdapter.COL_POS_CAR__MODEL );
+            String strRegistrationNo = c.getString( MainDbAdapter.COL_POS_CAR__REGISTRATIONNO );
             try{
-                bdStartIndex = new BigDecimal(c.getString( MainDbAdapter.CAR_COL_INDEXSTART_POS ));
+                bdStartIndex = new BigDecimal(c.getString( MainDbAdapter.COL_POS_CAR__INDEXSTART ));
             }
             catch(NumberFormatException e){};
-            Long lUomLengthId = c.getLong( MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS );
-            Long lUomVolumeId = c.getLong( MainDbAdapter.CAR_COL_UOMVOLUME_ID_POS );
-            Long lCurrencyId = c.getLong( MainDbAdapter.CAR_COL_CURRENCY_ID_POS );
+            Long lUomLengthId = c.getLong( MainDbAdapter.COL_POS_CAR__UOMLENGTH_ID );
+            Long lUomVolumeId = c.getLong( MainDbAdapter.COL_POS_CAR__UOMVOLUME_ID );
+            Long lCurrencyId = c.getLong( MainDbAdapter.COL_POS_CAR__CURRENCY_ID );
             //uom for length
-            initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
-                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, lUomLengthId, false);
+            initSpinner(spnUomLength, MainDbAdapter.TABLE_NAME_UOM,
+                    MainDbAdapter.COL_LIST_GEN_ROWID_NAME, new String[]{MainDbAdapter.COL_NAME_GEN_NAME},
+                    MainDbAdapter.COL_NAME_UOM__UOMTYPE + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
+                        MainDbAdapter.WHERE_CONDITION_ISACTIVE_ANDPREFIX, null, MainDbAdapter.COL_NAME_GEN_NAME, lUomLengthId, false);
             //uom for volume
-            initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
-                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, lUomVolumeId, false);
+            initSpinner(spnUomVolume, MainDbAdapter.TABLE_NAME_UOM,
+                    MainDbAdapter.COL_LIST_GEN_ROWID_NAME, new String[]{MainDbAdapter.COL_NAME_GEN_NAME},
+                    MainDbAdapter.COL_NAME_UOM__UOMTYPE + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
+                        MainDbAdapter.WHERE_CONDITION_ISACTIVE_ANDPREFIX, null, MainDbAdapter.COL_NAME_GEN_NAME, lUomVolumeId, false);
              //default currency
-            initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, lCurrencyId, false);
+            initSpinner(spnCurrency, MainDbAdapter.TABLE_NAME_CURRENCY,
+                    MainDbAdapter.COL_LIST_GEN_ROWID_NAME, new String[]{MainDbAdapter.COL_NAME_GEN_NAME},
+                    MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME, lCurrencyId, false);
 
             if( strName != null ) {
                 etName.setText( strName );
@@ -125,19 +125,19 @@ public class CarEditActivity extends EditActivityBase
             c.close();
         }
         else {
-            initSpinner(spnUomLength, MainDbAdapter.UOM_TABLE_NAME,
-                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, 1, false);
+            initSpinner(spnUomLength, MainDbAdapter.TABLE_NAME_UOM,
+                    MainDbAdapter.COL_LIST_GEN_ROWID_NAME, new String[]{MainDbAdapter.COL_NAME_GEN_NAME},
+                    MainDbAdapter.COL_NAME_UOM__UOMTYPE + "='" + StaticValues.UOM_LENGTH_TYPE_CODE + "'" +
+                        MainDbAdapter.WHERE_CONDITION_ISACTIVE_ANDPREFIX, null, MainDbAdapter.COL_NAME_GEN_NAME, 1, false);
             //uom for volume
-            initSpinner(spnUomVolume, MainDbAdapter.UOM_TABLE_NAME,
-                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.UOM_COL_UOMTYPE_NAME + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
-                        MainDbAdapter.isActiveWithAndCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, 3, false);
+            initSpinner(spnUomVolume, MainDbAdapter.TABLE_NAME_UOM,
+                    MainDbAdapter.COL_LIST_GEN_ROWID_NAME, new String[]{MainDbAdapter.COL_NAME_GEN_NAME},
+                    MainDbAdapter.COL_NAME_UOM__UOMTYPE + "='" + StaticValues.UOM_VOLUME_TYPE_CODE + "'" +
+                        MainDbAdapter.WHERE_CONDITION_ISACTIVE_ANDPREFIX, null, MainDbAdapter.COL_NAME_GEN_NAME, 3, false);
              //default currency
-            initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                    MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                    MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, 1, false);
+            initSpinner(spnCurrency, MainDbAdapter.TABLE_NAME_CURRENCY,
+                    MainDbAdapter.COL_LIST_GEN_ROWID_NAME, new String[]{MainDbAdapter.COL_NAME_GEN_NAME},
+                    MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME, 1, false);
 
             ckIsActive.setChecked( true );
         }
@@ -161,30 +161,30 @@ public class CarEditActivity extends EditActivityBase
             }
         }
         ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE,
                 (ckIsActive.isChecked() ? "Y" : "N") );
-        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,
                 etUserComment.getText().toString() );
-        cvData.put( MainDbAdapter.CAR_COL_MODEL_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_CAR__MODEL,
                 etCarModel.getText().toString() );
-        cvData.put( MainDbAdapter.CAR_COL_REGISTRATIONNO_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_CAR__REGISTRATIONNO,
                 etCarRegNo.getText().toString());
-        cvData.put( MainDbAdapter.CAR_COL_INDEXSTART_NAME, bdStartIndex.toString() );
-        cvData.put( MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_CAR__INDEXSTART, bdStartIndex.toString() );
+        cvData.put( MainDbAdapter.COL_NAME_CAR__UOMLENGTH_ID,
                 spnUomLength.getSelectedItemId() );
-        cvData.put( MainDbAdapter.CAR_COL_UOMVOLUME_ID_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_CAR__UOMVOLUME_ID,
                 spnUomVolume.getSelectedItemId() );
-        cvData.put( MainDbAdapter.CAR_COL_CURRENCY_ID_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_CAR__CURRENCY_ID,
                 spnCurrency.getSelectedItemId());
 
         int dbRetVal = -1;
         String strErrMsg = null;
         if( mRowId == -1 ) {
             //when a new car defined the current index is same with the start index
-            cvData.put( MainDbAdapter.CAR_COL_INDEXCURRENT_NAME, bdStartIndex.toString() );
-            dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.CAR_TABLE_NAME, cvData)).intValue();
+            cvData.put( MainDbAdapter.COL_NAME_CAR__INDEXCURRENT, bdStartIndex.toString() );
+            dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_CAR, cvData)).intValue();
             if(dbRetVal > 0){
             	finish();
             	return true;
@@ -201,7 +201,7 @@ public class CarEditActivity extends EditActivityBase
             }
         }
         else {
-        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.CAR_TABLE_NAME, mRowId, cvData);
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_CAR, mRowId, cvData);
             if(dbRetVal != -1){
                 strErrMsg = mResource.getString(dbRetVal);
                 if(dbRetVal == R.string.ERR_000)
@@ -248,9 +248,9 @@ public class CarEditActivity extends EditActivityBase
 		if(data != null)
 			newId =	data.getLongExtra("mRowId", 0);
 			
-        initSpinner(spnCurrency, MainDbAdapter.CURRENCY_TABLE_NAME,
-                MainDbAdapter.genColName, new String[]{MainDbAdapter.GEN_COL_NAME_NAME},
-                MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME, newId, false);
+        initSpinner(spnCurrency, MainDbAdapter.TABLE_NAME_CURRENCY,
+                MainDbAdapter.COL_LIST_GEN_ROWID_NAME, new String[]{MainDbAdapter.COL_NAME_GEN_NAME},
+                MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME, newId, false);
 	}
 
 	/* (non-Javadoc)

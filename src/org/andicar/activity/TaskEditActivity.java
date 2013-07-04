@@ -153,13 +153,13 @@ public class TaskEditActivity extends EditActivityBase {
 		init();
 
 		if (operation.equals("E")) {
-			mRowId = mBundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
-			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_TABLE_NAME,
-					MainDbAdapter.taskTableColNames, mRowId);
-			String name = c.getString(MainDbAdapter.GEN_COL_NAME_POS);
-			String isActive = c.getString(MainDbAdapter.GEN_COL_ISACTIVE_POS);
-			String userComment = c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS);
-			Long lTaskTypeId = c.getLong(MainDbAdapter.TASK_COL_TASKTYPE_ID_POS);
+			mRowId = mBundleExtras.getLong(MainDbAdapter.COL_NAME_GEN_ROWID);
+			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TASK,
+					MainDbAdapter.COL_LIST_TASK_TABLE, mRowId);
+			String name = c.getString(MainDbAdapter.COL_POS_GEN_NAME);
+			String isActive = c.getString(MainDbAdapter.COL_POS_GEN_ISACTIVE);
+			String userComment = c.getString(MainDbAdapter.COL_POS_GEN_USER_COMMENT);
+			Long lTaskTypeId = c.getLong(MainDbAdapter.COL_POS_TASK__TASKTYPE_ID);
 
 			if (name != null) {
 				etName.setText(name);
@@ -171,19 +171,19 @@ public class TaskEditActivity extends EditActivityBase {
 				etUserComment.setText(userComment);
 			}
 
-			initSpinner(spnTaskType, MainDbAdapter.TASKTYPE_TABLE_NAME,
-					MainDbAdapter.genColName,
-					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-					MainDbAdapter.isActiveCondition, null,
-					MainDbAdapter.GEN_COL_NAME_NAME, lTaskTypeId, false);
-			isRecurrent = (c.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y"));
+			initSpinner(spnTaskType, MainDbAdapter.TABLE_NAME_TASKTYPE,
+					MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+					new String[] { MainDbAdapter.COL_NAME_GEN_NAME },
+					MainDbAdapter.WHERE_CONDITION_ISACTIVE, null,
+					MainDbAdapter.COL_NAME_GEN_NAME, lTaskTypeId, false);
+			isRecurrent = (c.getString(MainDbAdapter.COL_POS_TASK__ISRECURRENT).equals("Y"));
 			if(isRecurrent)
 				rbRecurent.setChecked(true);
 			else
 				rbOneTime.setChecked(true);
 			
 
-			mScheduledFor = c.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS); 
+			mScheduledFor = c.getString(MainDbAdapter.COL_POS_TASK__SCHEDULEDFOR); 
 			if(mScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 				isMileageEnabled = true;
 				isTimingEnabled = true;
@@ -199,16 +199,16 @@ public class TaskEditActivity extends EditActivityBase {
 				isTimingEnabled = false;
 				rbMileageDriven.setChecked(true);
 			}
-			if(c.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS) != null){
-				ckIsDifferentStartingTime.setChecked(c.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y"));
-				isDiffStartingTime = c.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("Y");
-				etFrequency.setText(c.getString(MainDbAdapter.TASK_COL_TIMEFREQUENCY_POS));
+			if(c.getString(MainDbAdapter.COL_POS_TASK__ISDIFFERENTSTARTINGTIME) != null){
+				ckIsDifferentStartingTime.setChecked(c.getString(MainDbAdapter.COL_POS_TASK__ISDIFFERENTSTARTINGTIME).equals("Y"));
+				isDiffStartingTime = c.getString(MainDbAdapter.COL_POS_TASK__ISDIFFERENTSTARTINGTIME).equals("Y");
+				etFrequency.setText(c.getString(MainDbAdapter.COL_POS_TASK__TIMEFREQUENCY));
 			}
-			mTimeFrequencyTypeId = c.getLong(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS);
+			mTimeFrequencyTypeId = c.getLong(MainDbAdapter.COL_POS_TASK__TIMEFREQUENCYTYPE);
 			spnScheduleFrequency.setSelection( ((Long)mTimeFrequencyTypeId).intValue() - 1);
 			Long startingTimeInMilis;
-			if(c.getString(MainDbAdapter.TASK_COL_STARTINGTIME_POS) != null)
-				startingTimeInMilis = c.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000;
+			if(c.getString(MainDbAdapter.COL_POS_TASK__STARTINGTIME) != null)
+				startingTimeInMilis = c.getLong(MainDbAdapter.COL_POS_TASK__STARTINGTIME) * 1000;
 			else
 				startingTimeInMilis = System.currentTimeMillis();
 			if(isTimingEnabled){
@@ -227,24 +227,24 @@ public class TaskEditActivity extends EditActivityBase {
 			else
 				initDateTime(System.currentTimeMillis() + StaticValues.ONE_DAY_IN_MILISECONDS);
 			
-			if(c.getString(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS) != null)
-				etTimeReminder.setText(c.getString(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+			if(c.getString(MainDbAdapter.COL_POS_TASK__TIMEREMINDERSTART) != null)
+				etTimeReminder.setText(c.getString(MainDbAdapter.COL_POS_TASK__TIMEREMINDERSTART));
 			
-			if(c.getString(MainDbAdapter.TASK_COL_RUNMILEAGE_POS) != null)
-				etMileage.setText(c.getString(MainDbAdapter.TASK_COL_RUNMILEAGE_POS));
+			if(c.getString(MainDbAdapter.COL_POS_TASK__RUNMILEAGE) != null)
+				etMileage.setText(c.getString(MainDbAdapter.COL_POS_TASK__RUNMILEAGE));
 
-			etReminderMileage.setText(c.getString(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_POS));
+			etReminderMileage.setText(c.getString(MainDbAdapter.COL_POS_TASK__MILEAGEREMINDERSTART));
 			
-			etNoOfNextToDo.setText(c.getString(MainDbAdapter.TASK_COL_TODOCOUNT_POS));
+			etNoOfNextToDo.setText(c.getString(MainDbAdapter.COL_POS_TASK__TODOCOUNT));
 
 			c.close();
 		} else { // new
 			ckIsActive.setChecked(true);
-			initSpinner(spnTaskType, MainDbAdapter.TASKTYPE_TABLE_NAME,
-					MainDbAdapter.genColName,
-					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-					MainDbAdapter.isActiveCondition, null,
-					MainDbAdapter.GEN_COL_NAME_NAME, 0, false);
+			initSpinner(spnTaskType, MainDbAdapter.TABLE_NAME_TASKTYPE,
+					MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+					new String[] { MainDbAdapter.COL_NAME_GEN_NAME },
+					MainDbAdapter.WHERE_CONDITION_ISACTIVE, null,
+					MainDbAdapter.COL_NAME_GEN_NAME, 0, false);
 			rbRecurent.setChecked(true);
 			rbTimeAndMileageDriven.setChecked(true);
 			llStartingTime.setVisibility(View.GONE);
@@ -336,14 +336,14 @@ public class TaskEditActivity extends EditActivityBase {
 			if(isMileageEnabled){
 				if(firstRun.length() > 0)
 					firstRun = firstRun + " || '; " + mResource.getString(R.string.TaskCarEditActivity_StartMileage) + " ' || " + 
-						DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME) + 
+						DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE) + 
 							" || ' ' || " + 
-						DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.UOM_COL_CODE_NAME);
+						DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_UOM, MainDbAdapter.COL_NAME_UOM__CODE);
 				else
 					firstRun = "'" + mResource.getString(R.string.TaskCarEditActivity_StartMileage) + " ' || " + 
-						DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME) + 
+						DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE) + 
 							" || ' ' || " + 
-						DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.UOM_COL_CODE_NAME);
+						DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_UOM, MainDbAdapter.COL_NAME_UOM__CODE);
 			}
     	}
     	else{
@@ -358,22 +358,22 @@ public class TaskEditActivity extends EditActivityBase {
         String[] selectionArgs = {Long.toString(mRowId)};
     	String selectSql = 
     		"SELECT " + 
-				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + ", " + //#0
-				DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_NAME_NAME) + ", " + //#1
+				DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_GEN_ROWID) + ", " + //#0
+				DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_NAME_GEN_NAME) + ", " + //#1
 				firstRun +
-				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME) + " " + //#3
-			" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
-				" JOIN " + MainDbAdapter.CAR_TABLE_NAME + " ON " + 
-					DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME) + " = " +
-					DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + 
-					" JOIN " + MainDbAdapter.UOM_TABLE_NAME + " ON " + 
-                		DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.CAR_COL_UOMLENGTH_ID_NAME) + "=" +
-                                        	DB.sqlConcatTableColumn(MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) +
+				DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_DATE) + " " + //#3
+			" FROM " + MainDbAdapter.TABLE_NAME_TASK_CAR + " " +
+				" JOIN " + MainDbAdapter.TABLE_NAME_CAR + " ON " + 
+					DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_TASK_CAR__CAR_ID) + " = " +
+					DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_NAME_GEN_ROWID) + 
+					" JOIN " + MainDbAdapter.TABLE_NAME_UOM + " ON " + 
+                		DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_NAME_CAR__UOMLENGTH_ID) + "=" +
+                                        	DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_UOM, MainDbAdapter.COL_NAME_GEN_ROWID) +
 			" WHERE " + 
-				DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME) + " = ? " +
-				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.GEN_COL_ISACTIVE_NAME) + " = 'Y'" +
+				DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_TASK_CAR__TASK_ID) + " = ? " +
+				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_GEN_ISACTIVE) + " = 'Y'" +
 			" ORDER BY " + 
-				DB.sqlConcatTableColumn(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.GEN_COL_NAME_NAME);
+				DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_NAME_GEN_NAME);
 
     	int listLayout = R.layout.twoline_list2_activity_s01;
 
@@ -381,7 +381,7 @@ public class TaskEditActivity extends EditActivityBase {
         SimpleCursorAdapter cursorAdapter =
         	new SimpleCursorAdapter(this, listLayout,
         			mLinkedCarsCursor,
-                        new String[]{MainDbAdapter.GEN_COL_NAME_NAME, "FirstRun"}, 
+                        new String[]{MainDbAdapter.COL_NAME_GEN_NAME, "FirstRun"}, 
                         new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}
                 );
         cursorAdapter.setViewBinder(new TaskCarLinkDataBinder());
@@ -507,59 +507,59 @@ public class TaskEditActivity extends EditActivityBase {
 		}
 		
 		ContentValues data = new ContentValues();
-		data.put(MainDbAdapter.GEN_COL_NAME_NAME, etName.getText().toString());
-		data.put(MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+		data.put(MainDbAdapter.COL_NAME_GEN_NAME, etName.getText().toString());
+		data.put(MainDbAdapter.COL_NAME_GEN_ISACTIVE,
 				(ckIsActive.isChecked() ? "Y" : "N"));
-		data.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME, etUserComment
+		data.put(MainDbAdapter.COL_NAME_GEN_USER_COMMENT, etUserComment
 				.getText().toString());
 
-		data.put(MainDbAdapter.TASK_COL_TASKTYPE_ID_NAME, spnTaskType.getSelectedItemId());
-		data.put(MainDbAdapter.TASK_COL_SCHEDULEDFOR_NAME, mScheduledFor);
-		data.put(MainDbAdapter.TASK_COL_ISRECURRENT_NAME, (isRecurrent ? "Y" : "N"));
+		data.put(MainDbAdapter.COL_NAME_TASK__TASKTYPE_ID, spnTaskType.getSelectedItemId());
+		data.put(MainDbAdapter.COL_NAME_TASK__SCHEDULEDFOR, mScheduledFor);
+		data.put(MainDbAdapter.COL_NAME_TASK__ISRECURRENT, (isRecurrent ? "Y" : "N"));
 		if(isRecurrent)
-			data.put(MainDbAdapter.TASK_COL_TODOCOUNT_NAME, etNoOfNextToDo.getText().toString());
+			data.put(MainDbAdapter.COL_NAME_TASK__TODOCOUNT, etNoOfNextToDo.getText().toString());
 		else
-			data.put(MainDbAdapter.TASK_COL_TODOCOUNT_NAME, 1);
+			data.put(MainDbAdapter.COL_NAME_TASK__TODOCOUNT, 1);
 		if(isTimingEnabled){
 			if(isRecurrent){
-				data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (isDiffStartingTime ? "Y" : "N"));
-				data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCY_NAME, etFrequency.getText().toString());
+				data.put(MainDbAdapter.COL_NAME_TASK__ISDIFFERENTSTARTINGTIME, (isDiffStartingTime ? "Y" : "N"));
+				data.put(MainDbAdapter.COL_NAME_TASK__TIMEFREQUENCY, etFrequency.getText().toString());
 				if(isDiffStartingTime)
-					data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, (Long)null);
+					data.put(MainDbAdapter.COL_NAME_TASK__STARTINGTIME, (Long)null);
 				else{
 					if(mTimeFrequencyTypeId == StaticValues.TASK_TIMEFREQUENCYTYPE_MONTHLY && ckOnLastDay.isChecked()){
 						mcalDateTime.set(Calendar.MONTH, spnLastDayMonth.getSelectedItemPosition());
-						data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mcalDateTime.getTimeInMillis() / 1000);
+						data.put(MainDbAdapter.COL_NAME_TASK__STARTINGTIME, mcalDateTime.getTimeInMillis() / 1000);
 					}
 					else
-						data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
+						data.put(MainDbAdapter.COL_NAME_TASK__STARTINGTIME, mlDateTimeInSeconds);
 				}
 			}
 			else{
-				data.put(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, (String)null);
-				data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCY_NAME, (String)null);
-				data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, mlDateTimeInSeconds);
+				data.put(MainDbAdapter.COL_NAME_TASK__ISDIFFERENTSTARTINGTIME, (String)null);
+				data.put(MainDbAdapter.COL_NAME_TASK__TIMEFREQUENCY, (String)null);
+				data.put(MainDbAdapter.COL_NAME_TASK__STARTINGTIME, mlDateTimeInSeconds);
 			}
 
-			data.put(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_NAME, mTimeFrequencyTypeId);
-			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, etTimeReminder.getText().toString());
+			data.put(MainDbAdapter.COL_NAME_TASK__TIMEFREQUENCYTYPE, mTimeFrequencyTypeId);
+			data.put(MainDbAdapter.COL_NAME_TASK__TIMEREMINDERSTART, etTimeReminder.getText().toString());
 		}
 		else{
-			data.put(MainDbAdapter.TASK_COL_STARTINGTIME_NAME, (Integer)null);
-			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, (Integer)null);
-			data.put(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_NAME, (Integer)null);
+			data.put(MainDbAdapter.COL_NAME_TASK__STARTINGTIME, (Integer)null);
+			data.put(MainDbAdapter.COL_NAME_TASK__TIMEREMINDERSTART, (Integer)null);
+			data.put(MainDbAdapter.COL_NAME_TASK__TIMEREMINDERSTART, (Integer)null);
 		}
 		if(isMileageEnabled){
-			data.put(MainDbAdapter.TASK_COL_RUNMILEAGE_NAME, etMileage.getText().toString());
-			data.put(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_NAME, etReminderMileage.getText().toString());
+			data.put(MainDbAdapter.COL_NAME_TASK__RUNMILEAGE, etMileage.getText().toString());
+			data.put(MainDbAdapter.COL_NAME_TASK__MILEAGEREMINDERSTART, etReminderMileage.getText().toString());
 		}
 		else{
-			data.put(MainDbAdapter.TASK_COL_RUNMILEAGE_NAME, (Integer)null);
-			data.put(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_NAME, (Integer)null);
+			data.put(MainDbAdapter.COL_NAME_TASK__RUNMILEAGE, (Integer)null);
+			data.put(MainDbAdapter.COL_NAME_TASK__MILEAGEREMINDERSTART, (Integer)null);
 		}
 		
 		if (mRowId == -1) {
-			mRowId = mDbAdapter.createRecord(MainDbAdapter.TASK_TABLE_NAME, data);
+			mRowId = mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_TASK, data);
 			if(mRowId > 0)
 				saveSuccess = true;
 			else
@@ -574,7 +574,7 @@ public class TaskEditActivity extends EditActivityBase {
 			}
 		} else {
 			int updResult = mDbAdapter.updateRecord(
-					MainDbAdapter.TASK_TABLE_NAME, mRowId, data);
+					MainDbAdapter.TABLE_NAME_TASK, mRowId, data);
 			if (updResult != -1) {
 				saveSuccess = false;
 				String errMsg = "";
@@ -591,8 +591,8 @@ public class TaskEditActivity extends EditActivityBase {
 					//final save => recreate the todos (delete existing & recreate)
 					String[] deleteArgs = {Long.toString(mRowId)};
 //	                mDbAdapter.deleteRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?", deleteArgs);
-	                mDbAdapter.deleteRecords(MainDbAdapter.TODO_TABLE_NAME, 
-	                		MainDbAdapter.TODO_COL_TASK_ID_NAME + " = ? AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + " = 'N'", 
+	                mDbAdapter.deleteRecords(MainDbAdapter.TABLE_NAME_TODO, 
+	                		MainDbAdapter.COL_NAME_TODO__TASK_ID + " = ? AND " + MainDbAdapter.COL_NAME_TODO__ISDONE + " = 'N'", 
 	                		deleteArgs);
 
 					Intent intent = new Intent(this, ToDoManagementService.class);
@@ -606,19 +606,19 @@ public class TaskEditActivity extends EditActivityBase {
 		//delete existent linked cars if the current configuration not support linked cars
 		String[] selectionArgs = {Long.toString(mRowId)};
 		if(isFinishAfterSave && isDeleteLinkedCarsOnSave){
-			mDbAdapter.deleteRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, 
-						MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + "= ?", selectionArgs);
+			mDbAdapter.deleteRecords(MainDbAdapter.TABLE_NAME_TASK_CAR, 
+						MainDbAdapter.COL_NAME_TASK_CAR__TASK_ID + "= ?", selectionArgs);
 		}
 		
 		ContentValues newContent = new ContentValues();
 		if(!isTimingEnabled){
-			newContent.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, (Long)null);
-			mDbAdapter.updateRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?", 
+			newContent.put(MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_DATE, (Long)null);
+			mDbAdapter.updateRecords(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_TASK_CAR__TASK_ID + " = ?", 
 					selectionArgs, newContent);
 		}
 		if(!isMileageEnabled){
-			newContent.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, (Integer)null);
-			mDbAdapter.updateRecords(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = ?", 
+			newContent.put(MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE, (Integer)null);
+			mDbAdapter.updateRecords(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_NAME_TASK_CAR__TASK_ID + " = ?", 
 					selectionArgs, newContent);
 		}
 		return true;
@@ -647,20 +647,20 @@ public class TaskEditActivity extends EditActivityBase {
 			mPrefEditor.commit();
 			if(!saveSuccess)
 				return;
-			mLinkDialogCarSelectCondition = MainDbAdapter.isActiveCondition +
-				" AND " + MainDbAdapter.GEN_COL_ROWID_NAME + 
-												" NOT IN (SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + 
-														" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME + " " +
-														" WHERE " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " = " + Long.toString(mRowId) +
+			mLinkDialogCarSelectCondition = MainDbAdapter.WHERE_CONDITION_ISACTIVE +
+				" AND " + MainDbAdapter.COL_NAME_GEN_ROWID + 
+												" NOT IN (SELECT " + MainDbAdapter.COL_NAME_TASK_CAR__CAR_ID + 
+														" FROM " + MainDbAdapter.TABLE_NAME_TASK_CAR + " " +
+														" WHERE " + MainDbAdapter.COL_NAME_TASK_CAR__TASK_ID + " = " + Long.toString(mRowId) +
 														")";
 			if(!isRecurrent && isMileageEnabled && !isTimingEnabled){ //select only cars with current mileage < due mileage
 				mLinkDialogCarSelectCondition  = mLinkDialogCarSelectCondition  + 
-					" AND " + MainDbAdapter.CAR_COL_INDEXCURRENT_NAME + " < " + etMileage.getText().toString();
+					" AND " + MainDbAdapter.COL_NAME_CAR__INDEXCURRENT + " < " + etMileage.getText().toString();
 			}
 			
 			//check if unlinked cars exists.
 			String checkSQL = "SELECT * " +
-								" FROM " + MainDbAdapter.CAR_TABLE_NAME + " " +
+								" FROM " + MainDbAdapter.TABLE_NAME_CAR + " " +
 								" WHERE " + mLinkDialogCarSelectCondition;
 			Cursor c = mDbAdapter.query(checkSQL, null);
 			
@@ -702,11 +702,11 @@ public class TaskEditActivity extends EditActivityBase {
 		if (data != null)
 			newId = data.getLongExtra("mRowId", 0);
 
-		initSpinner(spnTaskType, MainDbAdapter.TASKTYPE_TABLE_NAME,
-				MainDbAdapter.genColName,
-				new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-				MainDbAdapter.isActiveCondition, null,
-				MainDbAdapter.GEN_COL_NAME_NAME, newId, false);
+		initSpinner(spnTaskType, MainDbAdapter.TABLE_NAME_TASKTYPE,
+				MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+				new String[] { MainDbAdapter.COL_NAME_GEN_NAME },
+				MainDbAdapter.WHERE_CONDITION_ISACTIVE, null,
+				MainDbAdapter.COL_NAME_GEN_NAME, newId, false);
 	}
 
 	private RadioGroup.OnCheckedChangeListener rgRepeatingOnCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
@@ -758,9 +758,9 @@ public class TaskEditActivity extends EditActivityBase {
 	        initDialog();
 			long linkId = mPreferences.getLong("TaskCarLinkId", -1);
 			if(linkId != -1){
-				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.taskCarTableColNames, linkId);
-		        initDialogControls(c.getLong(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS));
-		        long linkedCarStartDate = c.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000;
+				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_LIST_TASK_CAR_TABLE, linkId);
+		        initDialogControls(c.getLong(MainDbAdapter.COL_POS_TASK_CAR__CAR_ID));
+		        long linkedCarStartDate = c.getLong(MainDbAdapter.COL_POS_TASK_CAR__FIRSTRUN_DATE) * 1000;
 		        mLinkDialogStartingDateTimeCal = Calendar.getInstance();
 		        mLinkDialogStartingDateTimeCal.setTimeInMillis(linkedCarStartDate);
 		        mLinkDialogStartingYear = mLinkDialogStartingDateTimeCal.get(Calendar.YEAR);
@@ -769,7 +769,7 @@ public class TaskEditActivity extends EditActivityBase {
 		        mLinkDialogStartingHour = mLinkDialogStartingDateTimeCal.get(Calendar.HOUR_OF_DAY);
 		        mLinkDialogStartingMinute = mLinkDialogStartingDateTimeCal.get(Calendar.MINUTE);
 		        updateLinkDialogStartingDateTime();
-		        etLinkedCarIndexStart.setText(c.getString(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS));
+		        etLinkedCarIndexStart.setText(c.getString(MainDbAdapter.COL_POS_TASK_CAR__FIRSTRUN_MILEAGE));
 		        c.close();
 			}
 			else{
@@ -833,13 +833,13 @@ public class TaskEditActivity extends EditActivityBase {
 
 	private void initDialogControls(long carId) {
 		if(carId != -1)
-			mLinkDialogCarSelectCondition = MainDbAdapter.isActiveCondition;
+			mLinkDialogCarSelectCondition = MainDbAdapter.WHERE_CONDITION_ISACTIVE;
 		
-		initSpinner(spnLinkDialogCar, MainDbAdapter.CAR_TABLE_NAME,
-			MainDbAdapter.genColName,
-			new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
+		initSpinner(spnLinkDialogCar, MainDbAdapter.TABLE_NAME_CAR,
+			MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+			new String[] { MainDbAdapter.COL_NAME_GEN_NAME },
 			mLinkDialogCarSelectCondition, null,
-			MainDbAdapter.GEN_COL_NAME_NAME, carId, false);
+			MainDbAdapter.COL_NAME_GEN_NAME, carId, false);
 		
 		if(carId != -1)
 			spnLinkDialogCar.setEnabled(false);
@@ -940,10 +940,10 @@ public class TaskEditActivity extends EditActivityBase {
 	        	}
 	        	long selectedCarId = spnLinkDialogCar.getSelectedItemId();
 	        	String selectedCarName = "";
-	            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+	            String selection = MainDbAdapter.COL_NAME_GEN_ROWID + "= ? ";
 	            String[] selectionArgs = {Long.toString(selectedCarId)};
 	            
-	        	Cursor c = mDbAdapter.query(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, 
+	        	Cursor c = mDbAdapter.query(MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_LIST_GEN_ROWID_NAME, 
 	        			selection, selectionArgs, null, null, null);
 	        	if(c.moveToNext())
 	        		selectedCarName = c.getString(1);
@@ -951,27 +951,27 @@ public class TaskEditActivity extends EditActivityBase {
 	        	
 	    		ContentValues data = new ContentValues();
 	    		//name = task name <-> car name
-	    		data.put(MainDbAdapter.GEN_COL_NAME_NAME, etName.getText().toString() + " <-> " + selectedCarName);
-	    		data.put(MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
-	    		data.put(MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME, mRowId);
-	    		data.put(MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME, selectedCarId);
+	    		data.put(MainDbAdapter.COL_NAME_GEN_NAME, etName.getText().toString() + " <-> " + selectedCarName);
+	    		data.put(MainDbAdapter.COL_NAME_GEN_ISACTIVE, "Y");
+	    		data.put(MainDbAdapter.COL_NAME_TASK_CAR__TASK_ID, mRowId);
+	    		data.put(MainDbAdapter.COL_NAME_TASK_CAR__CAR_ID, selectedCarId);
 	    		if(isTimingEnabled){
 	    			if(!isDiffStartingTime|| !isRecurrent)
-	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, mlDateTimeInSeconds);
+	    				data.put(MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_DATE, mlDateTimeInSeconds);
 	    			else
-	    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, mlStartingDateTimeInSeconds);
+	    				data.put(MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_DATE, mlStartingDateTimeInSeconds);
 	    		}
 	    		else
-	    			data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_NAME, (Long)null);
+	    			data.put(MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_DATE, (Long)null);
 	    		
 	    		if(isMileageEnabled && isRecurrent)
-    				data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, etLinkedCarIndexStart.getText().toString());
+    				data.put(MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE, etLinkedCarIndexStart.getText().toString());
 	    		else
-	    			data.put(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME, (Long)null);
+	    			data.put(MainDbAdapter.COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE, (Long)null);
 
 	    		long linkId = mPreferences.getLong("TaskCarLinkId", -1);
 	    		if(linkId == -1){ //new link
-		    		long retVal = mDbAdapter.createRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, data);
+		    		long retVal = mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_TASK_CAR, data);
 		    		if(retVal < 0){
 		    			String errorMessage;
 		    			if(retVal == -1)
@@ -986,7 +986,7 @@ public class TaskEditActivity extends EditActivityBase {
 		    		}
 	    		}
 	    		else{
-		    		long retVal = mDbAdapter.updateRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, linkId, data);
+		    		long retVal = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_TASK_CAR, linkId, data);
 		    		if(retVal > -1){
 		    			String errorMessage;
 		    			if(retVal == -1)
@@ -1244,14 +1244,14 @@ public class TaskEditActivity extends EditActivityBase {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
             					String[] deleteArgs = {Long.toString(mLongClickId)};
-            					mDbAdapter.deleteRecords(MainDbAdapter.TODO_TABLE_NAME, 
-            	                		MainDbAdapter.TODO_COL_ISDONE_NAME + " = 'N' " + " AND " + 
-            	                		MainDbAdapter.TODO_COL_CAR_ID_NAME + " = " +
-            	                					"(SELECT " + MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + 
-            	                					" FROM " + MainDbAdapter.TASK_CAR_TABLE_NAME +
-            	                					" WHERE " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ? )",
+            					mDbAdapter.deleteRecords(MainDbAdapter.TABLE_NAME_TODO, 
+            	                		MainDbAdapter.COL_NAME_TODO__ISDONE + " = 'N' " + " AND " + 
+            	                		MainDbAdapter.COL_NAME_TODO__CAR_ID + " = " +
+            	                					"(SELECT " + MainDbAdapter.COL_NAME_TASK_CAR__CAR_ID + 
+            	                					" FROM " + MainDbAdapter.TABLE_NAME_TASK_CAR +
+            	                					" WHERE " + MainDbAdapter.COL_NAME_GEN_ROWID + " = ? )",
             	                		deleteArgs);
-                                int deleteResult = mDbAdapter.deleteRecord(MainDbAdapter.TASK_CAR_TABLE_NAME, mLongClickId);
+                                int deleteResult = mDbAdapter.deleteRecord(MainDbAdapter.TABLE_NAME_TASK_CAR, mLongClickId);
                                 if(deleteResult != -1) {
                                     madbErrorAlert.setMessage(mResource.getString(deleteResult));
                                     madError = madbErrorAlert.create();

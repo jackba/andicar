@@ -444,11 +444,11 @@ public class MainActivity extends BaseActivity {
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
 				ReportDbAdapter.sqlConcatTableColumn(
-						MainDbAdapter.EXPENSE_TABLE_NAME,
-						MainDbAdapter.EXPENSE_COL_CAR_ID_NAME)
+						MainDbAdapter.TABLE_NAME_EXPENSE,
+						MainDbAdapter.COL_NAME_EXPENSE__CAR_ID)
 						+ "=", String.valueOf(mCarId));
 		whereConditions.putString("COALESCE("
-				+ MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME + ", '') = ", "");
+				+ MainDbAdapter.COL_NAME_EXPENSE__FROMTABLE + ", '') = ", "");
 		reportDb.setReportSql("expensesListViewSelect",
 				whereConditions);
 		listCursor = reportDb.fetchReport(1);
@@ -506,8 +506,8 @@ public class MainActivity extends BaseActivity {
 		whereConditions.clear();
 		whereConditions.putString(
 				ReportDbAdapter.sqlConcatTableColumn(
-						MainDbAdapter.GPSTRACK_TABLE_NAME,
-						MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME)
+						MainDbAdapter.TABLE_NAME_GPSTRACK,
+						MainDbAdapter.COL_NAME_GPSTRACK__CAR_ID)
 						+ "=", String.valueOf(mCarId));
 		reportDb.setReportSql("gpsTrackListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
@@ -599,8 +599,8 @@ public class MainActivity extends BaseActivity {
 		whereConditions = new Bundle();
 		whereConditions.putString(
 				ReportDbAdapter.sqlConcatTableColumn(
-						MainDbAdapter.MILEAGE_TABLE_NAME,
-						MainDbAdapter.MILEAGE_COL_CAR_ID_NAME)
+						MainDbAdapter.TABLE_NAME_MILEAGE,
+						MainDbAdapter.COL_NAME_MILEAGE__CAR_ID)
 						+ "=", String.valueOf(mCarId));
 
 		reportDb.setReportSql("mileageListViewSelect", whereConditions);
@@ -656,8 +656,8 @@ public class MainActivity extends BaseActivity {
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
 				ReportDbAdapter.sqlConcatTableColumn(
-						MainDbAdapter.REFUEL_TABLE_NAME,
-						MainDbAdapter.REFUEL_COL_CAR_ID_NAME)
+						MainDbAdapter.TABLE_NAME_REFUEL,
+						MainDbAdapter.COL_NAME_REFUEL__CAR_ID)
 						+ "=", String.valueOf(mCarId));
 		reportDb.setReportSql("refuelListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
@@ -731,8 +731,8 @@ public class MainActivity extends BaseActivity {
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
 				ReportDbAdapter.sqlConcatTableColumn(
-						MainDbAdapter.TODO_TABLE_NAME,
-						MainDbAdapter.TODO_COL_ISDONE_NAME)
+						MainDbAdapter.TABLE_NAME_TODO,
+						MainDbAdapter.COL_NAME_TODO__ISDONE)
 						+ "=", "N");
 		reportDb.setReportSql("todoListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
@@ -825,8 +825,8 @@ public class MainActivity extends BaseActivity {
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
 				ReportDbAdapter.sqlConcatTableColumn(
-						MainDbAdapter.CAR_TABLE_NAME,
-						MainDbAdapter.GEN_COL_ROWID_NAME)
+						MainDbAdapter.TABLE_NAME_CAR,
+						MainDbAdapter.COL_NAME_GEN_ROWID)
 						+ "=", String.valueOf(mCarId));
 		reportDb.setReportSql("statisticsMainViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
@@ -947,13 +947,13 @@ public class MainActivity extends BaseActivity {
 			BigDecimal totalFuelQty = null;
 
 			// select first full refuel index
-			sql = "SELECT " + MainDbAdapter.REFUEL_COL_INDEX_NAME + " FROM "
-					+ MainDbAdapter.REFUEL_TABLE_NAME + " WHERE "
-					+ MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = " + mCarId
-					+ " " + " AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME
+			sql = "SELECT " + MainDbAdapter.COL_NAME_REFUEL__INDEX + " FROM "
+					+ MainDbAdapter.TABLE_NAME_REFUEL + " WHERE "
+					+ MainDbAdapter.COL_NAME_REFUEL__CAR_ID + " = " + mCarId
+					+ " " + " AND " + MainDbAdapter.COL_NAME_GEN_ISACTIVE
 					+ " = \'Y\' " + " AND "
-					+ MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME + " = \'Y\' "
-					+ " ORDER BY " + MainDbAdapter.REFUEL_COL_INDEX_NAME
+					+ MainDbAdapter.COL_NAME_REFUEL__ISFULLREFUEL + " = \'Y\' "
+					+ " ORDER BY " + MainDbAdapter.COL_NAME_REFUEL__INDEX
 					+ " ASC " + " LIMIT 1";
 			c = reportDb.execSelectSql(sql, null);
 
@@ -964,17 +964,17 @@ public class MainActivity extends BaseActivity {
 
 				c.close();
 				// get the last full refuel index
-				sql = "SELECT " + MainDbAdapter.REFUEL_COL_INDEX_NAME
-						+ " FROM " + MainDbAdapter.REFUEL_TABLE_NAME
-						+ " WHERE " + MainDbAdapter.REFUEL_COL_CAR_ID_NAME
+				sql = "SELECT " + MainDbAdapter.COL_NAME_REFUEL__INDEX
+						+ " FROM " + MainDbAdapter.TABLE_NAME_REFUEL
+						+ " WHERE " + MainDbAdapter.COL_NAME_REFUEL__CAR_ID
 						+ " = " + mCarId + " " + " AND "
-						+ MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\' "
-						+ " AND " + MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME
+						+ MainDbAdapter.COL_NAME_GEN_ISACTIVE + " = \'Y\' "
+						+ " AND " + MainDbAdapter.COL_NAME_REFUEL__ISFULLREFUEL
 						+ " = \'Y\' " + " AND "
-						+ MainDbAdapter.REFUEL_COL_INDEX_NAME + " <> "
+						+ MainDbAdapter.COL_NAME_REFUEL__INDEX + " <> "
 						+ tmpFullRefuelIndex.toPlainString()
 						+ // convert from xxxe+10 => xxxxxxxxxx...
-						" ORDER BY " + MainDbAdapter.REFUEL_COL_INDEX_NAME
+						" ORDER BY " + MainDbAdapter.COL_NAME_REFUEL__INDEX
 						+ " DESC " + " LIMIT 1";
 				c = reportDb.execSelectSql(sql, null);
 				if (c.moveToFirst()) {
@@ -989,16 +989,16 @@ public class MainActivity extends BaseActivity {
 						// get the total fuel quantity between the first and
 						// last refuels
 						sql = "SELECT SUM("
-								+ MainDbAdapter.REFUEL_COL_QUANTITY_NAME + ") "
-								+ " FROM " + MainDbAdapter.REFUEL_TABLE_NAME
+								+ MainDbAdapter.COL_NAME_REFUEL__QUANTITY + ") "
+								+ " FROM " + MainDbAdapter.TABLE_NAME_REFUEL
 								+ " WHERE "
-								+ MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = "
+								+ MainDbAdapter.COL_NAME_REFUEL__CAR_ID + " = "
 								+ mCarId + " " + " AND "
-								+ MainDbAdapter.GEN_COL_ISACTIVE_NAME
+								+ MainDbAdapter.COL_NAME_GEN_ISACTIVE
 								+ " = \'Y\' " + " AND "
-								+ MainDbAdapter.REFUEL_COL_INDEX_NAME + " > "
+								+ MainDbAdapter.COL_NAME_REFUEL__INDEX + " > "
 								+ tmpFullRefuelIndex.toPlainString() + " AND "
-								+ MainDbAdapter.REFUEL_COL_INDEX_NAME + " <= "
+								+ MainDbAdapter.COL_NAME_REFUEL__INDEX + " <= "
 								+ lastFullRefuelIndex.toPlainString();
 						c = reportDb.execSelectSql(sql, null);
 						if (c.moveToFirst()) {
@@ -1056,19 +1056,19 @@ public class MainActivity extends BaseActivity {
 						// refuels)
 
 						// get the second last full refuel
-						sql = "SELECT " + MainDbAdapter.REFUEL_COL_INDEX_NAME
-								+ " FROM " + MainDbAdapter.REFUEL_TABLE_NAME
+						sql = "SELECT " + MainDbAdapter.COL_NAME_REFUEL__INDEX
+								+ " FROM " + MainDbAdapter.TABLE_NAME_REFUEL
 								+ " WHERE "
-								+ MainDbAdapter.REFUEL_COL_CAR_ID_NAME + " = "
+								+ MainDbAdapter.COL_NAME_REFUEL__CAR_ID + " = "
 								+ mCarId + " " + " AND "
-								+ MainDbAdapter.GEN_COL_ISACTIVE_NAME
+								+ MainDbAdapter.COL_NAME_GEN_ISACTIVE
 								+ " = \'Y\' " + " AND "
-								+ MainDbAdapter.REFUEL_COL_ISFULLREFUEL_NAME
+								+ MainDbAdapter.COL_NAME_REFUEL__ISFULLREFUEL
 								+ " = \'Y\' " + " AND "
-								+ MainDbAdapter.REFUEL_COL_INDEX_NAME + " < "
+								+ MainDbAdapter.COL_NAME_REFUEL__INDEX + " < "
 								+ lastFullRefuelIndex.toPlainString()
 								+ " ORDER BY "
-								+ MainDbAdapter.REFUEL_COL_INDEX_NAME
+								+ MainDbAdapter.COL_NAME_REFUEL__INDEX
 								+ " DESC " + " LIMIT 1";
 						c = reportDb.execSelectSql(sql, null);
 						if (c.moveToFirst()) {
@@ -1079,19 +1079,19 @@ public class MainActivity extends BaseActivity {
 							// get the total fuel qty between the last two full
 							// refuels
 							sql = "SELECT SUM("
-									+ MainDbAdapter.REFUEL_COL_QUANTITY_NAME
+									+ MainDbAdapter.COL_NAME_REFUEL__QUANTITY
 									+ ") " + " FROM "
-									+ MainDbAdapter.REFUEL_TABLE_NAME
+									+ MainDbAdapter.TABLE_NAME_REFUEL
 									+ " WHERE "
-									+ MainDbAdapter.REFUEL_COL_CAR_ID_NAME
+									+ MainDbAdapter.COL_NAME_REFUEL__CAR_ID
 									+ " = " + mCarId + " " + " AND "
-									+ MainDbAdapter.GEN_COL_ISACTIVE_NAME
+									+ MainDbAdapter.COL_NAME_GEN_ISACTIVE
 									+ " = \'Y\' " + " AND "
-									+ MainDbAdapter.REFUEL_COL_INDEX_NAME
+									+ MainDbAdapter.COL_NAME_REFUEL__INDEX
 									+ " > "
 									+ tmpFullRefuelIndex.toPlainString()
 									+ " AND "
-									+ MainDbAdapter.REFUEL_COL_INDEX_NAME
+									+ MainDbAdapter.COL_NAME_REFUEL__INDEX
 									+ " <= "
 									+ lastFullRefuelIndex.toPlainString();
 							c = reportDb.execSelectSql(sql, null);
@@ -1270,11 +1270,11 @@ public class MainActivity extends BaseActivity {
 			}
 	
 			mCarId = mPreferences.getLong("CurrentCar_ID", -1);
-			initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
-					MainDbAdapter.genColName,
-					new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-					MainDbAdapter.isActiveCondition, null,
-					MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
+			initSpinner(spnCar, MainDbAdapter.TABLE_NAME_CAR,
+					MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+					new String[] { MainDbAdapter.COL_NAME_GEN_NAME },
+					MainDbAdapter.WHERE_CONDITION_ISACTIVE, null,
+					MainDbAdapter.COL_NAME_GEN_NAME, mCarId, false);
 	
 			if (reportDb == null)
 				reportDb = new ReportDbAdapter(mainContext, null, null);
@@ -1586,17 +1586,17 @@ public class MainActivity extends BaseActivity {
 		mCarId = mPreferences.getLong("CurrentCar_ID", -1);
 		if (mCarId == -1) { // new install or last used car was
 							// deleted/inactivated
-			c = mDbAdapter.query(MainDbAdapter.CAR_TABLE_NAME,
-					MainDbAdapter.genColName,
-					MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\'", null,
-					null, null, MainDbAdapter.GEN_COL_NAME_NAME);
+			c = mDbAdapter.query(MainDbAdapter.TABLE_NAME_CAR,
+					MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+					MainDbAdapter.COL_NAME_GEN_ISACTIVE + " = \'Y\'", null,
+					null, null, MainDbAdapter.COL_NAME_GEN_NAME);
 			if (c.moveToFirst()) { // active car exists
-				mCarId = c.getLong(MainDbAdapter.GEN_COL_ROWID_POS);
-				initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME,
-						MainDbAdapter.genColName,
-						new String[] { MainDbAdapter.GEN_COL_NAME_NAME },
-						MainDbAdapter.isActiveCondition, null,
-						MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
+				mCarId = c.getLong(MainDbAdapter.COL_POS_GEN_ROWID);
+				initSpinner(spnCar, MainDbAdapter.TABLE_NAME_CAR,
+						MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+						new String[] { MainDbAdapter.COL_NAME_GEN_NAME },
+						MainDbAdapter.WHERE_CONDITION_ISACTIVE, null,
+						MainDbAdapter.COL_NAME_GEN_NAME, mCarId, false);
 				c.close();
 				mPrefEditor.putLong("CurrentCar_ID", mCarId);
 				mPrefEditor.putLong("CarUOMVolume_ID",
@@ -1627,7 +1627,7 @@ public class MainActivity extends BaseActivity {
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
 								Intent i = new Intent(MainActivity.this, CommonListActivity.class);
-						        i.putExtra("ListSource", MainDbAdapter.CAR_TABLE_NAME);
+						        i.putExtra("ListSource", MainDbAdapter.TABLE_NAME_CAR);
 								i.putExtra("ExitAfterInsert", true);
 								startActivity(i);
 							}
@@ -1652,8 +1652,8 @@ public class MainActivity extends BaseActivity {
 		}
 		fillCarIndexLabel();
 		// check if drivers exists
-		c = mDbAdapter.query(MainDbAdapter.DRIVER_TABLE_NAME,
-				MainDbAdapter.genColName, MainDbAdapter.GEN_COL_ISACTIVE_NAME
+		c = mDbAdapter.query(MainDbAdapter.TABLE_NAME_DRIVER,
+				MainDbAdapter.COL_LIST_GEN_ROWID_NAME, MainDbAdapter.COL_NAME_GEN_ISACTIVE
 						+ " = \'Y\'", null, null, null, null);
 		if (!c.moveToFirst()) { // no active driver exist
             AndiCarDialogBuilder builder = new AndiCarDialogBuilder(MainActivity.this, 
@@ -1666,7 +1666,7 @@ public class MainActivity extends BaseActivity {
 
 						public void onClick(DialogInterface dialog, int id) {
 							Intent i = new Intent(MainActivity.this, CommonListActivity.class);
-							i.putExtra("ListSource", MainDbAdapter.DRIVER_TABLE_NAME);
+							i.putExtra("ListSource", MainDbAdapter.TABLE_NAME_DRIVER);
 							i.putExtra("ExitAfterInsert", true);
 							startActivity(i);
 						}
@@ -1684,7 +1684,7 @@ public class MainActivity extends BaseActivity {
 		}
 		if (mPreferences.getLong("LastDriver_ID", -1) < 0) {
 			mPrefEditor.putLong("LastDriver_ID",
-					c.getLong(MainDbAdapter.GEN_COL_ROWID_POS));
+					c.getLong(MainDbAdapter.COL_POS_GEN_ROWID));
 			mPrefEditor.commit();
 		}
 

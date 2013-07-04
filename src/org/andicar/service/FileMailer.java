@@ -94,13 +94,13 @@ public class FileMailer extends Service {
 			Cursor c = db.query(AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_TABLE_NAME, 
 					AddOnDBAdapter.addonSecureBKSettingsTableColNames, null, null, null, null, null);
 			if(c != null && c.moveToFirst()){
-				isActive = c.getString(MainDbAdapter.GEN_COL_ISACTIVE_POS).equals("Y");
+				isActive = c.getString(MainDbAdapter.COL_POS_GEN_ISACTIVE).equals("Y");
 				isShowNotification = c.getString(AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISSHOWNOTIF_POS).equals("Y");
 				sendReports = c.getString(AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEREPORTS_POS).equals("Y");
 				sendGPSTracks = c.getString(AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEGPS_POS).equals("Y");
 				
 				//send files only if the user configured the service
-				isActive = isActive && c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("UserModified");
+				isActive = isActive && c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("UserModified");
 			}
 			c.close();
 			db.close();

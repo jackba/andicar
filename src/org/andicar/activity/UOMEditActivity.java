@@ -61,14 +61,14 @@ public class UOMEditActivity extends EditActivityBase {
         spnUomType.setAdapter(adapter);
 
         if (operation.equals("E")) {
-            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.UOM_TABLE_NAME,
-                    MainDbAdapter.uomTableColNames, mRowId);
-            String name = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String isActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String userComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String code = c.getString( MainDbAdapter.UOM_COL_CODE_POS );
-            String uomType = c.getString( MainDbAdapter.UOM_COL_UOMTYPE_POS );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.COL_NAME_GEN_ROWID );
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_UOM,
+                    MainDbAdapter.COL_LIST_UOM_TABLE, mRowId);
+            String name = c.getString( MainDbAdapter.COL_POS_GEN_NAME );
+            String isActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
+            String userComment = c.getString( MainDbAdapter.COL_POS_GEN_USER_COMMENT );
+            String code = c.getString( MainDbAdapter.COL_POS_UOM__CODE );
+            String uomType = c.getString( MainDbAdapter.COL_POS_UOM__UOMTYPE );
             if(uomType.equals(StaticValues.UOM_LENGTH_TYPE_CODE))
                 spnUomType.setSelection(0);
             else if(uomType.equals(StaticValues.UOM_VOLUME_TYPE_CODE))
@@ -100,25 +100,25 @@ public class UOMEditActivity extends EditActivityBase {
     protected boolean saveData() {
 
         ContentValues data = new ContentValues();
-        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+        data.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+        data.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE,
                 (ckIsActive.isChecked() ? "Y" : "N") );
-        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+        data.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,
                 etUserComment.getText().toString() );
-        data.put( MainDbAdapter.UOM_COL_CODE_NAME,
+        data.put( MainDbAdapter.COL_NAME_UOM__CODE,
                 etCode.getText().toString());
         if(spnUomType.getSelectedItemPosition() == 0)
-            data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_LENGTH_TYPE_CODE);
+            data.put( MainDbAdapter.COL_NAME_UOM__UOMTYPE, StaticValues.UOM_LENGTH_TYPE_CODE);
         else if(spnUomType.getSelectedItemPosition() == 1)
-            data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_VOLUME_TYPE_CODE);
+            data.put( MainDbAdapter.COL_NAME_UOM__UOMTYPE, StaticValues.UOM_VOLUME_TYPE_CODE);
         else
-            data.put( MainDbAdapter.UOM_COL_UOMTYPE_NAME, StaticValues.UOM_OTHER_TYPE_CODE);
+            data.put( MainDbAdapter.COL_NAME_UOM__UOMTYPE, StaticValues.UOM_OTHER_TYPE_CODE);
 
         int dbRetVal = -1;
         String strErrMsg = null;
         if( mRowId == -1 ) {
-        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.UOM_TABLE_NAME, data)).intValue();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_UOM, data)).intValue();
             if(dbRetVal > 0){
             	finish();
             	return true;
@@ -136,7 +136,7 @@ public class UOMEditActivity extends EditActivityBase {
             }
         }
         else {
-        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.UOM_TABLE_NAME, mRowId, data);
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_UOM, mRowId, data);
             if(dbRetVal != -1){
                 String errMsg = "";
                 errMsg = mResource.getString(dbRetVal);

@@ -51,12 +51,12 @@ public class TagEditActivity extends EditActivityBase
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if( operation.equals( "E") ) {
-            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TAG_TABLE_NAME,
-                    MainDbAdapter.tagTableColNames, mRowId);
-            String name = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String isActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String userComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.COL_NAME_GEN_ROWID );
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TAG,
+                    MainDbAdapter.COL_LIST_TAG_TABLE, mRowId);
+            String name = c.getString( MainDbAdapter.COL_POS_GEN_NAME );
+            String isActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
+            String userComment = c.getString( MainDbAdapter.COL_POS_GEN_USER_COMMENT );
 
             if( name != null ) {
                 etName.setText( name );
@@ -79,17 +79,17 @@ public class TagEditActivity extends EditActivityBase
     protected boolean saveData() {
 
         ContentValues data = new ContentValues();
-        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+        data.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+        data.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE,
                 (ckIsActive.isChecked() ? "Y" : "N") );
-        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+        data.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,
                 etUserComment.getText().toString() );
 
         int dbRetVal = -1;
         String strErrMsg = null;
         if( mRowId == -1 ) {
-        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TAG_TABLE_NAME, data)).intValue();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_TAG, data)).intValue();
             if(dbRetVal > 0){
             	finish();
             	return true;
@@ -107,7 +107,7 @@ public class TagEditActivity extends EditActivityBase
             }
         }
         else {
-        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TAG_TABLE_NAME, mRowId, data);
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_TAG, mRowId, data);
             if(dbRetVal != -1){
                 String errMsg = "";
                 errMsg = mResource.getString(dbRetVal);

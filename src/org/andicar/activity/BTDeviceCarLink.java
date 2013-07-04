@@ -68,16 +68,16 @@ public class BTDeviceCarLink extends EditActivityBase {
 
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
         if( operation.equals( "E") ) {
-            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
+            mRowId = mBundleExtras.getLong( MainDbAdapter.COL_NAME_GEN_ROWID );
             Cursor c = mDbAdapter.fetchRecord(AddOnDBAdapter.ADDON_BTDEVICE_CAR_TABLE_NAME,
             		AddOnDBAdapter.addonBTDeviceCarTableColNames, mRowId);
-            String isActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
+            String isActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
             mMAC = c.getString( AddOnDBAdapter.ADDON_BTDEVICE_CAR_COL_MACADDR_POS );
             mCarId = c.getLong(AddOnDBAdapter.ADDON_BTDEVICE_CAR_CAR_ID_POS);
             if( isActive != null ) {
                 ckIsActive.setChecked( isActive.equals( "Y" ) );
             }
-            etUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+            etUserComment.setText(c.getString(MainDbAdapter.COL_POS_GEN_USER_COMMENT));
             c.close();
         }
         else {
@@ -98,16 +98,16 @@ public class BTDeviceCarLink extends EditActivityBase {
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	private void initControls(){
     	String extraWhere = 
-    		" AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " " +
+    		" AND " + MainDbAdapter.COL_NAME_GEN_ROWID + " " +
     				" NOT IN (SELECT " + AddOnDBAdapter.ADDON_BTDEVICE_CAR_CAR_ID_NAME + " " +
     							" FROM " + AddOnDBAdapter.ADDON_BTDEVICE_CAR_TABLE_NAME + " " +
-								" WHERE " + MainDbAdapter.isActiveCondition + " " +
+								" WHERE " + MainDbAdapter.WHERE_CONDITION_ISACTIVE + " " +
 										" AND " + AddOnDBAdapter.ADDON_BTDEVICE_CAR_CAR_ID_NAME + " != " + mCarId +
 										" )";
     		
-        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition + extraWhere, null,
-                MainDbAdapter.GEN_COL_NAME_NAME, mCarId, false);
+        initSpinner(spnCar, MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_LIST_GEN_ROWID_NAME, 
+                new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, MainDbAdapter.WHERE_CONDITION_ISACTIVE + extraWhere, null,
+                MainDbAdapter.COL_NAME_GEN_NAME, mCarId, false);
         
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
         if(mBtAdapter == null){
@@ -140,8 +140,8 @@ public class BTDeviceCarLink extends EditActivityBase {
             	c = mDbAdapter.query(
             			"SELECT * " +
             			" FROM " + AddOnDBAdapter.ADDON_BTDEVICE_CAR_TABLE_NAME + " " +
-    					" WHERE " + MainDbAdapter.isActiveCondition + " " +
-    							" AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " != " + mRowId + 
+    					" WHERE " + MainDbAdapter.WHERE_CONDITION_ISACTIVE + " " +
+    							" AND " + MainDbAdapter.COL_NAME_GEN_ROWID + " != " + mRowId + 
     							" AND " + AddOnDBAdapter.ADDON_BTDEVICE_CAR_COL_MACADDR_NAME + " = ? ", args);
             	if(c.moveToNext()){
             		//already linked
@@ -173,12 +173,12 @@ public class BTDeviceCarLink extends EditActivityBase {
 			return false;
 		}
         ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, ckIsActive.isChecked() ? "Y" : "N");
-        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME, etUserComment.getText().toString() );
+        cvData.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE, ckIsActive.isChecked() ? "Y" : "N");
+        cvData.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT, etUserComment.getText().toString() );
         cvData.put( AddOnDBAdapter.ADDON_BTDEVICE_CAR_CAR_ID_NAME, spnCar.getSelectedItemId() );
         cvData.put( AddOnDBAdapter.ADDON_BTDEVICE_CAR_COL_MACADDR_NAME, 
         		mPairedDevicesMAC.get(spnBTPairedDevices.getSelectedItemPosition()));
-        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME, 
+        cvData.put( MainDbAdapter.COL_NAME_GEN_NAME, 
         		mPairedDevicesName.get(spnBTPairedDevices.getSelectedItemPosition()));
         
         int dbRetVal = -1;

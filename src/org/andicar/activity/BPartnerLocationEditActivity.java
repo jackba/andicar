@@ -80,23 +80,23 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
         init();
 
         if( strOperationType.equals( "E") ) {
-            mRowId = mBundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
-                    MainDbAdapter.bpartnerLocationTableColNames, mRowId);
+            mRowId = mBundleExtras.getLong(MainDbAdapter.COL_NAME_GEN_ROWID);
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION,
+                    MainDbAdapter.COL_LIST_BPARTNERLOCATION_TABLE, mRowId);
 
-            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String strAddress = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_POS );
-            String strPhone = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_PHONE_POS );
-            String strPhone2 = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_PHONE2_POS );
-            String strPostal = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_POSTAL_POS );
-            String strFax = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_FAX_POS );
-            String strCity = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_CITY_POS );
-            String strRegion = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_REGION_POS );
-            String strCountry = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_COUNTRY_POS );
-            String strContact = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_CONTACTPERSON_POS );
-            String strEmail = c.getString( MainDbAdapter.BPARTNER_LOCATION_COL_EMAIL_POS );
+            String strName = c.getString( MainDbAdapter.COL_POS_GEN_NAME );
+            String strIsActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
+            String strUserComment = c.getString( MainDbAdapter.COL_POS_GEN_USER_COMMENT );
+            String strAddress = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__ADDRESS );
+            String strPhone = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__PHONE );
+            String strPhone2 = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__PHONE2 );
+            String strPostal = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__POSTAL );
+            String strFax = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__FAX );
+            String strCity = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__CITY );
+            String strRegion = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__REGION );
+            String strCountry = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__COUNTRY );
+            String strContact = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__CONTACTPERSON );
+            String strEmail = c.getString( MainDbAdapter.COL_POS_BPARTNERLOCATION__EMAIL );
 
             if (strName != null)
                 etName.setText(strName);
@@ -162,47 +162,47 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
 
     private void initControls(){
         cityAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_CITY_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__CITY,
                     -1, 0));
         acCity.setAdapter(cityAdapter);
 
         regionAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_REGION_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__REGION,
                     -1, 0));
         acRegion.setAdapter(regionAdapter);
 
         countryAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_COUNTRY_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__COUNTRY,
                     -1, 0));
         acCountry.setAdapter(countryAdapter);
 
         contactAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_CONTACTPERSON_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__CONTACTPERSON,
                     -1, 0));
         acContact.setAdapter(contactAdapter);
 
         emailAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_EMAIL_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__EMAIL,
                     -1, 0));
         acEmail.setAdapter(emailAdapter);
 
         phoneAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_PHONE_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__PHONE,
                     mBPartnerId, 0));
         acPhone1.setAdapter(phoneAdapter);
 
         phone2Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_PHONE2_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__PHONE2,
                     mBPartnerId, 0));
         acPhone2.setAdapter(phone2Adapter);
 
         postalAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_POSTAL_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__POSTAL,
                     -1, 0));
         acPostal.setAdapter(postalAdapter);
 
         faxAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_FAX_NAME,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, MainDbAdapter.COL_NAME_BPARTNERLOCATION__FAX,
                     mBPartnerId, 0));
         acFax.setAdapter(faxAdapter);
     }
@@ -210,28 +210,28 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
     @Override
     protected boolean saveData() {
         ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE,
                 (ckIsActive.isChecked() ? "Y" : "N") );
-        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,
                 etUserComment.getText().toString() );
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_BPARTNER_ID_NAME, mBPartnerId);
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME, etAddress.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_PHONE_NAME, acPhone1.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_PHONE2_NAME, acPhone2.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_POSTAL_NAME, acPostal.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_FAX_NAME, acFax.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_CITY_NAME, acCity.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_REGION_NAME, acRegion.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_COUNTRY_NAME, acCountry.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_CONTACTPERSON_NAME, acContact.getText().toString());
-        cvData.put(MainDbAdapter.BPARTNER_LOCATION_COL_EMAIL_NAME, acEmail.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__BPARTNER_ID, mBPartnerId);
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__ADDRESS, etAddress.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__PHONE, acPhone1.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__PHONE2, acPhone2.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__POSTAL, acPostal.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__FAX, acFax.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__CITY, acCity.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__REGION, acRegion.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__COUNTRY, acCountry.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__CONTACTPERSON, acContact.getText().toString());
+        cvData.put(MainDbAdapter.COL_NAME_BPARTNERLOCATION__EMAIL, acEmail.getText().toString());
 
         int dbRetVal = -1;
         String strErrMsg = null;
         if (mRowId == -1) {
-        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, cvData)).intValue();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, cvData)).intValue();
         	if(dbRetVal > 0){
 	            finish();
 	            return true;
@@ -247,7 +247,7 @@ public class BPartnerLocationEditActivity extends EditActivityBase {
                 return false;
         	}
         } else {
-        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, mRowId, cvData);
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, mRowId, cvData);
             if(dbRetVal != -1){
                 strErrMsg = mResource.getString(dbRetVal);
                 if(dbRetVal == R.string.ERR_000)

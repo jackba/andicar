@@ -66,8 +66,8 @@ public class BTConnectionReceiver {
 						return;
 					String[] selArgs = {deviceMAC};
 					Cursor c = mDb.query(AddOnDBAdapter.ADDON_BTDEVICE_CAR_TABLE_NAME, AddOnDBAdapter.addonBTDeviceCarTableColNames, 
-							MainDbAdapter.isActiveCondition + " AND " + DB.sqlConcatTableColumn(AddOnDBAdapter.ADDON_BTDEVICE_CAR_TABLE_NAME, AddOnDBAdapter.ADDON_BTDEVICE_CAR_COL_MACADDR_NAME) + " = ?", 
-							selArgs, null, null, MainDbAdapter.GEN_COL_ROWID_NAME + " DESC");
+							MainDbAdapter.WHERE_CONDITION_ISACTIVE + " AND " + DB.sqlConcatTableColumn(AddOnDBAdapter.ADDON_BTDEVICE_CAR_TABLE_NAME, AddOnDBAdapter.ADDON_BTDEVICE_CAR_COL_MACADDR_NAME) + " = ?", 
+							selArgs, null, null, MainDbAdapter.COL_NAME_GEN_ROWID + " DESC");
 					if(c == null)
 						return;
 					if(c.moveToFirst()){ //linked car exist

@@ -46,113 +46,113 @@ public class CommonListActivity extends ListActivityBase
 
         initStyle();
     	
-    	if(listSource.equals(MainDbAdapter.CAR_TABLE_NAME)){
+    	if(listSource.equals(MainDbAdapter.TABLE_NAME_CAR)){
 	        super.onCreate( icicle, null, CarEditActivity.class, null,
-	                MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
-	                simpleListItem2, new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
+	                MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_LIST_CAR_TABLE, null, MainDbAdapter.COL_NAME_GEN_NAME,
+	                simpleListItem2, new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, new int[]{android.R.id.text1}, null);
 	        setTitle(R.string.APP_Activity_CarList);
     	}
-    	else if(listSource.equals(MainDbAdapter.DRIVER_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_DRIVER)){
             super.onCreate( icicle, null, DriverEditActivity.class, null,
-                    MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_DRIVER, MainDbAdapter.COL_LIST_DRIVER_TABLE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                     simpleListItem2,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, new int[]{android.R.id.text1}, null);
 	        setTitle(R.string.APP_Activity_DriverList);
     	}
-    	else if(listSource.equals(MainDbAdapter.BPARTNER_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_BPARTNER)){
             super.onCreate( icicle, null, BPartnerEditActivity.class, null,
-                    MainDbAdapter.BPARTNER_TABLE_NAME, MainDbAdapter.bpartnerTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME, 
+                    MainDbAdapter.TABLE_NAME_BPARTNER, MainDbAdapter.COL_LIST_BPARTNER_TABLE, null, MainDbAdapter.COL_NAME_GEN_NAME, 
                     simpleListItem2,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, new int[]{android.R.id.text1}, null);
 	        setTitle(R.string.APP_Activity_BPartnerList);
     	}
     	
     	
-    	else if(listSource.equals(MainDbAdapter.TASK_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_TASK)){
             super.onCreate( icicle, null, TaskEditActivity.class, null,
-                    MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.taskTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_TASK, MainDbAdapter.COL_LIST_TASK_TABLE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                     twolineListActivity,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_GEN_USER_COMMENT},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_TaskList);
     	} 
-    	else if(listSource.equals(MainDbAdapter.TASKTYPE_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_TASKTYPE)){
             super.onCreate( icicle, null, TaskTypeEditActivity.class, null,
-                    MainDbAdapter.TASKTYPE_TABLE_NAME, MainDbAdapter.taskTypeTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_TASKTYPE, MainDbAdapter.COL_LIST_TASKTYPE_TABLE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                     twolineListActivity,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_GEN_USER_COMMENT},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_TaskTypeList);
     	} 
-    	else if(listSource.equals(MainDbAdapter.UOM_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_UOM)){
             super.onCreate( icicle, null, UOMEditActivity.class, null,
-                    MainDbAdapter.UOM_TABLE_NAME, MainDbAdapter.uomTableColNames, 
-                    null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_UOM, MainDbAdapter.COL_LIST_UOM_TABLE, 
+                    null, MainDbAdapter.COL_NAME_GEN_NAME,
                     twolineListActivity,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.UOM_COL_CODE_NAME},
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_UOM__CODE},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_UOMList);
     	} 
-    	else if(listSource.equals(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_EXPENSECATEGORY)){
     		if(!mBundleExtras.getBoolean("IsFuel")){
     	        super.onCreate( icicle, null, ExpenseCategoryEditActivity.class, null,
-    	                MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.expenseCategoryTableColNames, MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + "='N'",
-    	                MainDbAdapter.GEN_COL_NAME_NAME,
+    	                MainDbAdapter.TABLE_NAME_EXPENSECATEGORY, MainDbAdapter.COL_LIST_EXPENSECATEGORY_TABLE, MainDbAdapter.COL_NAME_EXPENSECATEGORY__ISFUEL + "='N'",
+    	                MainDbAdapter.COL_NAME_GEN_NAME,
     	                twolineListActivity,
-    	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
+    	                new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_GEN_USER_COMMENT},
     	                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
     	        setTitle(R.string.APP_Activity_ExpenseCategoryList);
     		}
     		else{
     	        super.onCreate( icicle, null, ExpenseCategoryEditActivity.class, null,
-    	                MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, MainDbAdapter.expenseCategoryTableColNames, MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + "='Y'",
-    	                MainDbAdapter.GEN_COL_NAME_NAME,
+    	                MainDbAdapter.TABLE_NAME_EXPENSECATEGORY, MainDbAdapter.COL_LIST_EXPENSECATEGORY_TABLE, MainDbAdapter.COL_NAME_EXPENSECATEGORY__ISFUEL + "='Y'",
+    	                MainDbAdapter.COL_NAME_GEN_NAME,
     	                twolineListActivity,
-    	                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
+    	                new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_GEN_USER_COMMENT},
     	                new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
     	        setTitle(R.string.APP_Activity_FuelCategoryList);
     		}
     	} 
-    	else if(listSource.equals(MainDbAdapter.EXPENSETYPE_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_EXPENSETYPE)){
             super.onCreate( icicle, null, ExpenseTypeEditActivity.class, null,
-                    MainDbAdapter.EXPENSETYPE_TABLE_NAME, MainDbAdapter.expenseTypeTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_EXPENSETYPE, MainDbAdapter.COL_LIST_EXPENSETYPE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                     twolineListActivity,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_GEN_USER_COMMENT},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_ExpenseTypeList);
     	} 
-    	else if(listSource.equals(MainDbAdapter.CURRENCY_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_CURRENCY)){
             super.onCreate( icicle, null, CurrencyEditActivity.class, null,
-                    MainDbAdapter.CURRENCY_TABLE_NAME, MainDbAdapter.currencyTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_CURRENCY, MainDbAdapter.COL_LIST_CURRENCY_TABLE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                     twolineListActivity,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.CURRENCY_COL_CODE_NAME},
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_CURRENCY__CODE},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_CurrencyList);
     	} 
-    	else if(listSource.equals(MainDbAdapter.TAG_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_TAG)){
             super.onCreate( icicle, null, TagEditActivity.class, null,
-                    MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.tagTableColNames, null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_TAG, MainDbAdapter.COL_LIST_TAG_TABLE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                     twolineListActivity,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME},
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_GEN_USER_COMMENT},
                     new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, null);
 	        setTitle(R.string.APP_Activity_TagList);
     	} 
 
-    	else if(listSource.equals(MainDbAdapter.UOM_CONVERSION_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_UOMCONVERSION)){
             super.onCreate( icicle, null, UOMConversionEditActivity.class, null,
-                    MainDbAdapter.UOM_CONVERSION_TABLE_NAME, MainDbAdapter.uomConversionTableColNames,
-                    null, MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_UOMCONVERSION, MainDbAdapter.COL_LIST_UOMCONVERSION_TABLE,
+                    null, MainDbAdapter.COL_NAME_GEN_NAME,
                     threeLineListActivity,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.GEN_COL_USER_COMMENT_NAME, MainDbAdapter.UOM_CONVERSION_COL_RATE_NAME},
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_GEN_USER_COMMENT, MainDbAdapter.COL_NAME_UOMCONVERSION__RATE},
                     new int[]{R.id.tvThreeLineListText1, R.id.tvThreeLineListText2, R.id.tvThreeLineListText3}, null);
 	        setTitle(R.string.APP_Activity_UOMConversionList);
     	} 
-    	else if(listSource.equals(MainDbAdapter.CURRENCYRATE_TABLE_NAME)){
+    	else if(listSource.equals(MainDbAdapter.TABLE_NAME_CURRENCYRATE)){
             super.onCreate( icicle, null, CurrencyRateEditActivity.class, null,
-                    MainDbAdapter.CURRENCYRATE_TABLE_NAME, MainDbAdapter.currencyRateTableColNames, null,
-                    MainDbAdapter.GEN_COL_NAME_NAME,
+                    MainDbAdapter.TABLE_NAME_CURRENCYRATE, MainDbAdapter.COL_LIST_CURRENCYRATE_TABLE, null,
+                    MainDbAdapter.COL_NAME_GEN_NAME,
                     threeLineListActivity,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.CURRENCYRATE_COL_RATE_NAME, MainDbAdapter.CURRENCYRATE_COL_INVERSERATE_NAME},
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_CURRENCYRATE__RATE, MainDbAdapter.COL_NAME_CURRENCYRATE__INVERSERATE},
                     new int[]{R.id.tvThreeLineListText1, R.id.tvThreeLineListText2, R.id.tvThreeLineListText3}, null);
 	        setTitle(R.string.APP_Activity_CurrencyRateList);
     	} 

@@ -210,41 +210,41 @@ public class GPSTrackService extends Service {
         //create the master record
         //use direct table insert for increasing the speed of the DB operation
         ContentValues cvData = new ContentValues();
-        cvData.put(MainDbAdapter.GEN_COL_NAME_NAME, sName);
-        cvData.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME, sUserComment);
-        cvData.put(MainDbAdapter.GPSTRACK_COL_CAR_ID_NAME, mCarId);
-        cvData.put(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME, mDriverId);
-        cvData.put(MainDbAdapter.GPSTRACK_COL_DATE_NAME, (System.currentTimeMillis() / 1000));
+        cvData.put(MainDbAdapter.COL_NAME_GEN_NAME, sName);
+        cvData.put(MainDbAdapter.COL_NAME_GEN_USER_COMMENT, sUserComment);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACK__CAR_ID, mCarId);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACK__DRIVER_ID, mDriverId);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACK__DATE, (System.currentTimeMillis() / 1000));
         if(sTag != null && sTag.length() > 0){
         	long mTagId = 0;
-            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String selection = "UPPER (" + MainDbAdapter.COL_NAME_GEN_NAME + ") = ?";
             String[] selectionArgs = {sTag.toUpperCase(Locale.US)};
-            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+            Cursor c = mDbAdapter.query(MainDbAdapter.TABLE_NAME_TAG, MainDbAdapter.COL_LIST_GEN_ROWID_NAME, selection, selectionArgs,
                     null, null, null);
             String tagIdStr = null;
             if(c.moveToFirst())
-                tagIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+                tagIdStr = c.getString(MainDbAdapter.COL_POS_GEN_ROWID);
             c.close();
             if(tagIdStr != null && tagIdStr.length() > 0){
                 mTagId = Long.parseLong(tagIdStr);
-                cvData.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, mTagId);
+                cvData.put(MainDbAdapter.COL_NAME_GPSTRACK__TAG_ID, mTagId);
             }
             else{
                 ContentValues tmpData = new ContentValues();
-                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, sTag);
-                mTagId = mDbAdapter.createRecord(MainDbAdapter.TAG_TABLE_NAME, tmpData);
+                tmpData.put(MainDbAdapter.COL_NAME_GEN_NAME, sTag);
+                mTagId = mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_TAG, tmpData);
                 if(mTagId >= 0)
-                	cvData.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, mTagId);
+                	cvData.put(MainDbAdapter.COL_NAME_GPSTRACK__TAG_ID, mTagId);
             }
         }
         else
-        	cvData.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, (String)null);
+        	cvData.put(MainDbAdapter.COL_NAME_GPSTRACK__TAG_ID, (String)null);
 
-        gpsTrackId = mDbAdapter.createRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, cvData);
+        gpsTrackId = mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_GPSTRACK, cvData);
     	if(isEnableDebugLog)
     		logDebugInfo("onCreate(): Track saved in DB gpsTrackId = " + gpsTrackId, null);
 
-        long lMileId = mDbAdapter.getIdFromCode(MainDbAdapter.UOM_TABLE_NAME, "mi");
+        long lMileId = mDbAdapter.getIdFromCode(MainDbAdapter.TABLE_NAME_UOM, "mi");
         long lCarUomId = mDbAdapter.getCarUOMLengthID(mCarId);
         if(lCarUomId == lMileId)
             isUseMetricUnits = false; //use imperial units
@@ -283,7 +283,7 @@ public class GPSTrackService extends Service {
 //    	gpsTrackDetailCSVFileWriter = FileUtils.createGpsTrackDetailFileWriter(StaticValues.CSV_FORMAT, fileName);
     	
         //create the header
-        gpsTrackDetailCSVFileWriter.append(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "," +
+        gpsTrackDetailCSVFileWriter.append(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID + "," +
                                                 "Accuracy" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
 //                                                "Accuracy [m], " + //debug
                                                 "Altitude" + (isUseMetricUnits? " [m]" : " [yd]") + "," +
@@ -300,10 +300,10 @@ public class GPSTrackService extends Service {
                                                 "InvalidTrackPointCount" + "," +
                                                 "IsValidPoint" + "\n");
         ContentValues cvData = new ContentValues();
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.CSV_FORMAT);
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME, gpsTrackDetailCSVFile.getAbsolutePath());
-        mDbAdapter.createRecord(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, cvData);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID, gpsTrackId);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILEFORMAT, StaticValues.CSV_FORMAT);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILE, gpsTrackDetailCSVFile.getAbsolutePath());
+        mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_GPSTRACKDETAIL, cvData);
         gpsTrackDetailCSVFileWriter.flush();
         
     	if(isEnableDebugLog)
@@ -320,10 +320,10 @@ public class GPSTrackService extends Service {
         gpsTrackDetailGOPFileWriter.append( "LatitudeE6,LongitudeE6,PointType\n");
 
         ContentValues cvData = new ContentValues();
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.GOP_FORMAT);
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME, gpsTrackDetailGOPFile.getAbsolutePath());
-        mDbAdapter.createRecord(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, cvData);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID, gpsTrackId);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILEFORMAT, StaticValues.GOP_FORMAT);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILE, gpsTrackDetailGOPFile.getAbsolutePath());
+        mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_GPSTRACKDETAIL, cvData);
         
         gpsTrackDetailGOPFileWriter.flush();
 
@@ -340,10 +340,10 @@ public class GPSTrackService extends Service {
         if(gpsTrackDetailGPXFileWriter == null)
             return;
         ContentValues cvData = new ContentValues();
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.GPX_FORMAT);
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME, gpsTrackDetailGPXFile.getAbsolutePath());
-        mDbAdapter.createRecord(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, cvData);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID, gpsTrackId);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILEFORMAT, StaticValues.GPX_FORMAT);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILE, gpsTrackDetailGPXFile.getAbsolutePath());
+        mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_GPSTRACKDETAIL, cvData);
 
         gpsTrackDetailGPXFileWriter.append(
                 "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>\n"
@@ -386,10 +386,10 @@ public class GPSTrackService extends Service {
         }
         
         ContentValues cvData = new ContentValues();
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME, gpsTrackId);
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILEFORMAT_NAME, StaticValues.KML_FORMAT);
-        cvData.put(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME, gpsTrackDetailKMLFile.getAbsolutePath());
-        mDbAdapter.createRecord(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, cvData);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID, gpsTrackId);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILEFORMAT, StaticValues.KML_FORMAT);
+        cvData.put(MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILE, gpsTrackDetailKMLFile.getAbsolutePath());
+        mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_GPSTRACKDETAIL, cvData);
 
         //initialize the file header
 
@@ -1052,24 +1052,24 @@ public class GPSTrackService extends Service {
         }
 
         ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MINACCURACY_NAME, (Math.round(dMinAccuracy * 100)*1d)/100); //round to 2 decimals
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXACCURACY_NAME, (Math.round(dMaxAccuracy * 100)*1d)/100);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGACCURACY_NAME, (Math.round(dAvgAccuracy * 100)*1d)/100);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MINALTITUDE_NAME, (Math.round(dMinAltitude * 100)*1d)/100);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXALTITUDE_NAME, (Math.round(dMaxAltitude * 100)*1d)/100);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTIME_NAME, lTotalTime);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MOVINGTIME_NAME, lTotalMovingTime);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_DISTANCE_NAME, (Math.round(dTotalDistance * 100)*1d)/100);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGSPEED_NAME, (Math.round(dAvgSpeed * 100)*1d)/100);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_AVGMOVINGSPEED_NAME, (Math.round(dAvgMovingSpeed * 100)*1d)/100);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_MAXSPEED_NAME, (Math.round(dMaxSpeed * 100)*1d)/100);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALTRACKPOINTS_NAME, dTotalTrackPoints);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_INVALIDTRACKPOINTS_NAME, dTotalSkippedTrackPoints);
-        cvData.put( MainDbAdapter.GPSTRACK_COL_TOTALPAUSETIME_NAME, lTotalPauseTime);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__MINACCURACY, (Math.round(dMinAccuracy * 100)*1d)/100); //round to 2 decimals
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__MAXACCURACY, (Math.round(dMaxAccuracy * 100)*1d)/100);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__AVGACCURACY, (Math.round(dAvgAccuracy * 100)*1d)/100);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__MINALTITUDE, (Math.round(dMinAltitude * 100)*1d)/100);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__MAXALTITUDE, (Math.round(dMaxAltitude * 100)*1d)/100);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__TOTALTIME, lTotalTime);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__MOVINGTIME, lTotalMovingTime);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__DISTANCE, (Math.round(dTotalDistance * 100)*1d)/100);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__AVGSPEED, (Math.round(dAvgSpeed * 100)*1d)/100);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__AVGMOVINGSPEED, (Math.round(dAvgMovingSpeed * 100)*1d)/100);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__MAXSPEED, (Math.round(dMaxSpeed * 100)*1d)/100);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__TOTALTRACKPOINTS, dTotalTrackPoints);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__INVALIDTRACKPOINTS, dTotalSkippedTrackPoints);
+        cvData.put( MainDbAdapter.COL_NAME_GPSTRACK__TOTALPAUSETIME, lTotalPauseTime);
         
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);
-        mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, gpsTrackId, cvData);
+        mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_GPSTRACK, gpsTrackId, cvData);
         
     	if(isEnableDebugLog)
     		logDebugInfo("updateStatistics() terminated", null);

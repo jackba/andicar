@@ -96,8 +96,8 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		Bundle whereConditions = new Bundle();
 		whereConditions.putString(
 				ReportDbAdapter.sqlConcatTableColumn(
-						MainDbAdapter.TODO_TABLE_NAME,
-						MainDbAdapter.GEN_COL_ROWID_NAME)
+						MainDbAdapter.TABLE_NAME_TODO,
+						MainDbAdapter.COL_NAME_GEN_ROWID)
 						+ "= ", Long.toString(mToDoID));
 		
 		ReportDbAdapter reportDb = new ReportDbAdapter(this, "todoListViewSelect", whereConditions);
@@ -218,18 +218,18 @@ public class ToDoNotificationDialog extends EditActivityBase {
 		if(ckIsDone.isChecked()){
 			boolean isRecurrentTask = false;
 			if(mTaskID > 0){
-				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_TABLE_NAME, 
-						MainDbAdapter.taskTableColNames, mTaskID);
-				isRecurrentTask = c.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
+				Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TASK, 
+						MainDbAdapter.COL_LIST_TASK_TABLE, mTaskID);
+				isRecurrentTask = c.getString(MainDbAdapter.COL_POS_TASK__ISRECURRENT).equals("Y");
 				try{c.close();} catch(Exception e){};
 			}
 			if(!isRecurrentTask){ //if not recurrent => delete the to-do & task
-				mDbAdapter.deleteRecord(MainDbAdapter.TODO_TABLE_NAME, mToDoID);
-				mDbAdapter.deleteRecord(MainDbAdapter.TASK_TABLE_NAME, mTaskID);
+				mDbAdapter.deleteRecord(MainDbAdapter.TABLE_NAME_TODO, mToDoID);
+				mDbAdapter.deleteRecord(MainDbAdapter.TABLE_NAME_TASK, mTaskID);
 				return true;
 			}
 			
-			cvData.put( MainDbAdapter.TODO_COL_ISDONE_NAME, "Y");
+			cvData.put( MainDbAdapter.COL_NAME_TODO__ISDONE, "Y");
 //	                (ckIsDone.isChecked() ? "Y" : "N") );
 		}
 		else{
@@ -254,7 +254,7 @@ public class ToDoNotificationDialog extends EditActivityBase {
 	            return false;
 	        }
 			if(triggeredBy == ToDoNotificationService.TRIGGERED_BY_MILEAGE){
-				cvData.put( MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, carCurrentOdodmeter +  postPoneFor.longValue());
+				cvData.put( MainDbAdapter.COL_NAME_TODO__NOTIFICATIONMILEAGE, carCurrentOdodmeter +  postPoneFor.longValue());
 			}
 			else{
 				Calendar cal = Calendar.getInstance();
@@ -262,12 +262,12 @@ public class ToDoNotificationDialog extends EditActivityBase {
 					cal.add(Calendar.MINUTE, postPoneFor.intValue());
 				else
 					cal.add(Calendar.DAY_OF_YEAR, postPoneFor.intValue());
-				cvData.put( MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, cal.getTimeInMillis() / 1000);
+				cvData.put( MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE, cal.getTimeInMillis() / 1000);
 			}
 		}
 		if(mDbAdapter == null)
 			mDbAdapter = new MainDbAdapter(this);
-		mDbAdapter.updateRecord(MainDbAdapter.TODO_TABLE_NAME, mToDoID, cvData);
+		mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_TODO, mToDoID, cvData);
 		Intent intent = new Intent(this, ToDoManagementService.class);
 		intent.putExtra("TaskID", mTaskID);
 		intent.putExtra("setJustNextRun", !ckIsDone.isChecked());

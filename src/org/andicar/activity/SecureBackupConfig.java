@@ -63,11 +63,11 @@ public class SecureBackupConfig extends EditActivityBase {
 		
         //just one record should be in this table!!!
 		if(c.moveToFirst()){
-			mRowId = c.getLong(DB.GEN_COL_ROWID_POS);
+			mRowId = c.getLong(DB.COL_POS_GEN_ROWID);
 			ckIsIncludeGPSTrack.setChecked(c.getString(AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEGPS_POS).equals("Y"));
 			ckIsIncludeReports.setChecked(c.getString(AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEREPORTS_POS).equals("Y"));
 			ckIsShowNotification.setChecked(c.getString(AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISSHOWNOTIF_POS).equals("Y"));
-	    	ckIsActive.setChecked(c.getString(DB.GEN_COL_ISACTIVE_POS).equals("Y"));
+	    	ckIsActive.setChecked(c.getString(DB.COL_POS_GEN_ISACTIVE).equals("Y"));
 		}
 		else{
 			mRowId = -1;
@@ -97,9 +97,9 @@ public class SecureBackupConfig extends EditActivityBase {
 		}
 
         ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME, "UserModified");
-        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, (ckIsActive.isChecked() ? "Y" : "N") );
-        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME, "Default");
+        cvData.put( MainDbAdapter.COL_NAME_GEN_NAME, "UserModified");
+        cvData.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE, (ckIsActive.isChecked() ? "Y" : "N") );
+        cvData.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT, "Default");
         cvData.put( AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEGPS_NAME, (ckIsIncludeGPSTrack.isChecked() ? "Y" : "N") );
         cvData.put( AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEREPORTS_NAME, (ckIsIncludeReports.isChecked() ? "Y" : "N") );
         cvData.put( AddOnDBAdapter.ADDON_SECURE_BK_SETTINGS_COL_ISSHOWNOTIF_NAME, (ckIsShowNotification.isChecked() ? "Y" : "N") );

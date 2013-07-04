@@ -66,7 +66,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
         if(icicle == null){
             whereConditions = new Bundle();
             whereConditions.putString(
-                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_ISDONE_NAME) + "=", "N");
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_TODO__ISDONE) + "=", "N");
         }
         else
             whereConditions = (Bundle)getLastNonConfigurationInstance();
@@ -74,7 +74,7 @@ public class ToDoListReportActivity extends ReportListActivityBase{
         initStyle();
 
         super.onCreate( icicle, null, TaskEditActivity.class, null,
-                MainDbAdapter.TODO_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
+                MainDbAdapter.TABLE_NAME_TODO, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null, threeLineListReportActivity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
@@ -116,9 +116,9 @@ public class ToDoListReportActivity extends ReportListActivityBase{
         tvDateFromSearch = (TextView) searchView.findViewById(R.id.tvDateFromSearch);
         tvDateToSearch = (TextView) searchView.findViewById(R.id.tvDateToSearch);
         spnCarSearch = (Spinner) searchView.findViewById(R.id.spnCarSearch);
-        initSpinner(spnCarSearch, MainDbAdapter.CAR_TABLE_NAME, null, null, 0);
+        initSpinner(spnCarSearch, MainDbAdapter.TABLE_NAME_CAR, null, null, 0);
         spnTask = (Spinner) searchView.findViewById(R.id.spnTask);
-        initSpinner(spnTask, MainDbAdapter.TASK_TABLE_NAME, null, null, 0);
+        initSpinner(spnTask, MainDbAdapter.TABLE_NAME_TASK, null, null, 0);
         spnIsDone = (Spinner) searchView.findViewById(R.id.spnIsActive);
         spnIsDone.setSelection(2); //yes
 
@@ -150,8 +150,8 @@ public class ToDoListReportActivity extends ReportListActivityBase{
                     whereConditions.clear();
                     if (etUserCommentSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
-                                		MainDbAdapter.GEN_COL_USER_COMMENT_NAME) + " LIKE ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO,
+                                		MainDbAdapter.COL_NAME_GEN_USER_COMMENT) + " LIKE ",
                                 etUserCommentSearch.getText().toString());
                     }
                     if (tvDateFromSearch.getText().toString().length() > 0) {
@@ -190,25 +190,25 @@ public class ToDoListReportActivity extends ReportListActivityBase{
                     }
                     if (spnCarSearch.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
-                                		MainDbAdapter.TODO_COL_CAR_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO,
+                                		MainDbAdapter.COL_NAME_TODO__CAR_ID) + "=",
                                 String.valueOf(spnCarSearch.getSelectedItemId()));
                     }
                     if (spnTask.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
-                                		MainDbAdapter.TODO_COL_TASK_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO,
+                                		MainDbAdapter.COL_NAME_TODO__TASK_ID) + "=",
                                 String.valueOf(spnTask.getSelectedItemId()));
                     }
                     if (spnIsDone.getSelectedItemId() == 1) { //is done
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
-                                		MainDbAdapter.TODO_COL_ISDONE_NAME) + "=", "Y");
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO,
+                                		MainDbAdapter.COL_NAME_TODO__ISDONE) + "=", "Y");
                     }
                     else if (spnIsDone.getSelectedItemId() == 2) { //is not done
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME,
-                                		MainDbAdapter.TODO_COL_ISDONE_NAME) + "=", "N");
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO,
+                                		MainDbAdapter.COL_NAME_TODO__ISDONE) + "=", "N");
                     }
                     mListDbHelper.setReportSql(reportSelectName, whereConditions);
                     fillData();
@@ -247,30 +247,30 @@ public class ToDoListReportActivity extends ReportListActivityBase{
 			return super.onContextItemSelected(item);
 		else{
 			//check if task is one time => if yes delete the to-do and the task
-			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, 
-					MainDbAdapter.todoTableColNames, mLongClickId);
+			Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TODO, 
+					MainDbAdapter.COL_LIST_TODO_TABLE, mLongClickId);
 			long taskID = 0;
 			boolean isRecurrentTask = false;
 			if(c != null){
-				taskID = c.getLong(MainDbAdapter.TODO_COL_TASK_ID_POS);
+				taskID = c.getLong(MainDbAdapter.COL_POS_TODO__TASK_ID);
 				try{c.close();} catch(Exception e){};
 			}
 			if(taskID > 0){
-				c = mDbAdapter.fetchRecord(MainDbAdapter.TASK_TABLE_NAME, 
-						MainDbAdapter.taskTableColNames, taskID);
-				isRecurrentTask = c.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
+				c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TASK, 
+						MainDbAdapter.COL_LIST_TASK_TABLE, taskID);
+				isRecurrentTask = c.getString(MainDbAdapter.COL_POS_TASK__ISRECURRENT).equals("Y");
 				try{c.close();} catch(Exception e){};
 			}
 			if(!isRecurrentTask){ //if not recurrent => delete the to-do & task
-				mDbAdapter.deleteRecord(MainDbAdapter.TODO_TABLE_NAME, mLongClickId);
-				mDbAdapter.deleteRecord(MainDbAdapter.TASK_TABLE_NAME, taskID);
+				mDbAdapter.deleteRecord(MainDbAdapter.TABLE_NAME_TODO, mLongClickId);
+				mDbAdapter.deleteRecord(MainDbAdapter.TABLE_NAME_TASK, taskID);
 				fillData();
 				return true;
 			}
 			
 			ContentValues data = new ContentValues();
-			data.put(MainDbAdapter.TODO_COL_ISDONE_NAME, "Y");
-			int updResult = mDbAdapter.updateRecord(MainDbAdapter.TODO_TABLE_NAME, mLongClickId, data);
+			data.put(MainDbAdapter.COL_NAME_TODO__ISDONE, "Y");
+			int updResult = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_TODO, mLongClickId, data);
 			if (updResult != -1) {
 				String errMsg = "";
 				errMsg = mRes.getString(updResult);
