@@ -167,15 +167,15 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     	try{
             String selectSql = "";
 
-            selectSql = "SELECT 'All' AS " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
-                                 "-1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME +
+            selectSql = "SELECT 'All' AS " + MainDbAdapter.COL_NAME_GEN_NAME + ", " +
+                                 "-1 AS " + MainDbAdapter.COL_NAME_GEN_ROWID +
                         " UNION " +
-                        " SELECT " + MainDbAdapter.GEN_COL_NAME_NAME + ", " +
-                                    MainDbAdapter.GEN_COL_ROWID_NAME +
+                        " SELECT " + MainDbAdapter.COL_NAME_GEN_NAME + ", " +
+                                    MainDbAdapter.COL_NAME_GEN_ROWID +
                         " FROM " + tableName;
             if(selection != null)
             	selectSql = selectSql + " WHERE " + selection;
-            selectSql = selectSql + " ORDER BY " + MainDbAdapter.GEN_COL_ROWID_NAME;
+            selectSql = selectSql + " ORDER BY " + MainDbAdapter.COL_NAME_GEN_ROWID;
 
             Spinner spinner = (Spinner) pSpinner;
             Cursor c = mListDbHelper.query(selectSql, selectionArgs);
@@ -183,7 +183,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
             int[] to = new int[]{android.R.id.text1};
             SimpleCursorAdapter mCursorAdapter =
                     new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item, c,
-            new String[] {MainDbAdapter.GEN_COL_NAME_NAME}, to);
+            new String[] {MainDbAdapter.COL_NAME_GEN_NAME}, to);
             mCursorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(mCursorAdapter);
             if(selectedId >= 0){

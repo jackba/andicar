@@ -75,46 +75,46 @@ public class GPSTrackEditActivity extends EditActivityBase {
 
         userCommentAdapter = new ArrayAdapter<String>(GPSTrackEditActivity.this,
                 android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_GPSTRACK, null,
                 mPreferences.getLong("CurrentCar_ID", -1), 30));
         acUserComment.setAdapter(userCommentAdapter);
 
-        mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.GPSTRACK_TABLE_NAME,
-                MainDbAdapter.gpsTrackTableColNames, mRowId);
-        mCarId = c.getLong(MainDbAdapter.GPSTRACK_COL_CAR_ID_POS);
-        mDriverId = c.getLong(MainDbAdapter.GPSTRACK_COL_DRIVER_ID_POS);
+        mRowId = mBundleExtras.getLong( MainDbAdapter.COL_NAME_GEN_ROWID );
+        Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_GPSTRACK,
+                MainDbAdapter.COL_LIST_GPSTRACK_TABLE, mRowId);
+        mCarId = c.getLong(MainDbAdapter.COL_POS_GPSTRACK__CAR_ID);
+        mDriverId = c.getLong(MainDbAdapter.COL_POS_GPSTRACK__DRIVER_ID);
 
-        etName.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
-        acUserComment.setText(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+        etName.setText(c.getString(MainDbAdapter.COL_POS_GEN_NAME));
+        acUserComment.setText(c.getString(MainDbAdapter.COL_POS_GEN_USER_COMMENT));
 
         tvCarLabel.setText(mResource.getString(R.string.GEN_CarLabel) + " " +
-                        mDbAdapter.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName, mCarId).getString(1));
+                        mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_LIST_GEN_ROWID_NAME, mCarId).getString(1));
 
 
         
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_TAG, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
         //fill tag
-        if(c.getString(MainDbAdapter.GPSTRACK_COL_TAG_ID_POS) != null
-                && c.getString(MainDbAdapter.GPSTRACK_COL_TAG_ID_POS).length() > 0){
-            mTagId = c.getLong(MainDbAdapter.GPSTRACK_COL_TAG_ID_POS);
-            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+        if(c.getString(MainDbAdapter.COL_POS_GPSTRACK__TAG_ID) != null
+                && c.getString(MainDbAdapter.COL_POS_GPSTRACK__TAG_ID).length() > 0){
+            mTagId = c.getLong(MainDbAdapter.COL_POS_GPSTRACK__TAG_ID);
+            String selection = MainDbAdapter.COL_NAME_GEN_ROWID + "= ? ";
             String[] selectionArgs = {Long.toString(mTagId)};
-            Cursor c2 = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+            Cursor c2 = mDbAdapter.query(MainDbAdapter.TABLE_NAME_TAG, MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
                         selection, selectionArgs, null, null, null);
             if(c2.moveToFirst())
-                acTag.setText(c2.getString(MainDbAdapter.GEN_COL_NAME_POS));
+                acTag.setText(c2.getString(MainDbAdapter.COL_POS_GEN_NAME));
             c2.close();
         }
 
-        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+        initSpinner(spnDriver, MainDbAdapter.TABLE_NAME_DRIVER, MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+                new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                 mDriverId, false);
-        initDateTime(c.getLong(MainDbAdapter.GPSTRACK_COL_DATE_POS) * 1000);
+        initDateTime(c.getLong(MainDbAdapter.COL_POS_GPSTRACK__DATE) * 1000);
         tvDateTimeValue.setText(mResource.getString(R.string.GEN_DateTimeLabel) + " " + tvDateTimeValue.getText());
         c.close();
 
@@ -122,7 +122,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
         Bundle whereConditions = new Bundle();
         whereConditions.clear();
         whereConditions.putString(
-            ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + "=",
+            ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK, MainDbAdapter.COL_NAME_GEN_ROWID) + "=",
                     String.valueOf(mRowId));
         ReportDbAdapter reportDb = new ReportDbAdapter(this, "gpsTrackListViewSelect", whereConditions);
         c = reportDb.fetchReport(1);
@@ -138,7 +138,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
                     .replace("[#6]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
                             Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
                     .replace("[#12]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_12) +
-                            Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.GPSTRACK_COL_TOTALPAUSETIME_NAME)), false))
+                            Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.COL_NAME_GPSTRACK__TOTALPAUSETIME)), false))
                     .replace("[#7]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                     .replace("[#8]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                     .replace("[#9]", "\n" + mResource.getString(R.string.GPSTrackReport_GPSTrackVar_9))
@@ -149,16 +149,16 @@ public class GPSTrackEditActivity extends EditActivityBase {
         c.close();
         reportDb.close();
 
-        String selection = MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "=?";
+        String selection = MainDbAdapter.COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID + "=?";
         String[] selectionArgs = {Long.toString(mRowId)};
         int layout = R.layout.oneline_list_layout_small_s01;
    		layout = R.layout.oneline_list_layout_small_s01;
 
         SimpleCursorAdapter cursorAdapter =
                 new SimpleCursorAdapter(this, layout,
-                                    mDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME,
-                                            MainDbAdapter.gpsTrackDetailTableColNames, selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME),
-                                    new String[]{MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME}, new int[]{R.id.tvOneLineListTextSmall});
+                                    mDbAdapter.query(MainDbAdapter.TABLE_NAME_GPSTRACKDETAIL,
+                                            MainDbAdapter.COL_LIST_GPSTRACKDETAIL_TABLE, selection, selectionArgs, null, null, MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILE),
+                                    new String[]{MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILE}, new int[]{R.id.tvOneLineListTextSmall});
 
         lvTrackFileList.setAdapter(cursorAdapter);
         
@@ -199,40 +199,40 @@ public class GPSTrackEditActivity extends EditActivityBase {
     protected boolean saveData() {
 
         ContentValues data = new ContentValues();
-        data.put( MainDbAdapter.GEN_COL_NAME_NAME,
+        data.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        data.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
-        data.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+        data.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE, "Y");
+        data.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,
                 acUserComment.getText().toString() );
-        data.put( MainDbAdapter.GPSTRACK_COL_DRIVER_ID_NAME,
+        data.put( MainDbAdapter.COL_NAME_GPSTRACK__DRIVER_ID,
                 spnDriver.getSelectedItemId() );
         if(acTag.getText().toString() != null && acTag.getText().toString().length() > 0){
-            String selection = "UPPER (" + MainDbAdapter.GEN_COL_NAME_NAME + ") = ?";
+            String selection = "UPPER (" + MainDbAdapter.COL_NAME_GEN_NAME + ") = ?";
             String[] selectionArgs = {acTag.getText().toString().toUpperCase()};
-            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName, selection, selectionArgs,
+            Cursor c = mDbAdapter.query(MainDbAdapter.TABLE_NAME_TAG, MainDbAdapter.COL_LIST_GEN_ROWID_NAME, selection, selectionArgs,
                     null, null, null);
             String tagIdStr = null;
             if(c.moveToFirst())
-                tagIdStr = c.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+                tagIdStr = c.getString(MainDbAdapter.COL_POS_GEN_ROWID);
             c.close();
             if(tagIdStr != null && tagIdStr.length() > 0){
                 mTagId = Long.parseLong(tagIdStr);
-                data.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, mTagId);
+                data.put(MainDbAdapter.COL_NAME_GPSTRACK__TAG_ID, mTagId);
             }
             else{
                 ContentValues tmpData = new ContentValues();
-                tmpData.put(MainDbAdapter.GEN_COL_NAME_NAME, acTag.getText().toString());
-                mTagId = mDbAdapter.createRecord(MainDbAdapter.TAG_TABLE_NAME, tmpData);
+                tmpData.put(MainDbAdapter.COL_NAME_GEN_NAME, acTag.getText().toString());
+                mTagId = mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_TAG, tmpData);
                 if(mTagId >= 0)
-                    data.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, mTagId);
+                    data.put(MainDbAdapter.COL_NAME_GPSTRACK__TAG_ID, mTagId);
             }
         }
         else{
-            data.put(MainDbAdapter.GPSTRACK_COL_TAG_ID_NAME, (String)null);
+            data.put(MainDbAdapter.COL_NAME_GPSTRACK__TAG_ID, (String)null);
         }
 
 
-        int updResult = mDbAdapter.updateRecord(MainDbAdapter.GPSTRACK_TABLE_NAME, mRowId, data);
+        int updResult = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_GPSTRACK, mRowId, data);
         if(updResult != -1){
             String errMsg = "";
             errMsg = mResource.getString(updResult);

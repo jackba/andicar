@@ -67,10 +67,10 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
         if(icicle == null){
             whereConditions = new Bundle();
             whereConditions.putString(
-                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                    			MainDbAdapter.EXPENSE_COL_CAR_ID_NAME) + "=",
+                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                    			MainDbAdapter.COL_NAME_EXPENSE__CAR_ID) + "=",
                     mCarId.toString() );
-    		whereConditions.putString("COALESCE(" + MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME + ", '') = ", ""); 
+    		whereConditions.putString("COALESCE(" + MainDbAdapter.COL_NAME_EXPENSE__FROMTABLE + ", '') = ", ""); 
         }
         else
             whereConditions = (Bundle)getLastNonConfigurationInstance();
@@ -78,7 +78,7 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
         initStyle();
 
         super.onCreate( icicle, null, ExpenseEditActivity.class, null,
-                MainDbAdapter.EXPENSE_TABLE_NAME, ReportDbAdapter.genericReportListViewSelectCols, null,
+                MainDbAdapter.TABLE_NAME_EXPENSE, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null, threeLineListReportActivity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
@@ -116,21 +116,21 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
         searchDialog.setPositiveButton(R.string.GEN_OK, searchDialogButtonlistener);
         searchDialog.setNegativeButton(R.string.GEN_CANCEL, searchDialogButtonlistener);
         spnExpCategory = (Spinner) searchView.findViewById(R.id.spnExpCategorySearch);
-        initSpinner(spnExpCategory, MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, 
-        		MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'N'", null, -1);
+        initSpinner(spnExpCategory, MainDbAdapter.TABLE_NAME_EXPENSECATEGORY, 
+        		MainDbAdapter.COL_NAME_EXPENSECATEGORY__ISFUEL + " = 'N'", null, -1);
         spnExpType = (Spinner) searchView.findViewById(R.id.spnExpTypeSearch);
-        initSpinner(spnExpType, MainDbAdapter.EXPENSETYPE_TABLE_NAME, null, null, -1);
+        initSpinner(spnExpType, MainDbAdapter.TABLE_NAME_EXPENSETYPE, null, null, -1);
         etUserComment = (EditText) searchView.findViewById(R.id.etUserCommentSearch);
         etUserComment.setText("%");
         tvDateFromSearch = (TextView) searchView.findViewById(R.id.tvDateFromSearch);
         tvDateToSearch = (TextView) searchView.findViewById(R.id.tvDateToSearch);
         spnCar = (Spinner) searchView.findViewById(R.id.spnCarSearch);
-        initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, null, null, mCarId);
+        initSpinner(spnCar, MainDbAdapter.TABLE_NAME_CAR, null, null, mCarId);
         spnDriver = (Spinner) searchView.findViewById(R.id.spnDriverSearch);
-        initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, null, null, -1);
+        initSpinner(spnDriver, MainDbAdapter.TABLE_NAME_DRIVER, null, null, -1);
         acTag = ((AutoCompleteTextView) searchView.findViewById( R.id.acTag ));
         tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_TAG, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
         acTag.setText("%");
@@ -164,63 +164,63 @@ public class ExpensesListReportActivity extends ReportListActivityBase{
                 try {
                     whereConditions.clear();
                     //exclude expenses created from refuels
-            		whereConditions.putString("COALESCE(" + MainDbAdapter.EXPENSE_COL_FROMTABLE_NAME + ", '') = ", "");
+            		whereConditions.putString("COALESCE(" + MainDbAdapter.COL_NAME_EXPENSE__FROMTABLE + ", '') = ", "");
             		
                     if (spnExpCategory.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                                		MainDbAdapter.EXPENSE_COL_EXPENSECATEGORY_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                                		MainDbAdapter.COL_NAME_EXPENSE__EXPENSECATEGORY_ID) + "=",
                                 String.valueOf(spnExpCategory.getSelectedItemId()));
                     }
                     if (spnExpType.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                                		MainDbAdapter.EXPENSE_COL_EXPENSETYPE_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                                		MainDbAdapter.COL_NAME_EXPENSE__EXPENSETYPE_ID) + "=",
                                 String.valueOf(spnExpType.getSelectedItemId()));
                     }
                     if (etUserComment.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                                		MainDbAdapter.GEN_COL_USER_COMMENT_NAME) + " LIKE ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                                		MainDbAdapter.COL_NAME_GEN_USER_COMMENT) + " LIKE ",
                                 etUserComment.getText().toString());
                     }
                     if (tvDateFromSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                                		MainDbAdapter.EXPENSE_COL_DATE_NAME) + " >= ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                                		MainDbAdapter.COL_NAME_EXPENSE__DATE) + " >= ",
                                 Long.toString(Utils.decodeDateStr(tvDateFromSearch.getText().toString(),
                                 		StaticValues.DATE_DECODE_TO_ZERO) / 1000));
                     }
                     if (tvDateToSearch.getText().toString().length() > 0) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                                		MainDbAdapter.EXPENSE_COL_DATE_NAME) + " <= ",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                                		MainDbAdapter.COL_NAME_EXPENSE__DATE) + " <= ",
                                 Long.toString(Utils.decodeDateStr(tvDateToSearch.getText().toString(),
                                 		StaticValues.DATE_DECODE_TO_24) / 1000));
                     }
                     if (spnCar.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                                		MainDbAdapter.EXPENSE_COL_CAR_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                                		MainDbAdapter.COL_NAME_EXPENSE__CAR_ID) + "=",
                                 String.valueOf(spnCar.getSelectedItemId()));
                     }
                     if (spnDriver.getSelectedItemId() != -1) {
                         whereConditions.putString(
-                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                                		MainDbAdapter.EXPENSE_COL_DRIVER_ID_NAME) + "=",
+                                ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                                		MainDbAdapter.COL_NAME_EXPENSE__DRIVER_ID) + "=",
                                 String.valueOf(spnDriver.getSelectedItemId()));
                     }
                     if (acTag.getText().toString() != null) {
                     	if(acTag.getText().toString().length() == 0)
                             whereConditions.putString(
-                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.EXPENSE_TABLE_NAME,
-                                    							MainDbAdapter.EXPENSE_COL_TAG_ID_NAME) + " is ",
+                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_EXPENSE,
+                                    							MainDbAdapter.COL_NAME_EXPENSE__TAG_ID) + " is ",
                                     "null");
                     	else
                             whereConditions.putString(
                             		"COALESCE( " +
-	                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TAG_TABLE_NAME,
-	                                    							MainDbAdapter.GEN_COL_NAME_NAME) + ", '') LIKE ",
+	                                    ReportDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TAG,
+	                                    							MainDbAdapter.COL_NAME_GEN_NAME) + ", '') LIKE ",
         							acTag.getText().toString());
                     }
 //                    if(spnIsActive.getSelectedItemId() > 0){

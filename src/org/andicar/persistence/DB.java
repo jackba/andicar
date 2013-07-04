@@ -51,1128 +51,1190 @@ public class DB {
 
 	protected static final String TAG = "MainDbAdapter";
 	// drivers
-	public static final String DRIVER_TABLE_NAME = "DEF_DRIVER";
+	public static final String TABLE_NAME_DRIVER = "DEF_DRIVER";
 	// cars
-	public static final String CAR_TABLE_NAME = "DEF_CAR";
+	public static final String TABLE_NAME_CAR = "DEF_CAR";
 	// uoms
-	public static final String UOM_TABLE_NAME = "DEF_UOM";
+	public static final String TABLE_NAME_UOM = "DEF_UOM";
 	// expense types
-	public static final String EXPENSETYPE_TABLE_NAME = "DEF_EXPENSETYPE";
+	public static final String TABLE_NAME_EXPENSETYPE = "DEF_EXPENSETYPE";
 	// uom conversion rates
-	public static final String UOM_CONVERSION_TABLE_NAME = "DEF_UOMCONVERTIONRATE";
+	public static final String TABLE_NAME_UOMCONVERSION = "DEF_UOMCONVERTIONRATE";
 	// currencies
-	public static final String CURRENCY_TABLE_NAME = "DEF_CURRENCY";
+	public static final String TABLE_NAME_CURRENCY = "DEF_CURRENCY";
 	// mileages
-	public static final String MILEAGE_TABLE_NAME = "CAR_MILEAGE";
+	public static final String TABLE_NAME_MILEAGE = "CAR_MILEAGE";
 	// refuel
-	public static final String REFUEL_TABLE_NAME = "CAR_REFUEL";
+	public static final String TABLE_NAME_REFUEL = "CAR_REFUEL";
 	// expense categories (eg. Refuel, Service, Insurance, etc.
-	public static final String EXPENSECATEGORY_TABLE_NAME = "DEF_EXPENSECATEGORY";
+	public static final String TABLE_NAME_EXPENSECATEGORY = "DEF_EXPENSECATEGORY";
 	// car expenses
-	public static final String EXPENSE_TABLE_NAME = "CAR_EXPENSE";
+	public static final String TABLE_NAME_EXPENSE = "CAR_EXPENSE";
 	// currency rate
-	public static final String CURRENCYRATE_TABLE_NAME = "DEF_CURRENCYRATE";
+	public static final String TABLE_NAME_CURRENCYRATE = "DEF_CURRENCYRATE";
 	// gps track table
-	public static final String GPSTRACK_TABLE_NAME = "GPS_TRACK";
-	public static final String GPSTRACKDETAIL_TABLE_NAME = "GPS_TRACKDETAIL";
+	public static final String TABLE_NAME_GPSTRACK = "GPS_TRACK";
+	public static final String TABLE_NAME_GPSTRACKDETAIL = "GPS_TRACKDETAIL";
 
 	// business partner table
-	public static final String BPARTNER_TABLE_NAME = "DEF_BPARTNER";
+	public static final String TABLE_NAME_BPARTNER = "DEF_BPARTNER";
 	// business partner locations table
-	public static final String BPARTNER_LOCATION_TABLE_NAME = "DEF_BPARTNERLOCATION";
+	public static final String TABLE_NAME_BPARTNERLOCATION = "DEF_BPARTNERLOCATION";
 
 	// tags table
-	public static final String TAG_TABLE_NAME = "DEF_TAG";
+	public static final String TABLE_NAME_TAG = "DEF_TAG";
 
 	// tasks/reminders/todo tables
-	public static final String TASKTYPE_TABLE_NAME = "DEF_TASKTYPE";
-	public static final String TASK_TABLE_NAME = "DEF_TASK";
-	public static final String TASK_CAR_TABLE_NAME = "TASK_CAR";
-	public static final String TODO_TABLE_NAME = "TASK_TODO";
-	//link table between cars and reimbursement rates
-	public static final String REIMBURSEMENT_CAR_RATES_TABLE_NAME = "REIMBURSEMENT_CAR";
-	
-	
+	public static final String TABLE_NAME_TASKTYPE = "DEF_TASKTYPE";
+	public static final String TABLE_NAME_TASK = "DEF_TASK";
+	public static final String TABLE_NAME_TASK_CAR = "TASK_CAR";
+	public static final String TABLE_NAME_TODO = "TASK_TODO";
+	// link table between cars and reimbursement rates
+	public static final String TABLE_NAME_REIMBURSEMENT_CAR_RATES = "REIMBURSEMENT_CAR";
+
 	// column names. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
-	public static final String GEN_COL_ROWID_NAME = "_id";
-	public static final String GEN_COL_NAME_NAME = "Name";
-	public static final String GEN_COL_ISACTIVE_NAME = "IsActive";
-	public static final String GEN_COL_USER_COMMENT_NAME = "UserComment";
+	public static final String COL_NAME_GEN_ROWID = "_id";
+	public static final String COL_NAME_GEN_NAME = "Name";
+	public static final String COL_NAME_GEN_ISACTIVE = "IsActive";
+	public static final String COL_NAME_GEN_USER_COMMENT = "UserComment";
 	// driver specific column names
-	public static final String DRIVER_COL_LICENSE_NO_NAME = "LicenseNo";
+	public static final String COL_NAME_DRIVER__LICENSE_NO = "LicenseNo";
 	// car specific column names
-	public static final String CAR_COL_MODEL_NAME = "Model";
-	public static final String CAR_COL_REGISTRATIONNO_NAME = "RegistrationNo";
-	public static final String CAR_COL_INDEXSTART_NAME = "IndexStart";
-	public static final String CAR_COL_INDEXCURRENT_NAME = "IndexCurrent";
-	public static final String CAR_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME + "_Length_ID";
-	public static final String CAR_COL_UOMVOLUME_ID_NAME = UOM_TABLE_NAME + "_Volume_ID";
-	public static final String CAR_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
-	
+	public static final String COL_NAME_CAR__MODEL = "Model";
+	public static final String COL_NAME_CAR__REGISTRATIONNO = "RegistrationNo";
+	public static final String COL_NAME_CAR__INDEXSTART = "IndexStart";
+	public static final String COL_NAME_CAR__INDEXCURRENT = "IndexCurrent";
+	public static final String COL_NAME_CAR__UOMLENGTH_ID = TABLE_NAME_UOM
+			+ "_Length_ID";
+	public static final String COL_NAME_CAR__UOMVOLUME_ID = TABLE_NAME_UOM
+			+ "_Volume_ID";
+	public static final String COL_NAME_CAR__CURRENCY_ID = TABLE_NAME_CURRENCY
+			+ "_ID";
+
 	// uom specific column names
-	public static final String UOM_COL_CODE_NAME = "Code";
-	public static final String UOM_COL_UOMTYPE_NAME = "UOMType"; // V - Volume or L - Length
+	public static final String COL_NAME_UOM__CODE = "Code";
+	public static final String COL_NAME_UOM__UOMTYPE = "UOMType"; // V - Volume
+																	// or L -
+																	// Length
 	// uom conversion specific column names
-	public static final String UOM_CONVERSION_COL_UOMFROM_ID_NAME = UOM_TABLE_NAME + "_From_ID";
-	public static final String UOM_CONVERSION_COL_UOMTO_ID_NAME = UOM_TABLE_NAME + "_To_ID";
-	public static final String UOM_CONVERSION_COL_RATE_NAME = "ConvertionRate";
+	public static final String COL_NAME_UOMCONVERSION__UOMFROM_ID = TABLE_NAME_UOM
+			+ "_From_ID";
+	public static final String COL_NAME_UOMCONVERSION__UOMTO_ID = TABLE_NAME_UOM
+			+ "_To_ID";
+	public static final String COL_NAME_UOMCONVERSION__RATE = "ConvertionRate";
 	// mileage specific columns
-	public static final String MILEAGE_COL_DATE_NAME = "Date";
-	public static final String MILEAGE_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String MILEAGE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
-	public static final String MILEAGE_COL_INDEXSTART_NAME = "IndexStart";
-	public static final String MILEAGE_COL_INDEXSTOP_NAME = "IndexStop";
-	public static final String MILEAGE_COL_UOMLENGTH_ID_NAME = UOM_TABLE_NAME + "_Length_ID";
-	public static final String MILEAGE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
-	public static final String MILEAGE_COL_GPSTRACKLOG_NAME = "GPSTrackLog";
-	public static final String MILEAGE_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
-	public static final String MILEAGE_COL_REIMBURSEMENT_RATE_NAME = "ReimbursementRate";
-	public static final String MILEAGE_COL_REIMBURSEMENT_VALUE_NAME = "ReimbursementValue";
+	public static final String COL_NAME_MILEAGE__DATE = "Date";
+	public static final String COL_NAME_MILEAGE__CAR_ID = TABLE_NAME_CAR
+			+ "_ID";
+	public static final String COL_NAME_MILEAGE__DRIVER_ID = TABLE_NAME_DRIVER
+			+ "_ID";
+	public static final String COL_NAME_MILEAGE__INDEXSTART = "IndexStart";
+	public static final String COL_NAME_MILEAGE__INDEXSTOP = "IndexStop";
+	public static final String COL_NAME_MILEAGE__UOMLENGTH_ID = TABLE_NAME_UOM
+			+ "_Length_ID";
+	public static final String COL_NAME_MILEAGE__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE
+			+ "_ID";
+	public static final String COL_NAME_MILEAGE__GPSTRACKLOG = "GPSTrackLog";
+	public static final String COL_NAME_MILEAGE__TAG_ID = TABLE_NAME_TAG
+			+ "_ID";
+	public static final String COL_NAME_MILEAGE__REIMBURSEMENT_RATE = "ReimbursementRate";
+	public static final String COL_NAME_MILEAGE__REIMBURSEMENT_VALUE = "ReimbursementValue";
 	// currencies
-	public static final String CURRENCY_COL_CODE_NAME = "Code";
+	public static final String COL_NAME_CURRENCY__CODE = "Code";
 	// refuel
-	public static final String REFUEL_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String REFUEL_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
-	public static final String REFUEL_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
-	public static final String REFUEL_COL_INDEX_NAME = "CarIndex";
-	public static final String REFUEL_COL_QUANTITY_NAME = "Quantity";
-	public static final String REFUEL_COL_UOMVOLUME_ID_NAME = UOM_TABLE_NAME + "_Volume_ID";
-	public static final String REFUEL_COL_PRICE_NAME = "Price";
-	public static final String REFUEL_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
-	public static final String REFUEL_COL_DATE_NAME = "Date";
-	public static final String REFUEL_COL_DOCUMENTNO_NAME = "DocumentNo";
-	public static final String REFUEL_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
-	public static final String REFUEL_COL_ISFULLREFUEL_NAME = "IsFullRefuel";
-	public static final String REFUEL_COL_QUANTITYENTERED_NAME = "QuantityEntered";
-	public static final String REFUEL_COL_UOMVOLUMEENTERED_ID_NAME = UOM_TABLE_NAME + "_EnteredVolume_ID";
-	public static final String REFUEL_COL_PRICEENTERED_NAME = "PriceEntered";
-	public static final String REFUEL_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
-	public static final String REFUEL_COL_CURRENCYRATE_NAME = "CurrencyRate"; // CurrencyEntered -> Car Base Currency
-	public static final String REFUEL_COL_UOMVOLCONVERSIONRATE_NAME = "UOMVolumeConversionRate";
-	public static final String REFUEL_COL_AMOUNT_NAME = "Amount";
-	public static final String REFUEL_COL_AMOUNTENTERED_NAME = "AmountEntered";
-	public static final String REFUEL_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
-	public static final String REFUEL_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
-	public static final String REFUEL_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
+	public static final String COL_NAME_REFUEL__CAR_ID = TABLE_NAME_CAR + "_ID";
+	public static final String COL_NAME_REFUEL__DRIVER_ID = TABLE_NAME_DRIVER
+			+ "_ID";
+	public static final String COL_NAME_REFUEL__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE
+			+ "_ID";
+	public static final String COL_NAME_REFUEL__INDEX = "CarIndex";
+	public static final String COL_NAME_REFUEL__QUANTITY = "Quantity";
+	public static final String COL_NAME_REFUEL__UOMVOLUME_ID = TABLE_NAME_UOM
+			+ "_Volume_ID";
+	public static final String COL_NAME_REFUEL__PRICE = "Price";
+	public static final String COL_NAME_REFUEL__CURRENCY_ID = TABLE_NAME_CURRENCY
+			+ "_ID";
+	public static final String COL_NAME_REFUEL__DATE = "Date";
+	public static final String COL_NAME_REFUEL__DOCUMENTNO = "DocumentNo";
+	public static final String COL_NAME_REFUEL__EXPENSECATEGORY_ID = TABLE_NAME_EXPENSECATEGORY
+			+ "_ID";
+	public static final String COL_NAME_REFUEL__ISFULLREFUEL = "IsFullRefuel";
+	public static final String COL_NAME_REFUEL__QUANTITYENTERED = "QuantityEntered";
+	public static final String COL_NAME_REFUEL__UOMVOLUMEENTERED_ID = TABLE_NAME_UOM
+			+ "_EnteredVolume_ID";
+	public static final String COL_NAME_REFUEL__PRICEENTERED = "PriceEntered";
+	public static final String COL_NAME_REFUEL__CURRENCYENTERED_ID = TABLE_NAME_CURRENCY
+			+ "_Entered_ID";
+	public static final String COL_NAME_REFUEL__CURRENCYRATE = "CurrencyRate"; // CurrencyEntered
+																				// ->
+																				// Car
+																				// Base
+																				// Currency
+	public static final String COL_NAME_REFUEL__UOMVOLCONVERSIONRATE = "UOMVolumeConversionRate";
+	public static final String COL_NAME_REFUEL__AMOUNT = "Amount";
+	public static final String COL_NAME_REFUEL__AMOUNTENTERED = "AmountEntered";
+	public static final String COL_NAME_REFUEL__BPARTNER_ID = TABLE_NAME_BPARTNER
+			+ "_ID";
+	public static final String COL_NAME_REFUEL__BPARTNER_LOCATION_ID = TABLE_NAME_BPARTNERLOCATION
+			+ "_ID";
+	public static final String COL_NAME_REFUEL__TAG_ID = TABLE_NAME_TAG + "_ID";
 
 	// expense type
-	public static final String EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME = "IsCalculateReimbursement";
+	public static final String COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT = "IsCalculateReimbursement";
 
 	// expense category
-	public static final String EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME = "IsExcludefromMileagecost";
-	public static final String EXPENSECATEGORY_COL_ISFUEL_NAME = "IsFuel";
+	public static final String COL_NAME_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST = "IsExcludefromMileagecost";
+	public static final String COL_NAME_EXPENSECATEGORY__ISFUEL = "IsFuel";
 	// car expenses
-	public static final String EXPENSE_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_EXPENSECATEGORY_ID_NAME = EXPENSECATEGORY_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_EXPENSETYPE_ID_NAME = EXPENSETYPE_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_AMOUNT_NAME = "Amount";
-	public static final String EXPENSE_COL_CURRENCY_ID_NAME = CURRENCY_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_DATE_NAME = "Date";
-	public static final String EXPENSE_COL_DOCUMENTNO_NAME = "DocumentNo";
-	public static final String EXPENSE_COL_INDEX_NAME = "CarIndex";
-	public static final String EXPENSE_COL_FROMTABLE_NAME = "FromTable";
-	public static final String EXPENSE_COL_FROMRECORD_ID_NAME = "FromRecordId";
-	public static final String EXPENSE_COL_AMOUNTENTERED_NAME = "AmountEntered";
-	public static final String EXPENSE_COL_CURRENCYENTERED_ID_NAME = CURRENCY_TABLE_NAME + "_Entered_ID";
-	public static final String EXPENSE_COL_CURRENCYRATE_NAME = "CurrencyRate"; // CurrencyEntered -> Car Base Currency
-	public static final String EXPENSE_COL_QUANTITY_NAME = "Quantity";
-	public static final String EXPENSE_COL_PRICE_NAME = "Price";
-	public static final String EXPENSE_COL_PRICEENTERED_NAME = "PriceEntered";
-	public static final String EXPENSE_COL_UOM_ID_NAME = UOM_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_BPARTNER_LOCATION_ID_NAME = BPARTNER_LOCATION_TABLE_NAME + "_ID";
-	public static final String EXPENSE_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
+	public static final String COL_NAME_EXPENSE__CAR_ID = TABLE_NAME_CAR
+			+ "_ID";
+	public static final String COL_NAME_EXPENSE__DRIVER_ID = TABLE_NAME_DRIVER
+			+ "_ID";
+	public static final String COL_NAME_EXPENSE__EXPENSECATEGORY_ID = TABLE_NAME_EXPENSECATEGORY
+			+ "_ID";
+	public static final String COL_NAME_EXPENSE__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE
+			+ "_ID";
+	public static final String COL_NAME_EXPENSE__AMOUNT = "Amount";
+	public static final String COL_NAME_EXPENSE__CURRENCY_ID = TABLE_NAME_CURRENCY
+			+ "_ID";
+	public static final String COL_NAME_EXPENSE__DATE = "Date";
+	public static final String COL_NAME_EXPENSE__DOCUMENTNO = "DocumentNo";
+	public static final String COL_NAME_EXPENSE__INDEX = "CarIndex";
+	public static final String COL_NAME_EXPENSE__FROMTABLE = "FromTable";
+	public static final String COL_NAME_EXPENSE__FROMRECORD_ID = "FromRecordId";
+	public static final String COL_NAME_EXPENSE__AMOUNTENTERED = "AmountEntered";
+	public static final String COL_NAME_EXPENSE__CURRENCYENTERED_ID = TABLE_NAME_CURRENCY
+			+ "_Entered_ID";
+	public static final String COL_NAME_EXPENSE__CURRENCYRATE = "CurrencyRate"; // CurrencyEntered
+																				// ->
+																				// Car
+																				// Base
+																				// Currency
+	public static final String COL_NAME_EXPENSE__QUANTITY = "Quantity";
+	public static final String COL_NAME_EXPENSE__PRICE = "Price";
+	public static final String COL_NAME_EXPENSE__PRICEENTERED = "PriceEntered";
+	public static final String COL_NAME_EXPENSE__UOM_ID = TABLE_NAME_UOM
+			+ "_ID";
+	public static final String COL_NAME_EXPENSE__BPARTNER_ID = TABLE_NAME_BPARTNER
+			+ "_ID";
+	public static final String COL_NAME_EXPENSE__BPARTNER_LOCATION_ID = TABLE_NAME_BPARTNERLOCATION
+			+ "_ID";
+	public static final String COL_NAME_EXPENSE__TAG_ID = TABLE_NAME_TAG
+			+ "_ID";
 
 	// currency rate
-	public static final String CURRENCYRATE_COL_FROMCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_From_ID";
-	public static final String CURRENCYRATE_COL_TOCURRENCY_ID_NAME = CURRENCYRATE_TABLE_NAME + "_To_ID";
-	public static final String CURRENCYRATE_COL_RATE_NAME = "Rate";
-	public static final String CURRENCYRATE_COL_INVERSERATE_NAME = "InverseRate";
+	public static final String COL_NAME_CURRENCYRATE__FROMCURRENCY_ID = TABLE_NAME_CURRENCYRATE
+			+ "_From_ID";
+	public static final String COL_NAME_CURRENCYRATE__TOCURRENCY_ID = TABLE_NAME_CURRENCYRATE
+			+ "_To_ID";
+	public static final String COL_NAME_CURRENCYRATE__RATE = "Rate";
+	public static final String COL_NAME_CURRENCYRATE__INVERSERATE = "InverseRate";
 
 	// gps track
-	public static final String GPSTRACK_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String GPSTRACK_COL_DRIVER_ID_NAME = DRIVER_TABLE_NAME + "_ID";
-	public static final String GPSTRACK_COL_MILEAGE_ID_NAME = MILEAGE_TABLE_NAME + "_ID";
-	public static final String GPSTRACK_COL_DATE_NAME = "Date";
-	public static final String GPSTRACK_COL_MINACCURACY_NAME = "MinAccuracy";
-	public static final String GPSTRACK_COL_AVGACCURACY_NAME = "AvgAccuracy";
-	public static final String GPSTRACK_COL_MAXACCURACY_NAME = "MaxAccuracy";
-	public static final String GPSTRACK_COL_MINALTITUDE_NAME = "MinAltitude";
-	public static final String GPSTRACK_COL_MAXALTITUDE_NAME = "MaxAltitude";
-	public static final String GPSTRACK_COL_TOTALTIME_NAME = "TotalTime"; // in seconds
-	public static final String GPSTRACK_COL_MOVINGTIME_NAME = "MovingTime"; // in seconds
-	public static final String GPSTRACK_COL_DISTANCE_NAME = "Distance";
-	public static final String GPSTRACK_COL_MAXSPEED_NAME = "MaxSpeed";
-	public static final String GPSTRACK_COL_AVGSPEED_NAME = "AvgSpeed";
-	public static final String GPSTRACK_COL_AVGMOVINGSPEED_NAME = "AvgMovingSpeed";
-	public static final String GPSTRACK_COL_TOTALTRACKPOINTS_NAME = "TotalTrackPoints";
-	public static final String GPSTRACK_COL_INVALIDTRACKPOINTS_NAME = "InvalidTrackPoints";
-	public static final String GPSTRACK_COL_TAG_ID_NAME = TAG_TABLE_NAME + "_ID";
-	public static final String GPSTRACK_COL_TOTALPAUSETIME_NAME = "TotalPauseTime"; // in seconds
+	public static final String COL_NAME_GPSTRACK__CAR_ID = TABLE_NAME_CAR
+			+ "_ID";
+	public static final String COL_NAME_GPSTRACK__DRIVER_ID = TABLE_NAME_DRIVER
+			+ "_ID";
+	public static final String COL_NAME_GPSTRACK__MILEAGE_ID = TABLE_NAME_MILEAGE
+			+ "_ID";
+	public static final String COL_NAME_GPSTRACK__DATE = "Date";
+	public static final String COL_NAME_GPSTRACK__MINACCURACY = "MinAccuracy";
+	public static final String COL_NAME_GPSTRACK__AVGACCURACY = "AvgAccuracy";
+	public static final String COL_NAME_GPSTRACK__MAXACCURACY = "MaxAccuracy";
+	public static final String COL_NAME_GPSTRACK__MINALTITUDE = "MinAltitude";
+	public static final String COL_NAME_GPSTRACK__MAXALTITUDE = "MaxAltitude";
+	public static final String COL_NAME_GPSTRACK__TOTALTIME = "TotalTime"; // in
+																			// seconds
+	public static final String COL_NAME_GPSTRACK__MOVINGTIME = "MovingTime"; // in
+																				// seconds
+	public static final String COL_NAME_GPSTRACK__DISTANCE = "Distance";
+	public static final String COL_NAME_GPSTRACK__MAXSPEED = "MaxSpeed";
+	public static final String COL_NAME_GPSTRACK__AVGSPEED = "AvgSpeed";
+	public static final String COL_NAME_GPSTRACK__AVGMOVINGSPEED = "AvgMovingSpeed";
+	public static final String COL_NAME_GPSTRACK__TOTALTRACKPOINTS = "TotalTrackPoints";
+	public static final String COL_NAME_GPSTRACK__INVALIDTRACKPOINTS = "InvalidTrackPoints";
+	public static final String COL_NAME_GPSTRACK__TAG_ID = TABLE_NAME_TAG
+			+ "_ID";
+	public static final String COL_NAME_GPSTRACK__TOTALPAUSETIME = "TotalPauseTime"; // in
+																						// seconds
 
 	// gps track detail
-	public static final String GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME = GPSTRACK_TABLE_NAME + "_ID";
-	public static final String GPSTRACKDETAIL_COL_FILE_NAME = "File";
-	public static final String GPSTRACKDETAIL_COL_FILEFORMAT_NAME = "Format"; // see StaticValues.gpsTrackFormat...
+	public static final String COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID = TABLE_NAME_GPSTRACK
+			+ "_ID";
+	public static final String COL_NAME_GPSTRACKDETAIL__FILE = "File";
+	public static final String COL_NAME_GPSTRACKDETAIL__FILEFORMAT = "Format"; // see
+																				// StaticValues.gpsTrackFormat...
 	// business partner location
-	public static final String BPARTNER_LOCATION_COL_BPARTNER_ID_NAME = BPARTNER_TABLE_NAME + "_ID";
-	public static final String BPARTNER_LOCATION_COL_ADDRESS_NAME = "Address";
-	public static final String BPARTNER_LOCATION_COL_POSTAL_NAME = "Postal";
-	public static final String BPARTNER_LOCATION_COL_CITY_NAME = "City";
-	public static final String BPARTNER_LOCATION_COL_REGION_NAME = "Region";
-	public static final String BPARTNER_LOCATION_COL_COUNTRY_NAME = "Country";
-	public static final String BPARTNER_LOCATION_COL_PHONE_NAME = "Phone";
-	public static final String BPARTNER_LOCATION_COL_PHONE2_NAME = "Phone2";
-	public static final String BPARTNER_LOCATION_COL_FAX_NAME = "Fax";
-	public static final String BPARTNER_LOCATION_COL_EMAIL_NAME = "Email";
-	public static final String BPARTNER_LOCATION_COL_CONTACTPERSON_NAME = "ContactPerson";
+	public static final String COL_NAME_BPARTNERLOCATION__BPARTNER_ID = TABLE_NAME_BPARTNER
+			+ "_ID";
+	public static final String COL_NAME_BPARTNERLOCATION__ADDRESS = "Address";
+	public static final String COL_NAME_BPARTNERLOCATION__POSTAL = "Postal";
+	public static final String COL_NAME_BPARTNERLOCATION__CITY = "City";
+	public static final String COL_NAME_BPARTNERLOCATION__REGION = "Region";
+	public static final String COL_NAME_BPARTNERLOCATION__COUNTRY = "Country";
+	public static final String COL_NAME_BPARTNERLOCATION__PHONE = "Phone";
+	public static final String COL_NAME_BPARTNERLOCATION__PHONE2 = "Phone2";
+	public static final String COL_NAME_BPARTNERLOCATION__FAX = "Fax";
+	public static final String COL_NAME_BPARTNERLOCATION__EMAIL = "Email";
+	public static final String COL_NAME_BPARTNERLOCATION__CONTACTPERSON = "ContactPerson";
 
-	
-	public static final String TASK_COL_TASKTYPE_ID_NAME = TASKTYPE_TABLE_NAME + "_ID";
+	public static final String COL_NAME_TASK__TASKTYPE_ID = TABLE_NAME_TASKTYPE
+			+ "_ID";
 	/**
 	 * Time|Mileage|Both (StaticValues.TASK_SCHEDULED_FOR_{TIME|MILEAGE|BOTH})
 	 */
-	public static final String TASK_COL_SCHEDULEDFOR_NAME = "ScheduledFor";
+	public static final String COL_NAME_TASK__SCHEDULEDFOR = "ScheduledFor";
 	/**
 	 * recurrent or one time task {Y|N}
 	 */
-	public static final String TASK_COL_ISRECURRENT_NAME = "IsRecurrent";
-	public static final String TASK_COL_ISDIFFERENTSTARTINGTIME_NAME = "IsDifferentSTime";
+	public static final String COL_NAME_TASK__ISRECURRENT = "IsRecurrent";
+	public static final String COL_NAME_TASK__ISDIFFERENTSTARTINGTIME = "IsDifferentSTime";
 	/**
-	 * recurrency  (every X days/weeks/months/years depending on TASK_COL_TIMEFREQUENCYTYPE_NAME) 
+	 * recurrency (every X days/weeks/months/years depending on
+	 * TASK_COL_TIMEFREQUENCYTYPE_NAME)
 	 */
-	public static final String TASK_COL_TIMEFREQUENCY_NAME = "TimeFrequency";
+	public static final String COL_NAME_TASK__TIMEFREQUENCY = "TimeFrequency";
 	/**
 	 * Type integer<br>
-	 * Frequency type: 0 = One time, 1 = Daily, 2 = Weekly, 3 = Monthly, 4 = Yearly (StaticValues.TASK_TIMEFREQUENCYTYPE_...
+	 * Frequency type: 0 = One time, 1 = Daily, 2 = Weekly, 3 = Monthly, 4 =
+	 * Yearly (StaticValues.TASK_TIMEFREQUENCYTYPE_...
 	 */
-	public static final String TASK_COL_TIMEFREQUENCYTYPE_NAME = "TimeFrequencyType";
-	
+	public static final String COL_NAME_TASK__TIMEFREQUENCYTYPE = "TimeFrequencyType";
+
 	/**
-	 * Type Date<br><br>
-	 * If IsRecurent = 'Y':
-	 * <li>The starting date<br><br>
-	 * If IsRecurent = 'N':
-	 * <li>The run date
-	 * <li>1970-mm-01 hh:mm if TASK_COL_TIMEFREQUENCYTYPE_NAME = Month and if is LastDay of the month
+	 * Type Date<br>
+	 * <br>
+	 * If IsRecurent = 'Y': <li>The starting date<br>
+	 * <br>
+	 * If IsRecurent = 'N': <li>The run date <li>1970-mm-01 hh:mm if
+	 * TASK_COL_TIMEFREQUENCYTYPE_NAME = Month and if is LastDay of the month
 	 */
-	public static final String TASK_COL_STARTINGTIME_NAME = "StartingTime";
+	public static final String COL_NAME_TASK__STARTINGTIME = "StartingTime";
 	/**
 	 * Type integer <br>
-	 * <li>No. of days to start reminders if TASK_COL_TIMEFREQUENCYTYPE_NAME != Day
-	 * <li>No. of minutes to start reminders if TASK_COL_TIMEFREQUENCYTYPE_NAME == Day
+	 * <li>No. of days to start reminders if TASK_COL_TIMEFREQUENCYTYPE_NAME !=
+	 * Day <li>No. of minutes to start reminders if
+	 * TASK_COL_TIMEFREQUENCYTYPE_NAME == Day
 	 */
-	public static final String TASK_COL_TIMEREMINDERSTART_NAME = "TimeReminderStart";
+	public static final String COL_NAME_TASK__TIMEREMINDERSTART = "TimeReminderStart";
 	/**
-	 * If IsRecurent = 'Y':
-	 * <li>Run on every mileage<br>
-	 * else
-	 * <li>Run on mileage
+	 * If IsRecurent = 'Y': <li>Run on every mileage<br>
+	 * else <li>Run on mileage
 	 */
-	public static final String TASK_COL_RUNMILEAGE_NAME = "RunMileage";
+	public static final String COL_NAME_TASK__RUNMILEAGE = "RunMileage";
 	/**
 	 * No. of km|mi to start reminders
 	 */
-	public static final String TASK_COL_MILEAGEREMINDERSTART_NAME = "MileageReminderStart";
+	public static final String COL_NAME_TASK__MILEAGEREMINDERSTART = "MileageReminderStart";
 	/**
 	 * How many todos will be generated for this task
 	 */
-	public static final String TASK_COL_TODOCOUNT_NAME = "TodoCount";
-	
-	
+	public static final String COL_NAME_TASK__TODOCOUNT = "TodoCount";
+
 	/**
 	 * the task from where this todo come
 	 */
-	public static final String TODO_COL_TASK_ID_NAME = TASK_TABLE_NAME + "_ID";
+	public static final String COL_NAME_TODO__TASK_ID = TABLE_NAME_TASK + "_ID";
 	/**
-	 * the linked car to the task (if exist) 
+	 * the linked car to the task (if exist)
 	 */
-	public static final String TODO_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
+	public static final String COL_NAME_TODO__CAR_ID = TABLE_NAME_CAR + "_ID";
 	/**
 	 * the due date based on start time and recurency settings
 	 */
-	public static final String TODO_COL_DUEDATE_NAME = "DueDate";
+	public static final String COL_NAME_TODO__DUEDATE = "DueDate";
 	/**
 	 * the due mileage based on starting mileage and recurency mileage
 	 */
-	public static final String TODO_COL_DUEMILEAGE_NAME = "DueMileage";
+	public static final String COL_NAME_TODO__DUEMILEAGE = "DueMileage";
 	/**
-	 * show the notification at this date 
+	 * show the notification at this date
 	 */
-	public static final String TODO_COL_NOTIFICATIONDATE_NAME = "NotificationDate";
+	public static final String COL_NAME_TODO__NOTIFICATIONDATE = "NotificationDate";
 	/**
-	 * show the notification at this mileage 
+	 * show the notification at this mileage
 	 */
-	public static final String TODO_COL_NOTIFICATIONMILEAGE_NAME = "NotificationMileage";
+	public static final String COL_NAME_TODO__NOTIFICATIONMILEAGE = "NotificationMileage";
 	/**
 	 * if this todo is done {Y|N}
 	 */
-	public static final String TODO_COL_ISDONE_NAME = "IsDone";
+	public static final String COL_NAME_TODO__ISDONE = "IsDone";
 	/**
 	 * the date when this todo was done
 	 */
-	public static final String TODO_COL_DONEDATE_NAME = "DoneDate";
+	public static final String COL_NAME_TODO__DONEDATE = "DoneDate";
 	/**
 	 * stop the notification for this todo, even if is not done
 	 */
-	public static final String TODO_COL_ISSTOPNOTIFICATION_NAME = "IsStopNotification";
-	
-	public static final String TASK_CAR_COL_TASK_ID_NAME = TASK_TABLE_NAME + "_ID";
-	public static final String TASK_CAR_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String TASK_CAR_COL_FIRSTRUN_DATE_NAME = "FirstRunDate";
-	public static final String TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME = "FirstRunMileage";
+	public static final String COL_NAME_TODO__ISSTOPNOTIFICATION = "IsStopNotification";
 
-	public static final String REIMBURSEMENT_CAR_RATES_COL_CAR_ID_NAME = CAR_TABLE_NAME + "_ID";
-	public static final String REIMBURSEMENT_CAR_RATES_COL_EXPENSETYPE_ID_NAME = EXPENSE_TABLE_NAME + "_ID";
-	public static final String REIMBURSEMENT_CAR_RATES_COL_RATE_NAME = "Rate";
+	public static final String COL_NAME_TASK_CAR__TASK_ID = TABLE_NAME_TASK
+			+ "_ID";
+	public static final String COL_NAME_TASK_CAR__CAR_ID = TABLE_NAME_CAR
+			+ "_ID";
+	public static final String COL_NAME_TASK_CAR__FIRSTRUN_DATE = "FirstRunDate";
+	public static final String COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE = "FirstRunMileage";
+
+	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID = TABLE_NAME_CAR
+			+ "_ID";
+	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID = TABLE_NAME_EXPENSE
+			+ "_ID";
+	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__RATE = "Rate";
 
 	// column positions. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
-	public static final int GEN_COL_ROWID_POS = 0;
-	public static final int GEN_COL_NAME_POS = 1;
-	public static final int GEN_COL_ISACTIVE_POS = 2;
-	public static final int GEN_COL_USER_COMMENT_POS = 3;
-	
+	public static final int COL_POS_GEN_ROWID = 0;
+	public static final int COL_POS_GEN_NAME = 1;
+	public static final int COL_POS_GEN_ISACTIVE = 2;
+	public static final int COL_POS_GEN_USER_COMMENT = 3;
+
 	// driver specidfic column positions
-	public static final int DRIVER_COL_LICENSE_NO_POS = 4;
+	public static final int COL_POS_DRIVER__LICENSE_NO = 4;
 	// car specific column positions
-	public static final int CAR_COL_MODEL_POS = 4;
-	public static final int CAR_COL_REGISTRATIONNO_POS = 5;
-	public static final int CAR_COL_INDEXSTART_POS = 6;
-	public static final int CAR_COL_INDEXCURRENT_POS = 7;
-	public static final int CAR_COL_UOMLENGTH_ID_POS = 8;
-	public static final int CAR_COL_UOMVOLUME_ID_POS = 9;
-	public static final int CAR_COL_CURRENCY_ID_POS = 10;
+	public static final int COL_POS_CAR__MODEL = 4;
+	public static final int COL_POS_CAR__REGISTRATIONNO = 5;
+	public static final int COL_POS_CAR__INDEXSTART = 6;
+	public static final int COL_POS_CAR__INDEXCURRENT = 7;
+	public static final int COL_POS_CAR__UOMLENGTH_ID = 8;
+	public static final int COL_POS_CAR__UOMVOLUME_ID = 9;
+	public static final int COL_POS_CAR__CURRENCY_ID = 10;
 
 	// uom specific column positions
-	public static final int UOM_COL_CODE_POS = 4;
-	public static final int UOM_COL_UOMTYPE_POS = 5;
+	public static final int COL_POS_UOM__CODE = 4;
+	public static final int COL_POS_UOM__UOMTYPE = 5;
 	// uom convertion specific column positions
-	public static final int UOM_CONVERSION_COL_UOMFROM_ID_POS = 4;
-	public static final int UOM_CONVERSION_COL_UOMTO_ID_POS = 5;
-	public static final int UOM_CONVERSION_COL_RATE_POS = 6;
+	public static final int COL_POS_UOMCONVERSION__UOMFROM_ID = 4;
+	public static final int COL_POS_UOMCONVERSION__UOMTO_ID = 5;
+	public static final int COL_POS_UOMCONVERSION__RATE = 6;
 	// mileage specific column positions
-	public static final int MILEAGE_COL_DATE_POS = 4;
-	public static final int MILEAGE_COL_CAR_ID_POS = 5;
-	public static final int MILEAGE_COL_DRIVER_ID_POS = 6;
-	public static final int MILEAGE_COL_INDEXSTART_POS = 7;
-	public static final int MILEAGE_COL_INDEXSTOP_POS = 8;
-	public static final int MILEAGE_COL_UOMLENGTH_ID_POS = 9;
-	public static final int MILEAGE_COL_EXPENSETYPE_ID_POS = 10;
-	public static final int MILEAGE_COL_GPSTRACKLOG_POS = 11;
-	public static final int MILEAGE_COL_TAG_ID_POS = 12;
-	public static final int MILEAGE_COL_REIMBURSEMENT_RATE_POS = 13;
-	public static final int MILEAGE_COL_REIMBURSEMENT_VALUE_POS = 14;
+	public static final int COL_POS_MILEAGE__DATE = 4;
+	public static final int COL_POS_MILEAGE__CAR_ID = 5;
+	public static final int COL_POS_MILEAGE__DRIVER_ID = 6;
+	public static final int COL_POS_MILEAGE__INDEXSTART = 7;
+	public static final int COL_POS_MILEAGE__INDEXSTOP = 8;
+	public static final int COL_POS_MILEAGE__UOMLENGTH_ID = 9;
+	public static final int COL_POS_MILEAGE__EXPENSETYPE_ID = 10;
+	public static final int COL_POS_MILEAGE__GPSTRACKLOG = 11;
+	public static final int COL_POS_MILEAGE__TAG_ID = 12;
+	public static final int COL_POS_MILEAGE__REIMBURSEMENT_RATE = 13;
+	public static final int COL_POS_MILEAGE__REIMBURSEMENT_VALUE = 14;
 
 	// currencies
-	public static int CURRENCY_COL_CODE_POS = 4;
+	public static int COL_POS_CURRENCY__CODE = 4;
 	// refuel
-	public static final int REFUEL_COL_CAR_ID_POS = 4;
-	public static final int REFUEL_COL_DRIVER_ID_POS = 5;
-	public static final int REFUEL_COL_EXPENSETYPE_ID_POS = 6;
-	public static final int REFUEL_COL_INDEX_POS = 7;
-	public static final int REFUEL_COL_QUANTITY_POS = 8;
-	public static final int REFUEL_COL_UOMVOLUME_ID_POS = 9;
-	public static final int REFUEL_COL_PRICE_POS = 10;
-	public static final int REFUEL_COL_CURRENCY_ID_POS = 11;
-	public static final int REFUEL_COL_DATE_POS = 12;
-	public static final int REFUEL_COL_DOCUMENTNO_POS = 13;
-	public static final int REFUEL_COL_EXPENSECATEGORY_ID_POS = 14;
-	public static final int REFUEL_COL_ISFULLREFUEL_POS = 15;
-	public static final int REFUEL_COL_QUANTITYENTERED_POS = 16;
-	public static final int REFUEL_COL_UOMVOLUMEENTERED_ID_POS = 17;
-	public static final int REFUEL_COL_PRICEENTERED_POS = 18;
-	public static final int REFUEL_COL_CURRENCYENTERED_ID_POS = 19;
-	public static final int REFUEL_COL_CURRENCYRATE_POS = 20;
-	public static final int REFUEL_COL_UOMVOLCONVERSIONRATE_POS = 21;
-	public static final int REFUEL_COL_AMOUNT_POS = 22;
-	public static final int REFUEL_COL_AMOUNTENTERED_POS = 23;
-	public static final int REFUEL_COL_BPARTNER_ID_POS = 24;
-	public static final int REFUEL_COL_BPARTNER_LOCATION_ID_POS = 25;
-	public static final int REFUEL_COL_TAG_ID_POS = 26;
+	public static final int COL_POS_REFUEL__CAR_ID = 4;
+	public static final int COL_POS_REFUEL__DRIVER_ID = 5;
+	public static final int COL_POS_REFUEL__EXPENSETYPE_ID = 6;
+	public static final int COL_POS_REFUEL__INDEX = 7;
+	public static final int COL_POS_REFUEL__QUANTITY = 8;
+	public static final int COL_POS_REFUEL__UOMVOLUME_ID = 9;
+	public static final int COL_POS_REFUEL__PRICE = 10;
+	public static final int COL_POS_REFUEL__CURRENCY_ID = 11;
+	public static final int COL_POS_REFUEL__DATE = 12;
+	public static final int COL_POS_REFUEL__DOCUMENTNO = 13;
+	public static final int COL_POS_REFUEL__EXPENSECATEGORY_ID = 14;
+	public static final int COL_POS_REFUEL__ISFULLREFUEL = 15;
+	public static final int COL_POS_REFUEL__QUANTITYENTERED = 16;
+	public static final int COL_POS_REFUEL__UOMVOLUMEENTERED_ID = 17;
+	public static final int COL_POS_REFUEL__PRICEENTERED = 18;
+	public static final int COL_POS_REFUEL__CURRENCYENTERED_ID = 19;
+	public static final int COL_POS_REFUEL__CURRENCYRATE = 20;
+	public static final int COL_POS_REFUEL__UOMVOLCONVERSIONRATE = 21;
+	public static final int COL_POS_REFUEL__AMOUNT = 22;
+	public static final int COL_POS_REFUEL__AMOUNTENTERED = 23;
+	public static final int COL_POS_REFUEL__BPARTNER_ID = 24;
+	public static final int COL_POS_REFUEL__BPARTNER_LOCATION_ID = 25;
+	public static final int COL_POS_REFUEL__TAG_ID = 26;
 
-	public static final int EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_POS = 4;
-	
+	public static final int COL_POS_EXPENSETYPE__ISCALCULATEREIMBURSEMENT = 4;
+
 	// expense category
-	public static final int EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS = 4;
-	public static final int EXPENSECATEGORY_COL_ISFUEL_POS = 5;
+	public static final int COL_POS_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST = 4;
+	public static final int COL_POS_EXPENSECATEGORY__ISFUEL = 5;
 	// car expenses
-	public static final int EXPENSE_COL_CAR_ID_POS = 4;
-	public static final int EXPENSE_COL_DRIVER_ID_POS = 5;
-	public static final int EXPENSE_COL_EXPENSECATEGORY_POS = 6;
-	public static final int EXPENSE_COL_EXPENSETYPE_ID_POS = 7;
-	public static final int EXPENSE_COL_AMOUNT_POS = 8;
-	public static final int EXPENSE_COL_CURRENCY_ID_POS = 9;
-	public static final int EXPENSE_COL_DATE_POS = 10;
-	public static final int EXPENSE_COL_DOCUMENTNO_POS = 11;
-	public static final int EXPENSE_COL_INDEX_POS = 12;
-	public static final int EXPENSE_COL_FROMTABLE_POS = 13;
-	public static final int EXPENSE_COL_FROMRECORD_POS = 14;
-	public static final int EXPENSE_COL_AMOUNTENTERED_POS = 15;
-	public static final int EXPENSE_COL_CURRENCYENTERED_ID_POS = 16;
-	public static final int EXPENSE_COL_CURRENCYRATE_POS = 17;
-	public static final int EXPENSE_COL_QUANTITY_POS = 18;
-	public static final int EXPENSE_COL_PRICE_POS = 19;
-	public static final int EXPENSE_COL_PRICEENTERED_POS = 20;
-	public static final int EXPENSE_COL_UOM_ID_POS = 21;
-	public static final int EXPENSE_COL_BPARTNER_ID_POS = 22;
-	public static final int EXPENSE_COL_BPARTNER_LOCATION_ID_POS = 23;
-	public static final int EXPENSE_COL_TAG_ID_POS = 24;
+	public static final int COL_POS_EXPENSE__CAR_ID = 4;
+	public static final int COL_POS_EXPENSE__DRIVER_ID = 5;
+	public static final int COL_POS_EXPENSE__EXPENSECATEGORY = 6;
+	public static final int COL_POS_EXPENSE__EXPENSETYPE_ID = 7;
+	public static final int COL_POS_EXPENSE__AMOUNT = 8;
+	public static final int COL_POS_EXPENSE__CURRENCY_ID = 9;
+	public static final int COL_POS_EXPENSE__DATE = 10;
+	public static final int COL_POS_EXPENSE__DOCUMENTNO = 11;
+	public static final int COL_POS_EXPENSE__INDEX = 12;
+	public static final int COL_POS_EXPENSE__FROMTABLE = 13;
+	public static final int COL_POS_EXPENSE__FROMRECORD = 14;
+	public static final int COL_POS_EXPENSE__AMOUNTENTERED = 15;
+	public static final int COL_POS_EXPENSE__CURRENCYENTERED_ID = 16;
+	public static final int COL_POS_EXPENSE__CURRENCYRATE = 17;
+	public static final int COL_POS_EXPENSE__QUANTITY = 18;
+	public static final int COL_POS_EXPENSE__PRICE = 19;
+	public static final int COL_POS_EXPENSE__PRICEENTERED = 20;
+	public static final int COL_POS_EXPENSE__UOM_ID = 21;
+	public static final int COL_POS_EXPENSE__BPARTNER_ID = 22;
+	public static final int COL_POS_EXPENSE__BPARTNER_LOCATION_ID = 23;
+	public static final int COL_POS_EXPENSE__TAG_ID = 24;
 
 	// currency rate
-	public static final int CURRENCYRATE_COL_FROMCURRENCY_ID_POS = 4;
-	public static final int CURRENCYRATE_COL_TOCURRENCY_ID_POS = 5;
-	public static final int CURRENCYRATE_COL_RATE_POS = 6;
-	public static final int CURRENCYRATE_COL_INVERSERATE_POS = 7;
+	public static final int COL_POS_CURRENCYRATE__FROMCURRENCY_ID = 4;
+	public static final int COL_POS_CURRENCYRATE__TOCURRENCY_ID = 5;
+	public static final int COL_POS_CURRENCYRATE__RATE = 6;
+	public static final int COL_POS_CURRENCYRATE__INVERSERATE = 7;
 
 	// gps track
-	public static final int GPSTRACK_COL_CAR_ID_POS = 4;
-	public static final int GPSTRACK_COL_DRIVER_ID_POS = 5;
-	public static final int GPSTRACK_COL_MILEAGE_ID_POS = 6;
-	public static final int GPSTRACK_COL_DATE_POS = 7;
-	public static final int GPSTRACK_COL_MINACCURACY_POS = 8;
-	public static final int GPSTRACK_COL_AVGACCURACY_POS = 9;
-	public static final int GPSTRACK_COL_MAXACCURACY_POS = 10;
-	public static final int GPSTRACK_COL_MINALTITUDE_POS = 11;
-	public static final int GPSTRACK_COL_MAXALTITUDE_POS = 12;
-	public static final int GPSTRACK_COL_TOTALTIME_POS = 13;
-	public static final int GPSTRACK_COL_MOVINGTIME_POS = 14;
-	public static final int GPSTRACK_COL_DISTANCE_POS = 15;
-	public static final int GPSTRACK_COL_MAXSPEED_POS = 16;
-	public static final int GPSTRACK_COL_AVGSPEED_POS = 17;
-	public static final int GPSTRACK_COL_AVGMOVINGSPEED_POS = 18;
-	public static final int GPSTRACK_COL_TOTALTRACKPOINTS_POS = 19;
-	public static final int GPSTRACK_COL_INVALIDTRACKPOINTS_POS = 20;
-	public static final int GPSTRACK_COL_TAG_ID_POS = 21;
-	public static final int GPSTRACK_COL_TOTALPAUSETIME_POS = 22;
-		
+	public static final int COL_POS_GPSTRACK__CAR_ID = 4;
+	public static final int COL_POS_GPSTRACK__DRIVER_ID = 5;
+	public static final int COL_POS_GPSTRACK__MILEAGE_ID = 6;
+	public static final int COL_POS_GPSTRACK__DATE = 7;
+	public static final int COL_POS_GPSTRACK__MINACCURACY = 8;
+	public static final int COL_POS_GPSTRACK__AVGACCURACY = 9;
+	public static final int COL_POS_GPSTRACK__MAXACCURACY = 10;
+	public static final int COL_POS_GPSTRACK__MINALTITUDE = 11;
+	public static final int COL_POS_GPSTRACK__MAXALTITUDE = 12;
+	public static final int COL_POS_GPSTRACK__TOTALTIME = 13;
+	public static final int COL_POS_GPSTRACK__MOVINGTIME = 14;
+	public static final int COL_POS_GPSTRACK__DISTANCE = 15;
+	public static final int COL_POS_GPSTRACK__MAXSPEED = 16;
+	public static final int COL_POS_GPSTRACK__AVGSPEED = 17;
+	public static final int COL_POS_GPSTRACK__AVGMOVINGSPEED = 18;
+	public static final int COL_POS_GPSTRACK__TOTALTRACKPOINTS = 19;
+	public static final int COL_POS_GPSTRACK__INVALIDTRACKPOINTS = 20;
+	public static final int COL_POS_GPSTRACK__TAG_ID = 21;
+	public static final int COL_POS_GPSTRACK__TOTALPAUSETIME = 22;
+
 	// gps track detail
-	public static final int GPSTRACKDETAIL_COL_GPSTRACK_ID_POS = 4;
-	public static final int GPSTRACKDETAIL_COL_FILE_POS = 5;
-	public static final int GPSTRACKDETAIL_COL_FILEFORMAT_POS = 6;
+	public static final int COL_POS_GPSTRACKDETAIL__GPSTRACK_ID = 4;
+	public static final int COL_POS_GPSTRACKDETAIL__FILE = 5;
+	public static final int COL_POS_GPSTRACKDETAIL__FILEFORMAT = 6;
 	// business partner location
-	public static final int BPARTNER_LOCATION_COL_BPARTNER_ID_POS = 4;
-	public static final int BPARTNER_LOCATION_COL_ADDRESS_POS = 5;
-	public static final int BPARTNER_LOCATION_COL_POSTAL_POS = 6;
-	public static final int BPARTNER_LOCATION_COL_CITY_POS = 7;
-	public static final int BPARTNER_LOCATION_COL_REGION_POS = 8;
-	public static final int BPARTNER_LOCATION_COL_COUNTRY_POS = 9;
-	public static final int BPARTNER_LOCATION_COL_PHONE_POS = 10;
-	public static final int BPARTNER_LOCATION_COL_PHONE2_POS = 11;
-	public static final int BPARTNER_LOCATION_COL_FAX_POS = 12;
-	public static final int BPARTNER_LOCATION_COL_EMAIL_POS = 13;
-	public static final int BPARTNER_LOCATION_COL_CONTACTPERSON_POS = 14;
-	
-	public static final int TASK_COL_TASKTYPE_ID_POS = 4;
-	public static final int TASK_COL_SCHEDULEDFOR_POS = 5;
-	public static final int TASK_COL_ISRECURRENT_POS = 6;
-	public static final int TASK_COL_ISDIFFERENTSTARTINGTIME_POS = 7;
-	public static final int TASK_COL_TIMEFREQUENCY_POS = 8;
-	public static final int TASK_COL_TIMEFREQUENCYTYPE_POS = 9;
-	public static final int TASK_COL_STARTINGTIME_POS = 10;
-	public static final int TASK_COL_TIMEREMINDERSTART_POS = 11;
-	public static final int TASK_COL_RUNMILEAGE_POS = 12;
-	public static final int TASK_COL_MILEAGEREMINDERSTART_POS = 13;
-	public static final int TASK_COL_TODOCOUNT_POS = 14;
+	public static final int COL_POS_BPARTNERLOCATION__BPARTNER_ID = 4;
+	public static final int COL_POS_BPARTNERLOCATION__ADDRESS = 5;
+	public static final int COL_POS_BPARTNERLOCATION__POSTAL = 6;
+	public static final int COL_POS_BPARTNERLOCATION__CITY = 7;
+	public static final int COL_POS_BPARTNERLOCATION__REGION = 8;
+	public static final int COL_POS_BPARTNERLOCATION__COUNTRY = 9;
+	public static final int COL_POS_BPARTNERLOCATION__PHONE = 10;
+	public static final int COL_POS_BPARTNERLOCATION__PHONE2 = 11;
+	public static final int COL_POS_BPARTNERLOCATION__FAX = 12;
+	public static final int COL_POS_BPARTNERLOCATION__EMAIL = 13;
+	public static final int COL_POS_BPARTNERLOCATION__CONTACTPERSON = 14;
 
-	public static final int TASK_CAR_COL_TASK_ID_POS = 4;
-	public static final int TASK_CAR_COL_CAR_ID_POS = 5;
-	public static final int TASK_CAR_COL_FIRSTRUN_DATE_POS = 6;
-	public static final int TASK_CAR_COL_FIRSTRUN_MILEAGE_POS = 7;
-	
-	public static final int TODO_COL_TASK_ID_POS = 4;
-	public static final int TODO_COL_CAR_ID_POS = 5;
-	public static final int TODO_COL_DUEDATE_POS = 6;
-	public static final int TODO_COL_DUEMILAGE_POS = 7;
-	public static final int TODO_COL_NOTIFICATIONDATE_POS = 8;
-	public static final int TODO_COL_NOTIFICATIONMILEAGE_POS = 9;
-	public static final int TODO_COL_ISDONE_POS = 10;
-	public static final int TODO_COL_DONEDATE_POS = 11;
-	public static final int TODO_COL_ISSTOPNOTIFICATION_POS = 12;
+	public static final int COL_POS_TASK__TASKTYPE_ID = 4;
+	public static final int COL_POS_TASK__SCHEDULEDFOR = 5;
+	public static final int COL_POS_TASK__ISRECURRENT = 6;
+	public static final int COL_POS_TASK__ISDIFFERENTSTARTINGTIME = 7;
+	public static final int COL_POS_TASK__TIMEFREQUENCY = 8;
+	public static final int COL_POS_TASK__TIMEFREQUENCYTYPE = 9;
+	public static final int COL_POS_TASK__STARTINGTIME = 10;
+	public static final int COL_POS_TASK__TIMEREMINDERSTART = 11;
+	public static final int COL_POS_TASK__RUNMILEAGE = 12;
+	public static final int COL_POS_TASK__MILEAGEREMINDERSTART = 13;
+	public static final int COL_POS_TASK__TODOCOUNT = 14;
 
-	public static final int REIMBURSEMENT_CAR_RATES_COL_CAR_ID_POS = 4;
-	public static final int REIMBURSEMENT_CAR_RATES_COL_EXPENSETYPE_ID_POS = 5;
-	public static final int REIMBURSEMENT_CAR_RATES_COL_RATE_POS = 6;
+	public static final int COL_POS_TASK_CAR__TASK_ID = 4;
+	public static final int COL_POS_TASK_CAR__CAR_ID = 5;
+	public static final int COL_POS_TASK_CAR__FIRSTRUN_DATE = 6;
+	public static final int COL_POS_TASK_CAR__FIRSTRUN_MILEAGE = 7;
 
+	public static final int COL_POS_TODO__TASK_ID = 4;
+	public static final int COL_POS_TODO__CAR_ID = 5;
+	public static final int COL_POS_TODO__DUEDATE = 6;
+	public static final int COL_POS_TODO__DUEMILAGE = 7;
+	public static final int COL_POS_TODO__NOTIFICATIONDATE = 8;
+	public static final int COL_POS_TODO__NOTIFICATIONMILEAGE = 9;
+	public static final int COL_POS_TODO__ISDONE = 10;
+	public static final int COL_POS_TODO__DONEDATE = 11;
+	public static final int COL_POS_TODO__ISSTOPNOTIFICATION = 12;
 
-	public static final String[] driverTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, DRIVER_COL_LICENSE_NO_NAME };
+	public static final int COL_POS_REIMBURSEMENT_CAR_RATES__CAR_ID = 4;
+	public static final int COL_POS_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID = 5;
+	public static final int COL_POS_REIMBURSEMENT_CAR_RATES__RATE = 6;
 
-	public static final String[] carTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, CAR_COL_MODEL_NAME,
-			CAR_COL_REGISTRATIONNO_NAME, CAR_COL_INDEXSTART_NAME,
-			CAR_COL_INDEXCURRENT_NAME, CAR_COL_UOMLENGTH_ID_NAME,
-			CAR_COL_UOMVOLUME_ID_NAME, CAR_COL_CURRENCY_ID_NAME};
+	public static final String[] COL_LIST_DRIVER_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_DRIVER__LICENSE_NO };
 
-	public static final String[] uomTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, UOM_COL_CODE_NAME, UOM_COL_UOMTYPE_NAME };
+	public static final String[] COL_LIST_CAR_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_CAR__MODEL,
+			COL_NAME_CAR__REGISTRATIONNO, COL_NAME_CAR__INDEXSTART,
+			COL_NAME_CAR__INDEXCURRENT, COL_NAME_CAR__UOMLENGTH_ID,
+			COL_NAME_CAR__UOMVOLUME_ID, COL_NAME_CAR__CURRENCY_ID };
 
-	public static final String[] uomConversionTableColNames = {
-			GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, UOM_CONVERSION_COL_UOMFROM_ID_NAME,
-			UOM_CONVERSION_COL_UOMTO_ID_NAME, UOM_CONVERSION_COL_RATE_NAME };
+	public static final String[] COL_LIST_UOM_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_UOM__CODE,
+			COL_NAME_UOM__UOMTYPE };
 
-	public static final String[] expenseTypeTableColNames = {
-			GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME,
-			EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME};
+	public static final String[] COL_LIST_UOMCONVERSION_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_UOMCONVERSION__UOMFROM_ID,
+			COL_NAME_UOMCONVERSION__UOMTO_ID, COL_NAME_UOMCONVERSION__RATE };
 
-	public static final String[] mileageTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, MILEAGE_COL_DATE_NAME,
-			MILEAGE_COL_CAR_ID_NAME, MILEAGE_COL_DRIVER_ID_NAME,
-			MILEAGE_COL_INDEXSTART_NAME, MILEAGE_COL_INDEXSTOP_NAME,
-			MILEAGE_COL_UOMLENGTH_ID_NAME, MILEAGE_COL_EXPENSETYPE_ID_NAME,
-			MILEAGE_COL_GPSTRACKLOG_NAME, MILEAGE_COL_TAG_ID_NAME };
+	public static final String[] COL_LIST_EXPENSETYPE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT,
+			COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT };
 
-	public static final String[] currencyTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, CURRENCY_COL_CODE_NAME };
+	public static final String[] COL_LIST_MILEAGE_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_MILEAGE__DATE,
+			COL_NAME_MILEAGE__CAR_ID, COL_NAME_MILEAGE__DRIVER_ID,
+			COL_NAME_MILEAGE__INDEXSTART, COL_NAME_MILEAGE__INDEXSTOP,
+			COL_NAME_MILEAGE__UOMLENGTH_ID, COL_NAME_MILEAGE__EXPENSETYPE_ID,
+			COL_NAME_MILEAGE__GPSTRACKLOG, COL_NAME_MILEAGE__TAG_ID };
 
-	public static final String[] refuelTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, REFUEL_COL_CAR_ID_NAME,
-			REFUEL_COL_DRIVER_ID_NAME, REFUEL_COL_EXPENSETYPE_ID_NAME,
-			REFUEL_COL_INDEX_NAME, REFUEL_COL_QUANTITY_NAME,
-			REFUEL_COL_UOMVOLUME_ID_NAME, REFUEL_COL_PRICE_NAME,
-			REFUEL_COL_CURRENCY_ID_NAME, REFUEL_COL_DATE_NAME,
-			REFUEL_COL_DOCUMENTNO_NAME, REFUEL_COL_EXPENSECATEGORY_ID_NAME,
-			REFUEL_COL_ISFULLREFUEL_NAME, REFUEL_COL_QUANTITYENTERED_NAME,
-			REFUEL_COL_UOMVOLUMEENTERED_ID_NAME, REFUEL_COL_PRICEENTERED_NAME,
-			REFUEL_COL_CURRENCYENTERED_ID_NAME, REFUEL_COL_CURRENCYRATE_NAME,
-			REFUEL_COL_UOMVOLCONVERSIONRATE_NAME, REFUEL_COL_AMOUNT_NAME,
-			REFUEL_COL_AMOUNTENTERED_NAME, REFUEL_COL_BPARTNER_ID_NAME,
-			REFUEL_COL_BPARTNER_LOCATION_ID_NAME, REFUEL_COL_TAG_ID_NAME };
+	public static final String[] COL_LIST_CURRENCY_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_CURRENCY__CODE };
 
-	public static final String[] expenseCategoryTableColNames = {
-			GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME,
-			EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME,
-			EXPENSECATEGORY_COL_ISFUEL_NAME };
+	public static final String[] COL_LIST_REFUEL_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_REFUEL__CAR_ID,
+			COL_NAME_REFUEL__DRIVER_ID, COL_NAME_REFUEL__EXPENSETYPE_ID,
+			COL_NAME_REFUEL__INDEX, COL_NAME_REFUEL__QUANTITY,
+			COL_NAME_REFUEL__UOMVOLUME_ID, COL_NAME_REFUEL__PRICE,
+			COL_NAME_REFUEL__CURRENCY_ID, COL_NAME_REFUEL__DATE,
+			COL_NAME_REFUEL__DOCUMENTNO, COL_NAME_REFUEL__EXPENSECATEGORY_ID,
+			COL_NAME_REFUEL__ISFULLREFUEL, COL_NAME_REFUEL__QUANTITYENTERED,
+			COL_NAME_REFUEL__UOMVOLUMEENTERED_ID,
+			COL_NAME_REFUEL__PRICEENTERED, COL_NAME_REFUEL__CURRENCYENTERED_ID,
+			COL_NAME_REFUEL__CURRENCYRATE,
+			COL_NAME_REFUEL__UOMVOLCONVERSIONRATE, COL_NAME_REFUEL__AMOUNT,
+			COL_NAME_REFUEL__AMOUNTENTERED, COL_NAME_REFUEL__BPARTNER_ID,
+			COL_NAME_REFUEL__BPARTNER_LOCATION_ID, COL_NAME_REFUEL__TAG_ID };
 
-	public static final String[] expenseTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, EXPENSE_COL_CAR_ID_NAME,
-			EXPENSE_COL_DRIVER_ID_NAME, EXPENSE_COL_EXPENSECATEGORY_ID_NAME,
-			EXPENSE_COL_EXPENSETYPE_ID_NAME, EXPENSE_COL_AMOUNT_NAME,
-			EXPENSE_COL_CURRENCY_ID_NAME, EXPENSE_COL_DATE_NAME,
-			EXPENSE_COL_DOCUMENTNO_NAME, EXPENSE_COL_INDEX_NAME,
-			EXPENSE_COL_FROMTABLE_NAME, EXPENSE_COL_FROMRECORD_ID_NAME,
-			EXPENSE_COL_AMOUNTENTERED_NAME,
-			EXPENSE_COL_CURRENCYENTERED_ID_NAME, EXPENSE_COL_CURRENCYRATE_NAME,
-			EXPENSE_COL_QUANTITY_NAME, EXPENSE_COL_PRICE_NAME,
-			EXPENSE_COL_PRICEENTERED_NAME, EXPENSE_COL_UOM_ID_NAME,
-			EXPENSE_COL_BPARTNER_ID_NAME,
-			EXPENSE_COL_BPARTNER_LOCATION_ID_NAME, EXPENSE_COL_TAG_ID_NAME };
+	public static final String[] COL_LIST_EXPENSECATEGORY_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT,
+			COL_NAME_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST,
+			COL_NAME_EXPENSECATEGORY__ISFUEL };
 
-	public static final String[] currencyRateTableColNames = {
-			GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, CURRENCYRATE_COL_FROMCURRENCY_ID_NAME,
-			CURRENCYRATE_COL_TOCURRENCY_ID_NAME, CURRENCYRATE_COL_RATE_NAME,
-			CURRENCYRATE_COL_INVERSERATE_NAME };
+	public static final String[] COL_LIST_EXPENSE_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_EXPENSE__CAR_ID,
+			COL_NAME_EXPENSE__DRIVER_ID, COL_NAME_EXPENSE__EXPENSECATEGORY_ID,
+			COL_NAME_EXPENSE__EXPENSETYPE_ID, COL_NAME_EXPENSE__AMOUNT,
+			COL_NAME_EXPENSE__CURRENCY_ID, COL_NAME_EXPENSE__DATE,
+			COL_NAME_EXPENSE__DOCUMENTNO, COL_NAME_EXPENSE__INDEX,
+			COL_NAME_EXPENSE__FROMTABLE, COL_NAME_EXPENSE__FROMRECORD_ID,
+			COL_NAME_EXPENSE__AMOUNTENTERED,
+			COL_NAME_EXPENSE__CURRENCYENTERED_ID,
+			COL_NAME_EXPENSE__CURRENCYRATE, COL_NAME_EXPENSE__QUANTITY,
+			COL_NAME_EXPENSE__PRICE, COL_NAME_EXPENSE__PRICEENTERED,
+			COL_NAME_EXPENSE__UOM_ID, COL_NAME_EXPENSE__BPARTNER_ID,
+			COL_NAME_EXPENSE__BPARTNER_LOCATION_ID, COL_NAME_EXPENSE__TAG_ID };
 
-	public static final String[] gpsTrackTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, GPSTRACK_COL_CAR_ID_NAME,
-			GPSTRACK_COL_DRIVER_ID_NAME, GPSTRACK_COL_MILEAGE_ID_NAME,
-			GPSTRACK_COL_DATE_NAME, GPSTRACK_COL_MINACCURACY_NAME,
-			GPSTRACK_COL_AVGACCURACY_NAME, GPSTRACK_COL_MAXACCURACY_NAME,
-			GPSTRACK_COL_MINALTITUDE_NAME, GPSTRACK_COL_MAXALTITUDE_NAME,
-			GPSTRACK_COL_TOTALTIME_NAME, GPSTRACK_COL_MOVINGTIME_NAME,
-			GPSTRACK_COL_DISTANCE_NAME, GPSTRACK_COL_MAXSPEED_NAME,
-			GPSTRACK_COL_AVGSPEED_NAME, GPSTRACK_COL_AVGMOVINGSPEED_NAME,
-			GPSTRACK_COL_TOTALTRACKPOINTS_NAME,
-			GPSTRACK_COL_INVALIDTRACKPOINTS_NAME, GPSTRACK_COL_TAG_ID_NAME,
-			GPSTRACK_COL_TOTALPAUSETIME_NAME};
+	public static final String[] COL_LIST_CURRENCYRATE_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_CURRENCYRATE__FROMCURRENCY_ID,
+			COL_NAME_CURRENCYRATE__TOCURRENCY_ID, COL_NAME_CURRENCYRATE__RATE,
+			COL_NAME_CURRENCYRATE__INVERSERATE };
 
-	public static final String[] gpsTrackDetailTableColNames = {
-			GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME,
-			GPSTRACKDETAIL_COL_FILE_NAME, GPSTRACKDETAIL_COL_FILEFORMAT_NAME };
+	public static final String[] COL_LIST_GPSTRACK_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_GPSTRACK__CAR_ID,
+			COL_NAME_GPSTRACK__DRIVER_ID, COL_NAME_GPSTRACK__MILEAGE_ID,
+			COL_NAME_GPSTRACK__DATE, COL_NAME_GPSTRACK__MINACCURACY,
+			COL_NAME_GPSTRACK__AVGACCURACY, COL_NAME_GPSTRACK__MAXACCURACY,
+			COL_NAME_GPSTRACK__MINALTITUDE, COL_NAME_GPSTRACK__MAXALTITUDE,
+			COL_NAME_GPSTRACK__TOTALTIME, COL_NAME_GPSTRACK__MOVINGTIME,
+			COL_NAME_GPSTRACK__DISTANCE, COL_NAME_GPSTRACK__MAXSPEED,
+			COL_NAME_GPSTRACK__AVGSPEED, COL_NAME_GPSTRACK__AVGMOVINGSPEED,
+			COL_NAME_GPSTRACK__TOTALTRACKPOINTS,
+			COL_NAME_GPSTRACK__INVALIDTRACKPOINTS, COL_NAME_GPSTRACK__TAG_ID,
+			COL_NAME_GPSTRACK__TOTALPAUSETIME };
 
-	public static final String[] bpartnerTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME };
+	public static final String[] COL_LIST_GPSTRACKDETAIL_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID,
+			COL_NAME_GPSTRACKDETAIL__FILE, COL_NAME_GPSTRACKDETAIL__FILEFORMAT };
+
+	public static final String[] COL_LIST_BPARTNER_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT };
 
 	// business partner location
-	public static final String[] bpartnerLocationTableColNames = {
-			GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, BPARTNER_LOCATION_COL_BPARTNER_ID_NAME,
-			BPARTNER_LOCATION_COL_ADDRESS_NAME,
-			BPARTNER_LOCATION_COL_POSTAL_NAME, BPARTNER_LOCATION_COL_CITY_NAME,
-			BPARTNER_LOCATION_COL_REGION_NAME,
-			BPARTNER_LOCATION_COL_COUNTRY_NAME,
-			BPARTNER_LOCATION_COL_PHONE_NAME,
-			BPARTNER_LOCATION_COL_PHONE2_NAME, BPARTNER_LOCATION_COL_FAX_NAME,
-			BPARTNER_LOCATION_COL_EMAIL_NAME,
-			BPARTNER_LOCATION_COL_CONTACTPERSON_NAME };
+	public static final String[] COL_LIST_BPARTNERLOCATION_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_BPARTNERLOCATION__BPARTNER_ID,
+			COL_NAME_BPARTNERLOCATION__ADDRESS,
+			COL_NAME_BPARTNERLOCATION__POSTAL, COL_NAME_BPARTNERLOCATION__CITY,
+			COL_NAME_BPARTNERLOCATION__REGION,
+			COL_NAME_BPARTNERLOCATION__COUNTRY,
+			COL_NAME_BPARTNERLOCATION__PHONE,
+			COL_NAME_BPARTNERLOCATION__PHONE2, COL_NAME_BPARTNERLOCATION__FAX,
+			COL_NAME_BPARTNERLOCATION__EMAIL,
+			COL_NAME_BPARTNERLOCATION__CONTACTPERSON };
 
-	public static final String[] tagTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME };
+	public static final String[] COL_LIST_TAG_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE, COL_NAME_GEN_USER_COMMENT };
 
 	// tasks/reminders tables
-	public static final String[] taskTypeTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME };
+	public static final String[] COL_LIST_TASKTYPE_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT };
+
+	public static final String[] COL_LIST_TASK_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_TASK__TASKTYPE_ID,
+			COL_NAME_TASK__SCHEDULEDFOR, COL_NAME_TASK__ISRECURRENT,
+			COL_NAME_TASK__ISDIFFERENTSTARTINGTIME,
+			COL_NAME_TASK__TIMEFREQUENCY, COL_NAME_TASK__TIMEFREQUENCYTYPE,
+			COL_NAME_TASK__STARTINGTIME, COL_NAME_TASK__TIMEREMINDERSTART,
+			COL_NAME_TASK__RUNMILEAGE, COL_NAME_TASK__MILEAGEREMINDERSTART,
+			COL_NAME_TASK__TODOCOUNT };
+
+	public static final String[] COL_LIST_TASK_CAR_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_TASK_CAR__TASK_ID,
+			COL_NAME_TASK_CAR__CAR_ID, COL_NAME_TASK_CAR__FIRSTRUN_DATE,
+			COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE };
+
+	public static final String[] COL_LIST_TODO_TABLE = { COL_NAME_GEN_ROWID,
+			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT, COL_NAME_TODO__TASK_ID,
+			COL_NAME_TODO__CAR_ID, COL_NAME_TODO__DUEDATE,
+			COL_NAME_TODO__DUEMILEAGE, COL_NAME_TODO__NOTIFICATIONDATE,
+			COL_NAME_TODO__NOTIFICATIONMILEAGE, COL_NAME_TODO__ISDONE,
+			COL_NAME_TODO__DONEDATE, COL_NAME_TODO__ISSTOPNOTIFICATION };
+
+	public static final String[] COL_LIST_REIMBURSEMENT_CAR_RATES_TABLE = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
+			COL_NAME_GEN_USER_COMMENT,
+			COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID,
+			COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID,
+			COL_NAME_REIMBURSEMENT_CAR_RATES__RATE };
 	
-	public static final String[] taskTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, TASK_COL_TASKTYPE_ID_NAME,
-			TASK_COL_SCHEDULEDFOR_NAME, TASK_COL_ISRECURRENT_NAME, TASK_COL_ISDIFFERENTSTARTINGTIME_NAME, 
-			TASK_COL_TIMEFREQUENCY_NAME, TASK_COL_TIMEFREQUENCYTYPE_NAME, TASK_COL_STARTINGTIME_NAME,
-			TASK_COL_TIMEREMINDERSTART_NAME, TASK_COL_RUNMILEAGE_NAME, TASK_COL_MILEAGEREMINDERSTART_NAME,
-			TASK_COL_TODOCOUNT_NAME};
-	
-	public static final String[] taskCarTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-			TASK_CAR_COL_TASK_ID_NAME, TASK_CAR_COL_CAR_ID_NAME, TASK_CAR_COL_FIRSTRUN_DATE_NAME, TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME};
-
-	public static final String[] todoTableColNames = { GEN_COL_ROWID_NAME,GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME, GEN_COL_USER_COMMENT_NAME,
-		TODO_COL_TASK_ID_NAME, TODO_COL_CAR_ID_NAME, TODO_COL_DUEDATE_NAME, TODO_COL_DUEMILEAGE_NAME, 
-		TODO_COL_NOTIFICATIONDATE_NAME, TODO_COL_NOTIFICATIONMILEAGE_NAME,  
-		TODO_COL_ISDONE_NAME, TODO_COL_DONEDATE_NAME, TODO_COL_ISSTOPNOTIFICATION_NAME};
-
-	public static final String[] reimbursementCarRatesTableColNames = { GEN_COL_ROWID_NAME,
-			GEN_COL_NAME_NAME, GEN_COL_ISACTIVE_NAME,
-			GEN_COL_USER_COMMENT_NAME, 
-			REIMBURSEMENT_CAR_RATES_COL_CAR_ID_NAME, REIMBURSEMENT_CAR_RATES_COL_EXPENSETYPE_ID_NAME,
-			REIMBURSEMENT_CAR_RATES_COL_RATE_NAME};
-
-	public static final String[] genColName = { GEN_COL_ROWID_NAME, GEN_COL_NAME_NAME };
-	public static final String[] genColRowId = { GEN_COL_ROWID_NAME };
-	public static final String isActiveCondition = " " + GEN_COL_ISACTIVE_NAME + "='Y' ";
-	public static final String isActiveWithAndCondition = " AND" + isActiveCondition + " ";
+	public static final String[] COL_LIST_GEN_ROWID_NAME = {
+			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME };
+	public static final String[] COL_LIST_GEN_ROWID = { COL_NAME_GEN_ROWID };
+	public static final String WHERE_CONDITION_ISACTIVE = " "
+			+ COL_NAME_GEN_ISACTIVE + "='Y' ";
+	public static final String WHERE_CONDITION_ISACTIVE_ANDPREFIX = " AND"
+			+ WHERE_CONDITION_ISACTIVE + " ";
 
 	/**
 	 * Database creation sql statements
 	 */
-	protected static final String DRIVER_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ DRIVER_TABLE_NAME
+	protected static final String CREATE_SQL_DRIVER_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_DRIVER
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ DRIVER_COL_LICENSE_NO_NAME
+			+ COL_NAME_DRIVER__LICENSE_NO
 			+ " TEXT NULL "
 			+ ");";
-	protected static final String CAR_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ CAR_TABLE_NAME
+	protected static final String CREATE_SQL_CAR_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_CAR
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ CAR_COL_MODEL_NAME
+			+ COL_NAME_CAR__MODEL
 			+ " TEXT NULL, "
-			+ CAR_COL_REGISTRATIONNO_NAME
+			+ COL_NAME_CAR__REGISTRATIONNO
 			+ " TEXT NULL, "
-			+ CAR_COL_INDEXSTART_NAME
+			+ COL_NAME_CAR__INDEXSTART
 			+ " NUMERIC, "
-			+ CAR_COL_INDEXCURRENT_NAME
+			+ COL_NAME_CAR__INDEXCURRENT
 			+ " NUMERIC, "
-			+ CAR_COL_UOMLENGTH_ID_NAME
+			+ COL_NAME_CAR__UOMLENGTH_ID
 			+ " INTEGER, "
-			+ CAR_COL_UOMVOLUME_ID_NAME
+			+ COL_NAME_CAR__UOMVOLUME_ID
 			+ " INTEGER, "
-			+ CAR_COL_CURRENCY_ID_NAME 
-			+ " INTEGER "
-			+ ");";
-	
-	protected static final String UOM_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ UOM_TABLE_NAME
+			+ COL_NAME_CAR__CURRENCY_ID + " INTEGER " + ");";
+
+	protected static final String CREATE_SQL_UOM_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_UOM
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ UOM_COL_CODE_NAME
+			+ COL_NAME_UOM__CODE
 			+ " TEXT NOT NULL, "
-			+ UOM_COL_UOMTYPE_NAME + " TEXT NOT NULL " + ");";
-	protected static final String UOM_CONVERSION_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ UOM_CONVERSION_TABLE_NAME
+			+ COL_NAME_UOM__UOMTYPE + " TEXT NOT NULL " + ");";
+	protected static final String CREATE_SQL_UOMCONVERSION_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_UOMCONVERSION
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ UOM_CONVERSION_COL_UOMFROM_ID_NAME
+			+ COL_NAME_UOMCONVERSION__UOMFROM_ID
 			+ " INTEGER NOT NULL, "
-			+ UOM_CONVERSION_COL_UOMTO_ID_NAME
+			+ COL_NAME_UOMCONVERSION__UOMTO_ID
 			+ " INTEGER NOT NULL, "
-			+ UOM_CONVERSION_COL_RATE_NAME
+			+ COL_NAME_UOMCONVERSION__RATE
 			+ " NUMERIC NOT NULL " + ");";
-	protected static final String EXPENSETYPE_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ EXPENSETYPE_TABLE_NAME
+	protected static final String CREATE_SQL_EXPENSETYPE_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_EXPENSETYPE
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME
-			+ " TEXT NOT NULL DEFAULT 'N' "
-			+ ");";
-	protected static final String MILEAGE_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ MILEAGE_TABLE_NAME
+			+ COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT
+			+ " TEXT NOT NULL DEFAULT 'N' " + ");";
+	protected static final String CREATE_SQL_MILEAGE_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_MILEAGE
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ MILEAGE_COL_DATE_NAME
+			+ COL_NAME_MILEAGE__DATE
 			+ " DATE NOT NULL, "
-			+ MILEAGE_COL_CAR_ID_NAME
+			+ COL_NAME_MILEAGE__CAR_ID
 			+ " INTEGER NOT NULL, "
-			+ MILEAGE_COL_DRIVER_ID_NAME
+			+ COL_NAME_MILEAGE__DRIVER_ID
 			+ " INTEGER NOT NULL, "
-			+ MILEAGE_COL_INDEXSTART_NAME
+			+ COL_NAME_MILEAGE__INDEXSTART
 			+ " NUMERIC NOT NULL, "
-			+ MILEAGE_COL_INDEXSTOP_NAME
+			+ COL_NAME_MILEAGE__INDEXSTOP
 			+ " NUMERIC NOT NULL, "
-			+ MILEAGE_COL_UOMLENGTH_ID_NAME
+			+ COL_NAME_MILEAGE__UOMLENGTH_ID
 			+ " INTEGER NOT NULL, "
-			+ MILEAGE_COL_EXPENSETYPE_ID_NAME
+			+ COL_NAME_MILEAGE__EXPENSETYPE_ID
 			+ " INTEGER NOT NULL, "
-			+ MILEAGE_COL_GPSTRACKLOG_NAME
+			+ COL_NAME_MILEAGE__GPSTRACKLOG
 			+ " TEXT NULL, "
-			+ MILEAGE_COL_TAG_ID_NAME 
-			+ " INTEGER NULL, " 
-			+ MILEAGE_COL_REIMBURSEMENT_RATE_NAME 
+			+ COL_NAME_MILEAGE__TAG_ID
+			+ " INTEGER NULL, "
+			+ COL_NAME_MILEAGE__REIMBURSEMENT_RATE
 			+ " NUMERIC NOT NULL, "
-			+ MILEAGE_COL_REIMBURSEMENT_VALUE_NAME 
+			+ COL_NAME_MILEAGE__REIMBURSEMENT_VALUE
 			+ " NUMERIC NOT NULL "
 			+ ");";
-	protected static final String CURRENCY_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ CURRENCY_TABLE_NAME
+	protected static final String CREATE_SQL_CURRENCY_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_CURRENCY
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ CURRENCY_COL_CODE_NAME
+			+ COL_NAME_CURRENCY__CODE
 			+ " TEXT NOT NULL "
 			+ ");";
-	protected static final String REFUEL_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ REFUEL_TABLE_NAME
+	protected static final String CREATE_SQL_REFUEL_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_REFUEL
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ REFUEL_COL_CAR_ID_NAME
+			+ COL_NAME_REFUEL__CAR_ID
 			+ " INTEGER, "
-			+ REFUEL_COL_DRIVER_ID_NAME
+			+ COL_NAME_REFUEL__DRIVER_ID
 			+ " INTEGER, "
-			+ REFUEL_COL_EXPENSETYPE_ID_NAME
+			+ COL_NAME_REFUEL__EXPENSETYPE_ID
 			+ " INTEGER, "
-			+ REFUEL_COL_INDEX_NAME
+			+ COL_NAME_REFUEL__INDEX
 			+ " NUMERIC, "
-			+ REFUEL_COL_QUANTITY_NAME
+			+ COL_NAME_REFUEL__QUANTITY
 			+ " NUMERIC, "
-			+ REFUEL_COL_UOMVOLUME_ID_NAME
+			+ COL_NAME_REFUEL__UOMVOLUME_ID
 			+ " INTEGER, "
-			+ REFUEL_COL_PRICE_NAME
+			+ COL_NAME_REFUEL__PRICE
 			+ " NUMERIC, "
-			+ REFUEL_COL_CURRENCY_ID_NAME
+			+ COL_NAME_REFUEL__CURRENCY_ID
 			+ " INTEGER, "
-			+ REFUEL_COL_DATE_NAME
+			+ COL_NAME_REFUEL__DATE
 			+ " DATE NULL, "
-			+ REFUEL_COL_DOCUMENTNO_NAME
+			+ COL_NAME_REFUEL__DOCUMENTNO
 			+ " TEXT NULL, "
-			+ REFUEL_COL_EXPENSECATEGORY_ID_NAME
+			+ COL_NAME_REFUEL__EXPENSECATEGORY_ID
 			+ " INTEGER, "
-			+ REFUEL_COL_ISFULLREFUEL_NAME
+			+ COL_NAME_REFUEL__ISFULLREFUEL
 			+ " TEXT DEFAULT 'N', "
-			+ REFUEL_COL_QUANTITYENTERED_NAME
+			+ COL_NAME_REFUEL__QUANTITYENTERED
 			+ " NUMERIC NULL, "
-			+ REFUEL_COL_UOMVOLUMEENTERED_ID_NAME
+			+ COL_NAME_REFUEL__UOMVOLUMEENTERED_ID
 			+ " INTEGER NULL, "
-			+ REFUEL_COL_PRICEENTERED_NAME
+			+ COL_NAME_REFUEL__PRICEENTERED
 			+ " NUMERIC NULL, "
-			+ REFUEL_COL_CURRENCYENTERED_ID_NAME
+			+ COL_NAME_REFUEL__CURRENCYENTERED_ID
 			+ " INTEGER NULL, "
-			+ REFUEL_COL_CURRENCYRATE_NAME
+			+ COL_NAME_REFUEL__CURRENCYRATE
 			+ " NUMERIC NULL, "
-			+ REFUEL_COL_UOMVOLCONVERSIONRATE_NAME
+			+ COL_NAME_REFUEL__UOMVOLCONVERSIONRATE
 			+ " NUMERIC NULL, "
-			+ REFUEL_COL_AMOUNT_NAME
+			+ COL_NAME_REFUEL__AMOUNT
 			+ " NUMERIC NULL, "
-			+ REFUEL_COL_AMOUNTENTERED_NAME
+			+ COL_NAME_REFUEL__AMOUNTENTERED
 			+ " NUMERIC NULL, "
-			+ REFUEL_COL_BPARTNER_ID_NAME
+			+ COL_NAME_REFUEL__BPARTNER_ID
 			+ " INTEGER NULL, "
-			+ REFUEL_COL_BPARTNER_LOCATION_ID_NAME
+			+ COL_NAME_REFUEL__BPARTNER_LOCATION_ID
 			+ " INTEGER NULL, "
-			+ REFUEL_COL_TAG_ID_NAME + " INTEGER NULL " + ");";
+			+ COL_NAME_REFUEL__TAG_ID + " INTEGER NULL " + ");";
 
-	protected static final String EXPENSECATEGORY_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ EXPENSECATEGORY_TABLE_NAME
+	protected static final String CREATE_SQL_EXPENSECATEGORY_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_EXPENSECATEGORY
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME
+			+ COL_NAME_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST
 			+ " TEXT DEFAULT 'N', "
-			+ EXPENSECATEGORY_COL_ISFUEL_NAME
+			+ COL_NAME_EXPENSECATEGORY__ISFUEL
 			+ " TEXT DEFAULT 'N' " + ");";
 
-	protected static final String EXPENSE_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ EXPENSE_TABLE_NAME
+	protected static final String CREATE_SQL_EXPENSE_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_EXPENSE
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ EXPENSE_COL_CAR_ID_NAME
+			+ COL_NAME_EXPENSE__CAR_ID
 			+ " INTEGER, "
-			+ EXPENSE_COL_DRIVER_ID_NAME
+			+ COL_NAME_EXPENSE__DRIVER_ID
 			+ " INTEGER, "
-			+ EXPENSE_COL_EXPENSECATEGORY_ID_NAME
+			+ COL_NAME_EXPENSE__EXPENSECATEGORY_ID
 			+ " INTEGER, "
-			+ EXPENSE_COL_EXPENSETYPE_ID_NAME
+			+ COL_NAME_EXPENSE__EXPENSETYPE_ID
 			+ " INTEGER, "
-			+ EXPENSE_COL_AMOUNT_NAME
+			+ COL_NAME_EXPENSE__AMOUNT
 			+ " NUMERIC, "
-			+ EXPENSE_COL_CURRENCY_ID_NAME
+			+ COL_NAME_EXPENSE__CURRENCY_ID
 			+ " INTEGER, "
-			+ EXPENSE_COL_DATE_NAME
+			+ COL_NAME_EXPENSE__DATE
 			+ " DATE NULL, "
-			+ EXPENSE_COL_DOCUMENTNO_NAME
+			+ COL_NAME_EXPENSE__DOCUMENTNO
 			+ " TEXT NULL, "
-			+ EXPENSE_COL_INDEX_NAME
+			+ COL_NAME_EXPENSE__INDEX
 			+ " NUMERIC, "
-			+ EXPENSE_COL_FROMTABLE_NAME
+			+ COL_NAME_EXPENSE__FROMTABLE
 			+ " TEXT NULL, "
-			+ EXPENSE_COL_FROMRECORD_ID_NAME
+			+ COL_NAME_EXPENSE__FROMRECORD_ID
 			+ " INTEGER, "
-			+ EXPENSE_COL_AMOUNTENTERED_NAME
+			+ COL_NAME_EXPENSE__AMOUNTENTERED
 			+ " NUMERIC NULL, "
-			+ EXPENSE_COL_CURRENCYENTERED_ID_NAME
+			+ COL_NAME_EXPENSE__CURRENCYENTERED_ID
 			+ " INTEGER NULL, "
-			+ EXPENSE_COL_CURRENCYRATE_NAME
+			+ COL_NAME_EXPENSE__CURRENCYRATE
 			+ " NUMERIC NULL, "
-			+ EXPENSE_COL_QUANTITY_NAME
+			+ COL_NAME_EXPENSE__QUANTITY
 			+ " NUMERIC NULL, "
-			+ EXPENSE_COL_PRICE_NAME
+			+ COL_NAME_EXPENSE__PRICE
 			+ " NUMERIC NULL, "
-			+ EXPENSE_COL_PRICEENTERED_NAME
+			+ COL_NAME_EXPENSE__PRICEENTERED
 			+ " NUMERIC NULL, "
-			+ EXPENSE_COL_UOM_ID_NAME
+			+ COL_NAME_EXPENSE__UOM_ID
 			+ " INTEGER NULL, "
-			+ EXPENSE_COL_BPARTNER_ID_NAME
+			+ COL_NAME_EXPENSE__BPARTNER_ID
 			+ " INTEGER NULL, "
-			+ EXPENSE_COL_BPARTNER_LOCATION_ID_NAME
+			+ COL_NAME_EXPENSE__BPARTNER_LOCATION_ID
 			+ " INTEGER NULL, "
-			+ EXPENSE_COL_TAG_ID_NAME + " INTEGER NULL " + ");";
+			+ COL_NAME_EXPENSE__TAG_ID + " INTEGER NULL " + ");";
 
-	protected static final String CURRENCYRATE_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ CURRENCYRATE_TABLE_NAME
+	protected static final String CREATE_SQL_CURRENCYRATE_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_CURRENCYRATE
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ CURRENCYRATE_COL_FROMCURRENCY_ID_NAME
+			+ COL_NAME_CURRENCYRATE__FROMCURRENCY_ID
 			+ " INTEGER, "
-			+ CURRENCYRATE_COL_TOCURRENCY_ID_NAME
+			+ COL_NAME_CURRENCYRATE__TOCURRENCY_ID
 			+ " INTEGER, "
-			+ CURRENCYRATE_COL_RATE_NAME
+			+ COL_NAME_CURRENCYRATE__RATE
 			+ " NUMERIC, "
-			+ CURRENCYRATE_COL_INVERSERATE_NAME + " NUMERIC " + ");";
+			+ COL_NAME_CURRENCYRATE__INVERSERATE + " NUMERIC " + ");";
 
-	protected static final String GPSTRACK_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ GPSTRACK_TABLE_NAME
+	protected static final String CREATE_SQL_GPSTRACK_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_GPSTRACK
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ GPSTRACK_COL_CAR_ID_NAME
+			+ COL_NAME_GPSTRACK__CAR_ID
 			+ " INTEGER NULL, "
-			+ GPSTRACK_COL_DRIVER_ID_NAME
+			+ COL_NAME_GPSTRACK__DRIVER_ID
 			+ " INTEGER NULL, "
-			+ GPSTRACK_COL_MILEAGE_ID_NAME
+			+ COL_NAME_GPSTRACK__MILEAGE_ID
 			+ " INTEGER NULL, "
-			+ GPSTRACK_COL_DATE_NAME
+			+ COL_NAME_GPSTRACK__DATE
 			+ " DATE NULL, "
-			+ GPSTRACK_COL_MINACCURACY_NAME
+			+ COL_NAME_GPSTRACK__MINACCURACY
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_AVGACCURACY_NAME
+			+ COL_NAME_GPSTRACK__AVGACCURACY
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_MAXACCURACY_NAME
+			+ COL_NAME_GPSTRACK__MAXACCURACY
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_MINALTITUDE_NAME
+			+ COL_NAME_GPSTRACK__MINALTITUDE
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_MAXALTITUDE_NAME
+			+ COL_NAME_GPSTRACK__MAXALTITUDE
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_TOTALTIME_NAME
+			+ COL_NAME_GPSTRACK__TOTALTIME
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_MOVINGTIME_NAME
+			+ COL_NAME_GPSTRACK__MOVINGTIME
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_DISTANCE_NAME
+			+ COL_NAME_GPSTRACK__DISTANCE
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_MAXSPEED_NAME
+			+ COL_NAME_GPSTRACK__MAXSPEED
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_AVGSPEED_NAME
+			+ COL_NAME_GPSTRACK__AVGSPEED
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_AVGMOVINGSPEED_NAME
+			+ COL_NAME_GPSTRACK__AVGMOVINGSPEED
 			+ " NUMERIC NULL, "
-			+ GPSTRACK_COL_TOTALTRACKPOINTS_NAME
+			+ COL_NAME_GPSTRACK__TOTALTRACKPOINTS
 			+ " INTEGER NULL, "
-			+ GPSTRACK_COL_INVALIDTRACKPOINTS_NAME
+			+ COL_NAME_GPSTRACK__INVALIDTRACKPOINTS
 			+ " INTEGER NULL, "
-			+ GPSTRACK_COL_TAG_ID_NAME 
-			+ " INTEGER NULL, " 
-			+ GPSTRACK_COL_TOTALPAUSETIME_NAME 
-			+ " INTEGER NULL "
-			+ ");";
+			+ COL_NAME_GPSTRACK__TAG_ID
+			+ " INTEGER NULL, "
+			+ COL_NAME_GPSTRACK__TOTALPAUSETIME + " INTEGER NULL " + ");";
 
-	protected static final String GPSTRACKDETAIL_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ GPSTRACKDETAIL_TABLE_NAME
+	protected static final String CREATE_SQL_GPSTRACKDETAIL_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_GPSTRACKDETAIL
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME
+			+ COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID
 			+ " INTEGER NOT NULL, "
-			+ GPSTRACKDETAIL_COL_FILE_NAME
+			+ COL_NAME_GPSTRACKDETAIL__FILE
 			+ " TEXT NULL, "
-			+ GPSTRACKDETAIL_COL_FILEFORMAT_NAME + " TEXT NULL " + ");";
+			+ COL_NAME_GPSTRACKDETAIL__FILEFORMAT + " TEXT NULL " + ");";
 
-	protected static final String BPARTNER_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ BPARTNER_TABLE_NAME
+	protected static final String CREATE_SQL_BPARTNER_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_BPARTNER
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL "
 			+ ");";
 
-	protected static final String BPARTNER_LOCATION_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ BPARTNER_LOCATION_TABLE_NAME
+	protected static final String CREATE_SQL_BPARTNERLOCATION_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_BPARTNERLOCATION
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_BPARTNER_ID_NAME
+			+ COL_NAME_BPARTNERLOCATION__BPARTNER_ID
 			+ " INTEGER NOT NULL, "
-			+ BPARTNER_LOCATION_COL_ADDRESS_NAME
+			+ COL_NAME_BPARTNERLOCATION__ADDRESS
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_POSTAL_NAME
+			+ COL_NAME_BPARTNERLOCATION__POSTAL
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_CITY_NAME
+			+ COL_NAME_BPARTNERLOCATION__CITY
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_REGION_NAME
+			+ COL_NAME_BPARTNERLOCATION__REGION
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_COUNTRY_NAME
+			+ COL_NAME_BPARTNERLOCATION__COUNTRY
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_PHONE_NAME
+			+ COL_NAME_BPARTNERLOCATION__PHONE
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_PHONE2_NAME
+			+ COL_NAME_BPARTNERLOCATION__PHONE2
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_FAX_NAME
+			+ COL_NAME_BPARTNERLOCATION__FAX
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_EMAIL_NAME
+			+ COL_NAME_BPARTNERLOCATION__EMAIL
 			+ " TEXT NULL, "
-			+ BPARTNER_LOCATION_COL_CONTACTPERSON_NAME + " TEXT NULL " + ");";
+			+ COL_NAME_BPARTNERLOCATION__CONTACTPERSON + " TEXT NULL " + ");";
 
-	protected static final String TAG_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ TAG_TABLE_NAME
+	protected static final String CREATE_SQL_TAG_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_TAG
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL "
 			+ ");";
 
-	protected static final String TASKTYPE_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ TASKTYPE_TABLE_NAME
+	protected static final String CREATE_SQL_TASKTYPE_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_TASKTYPE
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL "
 			+ ");";
 
-	protected static final String TASK_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ TASK_TABLE_NAME
+	protected static final String CREATE_SQL_TASK_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_TASK
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ TASK_COL_TASKTYPE_ID_NAME
+			+ COL_NAME_TASK__TASKTYPE_ID
 			+ " INTEGER NOT NULL, "
-			+ TASK_COL_SCHEDULEDFOR_NAME
+			+ COL_NAME_TASK__SCHEDULEDFOR
 			+ " TEXT NULL, "
-			+ TASK_COL_ISRECURRENT_NAME
+			+ COL_NAME_TASK__ISRECURRENT
 			+ " TEXT NOT NULL, "
-			+ TASK_COL_ISDIFFERENTSTARTINGTIME_NAME
+			+ COL_NAME_TASK__ISDIFFERENTSTARTINGTIME
 			+ " TEXT NULL, "
-			+ TASK_COL_TIMEFREQUENCY_NAME
+			+ COL_NAME_TASK__TIMEFREQUENCY
 			+ " INTEGER NULL, "
-			+ TASK_COL_TIMEFREQUENCYTYPE_NAME
+			+ COL_NAME_TASK__TIMEFREQUENCYTYPE
 			+ " INTEGER NULL, "
-			+ TASK_COL_STARTINGTIME_NAME
+			+ COL_NAME_TASK__STARTINGTIME
 			+ " DATE NULL, "
-			+ TASK_COL_TIMEREMINDERSTART_NAME
+			+ COL_NAME_TASK__TIMEREMINDERSTART
 			+ " INTEGER NULL, "
-			+ TASK_COL_RUNMILEAGE_NAME
+			+ COL_NAME_TASK__RUNMILEAGE
 			+ " INTEGER NULL, "
-			+ TASK_COL_MILEAGEREMINDERSTART_NAME
+			+ COL_NAME_TASK__MILEAGEREMINDERSTART
 			+ " INTEGER NULL, "
-			+ TASK_COL_TODOCOUNT_NAME
+			+ COL_NAME_TASK__TODOCOUNT
 			+ " INTEGER NOT NULL, "
-			+ " FOREIGN KEY(" + TASK_COL_TASKTYPE_ID_NAME + ") REFERENCES " + TASKTYPE_TABLE_NAME + "(" + GEN_COL_ROWID_NAME + ")"
-			+ ");";
+			+ " FOREIGN KEY("
+			+ COL_NAME_TASK__TASKTYPE_ID
+			+ ") REFERENCES "
+			+ TABLE_NAME_TASKTYPE + "(" + COL_NAME_GEN_ROWID + ")" + ");";
 
-	protected static final String TASK_CAR_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-		+ TASK_CAR_TABLE_NAME
-		+ " ( "
-		+ GEN_COL_ROWID_NAME
-		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ GEN_COL_NAME_NAME
-		+ " TEXT NOT NULL, "
-		+ GEN_COL_ISACTIVE_NAME
-		+ " TEXT DEFAULT 'Y', "
-		+ GEN_COL_USER_COMMENT_NAME
-		+ " TEXT NULL, "
-		+ TASK_CAR_COL_TASK_ID_NAME
-		+ " INTEGER NOT NULL, "
-		+ TASK_CAR_COL_CAR_ID_NAME
-		+ " INTEGER NOT NULL, "
-		+ TASK_CAR_COL_FIRSTRUN_DATE_NAME 
-		+ " DATE NULL, "
-		+ TASK_CAR_COL_FIRSTRUN_MILEAGE_NAME
-		+ " INTEGER NULL "
-		+ ");";
-
-	protected static final String TODO_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-		+ TODO_TABLE_NAME
-		+ " ( "
-		+ GEN_COL_ROWID_NAME
-		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-		+ GEN_COL_NAME_NAME
-		+ " TEXT NOT NULL, "
-		+ GEN_COL_ISACTIVE_NAME
-		+ " TEXT DEFAULT 'Y', "
-		+ GEN_COL_USER_COMMENT_NAME
-		+ " TEXT NULL, "
-		+ TODO_COL_TASK_ID_NAME 
-		+ " INTEGER NOT NULL, "
-		+ TODO_COL_CAR_ID_NAME
-		+ " INTEGER NULL, "
-		+ TODO_COL_DUEDATE_NAME
-		+ " DATE NULL, "
-		+ TODO_COL_DUEMILEAGE_NAME
-		+ " INTEGER NULL, "
-		+ TODO_COL_NOTIFICATIONDATE_NAME
-		+ " DATE NULL, "
-		+ TODO_COL_NOTIFICATIONMILEAGE_NAME
-		+ " INTEGER NULL, "
-		+ TODO_COL_ISDONE_NAME
-		+ " TEXT DEFAULT 'N', "
-		+ TODO_COL_DONEDATE_NAME
-		+ " DATE NULL, "
-		+ TODO_COL_ISSTOPNOTIFICATION_NAME
-		+ " TEXT DEFAULT 'N' "
-		+ ");";
-
-	protected static final String REIMBURSEMENT_CAR_RATES_TABLE_CREATE_SQL = "CREATE TABLE IF NOT EXISTS "
-			+ REIMBURSEMENT_CAR_RATES_TABLE_NAME
+	protected static final String CREATE_SQL_TASK_CAR_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_TASK_CAR
 			+ " ( "
-			+ GEN_COL_ROWID_NAME
+			+ COL_NAME_GEN_ROWID
 			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-			+ GEN_COL_NAME_NAME
+			+ COL_NAME_GEN_NAME
 			+ " TEXT NOT NULL, "
-			+ GEN_COL_ISACTIVE_NAME
+			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
-			+ GEN_COL_USER_COMMENT_NAME
+			+ COL_NAME_GEN_USER_COMMENT
 			+ " TEXT NULL, "
-			+ REIMBURSEMENT_CAR_RATES_COL_CAR_ID_NAME
+			+ COL_NAME_TASK_CAR__TASK_ID
 			+ " INTEGER NOT NULL, "
-			+ REIMBURSEMENT_CAR_RATES_COL_EXPENSETYPE_ID_NAME
+			+ COL_NAME_TASK_CAR__CAR_ID
 			+ " INTEGER NOT NULL, "
-			+ REIMBURSEMENT_CAR_RATES_COL_RATE_NAME
-			+ " NUMBER NOT NULL DEFAULT 0 "
-			+ ");";
+			+ COL_NAME_TASK_CAR__FIRSTRUN_DATE
+			+ " DATE NULL, "
+			+ COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE
+			+ " INTEGER NULL " + ");";
+
+	protected static final String CREATE_SQL_TODO_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_TODO
+			+ " ( "
+			+ COL_NAME_GEN_ROWID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ COL_NAME_GEN_NAME
+			+ " TEXT NOT NULL, "
+			+ COL_NAME_GEN_ISACTIVE
+			+ " TEXT DEFAULT 'Y', "
+			+ COL_NAME_GEN_USER_COMMENT
+			+ " TEXT NULL, "
+			+ COL_NAME_TODO__TASK_ID
+			+ " INTEGER NOT NULL, "
+			+ COL_NAME_TODO__CAR_ID
+			+ " INTEGER NULL, "
+			+ COL_NAME_TODO__DUEDATE
+			+ " DATE NULL, "
+			+ COL_NAME_TODO__DUEMILEAGE
+			+ " INTEGER NULL, "
+			+ COL_NAME_TODO__NOTIFICATIONDATE
+			+ " DATE NULL, "
+			+ COL_NAME_TODO__NOTIFICATIONMILEAGE
+			+ " INTEGER NULL, "
+			+ COL_NAME_TODO__ISDONE
+			+ " TEXT DEFAULT 'N', "
+			+ COL_NAME_TODO__DONEDATE
+			+ " DATE NULL, "
+			+ COL_NAME_TODO__ISSTOPNOTIFICATION + " TEXT DEFAULT 'N' " + ");";
+
+	protected static final String CREATE_SQL_REIMBURSEMENT_CAR_RATES_TABLE = "CREATE TABLE IF NOT EXISTS "
+			+ TABLE_NAME_REIMBURSEMENT_CAR_RATES
+			+ " ( "
+			+ COL_NAME_GEN_ROWID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+			+ COL_NAME_GEN_NAME
+			+ " TEXT NOT NULL, "
+			+ COL_NAME_GEN_ISACTIVE
+			+ " TEXT DEFAULT 'Y', "
+			+ COL_NAME_GEN_USER_COMMENT
+			+ " TEXT NULL, "
+			+ COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID
+			+ " INTEGER NOT NULL, "
+			+ COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID
+			+ " INTEGER NOT NULL, "
+			+ COL_NAME_REIMBURSEMENT_CAR_RATES__RATE
+			+ " NUMBER NOT NULL DEFAULT 0 " + ");";
 
 	/**
 	 * Constructor - takes the context to allow the database to be
@@ -1239,8 +1301,8 @@ public class DB {
 
 		@Override
 		public void onCreate(SQLiteDatabase db) {
-            //create drivers table
-            createDriverTable(db);
+			// create drivers table
+			createDriverTable(db);
 			// create cars table
 			createCarTable(db);
 			createUOMTable(db);
@@ -1274,7 +1336,7 @@ public class DB {
 
 			AddOnDBAdapter.createAddOnDataTemplateTables(db);
 			AddOnDBAdapter.createAddOnBTDeviceCarTable(db);
-			
+
 			createReimbursementCarRatesTable(db);
 
 			// create indexes
@@ -1297,113 +1359,108 @@ public class DB {
 		 * @param db
 		 */
 		private void createCarTable(SQLiteDatabase db) {
-			db.execSQL(CAR_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_CAR_TABLE);
 		}
 
 		/**
 		 * @param db
 		 */
 		private void createDriverTable(SQLiteDatabase db) {
-			db.execSQL(DRIVER_TABLE_CREATE_SQL);
-			String sql = 
-					"INSERT INTO " + DRIVER_TABLE_NAME + "( " +
-								GEN_COL_NAME_NAME + ", " +
-								GEN_COL_ISACTIVE_NAME + ", " +
-								GEN_COL_USER_COMMENT_NAME + ") " +
-					" VALUES( 'I', 'Y', 'Customize me')";
+			db.execSQL(CREATE_SQL_DRIVER_TABLE);
+			String sql = "INSERT INTO " + TABLE_NAME_DRIVER + "( "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_GEN_USER_COMMENT + ") "
+					+ " VALUES( 'I', 'Y', 'Customize me')";
 			db.execSQL(sql);
 		}
 
-		private void createTaskToDoTables(SQLiteDatabase db) throws SQLException {
+		private void createTaskToDoTables(SQLiteDatabase db)
+				throws SQLException {
 			// create task/reminder
-			db.execSQL(TASKTYPE_TABLE_CREATE_SQL);
-			db.execSQL(TASK_TABLE_CREATE_SQL);
-			db.execSQL(TASK_CAR_TABLE_CREATE_SQL);
-			db.execSQL(TODO_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_TASKTYPE_TABLE);
+			db.execSQL(CREATE_SQL_TASK_TABLE);
+			db.execSQL(CREATE_SQL_TASK_CAR_TABLE);
+			db.execSQL(CREATE_SQL_TODO_TABLE);
 
-			String sql = 
-				"INSERT INTO " + TASKTYPE_TABLE_NAME + "( " +
-							GEN_COL_NAME_NAME + ", " +
-							GEN_COL_ISACTIVE_NAME + ", " +
-							GEN_COL_USER_COMMENT_NAME + ") " +
-				" VALUES( " +
-							"'" + mResource.getString(R.string.DB_TaskType_ServiceName) + "', " +
-							"'Y', " +
-							"'" + mResource.getString(R.string.DB_TaskType_ServiceComment) + "')";
+			String sql = "INSERT INTO " + TABLE_NAME_TASKTYPE + "( "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_GEN_USER_COMMENT + ") " + " VALUES( " + "'"
+					+ mResource.getString(R.string.DB_TaskType_ServiceName)
+					+ "', " + "'Y', " + "'"
+					+ mResource.getString(R.string.DB_TaskType_ServiceComment)
+					+ "')";
 			db.execSQL(sql);
-			sql = 
-				"INSERT INTO " + TASKTYPE_TABLE_NAME + "( " +
-							GEN_COL_NAME_NAME + ", " +
-							GEN_COL_ISACTIVE_NAME + ", " +
-							GEN_COL_USER_COMMENT_NAME + ") " +
-				" VALUES( " +
-							"'" + mResource.getString(R.string.DB_TaskType_ReminderName) + "', " +
-							"'Y', " +
-							"'" + mResource.getString(R.string.DB_TaskType_ReminderComment) + "')";
+			sql = "INSERT INTO " + TABLE_NAME_TASKTYPE + "( "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_GEN_USER_COMMENT + ") " + " VALUES( " + "'"
+					+ mResource.getString(R.string.DB_TaskType_ReminderName)
+					+ "', " + "'Y', " + "'"
+					+ mResource.getString(R.string.DB_TaskType_ReminderComment)
+					+ "')";
 			db.execSQL(sql);
-			
-//			Calendar cal = Calendar.getInstance();
-//			if(cal.get(Calendar.HOUR_OF_DAY) > 20){
-//				cal.add(Calendar.DAY_OF_YEAR, 1);
-//			}
-//			cal.set(Calendar.HOUR_OF_DAY, 20);
-//			cal.set(Calendar.MINUTE, 0);
-//			cal.set(Calendar.SECOND, 0);
-//			
-//			sql = " INSERT INTO " + TASK_TABLE_NAME + "( " +
-//							GEN_COL_NAME_NAME + ", " +
-//							GEN_COL_ISACTIVE_NAME + ", " +
-//							GEN_COL_USER_COMMENT_NAME + ", " +
-//							TASK_COL_TASKTYPE_ID_NAME + ", " +
-//							TASK_COL_SCHEDULEDFOR_NAME + ", " +
-//							TASK_COL_ISRECURRENT_NAME + ", " +
-//							TASK_COL_ISDIFFERENTSTARTINGTIME_NAME + ", " +
-//							TASK_COL_TIMEFREQUENCY_NAME + ", " +
-//							TASK_COL_TIMEFREQUENCYTYPE_NAME + ", " +
-//							TASK_COL_STARTINGTIME_NAME + ", " +
-//							TASK_COL_TIMEREMINDERSTART_NAME + ", " +
-//							TASK_COL_TODOCOUNT_NAME + ") " +
-//					"VALUES ( " +
-//							"'" + mResource.getString(R.string.DB_DemoTask_Name) + "', " +
-//							"'Y', " +
-//							"'" + mResource.getString(R.string.DB_DemoTask_Comment) + "', " +
-//							"2, " +
-//							"'T', " +
-//							"'Y', " +
-//							"'N', " +
-//							"1, " +
-//							"1, " +
-//							Long.toString(cal.getTimeInMillis() / 1000) + ", " +
-//							"30, " +
-//							"3 )";
-//
-//			db.execSQL(sql);
-//
-//			Intent intent = new Intent(mCtx, ToDoManagementService.class);
-//			mCtx.startService(intent);
-//							
+
+			// Calendar cal = Calendar.getInstance();
+			// if(cal.get(Calendar.HOUR_OF_DAY) > 20){
+			// cal.add(Calendar.DAY_OF_YEAR, 1);
+			// }
+			// cal.set(Calendar.HOUR_OF_DAY, 20);
+			// cal.set(Calendar.MINUTE, 0);
+			// cal.set(Calendar.SECOND, 0);
+			//
+			// sql = " INSERT INTO " + TASK_TABLE_NAME + "( " +
+			// GEN_COL_NAME_NAME + ", " +
+			// GEN_COL_ISACTIVE_NAME + ", " +
+			// GEN_COL_USER_COMMENT_NAME + ", " +
+			// TASK_COL_TASKTYPE_ID_NAME + ", " +
+			// TASK_COL_SCHEDULEDFOR_NAME + ", " +
+			// TASK_COL_ISRECURRENT_NAME + ", " +
+			// TASK_COL_ISDIFFERENTSTARTINGTIME_NAME + ", " +
+			// TASK_COL_TIMEFREQUENCY_NAME + ", " +
+			// TASK_COL_TIMEFREQUENCYTYPE_NAME + ", " +
+			// TASK_COL_STARTINGTIME_NAME + ", " +
+			// TASK_COL_TIMEREMINDERSTART_NAME + ", " +
+			// TASK_COL_TODOCOUNT_NAME + ") " +
+			// "VALUES ( " +
+			// "'" + mResource.getString(R.string.DB_DemoTask_Name) + "', " +
+			// "'Y', " +
+			// "'" + mResource.getString(R.string.DB_DemoTask_Comment) + "', " +
+			// "2, " +
+			// "'T', " +
+			// "'Y', " +
+			// "'N', " +
+			// "1, " +
+			// "1, " +
+			// Long.toString(cal.getTimeInMillis() / 1000) + ", " +
+			// "30, " +
+			// "3 )";
+			//
+			// db.execSQL(sql);
+			//
+			// Intent intent = new Intent(mCtx, ToDoManagementService.class);
+			// mCtx.startService(intent);
+			//
 		}
 
 		private void createBPartnerTable(SQLiteDatabase db) throws SQLException {
 			// business partner
-			db.execSQL(BPARTNER_TABLE_CREATE_SQL);
-			db.execSQL(BPARTNER_LOCATION_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_BPARTNER_TABLE);
+			db.execSQL(CREATE_SQL_BPARTNERLOCATION_TABLE);
 		}
 
 		private void createGPSTrackTables(SQLiteDatabase db)
 				throws SQLException {
-			db.execSQL(GPSTRACK_TABLE_CREATE_SQL);
-			db.execSQL(GPSTRACKDETAIL_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_GPSTRACK_TABLE);
+			db.execSQL(CREATE_SQL_GPSTRACKDETAIL_TABLE);
 		}
 
 		private void createUOMTable(SQLiteDatabase db) throws SQLException {
 			// create uom table
-			db.execSQL(UOM_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_UOM_TABLE);
 			// init uom's
-			String colPart = "INSERT INTO " + UOM_TABLE_NAME + " ( "
-					+ GEN_COL_NAME_NAME + ", " + GEN_COL_ISACTIVE_NAME + ", "
-					+ GEN_COL_USER_COMMENT_NAME + ", " + UOM_COL_CODE_NAME
-					+ ", " + UOM_COL_UOMTYPE_NAME + ") ";
+			String colPart = "INSERT INTO " + TABLE_NAME_UOM + " ( "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_GEN_USER_COMMENT + ", " + COL_NAME_UOM__CODE
+					+ ", " + COL_NAME_UOM__UOMTYPE + ") ";
 			db.execSQL(colPart + "VALUES ( " + "'"
 					+ mResource.getString(R.string.DB_UOM_KmName) + "', "
 					+ "'Y', " + "'"
@@ -1433,14 +1490,14 @@ public class DB {
 
 		private void createUOMConversionTable(SQLiteDatabase db)
 				throws SQLException {
-			db.execSQL(UOM_CONVERSION_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_UOMCONVERSION_TABLE);
 			// init default uom conversions
-			String colPart = "INSERT INTO " + UOM_CONVERSION_TABLE_NAME + " ( "
-					+ GEN_COL_NAME_NAME + ", " + GEN_COL_ISACTIVE_NAME + ", "
-					+ GEN_COL_USER_COMMENT_NAME + ", "
-					+ UOM_CONVERSION_COL_UOMFROM_ID_NAME + ", "
-					+ UOM_CONVERSION_COL_UOMTO_ID_NAME + ", "
-					+ UOM_CONVERSION_COL_RATE_NAME + " " + ") ";
+			String colPart = "INSERT INTO " + TABLE_NAME_UOMCONVERSION + " ( "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_GEN_USER_COMMENT + ", "
+					+ COL_NAME_UOMCONVERSION__UOMFROM_ID + ", "
+					+ COL_NAME_UOMCONVERSION__UOMTO_ID + ", "
+					+ COL_NAME_UOMCONVERSION__RATE + " " + ") ";
 			db.execSQL(colPart + "VALUES ( " + "'"
 					+ mResource.getString(R.string.DB_UOMConv_MiToKmName)
 					+ "', " + "'Y', " + "'"
@@ -1486,11 +1543,11 @@ public class DB {
 		private void createExpenseTypeTable(SQLiteDatabase db)
 				throws SQLException {
 			// create expense types table
-			db.execSQL(EXPENSETYPE_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_EXPENSETYPE_TABLE);
 			// init some standard expenses
-			String colPart = "INSERT INTO " + EXPENSETYPE_TABLE_NAME + " ( "
-					+ GEN_COL_NAME_NAME + ", " + GEN_COL_ISACTIVE_NAME + ", "
-					+ GEN_COL_USER_COMMENT_NAME + " " + ") ";
+			String colPart = "INSERT INTO " + TABLE_NAME_EXPENSETYPE + " ( "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_GEN_USER_COMMENT + " " + ") ";
 			db.execSQL(colPart + "VALUES ( " + "'"
 					+ mResource.getString(R.string.DB_ExpType_PersonalName)
 					+ "', " + "'Y', " + "'"
@@ -1505,22 +1562,23 @@ public class DB {
 
 		private void createMileageTable(SQLiteDatabase db) throws SQLException {
 			// create mileage table
-			db.execSQL(MILEAGE_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_MILEAGE_TABLE);
 		}
 
 		private void createRefuelTable(SQLiteDatabase db) throws SQLException {
-			db.execSQL(REFUEL_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_REFUEL_TABLE);
 		}
 
 		private void createTagTable(SQLiteDatabase db) throws SQLException {
 			// business partner
-			db.execSQL(TAG_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_TAG_TABLE);
 		}
 
-		private void createReimbursementCarRatesTable(SQLiteDatabase db) throws SQLException {
-			db.execSQL(REIMBURSEMENT_CAR_RATES_TABLE_CREATE_SQL);
+		private void createReimbursementCarRatesTable(SQLiteDatabase db)
+				throws SQLException {
+			db.execSQL(CREATE_SQL_REIMBURSEMENT_CAR_RATES_TABLE);
 		}
-		
+
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -1618,7 +1676,12 @@ public class DB {
 				upgradeDbTo401(db, oldVersion);
 			}
 			// AndiCar 3.4.x
-			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again because on fresh 350 install addon tables was not created
+			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again
+																// because on
+																// fresh 350
+																// install addon
+																// tables was
+																// not created
 				upgradeDbTo350(db, oldVersion);
 				upgradeDbTo355(db, oldVersion);
 				upgradeDbTo356(db, oldVersion);
@@ -1661,14 +1724,14 @@ public class DB {
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
 				upgradeDbTo401(db, oldVersion);
-			}else if (oldVersion == 358) {
+			} else if (oldVersion == 358) {
 				AddOnDBAdapter.upgradeTo359(db);
 				upgradeDbTo400(db, oldVersion);
 				upgradeDbTo401(db, oldVersion);
-			}else if (oldVersion == 359) {
+			} else if (oldVersion == 359) {
 				upgradeDbTo400(db, oldVersion);
 				upgradeDbTo401(db, oldVersion);
-			}else if (oldVersion == 400) {
+			} else if (oldVersion == 400) {
 				upgradeDbTo401(db, oldVersion);
 			}
 
@@ -1687,19 +1750,19 @@ public class DB {
 		private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
 			createExpenseCategory(db);
 			String updateSql;
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_EXPENSECATEGORY_ID_NAME)) {
-				updateSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_EXPENSECATEGORY_ID_NAME + " INTEGER";
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__EXPENSECATEGORY_ID)) {
+				updateSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__EXPENSECATEGORY_ID + " INTEGER";
 				db.execSQL(updateSql);
-				updateSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_EXPENSECATEGORY_ID_NAME + " = 1";
+				updateSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__EXPENSECATEGORY_ID + " = 1";
 				db.execSQL(updateSql);
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_ISFULLREFUEL_NAME)) {
-				db.execSQL("ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_ISFULLREFUEL_NAME + " TEXT DEFAULT 'N' ");
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__ISFULLREFUEL)) {
+				db.execSQL("ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__ISFULLREFUEL + " TEXT DEFAULT 'N' ");
 			}
 			createExpenses(db, true);
 		}
@@ -1709,83 +1772,84 @@ public class DB {
 			String updSql = "";
 
 			createCurrencyRateTable(db);
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_QUANTITYENTERED_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_QUANTITYENTERED_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__QUANTITYENTERED)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__QUANTITYENTERED + " NUMERIC NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_QUANTITYENTERED_NAME + " = "
-						+ REFUEL_COL_QUANTITY_NAME;
+				updSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__QUANTITYENTERED + " = "
+						+ COL_NAME_REFUEL__QUANTITY;
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_UOMVOLUMEENTERED_ID_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_UOMVOLUMEENTERED_ID_NAME
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__UOMVOLUMEENTERED_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__UOMVOLUMEENTERED_ID
 						+ " INTEGER NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_UOMVOLUMEENTERED_ID_NAME + " = "
-						+ REFUEL_COL_UOMVOLUME_ID_NAME;
+				updSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__UOMVOLUMEENTERED_ID + " = "
+						+ COL_NAME_REFUEL__UOMVOLUME_ID;
 				db.execSQL(updSql);
 				updSql = "UPDATE "
-						+ REFUEL_TABLE_NAME
+						+ TABLE_NAME_REFUEL
 						+ " SET "
-						+ REFUEL_COL_UOMVOLUME_ID_NAME
+						+ COL_NAME_REFUEL__UOMVOLUME_ID
 						+ " = "
 						+ "(SELECT "
-						+ CAR_COL_UOMVOLUME_ID_NAME
+						+ COL_NAME_CAR__UOMVOLUME_ID
 						+ " "
 						+ "FROM "
-						+ CAR_TABLE_NAME
+						+ TABLE_NAME_CAR
 						+ " "
 						+ "WHERE "
-						+ GEN_COL_ROWID_NAME
+						+ COL_NAME_GEN_ROWID
 						+ " = "
-						+ sqlConcatTableColumn(REFUEL_TABLE_NAME,
-								REFUEL_COL_CAR_ID_NAME) + ") ";
+						+ sqlConcatTableColumn(TABLE_NAME_REFUEL,
+								COL_NAME_REFUEL__CAR_ID) + ") ";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_PRICEENTERED_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__PRICEENTERED)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__PRICEENTERED + " NUMERIC NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_PRICEENTERED_NAME + " = "
-						+ REFUEL_COL_PRICE_NAME;
+				updSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__PRICEENTERED + " = "
+						+ COL_NAME_REFUEL__PRICE;
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_CURRENCYENTERED_ID_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_CURRENCYENTERED_ID_NAME + " INTEGER NULL ";
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__CURRENCYENTERED_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__CURRENCYENTERED_ID
+						+ " INTEGER NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_CURRENCYENTERED_ID_NAME + " = "
-						+ REFUEL_COL_CURRENCY_ID_NAME;
+				updSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__CURRENCYENTERED_ID + " = "
+						+ COL_NAME_REFUEL__CURRENCY_ID;
 				db.execSQL(updSql);
 				updSql = "UPDATE "
-						+ REFUEL_TABLE_NAME
+						+ TABLE_NAME_REFUEL
 						+ " SET "
-						+ REFUEL_COL_CURRENCY_ID_NAME
+						+ COL_NAME_REFUEL__CURRENCY_ID
 						+ " = "
 						+ "(SELECT "
-						+ CAR_COL_CURRENCY_ID_NAME
+						+ COL_NAME_CAR__CURRENCY_ID
 						+ " FROM "
-						+ CAR_TABLE_NAME
+						+ TABLE_NAME_CAR
 						+ " WHERE "
-						+ sqlConcatTableColumn(CAR_TABLE_NAME,
-								GEN_COL_ROWID_NAME)
+						+ sqlConcatTableColumn(TABLE_NAME_CAR,
+								COL_NAME_GEN_ROWID)
 						+ " = "
-						+ sqlConcatTableColumn(REFUEL_TABLE_NAME,
-								REFUEL_COL_CAR_ID_NAME) + ") ";
+						+ sqlConcatTableColumn(TABLE_NAME_REFUEL,
+								COL_NAME_REFUEL__CAR_ID) + ") ";
 				db.execSQL(updSql);
 				Cursor c = db.rawQuery("SELECT COUNT(*) " + "FROM "
-						+ REFUEL_TABLE_NAME + " " + "WHERE "
-						+ REFUEL_COL_CURRENCY_ID_NAME + " <> "
-						+ REFUEL_COL_CURRENCYENTERED_ID_NAME, null);
+						+ TABLE_NAME_REFUEL + " " + "WHERE "
+						+ COL_NAME_REFUEL__CURRENCY_ID + " <> "
+						+ COL_NAME_REFUEL__CURRENCYENTERED_ID, null);
 				if (c.moveToFirst() && c.getInt(0) > 0) {
 					SharedPreferences mPreferences = mCtx.getSharedPreferences(
 							StaticValues.GLOBAL_PREFERENCE_NAME, 0);
@@ -1798,124 +1862,124 @@ public class DB {
 				}
 				c.close();
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_CURRENCYRATE_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__CURRENCYRATE)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__CURRENCYRATE + " NUMERIC NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_CURRENCYRATE_NAME + " = 1 ";
+				updSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__CURRENCYRATE + " = 1 ";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_UOMVOLCONVERSIONRATE_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_UOMVOLCONVERSIONRATE_NAME
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__UOMVOLCONVERSIONRATE)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__UOMVOLCONVERSIONRATE
 						+ " NUMERIC NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_UOMVOLCONVERSIONRATE_NAME + " = 1 ";
+				updSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__UOMVOLCONVERSIONRATE + " = 1 ";
 				db.execSQL(updSql);
 				updSql = "UPDATE "
-						+ REFUEL_TABLE_NAME
+						+ TABLE_NAME_REFUEL
 						+ " SET "
-						+ REFUEL_COL_UOMVOLCONVERSIONRATE_NAME
+						+ COL_NAME_REFUEL__UOMVOLCONVERSIONRATE
 						+ " = "
 						+ "(SELECT "
-						+ UOM_CONVERSION_COL_RATE_NAME
+						+ COL_NAME_UOMCONVERSION__RATE
 						+ " "
 						+ "FROM "
-						+ UOM_CONVERSION_TABLE_NAME
+						+ TABLE_NAME_UOMCONVERSION
 						+ " "
 						+ "WHERE "
-						+ UOM_CONVERSION_COL_UOMFROM_ID_NAME
+						+ COL_NAME_UOMCONVERSION__UOMFROM_ID
 						+ " = "
-						+ sqlConcatTableColumn(REFUEL_TABLE_NAME,
-								REFUEL_COL_UOMVOLUMEENTERED_ID_NAME)
+						+ sqlConcatTableColumn(TABLE_NAME_REFUEL,
+								COL_NAME_REFUEL__UOMVOLUMEENTERED_ID)
 						+ " "
 						+ "AND "
-						+ UOM_CONVERSION_COL_UOMTO_ID_NAME
+						+ COL_NAME_UOMCONVERSION__UOMTO_ID
 						+ " = "
-						+ sqlConcatTableColumn(REFUEL_TABLE_NAME,
-								REFUEL_COL_UOMVOLUME_ID_NAME)
+						+ sqlConcatTableColumn(TABLE_NAME_REFUEL,
+								COL_NAME_REFUEL__UOMVOLUME_ID)
 						+ "), "
-						+ REFUEL_COL_QUANTITY_NAME
+						+ COL_NAME_REFUEL__QUANTITY
 						+ " = "
 						+ "ROUND( "
-						+ REFUEL_COL_QUANTITYENTERED_NAME
+						+ COL_NAME_REFUEL__QUANTITYENTERED
 						+ " * "
 						+ "(SELECT "
-						+ UOM_CONVERSION_COL_RATE_NAME
+						+ COL_NAME_UOMCONVERSION__RATE
 						+ " "
 						+ "FROM "
-						+ UOM_CONVERSION_TABLE_NAME
+						+ TABLE_NAME_UOMCONVERSION
 						+ " "
 						+ "WHERE "
-						+ UOM_CONVERSION_COL_UOMFROM_ID_NAME
+						+ COL_NAME_UOMCONVERSION__UOMFROM_ID
 						+ " = "
-						+ sqlConcatTableColumn(REFUEL_TABLE_NAME,
-								REFUEL_COL_UOMVOLUMEENTERED_ID_NAME)
+						+ sqlConcatTableColumn(TABLE_NAME_REFUEL,
+								COL_NAME_REFUEL__UOMVOLUMEENTERED_ID)
 						+ " "
 						+ "AND "
-						+ UOM_CONVERSION_COL_UOMTO_ID_NAME
+						+ COL_NAME_UOMCONVERSION__UOMTO_ID
 						+ " = "
-						+ sqlConcatTableColumn(REFUEL_TABLE_NAME,
-								REFUEL_COL_UOMVOLUME_ID_NAME) + "), 2 ) "
-						+ "WHERE " + REFUEL_COL_UOMVOLUME_ID_NAME + " <> "
-						+ REFUEL_COL_UOMVOLUMEENTERED_ID_NAME;
+						+ sqlConcatTableColumn(TABLE_NAME_REFUEL,
+								COL_NAME_REFUEL__UOMVOLUME_ID) + "), 2 ) "
+						+ "WHERE " + COL_NAME_REFUEL__UOMVOLUME_ID + " <> "
+						+ COL_NAME_REFUEL__UOMVOLUMEENTERED_ID;
 				db.execSQL(updSql);
 			}
 
-			if (!columnExists(db, EXPENSE_TABLE_NAME,
-					EXPENSE_COL_AMOUNTENTERED_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_EXPENSE,
+					COL_NAME_EXPENSE__AMOUNTENTERED)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__AMOUNTENTERED + " NUMERIC NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + EXPENSE_TABLE_NAME + " SET "
-						+ EXPENSE_COL_AMOUNTENTERED_NAME + " = "
-						+ EXPENSE_COL_AMOUNT_NAME;
+				updSql = "UPDATE " + TABLE_NAME_EXPENSE + " SET "
+						+ COL_NAME_EXPENSE__AMOUNTENTERED + " = "
+						+ COL_NAME_EXPENSE__AMOUNT;
 				db.execSQL(updSql);
 			}
 
-			if (!columnExists(db, EXPENSE_TABLE_NAME,
-					EXPENSE_COL_CURRENCYENTERED_ID_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_CURRENCYENTERED_ID_NAME
+			if (!columnExists(db, TABLE_NAME_EXPENSE,
+					COL_NAME_EXPENSE__CURRENCYENTERED_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__CURRENCYENTERED_ID
 						+ " INTEGER NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + EXPENSE_TABLE_NAME + " SET "
-						+ EXPENSE_COL_CURRENCYENTERED_ID_NAME + " = "
-						+ EXPENSE_COL_CURRENCY_ID_NAME;
+				updSql = "UPDATE " + TABLE_NAME_EXPENSE + " SET "
+						+ COL_NAME_EXPENSE__CURRENCYENTERED_ID + " = "
+						+ COL_NAME_EXPENSE__CURRENCY_ID;
 				db.execSQL(updSql);
 				updSql = "UPDATE "
-						+ EXPENSE_TABLE_NAME
+						+ TABLE_NAME_EXPENSE
 						+ " SET "
-						+ EXPENSE_COL_CURRENCY_ID_NAME
+						+ COL_NAME_EXPENSE__CURRENCY_ID
 						+ " = "
 						+ "(SELECT "
-						+ CAR_COL_CURRENCY_ID_NAME
+						+ COL_NAME_CAR__CURRENCY_ID
 						+ " FROM "
-						+ CAR_TABLE_NAME
+						+ TABLE_NAME_CAR
 						+ " WHERE "
-						+ sqlConcatTableColumn(CAR_TABLE_NAME,
-								GEN_COL_ROWID_NAME)
+						+ sqlConcatTableColumn(TABLE_NAME_CAR,
+								COL_NAME_GEN_ROWID)
 						+ " = "
-						+ sqlConcatTableColumn(EXPENSE_TABLE_NAME,
-								EXPENSE_COL_CAR_ID_NAME) + ") ";
+						+ sqlConcatTableColumn(TABLE_NAME_EXPENSE,
+								COL_NAME_EXPENSE__CAR_ID) + ") ";
 				db.execSQL(updSql);
 				Cursor c = db
 						.rawQuery(
 								"SELECT COUNT(*) "
 										+ "FROM "
-										+ EXPENSE_TABLE_NAME
+										+ TABLE_NAME_EXPENSE
 										+ " "
 										+ "WHERE "
-										+ EXPENSE_COL_CURRENCY_ID_NAME
+										+ COL_NAME_EXPENSE__CURRENCY_ID
 										+ " <> "
-										+ EXPENSE_COL_CURRENCYENTERED_ID_NAME
+										+ COL_NAME_EXPENSE__CURRENCYENTERED_ID
 										+ " "
 										+ "AND COALESCE("
-										+ EXPENSE_COL_FROMTABLE_NAME
+										+ COL_NAME_EXPENSE__FROMTABLE
 										+ ", 'X') <> '"
 										+ StaticValues.EXPENSES_COL_FROMREFUEL_TABLE_NAME
 										+ "'", null);
@@ -1938,13 +2002,13 @@ public class DB {
 				c.close();
 			}
 
-			if (!columnExists(db, EXPENSE_TABLE_NAME,
-					EXPENSE_COL_CURRENCYRATE_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_CURRENCYRATE_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_EXPENSE,
+					COL_NAME_EXPENSE__CURRENCYRATE)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__CURRENCYRATE + " NUMERIC NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + EXPENSE_TABLE_NAME + " SET "
-						+ EXPENSE_COL_CURRENCYRATE_NAME + " = 1";
+				updSql = "UPDATE " + TABLE_NAME_EXPENSE + " SET "
+						+ COL_NAME_EXPENSE__CURRENCYRATE + " = 1";
 				db.execSQL(updSql);
 			}
 
@@ -1966,25 +2030,25 @@ public class DB {
 		private void upgradeDbTo310(SQLiteDatabase db, int oldVersion)
 				throws SQLException {
 			String updSql = "";
-			if (!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_AMOUNT_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_AMOUNT_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_REFUEL, COL_NAME_REFUEL__AMOUNT)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__AMOUNT + " NUMERIC NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_AMOUNT_NAME + " = "
-						+ REFUEL_COL_QUANTITYENTERED_NAME + " * "
-						+ REFUEL_COL_PRICE_NAME;
+				updSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__AMOUNT + " = "
+						+ COL_NAME_REFUEL__QUANTITYENTERED + " * "
+						+ COL_NAME_REFUEL__PRICE;
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_AMOUNTENTERED_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_AMOUNTENTERED_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__AMOUNTENTERED)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__AMOUNTENTERED + " NUMERIC NULL ";
 				db.execSQL(updSql);
-				updSql = "UPDATE " + REFUEL_TABLE_NAME + " SET "
-						+ REFUEL_COL_AMOUNTENTERED_NAME + " = "
-						+ REFUEL_COL_QUANTITYENTERED_NAME + " * "
-						+ REFUEL_COL_PRICEENTERED_NAME;
+				updSql = "UPDATE " + TABLE_NAME_REFUEL + " SET "
+						+ COL_NAME_REFUEL__AMOUNTENTERED + " = "
+						+ COL_NAME_REFUEL__QUANTITYENTERED + " * "
+						+ COL_NAME_REFUEL__PRICEENTERED;
 				db.execSQL(updSql);
 			}
 		}
@@ -1994,52 +2058,53 @@ public class DB {
 			String updSql = "";
 			createBPartnerTable(db);
 
-			if (!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_QUANTITY_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_QUANTITY_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_EXPENSE,
+					COL_NAME_EXPENSE__QUANTITY)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__QUANTITY + " NUMERIC NULL ";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_PRICE_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_PRICE_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_EXPENSE, COL_NAME_EXPENSE__PRICE)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__PRICE + " NUMERIC NULL ";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, EXPENSE_TABLE_NAME,
-					EXPENSE_COL_PRICEENTERED_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_PRICEENTERED_NAME + " NUMERIC NULL ";
+			if (!columnExists(db, TABLE_NAME_EXPENSE,
+					COL_NAME_EXPENSE__PRICEENTERED)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__PRICEENTERED + " NUMERIC NULL ";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_UOM_ID_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_UOM_ID_NAME + " INTEGER NULL ";
+			if (!columnExists(db, TABLE_NAME_EXPENSE, COL_NAME_EXPENSE__UOM_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__UOM_ID + " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
 
-			if (!columnExists(db, EXPENSE_TABLE_NAME,
-					EXPENSE_COL_BPARTNER_ID_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
+			if (!columnExists(db, TABLE_NAME_EXPENSE,
+					COL_NAME_EXPENSE__BPARTNER_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__BPARTNER_ID + " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, EXPENSE_TABLE_NAME,
-					EXPENSE_COL_BPARTNER_LOCATION_ID_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_BPARTNER_LOCATION_ID_NAME
+			if (!columnExists(db, TABLE_NAME_EXPENSE,
+					COL_NAME_EXPENSE__BPARTNER_LOCATION_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__BPARTNER_LOCATION_ID
 						+ " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
 
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_BPARTNER_ID_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_BPARTNER_ID_NAME + " INTEGER NULL ";
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__BPARTNER_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__BPARTNER_ID + " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME,
-					REFUEL_COL_BPARTNER_LOCATION_ID_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_BPARTNER_LOCATION_ID_NAME
+			if (!columnExists(db, TABLE_NAME_REFUEL,
+					COL_NAME_REFUEL__BPARTNER_LOCATION_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__BPARTNER_LOCATION_ID
 						+ " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
@@ -2050,26 +2115,27 @@ public class DB {
 			// createAddOnTable(db);
 			createTagTable(db);
 			String updSql = "";
-			if (!columnExists(db, MILEAGE_TABLE_NAME, MILEAGE_COL_TAG_ID_NAME)) {
-				updSql = "ALTER TABLE " + MILEAGE_TABLE_NAME + " ADD "
-						+ MILEAGE_COL_TAG_ID_NAME + " INTEGER NULL ";
+			if (!columnExists(db, TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__TAG_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_MILEAGE + " ADD "
+						+ COL_NAME_MILEAGE__TAG_ID + " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, REFUEL_TABLE_NAME, REFUEL_COL_TAG_ID_NAME)) {
-				updSql = "ALTER TABLE " + REFUEL_TABLE_NAME + " ADD "
-						+ REFUEL_COL_TAG_ID_NAME + " INTEGER NULL ";
+			if (!columnExists(db, TABLE_NAME_REFUEL, COL_NAME_REFUEL__TAG_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_REFUEL + " ADD "
+						+ COL_NAME_REFUEL__TAG_ID + " INTEGER NULL ";
 
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, EXPENSE_TABLE_NAME, EXPENSE_COL_TAG_ID_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSE_TABLE_NAME + " ADD "
-						+ EXPENSE_COL_TAG_ID_NAME + " INTEGER NULL ";
+			if (!columnExists(db, TABLE_NAME_EXPENSE, COL_NAME_EXPENSE__TAG_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSE + " ADD "
+						+ COL_NAME_EXPENSE__TAG_ID + " INTEGER NULL ";
 				db.execSQL(updSql);
 
 			}
-			if (!columnExists(db, GPSTRACK_TABLE_NAME, GPSTRACK_COL_TAG_ID_NAME)) {
-				updSql = "ALTER TABLE " + GPSTRACK_TABLE_NAME + " ADD "
-						+ GPSTRACK_COL_TAG_ID_NAME + " INTEGER NULL ";
+			if (!columnExists(db, TABLE_NAME_GPSTRACK,
+					COL_NAME_GPSTRACK__TAG_ID)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_GPSTRACK + " ADD "
+						+ COL_NAME_GPSTRACK__TAG_ID + " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
 		}
@@ -2083,16 +2149,16 @@ public class DB {
 		private void upgradeDbTo355(SQLiteDatabase db, int oldVersion)
 				throws SQLException {
 			String updSql = null;
-			if (!columnExists(db, EXPENSECATEGORY_TABLE_NAME,
-					EXPENSECATEGORY_COL_ISFUEL_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSECATEGORY_TABLE_NAME + " ADD "
-						+ EXPENSECATEGORY_COL_ISFUEL_NAME
+			if (!columnExists(db, TABLE_NAME_EXPENSECATEGORY,
+					COL_NAME_EXPENSECATEGORY__ISFUEL)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSECATEGORY + " ADD "
+						+ COL_NAME_EXPENSECATEGORY__ISFUEL
 						+ " TEXT DEFAULT 'N' ";
 				db.execSQL(updSql);
 
-				updSql = "UPDATE " + EXPENSECATEGORY_TABLE_NAME + " SET "
-						+ EXPENSECATEGORY_COL_ISFUEL_NAME + " = 'Y' "
-						+ " WHERE " + GEN_COL_ROWID_NAME + " = 1";
+				updSql = "UPDATE " + TABLE_NAME_EXPENSECATEGORY + " SET "
+						+ COL_NAME_EXPENSECATEGORY__ISFUEL + " = 'Y' "
+						+ " WHERE " + COL_NAME_GEN_ROWID + " = 1";
 
 				db.execSQL(updSql);
 			}
@@ -2103,55 +2169,57 @@ public class DB {
 			AddOnDBAdapter.createAddOnSecureBKSettingsTable(db);
 		}
 
-		private void upgradeDbTo357(SQLiteDatabase db, int oldVersion) throws SQLException {
-			String sql = "DROP TABLE IF EXISTS " + TASKTYPE_TABLE_NAME;
+		private void upgradeDbTo357(SQLiteDatabase db, int oldVersion)
+				throws SQLException {
+			String sql = "DROP TABLE IF EXISTS " + TABLE_NAME_TASKTYPE;
 			db.execSQL(sql);
-			sql = "DROP TABLE IF EXISTS " + TASK_CAR_TABLE_NAME;
+			sql = "DROP TABLE IF EXISTS " + TABLE_NAME_TASK_CAR;
 			db.execSQL(sql);
-			sql = "DROP TABLE IF EXISTS " + TASK_TABLE_NAME;
+			sql = "DROP TABLE IF EXISTS " + TABLE_NAME_TASK;
 			db.execSQL(sql);
-			sql = "DROP TABLE IF EXISTS " + TODO_TABLE_NAME;
+			sql = "DROP TABLE IF EXISTS " + TABLE_NAME_TODO;
 			db.execSQL(sql);
 			createTaskToDoTables(db);
 		}
 
-		private void upgradeDbTo400(SQLiteDatabase db, int oldVersion) throws SQLException {
+		private void upgradeDbTo400(SQLiteDatabase db, int oldVersion)
+				throws SQLException {
 			String updSql = null;
-			if (!columnExists(db, GPSTRACK_TABLE_NAME,
-					GPSTRACK_COL_TOTALPAUSETIME_NAME)) {
-				updSql = "ALTER TABLE " + GPSTRACK_TABLE_NAME + " ADD "
-						+ GPSTRACK_COL_TOTALPAUSETIME_NAME
-						+ " NUMBER NULL ";
+			if (!columnExists(db, TABLE_NAME_GPSTRACK,
+					COL_NAME_GPSTRACK__TOTALPAUSETIME)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_GPSTRACK + " ADD "
+						+ COL_NAME_GPSTRACK__TOTALPAUSETIME + " NUMBER NULL ";
 				db.execSQL(updSql);
 
-				updSql = "UPDATE " + GPSTRACK_TABLE_NAME + " SET "
-						+ GPSTRACK_COL_TOTALPAUSETIME_NAME + " = 0";
+				updSql = "UPDATE " + TABLE_NAME_GPSTRACK + " SET "
+						+ COL_NAME_GPSTRACK__TOTALPAUSETIME + " = 0";
 
 				db.execSQL(updSql);
 			}
 		}
 
-		private void upgradeDbTo401(SQLiteDatabase db, int oldVersion) throws SQLException {
+		private void upgradeDbTo401(SQLiteDatabase db, int oldVersion)
+				throws SQLException {
 			String updSql = null;
 			createReimbursementCarRatesTable(db);
-			if (!columnExists(db, EXPENSETYPE_TABLE_NAME,
-					EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME)) {
-				updSql = "ALTER TABLE " + EXPENSETYPE_TABLE_NAME + " ADD "
-						+ EXPENSETYPE_COL_ISCALCULATEREIMBURSEMENT_NAME
+			if (!columnExists(db, TABLE_NAME_EXPENSETYPE,
+					COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSETYPE + " ADD "
+						+ COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT
 						+ " TEXT NOT NULL DEFAULT 'N'";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, MILEAGE_TABLE_NAME,
-					MILEAGE_COL_REIMBURSEMENT_RATE_NAME)) {
-				updSql = "ALTER TABLE " + MILEAGE_TABLE_NAME + " ADD "
-						+ MILEAGE_COL_REIMBURSEMENT_RATE_NAME
+			if (!columnExists(db, TABLE_NAME_MILEAGE,
+					COL_NAME_MILEAGE__REIMBURSEMENT_RATE)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_MILEAGE + " ADD "
+						+ COL_NAME_MILEAGE__REIMBURSEMENT_RATE
 						+ " NUMERIC NOT NULL DEFAULT 0";
 				db.execSQL(updSql);
 			}
-			if (!columnExists(db, MILEAGE_TABLE_NAME,
-					MILEAGE_COL_REIMBURSEMENT_VALUE_NAME)) {
-				updSql = "ALTER TABLE " + MILEAGE_TABLE_NAME + " ADD "
-						+ MILEAGE_COL_REIMBURSEMENT_VALUE_NAME
+			if (!columnExists(db, TABLE_NAME_MILEAGE,
+					COL_NAME_MILEAGE__REIMBURSEMENT_VALUE)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_MILEAGE + " ADD "
+						+ COL_NAME_MILEAGE__REIMBURSEMENT_VALUE
 						+ " NUMERIC NOT NULL DEFAULT 0";
 				db.execSQL(updSql);
 			}
@@ -2172,56 +2240,81 @@ public class DB {
 		private void createExpenseCategory(SQLiteDatabase db)
 				throws SQLException {
 			// expense category
-			db.execSQL(EXPENSECATEGORY_TABLE_CREATE_SQL);
-			String colPart = "INSERT INTO " + EXPENSECATEGORY_TABLE_NAME
-					+ " ( " + GEN_COL_NAME_NAME + ", " + GEN_COL_ISACTIVE_NAME
-					+ ", " + GEN_COL_USER_COMMENT_NAME + ", "
-					+ EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME + ", "
-					+ EXPENSECATEGORY_COL_ISFUEL_NAME + " " + ") ";
+			db.execSQL(CREATE_SQL_EXPENSECATEGORY_TABLE);
+			String colPart = "INSERT INTO " + TABLE_NAME_EXPENSECATEGORY
+					+ " ( " + COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_ISACTIVE
+					+ ", " + COL_NAME_GEN_USER_COMMENT + ", "
+					+ COL_NAME_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST + ", "
+					+ COL_NAME_EXPENSECATEGORY__ISFUEL + " " + ") ";
 
-			//fuel types
+			// fuel types
 			db.execSQL(colPart + "VALUES ( " + "'"
-					+ mResource.getString(R.string.DB_FuelType_Diesel1D) + "', "
-					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_Diesel1D)
+					+ "', " + "'Y', " + "'"
 					+ mResource.getString(R.string.DB_FuelType_Diesel1DComment)
 					+ "', " + "'N', 'Y' )");
 			db.execSQL(colPart + "VALUES ( " + "'"
-					+ mResource.getString(R.string.DB_FuelType_Diesel2D) + "', "
-					+ "'Y', " + "'"
+					+ mResource.getString(R.string.DB_FuelType_Diesel2D)
+					+ "', " + "'Y', " + "'"
 					+ mResource.getString(R.string.DB_FuelType_Diesel2DComment)
 					+ "', " + "'N', 'Y' )");
-			db.execSQL(colPart + "VALUES ( " + "'"
-					+ mResource.getString(R.string.DB_FuelType_DieselBio) + "', "
-					+ "'Y', " + "'"
-					+ mResource.getString(R.string.DB_FuelType_DieselBioComment)
+			db.execSQL(colPart
+					+ "VALUES ( "
+					+ "'"
+					+ mResource.getString(R.string.DB_FuelType_DieselBio)
+					+ "', "
+					+ "'Y', "
+					+ "'"
+					+ mResource
+							.getString(R.string.DB_FuelType_DieselBioComment)
 					+ "', " + "'N', 'Y' )");
-			db.execSQL(colPart + "VALUES ( " + "'"
-					+ mResource.getString(R.string.DB_FuelType_DieselSynthetic) + "', "
-					+ "'Y', " + "'"
-					+ mResource.getString(R.string.DB_FuelType_DieselSyntheticComment)
+			db.execSQL(colPart
+					+ "VALUES ( "
+					+ "'"
+					+ mResource.getString(R.string.DB_FuelType_DieselSynthetic)
+					+ "', "
+					+ "'Y', "
+					+ "'"
+					+ mResource
+							.getString(R.string.DB_FuelType_DieselSyntheticComment)
 					+ "', " + "'N', 'Y' )");
-			db.execSQL(colPart + "VALUES ( " + "'"
-					+ mResource.getString(R.string.DB_FuelType_GasolineRegular) + "', "
-					+ "'Y', " + "'"
-					+ mResource.getString(R.string.DB_FuelType_GasolineRegularComment)
+			db.execSQL(colPart
+					+ "VALUES ( "
+					+ "'"
+					+ mResource.getString(R.string.DB_FuelType_GasolineRegular)
+					+ "', "
+					+ "'Y', "
+					+ "'"
+					+ mResource
+							.getString(R.string.DB_FuelType_GasolineRegularComment)
 					+ "', " + "'N', 'Y' )");
-			db.execSQL(colPart + "VALUES ( " + "'"
-					+ mResource.getString(R.string.DB_FuelType_GasolineMidgrade) + "', "
-					+ "'Y', " + "'"
-					+ mResource.getString(R.string.DB_FuelType_GasolineMidgradeComment)
+			db.execSQL(colPart
+					+ "VALUES ( "
+					+ "'"
+					+ mResource
+							.getString(R.string.DB_FuelType_GasolineMidgrade)
+					+ "', "
+					+ "'Y', "
+					+ "'"
+					+ mResource
+							.getString(R.string.DB_FuelType_GasolineMidgradeComment)
 					+ "', " + "'N', 'Y' )");
-			db.execSQL(colPart + "VALUES ( " + "'"
-					+ mResource.getString(R.string.DB_FuelType_GasolinePremium) + "', "
-					+ "'Y', " + "'"
-					+ mResource.getString(R.string.DB_FuelType_GasolinePremiumComment)
+			db.execSQL(colPart
+					+ "VALUES ( "
+					+ "'"
+					+ mResource.getString(R.string.DB_FuelType_GasolinePremium)
+					+ "', "
+					+ "'Y', "
+					+ "'"
+					+ mResource
+							.getString(R.string.DB_FuelType_GasolinePremiumComment)
 					+ "', " + "'N', 'Y' )");
 			db.execSQL(colPart + "VALUES ( " + "'"
 					+ mResource.getString(R.string.DB_FuelType_LPG) + "', "
 					+ "'Y', " + "'"
 					+ mResource.getString(R.string.DB_FuelType_LPGComment)
 					+ "', " + "'N', 'Y' )");
-			
-			
+
 			db.execSQL(colPart + "VALUES ( " + "'"
 					+ mResource.getString(R.string.DB_ExpCat_ServiceName)
 					+ "', " + "'Y', " + "'"
@@ -2237,46 +2330,49 @@ public class DB {
 		private void createExpenses(SQLiteDatabase db, boolean isUpdate)
 				throws SQLException {
 			// expenses table
-			db.execSQL(EXPENSE_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_EXPENSE_TABLE);
 			if (!isUpdate) {
 				return;
 			}
 			// initialize refuel expenses
-			String sql = "INSERT INTO " + EXPENSE_TABLE_NAME + "( "
-					+ GEN_COL_NAME_NAME + ", " + GEN_COL_USER_COMMENT_NAME
-					+ ", " + GEN_COL_ISACTIVE_NAME + ", "
-					+ EXPENSE_COL_CAR_ID_NAME + ", "
-					+ EXPENSE_COL_DRIVER_ID_NAME + ", "
-					+ EXPENSE_COL_EXPENSECATEGORY_ID_NAME + ", "
-					+ EXPENSE_COL_EXPENSETYPE_ID_NAME + ", "
-					+ EXPENSE_COL_AMOUNT_NAME + ", "
-					+ EXPENSE_COL_CURRENCY_ID_NAME + ", "
-					+ EXPENSE_COL_DATE_NAME + ", "
-					+ EXPENSE_COL_DOCUMENTNO_NAME + ", "
-					+ EXPENSE_COL_INDEX_NAME + ", "
-					+ EXPENSE_COL_FROMTABLE_NAME + ", "
-					+ EXPENSE_COL_FROMRECORD_ID_NAME + " " + ") " + "SELECT "
-					+ GEN_COL_NAME_NAME + ", " + GEN_COL_USER_COMMENT_NAME
-					+ ", " + GEN_COL_ISACTIVE_NAME + ", "
-					+ REFUEL_COL_CAR_ID_NAME + ", " + REFUEL_COL_DRIVER_ID_NAME
-					+ ", " + REFUEL_COL_EXPENSECATEGORY_ID_NAME + ", "
-					+ REFUEL_COL_EXPENSETYPE_ID_NAME + ", "
-					+ REFUEL_COL_QUANTITY_NAME + " * " + REFUEL_COL_PRICE_NAME
-					+ ", " + REFUEL_COL_CURRENCY_ID_NAME + ", "
-					+ REFUEL_COL_DATE_NAME + ", " + REFUEL_COL_DOCUMENTNO_NAME
-					+ ", " + REFUEL_COL_INDEX_NAME + ", " + "'Refuel' " + ", "
-					+ GEN_COL_ROWID_NAME + " " + "FROM " + REFUEL_TABLE_NAME;
+			String sql = "INSERT INTO " + TABLE_NAME_EXPENSE + "( "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_USER_COMMENT
+					+ ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_EXPENSE__CAR_ID + ", "
+					+ COL_NAME_EXPENSE__DRIVER_ID + ", "
+					+ COL_NAME_EXPENSE__EXPENSECATEGORY_ID + ", "
+					+ COL_NAME_EXPENSE__EXPENSETYPE_ID + ", "
+					+ COL_NAME_EXPENSE__AMOUNT + ", "
+					+ COL_NAME_EXPENSE__CURRENCY_ID + ", "
+					+ COL_NAME_EXPENSE__DATE + ", "
+					+ COL_NAME_EXPENSE__DOCUMENTNO + ", "
+					+ COL_NAME_EXPENSE__INDEX + ", "
+					+ COL_NAME_EXPENSE__FROMTABLE + ", "
+					+ COL_NAME_EXPENSE__FROMRECORD_ID + " " + ") " + "SELECT "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_USER_COMMENT
+					+ ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_REFUEL__CAR_ID + ", "
+					+ COL_NAME_REFUEL__DRIVER_ID + ", "
+					+ COL_NAME_REFUEL__EXPENSECATEGORY_ID + ", "
+					+ COL_NAME_REFUEL__EXPENSETYPE_ID + ", "
+					+ COL_NAME_REFUEL__QUANTITY + " * "
+					+ COL_NAME_REFUEL__PRICE + ", "
+					+ COL_NAME_REFUEL__CURRENCY_ID + ", "
+					+ COL_NAME_REFUEL__DATE + ", "
+					+ COL_NAME_REFUEL__DOCUMENTNO + ", "
+					+ COL_NAME_REFUEL__INDEX + ", " + "'Refuel' " + ", "
+					+ COL_NAME_GEN_ROWID + " " + "FROM " + TABLE_NAME_REFUEL;
 			db.execSQL(sql);
 		}
 
 		private void createCurrencyTable(SQLiteDatabase db) throws SQLException {
 			// currency table name
-			db.execSQL(CURRENCY_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_CURRENCY_TABLE);
 			// insert some currencies
-			String colPart = "INSERT INTO " + CURRENCY_TABLE_NAME + " ( "
-					+ GEN_COL_NAME_NAME + ", " + GEN_COL_ISACTIVE_NAME + ", "
-					+ GEN_COL_USER_COMMENT_NAME + ", " + CURRENCY_COL_CODE_NAME
-					+ ") ";
+			String colPart = "INSERT INTO " + TABLE_NAME_CURRENCY + " ( "
+					+ COL_NAME_GEN_NAME + ", " + COL_NAME_GEN_ISACTIVE + ", "
+					+ COL_NAME_GEN_USER_COMMENT + ", "
+					+ COL_NAME_CURRENCY__CODE + ") ";
 			db.execSQL(colPart + "VALUES ( " + "'"
 					+ mResource.getString(R.string.DB_Curr_EUR) + "', "
 					+ "'Y', " + "'" + mResource.getString(R.string.DB_Curr_EUR)
@@ -2427,61 +2523,63 @@ public class DB {
 		private void createCurrencyRateTable(SQLiteDatabase db)
 				throws SQLException {
 			// create currency rate table
-			db.execSQL(CURRENCYRATE_TABLE_CREATE_SQL);
+			db.execSQL(CREATE_SQL_CURRENCYRATE_TABLE);
 		}
 	}
 
 	private void createIndexes(SQLiteDatabase db) {
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACK_TABLE_NAME
-				+ "_IX1 " + "ON " + GPSTRACK_TABLE_NAME + " ("
-				+ GPSTRACK_COL_CAR_ID_NAME + ")");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACK_TABLE_NAME
-				+ "_IX2 " + "ON " + GPSTRACK_TABLE_NAME + " ("
-				+ GPSTRACK_COL_DRIVER_ID_NAME + ")");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACK_TABLE_NAME
-				+ "_IX3 " + "ON " + GPSTRACK_TABLE_NAME + " ("
-				+ GPSTRACK_COL_MILEAGE_ID_NAME + " DESC )");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACK_TABLE_NAME
-				+ "_IX4 " + "ON " + GPSTRACK_TABLE_NAME + " ("
-				+ GPSTRACK_COL_DATE_NAME + " DESC )");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + GPSTRACKDETAIL_TABLE_NAME
-				+ "_IX1 " + "ON " + GPSTRACKDETAIL_TABLE_NAME + " ("
-				+ GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + ")");
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_GPSTRACK
+				+ "_IX1 " + "ON " + TABLE_NAME_GPSTRACK + " ("
+				+ COL_NAME_GPSTRACK__CAR_ID + ")");
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_GPSTRACK
+				+ "_IX2 " + "ON " + TABLE_NAME_GPSTRACK + " ("
+				+ COL_NAME_GPSTRACK__DRIVER_ID + ")");
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_GPSTRACK
+				+ "_IX3 " + "ON " + TABLE_NAME_GPSTRACK + " ("
+				+ COL_NAME_GPSTRACK__MILEAGE_ID + " DESC )");
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_GPSTRACK
+				+ "_IX4 " + "ON " + TABLE_NAME_GPSTRACK + " ("
+				+ COL_NAME_GPSTRACK__DATE + " DESC )");
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_GPSTRACKDETAIL
+				+ "_IX1 " + "ON " + TABLE_NAME_GPSTRACKDETAIL + " ("
+				+ COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID + ")");
 		// create indexes on mileage table
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX1 "
-				+ "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_CAR_ID_NAME
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_MILEAGE + "_IX1 "
+				+ "ON " + TABLE_NAME_MILEAGE + " (" + COL_NAME_MILEAGE__CAR_ID
 				+ ")");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX2 "
-				+ "ON " + MILEAGE_TABLE_NAME + " ("
-				+ MILEAGE_COL_DRIVER_ID_NAME + ")");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX3 "
-				+ "ON " + MILEAGE_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_MILEAGE + "_IX2 "
+				+ "ON " + TABLE_NAME_MILEAGE + " ("
+				+ COL_NAME_MILEAGE__DRIVER_ID + ")");
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_MILEAGE + "_IX3 "
+				+ "ON " + TABLE_NAME_MILEAGE + " (" + COL_NAME_MILEAGE__DATE
 				+ " DESC )");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX4 "
-				+ "ON " + MILEAGE_TABLE_NAME + " ("
-				+ MILEAGE_COL_INDEXSTOP_NAME + " DESC )");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + MILEAGE_TABLE_NAME + "_IX5 "
-				+ "ON " + MILEAGE_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_MILEAGE + "_IX4 "
+				+ "ON " + TABLE_NAME_MILEAGE + " ("
+				+ COL_NAME_MILEAGE__INDEXSTOP + " DESC )");
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_MILEAGE + "_IX5 "
+				+ "ON " + TABLE_NAME_MILEAGE + " (" + COL_NAME_GEN_USER_COMMENT
 				+ ")");
 
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX1 "
-				+ "ON " + REFUEL_TABLE_NAME + " (" + MILEAGE_COL_DATE_NAME
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_REFUEL + "_IX1 "
+				+ "ON " + TABLE_NAME_REFUEL + " (" + COL_NAME_MILEAGE__DATE
 				+ " DESC )");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX2 "
-				+ "ON " + REFUEL_TABLE_NAME + " (" + GEN_COL_USER_COMMENT_NAME
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_REFUEL + "_IX2 "
+				+ "ON " + TABLE_NAME_REFUEL + " (" + COL_NAME_GEN_USER_COMMENT
 				+ ")");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX3 "
-				+ "ON " + REFUEL_TABLE_NAME + " ("
-				+ REFUEL_COL_ISFULLREFUEL_NAME + ")");
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + REFUEL_TABLE_NAME + "_IX4 "
-				+ "ON " + REFUEL_TABLE_NAME + " (" + REFUEL_COL_INDEX_NAME
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_REFUEL + "_IX3 "
+				+ "ON " + TABLE_NAME_REFUEL + " ("
+				+ COL_NAME_REFUEL__ISFULLREFUEL + ")");
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_REFUEL + "_IX4 "
+				+ "ON " + TABLE_NAME_REFUEL + " (" + COL_NAME_REFUEL__INDEX
 				+ ")");
-		
-		db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS " + TASK_CAR_TABLE_NAME + "_UK1 "
-				+ "ON " + TASK_CAR_TABLE_NAME + " (" + TASK_CAR_COL_CAR_ID_NAME + ", " + TASK_CAR_COL_TASK_ID_NAME + ")");
-		
-		db.execSQL("CREATE INDEX IF NOT EXISTS " + TODO_TABLE_NAME + "_IX1 "
-				+ "ON " + TODO_TABLE_NAME + " (" + TODO_COL_TASK_ID_NAME + ")");
+
+		db.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS " + TABLE_NAME_TASK_CAR
+				+ "_UK1 " + "ON " + TABLE_NAME_TASK_CAR + " ("
+				+ COL_NAME_TASK_CAR__CAR_ID + ", " + COL_NAME_TASK_CAR__TASK_ID
+				+ ")");
+
+		db.execSQL("CREATE INDEX IF NOT EXISTS " + TABLE_NAME_TODO + "_IX1 "
+				+ "ON " + TABLE_NAME_TODO + " (" + COL_NAME_TODO__TASK_ID + ")");
 	}
 
 	public boolean backupDb(String bkName, String bkPrefix) {

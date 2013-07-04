@@ -66,13 +66,13 @@ public class BPartnerEditActivity extends EditActivityBase {
         init();
 
         if( strOperationType.equals( "E") ) {
-            mRowId = mBundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.BPARTNER_TABLE_NAME,
-                    MainDbAdapter.bpartnerTableColNames, mRowId);
+            mRowId = mBundleExtras.getLong(MainDbAdapter.COL_NAME_GEN_ROWID);
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_BPARTNER,
+                    MainDbAdapter.COL_LIST_BPARTNER_TABLE, mRowId);
 
-            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
+            String strName = c.getString( MainDbAdapter.COL_POS_GEN_NAME );
+            String strIsActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
+            String strUserComment = c.getString( MainDbAdapter.COL_POS_GEN_USER_COMMENT );
 
             if (strName != null) {
                 etName.setText(strName);
@@ -107,15 +107,15 @@ public class BPartnerEditActivity extends EditActivityBase {
     }
 
     private void fillData(){
-        String selection = MainDbAdapter.BPARTNER_LOCATION_COL_BPARTNER_ID_NAME + "= ? ";
+        String selection = MainDbAdapter.COL_NAME_BPARTNERLOCATION__BPARTNER_ID + "= ? ";
         String[] selectionArgs = {Long.toString(mRowId)};
         if(!showInactiveRecords)
             selection = selection +
-                                " AND " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = \'Y\'";
+                                " AND " + MainDbAdapter.COL_NAME_GEN_ISACTIVE + " = \'Y\'";
 
-        String columns[] = {MainDbAdapter.GEN_COL_ROWID_NAME, MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME};
-        cAddressCursor = mDbAdapter.query(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, columns, 
-                selection, selectionArgs, null, null, MainDbAdapter.GEN_COL_NAME_NAME);
+        String columns[] = {MainDbAdapter.COL_NAME_GEN_ROWID, MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_BPARTNERLOCATION__ADDRESS};
+        cAddressCursor = mDbAdapter.query(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, columns, 
+                selection, selectionArgs, null, null, MainDbAdapter.COL_NAME_GEN_NAME);
 //                fetchForTable(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME,
 //                    MainDbAdapter.genColName, selection, MainDbAdapter.GEN_COL_NAME_NAME);
         startManagingCursor(cAddressCursor);
@@ -125,7 +125,7 @@ public class BPartnerEditActivity extends EditActivityBase {
         int listLayout = R.layout.simple_list_item_2_s01;
         SimpleCursorAdapter listCursorAdapter =
                 new SimpleCursorAdapter(this, listLayout,
-                cAddressCursor, new String[]{MainDbAdapter.GEN_COL_NAME_NAME, MainDbAdapter.BPARTNER_LOCATION_COL_ADDRESS_NAME}, new int[]{android.R.id.text1, android.R.id.text2});
+                cAddressCursor, new String[]{MainDbAdapter.COL_NAME_GEN_NAME, MainDbAdapter.COL_NAME_BPARTNERLOCATION__ADDRESS}, new int[]{android.R.id.text1, android.R.id.text2});
         lvAddressList.setAdapter(listCursorAdapter);
     }
 
@@ -133,17 +133,17 @@ public class BPartnerEditActivity extends EditActivityBase {
     protected boolean saveData() {
 
     	ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE,
                 (ckIsActive.isChecked() ? "Y" : "N") );
-        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,
                 etUserComment.getText().toString() );
 
         int dbRetVal = -1;
         String strErrMsg = null;
         if (mRowId == -1) {
-        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.BPARTNER_TABLE_NAME, cvData)).intValue();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_BPARTNER, cvData)).intValue();
             if(dbRetVal > 0){
             	finish();
             	return true;
@@ -160,7 +160,7 @@ public class BPartnerEditActivity extends EditActivityBase {
                 return false;
             }
         } else {
-        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.BPARTNER_TABLE_NAME, mRowId, cvData);
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_BPARTNER, mRowId, cvData);
             if(dbRetVal != -1){
                 strErrMsg = mResource.getString(dbRetVal);
                 if(dbRetVal == R.string.ERR_000)
@@ -186,7 +186,7 @@ public class BPartnerEditActivity extends EditActivityBase {
             new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> av, View view, int i, long l) {
                     Intent intent = new Intent(BPartnerEditActivity.this, BPartnerLocationEditActivity.class);
-                    intent.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, l);
+                    intent.putExtra(MainDbAdapter.COL_NAME_GEN_ROWID, l);
                     intent.putExtra("BPartnerID", mRowId);
                     intent.putExtra("Operation", "E");
                     startActivityForResult(intent, StaticValues.ACTIVITY_EDIT_REQUEST_CODE);
@@ -263,7 +263,7 @@ public class BPartnerEditActivity extends EditActivityBase {
             case StaticValues.CONTEXT_MENU_EDIT_ID:
                 insertIntent = new Intent(this, BPartnerLocationEditActivity.class);
                 insertIntent.putExtra("BPartnerID", mRowId);
-                insertIntent.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, mLongClickId);
+                insertIntent.putExtra(MainDbAdapter.COL_NAME_GEN_ROWID, mLongClickId);
                 insertIntent.putExtra("Operation", "E");
                 startActivityForResult(insertIntent, StaticValues.ACTIVITY_NEW_REQUEST_CODE);
                 return true;
@@ -275,7 +275,7 @@ public class BPartnerEditActivity extends EditActivityBase {
                 builder.setPositiveButton(mResource.getString(R.string.GEN_YES),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                int deleteResult = mDbAdapter.deleteRecord(MainDbAdapter.BPARTNER_LOCATION_TABLE_NAME, mLongClickId);
+                                int deleteResult = mDbAdapter.deleteRecord(MainDbAdapter.TABLE_NAME_BPARTNERLOCATION, mLongClickId);
                                 if(deleteResult != -1) {
                                     madbErrorAlert.setMessage(mResource.getString(deleteResult));
                                     madError = madbErrorAlert.create();

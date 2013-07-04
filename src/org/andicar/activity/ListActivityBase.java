@@ -264,8 +264,8 @@ public class ListActivityBase extends ListActivity {
 	        menu.add(0, StaticValues.CONTEXT_MENU_INSERT_ID, 0, mRes.getString(R.string.MENU_AddNewCaption));
         }
         if(this instanceof ToDoListReportActivity){
-        	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, mLongClickId);
-        	if(c.getString(MainDbAdapter.TODO_COL_ISDONE_POS).equals("N"))
+        	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_LIST_TODO_TABLE, mLongClickId);
+        	if(c.getString(MainDbAdapter.COL_POS_TODO__ISDONE).equals("N"))
         		menu.add(0, StaticValues.CONTEXT_MENU_TODO_DONE_ID, 0, mRes.getString(R.string.ToDo_IsDoneCaption));
         	c.close();
         }
@@ -277,9 +277,9 @@ public class ListActivityBase extends ListActivity {
             menu.add( 0, StaticValues.CONTEXT_MENU_SHOWONMAP_ID, 0, mRes.getText( R.string.MENU_ShowOnMap ));
         }
         else if(this instanceof MileageListReportActivity){
-            String selection = MainDbAdapter.GPSTRACK_COL_MILEAGE_ID_NAME + "= ? ";
+            String selection = MainDbAdapter.COL_NAME_GPSTRACK__MILEAGE_ID + "= ? ";
             String[] selectionArgs = {Long.toString(mLongClickId)};
-            Cursor c2 = mDbAdapter.query(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.genColRowId,
+            Cursor c2 = mDbAdapter.query(MainDbAdapter.TABLE_NAME_GPSTRACK, MainDbAdapter.COL_LIST_GEN_ROWID,
                         selection, selectionArgs, null, null, null);
             if(c2.moveToFirst()){
             	mGpsTrackId =  c2.getLong(0);
@@ -309,16 +309,16 @@ public class ListActivityBase extends ListActivity {
     		return;
 
     	Intent i = new Intent(this, mEditClass);
-        if(mTableName.equals(MainDbAdapter.TODO_TABLE_NAME)) {
-        	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, id);
-        	long taskId = c.getLong(MainDbAdapter.TODO_COL_TASK_ID_POS);
+        if(mTableName.equals(MainDbAdapter.TABLE_NAME_TODO)) {
+        	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_LIST_TODO_TABLE, id);
+        	long taskId = c.getLong(MainDbAdapter.COL_POS_TODO__TASK_ID);
         	c.close();
-        	i.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, taskId);
+        	i.putExtra(MainDbAdapter.COL_NAME_GEN_ROWID, taskId);
         }
         else
-        	i.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, id);
+        	i.putExtra(MainDbAdapter.COL_NAME_GEN_ROWID, id);
         
-        if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)) {
+        if(mTableName.equals(MainDbAdapter.TABLE_NAME_CAR)) {
             i.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
         }
         
@@ -335,7 +335,7 @@ public class ListActivityBase extends ListActivity {
                 return true;
             case StaticValues.CONTEXT_MENU_DELETE_ID:
                 //check if the car is the selected car. If yes it cannot be deleted.
-                if(mTableName.equals(MainDbAdapter.CAR_TABLE_NAME)
+                if(mTableName.equals(MainDbAdapter.TABLE_NAME_CAR)
                         && mPreferences.getLong("CurrentCar_ID", -1) == mLongClickId) {
                     errorAlertBuilder.setMessage(mRes.getString(R.string.CarListActivity_CurrentCarDeleteMessage));
                     errorAlert = errorAlertBuilder.create();
@@ -377,13 +377,13 @@ public class ListActivityBase extends ListActivity {
                 return true;
             case StaticValues.CONTEXT_MENU_INSERT_ID:
                 Intent insertIntent = new Intent(this, mInsertClass);
-                if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
+                if(mTableName.equals(MainDbAdapter.TABLE_NAME_MILEAGE)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                 }
-                else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
+                else if(mTableName.equals(MainDbAdapter.TABLE_NAME_REFUEL)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                 }
-                else if(mTableName.equals(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME))
+                else if(mTableName.equals(MainDbAdapter.TABLE_NAME_EXPENSECATEGORY))
                     insertIntent.putExtra("IsFuel", mBundleExtras.getBoolean("IsFuel"));
                 
                 insertIntent.putExtra("Operation", "N");
@@ -402,7 +402,7 @@ public class ListActivityBase extends ListActivity {
             case StaticValues.CONTEXT_MENU_OPENGPSTRACK_ID:
             	if(mGpsTrackId > -1){
 	                Intent gpsTrackEditIntent = new Intent(this, GPSTrackEditActivity.class);
-	                gpsTrackEditIntent.putExtra(MainDbAdapter.GEN_COL_ROWID_NAME, mGpsTrackId);
+	                gpsTrackEditIntent.putExtra(MainDbAdapter.COL_NAME_GEN_ROWID, mGpsTrackId);
 	                startActivity(gpsTrackEditIntent);
             	}
                 return true;
@@ -427,10 +427,10 @@ public class ListActivityBase extends ListActivity {
         String tmpWhere = mWhereCondition;
         if(!showInactiveRecords) {
             if(tmpWhere != null && tmpWhere.length() > 0) {
-                tmpWhere = tmpWhere + MainDbAdapter.isActiveWithAndCondition;
+                tmpWhere = tmpWhere + MainDbAdapter.WHERE_CONDITION_ISACTIVE_ANDPREFIX;
             }
             else {
-                tmpWhere = MainDbAdapter.isActiveCondition;
+                tmpWhere = MainDbAdapter.WHERE_CONDITION_ISACTIVE;
             }
         }
         recordCursor = mDbAdapter.query(mTableName, mColumns, tmpWhere, null, null, null, mOrderByColumn);
@@ -455,16 +455,16 @@ public class ListActivityBase extends ListActivity {
         switch(item.getItemId()) {
             case StaticValues.OPTION_MENU_ADD_ID:
                 Intent insertIntent = new Intent(this, mInsertClass);
-                if(mTableName.equals(MainDbAdapter.MILEAGE_TABLE_NAME)) {
+                if(mTableName.equals(MainDbAdapter.TABLE_NAME_MILEAGE)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                 }
-                else if(mTableName.equals(MainDbAdapter.REFUEL_TABLE_NAME)) {
+                else if(mTableName.equals(MainDbAdapter.TABLE_NAME_REFUEL)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                 }
-                else if(mTableName.equals(MainDbAdapter.EXPENSE_TABLE_NAME)) {
+                else if(mTableName.equals(MainDbAdapter.TABLE_NAME_EXPENSE)) {
                     insertIntent.putExtra("CurrentCar_ID", mPreferences.getLong("CurrentCar_ID", -1));
                 }
-                else if(mTableName.equals(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME))
+                else if(mTableName.equals(MainDbAdapter.TABLE_NAME_EXPENSECATEGORY))
                     insertIntent.putExtra("IsFuel", mBundleExtras.getBoolean("IsFuel"));
 
                 insertIntent.putExtra("Operation", "N");

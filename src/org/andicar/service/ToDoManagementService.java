@@ -105,50 +105,50 @@ public class ToDoManagementService extends Service {
 
 //		taskSelection = MainDbAdapter.isActiveCondition + 
 //				" AND " + MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_NAME + "!='" + StaticValues.TASK_TIMEFREQUENCYTYPE_ONETIME + "'";
-		taskSelection = MainDbAdapter.isActiveCondition;
+		taskSelection = MainDbAdapter.WHERE_CONDITION_ISACTIVE;
 		taskSelectionArgs = null;
 		if(mTaskID > 0){
-			taskSelection = taskSelection + " AND " + MainDbAdapter.GEN_COL_ROWID_NAME + " = ?";
+			taskSelection = taskSelection + " AND " + MainDbAdapter.COL_NAME_GEN_ROWID + " = ?";
 			taskSelectionArgs = new String[1];
 			taskSelectionArgs[0] = Long.toString(mTaskID);
 		}
 
 		taskCarSelection = 
-			MainDbAdapter.isActiveCondition +
-				" AND " + MainDbAdapter.TASK_CAR_COL_TASK_ID_NAME + " =? ";
-		taskCursor = mDb.query(MainDbAdapter.TASK_TABLE_NAME, 
-				MainDbAdapter.taskTableColNames, taskSelection, taskSelectionArgs, null, null, null);
+			MainDbAdapter.WHERE_CONDITION_ISACTIVE +
+				" AND " + MainDbAdapter.COL_NAME_TASK_CAR__TASK_ID + " =? ";
+		taskCursor = mDb.query(MainDbAdapter.TABLE_NAME_TASK, 
+				MainDbAdapter.COL_LIST_TASK_TABLE, taskSelection, taskSelectionArgs, null, null, null);
 
 		int taskToDoCount = 3;
 		while(taskCursor.moveToNext()){
-			isRecurrentTask = taskCursor.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
-			todoSelection = MainDbAdapter.TODO_COL_TASK_ID_NAME + "=? AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + "='N'";
-			taskToDoCount = taskCursor.getInt(MainDbAdapter.TASK_COL_TODOCOUNT_POS);
+			isRecurrentTask = taskCursor.getString(MainDbAdapter.COL_POS_TASK__ISRECURRENT).equals("Y");
+			todoSelection = MainDbAdapter.COL_NAME_TODO__TASK_ID + "=? AND " + MainDbAdapter.COL_NAME_TODO__ISDONE + "='N'";
+			taskToDoCount = taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TODOCOUNT);
 			
 			if(mCarID > 0){
 				taskCarSelection = taskCarSelection + " AND " +
-						MainDbAdapter.TASK_CAR_COL_CAR_ID_NAME + " =? ";
+						MainDbAdapter.COL_NAME_TASK_CAR__CAR_ID + " =? ";
 				taskCarSelectArgs = new String[2];
-				taskCarSelectArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+				taskCarSelectArgs[0] = taskCursor.getString(MainDbAdapter.COL_POS_GEN_ROWID);
 				taskCarSelectArgs[1] = Long.toString(mCarID);
 			
 			}
 			else{
 				taskCarSelectArgs = new String[1];
-				taskCarSelectArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+				taskCarSelectArgs[0] = taskCursor.getString(MainDbAdapter.COL_POS_GEN_ROWID);
 			}
 			
-			taskCarCursor = mDb.query(MainDbAdapter.TASK_CAR_TABLE_NAME, MainDbAdapter.taskCarTableColNames, 
+			taskCarCursor = mDb.query(MainDbAdapter.TABLE_NAME_TASK_CAR, MainDbAdapter.COL_LIST_TASK_CAR_TABLE, 
 					taskCarSelection, taskCarSelectArgs, null, null, null);
 			
 			if(taskCarCursor.getCount() > 0){//cars are linked to task
-				todoSelection = todoSelection + " AND " + MainDbAdapter.TODO_COL_CAR_ID_NAME + "=?";
+				todoSelection = todoSelection + " AND " + MainDbAdapter.COL_NAME_TODO__CAR_ID + "=?";
 				todoSelectionArgs = new String[2];
-				todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
+				todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.COL_POS_GEN_ROWID);
 				while(taskCarCursor.moveToNext()){
 					if(isRecurrentTask){
-						todoSelectionArgs[1] = taskCarCursor.getString(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS); 
-						todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
+						todoSelectionArgs[1] = taskCarCursor.getString(MainDbAdapter.COL_POS_TASK_CAR__CAR_ID); 
+						todoCursor = mDb.query(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_LIST_TODO_TABLE, todoSelection, todoSelectionArgs, null, null, null);
 						todoCount = todoCursor.getCount();
 						todoCursor.close();
 						if(todoCount < taskToDoCount){
@@ -164,8 +164,8 @@ public class ToDoManagementService extends Service {
 			else{ //no cars are linked to task
 				if(isRecurrentTask){
 					todoSelectionArgs = new String[1];
-					todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.GEN_COL_ROWID_POS);
-					todoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, todoSelection, todoSelectionArgs, null, null, null);
+					todoSelectionArgs[0] = taskCursor.getString(MainDbAdapter.COL_POS_GEN_ROWID);
+					todoCursor = mDb.query(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_LIST_TODO_TABLE, todoSelection, todoSelectionArgs, null, null, null);
 					todoCount = todoCursor.getCount();
 					todoCursor.close();
 					if(todoCount < taskToDoCount){
@@ -192,33 +192,33 @@ public class ToDoManagementService extends Service {
 		String todoSelectCondition = null;
 		String[] todoSelectArgs = null;
 		String todoSelectOrderBy = null;
-		long taskId = taskCursor.getLong(MainDbAdapter.GEN_COL_ROWID_POS);
+		long taskId = taskCursor.getLong(MainDbAdapter.COL_POS_GEN_ROWID);
 		long carId = 0;
-		boolean isRecurrentTask = taskCursor.getString(MainDbAdapter.TASK_COL_ISRECURRENT_POS).equals("Y");
+		boolean isRecurrentTask = taskCursor.getString(MainDbAdapter.COL_POS_TASK__ISRECURRENT).equals("Y");
 		boolean isDiffStartingTime = false; 
-		if( taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS) == null ||
-				taskCursor.getString(MainDbAdapter.TASK_COL_ISDIFFERENTSTARTINGTIME_POS).equals("N")){
+		if( taskCursor.getString(MainDbAdapter.COL_POS_TASK__ISDIFFERENTSTARTINGTIME) == null ||
+				taskCursor.getString(MainDbAdapter.COL_POS_TASK__ISDIFFERENTSTARTINGTIME).equals("N")){
 			isDiffStartingTime = false;
 		}
 		else
 			isDiffStartingTime = true;
 
 		if(taskCarCursor != null)
-			carId = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS);
+			carId = taskCarCursor.getLong(MainDbAdapter.COL_POS_TASK_CAR__CAR_ID);
 		
-		String taskScheduledFor = taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS);
-		int frequencyType = taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS);
-		int timeFrequency = taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCY_POS);
-		int mileageFrequency = taskCursor.getInt(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
+		String taskScheduledFor = taskCursor.getString(MainDbAdapter.COL_POS_TASK__SCHEDULEDFOR);
+		int frequencyType = taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEFREQUENCYTYPE);
+		int timeFrequency = taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEFREQUENCY);
+		int mileageFrequency = taskCursor.getInt(MainDbAdapter.COL_POS_TASK__RUNMILEAGE);
 
-		nextToDoContent.put(MainDbAdapter.GEN_COL_NAME_NAME, taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS));
-		nextToDoContent.put(MainDbAdapter.GEN_COL_USER_COMMENT_NAME, taskCursor.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
-		nextToDoContent.put(MainDbAdapter.TODO_COL_TASK_ID_NAME, taskId);
+		nextToDoContent.put(MainDbAdapter.COL_NAME_GEN_NAME, taskCursor.getString(MainDbAdapter.COL_POS_GEN_NAME));
+		nextToDoContent.put(MainDbAdapter.COL_NAME_GEN_USER_COMMENT, taskCursor.getString(MainDbAdapter.COL_POS_GEN_USER_COMMENT));
+		nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__TASK_ID, taskId);
 
 		
 		//select the last todo
-		todoSelectCondition = MainDbAdapter.isActiveCondition + " AND " + MainDbAdapter.TODO_COL_ISDONE_NAME + " = 'N' " +
-				" AND " + MainDbAdapter.TODO_COL_TASK_ID_NAME + " = ? ";
+		todoSelectCondition = MainDbAdapter.WHERE_CONDITION_ISACTIVE + " AND " + MainDbAdapter.COL_NAME_TODO__ISDONE + " = 'N' " +
+				" AND " + MainDbAdapter.COL_NAME_TODO__TASK_ID + " = ? ";
 				
 		if(taskCarCursor == null){
 			todoSelectArgs = new String[1];
@@ -226,97 +226,97 @@ public class ToDoManagementService extends Service {
 		}
 		else{
 			todoSelectCondition = todoSelectCondition
-					+ " AND " + MainDbAdapter.TODO_COL_CAR_ID_NAME + " = ? ";
+					+ " AND " + MainDbAdapter.COL_NAME_TODO__CAR_ID + " = ? ";
 			todoSelectArgs = new String[2];
 			todoSelectArgs[0] = Long.toString(taskId);
 			todoSelectArgs[1] = Long.toString(carId);
 		}
 		
 		if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE))
-			todoSelectOrderBy = MainDbAdapter.TODO_COL_DUEMILEAGE_NAME + " DESC";
+			todoSelectOrderBy = MainDbAdapter.COL_NAME_TODO__DUEMILEAGE + " DESC";
 		else
-			todoSelectOrderBy = MainDbAdapter.TODO_COL_DUEDATE_NAME + " DESC";
+			todoSelectOrderBy = MainDbAdapter.COL_NAME_TODO__DUEDATE + " DESC";
 
-		lastTodoCursor = mDb.query(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.todoTableColNames, 
+		lastTodoCursor = mDb.query(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_LIST_TODO_TABLE, 
 				todoSelectCondition, todoSelectArgs, null, null, todoSelectOrderBy);
 		
 		if(lastTodoCursor.moveToNext()){ //an existing todo exist => this is the reference for the next todo
 			if(taskCarCursor != null)
-				nextToDoContent.put(MainDbAdapter.TODO_COL_CAR_ID_NAME, taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS));
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__CAR_ID, taskCarCursor.getLong(MainDbAdapter.COL_POS_TASK_CAR__CAR_ID));
 			else
-				nextToDoContent.put(MainDbAdapter.TODO_COL_CAR_ID_NAME, (Long)null);
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__CAR_ID, (Long)null);
 
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_TIME) ||
 					taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 				
 				if(taskCarCursor != null && isRecurrentTask && isDiffStartingTime)
-					nextToDoCalendar.setTimeInMillis(taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000);
+					nextToDoCalendar.setTimeInMillis(taskCarCursor.getLong(MainDbAdapter.COL_POS_TASK_CAR__FIRSTRUN_DATE) * 1000);
 				else{
-					if(taskCursor.getString(MainDbAdapter.TASK_COL_STARTINGTIME_POS) != null)
-						nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000);
+					if(taskCursor.getString(MainDbAdapter.COL_POS_TASK__STARTINGTIME) != null)
+						nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.COL_POS_TASK__STARTINGTIME) * 1000);
 					else
 						nextToDoCalendar.setTimeInMillis(System.currentTimeMillis());
 				}
 				boolean isLastDayOfMonth = (nextToDoCalendar.get(Calendar.YEAR) == 1970);
 				
 				//calculate the next todo date
-				nextToDoCalendar.setTimeInMillis(lastTodoCursor.getLong(MainDbAdapter.TODO_COL_DUEDATE_POS) * 1000);
+				nextToDoCalendar.setTimeInMillis(lastTodoCursor.getLong(MainDbAdapter.COL_POS_TODO__DUEDATE) * 1000);
 
 				//set the calendar for next todo based on task definition
 				setNextToDoCalendar(nextToDoCalendar, frequencyType, timeFrequency, isLastDayOfMonth);
-				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEDATE, nextToDoCalendar.getTimeInMillis() / 1000);
 				//set the alarm date
-				if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
-					nextToDoCalendar.add(Calendar.MINUTE, -1 * taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+				if(taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEFREQUENCYTYPE) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
+					nextToDoCalendar.add(Calendar.MINUTE, -1 * taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEREMINDERSTART));
 				}
 				else{
-					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1 * taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1 * taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEREMINDERSTART));
 				}
 				if(nextToDoCalendar.getTimeInMillis() < System.currentTimeMillis())
-					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, (System.currentTimeMillis() / 1000) + 60);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE, (System.currentTimeMillis() / 1000) + 60);
 				else
-					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE, nextToDoCalendar.getTimeInMillis() / 1000);
 			}
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) ||
 					taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
-				nextToDoMileage = lastTodoCursor.getLong(MainDbAdapter.TODO_COL_DUEMILAGE_POS) + mileageFrequency;
-				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, nextToDoMileage);
-				nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, 
-						nextToDoMileage - taskCursor.getLong(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_POS));
+				nextToDoMileage = lastTodoCursor.getLong(MainDbAdapter.COL_POS_TODO__DUEMILAGE) + mileageFrequency;
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEMILEAGE, nextToDoMileage);
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONMILEAGE, 
+						nextToDoMileage - taskCursor.getLong(MainDbAdapter.COL_POS_TASK__MILEAGEREMINDERSTART));
 			}
 			
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE)){
-				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, (Long)null);
-				nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, (Long)null);
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEDATE, (Long)null);
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE, (Long)null);
 			}
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_TIME)){
-				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, (Long)null);
-				nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, (Long)null); 
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEMILEAGE, (Long)null);
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONMILEAGE, (Long)null); 
 			}
 		}
 		else{ //this is the first todo
 			if(taskCarCursor != null)
-				nextToDoContent.put(MainDbAdapter.TODO_COL_CAR_ID_NAME, taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_CAR_ID_POS));
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__CAR_ID, taskCarCursor.getLong(MainDbAdapter.COL_POS_TASK_CAR__CAR_ID));
 			else
-				nextToDoContent.put(MainDbAdapter.TODO_COL_CAR_ID_NAME, (Long)null);
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__CAR_ID, (Long)null);
 			
 			if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE)){
 				if(taskCarCursor != null){
 					if(isRecurrentTask){
-						firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
+						firstRunMileage = taskCarCursor.getLong(MainDbAdapter.COL_POS_TASK_CAR__FIRSTRUN_MILEAGE);
 						carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
 						while(firstRunMileage < carCurrentIndex)
 							firstRunMileage = firstRunMileage + mileageFrequency;
 
 					}
 					else
-						firstRunMileage = taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
+						firstRunMileage = taskCursor.getLong(MainDbAdapter.COL_POS_TASK__RUNMILEAGE);
 
-					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, firstRunMileage);
-					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, 
-							firstRunMileage - taskCursor.getLong(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_POS));
-					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, (Long)null);
-					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, (Long)null);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEMILEAGE, firstRunMileage);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONMILEAGE, 
+							firstRunMileage - taskCursor.getLong(MainDbAdapter.COL_POS_TASK__MILEAGEREMINDERSTART));
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEDATE, (Long)null);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE, (Long)null);
 				}
 			}
 			else if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)
@@ -332,10 +332,10 @@ public class ToDoManagementService extends Service {
 					
 				
 				if(taskCarCursor != null && isRecurrentTask && isDiffStartingTime)
-					nextToDoCalendar.setTimeInMillis(taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_DATE_POS) * 1000);
+					nextToDoCalendar.setTimeInMillis(taskCarCursor.getLong(MainDbAdapter.COL_POS_TASK_CAR__FIRSTRUN_DATE) * 1000);
 				else{
-					if(taskCursor.getString(MainDbAdapter.TASK_COL_STARTINGTIME_POS) != null)
-						nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.TASK_COL_STARTINGTIME_POS) * 1000);
+					if(taskCursor.getString(MainDbAdapter.COL_POS_TASK__STARTINGTIME) != null)
+						nextToDoCalendar.setTimeInMillis(taskCursor.getLong(MainDbAdapter.COL_POS_TASK__STARTINGTIME) * 1000);
 					else
 						nextToDoCalendar.setTimeInMillis(System.currentTimeMillis());
 				}
@@ -361,46 +361,46 @@ public class ToDoManagementService extends Service {
 				}
 				while(nextToDoCalendar.getTimeInMillis() < System.currentTimeMillis()){
 					@SuppressWarnings("unused")
-					String test = taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS);
+					String test = taskCursor.getString(MainDbAdapter.COL_POS_GEN_NAME);
 					setNextToDoCalendar(nextToDoCalendar, frequencyType, timeFrequency, isLastDayOfMonth);
 				}
 				
-				nextToDoContent.put(MainDbAdapter.TODO_COL_DUEDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
+				nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEDATE, nextToDoCalendar.getTimeInMillis() / 1000);
 				//set the alarm date
-				if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
-					nextToDoCalendar.add(Calendar.MINUTE, -1 * taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+				if(taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEFREQUENCYTYPE) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
+					nextToDoCalendar.add(Calendar.MINUTE, -1 * taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEREMINDERSTART));
 				}
 				else{
-					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1 * taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEREMINDERSTART_POS));
+					nextToDoCalendar.add(Calendar.DAY_OF_YEAR, -1 * taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEREMINDERSTART));
 				}
 				if(nextToDoCalendar.getTimeInMillis() < System.currentTimeMillis())
-					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, (System.currentTimeMillis() / 1000) + 60);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE, (System.currentTimeMillis() / 1000) + 60);
 				else
-					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME, nextToDoCalendar.getTimeInMillis() / 1000);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE, nextToDoCalendar.getTimeInMillis() / 1000);
 
 				if(taskScheduledFor.equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 					if(taskCarCursor != null){
 						if(isRecurrentTask){
-							firstRunMileage = taskCarCursor.getLong(MainDbAdapter.TASK_CAR_COL_FIRSTRUN_MILEAGE_POS);
+							firstRunMileage = taskCarCursor.getLong(MainDbAdapter.COL_POS_TASK_CAR__FIRSTRUN_MILEAGE);
 							carCurrentIndex = mDb.getCarCurrentIndex(carId).longValue();
 							while(firstRunMileage <= carCurrentIndex)
 								firstRunMileage = firstRunMileage + mileageFrequency;
 						}
 						else
-							firstRunMileage = taskCursor.getLong(MainDbAdapter.TASK_COL_RUNMILEAGE_POS);
-						nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, firstRunMileage);
-						nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, 
-								firstRunMileage - taskCursor.getLong(MainDbAdapter.TASK_COL_MILEAGEREMINDERSTART_POS));
+							firstRunMileage = taskCursor.getLong(MainDbAdapter.COL_POS_TASK__RUNMILEAGE);
+						nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEMILEAGE, firstRunMileage);
+						nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONMILEAGE, 
+								firstRunMileage - taskCursor.getLong(MainDbAdapter.COL_POS_TASK__MILEAGEREMINDERSTART));
 					}
 				}
 				else{
-					nextToDoContent.put(MainDbAdapter.TODO_COL_DUEMILEAGE_NAME, (Long)null);
-					nextToDoContent.put(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_NAME, (Long)null);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__DUEMILEAGE, (Long)null);
+					nextToDoContent.put(MainDbAdapter.COL_NAME_TODO__NOTIFICATIONMILEAGE, (Long)null);
 				}
 			}
 			
 		}
-		mDb.createRecord(MainDbAdapter.TODO_TABLE_NAME, nextToDoContent);
+		mDb.createRecord(MainDbAdapter.TABLE_NAME_TODO, nextToDoContent);
 		lastTodoCursor.close();
 	}
 

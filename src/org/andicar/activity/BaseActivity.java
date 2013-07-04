@@ -147,15 +147,15 @@ public abstract class BaseActivity extends Activity {
             Spinner spnCurrentSpinner = (Spinner) pSpinner;
             Cursor dbcRecordCursor;
             if(addEmptyValue){
-                String selectSql = "SELECT -1 AS " + MainDbAdapter.GEN_COL_ROWID_NAME + ", " +
-                                    "null AS " + MainDbAdapter.GEN_COL_NAME_NAME +
+                String selectSql = "SELECT -1 AS " + MainDbAdapter.COL_NAME_GEN_ROWID + ", " +
+                                    "null AS " + MainDbAdapter.COL_NAME_GEN_NAME +
                                     " UNION " +
-                                    " SELECT " + MainDbAdapter.GEN_COL_ROWID_NAME + ", " +
-                                                MainDbAdapter.GEN_COL_NAME_NAME +
+                                    " SELECT " + MainDbAdapter.COL_NAME_GEN_ROWID + ", " +
+                                                MainDbAdapter.COL_NAME_GEN_NAME +
                                     " FROM " + tableName;
                 if(selection != null && selection.length() > 0)
                     selectSql = selectSql + " WHERE " + selection;
-                selectSql = selectSql + " ORDER BY " + MainDbAdapter.GEN_COL_NAME_NAME;
+                selectSql = selectSql + " ORDER BY " + MainDbAdapter.COL_NAME_GEN_NAME;
                 dbcRecordCursor = mDbAdapter.execSelectSql(selectSql, selectionArgs);
             }
             else{
@@ -174,7 +174,7 @@ public abstract class BaseActivity extends Activity {
             //set the spinner to this id
                 dbcRecordCursor.moveToFirst();
                 for( int i = 0; i < dbcRecordCursor.getCount(); i++ ) {
-                    if( dbcRecordCursor.getLong( MainDbAdapter.GEN_COL_ROWID_POS ) == selectedId) {
+                    if( dbcRecordCursor.getLong( MainDbAdapter.COL_POS_GEN_ROWID ) == selectedId) {
                         spnCurrentSpinner.setSelection( i );
                         break;
                     }

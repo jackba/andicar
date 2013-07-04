@@ -120,10 +120,10 @@ public class DataEntryTemplate{
 		
 		if(spnTemplate != null){
 			spnTemplate.setOnItemSelectedListener(spnTemplateOnItemSelectedListener);
-			mActivity.initSpinner(spnTemplate, AddOnDBAdapter.ADDON_DATA_TEMPLATE_TABLE_NAME, MainDbAdapter.genColName, 
-					new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
-					MainDbAdapter.isActiveCondition + " AND " + AddOnDBAdapter.ADDON_DATA_TEMPLATE_COL_CLASS_NAME + " = '" + mActivityClass +"'", 
-					null, MainDbAdapter.GEN_COL_NAME_NAME, -1, true);
+			mActivity.initSpinner(spnTemplate, AddOnDBAdapter.ADDON_DATA_TEMPLATE_TABLE_NAME, MainDbAdapter.COL_LIST_GEN_ROWID_NAME, 
+					new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, 
+					MainDbAdapter.WHERE_CONDITION_ISACTIVE + " AND " + AddOnDBAdapter.ADDON_DATA_TEMPLATE_COL_CLASS_NAME + " = '" + mActivityClass +"'", 
+					null, MainDbAdapter.COL_NAME_GEN_NAME, -1, true);
 			spnTemplate.setOnTouchListener(mActivity.spinnerOnTouchListener);
 		}
 	}
@@ -160,66 +160,66 @@ public class DataEntryTemplate{
 		if(mActivity instanceof ExpenseEditActivity){
 			ExpenseEditActivity tmpActivity = (ExpenseEditActivity)mActivity;
 			while(c.moveToNext()){
-				if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnCar")){
+				if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnCar")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setCarId(tmpID);
 					if(tmpActivity.findViewById(R.id.lCarZone) != null &&
 							tmpActivity.findViewById(R.id.lCarZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnCar), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnDriver")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnDriver")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setDriverId(tmpID);
 					if(tmpActivity.findViewById(R.id.lDriverZone) != null &&
 							tmpActivity.findViewById(R.id.lDriverZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnDriver), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnExpCategory")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnExpCategory")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setExpCategoryId(tmpID);
 					if(tmpActivity.findViewById(R.id.lExpCatZone) != null &&
 							tmpActivity.findViewById(R.id.lExpCatZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnExpCategory), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnExpType")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnExpType")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setExpTypeId(tmpID);
 					if(tmpActivity.findViewById(R.id.lExpTypeZone) != null &&
 							tmpActivity.findViewById(R.id.lExpTypeZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnExpType), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnCurrency")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnCurrency")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setCurrencyId(tmpID);
 					tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnCurrency), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnUOM")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnUOM")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setmUOMId(tmpID);
 					tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnUOM), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("etQuantity"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("etQuantity"))
 					((EditText)tmpActivity.findViewById(R.id.etQuantity)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("etUserInput"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("etUserInput"))
 					((EditText)tmpActivity.findViewById(R.id.etUserInput)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acBPartner"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acBPartner"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acBPartner)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acAdress"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acAdress"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acAdress)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acTag"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acTag"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acTag)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acUserComment"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acUserComment"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acUserComment)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("rbInsertModeAmount"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("rbInsertModeAmount"))
 					((RadioButton)tmpActivity.findViewById(R.id.rbInsertModeAmount)).setChecked(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("rbInsertModePrice"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("rbInsertModePrice"))
 					((RadioButton)tmpActivity.findViewById(R.id.rbInsertModePrice)).setChecked(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"));
 			}
@@ -227,63 +227,63 @@ public class DataEntryTemplate{
 		else if (mActivity instanceof RefuelEditActivity){
 			RefuelEditActivity tmpActivity = (RefuelEditActivity)mActivity;
 			while(c.moveToNext()){
-				if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnCar")){
+				if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnCar")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setCarId(tmpID);
 					if(tmpActivity.findViewById(R.id.lCarZone) != null &&
 							tmpActivity.findViewById(R.id.lCarZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnCar), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnDriver")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnDriver")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setDriverId(tmpID);
 					if(tmpActivity.findViewById(R.id.lDriverZone) != null &&
 							tmpActivity.findViewById(R.id.lDriverZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnDriver), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnExpCategory")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnExpCategory")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setExpCategoryId(tmpID);
 					if(tmpActivity.findViewById(R.id.lExpCatZone) != null &&
 							tmpActivity.findViewById(R.id.lExpCatZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnExpCategory), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnExpType")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnExpType")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setExpTypeId(tmpID);
 					if(tmpActivity.findViewById(R.id.lExpTypeZone) != null &&
 							tmpActivity.findViewById(R.id.lExpTypeZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnExpType), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnCurrency")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnCurrency")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setCurrencyId(tmpID);
 					tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnCurrency), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnUomVolume")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnUomVolume")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setUOMVolumeId(tmpID);
 					tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnUomVolume), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("etUserInput"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("etUserInput"))
 					((EditText)tmpActivity.findViewById(R.id.etUserInput)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acBPartner"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acBPartner"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acBPartner)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acAdress"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acAdress"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acAdress)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acTag"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acTag"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acTag)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acUserComment"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acUserComment"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acUserComment)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("rbInsertModeAmount"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("rbInsertModeAmount"))
 					((RadioButton)tmpActivity.findViewById(R.id.rbInsertModeAmount)).setChecked(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("rbInsertModePrice"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("rbInsertModePrice"))
 					((RadioButton)tmpActivity.findViewById(R.id.rbInsertModePrice)).setChecked(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"));
 			}
@@ -294,45 +294,45 @@ public class DataEntryTemplate{
 			boolean isMileageInsertMode = false;
 
 			while(c.moveToNext()){
-				if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnCar")){
+				if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnCar")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setCarId(tmpID);
 					if(tmpActivity.findViewById(R.id.lCarZone) != null &&
 							tmpActivity.findViewById(R.id.lCarZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnCar), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnDriver")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnDriver")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setDriverId(tmpID);
 					if(tmpActivity.findViewById(R.id.lDriverZone) != null &&
 							tmpActivity.findViewById(R.id.lDriverZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnDriver), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnExpType")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnExpType")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setExpTypeId(tmpID);
 					if(tmpActivity.findViewById(R.id.lExpTypeZone) != null &&
 							tmpActivity.findViewById(R.id.lExpTypeZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnExpType), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("rbInsertModeIndex")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("rbInsertModeIndex")){
 					((RadioButton)tmpActivity.findViewById(R.id.rbInsertModeIndex)).setChecked(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"));
 					if(c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"))
 						tmpActivity.setInsertMode(StaticValues.MILEAGE_INSERTMODE_INDEX);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("rbInsertModeMileage")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("rbInsertModeMileage")){
 					isMileageInsertMode = c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y");
 					((RadioButton)tmpActivity.findViewById(R.id.rbInsertModeMileage)).setChecked(isMileageInsertMode);
 					if(isMileageInsertMode)
 						tmpActivity.setInsertMode(StaticValues.MILEAGE_INSERTMODE_MILEAGE);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("etUserInput"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("etUserInput"))
 					etUserInputStr = c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acTag"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acTag"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acTag)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acUserComment"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acUserComment"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acUserComment)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
 			}
@@ -346,36 +346,36 @@ public class DataEntryTemplate{
 		else if (mActivity instanceof GPSTrackController){
 			GPSTrackController tmpActivity = (GPSTrackController)mActivity;
 			while(c.moveToNext()){
-				if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnCar")){
+				if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnCar")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setCarId(tmpID);
 					if(tmpActivity.findViewById(R.id.lCarZone) != null &&
 							tmpActivity.findViewById(R.id.lCarZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnCar), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("spnDriver")){
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("spnDriver")){
 					tmpID = c.getLong(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS);
 					tmpActivity.setDriverId(tmpID);
 					if(tmpActivity.findViewById(R.id.lDriverZone) != null &&
 							tmpActivity.findViewById(R.id.lDriverZone).getVisibility() == View.VISIBLE)
 						tmpActivity.setSpinnerSelectedID((Spinner)tmpActivity.findViewById(R.id.spnDriver), tmpID);
 				}
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("etName"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("etName"))
 					((EditText)tmpActivity.findViewById(R.id.etName)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acTag"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acTag"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acTag)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("acUserComment"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("acUserComment"))
 					((AutoCompleteTextView)tmpActivity.findViewById(R.id.acUserComment)).setText(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("ckIsCreateMileage"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("ckIsCreateMileage"))
 					((CheckBox)tmpActivity.findViewById(R.id.ckIsCreateMileage)).setChecked(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("ckIsUseKML"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("ckIsUseKML"))
 					((CheckBox)tmpActivity.findViewById(R.id.ckIsUseKML)).setChecked(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"));
-				else if(c.getString(MainDbAdapter.GEN_COL_NAME_POS).equals("ckIsUseGPX"))
+				else if(c.getString(MainDbAdapter.COL_POS_GEN_NAME).equals("ckIsUseGPX"))
 					((CheckBox)tmpActivity.findViewById(R.id.ckIsUseGPX)).setChecked(
 							c.getString(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_POS).equals("Y"));
 			}
@@ -406,14 +406,14 @@ public class DataEntryTemplate{
 		if(templateID < 0 && (name == null || name.length() == 0))
 			return -1;
 			
-		cv.put( MainDbAdapter.GEN_COL_NAME_NAME, name);
+		cv.put( MainDbAdapter.COL_NAME_GEN_NAME, name);
        
 		if(templateMetaData != null && templateMetaData.containsKey("Comment"))
-	        cv.put( MainDbAdapter.GEN_COL_NAME_NAME, templateMetaData.getAsString("Comment"));
+	        cv.put( MainDbAdapter.COL_NAME_GEN_NAME, templateMetaData.getAsString("Comment"));
 		else
-			cv.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME, "");
+			cv.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT, "");
 		
-        cv.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
+        cv.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE, "Y");
         cv.put( AddOnDBAdapter.ADDON_DATA_TEMPLATE_COL_CLASS_NAME, mActivityClass);
         if(templateID < 0){
         	retVal = mDbAdapter.createRecord(AddOnDBAdapter.ADDON_DATA_TEMPLATE_TABLE_NAME, cv);
@@ -433,8 +433,8 @@ public class DataEntryTemplate{
 		for (Iterator<String> iterator = keys.iterator(); iterator.hasNext();) {
 			String value = (String) iterator.next();
 			cv.clear();
-			cv.put( MainDbAdapter.GEN_COL_NAME_NAME, value);
-			cv.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, "Y");
+			cv.put( MainDbAdapter.COL_NAME_GEN_NAME, value);
+			cv.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE, "Y");
 			cv.put(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_TEMPLATE_ID_NAME, retVal);
 			cv.put(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_NAME, values.getString(value));
 			dbRetVal = mDbAdapter.createRecord(AddOnDBAdapter.ADDON_DATA_TEMPLATE_VALUES_TABLE_NAME, cv);
@@ -541,10 +541,10 @@ public class DataEntryTemplate{
 		
 		mActivity.setBackgroundSettingsActive(true);
 		
-		mActivity.initSpinner(spnTemplate, AddOnDBAdapter.ADDON_DATA_TEMPLATE_TABLE_NAME, MainDbAdapter.genColName, 
-				new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, 
-				MainDbAdapter.isActiveCondition + " AND " + AddOnDBAdapter.ADDON_DATA_TEMPLATE_COL_CLASS_NAME + " = '" + mActivityClass +"'", 
-				null, MainDbAdapter.GEN_COL_NAME_NAME, newID, true);
+		mActivity.initSpinner(spnTemplate, AddOnDBAdapter.ADDON_DATA_TEMPLATE_TABLE_NAME, MainDbAdapter.COL_LIST_GEN_ROWID_NAME, 
+				new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, 
+				MainDbAdapter.WHERE_CONDITION_ISACTIVE + " AND " + AddOnDBAdapter.ADDON_DATA_TEMPLATE_COL_CLASS_NAME + " = '" + mActivityClass +"'", 
+				null, MainDbAdapter.COL_NAME_GEN_NAME, newID, true);
 	}
 
 	public void setControlsEnabled(boolean isEnabled){

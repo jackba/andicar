@@ -45,8 +45,8 @@ public class DataEntryTemplateList extends ListActivityBase
         super.onCreate( icicle, null, null, null,
                 AddOnDBAdapter.ADDON_DATA_TEMPLATE_TABLE_NAME, AddOnDBAdapter.addonDataTemplateTableColNames, 
                 whereCondition, 
-                MainDbAdapter.GEN_COL_NAME_NAME,
+                MainDbAdapter.COL_NAME_GEN_NAME,
                 android.R.layout.simple_list_item_2, 
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, new int[]{android.R.id.text1}, null);
+                new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, new int[]{android.R.id.text1}, null);
     }
 }

@@ -200,7 +200,7 @@ public class Utils {
         MainDbAdapter mMainDbAdapter = new MainDbAdapter(ctx);
         String emailSubject = "AndiCar GPS Track";
 
-        b.putString(MainDbAdapter.sqlConcatTableColumn(MainDbAdapter.GPSTRACK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + "=", Long.toString(gpsTrackID));
+        b.putString(MainDbAdapter.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_GPSTRACK, MainDbAdapter.COL_NAME_GEN_ROWID) + "=", Long.toString(gpsTrackID));
         ReportDbAdapter reportDbAdapter = new ReportDbAdapter(ctx, "gpsTrackListViewSelect", b);
         Cursor c = reportDbAdapter.fetchReport(1);
         if(c.moveToFirst()){
@@ -218,7 +218,7 @@ public class Utils {
                         .replace("[#6]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_6) +
                                 Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.FIFTH_LINE_LIST_NAME)), false))
                         .replace("[#12]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_12) +
-                                Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.GPSTRACK_COL_TOTALPAUSETIME_NAME)), false))
+                                Utils.getTimeString(c.getLong(c.getColumnIndex(ReportDbAdapter.COL_NAME_GPSTRACK__TOTALPAUSETIME)), false))
                         .replace("[#7]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_7))
                         .replace("[#8]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_8))
                         .replace("[#9]", mRes.getString(R.string.GPSTrackReport_GPSTrackVar_9))
@@ -227,7 +227,7 @@ public class Utils {
                     + "\n" +
                     c.getString(c.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME));
             emailSubject = emailSubject + " - " +
-                    c.getString(c.getColumnIndex(ReportDbAdapter.GEN_COL_NAME_NAME));
+                    c.getString(c.getColumnIndex(ReportDbAdapter.COL_NAME_GEN_NAME));
             c.close();
             reportDbAdapter.close();
 
@@ -237,15 +237,15 @@ public class Utils {
         emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, emailSubject);
         
         //get the track files
-        String selection = MainDbAdapter.GPSTRACKDETAIL_COL_GPSTRACK_ID_NAME + "= ? ";
+        String selection = MainDbAdapter.COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID + "= ? ";
         String[] selectionArgs = {Long.toString(gpsTrackID)};
-        c = mMainDbAdapter.query(MainDbAdapter.GPSTRACKDETAIL_TABLE_NAME, MainDbAdapter.gpsTrackDetailTableColNames, 
-                selection, selectionArgs, null, null, MainDbAdapter.GPSTRACKDETAIL_COL_FILE_NAME);
+        c = mMainDbAdapter.query(MainDbAdapter.TABLE_NAME_GPSTRACKDETAIL, MainDbAdapter.COL_LIST_GPSTRACKDETAIL_TABLE, 
+                selection, selectionArgs, null, null, MainDbAdapter.COL_NAME_GPSTRACKDETAIL__FILE);
         
         Bundle trackFiles = new Bundle();
         String trackFile = "";
         while(c.moveToNext()){
-        	trackFile = c.getString(MainDbAdapter.GPSTRACKDETAIL_COL_FILE_POS);
+        	trackFile = c.getString(MainDbAdapter.COL_POS_GPSTRACKDETAIL__FILE);
         	trackFiles.putString(trackFile.replace(StaticValues.TRACK_FOLDER, ""), trackFile);
         }
         

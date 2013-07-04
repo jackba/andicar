@@ -116,12 +116,12 @@ public class GPSTrackController extends EditActivityBase {
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         acUserComment = ((AutoCompleteTextView) findViewById( R.id.acUserComment ));
         aaUserComment = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_GPSTRACK, null,
                 		mCarId, 30));
         acUserComment.setAdapter(aaUserComment);
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         tagAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.TAG_TABLE_NAME, null,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_TAG, null,
                 0, 0));
         acTag.setAdapter(tagAdapter);
         etName = (EditText) findViewById(R.id.etName);
@@ -150,12 +150,12 @@ public class GPSTrackController extends EditActivityBase {
         //init tag
         if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
             mTagId = mPreferences.getLong("LastTagId", 0);
-            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+            String selection = MainDbAdapter.COL_NAME_GEN_ROWID + "= ? ";
             String[] selectionArgs = {Long.toString(mTagId)};
-            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+            Cursor c = mDbAdapter.query(MainDbAdapter.TABLE_NAME_TAG, MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
                         selection, selectionArgs, null, null, null);
             if(c.moveToFirst())
-                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+                acTag.setText(c.getString(MainDbAdapter.COL_POS_GEN_NAME));
             c.close();
         }
 
@@ -207,39 +207,39 @@ public class GPSTrackController extends EditActivityBase {
     private void initControls(){
     	long checkID;
     	if(lCarZone != null){
-	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.CAR_TABLE_NAME, null); 
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.TABLE_NAME_CAR, null); 
 	    	if(checkID > -1){ //one single car
 	    		mCarId = checkID;
 	    		lCarZone.setVisibility(View.GONE);
 	    	}
 	    	else{
 	    		lCarZone.setVisibility(View.VISIBLE);
-	            initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-	                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+	            initSpinner(spnCar, MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+	                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME,
 	                    mCarId, false);
 	    	}
     	}
     	else{
-            initSpinner(spnCar, MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.genColName,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+            initSpinner(spnCar, MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                     mCarId, false);
     	}
     	if(lDriverZone != null){
-	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.DRIVER_TABLE_NAME, null); 
+	    	checkID = mDbAdapter.isSingleActiveRecord(MainDbAdapter.TABLE_NAME_DRIVER, null); 
 	    	if(checkID > -1){ //one single driver
 	    		mDriverId = checkID;
 	    		lDriverZone.setVisibility(View.GONE);
 	    	}
 	    	else{
 	    		lDriverZone.setVisibility(View.VISIBLE);
-	            initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
-	                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+	            initSpinner(spnDriver, MainDbAdapter.TABLE_NAME_DRIVER, MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+	                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME,
 	                    mDriverId, false);
 	    	}
     	}
     	else{
-            initSpinner(spnDriver, MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.genColName,
-                    new String[]{MainDbAdapter.GEN_COL_NAME_NAME}, MainDbAdapter.isActiveCondition, null, MainDbAdapter.GEN_COL_NAME_NAME,
+            initSpinner(spnDriver, MainDbAdapter.TABLE_NAME_DRIVER, MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
+                    new String[]{MainDbAdapter.COL_NAME_GEN_NAME}, MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                     mDriverId, false);
     	}
 
@@ -451,7 +451,7 @@ public class GPSTrackController extends EditActivityBase {
         aaUserComment = null;
         aaUserComment = new ArrayAdapter<String>(GPSTrackController.this,
                 android.R.layout.simple_list_item_1,
-                mDbAdapter.getAutoCompleteText(MainDbAdapter.GPSTRACK_TABLE_NAME, null,
+                mDbAdapter.getAutoCompleteText(MainDbAdapter.TABLE_NAME_GPSTRACK, null,
                 spnCar.getSelectedItemId(), 30));
         acUserComment.setAdapter(aaUserComment);
         fillStartIndex();
@@ -486,12 +486,12 @@ public class GPSTrackController extends EditActivityBase {
         
         if(mPreferences.getBoolean("RememberLastTag", false) && mPreferences.getLong("LastTagId", 0) > 0){
             mTagId = mPreferences.getLong("LastTagId", 0);
-            String selection = MainDbAdapter.GEN_COL_ROWID_NAME + "= ? ";
+            String selection = MainDbAdapter.COL_NAME_GEN_ROWID + "= ? ";
             String[] selectionArgs = {Long.toString(mTagId)};
-            Cursor c = mDbAdapter.query(MainDbAdapter.TAG_TABLE_NAME, MainDbAdapter.genColName,
+            Cursor c = mDbAdapter.query(MainDbAdapter.TABLE_NAME_TAG, MainDbAdapter.COL_LIST_GEN_ROWID_NAME,
                         selection, selectionArgs, null, null, null);
             if(c.moveToFirst())
-                acTag.setText(c.getString(MainDbAdapter.GEN_COL_NAME_POS));
+                acTag.setText(c.getString(MainDbAdapter.COL_POS_GEN_NAME));
             c.close();
         }
         else

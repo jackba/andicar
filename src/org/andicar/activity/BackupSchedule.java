@@ -89,15 +89,15 @@ public class BackupSchedule extends EditActivityBase {
         
         //just one record should be in this table!!!
 		if(c.moveToFirst()){
-			mRowId = c.getLong(DB.GEN_COL_ROWID_POS);
-	    	initTime = c.getLong(DB.GEN_COL_NAME_POS);
-	    	ckIsActive.setChecked(c.getString(DB.GEN_COL_ISACTIVE_POS).equals("Y"));
+			mRowId = c.getLong(DB.COL_POS_GEN_ROWID);
+	    	initTime = c.getLong(DB.COL_POS_GEN_NAME);
+	    	ckIsActive.setChecked(c.getString(DB.COL_POS_GEN_ISACTIVE).equals("Y"));
 	        if(c.getString(AddOnDBAdapter.ADDON_BK_SCHEDULE_COL_FREQUENCY_POS).equals("D")) //daily frequency
 	        	spnScheduleFrequency.setSelection(0);
 	    	else
 	        	spnScheduleFrequency.setSelection(1);
 	        activeDaysBitmap = c.getString(AddOnDBAdapter.ADDON_BK_SCHEDULE_COL_DAYS_POS);
-	        etKeepLastNo.setText(c.getString(DB.GEN_COL_USER_COMMENT_POS));
+	        etKeepLastNo.setText(c.getString(DB.COL_POS_GEN_USER_COMMENT));
 	        ckNotifyIfSuccess.setChecked(mPreferences.getBoolean("AddOn_AutoBackupService_NotifyIfSuccess", true));
 		}
 		else{
@@ -172,8 +172,8 @@ public class BackupSchedule extends EditActivityBase {
         }
 
         ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME, mcalDateTime.getTimeInMillis());
-        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME, (ckIsActive.isChecked() ? "Y" : "N") );
+        cvData.put( MainDbAdapter.COL_NAME_GEN_NAME, mcalDateTime.getTimeInMillis());
+        cvData.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE, (ckIsActive.isChecked() ? "Y" : "N") );
         
         activeDaysBitmap = "";
 		for (int i = 0; i < 7; i++) {
@@ -196,7 +196,7 @@ public class BackupSchedule extends EditActivityBase {
         else
             cvData.put( AddOnDBAdapter.ADDON_BK_SCHEDULE_COL_FREQUENCY_NAME, "W");
 
-        cvData.put( DB.GEN_COL_USER_COMMENT_NAME, etKeepLastNo.getText().toString());
+        cvData.put( DB.COL_NAME_GEN_USER_COMMENT, etKeepLastNo.getText().toString());
 
         int dbRetVal = -1;
         String strErrMsg = null;

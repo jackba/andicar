@@ -50,9 +50,9 @@ public class BTDeviceCarList extends ListActivityBase {
     	
         super.onCreate( icicle, null, BTDeviceCarLink.class, null,
                 AddOnDBAdapter.ADDON_BTDEVICE_CAR_TABLE_NAME, AddOnDBAdapter.addonBTDeviceCarTableColNames, 
-                null, MainDbAdapter.GEN_COL_NAME_NAME,
+                null, MainDbAdapter.COL_NAME_GEN_NAME,
                 twoLineListLayout,
-                new String[]{MainDbAdapter.GEN_COL_NAME_NAME, AddOnDBAdapter.ADDON_BTDEVICE_CAR_CAR_ID_NAME},
+                new String[]{MainDbAdapter.COL_NAME_GEN_NAME, AddOnDBAdapter.ADDON_BTDEVICE_CAR_CAR_ID_NAME},
                 new int[]{R.id.tvTwoLineListText1, R.id.tvTwoLineListText2}, new BTDeviceCarListDataBinder(mDbAdapter, getResources()));
     }
 

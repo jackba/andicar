@@ -82,17 +82,17 @@ public class ToDoNotificationService extends Service {
 				mToDoID = mBundleExtras.getLong("ToDoID");
 				mCarID = mBundleExtras.getLong("CarID");
 				String sql = " SELECT * "+
-							" FROM " + MainDbAdapter.TODO_TABLE_NAME +
+							" FROM " + MainDbAdapter.TABLE_NAME_TODO +
 							" WHERE " + 
-								DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_ISDONE_NAME) + "='N' " + 
-								" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.GEN_COL_ISACTIVE_NAME) + "='Y' ";
+								DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_TODO__ISDONE) + "='N' " + 
+								" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_GEN_ISACTIVE) + "='Y' ";
 				if(mToDoID > 0){
 					sql = sql + " AND " + 
-							DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + " = " + mToDoID;
+							DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_GEN_ROWID) + " = " + mToDoID;
 				}
 				if(mCarID > 0){
 					sql = sql + " AND " + 
-							DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_CAR_ID_NAME) + " = " + mCarID;
+							DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_TODO__CAR_ID) + " = " + mCarID;
 				}
 	
 				Cursor toDoCursor = mDb.execSelectSql(sql, null);
@@ -108,11 +108,11 @@ public class ToDoNotificationService extends Service {
 	}
 	
 	private void checkNotifToDo(Cursor toDoCursor){
-		long toDoID = toDoCursor.getLong(MainDbAdapter.GEN_COL_ROWID_POS);
+		long toDoID = toDoCursor.getLong(MainDbAdapter.COL_POS_GEN_ROWID);
 		String sql = " SELECT * " +
-						" FROM " + MainDbAdapter.TASK_TABLE_NAME +
-						" WHERE " + DB.sqlConcatTableColumn(MainDbAdapter.TASK_TABLE_NAME, MainDbAdapter.GEN_COL_ROWID_NAME) + " = ?";
-		String argVals[] = {Long.toString(toDoCursor.getLong(MainDbAdapter.TODO_COL_TASK_ID_POS))};
+						" FROM " + MainDbAdapter.TABLE_NAME_TASK +
+						" WHERE " + DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TASK, MainDbAdapter.COL_NAME_GEN_ROWID) + " = ?";
+		String argVals[] = {Long.toString(toDoCursor.getLong(MainDbAdapter.COL_POS_TODO__TASK_ID))};
 		Cursor taskCursor = mDb.query(sql, argVals);
 		boolean showNotif = false;
 		String contentText = "";
@@ -128,21 +128,21 @@ public class ToDoNotificationService extends Service {
 		
 		if(taskCursor != null && taskCursor.moveToNext()){
 			
-			if(toDoCursor.getString(MainDbAdapter.TODO_COL_CAR_ID_POS) != null){
-				Cursor carCursor = mDb.fetchRecord(MainDbAdapter.CAR_TABLE_NAME, MainDbAdapter.carTableColNames, toDoCursor.getLong(MainDbAdapter.TODO_COL_CAR_ID_POS));
+			if(toDoCursor.getString(MainDbAdapter.COL_POS_TODO__CAR_ID) != null){
+				Cursor carCursor = mDb.fetchRecord(MainDbAdapter.TABLE_NAME_CAR, MainDbAdapter.COL_LIST_CAR_TABLE, toDoCursor.getLong(MainDbAdapter.COL_POS_TODO__CAR_ID));
 				if(carCursor != null){
-					contentText = getString(R.string.GEN_CarLabel) + " " + carCursor.getString(MainDbAdapter.GEN_COL_NAME_POS);
-					carCurrentOdodmeter = carCursor.getLong(MainDbAdapter.CAR_COL_INDEXCURRENT_POS);
-					carUOMCode = mDb.getUOMCode(carCursor.getLong(MainDbAdapter.CAR_COL_UOMLENGTH_ID_POS));
+					contentText = getString(R.string.GEN_CarLabel) + " " + carCursor.getString(MainDbAdapter.COL_POS_GEN_NAME);
+					carCurrentOdodmeter = carCursor.getLong(MainDbAdapter.COL_POS_CAR__INDEXCURRENT);
+					carUOMCode = mDb.getUOMCode(carCursor.getLong(MainDbAdapter.COL_POS_CAR__UOMLENGTH_ID));
 					carCursor.close();
 				}
 			}
 			
-			if(taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_TIME) || 
-					taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
+			if(taskCursor.getString(MainDbAdapter.COL_POS_TASK__SCHEDULEDFOR).equals(StaticValues.TASK_SCHEDULED_FOR_TIME) || 
+					taskCursor.getString(MainDbAdapter.COL_POS_TASK__SCHEDULEDFOR).equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 				//check time
 //				todoDueDateSec = toDoCursor.getLong(MainDbAdapter.TODO_COL_DUEDATE_POS);
-				todoAlarmDate = toDoCursor.getLong(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_POS);
+				todoAlarmDate = toDoCursor.getLong(MainDbAdapter.COL_POS_TODO__NOTIFICATIONDATE);
 				currentDateSec = System.currentTimeMillis() / 1000;
 
 				if(todoAlarmDate  <= currentDateSec){
@@ -151,17 +151,17 @@ public class ToDoNotificationService extends Service {
 				}
 						
 			}
-			if(taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) || 
-						taskCursor.getString(MainDbAdapter.TASK_COL_SCHEDULEDFOR_POS).equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
+			if(taskCursor.getString(MainDbAdapter.COL_POS_TASK__SCHEDULEDFOR).equals(StaticValues.TASK_SCHEDULED_FOR_MILEAGE) || 
+						taskCursor.getString(MainDbAdapter.COL_POS_TASK__SCHEDULEDFOR).equals(StaticValues.TASK_SCHEDULED_FOR_BOTH)){
 //				todoDueMileage = toDoCursor.getLong(MainDbAdapter.TODO_COL_DUEMILAGE_POS);
-				todoAlarmMileage = toDoCursor.getLong(MainDbAdapter.TODO_COL_NOTIFICATIONMILEAGE_POS);
+				todoAlarmMileage = toDoCursor.getLong(MainDbAdapter.COL_POS_TODO__NOTIFICATIONMILEAGE);
 				if(todoAlarmMileage <= carCurrentOdodmeter){
 					showNotif = true;
 					notifTrigger = TRIGGERED_BY_MILEAGE;
 				}
 				
 			}
-			if(taskCursor.getInt(MainDbAdapter.TASK_COL_TIMEFREQUENCYTYPE_POS) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
+			if(taskCursor.getInt(MainDbAdapter.COL_POS_TASK__TIMEFREQUENCYTYPE) == StaticValues.TASK_TIMEFREQUENCYTYPE_DAILY){
 				minutesOrDays = getString(R.string.GEN_Min);
 			}
 			else{
@@ -172,7 +172,7 @@ public class ToDoNotificationService extends Service {
 			    mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 			    notification = new Notification(R.drawable.icon_sys_alarm, "AndiCar " + getString(R.string.GEN_ToDoAlert), System.currentTimeMillis());
 				CharSequence contentTitle = getString(R.string.GEN_TaskLabel) + " " + 
-						taskCursor.getString(MainDbAdapter.GEN_COL_NAME_POS);
+						taskCursor.getString(MainDbAdapter.COL_POS_GEN_NAME);
 				Intent i = new Intent(this, ToDoNotificationDialog.class);
 				i.putExtra("ToDoID", toDoID);
 				i.putExtra("NotifTitle", contentTitle);
@@ -205,18 +205,18 @@ public class ToDoNotificationService extends Service {
 	private void setNextRunForDate(){
 		String sql = 
 			" SELECT * " +
-			" FROM " + MainDbAdapter.TODO_TABLE_NAME + 
+			" FROM " + MainDbAdapter.TABLE_NAME_TODO + 
 			" WHERE " + 
-				DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.GEN_COL_ISACTIVE_NAME) + "='Y' " +
-				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_ISDONE_NAME) + "='N' " +
-				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME) + " >= ? " +
-				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME) + " IS NOT NULL " +
-			" ORDER BY " + DB.sqlConcatTableColumn(MainDbAdapter.TODO_TABLE_NAME, MainDbAdapter.TODO_COL_NOTIFICATIONDATE_NAME) + " ASC ";
+				DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_GEN_ISACTIVE) + "='Y' " +
+				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_TODO__ISDONE) + "='N' " +
+				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE) + " >= ? " +
+				" AND " + DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE) + " IS NOT NULL " +
+			" ORDER BY " + DB.sqlConcatTableColumn(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_NAME_TODO__NOTIFICATIONDATE) + " ASC ";
 		long currentSec = System.currentTimeMillis() / 1000;
 		String selArgs[] = {Long.toString(currentSec)};
 		Cursor c = mDb.execSelectSql(sql, selArgs);
 		if(c.moveToNext()){
-			long notifDate = c.getLong(MainDbAdapter.TODO_COL_NOTIFICATIONDATE_POS);
+			long notifDate = c.getLong(MainDbAdapter.COL_POS_TODO__NOTIFICATIONDATE);
 			Intent i = new Intent(this, ToDoNotificationService.class);
 			i.putExtra("setJustNextRun", false);
 			PendingIntent pIntent = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);

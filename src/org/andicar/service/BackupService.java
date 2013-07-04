@@ -131,10 +131,10 @@ public class BackupService extends Service {
 
 		String selectSql = "SELECT * " +
 							" FROM " + AddOnDBAdapter.ADDON_BK_SCHEDULE_TABLE_NAME +
-							" WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y'";
+							" WHERE " + MainDbAdapter.COL_NAME_GEN_ISACTIVE + " = 'Y'";
 		Cursor c = db.query(selectSql, null);
 		if(c.moveToNext()){ //active schedule exists
-			nextSchedule.setTimeInMillis(c.getLong(MainDbAdapter.GEN_COL_NAME_POS)); //set the time part
+			nextSchedule.setTimeInMillis(c.getLong(MainDbAdapter.COL_POS_GEN_NAME)); //set the time part
 			//set date to current day
 			nextSchedule.set(currentDate.get(Calendar.YEAR), 
 					currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH));
@@ -225,10 +225,10 @@ public class BackupService extends Service {
 		
 		String selectSql = "SELECT * " +
 							" FROM " + AddOnDBAdapter.ADDON_BK_SCHEDULE_TABLE_NAME +
-							" WHERE " + MainDbAdapter.GEN_COL_ISACTIVE_NAME + " = 'Y'";
+							" WHERE " + MainDbAdapter.COL_NAME_GEN_ISACTIVE + " = 'Y'";
 		Cursor c = db.query(selectSql, null);
 		if(c.moveToFirst()){
-			noOfBk = Integer.parseInt(c.getString(MainDbAdapter.GEN_COL_USER_COMMENT_POS));
+			noOfBk = Integer.parseInt(c.getString(MainDbAdapter.COL_POS_GEN_USER_COMMENT));
 		}
 		c.close();
 		if(noOfBk <= 0)

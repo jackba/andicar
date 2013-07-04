@@ -49,7 +49,7 @@ public class AddOnDBAdapter {
     public static final String ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_NAME = "Value";
     
     public static final String ADDON_BTDEVICE_CAR_COL_MACADDR_NAME = "DeviceMACAddress";
-    public static final String ADDON_BTDEVICE_CAR_CAR_ID_NAME = DB.CAR_TABLE_NAME + "_ID";
+    public static final String ADDON_BTDEVICE_CAR_CAR_ID_NAME = DB.TABLE_NAME_CAR + "_ID";
 
     public static final int ADDON_BK_SCHEDULE_COL_FREQUENCY_POS = 4;
     public static final int ADDON_BK_SCHEDULE_COL_DAYS_POS = 5;
@@ -66,37 +66,37 @@ public class AddOnDBAdapter {
     public static final int ADDON_BTDEVICE_CAR_COL_MACADDR_POS = 4;
     public static final int ADDON_BTDEVICE_CAR_CAR_ID_POS = 5;
 
-    public static final String[] addonBKScheduleTableColNames = {DB.GEN_COL_ROWID_NAME, DB.GEN_COL_NAME_NAME, DB.GEN_COL_ISACTIVE_NAME, DB.GEN_COL_USER_COMMENT_NAME,
+    public static final String[] addonBKScheduleTableColNames = {DB.COL_NAME_GEN_ROWID, DB.COL_NAME_GEN_NAME, DB.COL_NAME_GEN_ISACTIVE, DB.COL_NAME_GEN_USER_COMMENT,
         ADDON_BK_SCHEDULE_COL_FREQUENCY_NAME, ADDON_BK_SCHEDULE_COL_DAYS_NAME};
 
-    public static final String[] addonSecureBKSettingsTableColNames = {DB.GEN_COL_ROWID_NAME, DB.GEN_COL_NAME_NAME, DB.GEN_COL_ISACTIVE_NAME, DB.GEN_COL_USER_COMMENT_NAME,
+    public static final String[] addonSecureBKSettingsTableColNames = {DB.COL_NAME_GEN_ROWID, DB.COL_NAME_GEN_NAME, DB.COL_NAME_GEN_ISACTIVE, DB.COL_NAME_GEN_USER_COMMENT,
     	ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEGPS_NAME, ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEREPORTS_NAME, ADDON_SECURE_BK_SETTINGS_COL_ISSHOWNOTIF_NAME};
     
-    public static final String[] addonDataTemplateTableColNames = {DB.GEN_COL_ROWID_NAME, DB.GEN_COL_NAME_NAME, DB.GEN_COL_ISACTIVE_NAME, DB.GEN_COL_USER_COMMENT_NAME,
+    public static final String[] addonDataTemplateTableColNames = {DB.COL_NAME_GEN_ROWID, DB.COL_NAME_GEN_NAME, DB.COL_NAME_GEN_ISACTIVE, DB.COL_NAME_GEN_USER_COMMENT,
     	ADDON_DATA_TEMPLATE_COL_CLASS_NAME};
 
-    public static final String[] addonDataTemplateValuesTableColNames = {DB.GEN_COL_ROWID_NAME, DB.GEN_COL_NAME_NAME, DB.GEN_COL_ISACTIVE_NAME, DB.GEN_COL_USER_COMMENT_NAME,
+    public static final String[] addonDataTemplateValuesTableColNames = {DB.COL_NAME_GEN_ROWID, DB.COL_NAME_GEN_NAME, DB.COL_NAME_GEN_ISACTIVE, DB.COL_NAME_GEN_USER_COMMENT,
     	ADDON_DATA_TEMPLATE_VALUES_COL_TEMPLATE_ID_NAME, ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_NAME};
 
-    public static final String[] addonBTDeviceCarTableColNames = {DB.GEN_COL_ROWID_NAME, DB.GEN_COL_NAME_NAME, DB.GEN_COL_ISACTIVE_NAME, DB.GEN_COL_USER_COMMENT_NAME,
+    public static final String[] addonBTDeviceCarTableColNames = {DB.COL_NAME_GEN_ROWID, DB.COL_NAME_GEN_NAME, DB.COL_NAME_GEN_ISACTIVE, DB.COL_NAME_GEN_USER_COMMENT,
     	ADDON_BTDEVICE_CAR_COL_MACADDR_NAME, ADDON_BTDEVICE_CAR_CAR_ID_NAME};
 
     public static final String ADDON_TABLE_CREATE_SQL =
         "CREATE TABLE IF NOT EXISTS " + ADDON_TABLE_NAME
         + " ( "
-	        + DB.GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-	        + DB.GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-	        + DB.GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-	        + DB.GEN_COL_USER_COMMENT_NAME + " TEXT NULL "
+	        + DB.COL_NAME_GEN_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+	        + DB.COL_NAME_GEN_NAME + " TEXT NOT NULL, "
+	        + DB.COL_NAME_GEN_ISACTIVE + " TEXT DEFAULT 'Y', "
+	        + DB.COL_NAME_GEN_USER_COMMENT + " TEXT NULL "
         + ");";
 
     public static final String ADDON_BK_SCHEDULE_TABLE_CREATE_SQL  =
         "CREATE TABLE IF NOT EXISTS " + ADDON_BK_SCHEDULE_TABLE_NAME
         + " ( "
-	        + DB.GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-	        + DB.GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-	        + DB.GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-	        + DB.GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
+	        + DB.COL_NAME_GEN_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+	        + DB.COL_NAME_GEN_NAME + " TEXT NOT NULL, "
+	        + DB.COL_NAME_GEN_ISACTIVE + " TEXT DEFAULT 'Y', "
+	        + DB.COL_NAME_GEN_USER_COMMENT + " TEXT NULL, "
 	        + ADDON_BK_SCHEDULE_COL_FREQUENCY_NAME + " TEXT NOT NULL, "
 	        + ADDON_BK_SCHEDULE_COL_DAYS_NAME + " TEXT NOT NULL"
         + ");";
@@ -104,10 +104,10 @@ public class AddOnDBAdapter {
     public static final String ADDON_SECURE_BK_SETTINGS_TABLE_CREATE_SQL =
         "CREATE TABLE IF NOT EXISTS " + ADDON_SECURE_BK_SETTINGS_TABLE_NAME
         + " ( "
-	        + DB.GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-	        + DB.GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-	        + DB.GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-	        + DB.GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
+	        + DB.COL_NAME_GEN_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+	        + DB.COL_NAME_GEN_NAME + " TEXT NOT NULL, "
+	        + DB.COL_NAME_GEN_ISACTIVE + " TEXT DEFAULT 'Y', "
+	        + DB.COL_NAME_GEN_USER_COMMENT + " TEXT NULL, "
 	        + ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEGPS_NAME + " TEXT NOT NULL DEFAULT 'N', "
 	        + ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEREPORTS_NAME + " TEXT NOT NULL DEFAULT 'N', "
 	        + ADDON_SECURE_BK_SETTINGS_COL_ISSHOWNOTIF_NAME + " TEXT NOT NULL DEFAULT 'Y'"
@@ -116,20 +116,20 @@ public class AddOnDBAdapter {
     public static final String ADDON_DATA_TEMPLATE_TABLE_CREATE_SQL =
         "CREATE TABLE IF NOT EXISTS " + ADDON_DATA_TEMPLATE_TABLE_NAME
         + " ( "
-	        + DB.GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-	        + DB.GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-	        + DB.GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-	        + DB.GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
+	        + DB.COL_NAME_GEN_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+	        + DB.COL_NAME_GEN_NAME + " TEXT NOT NULL, "
+	        + DB.COL_NAME_GEN_ISACTIVE + " TEXT DEFAULT 'Y', "
+	        + DB.COL_NAME_GEN_USER_COMMENT + " TEXT NULL, "
 	        + ADDON_DATA_TEMPLATE_COL_CLASS_NAME + " TEXT NOT NULL"
         + ");";
 
     public static final String ADDON_DATA_TEMPLATE_VALUES_TABLE_CREATE_SQL =
         "CREATE TABLE IF NOT EXISTS " + ADDON_DATA_TEMPLATE_VALUES_TABLE_NAME
         + " ( "
-	        + DB.GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-	        + DB.GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-	        + DB.GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-	        + DB.GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
+	        + DB.COL_NAME_GEN_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+	        + DB.COL_NAME_GEN_NAME + " TEXT NOT NULL, "
+	        + DB.COL_NAME_GEN_ISACTIVE + " TEXT DEFAULT 'Y', "
+	        + DB.COL_NAME_GEN_USER_COMMENT + " TEXT NULL, "
 	        + ADDON_DATA_TEMPLATE_VALUES_COL_TEMPLATE_ID_NAME + " INTEGER NOT NULL, "
 	        + ADDON_DATA_TEMPLATE_VALUES_COL_VALUE_NAME + " TEXT NULL"
         + ");";
@@ -137,10 +137,10 @@ public class AddOnDBAdapter {
     public static final String ADDON_BTDEVICE_CAR_TABLE_CREATE_SQL =
         "CREATE TABLE IF NOT EXISTS " + ADDON_BTDEVICE_CAR_TABLE_NAME
         + " ( "
-	        + DB.GEN_COL_ROWID_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-	        + DB.GEN_COL_NAME_NAME + " TEXT NOT NULL, "
-	        + DB.GEN_COL_ISACTIVE_NAME + " TEXT DEFAULT 'Y', "
-	        + DB.GEN_COL_USER_COMMENT_NAME + " TEXT NULL, "
+	        + DB.COL_NAME_GEN_ROWID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+	        + DB.COL_NAME_GEN_NAME + " TEXT NOT NULL, "
+	        + DB.COL_NAME_GEN_ISACTIVE + " TEXT DEFAULT 'Y', "
+	        + DB.COL_NAME_GEN_USER_COMMENT + " TEXT NULL, "
 	        + ADDON_BTDEVICE_CAR_COL_MACADDR_NAME + " TEXT NOT NULL, "
 	        + ADDON_BTDEVICE_CAR_CAR_ID_NAME + " INTEGER NOT NULL "
         + ");";
@@ -155,9 +155,9 @@ public class AddOnDBAdapter {
         db.execSQL(ADDON_BK_SCHEDULE_TABLE_CREATE_SQL);
         String initSQL = 
         	"INSERT INTO " + ADDON_BK_SCHEDULE_TABLE_NAME + " ( " +
-	            DB.GEN_COL_NAME_NAME + ", " +
-	            DB.GEN_COL_ISACTIVE_NAME + ", " +
-		        DB.GEN_COL_USER_COMMENT_NAME + ", " +
+	            DB.COL_NAME_GEN_NAME + ", " +
+	            DB.COL_NAME_GEN_ISACTIVE + ", " +
+		        DB.COL_NAME_GEN_USER_COMMENT + ", " +
 		        ADDON_BK_SCHEDULE_COL_FREQUENCY_NAME + ", " +
 		        ADDON_BK_SCHEDULE_COL_DAYS_NAME + " ) " +
 	        "VALUES ( " +
@@ -174,9 +174,9 @@ public class AddOnDBAdapter {
         db.execSQL(ADDON_SECURE_BK_SETTINGS_TABLE_CREATE_SQL);
         String initSQL = 
         	"INSERT INTO " + ADDON_SECURE_BK_SETTINGS_TABLE_NAME + " ( " +
-	            DB.GEN_COL_NAME_NAME + ", " +
-	            DB.GEN_COL_ISACTIVE_NAME + ", " +
-		        DB.GEN_COL_USER_COMMENT_NAME + ", " +
+	            DB.COL_NAME_GEN_NAME + ", " +
+	            DB.COL_NAME_GEN_ISACTIVE + ", " +
+		        DB.COL_NAME_GEN_USER_COMMENT + ", " +
 		        ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEGPS_NAME + ", " +
 		        ADDON_SECURE_BK_SETTINGS_COL_ISINCLUDEREPORTS_NAME + ", " +
 		        ADDON_SECURE_BK_SETTINGS_COL_ISSHOWNOTIF_NAME +
@@ -219,7 +219,7 @@ public class AddOnDBAdapter {
     
     public static boolean recordDeleted(SQLiteDatabase db, String table, long rowID){
     	
-    	if(table.equals(MainDbAdapter.CAR_TABLE_NAME)){
+    	if(table.equals(MainDbAdapter.TABLE_NAME_CAR)){
     		db.delete(ADDON_BTDEVICE_CAR_TABLE_NAME, ADDON_BTDEVICE_CAR_CAR_ID_NAME + " = " + rowID, null);
     	}
     	return true;
@@ -227,8 +227,8 @@ public class AddOnDBAdapter {
 
     public static boolean recordUpdated(SQLiteDatabase db, String table, long rowID, ContentValues content){
     	
-    	if(table.equals(MainDbAdapter.CAR_TABLE_NAME)){
-    		if(content.getAsString(MainDbAdapter.GEN_COL_ISACTIVE_NAME).equals("N"))
+    	if(table.equals(MainDbAdapter.TABLE_NAME_CAR)){
+    		if(content.getAsString(MainDbAdapter.COL_NAME_GEN_ISACTIVE).equals("N"))
     			db.delete(ADDON_BTDEVICE_CAR_TABLE_NAME, ADDON_BTDEVICE_CAR_CAR_ID_NAME + " = " + rowID, null);    		
     	}
     	return true;

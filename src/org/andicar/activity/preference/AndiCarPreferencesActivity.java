@@ -108,7 +108,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //cars
         PreferenceScreen carPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.CAR_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_CAR);
         carPrefScreen.setIntent(listActivity);
         carPrefScreen.setTitle(mRes.getString(R.string.PREF_CarTitle));
         carPrefScreen.setSummary(mRes.getString(R.string.PREF_CarSummary));
@@ -116,7 +116,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //drivers
         PreferenceScreen driverPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.DRIVER_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_DRIVER);
         driverPrefScreen.setIntent(listActivity);
         driverPrefScreen.setTitle(mRes.getString(R.string.PREF_DriverTitle));
         driverPrefScreen.setSummary(mRes.getString(R.string.PREF_DriverSummary));
@@ -149,7 +149,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         PreferenceScreen taskPreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
 
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.TASK_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_TASK);
         taskPreferenceScreen.setIntent(listActivity);
         taskPreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTitle));
         taskPreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskSummary));
@@ -157,7 +157,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         
         PreferenceScreen taskTypePreferenceScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.TASKTYPE_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_TASKTYPE);
         taskTypePreferenceScreen.setIntent(listActivity);
         taskTypePreferenceScreen.setTitle(mRes.getString(R.string.PREF_TaskTypeTitle));
         taskTypePreferenceScreen.setSummary(mRes.getString(R.string.PREF_TaskTypeSummary));
@@ -170,7 +170,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //partners
         PreferenceScreen partnersPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.BPARTNER_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_BPARTNER);
         partnersPrefScreen.setIntent(listActivity);
         partnersPrefScreen.setTitle(mRes.getString(R.string.PREF_PartnerTitle));
         partnersPrefScreen.setSummary(mRes.getString(R.string.PREF_PartnerSummary));
@@ -183,7 +183,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //preference for uom
         PreferenceScreen uomPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.UOM_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_UOM);
         uomPrefScreen.setIntent(listActivity);
         uomPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMTitle));
         uomPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMSummary));
@@ -191,7 +191,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //uom conversions
         PreferenceScreen uomConversionPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.UOM_CONVERSION_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_UOMCONVERSION);
         uomConversionPrefScreen.setIntent(listActivity);
         uomConversionPrefScreen.setTitle(mRes.getString(R.string.PREF_UOMConversionTitle));
         uomConversionPrefScreen.setSummary(mRes.getString(R.string.PREF_UOMConversionSummary));
@@ -205,7 +205,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //expense categories
         PreferenceScreen expCategoryPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.EXPENSECATEGORY_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_EXPENSECATEGORY);
         listActivity.putExtra("IsFuel", false);
         expCategoryPrefScreen.setIntent(listActivity);
         expCategoryPrefScreen.setTitle(mRes.getString(R.string.PREF_ExpenseCategoryCategoryTitle));
@@ -215,7 +215,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //expense types
         PreferenceScreen expTypePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.EXPENSETYPE_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_EXPENSETYPE);
         expTypePrefScreen.setIntent(listActivity);
         expTypePrefScreen.setTitle(mRes.getString(R.string.PREF_ExpenseTypeCategoryTitle));
         expTypePrefScreen.setSummary(mRes.getString(R.string.PREF_ExpenseTypeCategorySummary));
@@ -224,7 +224,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //fuel categories
         PreferenceScreen fuelTypePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.EXPENSECATEGORY_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_EXPENSECATEGORY);
         listActivity.putExtra("IsFuel", true);
         fuelTypePrefScreen.setIntent(listActivity);
         fuelTypePrefScreen.setTitle(mRes.getString(R.string.PREF_FuelCategoryTitle));
@@ -234,7 +234,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //currencies
         PreferenceScreen currencyPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.CURRENCY_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_CURRENCY);
         currencyPrefScreen.setIntent(listActivity);
         currencyPrefScreen.setTitle(mRes.getString(R.string.PREF_CurrencyTitle));
         currencyPrefScreen.setSummary(mRes.getString(R.string.PREF_CurrencySummary));
@@ -242,7 +242,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //currency rates
         PreferenceScreen currencyRatePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.CURRENCYRATE_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_CURRENCYRATE);
         currencyRatePrefScreen.setIntent(listActivity);
         currencyRatePrefScreen.setTitle(mRes.getString(R.string.PREF_CurrencyRateCategoryTitle));
         currencyRatePrefScreen.setSummary(mRes.getString(R.string.PREF_CurrencyRateCategorySummary));
@@ -274,7 +274,7 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         //tags
         PreferenceScreen tagPrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);
-        listActivity.putExtra("ListSource", MainDbAdapter.TAG_TABLE_NAME);
+        listActivity.putExtra("ListSource", MainDbAdapter.TABLE_NAME_TAG);
         tagPrefScreen.setIntent(listActivity);
         tagPrefScreen.setTitle(mRes.getString(R.string.PREF_TagCategoryTitle));
         tagPrefScreen.setSummary(mRes.getString(R.string.PREF_TagCategorySummary));

@@ -51,13 +51,13 @@ public class DriverEditActivity extends EditActivityBase {
         String strOperationType = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if( strOperationType.equals( "E") ) {
-            mRowId = mBundleExtras.getLong(MainDbAdapter.GEN_COL_ROWID_NAME);
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.DRIVER_TABLE_NAME, MainDbAdapter.driverTableColNames, mRowId);
+            mRowId = mBundleExtras.getLong(MainDbAdapter.COL_NAME_GEN_ROWID);
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_DRIVER, MainDbAdapter.COL_LIST_DRIVER_TABLE, mRowId);
 
-            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String strLicenseNo = c.getString( MainDbAdapter.DRIVER_COL_LICENSE_NO_POS);
+            String strName = c.getString( MainDbAdapter.COL_POS_GEN_NAME );
+            String strIsActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
+            String strUserComment = c.getString( MainDbAdapter.COL_POS_GEN_USER_COMMENT );
+            String strLicenseNo = c.getString( MainDbAdapter.COL_POS_DRIVER__LICENSE_NO);
 
             if (strName != null) {
                 etName.setText(strName);
@@ -82,19 +82,19 @@ public class DriverEditActivity extends EditActivityBase {
     protected boolean saveData() {
 
     	ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE,
                 (ckIsActive.isChecked() ? "Y" : "N") );
-        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,
                 etUserComment.getText().toString() );
-        cvData.put( MainDbAdapter.DRIVER_COL_LICENSE_NO_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_DRIVER__LICENSE_NO,
                 etLicenseNo.getText().toString());
 
         int dbRetVal = -1;
         String strErrMsg = null;
         if (mRowId == -1) {
-        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.DRIVER_TABLE_NAME, cvData)).intValue();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_DRIVER, cvData)).intValue();
             if(dbRetVal > 0){
             	finish();
             	return true;
@@ -111,7 +111,7 @@ public class DriverEditActivity extends EditActivityBase {
                 return false;
             }
         } else {
-        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.DRIVER_TABLE_NAME, mRowId, cvData);
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_DRIVER, mRowId, cvData);
             if(dbRetVal != -1){
                 strErrMsg = mResource.getString(dbRetVal);
                 if(dbRetVal == R.string.ERR_000)

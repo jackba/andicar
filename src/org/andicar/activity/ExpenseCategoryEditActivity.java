@@ -55,14 +55,14 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
         ckIsExcludeFromMileageCost = (CheckBox) findViewById( R.id.ckIsExcludeFromMileageCost );
         
         if( strOperationType.equals( "E") ) {
-            mRowId = mBundleExtras.getLong( MainDbAdapter.GEN_COL_ROWID_NAME );
-            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME,
-                    MainDbAdapter.expenseCategoryTableColNames, mRowId);
-            String strName = c.getString( MainDbAdapter.GEN_COL_NAME_POS );
-            String strIsActive = c.getString( MainDbAdapter.GEN_COL_ISACTIVE_POS );
-            String strUserComment = c.getString( MainDbAdapter.GEN_COL_USER_COMMENT_POS );
-            String strExpCatIsExcludeFromMileageCostCheck = c.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_POS );
-            mIsFuel = c.getString( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_POS ).equals("Y");
+            mRowId = mBundleExtras.getLong( MainDbAdapter.COL_NAME_GEN_ROWID );
+            Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_EXPENSECATEGORY,
+                    MainDbAdapter.COL_LIST_EXPENSECATEGORY_TABLE, mRowId);
+            String strName = c.getString( MainDbAdapter.COL_POS_GEN_NAME );
+            String strIsActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
+            String strUserComment = c.getString( MainDbAdapter.COL_POS_GEN_USER_COMMENT );
+            String strExpCatIsExcludeFromMileageCostCheck = c.getString( MainDbAdapter.COL_POS_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST );
+            mIsFuel = c.getString( MainDbAdapter.COL_POS_EXPENSECATEGORY__ISFUEL ).equals("Y");
 
             if( strName != null ) {
                 etName.setText( strName );
@@ -93,20 +93,20 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
     protected boolean saveData() {
 
         ContentValues cvData = new ContentValues();
-        cvData.put( MainDbAdapter.GEN_COL_NAME_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        cvData.put( MainDbAdapter.GEN_COL_ISACTIVE_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE,
                 (ckIsActive.isChecked() ? "Y" : "N") );
-        cvData.put( MainDbAdapter.GEN_COL_USER_COMMENT_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,
                 etUserComment.getText().toString() );
-        cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISEXCLUDEFROMMILEAGECOST_NAME,
+        cvData.put( MainDbAdapter.COL_NAME_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST,
                 (ckIsExcludeFromMileageCost.isChecked() ? "Y" : "N") );
-        cvData.put( MainDbAdapter.EXPENSECATEGORY_COL_ISFUEL_NAME, mIsFuel ? "Y" : "N");
+        cvData.put( MainDbAdapter.COL_NAME_EXPENSECATEGORY__ISFUEL, mIsFuel ? "Y" : "N");
 
         int dbRetVal = -1;
         String strErrMsg = null;
         if( mRowId == -1 ) {
-        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, cvData)).intValue();
+        	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_EXPENSECATEGORY, cvData)).intValue();
             if(dbRetVal > 0){
             	finish();
             	return true;
@@ -124,7 +124,7 @@ public class ExpenseCategoryEditActivity extends EditActivityBase
             }
         }
         else {
-        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.EXPENSECATEGORY_TABLE_NAME, mRowId, cvData);
+        	dbRetVal = mDbAdapter.updateRecord(MainDbAdapter.TABLE_NAME_EXPENSECATEGORY, mRowId, cvData);
             if(dbRetVal != -1){
                 strErrMsg = mResource.getString(dbRetVal);
                 if(dbRetVal == R.string.ERR_000)
