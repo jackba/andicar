@@ -105,12 +105,9 @@ public class DB {
 	public static final String COL_NAME_CAR__REGISTRATIONNO = "RegistrationNo";
 	public static final String COL_NAME_CAR__INDEXSTART = "IndexStart";
 	public static final String COL_NAME_CAR__INDEXCURRENT = "IndexCurrent";
-	public static final String COL_NAME_CAR__UOMLENGTH_ID = TABLE_NAME_UOM
-			+ "_Length_ID";
-	public static final String COL_NAME_CAR__UOMVOLUME_ID = TABLE_NAME_UOM
-			+ "_Volume_ID";
-	public static final String COL_NAME_CAR__CURRENCY_ID = TABLE_NAME_CURRENCY
-			+ "_ID";
+	public static final String COL_NAME_CAR__UOMLENGTH_ID = TABLE_NAME_UOM + "_Length_ID";
+	public static final String COL_NAME_CAR__UOMVOLUME_ID = TABLE_NAME_UOM + "_Volume_ID";
+	public static final String COL_NAME_CAR__CURRENCY_ID = TABLE_NAME_CURRENCY + "_ID";
 
 	// uom specific column names
 	public static final String COL_NAME_UOM__CODE = "Code";
@@ -118,66 +115,46 @@ public class DB {
 																	// or L -
 																	// Length
 	// uom conversion specific column names
-	public static final String COL_NAME_UOMCONVERSION__UOMFROM_ID = TABLE_NAME_UOM
-			+ "_From_ID";
-	public static final String COL_NAME_UOMCONVERSION__UOMTO_ID = TABLE_NAME_UOM
-			+ "_To_ID";
+	public static final String COL_NAME_UOMCONVERSION__UOMFROM_ID = TABLE_NAME_UOM + "_From_ID";
+	public static final String COL_NAME_UOMCONVERSION__UOMTO_ID = TABLE_NAME_UOM + "_To_ID";
 	public static final String COL_NAME_UOMCONVERSION__RATE = "ConvertionRate";
 	// mileage specific columns
 	public static final String COL_NAME_MILEAGE__DATE = "Date";
-	public static final String COL_NAME_MILEAGE__CAR_ID = TABLE_NAME_CAR
-			+ "_ID";
-	public static final String COL_NAME_MILEAGE__DRIVER_ID = TABLE_NAME_DRIVER
-			+ "_ID";
+	public static final String COL_NAME_MILEAGE__CAR_ID = TABLE_NAME_CAR + "_ID";
+	public static final String COL_NAME_MILEAGE__DRIVER_ID = TABLE_NAME_DRIVER + "_ID";
 	public static final String COL_NAME_MILEAGE__INDEXSTART = "IndexStart";
 	public static final String COL_NAME_MILEAGE__INDEXSTOP = "IndexStop";
-	public static final String COL_NAME_MILEAGE__UOMLENGTH_ID = TABLE_NAME_UOM
-			+ "_Length_ID";
-	public static final String COL_NAME_MILEAGE__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE
-			+ "_ID";
+	public static final String COL_NAME_MILEAGE__UOMLENGTH_ID = TABLE_NAME_UOM + "_Length_ID";
+	public static final String COL_NAME_MILEAGE__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE + "_ID";
 	public static final String COL_NAME_MILEAGE__GPSTRACKLOG = "GPSTrackLog";
-	public static final String COL_NAME_MILEAGE__TAG_ID = TABLE_NAME_TAG
-			+ "_ID";
+	public static final String COL_NAME_MILEAGE__TAG_ID = TABLE_NAME_TAG + "_ID";
 	public static final String COL_NAME_MILEAGE__REIMBURSEMENT_RATE = "ReimbursementRate";
 	public static final String COL_NAME_MILEAGE__REIMBURSEMENT_VALUE = "ReimbursementValue";
 	// currencies
 	public static final String COL_NAME_CURRENCY__CODE = "Code";
 	// refuel
 	public static final String COL_NAME_REFUEL__CAR_ID = TABLE_NAME_CAR + "_ID";
-	public static final String COL_NAME_REFUEL__DRIVER_ID = TABLE_NAME_DRIVER
-			+ "_ID";
-	public static final String COL_NAME_REFUEL__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE
-			+ "_ID";
+	public static final String COL_NAME_REFUEL__DRIVER_ID = TABLE_NAME_DRIVER + "_ID";
+	public static final String COL_NAME_REFUEL__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE + "_ID";
 	public static final String COL_NAME_REFUEL__INDEX = "CarIndex";
 	public static final String COL_NAME_REFUEL__QUANTITY = "Quantity";
-	public static final String COL_NAME_REFUEL__UOMVOLUME_ID = TABLE_NAME_UOM
-			+ "_Volume_ID";
+	public static final String COL_NAME_REFUEL__UOMVOLUME_ID = TABLE_NAME_UOM + "_Volume_ID";
 	public static final String COL_NAME_REFUEL__PRICE = "Price";
-	public static final String COL_NAME_REFUEL__CURRENCY_ID = TABLE_NAME_CURRENCY
-			+ "_ID";
+	public static final String COL_NAME_REFUEL__CURRENCY_ID = TABLE_NAME_CURRENCY + "_ID";
 	public static final String COL_NAME_REFUEL__DATE = "Date";
 	public static final String COL_NAME_REFUEL__DOCUMENTNO = "DocumentNo";
-	public static final String COL_NAME_REFUEL__EXPENSECATEGORY_ID = TABLE_NAME_EXPENSECATEGORY
-			+ "_ID";
+	public static final String COL_NAME_REFUEL__EXPENSECATEGORY_ID = TABLE_NAME_EXPENSECATEGORY + "_ID";
 	public static final String COL_NAME_REFUEL__ISFULLREFUEL = "IsFullRefuel";
 	public static final String COL_NAME_REFUEL__QUANTITYENTERED = "QuantityEntered";
-	public static final String COL_NAME_REFUEL__UOMVOLUMEENTERED_ID = TABLE_NAME_UOM
-			+ "_EnteredVolume_ID";
+	public static final String COL_NAME_REFUEL__UOMVOLUMEENTERED_ID = TABLE_NAME_UOM + "_EnteredVolume_ID";
 	public static final String COL_NAME_REFUEL__PRICEENTERED = "PriceEntered";
-	public static final String COL_NAME_REFUEL__CURRENCYENTERED_ID = TABLE_NAME_CURRENCY
-			+ "_Entered_ID";
-	public static final String COL_NAME_REFUEL__CURRENCYRATE = "CurrencyRate"; // CurrencyEntered
-																				// ->
-																				// Car
-																				// Base
-																				// Currency
+	public static final String COL_NAME_REFUEL__CURRENCYENTERED_ID = TABLE_NAME_CURRENCY + "_Entered_ID";
+	public static final String COL_NAME_REFUEL__CURRENCYRATE = "CurrencyRate"; // CurrencyEntered -> Car Base Currency
 	public static final String COL_NAME_REFUEL__UOMVOLCONVERSIONRATE = "UOMVolumeConversionRate";
 	public static final String COL_NAME_REFUEL__AMOUNT = "Amount";
 	public static final String COL_NAME_REFUEL__AMOUNTENTERED = "AmountEntered";
-	public static final String COL_NAME_REFUEL__BPARTNER_ID = TABLE_NAME_BPARTNER
-			+ "_ID";
-	public static final String COL_NAME_REFUEL__BPARTNER_LOCATION_ID = TABLE_NAME_BPARTNERLOCATION
-			+ "_ID";
+	public static final String COL_NAME_REFUEL__BPARTNER_ID = TABLE_NAME_BPARTNER + "_ID";
+	public static final String COL_NAME_REFUEL__BPARTNER_LOCATION_ID = TABLE_NAME_BPARTNERLOCATION + "_ID";
 	public static final String COL_NAME_REFUEL__TAG_ID = TABLE_NAME_TAG + "_ID";
 
 	// expense type
@@ -187,87 +164,61 @@ public class DB {
 	public static final String COL_NAME_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST = "IsExcludefromMileagecost";
 	public static final String COL_NAME_EXPENSECATEGORY__ISFUEL = "IsFuel";
 	// car expenses
-	public static final String COL_NAME_EXPENSE__CAR_ID = TABLE_NAME_CAR
-			+ "_ID";
-	public static final String COL_NAME_EXPENSE__DRIVER_ID = TABLE_NAME_DRIVER
-			+ "_ID";
-	public static final String COL_NAME_EXPENSE__EXPENSECATEGORY_ID = TABLE_NAME_EXPENSECATEGORY
-			+ "_ID";
-	public static final String COL_NAME_EXPENSE__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE
-			+ "_ID";
+	public static final String COL_NAME_EXPENSE__CAR_ID = TABLE_NAME_CAR + "_ID";
+	public static final String COL_NAME_EXPENSE__DRIVER_ID = TABLE_NAME_DRIVER + "_ID";
+	public static final String COL_NAME_EXPENSE__EXPENSECATEGORY_ID = TABLE_NAME_EXPENSECATEGORY + "_ID";
+	public static final String COL_NAME_EXPENSE__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE + "_ID";
 	public static final String COL_NAME_EXPENSE__AMOUNT = "Amount";
-	public static final String COL_NAME_EXPENSE__CURRENCY_ID = TABLE_NAME_CURRENCY
-			+ "_ID";
+	public static final String COL_NAME_EXPENSE__CURRENCY_ID = TABLE_NAME_CURRENCY + "_ID";
 	public static final String COL_NAME_EXPENSE__DATE = "Date";
 	public static final String COL_NAME_EXPENSE__DOCUMENTNO = "DocumentNo";
 	public static final String COL_NAME_EXPENSE__INDEX = "CarIndex";
 	public static final String COL_NAME_EXPENSE__FROMTABLE = "FromTable";
 	public static final String COL_NAME_EXPENSE__FROMRECORD_ID = "FromRecordId";
 	public static final String COL_NAME_EXPENSE__AMOUNTENTERED = "AmountEntered";
-	public static final String COL_NAME_EXPENSE__CURRENCYENTERED_ID = TABLE_NAME_CURRENCY
-			+ "_Entered_ID";
-	public static final String COL_NAME_EXPENSE__CURRENCYRATE = "CurrencyRate"; // CurrencyEntered
-																				// ->
-																				// Car
-																				// Base
-																				// Currency
+	public static final String COL_NAME_EXPENSE__CURRENCYENTERED_ID = TABLE_NAME_CURRENCY + "_Entered_ID";
+	public static final String COL_NAME_EXPENSE__CURRENCYRATE = "CurrencyRate"; 
 	public static final String COL_NAME_EXPENSE__QUANTITY = "Quantity";
 	public static final String COL_NAME_EXPENSE__PRICE = "Price";
 	public static final String COL_NAME_EXPENSE__PRICEENTERED = "PriceEntered";
-	public static final String COL_NAME_EXPENSE__UOM_ID = TABLE_NAME_UOM
-			+ "_ID";
-	public static final String COL_NAME_EXPENSE__BPARTNER_ID = TABLE_NAME_BPARTNER
-			+ "_ID";
-	public static final String COL_NAME_EXPENSE__BPARTNER_LOCATION_ID = TABLE_NAME_BPARTNERLOCATION
-			+ "_ID";
-	public static final String COL_NAME_EXPENSE__TAG_ID = TABLE_NAME_TAG
-			+ "_ID";
+	public static final String COL_NAME_EXPENSE__UOM_ID = TABLE_NAME_UOM + "_ID";
+	public static final String COL_NAME_EXPENSE__BPARTNER_ID = TABLE_NAME_BPARTNER + "_ID";
+	public static final String COL_NAME_EXPENSE__BPARTNER_LOCATION_ID = TABLE_NAME_BPARTNERLOCATION + "_ID";
+	public static final String COL_NAME_EXPENSE__TAG_ID = TABLE_NAME_TAG + "_ID";
 
 	// currency rate
-	public static final String COL_NAME_CURRENCYRATE__FROMCURRENCY_ID = TABLE_NAME_CURRENCYRATE
-			+ "_From_ID";
-	public static final String COL_NAME_CURRENCYRATE__TOCURRENCY_ID = TABLE_NAME_CURRENCYRATE
-			+ "_To_ID";
+	public static final String COL_NAME_CURRENCYRATE__FROMCURRENCY_ID = TABLE_NAME_CURRENCYRATE + "_From_ID";
+	public static final String COL_NAME_CURRENCYRATE__TOCURRENCY_ID = TABLE_NAME_CURRENCYRATE + "_To_ID";
 	public static final String COL_NAME_CURRENCYRATE__RATE = "Rate";
 	public static final String COL_NAME_CURRENCYRATE__INVERSERATE = "InverseRate";
 
 	// gps track
-	public static final String COL_NAME_GPSTRACK__CAR_ID = TABLE_NAME_CAR
-			+ "_ID";
-	public static final String COL_NAME_GPSTRACK__DRIVER_ID = TABLE_NAME_DRIVER
-			+ "_ID";
-	public static final String COL_NAME_GPSTRACK__MILEAGE_ID = TABLE_NAME_MILEAGE
-			+ "_ID";
+	public static final String COL_NAME_GPSTRACK__CAR_ID = TABLE_NAME_CAR + "_ID";
+	public static final String COL_NAME_GPSTRACK__DRIVER_ID = TABLE_NAME_DRIVER + "_ID";
+	public static final String COL_NAME_GPSTRACK__MILEAGE_ID = TABLE_NAME_MILEAGE + "_ID";
 	public static final String COL_NAME_GPSTRACK__DATE = "Date";
 	public static final String COL_NAME_GPSTRACK__MINACCURACY = "MinAccuracy";
 	public static final String COL_NAME_GPSTRACK__AVGACCURACY = "AvgAccuracy";
 	public static final String COL_NAME_GPSTRACK__MAXACCURACY = "MaxAccuracy";
 	public static final String COL_NAME_GPSTRACK__MINALTITUDE = "MinAltitude";
 	public static final String COL_NAME_GPSTRACK__MAXALTITUDE = "MaxAltitude";
-	public static final String COL_NAME_GPSTRACK__TOTALTIME = "TotalTime"; // in
-																			// seconds
-	public static final String COL_NAME_GPSTRACK__MOVINGTIME = "MovingTime"; // in
-																				// seconds
+	public static final String COL_NAME_GPSTRACK__TOTALTIME = "TotalTime"; // in seconds
+	public static final String COL_NAME_GPSTRACK__MOVINGTIME = "MovingTime"; // in seconds
 	public static final String COL_NAME_GPSTRACK__DISTANCE = "Distance";
 	public static final String COL_NAME_GPSTRACK__MAXSPEED = "MaxSpeed";
 	public static final String COL_NAME_GPSTRACK__AVGSPEED = "AvgSpeed";
 	public static final String COL_NAME_GPSTRACK__AVGMOVINGSPEED = "AvgMovingSpeed";
 	public static final String COL_NAME_GPSTRACK__TOTALTRACKPOINTS = "TotalTrackPoints";
 	public static final String COL_NAME_GPSTRACK__INVALIDTRACKPOINTS = "InvalidTrackPoints";
-	public static final String COL_NAME_GPSTRACK__TAG_ID = TABLE_NAME_TAG
-			+ "_ID";
-	public static final String COL_NAME_GPSTRACK__TOTALPAUSETIME = "TotalPauseTime"; // in
-																						// seconds
+	public static final String COL_NAME_GPSTRACK__TAG_ID = TABLE_NAME_TAG + "_ID";
+	public static final String COL_NAME_GPSTRACK__TOTALPAUSETIME = "TotalPauseTime"; // in seconds
 
 	// gps track detail
-	public static final String COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID = TABLE_NAME_GPSTRACK
-			+ "_ID";
+	public static final String COL_NAME_GPSTRACKDETAIL__GPSTRACK_ID = TABLE_NAME_GPSTRACK + "_ID";
 	public static final String COL_NAME_GPSTRACKDETAIL__FILE = "File";
-	public static final String COL_NAME_GPSTRACKDETAIL__FILEFORMAT = "Format"; // see
-																				// StaticValues.gpsTrackFormat...
+	public static final String COL_NAME_GPSTRACKDETAIL__FILEFORMAT = "Format"; // see StaticValues.gpsTrackFormat...
 	// business partner location
-	public static final String COL_NAME_BPARTNERLOCATION__BPARTNER_ID = TABLE_NAME_BPARTNER
-			+ "_ID";
+	public static final String COL_NAME_BPARTNERLOCATION__BPARTNER_ID = TABLE_NAME_BPARTNER + "_ID";
 	public static final String COL_NAME_BPARTNERLOCATION__ADDRESS = "Address";
 	public static final String COL_NAME_BPARTNERLOCATION__POSTAL = "Postal";
 	public static final String COL_NAME_BPARTNERLOCATION__CITY = "City";
@@ -279,8 +230,7 @@ public class DB {
 	public static final String COL_NAME_BPARTNERLOCATION__EMAIL = "Email";
 	public static final String COL_NAME_BPARTNERLOCATION__CONTACTPERSON = "ContactPerson";
 
-	public static final String COL_NAME_TASK__TASKTYPE_ID = TABLE_NAME_TASKTYPE
-			+ "_ID";
+	public static final String COL_NAME_TASK__TASKTYPE_ID = TABLE_NAME_TASKTYPE + "_ID";
 	/**
 	 * Time|Mileage|Both (StaticValues.TASK_SCHEDULED_FOR_{TIME|MILEAGE|BOTH})
 	 */
@@ -369,17 +319,13 @@ public class DB {
 	 */
 	public static final String COL_NAME_TODO__ISSTOPNOTIFICATION = "IsStopNotification";
 
-	public static final String COL_NAME_TASK_CAR__TASK_ID = TABLE_NAME_TASK
-			+ "_ID";
-	public static final String COL_NAME_TASK_CAR__CAR_ID = TABLE_NAME_CAR
-			+ "_ID";
+	public static final String COL_NAME_TASK_CAR__TASK_ID = TABLE_NAME_TASK + "_ID";
+	public static final String COL_NAME_TASK_CAR__CAR_ID = TABLE_NAME_CAR + "_ID";
 	public static final String COL_NAME_TASK_CAR__FIRSTRUN_DATE = "FirstRunDate";
 	public static final String COL_NAME_TASK_CAR__FIRSTRUN_MILEAGE = "FirstRunMileage";
 
-	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID = TABLE_NAME_CAR
-			+ "_ID";
-	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID = TABLE_NAME_EXPENSE
-			+ "_ID";
+	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID = TABLE_NAME_CAR + "_ID";
+	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID = TABLE_NAME_EXPENSE + "_ID";
 	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__RATE = "Rate";
 
 	// column positions. Some is general (GEN_) some is particular
