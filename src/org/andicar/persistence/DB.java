@@ -327,6 +327,8 @@ public class DB {
 	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID = TABLE_NAME_CAR + "_ID";
 	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID = TABLE_NAME_EXPENSE + "_ID";
 	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__RATE = "Rate";
+	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM = "ValidFrom";
+	public static final String COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO = "ValidTo";
 
 	// column positions. Some is general (GEN_) some is particular
 	// generic columns must be first and must be created for ALL TABLES
@@ -495,6 +497,8 @@ public class DB {
 	public static final int COL_POS_REIMBURSEMENT_CAR_RATES__CAR_ID = 4;
 	public static final int COL_POS_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID = 5;
 	public static final int COL_POS_REIMBURSEMENT_CAR_RATES__RATE = 6;
+	public static final int COL_POS_REIMBURSEMENT_CAR_RATES__VALIDFROM = 7;
+	public static final int COL_POS_REIMBURSEMENT_CAR_RATES__VALIDTO = 8;
 
 	public static final String[] COL_LIST_DRIVER_TABLE = { COL_NAME_GEN_ROWID,
 			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
@@ -650,7 +654,8 @@ public class DB {
 			COL_NAME_GEN_USER_COMMENT,
 			COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID,
 			COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID,
-			COL_NAME_REIMBURSEMENT_CAR_RATES__RATE };
+			COL_NAME_REIMBURSEMENT_CAR_RATES__RATE, 
+			COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO };
 	
 	public static final String[] COL_LIST_GEN_ROWID_NAME = {
 			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME };
@@ -1180,7 +1185,12 @@ public class DB {
 			+ COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID
 			+ " INTEGER NOT NULL, "
 			+ COL_NAME_REIMBURSEMENT_CAR_RATES__RATE
-			+ " NUMBER NOT NULL DEFAULT 0 " + ");";
+			+ " NUMBER NOT NULL DEFAULT 0, "
+			+ COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM
+			+ " DATE NOT NULL, "
+			+ COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO
+			+ " DATE NOT NULL "
+			+ ");";
 
 	/**
 	 * Constructor - takes the context to allow the database to be
