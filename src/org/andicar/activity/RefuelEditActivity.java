@@ -113,7 +113,7 @@ public class RefuelEditActivity extends EditActivityBase {
         super.onCreate(icicle);
 
         if(icicle !=null)
-            return; //restoe from previous state
+            return; //restore from previous state
 
         operationType = mBundleExtras.getString("Operation");
 
@@ -229,9 +229,9 @@ public class RefuelEditActivity extends EditActivityBase {
         acAdress = ((AutoCompleteTextView) findViewById( R.id.acAdress ));
         acTag = ((AutoCompleteTextView) findViewById( R.id.acTag ));
         spnCar = (Spinner) findViewById(R.id.spnCar);
-        spnDriver = (Spinner) findViewById(R.id.spnDriver);
         spnCar.setOnItemSelectedListener(spinnerCarOnItemSelectedListener);
         spnCar.setOnTouchListener(spinnerOnTouchListener);
+        spnDriver = (Spinner) findViewById(R.id.spnDriver);
         spnDriver.setOnItemSelectedListener(spinnerDriverOnItemSelectedListener);
         spnDriver.setOnTouchListener(spinnerOnTouchListener);
         spnCurrency = (Spinner) findViewById( R.id.spnCurrency );
