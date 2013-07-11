@@ -19,7 +19,6 @@ package org.andicar.persistence;
 
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
-import org.andicar2.activity.R;
 
 import android.database.Cursor;
 import android.text.format.DateFormat;
@@ -27,27 +26,17 @@ import android.view.View;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
-public class MileageListDataBinder implements SimpleCursorAdapter.ViewBinder {
+public class ReimbursementListDataBinder implements SimpleCursorAdapter.ViewBinder {
     @Override
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-    	if(columnIndex == 1) {
-    		((TextView) view).setText(
-    				cursor.getString(1)
-    					.replace("[#1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
-				 				.format(cursor.getLong(5) * 1000))
-			 );
-    		return true;
-    	}
-    	else if(columnIndex == 2){
+    	if(columnIndex == 2) {
     		((TextView) view).setText(
     				cursor.getString(2)
-    					.replace("[#1]", Utils.numberToString(cursor.getDouble(6) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
-    					.replace("[#2]", Utils.numberToString(cursor.getDouble(7) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
-    					.replace("[#3]", Utils.numberToString(cursor.getDouble(8) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
-    					.replace("[#4]", 
-    						view.getContext().getResources().getText(R.string.GEN_Reimbursement).toString() + " " + 
-    								Utils.numberToString(cursor.getDouble(9) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
-			 );
+    					.replace("[#1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
+				 				.format(cursor.getLong(3) * 1000))
+    					.replace("[#2]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
+				 				.format(cursor.getLong(4) * 1000))
+    					.replace("[#3]", Utils.numberToString(cursor.getDouble(5) , true, StaticValues.DECIMALS_RATES, StaticValues.ROUNDING_MODE_RATES)));
     		return true;
     	}
         return false;

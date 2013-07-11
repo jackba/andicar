@@ -630,6 +630,9 @@ public class MainActivity extends BaseActivity {
 							Utils.numberToString(listCursor.getDouble(8), true,
 									StaticValues.DECIMALS_LENGTH,
 									StaticValues.ROUNDING_MODE_LENGTH))
+					.replace("[#4]", 
+    						mResource.getText(R.string.GEN_Reimbursement).toString() + " " + 
+    								Utils.numberToString(listCursor.getDouble(9) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
 
 			);
 			tvThreeLineListMileageText3.setText(listCursor.getString(3));

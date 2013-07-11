@@ -74,6 +74,8 @@
     <string name="APP_Activity_TodoList">"Tennivalók"</string>
     <string name="APP_Activity_FuelCategoryList">"Üzemanyag tipusok"</string>
     <string name="APP_Activity_FuelCategoryEdit">"Üzemanyag tipusok szerkesztése"</string>
+    <string name="APP_Activity_ReimbursementRateEdit">"Díj szerkesztése"</string>
+    
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Visszavon"</string>
     <string name="GEN_YES">"Igen"</string>
@@ -154,8 +156,10 @@
     <string name="GEN_StopLabel">"Stop"</string>
     <string name="GEN_PaymentFailed">"A fizetés nem sikerült"</string>
     <string name="GEN_PaymentNotConfirmed">"A fizetés nincs megerősítve"</string>
-        
-        
+    <string name="GEN_ValidFromLabel">"Érvényesség kezdete:"</string>
+    <string name="GEN_ValidToLabel">"Érvényesség lejárta:"</string>
+    <string name="GEN_Reimbursement">"Visszafizetés:"</string>
+    
     <string name="MENU_PreferencesCaption">"Beállítások"</string>
     <string name="MENU_AboutCaption">"AndiCarról"</string>
     <string name="MENU_DeleteCaption">"Törlés"</string>
@@ -250,6 +254,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Az adatbázis helyreállt. Az alkalmazás leáll."</string>
 
     <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Számolj visszatérítést"</string>
+    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Díjbeálítás"</string>
     
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Kizárás az fuvarköltség számításából"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"Üzemanyag"</string>
@@ -329,6 +334,11 @@
     <string name="TaskCarEditActivity_StartDate">"Kezdés dátuma:"</string>
     <string name="TaskCarEditActivity_StartMileage">"Kezdő kilóméter:"</string>
     <string name="TaskCarDialogActivity_Title">"Autó kapcsolása feladathoz"</string>
+    
+    <string name="ReimbursementEditActivity_Rate">"Díj:"</string>
+    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Meglévő fuvarok frissítése"</string>
+    
+    
     <string name="ToDo_OverdueLabel">"Lejárt"</string>
     <string name="ToDo_ScheduledLabel">"Ütemezett"</string>
     <string name="ToDo_DoneLabel">"Kész"</string>

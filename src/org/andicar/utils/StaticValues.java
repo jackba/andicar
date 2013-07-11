@@ -91,8 +91,8 @@ public class StaticValues
     public static final RoundingMode ROUNDING_MODE_LENGTH = RoundingMode.HALF_UP;
     public static final int DECIMALS_AMOUNT = 2;
     public static final RoundingMode ROUNDING_MODE_AMOUNT = RoundingMode.HALF_UP;
-    public static final int DECIMALS_CONVERSIONS = 4;
-    public static final RoundingMode ROUNDING_MODE_CONVERSIONS = RoundingMode.HALF_UP;
+    public static final int DECIMALS_RATES = 5;
+    public static final RoundingMode ROUNDING_MODE_RATES = RoundingMode.HALF_UP;
     public static final int DECIMALS_PRICE = 3;
     public static final RoundingMode ROUNDING_MODE_PRICE = RoundingMode.HALF_UP;
 

@@ -26,6 +26,7 @@
         If any of the translated string is longer than the english value you should
         verify the look of the user interface (using the android emulator or any other device)
         with the translated values.
+	Ch. simpl.
 -->
 <resources>
     <string name="APP_Description">"免费和开放源码的汽车管理软件。"</string>
@@ -69,7 +70,11 @@
 	<string name="APP_Activity_TaskTypeEdit">"编辑任务类型"</string>
 	<string name="APP_Activity_TaskList">"任务"</string>
 	<string name="APP_Activity_TaskEdit">"添加或编辑任务"</string>
-
+    <string name="APP_Activity_TodoList">"To-Do列表"</string>
+    <string name="APP_Activity_FuelCategoryList">"燃料类别"</string>
+    <string name="APP_Activity_FuelCategoryEdit">"编辑燃料类别"</string>
+    <string name="APP_Activity_ReimbursementRateEdit">"编辑率"</string>
+	
     <string name="GEN_OK">"确定"</string>
     <string name="GEN_CANCEL">"取消"</string>
     <string name="GEN_YES">"是"</string>
@@ -149,7 +154,10 @@
 	<string name="GEN_PaymentFailed">"支付失败"</string> 
 	<string name="GEN_PaymentNotConfirmed">"支付未得到证实"</string>
 	<string name="GEN_CarierBillingCheckWait">"检查carier计费的可用性。请稍等…"</string>
-
+    <string name="GEN_ValidFromLabel">"有效期从:"</string>
+    <string name="GEN_ValidToLabel">"有效期至:"</string>
+    <string name="GEN_Reimbursement">"薪金:"</string>
+    	
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
     <string name="MENU_DeleteCaption">"删除"</string>
@@ -248,6 +256,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"你的数据库已被还原。此程序即将关闭。"</string>
 
     <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"计算报销"</string>
+    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"费率设置"</string>
     
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"计算排除里程费用"</string>
     <string name="ExpenseEditActivity_CreatedFromWarning">"这个费用是由 [#1] 创建。\n编辑与之相对应的 [#1]."</string>
@@ -332,6 +341,9 @@
 	<string name="TaskCarEditActivity_StartMileage">"起始里程："</string>
 	<string name="TaskCarDialogActivity_Title">"连接车辆到任务"</string>
 
+    <string name="ReimbursementEditActivity_Rate">"费用:"</string>
+    <string name="ReimbursementEditActivity_UpdateExistingRecords">"更新现有记录"</string>
+    
 	<string name="ToDo_OverdueLabel">"超期："</string>
 	<string name="ToDo_ScheduledLabel">"如期："</string>
 	<string name="ToDo_DoneLabel">"完成"</string>

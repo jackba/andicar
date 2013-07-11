@@ -23,9 +23,13 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar2.activity.R;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 
 /**
@@ -38,6 +42,8 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     private EditText etUserComment = null;
     private CheckBox ckIsActive = null;
     private CheckBox ckIsCalculateReimbursement = null;
+    private Button btnSetReimbursementRates = null;
+    private boolean isFinishAfterSave = true;
 
     /** Called when the activity is first created. */
     @Override
@@ -48,7 +54,30 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         etName = (EditText) findViewById( R.id.etName );
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
+        btnSetReimbursementRates = (Button) findViewById(R.id.btnSetReimbursementRates);
+        btnSetReimbursementRates.setVisibility(View.GONE);
+        btnSetReimbursementRates.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				isFinishAfterSave = false;
+				saveData();
+				isFinishAfterSave = true;
+				Intent i = new Intent(getApplicationContext(), ReimbursementRateEditActivity.class);
+				i.putExtra("Operation", "N");
+				i.putExtra("expenseTypeId", mRowId);
+				startActivity(i);
+			}
+		});
         ckIsCalculateReimbursement = (CheckBox) findViewById( R.id.ckIsCalculateReimbursement);
+        ckIsCalculateReimbursement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if(isChecked)
+					btnSetReimbursementRates.setVisibility(View.VISIBLE);
+				else
+					btnSetReimbursementRates.setVisibility(View.GONE);
+			}
+		});
 
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
 
@@ -102,8 +131,11 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         if( mRowId == -1 ) {
         	dbRetVal = ((Long)mDbAdapter.createRecord(MainDbAdapter.TABLE_NAME_EXPENSETYPE, data)).intValue();
             if(dbRetVal > 0){
-            	finish();
-            	return true;
+            	mRowId = dbRetVal;
+            	if(isFinishAfterSave){
+	            	finish();
+	            	return true;
+            	}
             }
             else{
                 if(dbRetVal == -1) //DB Error
@@ -130,10 +162,13 @@ public class ExpenseTypeEditActivity extends EditActivityBase
                 return false;
             }
             else{
-                finish();
-                return true;
+            	if(isFinishAfterSave){
+	            	finish();
+	            	return true;
+            	}
             }
         }
+        return true;
     }
 
     @Override

@@ -75,7 +75,9 @@
     <string name="APP_Activity_TodoList">"To-Do List"</string>
     <string name="APP_Activity_FuelCategoryList">"Fuel categories"</string>
     <string name="APP_Activity_FuelCategoryEdit">"Edit fuel category"</string>
-
+    <string name="APP_Activity_ReimbursementRateEdit">"Edit rate"</string>
+    <string name="APP_Activity_ReimbursementList">"Reimbursement rates"</string>
+    
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
     <string name="GEN_YES">"Yes"</string>
@@ -157,7 +159,10 @@
     <string name="GEN_PaymentFailed">"Payment failed"</string>
     <string name="GEN_PaymentNotConfirmed">"Payment not confirmed"</string>
     <string name="GEN_CarierBillingCheckWait">"Checking carier billing availability. Please wait a moment ..."</string>
-        
+    <string name="GEN_ValidFromLabel">"Valid from:"</string>
+    <string name="GEN_ValidToLabel">"Valid to:"</string>
+    <string name="GEN_Reimbursement">"Reimbursement:"</string>
+    
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
     <string name="MENU_DeleteCaption">"Delete"</string>
@@ -262,6 +267,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Your database was restored. The application will be closed."</string>
 
     <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Calculate reimbursement"</string>
+    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Set rates"</string>
     
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Exclude from mileage cost calculation"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"Is fuel"</string>
@@ -351,6 +357,9 @@
     <string name="TaskCarEditActivity_StartDate">"Starting date:"</string>
     <string name="TaskCarEditActivity_StartMileage">"Starting mileage:"</string>
     <string name="TaskCarDialogActivity_Title">"Link car to task"</string>
+    
+    <string name="ReimbursementEditActivity_Rate">"Rate:"</string>
+    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Update existing mileages"</string>
     
     <string name="ToDo_OverdueLabel">"Overdue"</string>
     <string name="ToDo_ScheduledLabel">"Scheduled"</string>

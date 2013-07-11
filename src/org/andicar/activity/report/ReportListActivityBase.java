@@ -95,11 +95,20 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
 
         Calendar cal = Calendar.getInstance();
         mYearFrom = cal.get(Calendar.YEAR);
-        mMonthFrom = cal.get(Calendar.MONTH);
+        if(this instanceof ReimbursementRateListReportActivity)
+        	mMonthFrom = 0;
+        else
+        	mMonthFrom = cal.get(Calendar.MONTH);
         mDayFrom = 1;
         mYearTo = cal.get(Calendar.YEAR);
-        mMonthTo = cal.get(Calendar.MONTH);
-        mDayTo = cal.get(Calendar.DAY_OF_MONTH);
+        if(this instanceof ReimbursementRateListReportActivity){
+	        mMonthTo = 11;
+	        mDayTo = 31;
+        }
+        else{
+	        mMonthTo = cal.get(Calendar.MONTH);
+	        mDayTo = cal.get(Calendar.DAY_OF_MONTH);
+        }
     }
 
     @Override

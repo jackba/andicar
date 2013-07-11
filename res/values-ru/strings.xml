@@ -76,6 +76,7 @@
 	<string name="APP_Activity_TaskEdit">"Добавить или редактировать задачу"</string>
 	<string name="APP_Activity_FuelCategoryList">"Категории топлива"</string>
     <string name="APP_Activity_FuelCategoryEdit">"Редактировать категорию топлива"</string>
+    <string name="APP_Activity_ReimbursementRateEdit">"Редактировать скорость"</string>
     
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Отмена"</string>
@@ -158,7 +159,10 @@
 	<string name="GEN_PaymentFailed">"Платеж не состоялся"</string>
 	<string name="GEN_PaymentNotConfirmed">"Платеж не подтвержден"</string>
 	<string name="GEN_CarierBillingCheckWait">"Проверка возможности платежа. Пожалуйста подождите ..."</string>
-
+    <string name="GEN_ValidFromLabel">"Действует с:"</string>
+    <string name="GEN_ValidToLabel">"Срок действия:"</string>
+    <string name="GEN_Reimbursement">"возвращение денег:"</string>
+    	
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
     <string name="MENU_DeleteCaption">"Удалить"</string>
@@ -259,6 +263,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Ваша база данных восстановлена из копии. Программа будет закрыта."</string>
 
     <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Рассчитать возмещения"</string>
+    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Yстанавливать нормы"</string>
     
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"исключить из расчета стоимости поездки"</string>
     <string name="ExpenseEditActivity_CreatedFromWarning">"Эти расходы созданы на основе [#1].\nРедактируйте соответствующую [#1]."</string>
@@ -343,6 +348,9 @@
 	<string name="TaskCarEditActivity_StartMileage">"Начальный пробег:"</string>
 	<string name="TaskCarDialogActivity_Title">"Свяжите автомобиль с задачей"</string>
 
+    <string name="ReimbursementEditActivity_Rate">"Tариф:"</string>
+    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Обновить существующие записи"</string>
+    
 	<string name="ToDo_OverdueLabel">"Просроченные:"</string>
 	<string name="ToDo_ScheduledLabel">"Запланированные:"</string>
 	<string name="ToDo_DoneLabel">"Сделано"</string>

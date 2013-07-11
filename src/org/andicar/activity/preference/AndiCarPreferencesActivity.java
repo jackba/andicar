@@ -25,6 +25,7 @@ import java.util.Map;
 import org.andicar.activity.CommonListActivity;
 import org.andicar2.activity.R;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
+import org.andicar.activity.report.ReimbursementRateListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
 import org.andicar.utils.AndiCarStatistics;
@@ -221,6 +222,14 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
         expTypePrefScreen.setSummary(mRes.getString(R.string.PREF_ExpenseTypeCategorySummary));
         expenseCategory.addPreference(expTypePrefScreen);
 
+        //reimbursement rates
+        PreferenceScreen reimbursementRatesPrefScreen = getPreferenceManager().createPreferenceScreen(this);
+        listActivity = new Intent(this, ReimbursementRateListReportActivity.class);
+        reimbursementRatesPrefScreen.setIntent(listActivity);
+        reimbursementRatesPrefScreen.setTitle(mRes.getString(R.string.APP_Activity_ReimbursementList));
+        reimbursementRatesPrefScreen.setSummary(mRes.getString(R.string.APP_Activity_ReimbursementList));
+        expenseCategory.addPreference(reimbursementRatesPrefScreen);
+        
         //fuel categories
         PreferenceScreen fuelTypePrefScreen = getPreferenceManager().createPreferenceScreen(this);
         listActivity = new Intent(this, CommonListActivity.class);

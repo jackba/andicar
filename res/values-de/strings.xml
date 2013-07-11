@@ -74,7 +74,11 @@
     <string name="APP_Activity_TaskTypeEdit">"Aufgabentypen bearbeiten"</string>
     <string name="APP_Activity_TaskList">"Aufgaben"</string>
     <string name="APP_Activity_TaskEdit">"Aufgaben bearbeiten"</string>
-
+    <string name="APP_Activity_TodoList">"To-Do Liste"</string>
+    <string name="APP_Activity_FuelCategoryList">"Kraftstoff kategorien"</string>
+    <string name="APP_Activity_FuelCategoryEdit">"Kraftstoff kategorie bearbeiten"</string>
+    <string name="APP_Activity_ReimbursementRateEdit">"Rate bearbeiten"</string>
+    
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Abbruch"</string>
     <string name="GEN_YES">"Ja"</string>
@@ -137,7 +141,10 @@
     <string name="GEN_FuelEff">"Benzinverbrauch:"</string>
     <string name="GEN_StartLabel">"Anfang "</string>
     <string name="GEN_StopLabel">"Ende"</string>
-        
+    <string name="GEN_ValidFromLabel">"Gültig ab:"</string>
+    <string name="GEN_ValidToLabel">"Gültig bis:"</string>
+    <string name="GEN_Reimbursement">"Rückerstattung:"</string>
+    
     <string name="MENU_PreferencesCaption">"Einstellungen"</string>
     <string name="MENU_AboutCaption">"Über AndiCar"</string>
     <string name="MENU_DeleteCaption">"löschen"</string>
@@ -231,6 +238,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Deine Datenbank wurde wiederhergestellt. Die Anwendung schliesst sich jetzt."</string>
 
     <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Berechnen erstattung"</string>
+    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Set preise"</string>
     
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Von der Kosten pro Strecke Berechnung ausschliessen"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"ist Benzin"</string>
@@ -472,7 +480,12 @@
    <string name="TaskEditActivity_StartingTimeInFutureMsg">"Die Startzeitpunkt muss in der Zukunft liegen!"</string>
    <string name="TaskEditActivity_StartingTimeLbl">"Startzeit:"</string>
    <string name="TaskEditActivity_MileageFrequencySmallerThanReminder">"Die Wiederholung nach Strecke muss grösser sein als die Erinnerung."</string>
-    <string name="TaskCarEditActivity_StartDate">"Start Datum:"</string>
+   <string name="TaskCarEditActivity_StartDate">"Start Datum:"</string>
    <string name="TaskCarEditActivity_StartMileage">"Start Tachostand:"</string>
    <string name="TaskCarDialogActivity_Title">"Verlinke Fahrzeug mit Aufgabe"</string>
+
+   <string name="ReimbursementEditActivity_Rate">"Erstattungssatz:"</string>
+    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Aktualisieren Sie vorhandene Datensätze"</string>
+   
+   
 </resources>

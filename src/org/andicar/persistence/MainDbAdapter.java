@@ -106,6 +106,20 @@ public class MainDbAdapter extends DB
                 if(newIndexStr != null && newIndexStr.length() > 0)
                     stopIndex = new BigDecimal(newIndexStr);
             }
+            else if(tableName.equals(TABLE_NAME_REIMBURSEMENT_CAR_RATES)){
+            	if(content.getAsBoolean("UpdateExistingMileges")){
+            		//update existing mileages
+            		String updateSql = 
+            				"UPDATE " + TABLE_NAME_MILEAGE + 
+            				" SET " + COL_NAME_MILEAGE__REIMBURSEMENT_RATE + "=" + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) + ", " +
+            					COL_NAME_MILEAGE__REIMBURSEMENT_VALUE + "= (" + COL_NAME_MILEAGE__INDEXSTOP + "-" + COL_NAME_MILEAGE__INDEXSTART + ") * " + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
+            				" WHERE " + COL_NAME_MILEAGE__DATE + " BETWEEN " + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " AND " + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO) +
+            					" AND " + COL_NAME_MILEAGE__CAR_ID + " = " + content.getAsInteger(COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID) +
+            					" AND " + COL_NAME_MILEAGE__EXPENSETYPE_ID + " = " + content.getAsInteger(COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID);
+            		mDb.execSQL(updateSql);
+            	}
+            	content.remove("UpdateExistingMileges");
+            }
 
             if(mCarId != -1 && stopIndex != null){ //update the car current index
                try{
@@ -132,7 +146,7 @@ public class MainDbAdapter extends DB
             else{
                 retVal = mDb.insertOrThrow(tableName, null, content);
             }
-            if(retVal != -1 && tableName.equals(TABLE_NAME_REFUEL)){ //create expesnse
+            if(retVal != -1 && tableName.equals(TABLE_NAME_REFUEL)){ //create expense
                 ContentValues expenseContent = null;
                 expenseContent = new ContentValues();
 
@@ -314,7 +328,6 @@ public class MainDbAdapter extends DB
                 if(newIndexStr != null && newIndexStr.length() > 0)
                     stopIndex = new BigDecimal(newIndexStr);
             }
-            
             else if(tableName.equals(TABLE_NAME_CAR)){ //inactivate/activate the related task-car links/todos
                 String[] whereArgs = {Long.toString(rowId)};
                 ContentValues isActiveContent = new ContentValues();
@@ -327,6 +340,21 @@ public class MainDbAdapter extends DB
                 }
                 
             }
+            else if(tableName.equals(TABLE_NAME_REIMBURSEMENT_CAR_RATES)){
+            	if(content.getAsBoolean("UpdateExistingMileges")){
+            		//update existing mileages
+            		String updateSql = 
+            				"UPDATE " + TABLE_NAME_MILEAGE + 
+            				" SET " + COL_NAME_MILEAGE__REIMBURSEMENT_RATE + "=" + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) + ", " +
+            					COL_NAME_MILEAGE__REIMBURSEMENT_VALUE + "= (" + COL_NAME_MILEAGE__INDEXSTOP + "-" + COL_NAME_MILEAGE__INDEXSTART + ") * " + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
+            				" WHERE " + COL_NAME_MILEAGE__DATE + " BETWEEN " + content.getAsLong(COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " AND " + content.getAsLong(COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO) +
+            					" AND " + COL_NAME_MILEAGE__CAR_ID + " = " + content.getAsInteger(COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID) +
+            					" AND " + COL_NAME_MILEAGE__EXPENSETYPE_ID + " = " + content.getAsInteger(COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID);
+            		mDb.execSQL(updateSql);
+            	}
+            	content.remove("UpdateExistingMileges");
+            }
+            
             if(mCarId != -1 && stopIndex != null){
                try{
                     mDb.beginTransaction();
@@ -1353,7 +1381,7 @@ public class MainDbAdapter extends DB
                 retVal = new BigDecimal(retValStr);
                 if(retVal.signum() != 0)
                     return BigDecimal.ONE.divide(retVal, 10, RoundingMode.HALF_UP)
-                            .setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
+                            .setScale(StaticValues.DECIMALS_RATES, StaticValues.ROUNDING_MODE_RATES);
                 else
                     return BigDecimal.ZERO;
             }

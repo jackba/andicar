@@ -26,6 +26,8 @@
         If any of the translated string is longer than the english value you should
         verify the look of the user interface (using the android emulator or any other device)
         with the translated values.
+        
+        Ch. trad.
 -->
 <resources>
     <string name="APP_Description">"免費和開放源碼的汽車管理軟體。"</string>
@@ -71,7 +73,8 @@
 	<string name="APP_Activity_TaskEdit">"新增或編輯工作"</string>
 	<string name="APP_Activity_FuelCategoryList">"燃料種類"</string>
 	<string name="APP_Activity_FuelCategoryEdit">"編輯燃料種類"</string>
-	    
+    <string name="APP_Activity_ReimbursementRateEdit">"編輯率"</string>
+		    
     <string name="GEN_OK">"確定"</string>
     <string name="GEN_CANCEL">"取消"</string>
     <string name="GEN_YES">"是"</string>
@@ -151,7 +154,10 @@
 	<string name="GEN_PaymentFailed">"支付失敗"</string> 
 	<string name="GEN_PaymentNotConfirmed">"支付未得到證實"</string>
 	<string name="GEN_CarierBillingCheckWait">"检查carier计费的可用性。请稍等…"</string>
-
+    <string name="GEN_ValidFromLabel">"有效期從:"</string>
+    <string name="GEN_ValidToLabel">"有效期至:"</string>
+    <string name="GEN_Reimbursement">"薪金:"</string>
+    	
     <string name="MENU_PreferencesCaption">"首選項"</string>
     <string name="MENU_AboutCaption">"關於"</string>
     <string name="MENU_DeleteCaption">"刪除"</string>
@@ -251,6 +257,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"你的資料庫已被還原。此程式即將關閉。"</string>
 
     <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"計算報銷"</string>
+    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"費率設置"</string>
     
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"計算排除里程費用"</string>
     <string name="ExpenseEditActivity_CreatedFromWarning">"這個費用是由 [#1] 建立。\n編輯與之相對應的 [#1]."</string>
@@ -335,6 +342,9 @@
 	<string name="TaskCarEditActivity_StartMileage">"開始里程："</string>
 	<string name="TaskCarDialogActivity_Title">"連接車輛到工作"</string>
 
+    <string name="ReimbursementEditActivity_Rate">"費用:"</string>
+    <string name="ReimbursementEditActivity_UpdateExistingRecords">"更新現有記錄"</string>
+    
 	<string name="ToDo_OverdueLabel">"超期："</string>
 	<string name="ToDo_ScheduledLabel">"如期："</string>
 	<string name="ToDo_DoneLabel">"完成"</string>
