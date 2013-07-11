@@ -59,15 +59,18 @@ public class ReportDbAdapter extends MainDbAdapter{
     //used in main activity and mileage list activity
     public static String mileageListViewSelect =
             "SELECT " +
-//                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_INDEXSTOP_NAME) + ", " + //#0
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_GEN_ROWID) + ", " + //#0
                 sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_NAME) + " || '; ' || " + 
                 	sqlConcatTableColumn(TABLE_NAME_DRIVER, COL_NAME_GEN_NAME) + " || '; ' || " +
                     sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_NAME)  + " || '; ' || " +
                     " '[#1]' AS " + FIRST_LINE_LIST_NAME + ", " + //#1
                 " '[#1] -> [#2] = [#3] ' || " +
-                        sqlConcatTableColumn(TABLE_NAME_UOM, COL_NAME_UOM__CODE) +
-                            " AS " + SECOND_LINE_LIST_NAME + ", " + //#2
+                        sqlConcatTableColumn(TABLE_NAME_UOM, COL_NAME_UOM__CODE) + " || " +
+                " CASE " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__REIMBURSEMENT_VALUE) +
+	                " WHEN 0 THEN '' " +
+	                " ELSE ' ([#4] ' || " +
+	                	sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_CURRENCY__CODE) + " || ')' " +
+                " END AS " + SECOND_LINE_LIST_NAME + ", " + //#2
                 " COALESCE( " + sqlConcatTableColumn(TABLE_NAME_TAG, COL_NAME_GEN_NAME) + " || '; ', '') || " + 
                 		sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_GEN_USER_COMMENT) + 
                         " AS " + THIRD_LINE_LIST_NAME + ", " + //#3
@@ -76,7 +79,8 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTART) + ", " + //#6
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTOP) + ", " + //#7
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTOP) + " - " + 
-                	sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTART) + " AS Mileage " + //#8
+                	sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTART) + " AS Mileage, " + //#8
+                sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__REIMBURSEMENT_VALUE) + //#9
                 
             " FROM " + TABLE_NAME_MILEAGE +
                     " JOIN " + TABLE_NAME_EXPENSETYPE +
@@ -91,6 +95,10 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + TABLE_NAME_CAR +
                         " ON " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__CAR_ID) + "=" +
                                             sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_ROWID) +
+	                    " JOIN " + TABLE_NAME_CURRENCY +
+	                        " ON " + sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_CAR__CURRENCY_ID) + "=" +
+	                                            sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_GEN_ROWID) +
+
                     " LEFT OUTER JOIN " + TABLE_NAME_TAG +
                     	" ON " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__TAG_ID) + "=" +
                                         sqlConcatTableColumn(TABLE_NAME_TAG, COL_NAME_GEN_ROWID) +
@@ -970,6 +978,35 @@ public class ReportDbAdapter extends MainDbAdapter{
 		+ " WHERE 1=1 "
 	;
 
+    //used in main activity and mileage list activity
+    public static String reimbursementRateListViewSelect =
+            "SELECT " +
+                sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_GEN_ROWID) + ", " + //#0
+                sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_NAME) + " || '; ' || " + 
+                    sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_NAME)  + 
+                    		" AS " + FIRST_LINE_LIST_NAME + ", " + //#1
+                " '[#1] -> [#2] = [#3] ' || " +
+                	sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_CURRENCY__CODE) + " || '/' || " +
+                		sqlConcatTableColumn(TABLE_NAME_UOM, COL_NAME_UOM__CODE) +  
+                	" AS " + SECOND_LINE_LIST_NAME + ", " + //#2
+                COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM + ", " + //#3
+                COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO + ", " + //#4
+                COL_NAME_REIMBURSEMENT_CAR_RATES__RATE + //#5
+            " FROM " + TABLE_NAME_REIMBURSEMENT_CAR_RATES +
+                    " JOIN " + TABLE_NAME_EXPENSETYPE +
+                        " ON " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID) + "=" +
+                                            sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_ROWID) +
+                    " JOIN " + TABLE_NAME_CAR +
+                        " ON " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_MILEAGE__CAR_ID) + "=" +
+                                            sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_ROWID) +
+	                    " JOIN " + TABLE_NAME_UOM + 
+	                        " ON " + sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_CAR__UOMLENGTH_ID) + "=" +
+	                                            sqlConcatTableColumn(TABLE_NAME_UOM, COL_NAME_GEN_ROWID) +
+	                    " JOIN " + TABLE_NAME_CURRENCY + 
+	                        " ON " + sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_CAR__CURRENCY_ID) + "=" +
+	                                            sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_GEN_ROWID) +
+            " WHERE 1=1 ";
+
     public ReportDbAdapter( Context ctx, String reportSqlName, Bundle searchCondition )
     {
         super(ctx);
@@ -1097,6 +1134,16 @@ public class ReportDbAdapter extends MainDbAdapter{
                                     " ORDER BY EstimatedDueDate_DTypeL ASC, " + 
                                     	"COALESCE (ScheduledDate_DTypeD , 99999999999) ASC, " +
                                     			"COALESCE(EstimatedScheduledMileageDate_DTypeL, 99999999999) ASC ";
+        }
+        else if(mReportSqlName.equals("reimbursementRateListViewSelect")){
+            reportSql = reimbursementRateListViewSelect;
+            if(whereCondition.length() > 0)
+                reportSql = reportSql + whereCondition;
+
+            reportSql = reportSql +" ORDER BY " + 
+            			sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " DESC , " +
+            			sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID) + ", " +
+            			sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID);
         }
 
         if(limitCount != -1)

@@ -76,7 +76,8 @@
     <string name="APP_Activity_TodoList">&quot;Lista programari&quot;</string>
     <string name="APP_Activity_FuelCategoryList">&quot;Categorii combustibil&quot;</string>
     <string name="APP_Activity_FuelCategoryEdit">&quot;Editare categorie combustibil&quot;</string>
-
+    <string name="APP_Activity_ReimbursementRateEdit">"Editare rata"</string>
+    
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancel"</string>
     <string name="GEN_YES">&quot;Da&quot;</string>
@@ -158,7 +159,10 @@
     <string name="GEN_PaymentFailed">&quot;Plata esuata&quot;</string>
     <string name="GEN_PaymentNotConfirmed">&quot;Plata neconfirmata&quot;</string>
     <string name="GEN_CarierBillingCheckWait">&quot;Verificare disponibilitate plata.Asteptati ...&quot;</string>
-        
+    <string name="GEN_ValidFromLabel">"Valabil de la:"</string>
+    <string name="GEN_ValidToLabel">"Valabil pana la:"</string>
+    <string name="GEN_Reimbursement">"Rambursare:"</string>
+    
     <string name="MENU_PreferencesCaption">&quot;Preferinte&quot;</string>
     <string name="MENU_AboutCaption">&quot;Despre&quot;</string>
     <string name="MENU_DeleteCaption">&quot;Sterge&quot;</string>
@@ -263,6 +267,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">&quot;Baza de date a fost recreata. Aplicatia se va inchide.&quot;</string>
 
     <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Calculează rambursare"</string>
+    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Definire rate"</string>
     
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">&quot;Exclude din costul per Km&quot;</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">&quot;Este combutibil&quot;</string>
@@ -354,6 +359,9 @@
     <string name="TaskCarEditActivity_StartDate">&quot;Data pornire:&quot;</string>
     <string name="TaskCarEditActivity_StartMileage">&quot;Kilometraj plecare:&quot;</string>
     <string name="TaskCarDialogActivity_Title">&quot;Adauga masina la Actiune&quot;</string>
+    
+    <string name="ReimbursementEditActivity_Rate">"Tarif:"</string>
+    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Actualizarea kilometrajelor existente"</string>
     
     <string name="ToDo_OverdueLabel">&quot;Restanta&quot;</string>
     <string name="ToDo_ScheduledLabel">&quot;Programat&quot;</string>

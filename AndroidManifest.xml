@@ -308,5 +308,14 @@
 			</intent-filter>
 		</receiver>
             
+        <activity
+            android:name="org.andicar.activity.ReimbursementRateEditActivity"
+            android:label="@string/APP_Activity_ReimbursementRateEdit">
+        </activity>
+        <activity
+            android:name="org.andicar.activity.report.ReimbursementRateListReportActivity"
+            android:label="@string/APP_Activity_ReimbursementList">
+        </activity>
+        
     </application>
 </manifest>

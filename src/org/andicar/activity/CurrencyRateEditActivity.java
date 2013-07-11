@@ -211,14 +211,14 @@ public class CurrencyRateEditActivity extends EditActivityBase
                     bdInverseRate = bdRate;
                 else
                     bdInverseRate = BigDecimal.ONE.divide(bdRate, 10, RoundingMode.HALF_UP)
-                            .setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
-                if(bdRate.compareTo(bdRate.setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS)) != 0){
-                    bdRate = bdRate.setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
+                            .setScale(StaticValues.DECIMALS_RATES, StaticValues.ROUNDING_MODE_RATES);
+                if(bdRate.compareTo(bdRate.setScale(StaticValues.DECIMALS_RATES, StaticValues.ROUNDING_MODE_RATES)) != 0){
+                    bdRate = bdRate.setScale(StaticValues.DECIMALS_RATES, StaticValues.ROUNDING_MODE_RATES);
                     etCurrencyRate.setText("");
                     etCurrencyRate.append(bdRate.toString());
                     Toast toast = Toast.makeText( getApplicationContext(),
                             mResource.getString( R.string.CurrencyRateEditActivity_MaxDecimalsLabel ) +
-                                StaticValues.DECIMALS_CONVERSIONS, Toast.LENGTH_SHORT );
+                                StaticValues.DECIMALS_RATES, Toast.LENGTH_SHORT );
                     toast.show();
                 }
                 tvInverseRateValue.setText(bdInverseRate.toString());

@@ -209,14 +209,6 @@ public class AddOnDBAdapter {
         db.execSQL(ADDON_BTDEVICE_CAR_TABLE_CREATE_SQL);
     }
 
-    public static void upgradeTo358(SQLiteDatabase db) throws SQLException {
-    	createAddOnDataTemplateTables(db);
-    }
-
-    public static void upgradeTo359(SQLiteDatabase db) throws SQLException {
-    	createAddOnBTDeviceCarTable(db);
-    }
-    
     public static boolean recordDeleted(SQLiteDatabase db, String table, long rowID){
     	
     	if(table.equals(MainDbAdapter.TABLE_NAME_CAR)){

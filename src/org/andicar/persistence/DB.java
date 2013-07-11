@@ -1540,154 +1540,49 @@ public class DB {
 
 			// !!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
 
-			// AndiCar 1.0.0
 			if (oldVersion == 1) {
-				upgradeDbTo200(db); // update database to version 200 //AndiCar
-									// 2.0.0
-				upgradeDbTo210(db, oldVersion); // update database to version
-												// 210 //AndiCar 2.1.0
-				upgradeDbTo300(db, oldVersion);
-				upgradeDbTo310(db, oldVersion);
-				upgradeDbTo330(db, oldVersion);
-				upgradeDbTo340(db, oldVersion);
-				upgradeDbTo350(db, oldVersion);
-				upgradeDbTo355(db, oldVersion);
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
+				upgradeDbTo200(db, oldVersion); 
 			}
-			// AndiCar 2.0.x
 			else if (oldVersion == 200) {
-				upgradeDbTo210(db, oldVersion); // update database to version
-												// 210 //AndiCar 2.1.0
-				upgradeDbTo300(db, oldVersion);
-				upgradeDbTo310(db, oldVersion);
-				upgradeDbTo330(db, oldVersion);
-				upgradeDbTo340(db, oldVersion);
-				upgradeDbTo350(db, oldVersion);
-				upgradeDbTo355(db, oldVersion);
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
+				upgradeDbTo210(db, oldVersion);
 			}
-			// AndiCar 2.1.x
 			else if (oldVersion == 210) {
-				upgradeDbTo300(db, oldVersion); // update database to version
-												// 210 //AndiCar 2.2.0
-				upgradeDbTo310(db, oldVersion);
-				upgradeDbTo330(db, oldVersion);
-				upgradeDbTo340(db, oldVersion);
-				upgradeDbTo350(db, oldVersion);
-				upgradeDbTo355(db, oldVersion);
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
+				upgradeDbTo300(db, oldVersion);
 			}
-			// AndiCar 3.0.x
 			else if (oldVersion == 300) {
 				upgradeDbTo310(db, oldVersion);
-				upgradeDbTo330(db, oldVersion);
-				upgradeDbTo340(db, oldVersion);
-				upgradeDbTo350(db, oldVersion);
-				upgradeDbTo355(db, oldVersion);
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo401(db, oldVersion);
-				upgradeDbTo400(db, oldVersion);
 			}
-			// AndiCar 3.1.x, 3.2.x
 			else if (oldVersion == 310) {
 				upgradeDbTo330(db, oldVersion);
-				upgradeDbTo340(db, oldVersion);
-				upgradeDbTo350(db, oldVersion);
-				upgradeDbTo355(db, oldVersion);
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
 			}
-			// AndiCar 3.3.x
 			else if (oldVersion == 330) {
 				upgradeDbTo340(db, oldVersion);
-				upgradeDbTo350(db, oldVersion);
-				upgradeDbTo355(db, oldVersion);
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
 			}
-			// AndiCar 3.4.x
-			else if (oldVersion == 340 || oldVersion == 350) { // upgrade again
-																// because on
-																// fresh 350
-																// install addon
-																// tables was
-																// not created
+			else if (oldVersion == 340 || oldVersion == 350) {
 				upgradeDbTo350(db, oldVersion);
+			}
+			else if (oldVersion == 351) {
 				upgradeDbTo355(db, oldVersion);
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
-			} else if (oldVersion == 351) {
+			} 
+			else if (oldVersion == 353) {
 				upgradeDbTo355(db, oldVersion);
+			} 
+			else if (oldVersion == 355) {
 				upgradeDbTo356(db, oldVersion);
+			} 
+			else if (oldVersion == 356) {
 				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
+			} 
+			else if (oldVersion == 357) {
+				upgradeDbTo358(db, oldVersion);
+			} 
+			else if (oldVersion == 358) {
+				upgradeDbTo359(db, oldVersion);
+			} 
+			else if (oldVersion == 359) {
 				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
-			} else if (oldVersion == 353) {
-				upgradeDbTo355(db, oldVersion);
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
-			} else if (oldVersion == 355) {
-				upgradeDbTo356(db, oldVersion);
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
-			} else if (oldVersion == 356) {
-				upgradeDbTo357(db, oldVersion);
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
-			} else if (oldVersion == 357) {
-				AddOnDBAdapter.upgradeTo358(db);
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
-			} else if (oldVersion == 358) {
-				AddOnDBAdapter.upgradeTo359(db);
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
-			} else if (oldVersion == 359) {
-				upgradeDbTo400(db, oldVersion);
-				upgradeDbTo401(db, oldVersion);
-			} else if (oldVersion == 400) {
+			} 
+			else if (oldVersion == 400) {
 				upgradeDbTo401(db, oldVersion);
 			}
 
@@ -1703,7 +1598,7 @@ public class DB {
 
 		}
 
-		private void upgradeDbTo200(SQLiteDatabase db) throws SQLException {
+		private void upgradeDbTo200(SQLiteDatabase db, int oldVersion) throws SQLException {
 			createExpenseCategory(db);
 			String updateSql;
 			if (!columnExists(db, TABLE_NAME_REFUEL,
@@ -1721,6 +1616,8 @@ public class DB {
 						+ COL_NAME_REFUEL__ISFULLREFUEL + " TEXT DEFAULT 'N' ");
 			}
 			createExpenses(db, true);
+			
+			upgradeDbTo210(db, oldVersion);
 		}
 
 		private void upgradeDbTo210(SQLiteDatabase db, int oldVersion)
@@ -1967,6 +1864,8 @@ public class DB {
 						+ COL_NAME_EXPENSE__CURRENCYRATE + " = 1";
 				db.execSQL(updSql);
 			}
+			
+			upgradeDbTo300(db, oldVersion);
 
 		}
 
@@ -1981,6 +1880,8 @@ public class DB {
 			SharedPreferences.Editor editor = mPreferences.edit();
 			editor.putString("UpdateMsg", "VersionChanged");
 			editor.commit();
+			
+			upgradeDbTo310(db, oldVersion);
 		}
 
 		private void upgradeDbTo310(SQLiteDatabase db, int oldVersion)
@@ -2007,6 +1908,8 @@ public class DB {
 						+ COL_NAME_REFUEL__PRICEENTERED;
 				db.execSQL(updSql);
 			}
+			
+			upgradeDbTo330(db, oldVersion);
 		}
 
 		private void upgradeDbTo330(SQLiteDatabase db, int oldVersion)
@@ -2064,6 +1967,8 @@ public class DB {
 						+ " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
+			
+			upgradeDbTo340(db, oldVersion);
 		}
 
 		private void upgradeDbTo340(SQLiteDatabase db, int oldVersion)
@@ -2094,12 +1999,16 @@ public class DB {
 						+ COL_NAME_GPSTRACK__TAG_ID + " INTEGER NULL ";
 				db.execSQL(updSql);
 			}
+			
+			upgradeDbTo350(db, oldVersion);
 		}
 
 		private void upgradeDbTo350(SQLiteDatabase db, int oldVersion)
 				throws SQLException {
 			AddOnDBAdapter.createAddOnTable(db);
 			AddOnDBAdapter.createAddOnBKScheduleTable(db);
+			
+			upgradeDbTo355(db, oldVersion);
 		}
 
 		private void upgradeDbTo355(SQLiteDatabase db, int oldVersion)
@@ -2118,11 +2027,14 @@ public class DB {
 
 				db.execSQL(updSql);
 			}
+			
+			upgradeDbTo356(db, oldVersion);
 		}
 
 		private void upgradeDbTo356(SQLiteDatabase db, int oldVersion)
 				throws SQLException {
 			AddOnDBAdapter.createAddOnSecureBKSettingsTable(db);
+			upgradeDbTo357(db, oldVersion);
 		}
 
 		private void upgradeDbTo357(SQLiteDatabase db, int oldVersion)
@@ -2136,9 +2048,23 @@ public class DB {
 			sql = "DROP TABLE IF EXISTS " + TABLE_NAME_TODO;
 			db.execSQL(sql);
 			createTaskToDoTables(db);
+			
+			upgradeDbTo358(db, oldVersion);
 		}
 
-		private void upgradeDbTo400(SQLiteDatabase db, int oldVersion)
+	    public void upgradeDbTo358(SQLiteDatabase db, int oldVersion) throws SQLException {
+	    	AddOnDBAdapter.createAddOnDataTemplateTables(db);
+	    	
+	    	upgradeDbTo359(db, oldVersion);
+	    }
+
+	    public void upgradeDbTo359(SQLiteDatabase db, int oldVersion) throws SQLException {
+	    	AddOnDBAdapter.createAddOnBTDeviceCarTable(db);
+
+	    	upgradeDbTo400(db, oldVersion);
+	    }
+	    
+	    private void upgradeDbTo400(SQLiteDatabase db, int oldVersion)
 				throws SQLException {
 			String updSql = null;
 			if (!columnExists(db, TABLE_NAME_GPSTRACK,
@@ -2152,6 +2078,8 @@ public class DB {
 
 				db.execSQL(updSql);
 			}
+			
+			upgradeDbTo401(db, oldVersion);
 		}
 
 		private void upgradeDbTo401(SQLiteDatabase db, int oldVersion)

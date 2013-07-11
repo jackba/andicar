@@ -75,7 +75,8 @@
     <string name="APP_Activity_TodoList">"Lista de Tareas"</string>
     <string name="APP_Activity_FuelCategoryList">"Categorías de combustible"</string>
     <string name="APP_Activity_FuelCategoryEdit">"Editar categorías de combustible"</string>
-
+    <string name="APP_Activity_ReimbursementRateEdit">"Editar tasa"</string>
+    
     <string name="GEN_OK">"OK"</string>
     <string name="GEN_CANCEL">"Cancelar"</string>
     <string name="GEN_YES">"Yes"</string>
@@ -156,7 +157,11 @@
     <string name="GEN_StopLabel">"Km"</string>
     <string name="GEN_PaymentFailed">"el Pago ha fallado"</string>
     <string name="GEN_PaymentNotConfirmed">"Pago no confirmado"</string>
-    <string name="GEN_CarierBillingCheckWait">"Verificando proveedor de pago y disponibilidad. Por favor espere un momento"</string>   
+    <string name="GEN_CarierBillingCheckWait">"Verificando proveedor de pago y disponibilidad. Por favor espere un momento"</string>
+    <string name="GEN_ValidFromLabel">"Válido desde:"</string>
+    <string name="GEN_ValidToLabel">"Válido hasta:"</string>
+    <string name="GEN_Reimbursement">"Reembolso:"</string>
+    
     <string name="MENU_PreferencesCaption">"Preferencias"</string>
     <string name="MENU_AboutCaption">"Acerca"</string>
     <string name="MENU_DeleteCaption">"Borrar"</string>
@@ -256,6 +261,7 @@
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Tu base de datos ha sido restaurada. La aplicación  se cerrara."</string>
 
     <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Calcular el reembolso"</string>
+    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Establecer tarifas"</string>
     
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Excluir de los kilómetros el costo calculado"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"Es combustible"</string>
@@ -338,6 +344,9 @@
     <string name="TaskCarEditActivity_StartDate">"Fecha inicial:"</string>
     <string name="TaskCarEditActivity_StartMileage">"kilómetros iniciales:"</string>
     <string name="TaskCarDialogActivity_Title">"Asociar automóvil a una tarea"</string>
+
+    <string name="ReimbursementEditActivity_Rate">"Tarifa:"</string>
+    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Actualizar registros existentes"</string>
     
     <string name="ToDo_OverdueLabel">"Sobrepasado"</string>
     <string name="ToDo_ScheduledLabel">"Programado"</string>

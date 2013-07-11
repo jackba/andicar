@@ -21,6 +21,7 @@ package org.andicar.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Calendar;
 
@@ -35,6 +36,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.format.DateFormat;
 
 import com.google.android.maps.GeoPoint;
@@ -279,11 +281,31 @@ public class Utils {
     		bdNumber = new BigDecimal((Short)number);
     	else if(number instanceof BigDecimal)
     		bdNumber = (BigDecimal)number;
+    	else if(number instanceof String)
+    		bdNumber = new BigDecimal((String)number);
     	
     	bdNumber = bdNumber.setScale(scale, roundingMode);
     	bdNumber = bdNumber.stripTrailingZeros();
-    	if(localeFormat)
-    		return NumberFormat.getInstance().format(bdNumber);
+    	
+    	if(localeFormat){
+    		NumberFormat nf = NumberFormat.getInstance();
+    		DecimalFormatSymbols dfs = DecimalFormatSymbols.getInstance();
+    		nf.setMinimumFractionDigits(scale);
+    		nf.setRoundingMode(roundingMode);
+    		String retVal = nf.format(bdNumber);
+    		if(retVal.contains("" + dfs.getDecimalSeparator())){
+	    		//strip trailing zeroes 
+	    		while ((retVal.endsWith("0") || retVal.endsWith("" + dfs.getDecimalSeparator()) || retVal.endsWith("" + dfs.getGroupingSeparator())) 
+	    				&& retVal.length() > 1) {
+	    			if(retVal.endsWith("" + dfs.getDecimalSeparator())){
+	        			retVal = retVal.substring(0, retVal.length() - 1);
+	        			break;
+	    			}
+	    			retVal = retVal.substring(0, retVal.length() - 1);
+				}
+    		}
+    		return retVal;
+    	}
 
     	return bdNumber.toPlainString();
     }
