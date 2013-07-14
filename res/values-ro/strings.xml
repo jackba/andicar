@@ -266,9 +266,6 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">&quot;Sigur vrei refacerea fisierului? Aceasta actiune va sterge datele existente!&quot;</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">&quot;Baza de date a fost recreata. Aplicatia se va inchide.&quot;</string>
 
-    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Calculează rambursare"</string>
-    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Definire rate"</string>
-    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">&quot;Exclude din costul per Km&quot;</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">&quot;Este combutibil&quot;</string>
 
@@ -361,7 +358,6 @@
     <string name="TaskCarDialogActivity_Title">&quot;Adauga masina la Actiune&quot;</string>
     
     <string name="ReimbursementEditActivity_Rate">"Tarif:"</string>
-    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Actualizarea kilometrajelor existente"</string>
     
     <string name="ToDo_OverdueLabel">&quot;Restanta&quot;</string>
     <string name="ToDo_ScheduledLabel">&quot;Programat&quot;</string>

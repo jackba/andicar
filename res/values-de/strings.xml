@@ -237,9 +237,6 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"Bist Du Dir sicher dass Du dieses Backup wiederherstellen willst? Dadurch werden ALLE deine aktuellen Daten durch die im Backup überschrieben!"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Deine Datenbank wurde wiederhergestellt. Die Anwendung schliesst sich jetzt."</string>
 
-    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Berechnen erstattung"</string>
-    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Set preise"</string>
-    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Von der Kosten pro Strecke Berechnung ausschliessen"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"ist Benzin"</string>
 
@@ -485,7 +482,5 @@
    <string name="TaskCarDialogActivity_Title">"Verlinke Fahrzeug mit Aufgabe"</string>
 
    <string name="ReimbursementEditActivity_Rate">"Erstattungssatz:"</string>
-    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Aktualisieren Sie vorhandene Datensätze"</string>
-   
    
 </resources>

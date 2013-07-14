@@ -106,20 +106,6 @@ public class MainDbAdapter extends DB
                 if(newIndexStr != null && newIndexStr.length() > 0)
                     stopIndex = new BigDecimal(newIndexStr);
             }
-            else if(tableName.equals(TABLE_NAME_REIMBURSEMENT_CAR_RATES)){
-            	if(content.getAsBoolean("UpdateExistingMileges")){
-            		//update existing mileages
-            		String updateSql = 
-            				"UPDATE " + TABLE_NAME_MILEAGE + 
-            				" SET " + COL_NAME_MILEAGE__REIMBURSEMENT_RATE + "=" + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) + ", " +
-            					COL_NAME_MILEAGE__REIMBURSEMENT_VALUE + "= (" + COL_NAME_MILEAGE__INDEXSTOP + "-" + COL_NAME_MILEAGE__INDEXSTART + ") * " + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
-            				" WHERE " + COL_NAME_MILEAGE__DATE + " BETWEEN " + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " AND " + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO) +
-            					" AND " + COL_NAME_MILEAGE__CAR_ID + " = " + content.getAsInteger(COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID) +
-            					" AND " + COL_NAME_MILEAGE__EXPENSETYPE_ID + " = " + content.getAsInteger(COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID);
-            		mDb.execSQL(updateSql);
-            	}
-            	content.remove("UpdateExistingMileges");
-            }
 
             if(mCarId != -1 && stopIndex != null){ //update the car current index
                try{
@@ -340,21 +326,7 @@ public class MainDbAdapter extends DB
                 }
                 
             }
-            else if(tableName.equals(TABLE_NAME_REIMBURSEMENT_CAR_RATES)){
-            	if(content.getAsBoolean("UpdateExistingMileges")){
-            		//update existing mileages
-            		String updateSql = 
-            				"UPDATE " + TABLE_NAME_MILEAGE + 
-            				" SET " + COL_NAME_MILEAGE__REIMBURSEMENT_RATE + "=" + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) + ", " +
-            					COL_NAME_MILEAGE__REIMBURSEMENT_VALUE + "= (" + COL_NAME_MILEAGE__INDEXSTOP + "-" + COL_NAME_MILEAGE__INDEXSTART + ") * " + content.getAsDouble(COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
-            				" WHERE " + COL_NAME_MILEAGE__DATE + " BETWEEN " + content.getAsLong(COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " AND " + content.getAsLong(COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO) +
-            					" AND " + COL_NAME_MILEAGE__CAR_ID + " = " + content.getAsInteger(COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID) +
-            					" AND " + COL_NAME_MILEAGE__EXPENSETYPE_ID + " = " + content.getAsInteger(COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID);
-            		mDb.execSQL(updateSql);
-            	}
-            	content.remove("UpdateExistingMileges");
-            }
-            
+
             if(mCarId != -1 && stopIndex != null){
                try{
                     mDb.beginTransaction();
@@ -750,6 +722,7 @@ public class MainDbAdapter extends DB
                     //also delete the locations
                     mDb.delete(TABLE_NAME_TASK_CAR, COL_NAME_TASK_CAR__CAR_ID + "=" + rowId, null);
                     mDb.delete(TABLE_NAME_TODO, COL_NAME_TODO__CAR_ID + "=" + rowId, null);
+                    mDb.delete(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID + "=" + rowId, null);
                     if(!AddOnDBAdapter.recordDeleted(mDb, TABLE_NAME_CAR, rowId))
                     	return R.string.ERR_063;
                     
@@ -759,6 +732,13 @@ public class MainDbAdapter extends DB
                     //also delete the locations
                     mDb.delete(TABLE_NAME_TASK_CAR, COL_NAME_TASK_CAR__TASK_ID + "=" + rowId, null);
                     mDb.delete(TABLE_NAME_TODO, COL_NAME_TODO__TASK_ID + "=" + rowId, null);
+                    checkVal = (-1 * mDb.delete(tableName, COL_NAME_GEN_ROWID + "=" + rowId, null ));
+                }
+                else if(tableName.equals(TABLE_NAME_EXPENSETYPE)){
+                    mDb.delete(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID + "=" + rowId, null);
+                    if(!AddOnDBAdapter.recordDeleted(mDb, TABLE_NAME_CAR, rowId))
+                    	return R.string.ERR_063;
+                    
                     checkVal = (-1 * mDb.delete(tableName, COL_NAME_GEN_ROWID + "=" + rowId, null ));
                 }
                 else
@@ -1416,7 +1396,43 @@ public class MainDbAdapter extends DB
         catch(NumberFormatException e){}
         return retVal;
     }
-
+    
+    /**
+     * @param carID: Car ID
+     * @param expTypeID: Expense Type ID
+     * @param date Date in seconds
+     * @return
+     */
+    public BigDecimal getReimbursementRate(long carID, long expTypeID, long date){
+    	BigDecimal retVal = null;
+    	Cursor selectCursor = null;
+    	
+        try{
+	    	String selectSql = 
+	    			"SELECT " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
+					" FROM " + TABLE_NAME_REIMBURSEMENT_CAR_RATES +
+						" JOIN " + TABLE_NAME_EXPENSETYPE + " ON " + 
+							sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID) + " = " +
+								sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_ROWID) +
+					" WHERE " + 
+						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID) + " = ? " +
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID) + "=? " +
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + "<=? " + 
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO) + ">=? " +
+					" ORDER BY " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " DESC, " +
+							sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_GEN_ROWID) + " DESC" +
+					" LIMIT 1";
+	    	String[] selectionArgs = {Long.toString(carID), Long.toString(expTypeID), Long.toString(date), Long.toString(date)};
+	        selectCursor = execSelectSql(selectSql, selectionArgs);
+	        if(selectCursor.moveToFirst())
+	            retVal = new BigDecimal(selectCursor.getString(0));
+        }	
+        catch(NumberFormatException e){}
+    	finally{
+    		try{if(selectCursor != null) selectCursor.close();}catch(Exception e){};
+    	}
+    	return retVal;
+    }
 //    public BigDecimal getConvertedDistance(long fromId, long toId, BigDecimal distance){
 //        return distance.multiply(getUOMConversionRate(fromId, toId)).setScale(StaticValues.DECIMALS_CONVERSIONS, StaticValues.ROUNDING_MODE_CONVERSIONS);
 //    }

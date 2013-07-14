@@ -260,9 +260,6 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"Estas seguro que quieres restaurar la copia de seguridad seleccionada? Esta acción reemplazara los datos existentes!"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Tu base de datos ha sido restaurada. La aplicación  se cerrara."</string>
 
-    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Calcular el reembolso"</string>
-    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Establecer tarifas"</string>
-    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Excluir de los kilómetros el costo calculado"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"Es combustible"</string>
 
@@ -346,7 +343,6 @@
     <string name="TaskCarDialogActivity_Title">"Asociar automóvil a una tarea"</string>
 
     <string name="ReimbursementEditActivity_Rate">"Tarifa:"</string>
-    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Actualizar registros existentes"</string>
     
     <string name="ToDo_OverdueLabel">"Sobrepasado"</string>
     <string name="ToDo_ScheduledLabel">"Programado"</string>

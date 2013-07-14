@@ -66,11 +66,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " '[#1]' AS " + FIRST_LINE_LIST_NAME + ", " + //#1
                 " '[#1] -> [#2] = [#3] ' || " +
                         sqlConcatTableColumn(TABLE_NAME_UOM, COL_NAME_UOM__CODE) + " || " +
-                " CASE " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__REIMBURSEMENT_VALUE) +
-	                " WHEN 0 THEN '' " +
-	                " ELSE ' ([#4] ' || " +
-	                	sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_CURRENCY__CODE) + " || ')' " +
-                " END AS " + SECOND_LINE_LIST_NAME + ", " + //#2
+	                " ' [#4]' AS " + SECOND_LINE_LIST_NAME + ", " + //#2
                 " COALESCE( " + sqlConcatTableColumn(TABLE_NAME_TAG, COL_NAME_GEN_NAME) + " || '; ', '') || " + 
                 		sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_GEN_USER_COMMENT) + 
                         " AS " + THIRD_LINE_LIST_NAME + ", " + //#3
@@ -80,8 +76,24 @@ public class ReportDbAdapter extends MainDbAdapter{
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTOP) + ", " + //#7
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTOP) + " - " + 
                 	sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTART) + " AS Mileage, " + //#8
-                sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__REIMBURSEMENT_VALUE) + //#9
-                
+                sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_ROWID) + " AS CarID, " +//#9
+                sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_ROWID) + " AS ExpenseTypeID, " +//#10
+                sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_CURRENCY__CODE) + " AS CurrencyCode, " +//#11
+                "( SELECT " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
+                " FROM " + TABLE_NAME_REIMBURSEMENT_CAR_RATES +
+                " WHERE " +
+						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID) + " = " +
+								sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_ROWID) + 
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID) + " = " +
+								sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_ROWID) +
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " <= " +
+								sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE) +
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO) + " >= " +
+								sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE) +
+				" ORDER BY " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " DESC, " +
+						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_GEN_ROWID) + " DESC " +
+				" LIMIT 1" +
+                ") AS ReimbursementRate " + //#12
             " FROM " + TABLE_NAME_MILEAGE +
                     " JOIN " + TABLE_NAME_EXPENSETYPE +
                         " ON " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__EXPENSETYPE_ID) + "=" +
@@ -134,8 +146,41 @@ public class ReportDbAdapter extends MainDbAdapter{
                     sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTART) + " AS Mileage_DTypeN, " +
                 sqlConcatTableColumn(TABLE_NAME_UOM, COL_NAME_UOM__CODE) + " AS UomCode, " +
                 sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_NAME) + " AS ExpenseTypeName, " +
-                " COALESCE( " + sqlConcatTableColumn(TABLE_NAME_TAG, COL_NAME_GEN_NAME) + " || '; ', '') AS Tag " +
-//                sqlConcatTableColumn(MILEAGE_TABLE_NAME, MILEAGE_COL_DATE_NAME) + " AS Seconds " +
+                " COALESCE( " + sqlConcatTableColumn(TABLE_NAME_TAG, COL_NAME_GEN_NAME) + " || '; ', '') AS Tag, " +
+                "( SELECT " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
+                " FROM " + TABLE_NAME_REIMBURSEMENT_CAR_RATES +
+                " WHERE " +
+						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID) + " = " +
+								sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_ROWID) + 
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID) + " = " +
+								sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_ROWID) +
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " <= " +
+								sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE) +
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO) + " >= " +
+								sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE) +
+				" ORDER BY " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " DESC, " +
+						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_GEN_ROWID) + " DESC " +
+				" LIMIT 1" +
+                ") AS ReimbursementRate_DTypeR, " +
+                sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_CURRENCY__CODE) + " || '/' || " + 
+                	sqlConcatTableColumn(TABLE_NAME_UOM, COL_NAME_UOM__CODE) + " AS '', " +
+                "(" +sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTOP) + " - " +
+                	sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTART) + ") * " +
+                "( SELECT " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
+                " FROM " + TABLE_NAME_REIMBURSEMENT_CAR_RATES +
+                " WHERE " +
+						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__CAR_ID) + " = " +
+								sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_ROWID) + 
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__EXPENSETYPE_ID) + " = " +
+								sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_ROWID) +
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " <= " +
+								sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE) +
+						" AND " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO) + " >= " +
+								sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE) +
+				" ORDER BY " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " DESC, " +
+						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_GEN_ROWID) + " DESC " +
+				" LIMIT 1 " +
+				") AS ReimbursementValue_DTypeR" +
             " FROM " + TABLE_NAME_MILEAGE +
                     " JOIN " + TABLE_NAME_EXPENSETYPE +
                         " ON " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__EXPENSETYPE_ID) + "=" +
@@ -149,6 +194,9 @@ public class ReportDbAdapter extends MainDbAdapter{
                     " JOIN " + TABLE_NAME_CAR +
                         " ON " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__CAR_ID) + "=" +
                                             sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_ROWID) +
+	                    " JOIN " + TABLE_NAME_CURRENCY +
+	                        " ON " + sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_CAR__CURRENCY_ID) + "=" +
+	                                            sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_GEN_ROWID) +
                     " LEFT OUTER JOIN " + TABLE_NAME_TAG +
                     	" ON " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__TAG_ID) + "=" +
                                     sqlConcatTableColumn(TABLE_NAME_TAG, COL_NAME_GEN_ROWID) +
