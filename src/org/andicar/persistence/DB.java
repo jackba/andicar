@@ -128,8 +128,6 @@ public class DB {
 	public static final String COL_NAME_MILEAGE__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE + "_ID";
 	public static final String COL_NAME_MILEAGE__GPSTRACKLOG = "GPSTrackLog";
 	public static final String COL_NAME_MILEAGE__TAG_ID = TABLE_NAME_TAG + "_ID";
-	public static final String COL_NAME_MILEAGE__REIMBURSEMENT_RATE = "ReimbursementRate";
-	public static final String COL_NAME_MILEAGE__REIMBURSEMENT_VALUE = "ReimbursementValue";
 	// currencies
 	public static final String COL_NAME_CURRENCY__CODE = "Code";
 	// refuel
@@ -156,9 +154,6 @@ public class DB {
 	public static final String COL_NAME_REFUEL__BPARTNER_ID = TABLE_NAME_BPARTNER + "_ID";
 	public static final String COL_NAME_REFUEL__BPARTNER_LOCATION_ID = TABLE_NAME_BPARTNERLOCATION + "_ID";
 	public static final String COL_NAME_REFUEL__TAG_ID = TABLE_NAME_TAG + "_ID";
-
-	// expense type
-	public static final String COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT = "IsCalculateReimbursement";
 
 	// expense category
 	public static final String COL_NAME_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST = "IsExcludefromMileagecost";
@@ -365,8 +360,6 @@ public class DB {
 	public static final int COL_POS_MILEAGE__EXPENSETYPE_ID = 10;
 	public static final int COL_POS_MILEAGE__GPSTRACKLOG = 11;
 	public static final int COL_POS_MILEAGE__TAG_ID = 12;
-	public static final int COL_POS_MILEAGE__REIMBURSEMENT_RATE = 13;
-	public static final int COL_POS_MILEAGE__REIMBURSEMENT_VALUE = 14;
 
 	// currencies
 	public static int COL_POS_CURRENCY__CODE = 4;
@@ -394,8 +387,6 @@ public class DB {
 	public static final int COL_POS_REFUEL__BPARTNER_ID = 24;
 	public static final int COL_POS_REFUEL__BPARTNER_LOCATION_ID = 25;
 	public static final int COL_POS_REFUEL__TAG_ID = 26;
-
-	public static final int COL_POS_EXPENSETYPE__ISCALCULATEREIMBURSEMENT = 4;
 
 	// expense category
 	public static final int COL_POS_EXPENSECATEGORY__ISEXCLUDEFROMMILEAGECOST = 4;
@@ -523,8 +514,7 @@ public class DB {
 
 	public static final String[] COL_LIST_EXPENSETYPE = { COL_NAME_GEN_ROWID,
 			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
-			COL_NAME_GEN_USER_COMMENT,
-			COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT };
+			COL_NAME_GEN_USER_COMMENT };
 
 	public static final String[] COL_LIST_MILEAGE_TABLE = { COL_NAME_GEN_ROWID,
 			COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
@@ -748,9 +738,7 @@ public class DB {
 			+ COL_NAME_GEN_ISACTIVE
 			+ " TEXT DEFAULT 'Y', "
 			+ COL_NAME_GEN_USER_COMMENT
-			+ " TEXT NULL, "
-			+ COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT
-			+ " TEXT NOT NULL DEFAULT 'N' " + ");";
+			+ " TEXT NULL " + ");";
 	protected static final String CREATE_SQL_MILEAGE_TABLE = "CREATE TABLE IF NOT EXISTS "
 			+ TABLE_NAME_MILEAGE
 			+ " ( "
@@ -779,12 +767,7 @@ public class DB {
 			+ COL_NAME_MILEAGE__GPSTRACKLOG
 			+ " TEXT NULL, "
 			+ COL_NAME_MILEAGE__TAG_ID
-			+ " INTEGER NULL, "
-			+ COL_NAME_MILEAGE__REIMBURSEMENT_RATE
-			+ " NUMERIC NOT NULL, "
-			+ COL_NAME_MILEAGE__REIMBURSEMENT_VALUE
-			+ " NUMERIC NOT NULL "
-			+ ");";
+			+ " INTEGER NULL " + ");";
 	protected static final String CREATE_SQL_CURRENCY_TABLE = "CREATE TABLE IF NOT EXISTS "
 			+ TABLE_NAME_CURRENCY
 			+ " ( "
@@ -2084,29 +2067,7 @@ public class DB {
 
 		private void upgradeDbTo401(SQLiteDatabase db, int oldVersion)
 				throws SQLException {
-			String updSql = null;
 			createReimbursementCarRatesTable(db);
-			if (!columnExists(db, TABLE_NAME_EXPENSETYPE,
-					COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT)) {
-				updSql = "ALTER TABLE " + TABLE_NAME_EXPENSETYPE + " ADD "
-						+ COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT
-						+ " TEXT NOT NULL DEFAULT 'N'";
-				db.execSQL(updSql);
-			}
-			if (!columnExists(db, TABLE_NAME_MILEAGE,
-					COL_NAME_MILEAGE__REIMBURSEMENT_RATE)) {
-				updSql = "ALTER TABLE " + TABLE_NAME_MILEAGE + " ADD "
-						+ COL_NAME_MILEAGE__REIMBURSEMENT_RATE
-						+ " NUMERIC NOT NULL DEFAULT 0";
-				db.execSQL(updSql);
-			}
-			if (!columnExists(db, TABLE_NAME_MILEAGE,
-					COL_NAME_MILEAGE__REIMBURSEMENT_VALUE)) {
-				updSql = "ALTER TABLE " + TABLE_NAME_MILEAGE + " ADD "
-						+ COL_NAME_MILEAGE__REIMBURSEMENT_VALUE
-						+ " NUMERIC NOT NULL DEFAULT 0";
-				db.execSQL(updSql);
-			}
 		}
 
 		private boolean columnExists(SQLiteDatabase db, String table,

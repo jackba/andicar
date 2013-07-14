@@ -23,13 +23,9 @@ import org.andicar.persistence.MainDbAdapter;
 import org.andicar2.activity.R;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 
 /**
@@ -41,9 +37,6 @@ public class ExpenseTypeEditActivity extends EditActivityBase
     private EditText etName = null;
     private EditText etUserComment = null;
     private CheckBox ckIsActive = null;
-    private CheckBox ckIsCalculateReimbursement = null;
-    private Button btnSetReimbursementRates = null;
-    private boolean isFinishAfterSave = true;
 
     /** Called when the activity is first created. */
     @Override
@@ -54,31 +47,6 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         etName = (EditText) findViewById( R.id.etName );
         etUserComment = (EditText) findViewById( R.id.etUserComment );
         ckIsActive = (CheckBox) findViewById( R.id.ckIsActive );
-        btnSetReimbursementRates = (Button) findViewById(R.id.btnSetReimbursementRates);
-        btnSetReimbursementRates.setVisibility(View.GONE);
-        btnSetReimbursementRates.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				isFinishAfterSave = false;
-				saveData();
-				isFinishAfterSave = true;
-				Intent i = new Intent(getApplicationContext(), ReimbursementRateEditActivity.class);
-				i.putExtra("Operation", "N");
-				i.putExtra("expenseTypeId", mRowId);
-				startActivity(i);
-			}
-		});
-        ckIsCalculateReimbursement = (CheckBox) findViewById( R.id.ckIsCalculateReimbursement);
-        ckIsCalculateReimbursement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(isChecked)
-					btnSetReimbursementRates.setVisibility(View.VISIBLE);
-				else
-					btnSetReimbursementRates.setVisibility(View.GONE);
-			}
-		});
-
         String operation = mBundleExtras.getString("Operation"); //E = edit, N = new
 
         if( operation.equals( "E") ) {
@@ -87,7 +55,6 @@ public class ExpenseTypeEditActivity extends EditActivityBase
                     MainDbAdapter.COL_LIST_EXPENSETYPE, mRowId);
             String name = c.getString( MainDbAdapter.COL_POS_GEN_NAME );
             String isActive = c.getString( MainDbAdapter.COL_POS_GEN_ISACTIVE );
-            String isCalculateReimbursement = c.getString( MainDbAdapter.COL_POS_EXPENSETYPE__ISCALCULATEREIMBURSEMENT );
             String userComment = c.getString( MainDbAdapter.COL_POS_GEN_USER_COMMENT );
 
             if( name != null ) {
@@ -97,10 +64,6 @@ public class ExpenseTypeEditActivity extends EditActivityBase
                 ckIsActive.setChecked( isActive.equals( "Y" ) );
             }
 
-            if( isCalculateReimbursement != null ) {
-            	ckIsCalculateReimbursement.setChecked( isCalculateReimbursement.equals( "Y" ) );
-            }
-
             if( userComment != null ) {
                 etUserComment.setText( userComment );
             }
@@ -108,7 +71,6 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         }
         else {
             ckIsActive.setChecked( true );
-            ckIsCalculateReimbursement.setChecked(false);
         }
 
     }
@@ -119,8 +81,6 @@ public class ExpenseTypeEditActivity extends EditActivityBase
         ContentValues data = new ContentValues();
         data.put( MainDbAdapter.COL_NAME_GEN_NAME,
                 etName.getText().toString());
-        data.put( MainDbAdapter.COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT,
-                (ckIsCalculateReimbursement.isChecked() ? "Y" : "N") );
         data.put( MainDbAdapter.COL_NAME_GEN_ISACTIVE,
                 (ckIsActive.isChecked() ? "Y" : "N") );
         data.put( MainDbAdapter.COL_NAME_GEN_USER_COMMENT,

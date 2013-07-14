@@ -35,7 +35,6 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -48,7 +47,6 @@ import android.widget.TextView;
  */
 public class ReimbursementRateEditActivity extends EditActivityBase
 {
-    private CheckBox ckUpdateExistingMileages = null;
     private EditText etRate = null;
     private TextView tvRateUOM = null;
     private TextView tvValidFromValue = null;
@@ -108,15 +106,14 @@ public class ReimbursementRateEditActivity extends EditActivityBase
         calValidFrom.set(Calendar.MINUTE, 0);
         calValidFrom.set(Calendar.SECOND, 0);
         calValidFrom.set(Calendar.MILLISECOND, 0);
-        calValidTo.set(Calendar.HOUR_OF_DAY, 24);
-        calValidTo.set(Calendar.MINUTE, 0);
-        calValidTo.set(Calendar.SECOND, 0);
-        calValidTo.set(Calendar.MILLISECOND, 0);
+        calValidTo.set(Calendar.HOUR_OF_DAY, 23);
+        calValidTo.set(Calendar.MINUTE, 59);
+        calValidTo.set(Calendar.SECOND, 59);
+        calValidTo.set(Calendar.MILLISECOND, 999);
 
         data.put( MainDbAdapter.COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM, calValidFrom.getTimeInMillis() / 1000);
         data.put( MainDbAdapter.COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDTO, calValidTo.getTimeInMillis() / 1000);
         data.put( MainDbAdapter.COL_NAME_REIMBURSEMENT_CAR_RATES__RATE, etRate.getText().toString());
-        data.put( "UpdateExistingMileges", ckUpdateExistingMileages.isChecked());
 
         int dbRetVal = -1;
         String strErrMsg = null;
@@ -177,7 +174,6 @@ public class ReimbursementRateEditActivity extends EditActivityBase
 	}
 	
     private void init() {
-    	ckUpdateExistingMileages = (CheckBox) findViewById(R.id.ckUpdateExistingMileages);
     	etRate = (EditText) findViewById(R.id.etRate);
     	tvRateUOM = (TextView) findViewById(R.id.tvRateUOM);
         tvValidFromValue = (TextView) findViewById(R.id.tvValidFromValue);
@@ -215,8 +211,7 @@ public class ReimbursementRateEditActivity extends EditActivityBase
                 mCarId, false);
         initSpinner(spnExpType, MainDbAdapter.TABLE_NAME_EXPENSETYPE,
                 MainDbAdapter.COL_LIST_GEN_ROWID_NAME, new String[]{MainDbAdapter.COL_NAME_GEN_NAME},
-                MainDbAdapter.WHERE_CONDITION_ISACTIVE + " AND " + MainDbAdapter.COL_NAME_EXPENSETYPE__ISCALCULATEREIMBURSEMENT + "='Y'"
-                , null, MainDbAdapter.COL_NAME_GEN_NAME,
+                MainDbAdapter.WHERE_CONDITION_ISACTIVE, null, MainDbAdapter.COL_NAME_GEN_NAME,
                 mExpTypeId, false);
     }
 

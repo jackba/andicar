@@ -266,9 +266,6 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"Are you sure you want to restore the selected backup? This action will replace your existing data!"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"Your database was restored. The application will be closed."</string>
 
-    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"Calculate reimbursement"</string>
-    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"Set rates"</string>
-    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"Exclude from mileage cost calculation"</string>
     <string name="ExpenseCategoryEditActivity_IsFuel">"Is fuel"</string>
 
@@ -359,7 +356,6 @@
     <string name="TaskCarDialogActivity_Title">"Link car to task"</string>
     
     <string name="ReimbursementEditActivity_Rate">"Rate:"</string>
-    <string name="ReimbursementEditActivity_UpdateExistingRecords">"Update existing mileages"</string>
     
     <string name="ToDo_OverdueLabel">"Overdue"</string>
     <string name="ToDo_ScheduledLabel">"Scheduled"</string>

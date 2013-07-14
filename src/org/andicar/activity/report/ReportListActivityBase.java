@@ -398,6 +398,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
             						.replaceAll("_DTypeN", "")
             						.replaceAll("_DTypeD", "")
             						.replaceAll("_DTypeL", "")
+            						.replaceAll("_DTypeR", "")
             						+ "\"";
         }
         reportContent = reportContent + "\n";
@@ -415,6 +416,8 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                 	colVal = Utils.numberToString(reportCursor.getDouble(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
                 else if(reportCursor.getColumnName(i).endsWith("_DTypeL"))
                 	colVal = Utils.numberToString(reportCursor.getLong(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
+                else if(reportCursor.getColumnName(i).endsWith("_DTypeR"))
+                	colVal = Utils.numberToString(reportCursor.getDouble(i), false, 5, StaticValues.ROUNDING_MODE_RATES) ;
                 else if(reportCursor.getColumnName(i).endsWith("_DTypeD"))
                 	colVal = DateFormat.getDateFormat(this).format(reportCursor.getLong(i) * 1000);
                 else
@@ -498,6 +501,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                                 		.replaceAll("_DTypeN", "") 
 	            						.replaceAll("_DTypeD", "")
 	            						.replaceAll("_DTypeL", "")
+	            						.replaceAll("_DTypeR", "")
                         		+ "</TH>\n";
         }
         reportContent = reportContent +
@@ -521,6 +525,10 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                 else if(reportCursor.getColumnName(i).endsWith("_DTypeL")){
                 	colVal = Utils.numberToString(reportCursor.getLong(i), true, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
                 	colValUF = Utils.numberToString(reportCursor.getLong(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH);
+                }
+                if(reportCursor.getColumnName(i).contains("_DTypeR")){
+                	colVal = Utils.numberToString(reportCursor.getDouble(i), true, 5, StaticValues.ROUNDING_MODE_RATES);
+                	colValUF = Utils.numberToString(reportCursor.getDouble(i), false, 5, StaticValues.ROUNDING_MODE_RATES);
                 }
                 else if(reportCursor.getColumnName(i).endsWith("_DTypeD")){
                 	date = reportCursor.getLong(i) * 1000;

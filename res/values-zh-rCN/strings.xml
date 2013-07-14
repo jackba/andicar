@@ -255,9 +255,6 @@
     <string name="BackupRestoreEditActivity_RestoreConfirmation">"你确定你想要从选择的备份中还原？此操作会替换你的已有数据！"</string>
     <string name="BackupRestoreEditActivity_RestoreOKMessage">"你的数据库已被还原。此程序即将关闭。"</string>
 
-    <string name="ExpenseTypeEditActivity_IsCalculateReimbursement">"计算报销"</string>
-    <string name="ExpenseTypeEditActivity_BtnReimbursementLabel">"费率设置"</string>
-    
     <string name="ExpenseCategoryEditActivity_IsExcludeLabel">"计算排除里程费用"</string>
     <string name="ExpenseEditActivity_CreatedFromWarning">"这个费用是由 [#1] 创建。\n编辑与之相对应的 [#1]."</string>
 
@@ -342,7 +339,6 @@
 	<string name="TaskCarDialogActivity_Title">"连接车辆到任务"</string>
 
     <string name="ReimbursementEditActivity_Rate">"费用:"</string>
-    <string name="ReimbursementEditActivity_UpdateExistingRecords">"更新现有记录"</string>
     
 	<string name="ToDo_OverdueLabel">"超期："</string>
 	<string name="ToDo_ScheduledLabel">"如期："</string>

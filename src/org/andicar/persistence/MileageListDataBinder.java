@@ -17,6 +17,8 @@
  */
 package org.andicar.persistence;
 
+import java.math.BigDecimal;
+
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
 import org.andicar2.activity.R;
@@ -30,7 +32,7 @@ import android.widget.TextView;
 public class MileageListDataBinder implements SimpleCursorAdapter.ViewBinder {
     @Override
     public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
-    	if(columnIndex == 1) {
+		if(columnIndex == 1) {
     		((TextView) view).setText(
     				cursor.getString(1)
     					.replace("[#1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
@@ -39,14 +41,21 @@ public class MileageListDataBinder implements SimpleCursorAdapter.ViewBinder {
     		return true;
     	}
     	else if(columnIndex == 2){
+    		BigDecimal reimbursementRate = BigDecimal.ZERO;
+    		try{
+    			reimbursementRate = new BigDecimal(cursor.getDouble(12));
+    		}
+    		catch(Exception e){};
     		((TextView) view).setText(
     				cursor.getString(2)
     					.replace("[#1]", Utils.numberToString(cursor.getDouble(6) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
     					.replace("[#2]", Utils.numberToString(cursor.getDouble(7) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
     					.replace("[#3]", Utils.numberToString(cursor.getDouble(8) , true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH))
     					.replace("[#4]", 
-    						view.getContext().getResources().getText(R.string.GEN_Reimbursement).toString() + " " + 
-    								Utils.numberToString(cursor.getDouble(9) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+    							(reimbursementRate.compareTo(BigDecimal.ZERO) == 0) ? "" :
+        						"("+ view.getContext().getResources().getText(R.string.GEN_Reimbursement).toString() + " " +
+        						Utils.numberToString(reimbursementRate.multiply(new BigDecimal(cursor.getDouble(8))) , true, StaticValues.DECIMALS_RATES, StaticValues.ROUNDING_MODE_RATES)
+        							+ " " + cursor.getString(11) + ")")
 			 );
     		return true;
     	}

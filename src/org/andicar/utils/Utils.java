@@ -25,10 +25,10 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Calendar;
 
-import org.andicar2.activity.R;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
+import org.andicar2.activity.R;
 
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +36,6 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.format.DateFormat;
 
 import com.google.android.maps.GeoPoint;

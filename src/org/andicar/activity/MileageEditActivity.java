@@ -618,10 +618,11 @@ public class MileageEditActivity extends EditActivityBase {
         data.put( MainDbAdapter.COL_NAME_MILEAGE__CAR_ID, mCarId);
         data.put( MainDbAdapter.COL_NAME_MILEAGE__DRIVER_ID, mDriverId);
         data.put( MainDbAdapter.COL_NAME_MILEAGE__INDEXSTART, mStartIndex.toString());
-            data.put( MainDbAdapter.COL_NAME_MILEAGE__INDEXSTOP, mNewIndex.toString());
+        data.put( MainDbAdapter.COL_NAME_MILEAGE__INDEXSTOP, mNewIndex.toString());
         data.put( MainDbAdapter.COL_NAME_MILEAGE__UOMLENGTH_ID, mUOMLengthId);
         data.put( MainDbAdapter.COL_NAME_MILEAGE__EXPENSETYPE_ID, mExpTypeId);
         data.put( MainDbAdapter.COL_NAME_MILEAGE__GPSTRACKLOG, "");
+        
         if(acTag.getText().toString() != null && acTag.getText().toString().length() > 0){
             String selection = "UPPER (" + MainDbAdapter.COL_NAME_GEN_NAME + ") = ?";
             String[] selectionArgs = {acTag.getText().toString().toUpperCase()};

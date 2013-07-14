@@ -588,6 +588,7 @@ public class MainActivity extends BaseActivity {
 	}
 
 	private void fillMileageZone() {
+		BigDecimal reimbursementRate = BigDecimal.ZERO;
 		if(!isCarDefined){
 			btnMileageInsert.setEnabled(false);
 			btnMileageList.setEnabled(false);
@@ -613,7 +614,11 @@ public class MainActivity extends BaseActivity {
 							DateFormat.getDateFormat(getApplicationContext())
 									.format(listCursor.getLong(5) * 1000)));
 			
-			if(listCursor.getString(2) != null)
+			if(listCursor.getString(2) != null){
+				try{
+					reimbursementRate = new BigDecimal(listCursor.getDouble(12));
+				}
+				catch(Exception e){}
 				tvThreeLineListMileageText2.setText(listCursor.getString(2)
 					.replace(
 							"[#1]",
@@ -630,11 +635,13 @@ public class MainActivity extends BaseActivity {
 							Utils.numberToString(listCursor.getDouble(8), true,
 									StaticValues.DECIMALS_LENGTH,
 									StaticValues.ROUNDING_MODE_LENGTH))
-					.replace("[#4]", 
-    						mResource.getText(R.string.GEN_Reimbursement).toString() + " " + 
-    								Utils.numberToString(listCursor.getDouble(9) , true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
-
-			);
+					.replace("[#4]",
+							(reimbursementRate.compareTo(BigDecimal.ZERO) == 0) ? "" :
+        						"("+ getResources().getText(R.string.GEN_Reimbursement).toString() + " " +
+        						Utils.numberToString(reimbursementRate.multiply(new BigDecimal(listCursor.getDouble(8))) , true, StaticValues.DECIMALS_RATES, StaticValues.ROUNDING_MODE_RATES)
+        							+ " " + listCursor.getString(11) + ")")
+					);
+			}
 			tvThreeLineListMileageText3.setText(listCursor.getString(3));
 			btnMileageList.setEnabled(true);
 		} else {
