@@ -501,10 +501,10 @@ public class GPSTrackService extends Service {
             		footerTxt = footerTxt
 	                    + "<description>\n<![CDATA[End of trip '" + sName + "'<br>" + Utils.getDateStr(true, true, true);
             			try{
-            				footerTxt = footerTxt + "\n<br>Start at: " +DateFormat.getDateFormat(getApplicationContext()).format(lStartTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStartTime * 1000);
+            				footerTxt = footerTxt + "\n<br>Start at: " + DateFormat.getDateFormat(getApplicationContext()).format(lStartTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStartTime * 1000);
             			} catch(Exception e){};
             			try{
-            				footerTxt = footerTxt + "\n<br>End at: " +DateFormat.getDateFormat(getApplicationContext()).format(lStopTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStopTime * 1000);
+            				footerTxt = footerTxt + "\n<br>End at: " + DateFormat.getDateFormat(getApplicationContext()).format(lStopTime * 1000) + " " + DateFormat.getTimeFormat(getApplicationContext()).format(lStopTime * 1000);
             			} catch(Exception e){};
             			footerTxt = footerTxt + "\n<hr>";
             			try{
