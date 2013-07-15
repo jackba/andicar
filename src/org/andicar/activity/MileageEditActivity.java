@@ -66,7 +66,11 @@ public class MileageEditActivity extends EditActivityBase {
     private BigDecimal mStartIndex = new BigDecimal("0");
     private BigDecimal mStopIndex = null;
     private BigDecimal mEntryMileageValue = BigDecimal.valueOf(0);
+    private BigDecimal mReimbursementRate = BigDecimal.ZERO;
     private boolean isRecordMileage = false;
+    private String mCarCurrencyCode = "";
+    private boolean mReimbursementCanCalculated = true;
+    
 
     private RelativeLayout lCarZone;
     private RelativeLayout lDriverZone;
@@ -75,6 +79,7 @@ public class MileageEditActivity extends EditActivityBase {
     private RadioButton rbInsertModeMileage;
     private TextView tvCalculatedTextLabel;
     private TextView tvMileageRecInProgress;
+    private TextView tvReimbursementValue;
     private EditText etStartIndex;
     private EditText etUserInput;
     private TextView tvCalculatedContent;
@@ -260,6 +265,7 @@ public class MileageEditActivity extends EditActivityBase {
             return;
         }
     	c.close();
+    	setReimbursementValue();
 
         if(isSendStatistics)
             AndiCarStatistics.sendFlurryEvent(this, "MileageEdit", null);
@@ -356,7 +362,8 @@ public class MileageEditActivity extends EditActivityBase {
         	acTag.setOnKeyListener(this);
         if(acUserComment != null)
         	acUserComment.setOnKeyListener(this);
-        
+        mCarCurrencyCode = mDbAdapter.getCurrencyCode(mDbAdapter.getCarCurrencyID(mCarId));
+        setReimbursementValue();
     }
     
     private void init(){
@@ -364,6 +371,7 @@ public class MileageEditActivity extends EditActivityBase {
         lDriverZone = (RelativeLayout)findViewById(R.id.lDriverZone);
         lExpTypeZone = (RelativeLayout)findViewById(R.id.lExpTypeZone);
         tvCalculatedContent = (TextView) findViewById(R.id.tvCalculatedTextContent);
+        tvReimbursementValue = (TextView) findViewById(R.id.tvReimbursementValue);
         etUserInput = (EditText) findViewById(R.id.etUserInput);
         etUserInput.addTextChangedListener(mileageTextWatcher);
         etStartIndex = (EditText) findViewById(R.id.etIndexStart);
@@ -461,6 +469,7 @@ public class MileageEditActivity extends EditActivityBase {
             	}
             }
             initDateTime(mlDateTimeInSeconds * 1000);
+            setReimbursementValue();
         }
         catch(NumberFormatException e){}
     }
@@ -533,6 +542,7 @@ public class MileageEditActivity extends EditActivityBase {
                 tvCalculatedContent.setText(Utils.numberToString(pNewIndex, true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH));
             }
             mNewIndex = pNewIndex;
+            setReimbursementValue();
         }
         catch(NumberFormatException e){
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -791,6 +801,7 @@ public class MileageEditActivity extends EditActivityBase {
                     if(isBackgroundSettingsActive)
                         return;
                     setCarId(arg3);
+                    setReimbursementValue();
                 }
                 public void onNothingSelected(AdapterView<?> arg0) {
                 }
@@ -813,6 +824,7 @@ public class MileageEditActivity extends EditActivityBase {
                 if(isBackgroundSettingsActive)
                     return;
                 setExpTypeId(arg3);
+                setReimbursementValue();
             }
             public void onNothingSelected(AdapterView<?> arg0) {
             }
@@ -844,6 +856,7 @@ public class MileageEditActivity extends EditActivityBase {
                 mCarId, 30));
         acUserComment.setAdapter(userCommentAdapter);
         mStartIndex = BigDecimal.ZERO;
+        mCarCurrencyCode = mDbAdapter.getCurrencyCode(mDbAdapter.getCarCurrencyID(carId));
         fillGetCurrentIndex();
         calculateMileageOrNewIndex();
 	}
@@ -909,4 +922,32 @@ public class MileageEditActivity extends EditActivityBase {
         setSpecificLayout();
 	}
 
+	@Override
+	protected void updateDateTime() {
+		super.updateDateTime();
+		setReimbursementValue();
+	}
+
+	private void setReimbursementValue(){
+		if(!mReimbursementCanCalculated)
+			return;
+		try{
+			mReimbursementRate = mDbAdapter.getReimbursementRate(mCarId, mExpTypeId, mlDateTimeInSeconds);
+			if(mReimbursementRate.compareTo(BigDecimal.ZERO) != 0 && mNewIndex.compareTo(mStartIndex) > 0){
+				tvReimbursementValue.setVisibility(View.VISIBLE);
+				tvReimbursementValue.setText(mResource.getString(R.string.GEN_Reimbursement) + " " + 
+						Utils.numberToString((mNewIndex.subtract(mStartIndex)).multiply(mReimbursementRate)
+								, true, StaticValues.DECIMALS_RATES, StaticValues.ROUNDING_MODE_RATES) + " " + mCarCurrencyCode);
+			}
+			else
+				tvReimbursementValue.setVisibility(View.GONE);
+		}
+		catch(Exception e){
+			mReimbursementCanCalculated = false; //avoid subsequent exceptions
+			tvReimbursementValue.setVisibility(View.GONE);
+			madbErrorAlert.setMessage("An unexpected error occured!\nPlease contact the developers at andicar.support@gmail.com.\n\n" + e.getClass() + "\n" + e.getMessage());
+			madError = madbErrorAlert.create();
+			madError.show();
+		}
+	}
 }

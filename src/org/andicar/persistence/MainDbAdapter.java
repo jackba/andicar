@@ -1404,7 +1404,7 @@ public class MainDbAdapter extends DB
      * @return
      */
     public BigDecimal getReimbursementRate(long carID, long expTypeID, long date){
-    	BigDecimal retVal = null;
+    	BigDecimal retVal = BigDecimal.ZERO;
     	Cursor selectCursor = null;
     	
         try{
