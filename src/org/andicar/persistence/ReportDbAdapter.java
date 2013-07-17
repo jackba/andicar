@@ -123,7 +123,6 @@ public class ReportDbAdapter extends MainDbAdapter{
     public static String mileageListReportSelect =
             "SELECT " +
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_GEN_ROWID) + " AS MileageId, " +
-                sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_GEN_USER_COMMENT) + ", " +
                 "DATETIME(" + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE) +
                     ", 'unixepoch', 'localtime') AS " + COL_NAME_MILEAGE__DATE + ", " +
 
@@ -146,6 +145,7 @@ public class ReportDbAdapter extends MainDbAdapter{
                     sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTART) + " AS Mileage_DTypeN, " +
                 sqlConcatTableColumn(TABLE_NAME_UOM, COL_NAME_UOM__CODE) + " AS UomCode, " +
                 sqlConcatTableColumn(TABLE_NAME_EXPENSETYPE, COL_NAME_GEN_NAME) + " AS ExpenseTypeName, " +
+                sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_GEN_USER_COMMENT) + ", " +
                 " COALESCE( " + sqlConcatTableColumn(TABLE_NAME_TAG, COL_NAME_GEN_NAME) + " || '; ', '') AS Tag, " +
                 "( SELECT " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__RATE) +
                 " FROM " + TABLE_NAME_REIMBURSEMENT_CAR_RATES +
@@ -180,7 +180,8 @@ public class ReportDbAdapter extends MainDbAdapter{
 				" ORDER BY " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " DESC, " +
 						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_GEN_ROWID) + " DESC " +
 				" LIMIT 1 " +
-				") AS ReimbursementValue_DTypeR" +
+				") AS ReimbursementValue_DTypeR, " +
+				sqlConcatTableColumn(TABLE_NAME_CURRENCY, COL_NAME_CURRENCY__CODE) + " AS '' " +
             " FROM " + TABLE_NAME_MILEAGE +
                     " JOIN " + TABLE_NAME_EXPENSETYPE +
                         " ON " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__EXPENSETYPE_ID) + "=" +
