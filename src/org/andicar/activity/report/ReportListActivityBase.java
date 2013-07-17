@@ -19,16 +19,18 @@
 
 package org.andicar.activity.report;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 
 import org.andicar.activity.ListActivityBase;
-import org.andicar2.activity.R;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.FileUtils;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.persistence.ReportDbAdapter;
 import org.andicar.utils.StaticValues;
 import org.andicar.utils.Utils;
+import org.andicar2.activity.R;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -388,11 +390,20 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
         String reportContent = "";
         String colVal;
         int i;
+    	BigDecimal oldFullRefuelIndex = null;
+    	BigDecimal distance = null;
+    	BigDecimal fuelQty = null;
 
         //create header row
+        boolean appendComma = false;
         for(i = 0; i< reportCursor.getColumnCount(); i++){
-            if(i > 0)
+        	if(reportCursor.getColumnName(i).endsWith("DoNotExport"))
+        		continue;
+        	
+            if(appendComma)
                 reportContent = reportContent + ",";
+            appendComma = true;
+            
             reportContent = reportContent + "\"" + 
             					reportCursor.getColumnName(i)
             						.replaceAll("_DTypeN", "")
@@ -407,11 +418,18 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
 		long days;
 		Calendar now = Calendar.getInstance();
 		Calendar cal = Calendar.getInstance();
-        
+		
+		appendComma = false;
         while(reportCursor != null && reportCursor.moveToNext()){
+        	appendComma = false;
             for(i = 0; i< reportCursor.getColumnCount(); i++){
-                if(i > 0)
+            	if(reportCursor.getColumnName(i).endsWith("DoNotExport"))
+            		continue;
+            	
+                if(appendComma)
                     reportContent = reportContent + ",";
+                appendComma = true;
+                
                 if(reportCursor.getColumnName(i).endsWith("_DTypeN"))
                 	colVal = Utils.numberToString(reportCursor.getDouble(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH) ;
                 else if(reportCursor.getColumnName(i).endsWith("_DTypeL"))
@@ -422,10 +440,92 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                 	colVal = DateFormat.getDateFormat(this).format(reportCursor.getLong(i) * 1000);
                 else
                 	colVal = reportCursor.getString(i);
+                
                 if(colVal == null)
                     colVal = "";
                 colVal = colVal.replace("\"", "''");
-                if(!(this instanceof ToDoListReportActivity)){
+                if(this instanceof ToDoListReportActivity){
+                	colVal =   
+    	                	colVal.replace("[#TDR1]", mRes.getString(R.string.ToDo_DoneLabel))
+    	                            .replace("[#TDR2]", mRes.getString(R.string.ToDo_OverdueLabel))
+    	                            .replace("[#TDR3]", mRes.getString(R.string.ToDo_ScheduledLabel))
+    	                            .replace("[#TDR4]", mRes.getString(R.string.TaskEditActivity_TimeDriven))
+    	                            .replace("[#TDR5]", mRes.getString(R.string.TaskEditActivity_MileageDriven))
+    	                            .replace("[#TDR6]", 
+    	                            		mRes.getString(R.string.TaskEditActivity_TimeDriven) 
+    	                            			+ " & " + mRes.getString(R.string.TaskEditActivity_MileageDriven))
+    	                            ;
+                    	if((i == 6 || i == 7 || i == 8) && colVal.equals("0"))
+                    		colVal = "N/A";
+                    	if((i == 8 || i == 9) && !colVal.equals("N/A")){
+                    		try{
+    	                		days = Long.parseLong(colVal);
+    	                		if(days == 99999999999L)
+    								colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
+    	                		else{
+    								cal.setTimeInMillis(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+    								if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
+    									colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
+    								else{
+    									if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
+    										colVal = DateFormat.getDateFormat(this)
+    															.format(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+    									else{
+    										colVal = DateFormat.format("MMM, yyyy", cal).toString();
+    									}
+    								}
+    	                		}
+                    		}
+                    		catch(NumberFormatException e){
+                    			colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
+                    		}
+                    	}
+                }
+                else{ 
+                	if(this instanceof RefuelListReportActivity){
+	                	if(colVal.contains("[#rv1]") || colVal.contains("[#rv2]")){
+		            		try{
+		            			oldFullRefuelIndex = new BigDecimal(reportCursor.getDouble(27));
+		            		}
+		            		catch(Exception e){
+		            			colVal = colVal.replace("[#rv1]", "Error #1! Please contact me at andicar.support@gmail.com")
+	            								.replace("[#rv2]", "Error #1! Please contact me at andicar.support@gmail.com");
+		            			reportContent = reportContent + "\"" + colVal + "\"";
+		            			continue;
+		            		}
+		            		if(oldFullRefuelIndex == null || oldFullRefuelIndex.compareTo(BigDecimal.ZERO) < 0  //no previous full refuel found 
+		            				|| reportCursor.getString(6).equals("N")){ //this is not a full refuel
+		            			colVal = colVal.replace("[#rv1]", "")
+		            							.replace("[#rv2]", "");
+		            		}
+		        			// calculate the cons and fuel eff.
+		            		distance = (new BigDecimal(reportCursor.getString(5))).subtract(oldFullRefuelIndex);
+		            		try{
+		        				fuelQty = (new BigDecimal(mReportDbHelper.getFuelQtyForCons(
+		        						reportCursor.getLong(28), oldFullRefuelIndex, reportCursor.getDouble(5))));
+		            		}
+		            		catch(NullPointerException e){
+		            			colVal = colVal.replace("[#rv1]", "Error#2! Please contact me at andicar.support@gmail.com")
+		            							.replace("[#rv2]", "Error#2! Please contact me at andicar.support@gmail.com");
+		            			reportContent = reportContent + "\"" + colVal + "\"";
+		            			continue;
+		            		}
+		            		try{
+		            			colVal = colVal.replace("[#rv1]", 
+		        						Utils.numberToString(fuelQty.multiply(new BigDecimal("100")).divide(distance, 10, RoundingMode.HALF_UP), false,
+		        								2, RoundingMode.HALF_UP))
+		        								.replace("[#rv2]", 
+		        						Utils.numberToString(distance.divide(fuelQty, 10, RoundingMode.HALF_UP), false,
+		        								2, RoundingMode.HALF_UP));
+		            		}
+		            		catch(Exception e){
+		            			colVal = colVal.replace("[#rv1]", "Error#3! Please contact me at andicar.support@gmail.com")
+		            							.replace("[#rv2]", "Error#3! Please contact me at andicar.support@gmail.com");
+		            			reportContent = reportContent + "\"" + colVal + "\"";
+		            			continue;
+		            		}
+	                	}
+	                }
                 	colVal =   
 	                	colVal.replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
 	                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
@@ -433,45 +533,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
 	                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
 	                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
 	                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
-	                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6))
-	                            ;
-                }
-                else{
-                	colVal =   
-	                	colVal.replace("[#TDR1]", mRes.getString(R.string.ToDo_DoneLabel))
-	                            .replace("[#TDR2]", mRes.getString(R.string.ToDo_OverdueLabel))
-	                            .replace("[#TDR3]", mRes.getString(R.string.ToDo_ScheduledLabel))
-	                            .replace("[#TDR4]", mRes.getString(R.string.TaskEditActivity_TimeDriven))
-	                            .replace("[#TDR5]", mRes.getString(R.string.TaskEditActivity_MileageDriven))
-	                            .replace("[#TDR6]", 
-	                            		mRes.getString(R.string.TaskEditActivity_TimeDriven) 
-	                            			+ " & " + mRes.getString(R.string.TaskEditActivity_MileageDriven))
-	                            ;
-                	if((i == 6 || i == 7 || i == 8) && colVal.equals("0"))
-                		colVal = "N/A";
-                	if((i == 8 || i == 9) && !colVal.equals("N/A")){
-                		try{
-	                		days = Long.parseLong(colVal);
-	                		if(days == 99999999999L)
-								colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
-	                		else{
-								cal.setTimeInMillis(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
-								if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
-									colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
-								else{
-									if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
-										colVal = DateFormat.getDateFormat(this)
-															.format(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
-									else{
-										colVal = DateFormat.format("MMM, yyyy", cal).toString();
-									}
-								}
-	                		}
-                		}
-                		catch(NumberFormatException e){
-                			colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
-                		}
-                	}
+	                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6));
                 }
                 reportContent = reportContent + "\"" + colVal + "\"";
             }
@@ -482,6 +544,12 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     
     
     public String createHTMLContent(Cursor reportCursor, String title){
+    	BigDecimal oldFullRefuelIndex = null;
+    	BigDecimal distance = null;
+    	BigDecimal fuelQty = null;
+        int i;
+        String colVal;
+    	
         String reportContent = 
                 "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n" +
                 "<html>\n" +
@@ -492,10 +560,11 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                     "<body>\n" +
                         "<table  WIDTH=100% BORDER=1 BORDERCOLOR=\"#000000\" CELLPADDING=4 CELLSPACING=0>\n" +
                             "<TR VALIGN=TOP>\n"; //table header
-        int i;
-        String colVal;
         //create table header
         for(i = 0; i< reportCursor.getColumnCount(); i++){
+        	if(reportCursor.getColumnName(i).endsWith("DoNotExport"))
+        		continue;
+
             reportContent = reportContent +
                                 "<TH>" + reportCursor.getColumnName(i)
                                 		.replaceAll("_DTypeN", "") 
@@ -518,6 +587,10 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
             reportContent = reportContent +
                             "<TR VALIGN=TOP>\n";
             for(i = 0; i< reportCursor.getColumnCount(); i++){
+
+            	if(reportCursor.getColumnName(i).endsWith("DoNotExport"))
+            		continue;
+            	
                 if(reportCursor.getColumnName(i).contains("_DTypeN")){
                 	colVal = Utils.numberToString(reportCursor.getDouble(i), true, 4, StaticValues.ROUNDING_MODE_LENGTH);
                 	colValUF = Utils.numberToString(reportCursor.getDouble(i), false, 4, StaticValues.ROUNDING_MODE_LENGTH);
@@ -538,56 +611,99 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
                 	colVal = reportCursor.getString(i);
                 if(colVal == null)
                     colVal = "";
-                if(!(this instanceof ToDoListReportActivity)){
+                
+                if(this instanceof ToDoListReportActivity){
                 	colVal =   
-	                	colVal.replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
-	                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
-	                            .replace("[#d2]", mRes.getString(R.string.DayOfWeek_2))
-	                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
-	                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
-	                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
-	                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6))
-	                            ;
+    	                	colVal.replace("[#TDR1]", mRes.getString(R.string.ToDo_DoneLabel))
+    	                            .replace("[#TDR2]", mRes.getString(R.string.ToDo_OverdueLabel))
+    	                            .replace("[#TDR3]", mRes.getString(R.string.ToDo_ScheduledLabel))
+    	                            .replace("[#TDR4]", mRes.getString(R.string.TaskEditActivity_TimeDriven))
+    	                            .replace("[#TDR5]", mRes.getString(R.string.TaskEditActivity_MileageDriven))
+    	                            .replace("[#TDR6]", 
+    	                            		mRes.getString(R.string.TaskEditActivity_TimeDriven) 
+    	                            			+ " & " + mRes.getString(R.string.TaskEditActivity_MileageDriven))
+    	                            ;
+                    	if((i == 6 && date == 0) || ((i == 7 || i == 8) && colVal.equals("0")))
+                    		colVal = "N/A";
+                    	if((i == 8 || i == 9) && !colVal.equals("N/A")){
+                    		try{
+                    			days = Long.parseLong(colValUF);
+                    		}
+                    		catch (NumberFormatException e) {
+                    			days = 0;
+    						}
+                    		if(days == 99999999999L)
+    							colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
+                    		else{
+    							cal.setTimeInMillis(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+    							if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
+    								colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
+    							else{
+    								if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
+    									colVal = DateFormat.getDateFormat(this)
+    														.format(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
+    								else{
+    									colVal = DateFormat.format("MMM, yyyy", cal).toString();
+    								}
+    							}
+                    		}
+                    	}
                 }
                 else{
+                	if(this instanceof RefuelListReportActivity){
+	                	if(colVal.contains("[#rv1]") || colVal.contains("[#rv2]")){
+		            		try{
+		            			oldFullRefuelIndex = new BigDecimal(reportCursor.getDouble(27));
+		            		}
+		            		catch(Exception e){
+		            			colVal = colVal.replace("[#rv1]", "Error #1! Please contact me at andicar.support@gmail.com")
+	            								.replace("[#rv2]", "Error #1! Please contact me at andicar.support@gmail.com");
+		            			reportContent = reportContent + "<TD>" + colVal + "</TD>\n";
+		            			continue;
+		            		}
+		            		if(oldFullRefuelIndex == null || oldFullRefuelIndex.compareTo(BigDecimal.ZERO) < 0  //no previous full refuel found 
+		            				|| reportCursor.getString(6).equals("N")){ //this is not a full refuel
+		            			colVal = colVal.replace("[#rv1]", "")
+		            							.replace("[#rv2]", "");
+		            		}
+		        			// calculate the cons and fuel eff.
+		            		distance = (new BigDecimal(reportCursor.getString(5))).subtract(oldFullRefuelIndex);
+		            		try{
+		        				fuelQty = (new BigDecimal(mReportDbHelper.getFuelQtyForCons(
+		        						reportCursor.getLong(28), oldFullRefuelIndex, reportCursor.getDouble(5))));
+		            		}
+		            		catch(NullPointerException e){
+		            			colVal = colVal.replace("[#rv1]", "Error#2! Please contact me at andicar.support@gmail.com")
+		            							.replace("[#rv2]", "Error#2! Please contact me at andicar.support@gmail.com");
+		            			reportContent = reportContent + "<TD>" + colVal + "</TD>\n";
+		            			continue;
+		            		}
+		            		try{
+		            			colVal = colVal.replace("[#rv1]", 
+		        						Utils.numberToString(fuelQty.multiply(new BigDecimal("100")).divide(distance, 10, RoundingMode.HALF_UP), false,
+		        								2, RoundingMode.HALF_UP))
+		        								.replace("[#rv2]", 
+		        						Utils.numberToString(distance.divide(fuelQty, 10, RoundingMode.HALF_UP), false,
+		        								2, RoundingMode.HALF_UP));
+		            		}
+		            		catch(Exception e){
+		            			colVal = colVal.replace("[#rv1]", "Error#3! Please contact me at andicar.support@gmail.com")
+		            							.replace("[#rv2]", "Error#3! Please contact me at andicar.support@gmail.com");
+		            			reportContent = reportContent + "<TD>" + colVal + "</TD>\n";
+		            			continue;
+		            		}
+	                	}
+	                }
                 	colVal =   
-	                	colVal.replace("[#TDR1]", mRes.getString(R.string.ToDo_DoneLabel))
-	                            .replace("[#TDR2]", mRes.getString(R.string.ToDo_OverdueLabel))
-	                            .replace("[#TDR3]", mRes.getString(R.string.ToDo_ScheduledLabel))
-	                            .replace("[#TDR4]", mRes.getString(R.string.TaskEditActivity_TimeDriven))
-	                            .replace("[#TDR5]", mRes.getString(R.string.TaskEditActivity_MileageDriven))
-	                            .replace("[#TDR6]", 
-	                            		mRes.getString(R.string.TaskEditActivity_TimeDriven) 
-	                            			+ " & " + mRes.getString(R.string.TaskEditActivity_MileageDriven))
-	                            ;
-                	if((i == 6 && date == 0) || ((i == 7 || i == 8) && colVal.equals("0")))
-                		colVal = "N/A";
-                	if((i == 8 || i == 9) && !colVal.equals("N/A")){
-                		try{
-                			days = Long.parseLong(colValUF);
-                		}
-                		catch (NumberFormatException e) {
-                			days = 0;
-						}
-                		if(days == 99999999999L)
-							colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateNoData);
-                		else{
-							cal.setTimeInMillis(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
-							if(cal.get(Calendar.YEAR) - now.get(Calendar.YEAR) > 5)
-								colVal = mRes.getString(R.string.ToDo_EstimatedMileageDateTooFar);
-							else{
-								if(cal.getTimeInMillis() - now.getTimeInMillis() < 365 * StaticValues.ONE_DAY_IN_MILISECONDS) // 1 year
-									colVal = DateFormat.getDateFormat(this)
-														.format(currentTime + (days * StaticValues.ONE_DAY_IN_MILISECONDS));
-								else{
-									colVal = DateFormat.format("MMM, yyyy", cal).toString();
-								}
-							}
-                		}
-                	}
-                }
+    	                	colVal.replace("[#d0]", mRes.getString(R.string.DayOfWeek_0))
+    	                            .replace("[#d1]", mRes.getString(R.string.DayOfWeek_1))
+    	                            .replace("[#d2]", mRes.getString(R.string.DayOfWeek_2))
+    	                            .replace("[#d3]", mRes.getString(R.string.DayOfWeek_3))
+    	                            .replace("[#d4]", mRes.getString(R.string.DayOfWeek_4))
+    	                            .replace("[#d5]", mRes.getString(R.string.DayOfWeek_5))
+    	                            .replace("[#d6]", mRes.getString(R.string.DayOfWeek_6));
+            	}
                 reportContent = reportContent + "<TD>" + colVal + "</TD>\n"; 
-//                reportContent = reportContent + "</TD>\n";
             }
             reportContent = reportContent +
                             "</TR\n";

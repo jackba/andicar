@@ -152,7 +152,7 @@
     <string name="GEN_ToDoAlert">"Alerta de Tareas"</string>
     <string name="GEN_New">"Nuevo"</string>
     <string name="GEN_Update">"Actualización"</string>
-    <string name="GEN_FuelEff">"Combustible disponible.:"</string>
+    <string name="GEN_FuelEff">"Eficiencia de combustible: "</string>
     <string name="GEN_StartLabel">"Inicio"</string>
     <string name="GEN_StopLabel">"Km"</string>
     <string name="GEN_PaymentFailed">"el Pago ha fallado"</string>

@@ -77,13 +77,15 @@ public class RefuelListReportActivity extends ReportListActivityBase{
 
         initStyle();
 
+        RefuelListDataBinder rfDb = new RefuelListDataBinder();
+        rfDb.initCtx(getApplicationContext());
         super.onCreate( icicle, null, RefuelEditActivity.class, null,
                 MainDbAdapter.TABLE_NAME_REFUEL, ReportDbAdapter.genericReportListViewSelectCols, null,
                 null,
                 threeLineListReportActivity,
                 new String[]{ReportDbAdapter.FIRST_LINE_LIST_NAME, ReportDbAdapter.SECOND_LINE_LIST_NAME, ReportDbAdapter.THIRD_LINE_LIST_NAME},
                 new int[]{R.id.tvThreeLineListReportText1, R.id.tvThreeLineListReportText2, R.id.tvThreeLineListReportText3},
-                reportSelectName,  whereConditions, new RefuelListDataBinder());
+                reportSelectName,  whereConditions, rfDb /*new RefuelListDataBinder()*/);
 
     }
 

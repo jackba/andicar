@@ -1641,4 +1641,22 @@ public class MainDbAdapter extends DB
     	return retVal;
     	
     }
+    
+    public Double getFuelQtyForCons(long carID, BigDecimal prevIndex, Double currIndex){
+    	Double retVal = null;
+        String selectSql = "";
+        Cursor selectCursor;
+        selectSql = " SELECT SUM( " + COL_NAME_REFUEL__QUANTITY + ") " +
+                " FROM " + TABLE_NAME_REFUEL +
+                " WHERE " + WHERE_CONDITION_ISACTIVE +
+                	" AND " + COL_NAME_REFUEL__INDEX + " > " + prevIndex +
+                	" AND " + COL_NAME_REFUEL__INDEX + " <= " + currIndex;;
+	    
+	    selectCursor = execSelectSql(selectSql, null);
+	    if(selectCursor.moveToFirst()){
+    		retVal = selectCursor.getDouble(0);
+	    }
+	    selectCursor.close();
+    	return retVal;
+    }
 }
