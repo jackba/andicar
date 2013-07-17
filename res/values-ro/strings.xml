@@ -153,7 +153,7 @@
     <string name="GEN_ToDoAlert">&quot;Alerta programare&quot;</string>
     <string name="GEN_New">&quot;Nou&quot;</string>
     <string name="GEN_Update">"Update"</string>
-    <string name="GEN_FuelEff">&quot;Ef.consum:&quot;</string>
+    <string name="GEN_FuelEff">&quot;Consum:&quot;</string>
     <string name="GEN_StartLabel">"Start "</string>
     <string name="GEN_StopLabel">"Stop"</string>
     <string name="GEN_PaymentFailed">&quot;Plata esuata&quot;</string>

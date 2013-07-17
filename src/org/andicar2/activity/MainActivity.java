@@ -673,51 +673,59 @@ public class MainActivity extends BaseActivity {
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
 			
-			if(listCursor.getString(1) != null)
-				tvThreeLineListRefuelText1.setText(listCursor.getString(1).replace(
-					"[#1]",
-					DateFormat.getDateFormat(getApplicationContext()).format(
-							listCursor.getLong(4) * 1000)));
-			
-			if(listCursor.getString(2) != null)
+			if(listCursor.getString(1) != null){
+				tvThreeLineListRefuelText1.setText(listCursor.getString(1)
+						.replace("[#1]", DateFormat.getDateFormat(getApplicationContext()).format(listCursor.getLong(4) * 1000)));
+			}
+			if(listCursor.getString(2) != null){
 				tvThreeLineListRefuelText2.setText(listCursor.getString(2)
-					.replace(
-							"[#1]",
-							Utils.numberToString(listCursor.getDouble(5), true,
-									StaticValues.DECIMALS_VOLUME,
-									StaticValues.ROUNDING_MODE_VOLUME))
-					.replace(
-							"[#2]",
-							Utils.numberToString(listCursor.getDouble(6), true,
-									StaticValues.DECIMALS_VOLUME,
-									StaticValues.ROUNDING_MODE_VOLUME))
-					.replace(
-							"[#3]",
-							Utils.numberToString(listCursor.getDouble(7), true,
-									StaticValues.DECIMALS_PRICE,
-									StaticValues.ROUNDING_MODE_PRICE))
-					.replace(
-							"[#4]",
-							Utils.numberToString(listCursor.getDouble(8), true,
-									StaticValues.DECIMALS_PRICE,
-									StaticValues.ROUNDING_MODE_PRICE))
-					.replace(
-							"[#5]",
-							Utils.numberToString(listCursor.getDouble(9), true,
-									StaticValues.DECIMALS_AMOUNT,
-									StaticValues.ROUNDING_MODE_AMOUNT))
-					.replace(
-							"[#6]",
-							Utils.numberToString(listCursor.getDouble(10),
-									true, StaticValues.DECIMALS_AMOUNT,
-									StaticValues.ROUNDING_MODE_AMOUNT))
-					.replace(
-							"[#7]",
-							Utils.numberToString(listCursor.getDouble(11),
-									true, StaticValues.DECIMALS_LENGTH,
-									StaticValues.ROUNDING_MODE_LENGTH)));
-			tvThreeLineListRefuelText3.setText(listCursor.getString(listCursor
-					.getColumnIndex(ReportDbAdapter.THIRD_LINE_LIST_NAME)));
+					.replace("[#1]", Utils.numberToString(listCursor.getDouble(5), true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
+					.replace("[#2]", Utils.numberToString(listCursor.getDouble(6), true, StaticValues.DECIMALS_VOLUME, StaticValues.ROUNDING_MODE_VOLUME))
+					.replace("[#3]", Utils.numberToString(listCursor.getDouble(7), true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
+					.replace("[#4]", Utils.numberToString(listCursor.getDouble(8), true, StaticValues.DECIMALS_PRICE, StaticValues.ROUNDING_MODE_PRICE))
+					.replace("[#5]", Utils.numberToString(listCursor.getDouble(9), true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+					.replace("[#6]", Utils.numberToString(listCursor.getDouble(10), true, StaticValues.DECIMALS_AMOUNT, StaticValues.ROUNDING_MODE_AMOUNT))
+					.replace("[#7]", Utils.numberToString(listCursor.getDouble(11), true, StaticValues.DECIMALS_LENGTH, StaticValues.ROUNDING_MODE_LENGTH)));
+			}
+			
+			String text = listCursor.getString(3);
+			if(text != null){
+	    		BigDecimal oldFullRefuelIndex = null;
+	    		
+	    		try{
+	    			oldFullRefuelIndex = new BigDecimal(listCursor.getDouble(13));
+	    		}
+	    		catch(Exception e){
+	    			
+	    		}
+	    		if(oldFullRefuelIndex == null || oldFullRefuelIndex.equals(-1D)  //no previous full refuel found 
+	    				|| listCursor.getString(12).equals("N")){ //this is not a full refuel
+	    			text = text.replace("[#1]", "");
+	    		}
+	    		else{
+	    			// calculate the cons and fuel eff.
+	        		BigDecimal distance =  (new BigDecimal(listCursor.getString(11))).subtract(oldFullRefuelIndex);
+//	    			BigDecimal fuelQty = (new BigDecimal(listCursor.getString(6))).add(new BigDecimal(
+//	    										(listCursor.getString(16) == null ? "0" : listCursor.getString(16))));
+	    			BigDecimal fuelQty = (new BigDecimal(mDbAdapter.getFuelQtyForCons(
+	    					listCursor.getLong(16), oldFullRefuelIndex, listCursor.getDouble(11))));
+	    			String consStr = Utils.numberToString(
+	    						fuelQty.multiply(new BigDecimal("100")).divide(distance, 10, RoundingMode.HALF_UP), true,
+	    						StaticValues.DECIMALS_LENGTH,
+	    						StaticValues.ROUNDING_MODE_LENGTH) + " " + listCursor.getString(14) + "/100" + listCursor.getString(15) + 
+	    						"; " +
+	    					Utils.numberToString(
+	    							distance.divide(fuelQty, 10, RoundingMode.HALF_UP), true,
+	    							StaticValues.DECIMALS_LENGTH,
+	    							StaticValues.ROUNDING_MODE_LENGTH) + " " + listCursor.getString(15) + "/" + listCursor.getString(14);
+	    			
+	       			text = text.replace("[#1]", (text.equals("[#1]") ? "" : "; ") + 
+	        					mResource.getString(R.string.GEN_FuelEff) + " " + consStr);
+	    		}
+			}
+			else
+				text = "";
+			tvThreeLineListRefuelText3.setText(text);
 			btnRefuelList.setEnabled(true);
 		} else {
 			tvThreeLineListRefuelText1.setText(mResource
@@ -968,9 +976,7 @@ public class MainActivity extends BaseActivity {
 			c = reportDb.execSelectSql(sql, null);
 
 			if (c.moveToFirst()) {
-				tmpFullRefuelIndex = new BigDecimal(c.getDouble(0)).setScale(
-						StaticValues.DECIMALS_LENGTH,
-						StaticValues.ROUNDING_MODE_LENGTH);
+				tmpFullRefuelIndex = new BigDecimal(c.getDouble(0)).setScale(StaticValues.DECIMALS_LENGTH,StaticValues.ROUNDING_MODE_LENGTH);
 
 				c.close();
 				// get the last full refuel index
@@ -988,14 +994,11 @@ public class MainActivity extends BaseActivity {
 						+ " DESC " + " LIMIT 1";
 				c = reportDb.execSelectSql(sql, null);
 				if (c.moveToFirst()) {
-					lastFullRefuelIndex = new BigDecimal(c.getDouble(0))
-							.setScale(StaticValues.DECIMALS_LENGTH,
-									StaticValues.ROUNDING_MODE_LENGTH);
+					lastFullRefuelIndex = new BigDecimal(c.getDouble(0)).setScale(StaticValues.DECIMALS_LENGTH,StaticValues.ROUNDING_MODE_LENGTH);
 					c.close();
 					if (tmpFullRefuelIndex != null
 							&& lastFullRefuelIndex != null
-							&& lastFullRefuelIndex.subtract(tmpFullRefuelIndex)
-									.signum() != 0) {
+							&& lastFullRefuelIndex.subtract(tmpFullRefuelIndex).signum() != 0) {
 						// get the total fuel quantity between the first and
 						// last refuels
 						sql = "SELECT SUM("
@@ -1013,10 +1016,7 @@ public class MainActivity extends BaseActivity {
 						c = reportDb.execSelectSql(sql, null);
 						if (c.moveToFirst()) {
 							try {
-								totalFuelQty = new BigDecimal(c.getDouble(0))
-										.setScale(
-												StaticValues.DECIMALS_VOLUME,
-												StaticValues.ROUNDING_MODE_VOLUME);
+								totalFuelQty = new BigDecimal(c.getDouble(0)).setScale(10,StaticValues.ROUNDING_MODE_VOLUME);
 								// new BigDecimal(c.getString(0));
 							} catch (NumberFormatException e) {
 							}
@@ -1026,39 +1026,19 @@ public class MainActivity extends BaseActivity {
 						if (totalFuelQty != null) {
 							// calculate the avg cons and fuel eff.
 							BigDecimal avgCons = BigDecimal.ZERO;
-							avgCons = totalFuelQty.multiply(new BigDecimal(
-									"100"));
-							avgCons = avgCons
-									.divide(lastFullRefuelIndex
-											.subtract(tmpFullRefuelIndex),
-											10, RoundingMode.HALF_UP).setScale(
-											StaticValues.DECIMALS_AMOUNT,
-											StaticValues.ROUNDING_MODE_AMOUNT);
-							fuelEffStr = Utils.numberToString(avgCons, true,
-									StaticValues.DECIMALS_VOLUME,
-									StaticValues.ROUNDING_MODE_VOLUME)
-									+ " "
-									+ carUOMVolumeCode
-									+ "/100"
-									+ carUOMLengthCode;
+							avgCons = totalFuelQty.multiply(new BigDecimal("100"));
+							avgCons = avgCons.divide(lastFullRefuelIndex.subtract(tmpFullRefuelIndex),10, RoundingMode.HALF_UP)
+											.setScale(10,StaticValues.ROUNDING_MODE_AMOUNT);
+							fuelEffStr = Utils.numberToString(avgCons, true,StaticValues.DECIMALS_VOLUME,StaticValues.ROUNDING_MODE_VOLUME)
+											+ " " + carUOMVolumeCode + "/100" + carUOMLengthCode;
 							// //efficiency: x uom length (km or mi) / uom
 							// volume (l or galon)
 							if (avgCons != null && avgCons.signum() != 0) {
-								BigDecimal avgEff = (new BigDecimal("100"))
-										.divide(avgCons, 10,
-												RoundingMode.HALF_UP)
-										.setScale(
-												StaticValues.DECIMALS_VOLUME,
-												StaticValues.ROUNDING_MODE_VOLUME);
-								fuelEffStr = fuelEffStr
-										+ "; "
-										+ Utils.numberToString(
-												avgEff,
-												true,
-												StaticValues.DECIMALS_LENGTH,
-												StaticValues.ROUNDING_MODE_LENGTH)
-										+ " " + carUOMLengthCode + "/"
-										+ carUOMVolumeCode;
+								BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10,RoundingMode.HALF_UP)
+											.setScale(10,StaticValues.ROUNDING_MODE_VOLUME);
+								fuelEffStr = fuelEffStr + "; "
+												+ Utils.numberToString(avgEff,true,StaticValues.DECIMALS_LENGTH,StaticValues.ROUNDING_MODE_LENGTH)
+												+ " " + carUOMLengthCode + "/" + carUOMVolumeCode;
 							}
 						}
 
@@ -1082,9 +1062,7 @@ public class MainActivity extends BaseActivity {
 								+ " DESC " + " LIMIT 1";
 						c = reportDb.execSelectSql(sql, null);
 						if (c.moveToFirst()) {
-							tmpFullRefuelIndex = (new BigDecimal(c.getDouble(0))
-									.setScale(StaticValues.DECIMALS_LENGTH,
-											StaticValues.ROUNDING_MODE_LENGTH));
+							tmpFullRefuelIndex = (new BigDecimal(c.getDouble(0)).setScale(10,StaticValues.ROUNDING_MODE_LENGTH));
 							c.close();
 							// get the total fuel qty between the last two full
 							// refuels
@@ -1107,8 +1085,7 @@ public class MainActivity extends BaseActivity {
 							c = reportDb.execSelectSql(sql, null);
 							if (c.moveToFirst()) {
 								if (c.getString(0) != null)
-									totalFuelQty = new BigDecimal(
-											c.getString(0));
+									totalFuelQty = new BigDecimal(c.getString(0));
 								else
 									totalFuelQty = null;
 							}
@@ -1116,40 +1093,19 @@ public class MainActivity extends BaseActivity {
 							if (totalFuelQty != null) {
 								// calculate the avg cons and fuel eff.
 								BigDecimal avgCons = BigDecimal.ZERO;
-								avgCons = totalFuelQty.multiply(new BigDecimal(
-										"100"));
-								avgCons = avgCons
-										.divide(lastFullRefuelIndex
-												.subtract(tmpFullRefuelIndex),
-												10, RoundingMode.HALF_UP)
-										.setScale(
-												StaticValues.DECIMALS_AMOUNT,
-												StaticValues.ROUNDING_MODE_AMOUNT);
-								lastFuelEffStr = Utils.numberToString(avgCons,
-										true, StaticValues.DECIMALS_VOLUME,
-										StaticValues.ROUNDING_MODE_VOLUME)
-										+ " "
-										+ carUOMVolumeCode
-										+ "/100"
-										+ carUOMLengthCode;
+								avgCons = totalFuelQty.multiply(new BigDecimal("100"));
+								avgCons = avgCons.divide(lastFullRefuelIndex.subtract(tmpFullRefuelIndex),10, RoundingMode.HALF_UP)
+											.setScale(10,StaticValues.ROUNDING_MODE_AMOUNT);
+								lastFuelEffStr = Utils.numberToString(avgCons,true, StaticValues.DECIMALS_VOLUME,StaticValues.ROUNDING_MODE_VOLUME)
+														+ " " + carUOMVolumeCode + "/100" + carUOMLengthCode;
 								// //efficiency: x uom length (km or mi) / uom
 								// volume (l or galon)
 								if (avgCons != null && avgCons.signum() != 0) {
-									BigDecimal avgEff = (new BigDecimal("100"))
-											.divide(avgCons, 10,
-													RoundingMode.HALF_UP)
-											.setScale(
-													StaticValues.DECIMALS_AMOUNT,
-													StaticValues.ROUNDING_MODE_AMOUNT);
-									lastFuelEffStr = lastFuelEffStr
-											+ "; "
-											+ Utils.numberToString(
-													avgEff,
-													true,
-													StaticValues.DECIMALS_LENGTH,
-													StaticValues.ROUNDING_MODE_LENGTH)
-											+ " " + carUOMLengthCode + "/"
-											+ carUOMVolumeCode;
+									BigDecimal avgEff = (new BigDecimal("100")).divide(avgCons, 10,RoundingMode.HALF_UP)
+												.setScale(10,StaticValues.ROUNDING_MODE_AMOUNT);
+									lastFuelEffStr = lastFuelEffStr + "; "
+											+ Utils.numberToString(avgEff,true,StaticValues.DECIMALS_LENGTH,StaticValues.ROUNDING_MODE_LENGTH)
+											+ " " + carUOMLengthCode + "/" + carUOMVolumeCode;
 								}
 							}
 							c.close();
