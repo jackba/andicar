@@ -82,9 +82,9 @@
     </string>
 
     <string name="LM_UPDATE_MSG">
-        <i><b>Version 4.1.0:</b></i>\n
-        * GPS Track: pause / resume feature\n 
-        * UI polish\n
+        <i><b>Version 4.2.0:</b></i>\n
+        * Mileage based reimbursement calculation. The rates can be defined in Preferences -> Reimbursement rates\n 
+        * Fuel efficiency calculation for all full refuels in the refuel list and the exported refuel reports\n
         * Various bug fixing
     </string>
 </resources>
