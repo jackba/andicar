@@ -21,6 +21,7 @@ package org.andicar.utils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Calendar;
@@ -263,49 +264,81 @@ public class Utils {
      * @return the string representation of the number
      */
     public static String numberToString(Object number, boolean localeFormat, int scale, RoundingMode roundingMode){
-//    	String retVal = null;
-    	BigDecimal bdNumber = null;
-    	
-    	if(number instanceof Double)
-    		bdNumber = new BigDecimal((Double)number);
-    	else if(number instanceof Float)
-    		bdNumber = new BigDecimal((Float)number);
-    	else if(number instanceof Float)
-    		bdNumber = new BigDecimal((Float)number);
-    	else if(number instanceof Integer)
-    		bdNumber = new BigDecimal((Integer)number);
-    	else if(number instanceof Long)
-    		bdNumber = new BigDecimal((Long)number);
-    	else if(number instanceof Short)
-    		bdNumber = new BigDecimal((Short)number);
-    	else if(number instanceof BigDecimal)
-    		bdNumber = (BigDecimal)number;
-    	else if(number instanceof String)
-    		bdNumber = new BigDecimal((String)number);
-    	
-    	bdNumber = bdNumber.setScale(scale, roundingMode);
-    	bdNumber = bdNumber.stripTrailingZeros();
-    	
-    	if(localeFormat){
-    		NumberFormat nf = NumberFormat.getInstance();
-    		DecimalFormatSymbols dfs = DecimalFormatSymbols.getInstance();
-    		nf.setMinimumFractionDigits(scale);
-    		nf.setRoundingMode(roundingMode);
-    		String retVal = nf.format(bdNumber);
-    		if(retVal.contains("" + dfs.getDecimalSeparator())){
-	    		//strip trailing zeroes 
-	    		while ((retVal.endsWith("0") || retVal.endsWith("" + dfs.getDecimalSeparator()) || retVal.endsWith("" + dfs.getGroupingSeparator())) 
-	    				&& retVal.length() > 1) {
-	    			if(retVal.endsWith("" + dfs.getDecimalSeparator())){
-	        			retVal = retVal.substring(0, retVal.length() - 1);
-	        			break;
-	    			}
-	    			retVal = retVal.substring(0, retVal.length() - 1);
-				}
-    		}
-    		return retVal;
+    	try{
+	    	BigDecimal bdNumber = null;
+	    	
+	    	if(number instanceof Double)
+	    		bdNumber = new BigDecimal((Double)number);
+	    	else if(number instanceof Float)
+	    		bdNumber = new BigDecimal((Float)number);
+	    	else if(number instanceof Float)
+	    		bdNumber = new BigDecimal((Float)number);
+	    	else if(number instanceof Integer)
+	    		bdNumber = new BigDecimal((Integer)number);
+	    	else if(number instanceof Long)
+	    		bdNumber = new BigDecimal((Long)number);
+	    	else if(number instanceof Short)
+	    		bdNumber = new BigDecimal((Short)number);
+	    	else if(number instanceof BigDecimal)
+	    		bdNumber = (BigDecimal)number;
+	    	else if(number instanceof String)
+	    		bdNumber = new BigDecimal((String)number);
+	    	
+	    	bdNumber = bdNumber.setScale(scale, roundingMode);
+	    	bdNumber = bdNumber.stripTrailingZeros();
+	    	
+	    	if(localeFormat){
+	    		NumberFormat nf = NumberFormat.getInstance();
+	    		if(nf instanceof DecimalFormat){
+		    		DecimalFormatSymbols dfs = ((DecimalFormat)nf).getDecimalFormatSymbols();
+		    		nf.setMinimumFractionDigits(scale);
+		    		String retVal = nf.format(bdNumber);
+		    		if(retVal.contains("" + dfs.getDecimalSeparator())){
+			    		//strip trailing zeroes 
+			    		while ((retVal.endsWith("0") || retVal.endsWith("" + dfs.getDecimalSeparator()) || retVal.endsWith("" + dfs.getGroupingSeparator())) 
+			    				&& retVal.length() > 1) {
+			    			if(retVal.endsWith("" + dfs.getDecimalSeparator())){
+			        			retVal = retVal.substring(0, retVal.length() - 1);
+			        			break;
+			    			}
+			    			retVal = retVal.substring(0, retVal.length() - 1);
+						}
+		    		}
+		    		return retVal;
+	    		}
+	    		else
+	    			return numberToStringOld(number, localeFormat, scale, roundingMode);
+	    	}
+	    	return bdNumber.toPlainString();
     	}
-
-    	return bdNumber.toPlainString();
+    	catch(Exception e){
+    		return numberToStringOld(number, localeFormat, scale, roundingMode);
+    	}
     }
+    
+    public static String numberToStringOld(Object number, boolean localeFormat, int scale, RoundingMode roundingMode){
+        BigDecimal bdNumber = null;
+        
+        if(number instanceof Double)
+                bdNumber = new BigDecimal((Double)number);
+        else if(number instanceof Float)
+                bdNumber = new BigDecimal((Float)number);
+        else if(number instanceof Float)
+                bdNumber = new BigDecimal((Float)number);
+        else if(number instanceof Integer)
+                bdNumber = new BigDecimal((Integer)number);
+        else if(number instanceof Long)
+                bdNumber = new BigDecimal((Long)number);
+        else if(number instanceof Short)
+                bdNumber = new BigDecimal((Short)number);
+        else if(number instanceof BigDecimal)
+                bdNumber = (BigDecimal)number;
+        
+        bdNumber = bdNumber.setScale(scale, roundingMode);
+        bdNumber = bdNumber.stripTrailingZeros();
+        if(localeFormat)
+                return NumberFormat.getInstance().format(bdNumber);
+
+        return bdNumber.toPlainString();
+    }    
 }
