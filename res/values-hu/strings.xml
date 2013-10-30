@@ -168,8 +168,8 @@
     <string name="MENU_ShowInactiveCaption">"Inaktívok megjelenítése"</string>
     <string name="MENU_HideInactiveCaption">"Inaktívok eltüntetése"</string>
     <string name="MENU_SearchCaption">"Keresés/Szűrés"</string>
-    <string name="MENU_CreateReportCaption">"Riport létrehozás"</string>
-    <string name="MENU_SendAsEmailCaption">"Küldés / Feltöltés"</string>
+    <string name="MENU_ShareReport">"Riport létrehozás"</string>
+    <string name="MENU_Share">"Küldés / Feltöltés"</string>
     <string name="MENU_ShowOnMap">"Mutasd a térképen"</string>
     <string name="MENU_MileageCaption">"Fuvarok"</string>
     <string name="MENU_RefuelCaption">"Tankolások"</string>

@@ -25,6 +25,7 @@
     android:scrollbars="vertical"
     android:id="@+id/vgRoot"
     >
+<!-- 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -38,6 +39,7 @@
             android:layout_height="wrap_content"
             android:text="@string/DIALOGReport_SendEmailLabel"
             />
+ -->
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -60,5 +62,5 @@
                 />
         </LinearLayout>
 
-    </LinearLayout>
+    <!--  </LinearLayout>  -->
 </ScrollView>

@@ -24,16 +24,15 @@ package org.andicar.activity;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.andicar2.activity.R;
 import org.andicar.activity.miscellaneous.GPSTrackController;
 import org.andicar.persistence.AddOnDBAdapter;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
-import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
 
-import android.content.Context;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -66,7 +65,6 @@ public class DataEntryTemplate{
 	private long mTemplateID = -1;
 	
 	private boolean isSendCrashReport = true;
-	private boolean isSendStatistics = true;
 
 	private SharedPreferences mPreferences = null;
 	private Resources mResource = null;
@@ -87,7 +85,6 @@ public class DataEntryTemplate{
 		mResource = mActivity.getResources();
 		
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
-        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         
         if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
@@ -526,10 +523,6 @@ public class DataEntryTemplate{
 				btnUpdate.setEnabled(true);
 				fillFromTemplate(id);
 			}
-
-			if(isSendStatistics)
-	            AndiCarStatistics.sendFlurryEvent(mActivity, "DataEntryTemplate", null);
-			
 		}
 
 		@Override

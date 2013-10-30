@@ -217,8 +217,7 @@ public class RefuelEditActivity extends EditActivityBase {
             calculateBaseUOMQty();
         }
 
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent(this, "RefuelEdit", null);
+        AndiCarStatistics.sendFlurryEvent(this, "RefuelEdit", null);
     }
 
     private void init() {

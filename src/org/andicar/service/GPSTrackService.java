@@ -187,11 +187,18 @@ public class GPSTrackService extends Service {
         }
 
         mLocationListener = new AndiCarLocationListener();
-        mLocationManager.requestLocationUpdates(
-            LocationManager.GPS_PROVIDER, 
-                Long.parseLong(mPreferences.getString("GPSTrackMinTime", "0")),
-                /*Long.parseLong(mPreferences.getString("GPSTrackMinDistance", "5"))*/ 0,
-                mLocationListener);
+        try{
+	        mLocationManager.requestLocationUpdates(
+	            LocationManager.GPS_PROVIDER, 
+	                Long.parseLong(mPreferences.getString("GPSTrackMinTime", "0")),
+	                /*Long.parseLong(mPreferences.getString("GPSTrackMinDistance", "5"))*/ 0,
+	                mLocationListener);
+        }
+        catch(Exception e){
+        	Toast.makeText(this, R.string.ERR_068, Toast.LENGTH_LONG).show();
+            isErrorStop = true;
+            stopSelf();
+        }
 
         mDbAdapter = new MainDbAdapter(this);
 

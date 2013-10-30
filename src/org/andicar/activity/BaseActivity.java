@@ -66,7 +66,6 @@ public abstract class BaseActivity extends Activity {
     
 
     protected SharedPreferences.Editor mPrefEditor;
-    protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport;
     protected boolean isUseNumericInput = true;
 
@@ -86,7 +85,6 @@ public abstract class BaseActivity extends Activity {
         super.onCreate(icicle);
 
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
-        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(

@@ -25,10 +25,9 @@ package org.andicar.activity;
 import java.util.ArrayList;
 import java.util.Set;
 
-import org.andicar2.activity.R;
 import org.andicar.persistence.AddOnDBAdapter;
 import org.andicar.persistence.MainDbAdapter;
-import org.andicar.utils.AndiCarStatistics;
+import org.andicar2.activity.R;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -86,8 +85,6 @@ public class BTDeviceCarLink extends EditActivityBase {
         
         initControls();
 
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent(this, "BTDeviceCarLink", null);
     }
     
     private void init(){

@@ -267,8 +267,7 @@ public class MileageEditActivity extends EditActivityBase {
     	c.close();
     	setReimbursementValue();
 
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent(this, "MileageEdit", null);
+    	AndiCarStatistics.sendFlurryEvent(this, "MileageEdit", null);
     }
 
     private void initControls(){

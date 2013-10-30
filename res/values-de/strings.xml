@@ -153,8 +153,8 @@
     <string name="MENU_ShowInactiveCaption">"inaktive anzeigen"</string>
     <string name="MENU_HideInactiveCaption">"inaktive verbergen"</string>
     <string name="MENU_SearchCaption">"Suchen/Filtern"</string>
-    <string name="MENU_CreateReportCaption">"Auswertung erstellen"</string>
-    <string name="MENU_SendAsEmailCaption">"Als Mail senden"</string>
+    <string name="MENU_ShareReport">"Auswertung erstellen"</string>
+    <string name="MENU_Share">"Als Mail senden"</string>
     <string name="MENU_ShowOnMap">"auf Karte zeigen"</string>
     <string name="MENU_MileageCaption">"gefahrene Strecken"</string>
     <string name="MENU_RefuelCaption">"Tankfüllungen"</string>

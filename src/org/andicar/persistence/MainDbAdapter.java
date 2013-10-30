@@ -19,11 +19,6 @@
 
 package org.andicar.persistence;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.SQLException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -31,18 +26,21 @@ import java.util.Locale;
 
 import org.andicar.utils.StaticValues;
 import org.andicar2.activity.R;
-import org.andicar.utils.AndiCarStatistics;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.SQLException;
 
 public class MainDbAdapter extends DB
 {
     SharedPreferences mPref;
     boolean isSendCrashReport = true;
-    private Context mCtx;
 
     public MainDbAdapter( Context ctx )
     {
         super(ctx);
-        mCtx = ctx;
         mPref = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         isSendCrashReport = mPref.getBoolean("SendCrashReport", true);
     }
@@ -467,8 +465,6 @@ public class MainDbAdapter extends DB
                     tmpStopIndex = new BigDecimal(tmpStr);
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
-                if(isSendCrashReport)
-                    AndiCarStatistics.sendFlurryError(mCtx, "DB Error - updateCarCurrentIndex", "NFE1: c.getString(0) = " + c.getString(0), this.toString());
             }
         }
         if(tmpStopIndex == null)
@@ -492,8 +488,6 @@ public class MainDbAdapter extends DB
                     tmpStopIndex = new BigDecimal(tmpStr);
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
-                if(isSendCrashReport)
-                    AndiCarStatistics.sendFlurryError(mCtx, "DB Error - updateCarCurrentIndex", "NFE2: c.getString(0) = " + c.getString(0), this.toString());
             }
         }
         if(tmpStopIndex == null)
@@ -519,8 +513,6 @@ public class MainDbAdapter extends DB
                     tmpStopIndex = new BigDecimal(tmpStr);
             }catch(NumberFormatException e){
                 tmpStopIndex = null;
-                if(isSendCrashReport)
-                    AndiCarStatistics.sendFlurryError(mCtx, "DB Error - updateCarCurrentIndex", "NFE3: c.getString(0) = " + c.getString(0), this.toString());
             }
         }
         if(tmpStopIndex == null)

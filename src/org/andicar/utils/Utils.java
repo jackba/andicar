@@ -255,7 +255,7 @@ public class Utils {
         Uri trackFileZip = FileUtils.zipFiles(trackFiles, StaticValues.TRACK_FOLDER + "AndiCarGPSTrack.zip");
         if(trackFileZip != null)
             emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, trackFileZip);
-        ctx.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+        ctx.startActivity(Intent.createChooser(emailIntent, mRes.getString(R.string.GEN_Share)));
     }
 
     /**

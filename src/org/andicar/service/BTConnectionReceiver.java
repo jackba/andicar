@@ -24,7 +24,6 @@ import org.andicar.persistence.AddOnDBAdapter;
 import org.andicar.persistence.DB;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
-import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
 
 import android.bluetooth.BluetoothDevice;
@@ -71,14 +70,6 @@ public class BTConnectionReceiver {
 					if(c == null)
 						return;
 					if(c.moveToFirst()){ //linked car exist
-						try{
-							if(context.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS).getBoolean("SendUsageStatistics", true)){
-					            AndiCarStatistics.sendFlurryStartSession(context);
-						        AndiCarStatistics.sendFlurryEvent(context, "BTStarterUsed", null);
-					        }
-						}
-						catch(Exception e){}
-
 						pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 						mWakeLock = pm.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP, 
 														"AndiCar BT Starter");

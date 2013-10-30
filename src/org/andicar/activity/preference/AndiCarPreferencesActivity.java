@@ -19,17 +19,13 @@
 
 package org.andicar.activity.preference;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.andicar.activity.CommonListActivity;
-import org.andicar2.activity.R;
 import org.andicar.activity.miscellaneous.BackupRestoreActivity;
 import org.andicar.activity.report.ReimbursementRateListReportActivity;
 import org.andicar.persistence.MainDbAdapter;
 import org.andicar.utils.AndiCarExceptionHandler;
-import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
 
 import android.content.Context;
 import android.content.Intent;
@@ -50,7 +46,6 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
 
     private Resources mRes = null;
     protected SharedPreferences mPreferences;
-    private boolean isSendStatistics;
     private boolean isSendCrashReport;
     
     /** Called when the activity is first created. */
@@ -58,7 +53,6 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
-        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
@@ -67,33 +61,6 @@ public class AndiCarPreferencesActivity extends PreferenceActivity {
 
         setPreferenceScreen(createPreferenceHierarchy());
 
-    }
-
-    @Override
-    protected void onStart()
-    {
-        super.onStart();
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryStartSession(this);
-    }
-    @Override
-    protected void onStop()
-    {
-        super.onStop();
-
-        if(isSendStatistics != mPreferences.getBoolean("SendUsageStatistics", true)){
-            if(!isSendStatistics)
-                AndiCarStatistics.sendFlurryStartSession(this);
-            Map<String, String> parameters = new HashMap<String, String>();
-            parameters.put("SendStatisticsChanged", "From " + isSendStatistics + " to " + mPreferences.getBoolean("SendUsageStatistics", true));
-            AndiCarStatistics.sendFlurryEvent(this, "SendStatistics", parameters);
-            if(!isSendStatistics)
-                AndiCarStatistics.sendFlurryEndSession(this);
-        }
-
-        if(isSendStatistics){
-            AndiCarStatistics.sendFlurryEndSession(this);
-        }
     }
 
     private PreferenceScreen createPreferenceHierarchy() {

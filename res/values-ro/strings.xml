@@ -171,8 +171,8 @@
     <string name="MENU_ShowInactiveCaption">&quot;Arata inactive&quot;</string>
     <string name="MENU_HideInactiveCaption">&quot;Ascunde inactive&quot;</string>
     <string name="MENU_SearchCaption">&quot;Cauta/filtreaza&quot;</string>
-    <string name="MENU_CreateReportCaption">&quot;Creeaza raport&quot;</string>
-    <string name="MENU_SendAsEmailCaption">&quot;Trimite / Incarca&quot;</string>
+    <string name="MENU_ShareReport">&quot;Creeaza raport&quot;</string>
+    <string name="MENU_Share">&quot;Trimite / Incarca&quot;</string>
     <string name="MENU_ShowOnMap">&quot;Arata pe harta&quot;</string>
     <string name="MENU_MileageCaption">&quot;Kilometraje&quot;</string>
     <string name="MENU_RefuelCaption">&quot;Alimentari&quot;</string>

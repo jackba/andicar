@@ -170,8 +170,8 @@
     <string name="MENU_ShowInactiveCaption">"Mostrar inactivo"</string>
     <string name="MENU_HideInactiveCaption">"Esconder inactivo"</string>
     <string name="MENU_SearchCaption">"Buscar/filtros"</string>
-    <string name="MENU_CreateReportCaption">"Crear reporte"</string>
-    <string name="MENU_SendAsEmailCaption">"Enviar / Subir"</string>
+    <string name="MENU_ShareReport">"Crear reporte"</string>
+    <string name="MENU_Share">"Enviar / Subir"</string>
     <string name="MENU_ShowOnMap">"Mostrar en mapa"</string>
     <string name="MENU_MileageCaption">"Kiometrajes"</string>
     <string name="MENU_RefuelCaption">"Recargas"</string>

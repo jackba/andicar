@@ -50,6 +50,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 
 /**
@@ -80,7 +81,6 @@ public class ListActivityBase extends ListActivity {
     protected Bundle mBundleExtras = null;
     protected AndiCarDialogBuilder errorAlertBuilder;
     protected AlertDialog errorAlert;
-    protected boolean isSendStatistics = true;
     protected boolean isSendCrashReport = true;
     protected boolean isExitAfterInsert = false;
     protected boolean isInsertDisplayed = false;
@@ -105,15 +105,13 @@ public class ListActivityBase extends ListActivity {
     protected void onStart()
     {
         super.onStart();
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryStartSession(this);
+        AndiCarStatistics.sendFlurryStartSession(this);
     }
     @Override
     protected void onStop()
     {
         super.onStop();
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEndSession(this);
+        AndiCarStatistics.sendFlurryEndSession(this);
     }
 
     @SuppressWarnings("rawtypes")
@@ -126,7 +124,6 @@ public class ListActivityBase extends ListActivity {
         if(mPreferences == null)
         	mPreferences = getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
 
-        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
         if(isSendCrashReport)
             Thread.setDefaultUncaughtExceptionHandler(
@@ -222,7 +219,6 @@ public class ListActivityBase extends ListActivity {
         	}
 	    }
         
-        isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
         if(mDbAdapter == null)
             mDbAdapter = new MainDbAdapter(this);
     }
@@ -273,7 +269,7 @@ public class ListActivityBase extends ListActivity {
         	menu.add(0, StaticValues.CONTEXT_MENU_DELETE_ID, 0, mRes.getString(R.string.MENU_DeleteCaption));
 
         if(this instanceof GPSTrackListReportActivity){
-            menu.add( 0, StaticValues.CONTEXT_MENU_SENDASEMAIL_ID, 0, mRes.getText( R.string.MENU_SendAsEmailCaption ));
+            menu.add( 0, StaticValues.CONTEXT_MENU_SENDASEMAIL_ID, 0, mRes.getText( R.string.MENU_Share ));
             menu.add( 0, StaticValues.CONTEXT_MENU_SHOWONMAP_ID, 0, mRes.getText( R.string.MENU_ShowOnMap ));
         }
         else if(this instanceof MileageListReportActivity){
@@ -311,6 +307,10 @@ public class ListActivityBase extends ListActivity {
     	Intent i = new Intent(this, mEditClass);
         if(mTableName.equals(MainDbAdapter.TABLE_NAME_TODO)) {
         	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_LIST_TODO_TABLE, id);
+        	if(c == null){
+        		Toast.makeText(getApplicationContext(), R.string.ERR_061, Toast.LENGTH_LONG).show();
+        		return;
+        	}
         	long taskId = c.getLong(MainDbAdapter.COL_POS_TODO__TASK_ID);
         	c.close();
         	i.putExtra(MainDbAdapter.COL_NAME_GEN_ROWID, taskId);
