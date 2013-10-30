@@ -166,8 +166,8 @@
     <string name="MENU_ShowInactiveCaption">"顯示不活動的"</string>
     <string name="MENU_HideInactiveCaption">"隱藏不活動的"</string>
     <string name="MENU_SearchCaption">"搜索/過濾"</string>
-    <string name="MENU_CreateReportCaption">"建立報告"</string>
-	<string name="MENU_SendAsEmailCaption">"發送 / 上傳"</string>
+    <string name="MENU_ShareReport">"建立報告"</string>
+	<string name="MENU_Share">"發送 / 上傳"</string>
     <string name="MENU_ShowOnMap">"在地圖上顯示"</string>
     <string name="MENU_MileageCaption">"行車里程"</string>
     <string name="MENU_RefuelCaption">"補給燃料"</string>

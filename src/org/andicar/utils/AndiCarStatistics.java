@@ -29,28 +29,43 @@ import java.util.Map;
 public class AndiCarStatistics {
     public static void sendFlurryStartSession(Context ctx){
     	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
-        if(!mPreferences.getBoolean("IsBeta", false)){
+    	boolean isSendStatistics = 
+    			mPreferences.getBoolean("SendUsageStatistics", true) || !mPreferences.getBoolean("IsBeta", false);
+
+    	if(isSendStatistics){
             FlurryAgent.setReportLocation(false);
             FlurryAgent.onStartSession(ctx, StaticValues.FLURRY_ID);
         }
     }
     public static void sendFlurryEndSession(Context ctx){
     	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
-        if(!mPreferences.getBoolean("IsBeta", false)){
+    	boolean isSendStatistics = 
+    			mPreferences.getBoolean("SendUsageStatistics", true) || !mPreferences.getBoolean("IsBeta", false);
+        
+    	if(isSendStatistics)
             FlurryAgent.onEndSession(ctx);
-        }
     }
+    
     public static void sendFlurryEvent(Context ctx, String event, Map<String, String> parameters){
     	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
-        if(!mPreferences.getBoolean("IsBeta", false)){
+    	boolean isSendStatistics = 
+    			mPreferences.getBoolean("SendUsageStatistics", true) || !mPreferences.getBoolean("IsBeta", false);
+
+    	if(isSendStatistics)
             FlurryAgent.onEvent(event, parameters);
-        }
     }
 
     public static void sendFlurryError(Context ctx, String errorId, String message, String errorClass){
     	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
         if(!mPreferences.getBoolean("IsBeta", false)){
             FlurryAgent.onError(errorId, message, errorClass);
+        }
+    }
+
+    public static void sendFlurryError(Context ctx, String errorId, String message, Throwable exception){
+    	SharedPreferences mPreferences = ctx.getSharedPreferences(StaticValues.GLOBAL_PREFERENCE_NAME, Context.MODE_MULTI_PROCESS);
+        if(!mPreferences.getBoolean("IsBeta", false)){
+            FlurryAgent.onError(errorId, message, exception);
         }
     }
 }

@@ -35,6 +35,7 @@ import org.andicar2.activity.R;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -49,7 +50,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -65,7 +65,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     protected String reportSelectName = null;
     protected Bundle whereConditions;
     private View reportDialogView;
-    private CheckBox ckIsSendEmail;
+//    private CheckBox ckIsSendEmail;
     private Spinner spnReportFormat;
     protected int mYearFrom = 2010;
     protected int mMonthFrom = 11;
@@ -156,8 +156,8 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
         optionsMenu.add( 0, StaticValues.OPTION_MENU_SEARCH_ID, 0,
                 mRes.getText( R.string.MENU_SearchCaption ) ).
                 setIcon( mRes.getDrawable( R.drawable.ic_menu_search ) );
-        optionsMenu.add( 0, StaticValues.OPTION_MENU_REPORT_ID, 0,
-                mRes.getText( R.string.MENU_CreateReportCaption ) ).
+        optionsMenu.add( 0, StaticValues.OPTION_MENU_SHARE_ID, 0,
+                mRes.getText( R.string.MENU_ShareReport ) ).
                 setIcon( mRes.getDrawable( R.drawable.ic_menu_report ) );
         return true;
     }
@@ -167,7 +167,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     {
         if(item.getItemId() == StaticValues.OPTION_MENU_ADD_ID)
             return super.onOptionsItemSelected( item );
-        else if(item.getItemId() == StaticValues.OPTION_MENU_REPORT_ID)
+        else if(item.getItemId() == StaticValues.OPTION_MENU_SHARE_ID)
         {
             showDialog(StaticValues.DIALOG_REPORT_OPTIONS);
         }
@@ -233,7 +233,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
 		        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		        spnReportFormat.setAdapter(adapter);
 		
-		        ckIsSendEmail = (CheckBox)reportDialogView.findViewById(R.id.ckIsSendEmail);
+//		        ckIsSendEmail = (CheckBox)reportDialogView.findViewById(R.id.ckIsSendEmail);
 		
 		        reportOptionsDialog = new AndiCarDialogBuilder(ReportListActivityBase.this, 
 		        		AndiCarDialogBuilder.DIALOGTYPE_QUESTION, mRes.getString(R.string.DIALOGReport_DialogTitle));
@@ -287,7 +287,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     };
 
     public void run() {
-        createReport(true, ckIsSendEmail.isChecked(), spnReportFormat.getSelectedItemId());
+        createReport(true, true /*ckIsSendEmail.isChecked()*/, spnReportFormat.getSelectedItemId());
     }
 
     private Handler handler = new Handler() {
@@ -309,7 +309,7 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
             }
     };
 
-    protected boolean createReport(boolean saveLocally, boolean sendToMail, long reportFormatId){
+    protected boolean createReport(boolean saveLocally, boolean share, long reportFormatId){
         Cursor c = null;
         String reportContent = "";
         String reportTitle = "";
@@ -373,14 +373,19 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
             return false;
         }
 
-        if(sendToMail){
+        if(share){
             Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
             emailIntent.setType("text/html");
-            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar report " + reportTitle);
+            emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, " AndiCar report " + reportTitle + (reportFormatId == 0 ? ".csv" : ".html"));
             emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Sent by AndiCar (http://www.andicar.org)");
             emailIntent.putExtra(android.content.Intent.EXTRA_STREAM, Uri.parse("file://" + StaticValues.REPORT_FOLDER + reportFileName));
 //            emailIntent.setType("text/plain");
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+            try{
+            	startActivity(Intent.createChooser(emailIntent, mRes.getString(R.string.GEN_Share)));
+            }
+            catch(ActivityNotFoundException e){
+            	Toast.makeText(this, R.string.ERR_067, Toast.LENGTH_LONG).show();
+            }
         }
         handler.sendEmptyMessage(R.string.REPORTActivity_ReportCreatedMessage);
         return true;

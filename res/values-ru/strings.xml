@@ -171,8 +171,8 @@
     <string name="MENU_ShowInactiveCaption">"Показать неактивные"</string>
     <string name="MENU_HideInactiveCaption">"Спрятать неактивные"</string>
     <string name="MENU_SearchCaption">"Поиск/фильтр"</string>
-    <string name="MENU_CreateReportCaption">"Создать отчет"</string>
-    <string name="MENU_SendAsEmailCaption">"Отправить / загрузить"</string>
+    <string name="MENU_ShareReport">"Создать отчет"</string>
+    <string name="MENU_Share">"Отправить / загрузить"</string>
     <string name="MENU_ShowOnMap">"Показать на карте"</string>
     <string name="MENU_MileageCaption">"Поездки"</string>
     <string name="MENU_RefuelCaption">"Заправки"</string>

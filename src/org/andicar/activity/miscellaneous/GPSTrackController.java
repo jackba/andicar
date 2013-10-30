@@ -167,10 +167,13 @@ public class GPSTrackController extends EditActivityBase {
 
     @Override
     protected void onStop() {
-        super.onStop();
-        if(isBound)
-        	unbindService(mConnection);
-        saveState();
+    	try{
+	        super.onStop();
+	        if(isBound)
+	        	unbindService(mConnection);
+	        saveState();
+    	}
+    	catch(Exception e){};
     }
 
     @Override

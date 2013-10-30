@@ -20,16 +20,13 @@
 package org.andicar.activity.miscellaneous;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.andicar.activity.BaseActivity;
-import org.andicar2.activity.R;
 import org.andicar.activity.dialog.AndiCarDialogBuilder;
 import org.andicar.persistence.FileUtils;
 import org.andicar.service.AndiCarServiceStarter;
-import org.andicar.utils.AndiCarStatistics;
 import org.andicar.utils.StaticValues;
+import org.andicar2.activity.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -107,11 +104,6 @@ public class BackupRestoreActivity extends BaseActivity {
                             mResource.getString( R.string.BackupRestoreEditActivity_BackupCreatedMessage ), Toast.LENGTH_SHORT);
                     toast.show();
                     fillBkList();
-                    if(isSendStatistics){
-                        Map<String, String> parameters = new HashMap<String, String>();
-                        parameters.put("Operation", "Backup");
-                        AndiCarStatistics.sendFlurryEvent(BackupRestoreActivity.this, "BackupRestore", parameters);
-                    }
                 }
                 else{
                     madbErrorAlert.setMessage(mResource.getString( R.string.BackupRestoreEditActivity_BackupFailedMessage ) + "\n" +
@@ -144,12 +136,6 @@ public class BackupRestoreActivity extends BaseActivity {
                                     	AndiCarServiceStarter.startServices(BackupRestoreActivity.this, "BackupService");
                                     }
                                     catch(Exception e){}
-                                    if(isSendStatistics){
-                                        Map<String, String> parameters = new HashMap<String, String>();
-                                        parameters.put("Operation", "Restore");
-                                        AndiCarStatistics.sendFlurryEvent(BackupRestoreActivity.this, "BackupRestore", parameters);
-                                    }
-
                                     AndiCarDialogBuilder builder = new AndiCarDialogBuilder(BackupRestoreActivity.this, 
                                     		AndiCarDialogBuilder.DIALOGTYPE_INFO, mResource.getString(R.string.GEN_Info));
                                     builder.setMessage(mResource.getString(R.string.BackupRestoreEditActivity_RestoreOKMessage));

@@ -162,6 +162,7 @@
     <string name="GEN_ValidFromLabel">"Valid from:"</string>
     <string name="GEN_ValidToLabel">"Valid to:"</string>
     <string name="GEN_Reimbursement">"Reimbursement:"</string>
+    <string name="GEN_Share">"Share using ..."</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -171,8 +172,8 @@
     <string name="MENU_ShowInactiveCaption">"Show inactive"</string>
     <string name="MENU_HideInactiveCaption">"Hide inactive"</string>
     <string name="MENU_SearchCaption">"Search/filter"</string>
-    <string name="MENU_CreateReportCaption">"Create report"</string>
-    <string name="MENU_SendAsEmailCaption">"Send / Upload"</string>
+    <string name="MENU_ShareReport">"Share report"</string>
+    <string name="MENU_Share">"Share"</string>
     <string name="MENU_ShowOnMap">"Show on map"</string>
     <string name="MENU_MileageCaption">"Mileages"</string>
     <string name="MENU_RefuelCaption">"Refuels"</string>

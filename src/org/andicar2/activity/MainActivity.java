@@ -22,8 +22,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.andicar.activity.AddOnServicesList;
 import org.andicar.activity.BaseActivity;
@@ -138,7 +136,6 @@ public class MainActivity extends BaseActivity {
 	private boolean isActivityOnLoading = true;
 	private boolean isCarDefined = true;
 
-	private boolean isSendStatistics = true;
 	private boolean isSendCrashReport;
 	private boolean isJustInstalled = false;
 	
@@ -180,10 +177,7 @@ public class MainActivity extends BaseActivity {
 			// "/data/data/org.andicar.activity/databases/AndiCar.db",
 			// StaticValues.BASE_FOLDER + "debug.db", true);
 
-			isSendStatistics = mPreferences.getBoolean("SendUsageStatistics",
-					true);
-			isSendCrashReport = mPreferences
-					.getBoolean("SendCrashReport", true);
+			isSendCrashReport = mPreferences.getBoolean("SendCrashReport", true);
 			if (isSendCrashReport)
 				Thread.setDefaultUncaughtExceptionHandler(new AndiCarExceptionHandler(
 						Thread.getDefaultUncaughtExceptionHandler(), this));
@@ -215,7 +209,6 @@ public class MainActivity extends BaseActivity {
 
 			if (isJustInstalled) {
 				exitResume = true;
-				editor.putString("InitialInstallSource", StaticValues.INSTALL_SOURCE);
 				editor.commit();
 				// test if backups exists
 				if (FileUtils.getFileNames(StaticValues.BACKUP_FOLDER, null) != null
@@ -292,20 +285,6 @@ public class MainActivity extends BaseActivity {
 					alert.show();
 				}
 			}
-			
-			if(!mPreferences.contains("InitialInstallSource"))
-				editor.putString("InitialInstallSource", StaticValues.INSTALL_SOURCE);
-			editor.commit();
-
-			if(!mPreferences.contains("IsProviderSent") && isSendStatistics){
-	            AndiCarStatistics.sendFlurryStartSession(this);
-	        	Map<String, String> parameters = new HashMap<String, String>();
-				parameters.put("Provider", StaticValues.INSTALL_SOURCE);
-		        AndiCarStatistics.sendFlurryEvent(this, "InstallSource", parameters);
-				editor.putBoolean("IsProviderSent", true);
-				editor.commit();
-			}
-
 			try {
 				appVersion = getPackageManager().getPackageInfo(
 						getPackageName(), 0).versionName;
@@ -1212,7 +1191,6 @@ public class MainActivity extends BaseActivity {
 		if (!mPreferences.contains("AutoUpdateCheck")) {
 			editor.putBoolean("AutoUpdateCheck", true);
 		}
-		editor.putString("CurrentInstallSource", StaticValues.INSTALL_SOURCE);
 		editor.commit();
 	}
 
@@ -1227,7 +1205,6 @@ public class MainActivity extends BaseActivity {
 			setContentView(R.layout.main_activity_s01);
 			initControls();
 			isActivityOnLoading = true;
-			isSendStatistics = mPreferences.getBoolean("SendUsageStatistics", true);
 			if (mPreferences.getBoolean("MustClose", false)) {
 				SharedPreferences.Editor editor = mPreferences.edit();
 				editor.putBoolean("MustClose", false);
@@ -1392,15 +1369,13 @@ public class MainActivity extends BaseActivity {
 			showWhatsNew();
 		}
 
-		if (isSendStatistics)
-			AndiCarStatistics.sendFlurryStartSession(this);
+		AndiCarStatistics.sendFlurryStartSession(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		if (isSendStatistics)
-			AndiCarStatistics.sendFlurryEndSession(this);
+		AndiCarStatistics.sendFlurryEndSession(this);
 	}
 
 	protected AdapterView.OnItemSelectedListener spinnerCarOnItemSelectedListener = new AdapterView.OnItemSelectedListener() {

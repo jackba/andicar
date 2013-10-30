@@ -207,8 +207,7 @@ public class ExpenseEditActivity extends EditActivityBase {
     	}
 
         initControls();
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent(this, "ExpenseEdit", null);
+        AndiCarStatistics.sendFlurryEvent(this, "ExpenseEdit", null);
     }
 
     private void initControls() {

@@ -101,15 +101,13 @@ public abstract class EditActivityBase extends BaseActivity implements
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (isSendStatistics)
-			AndiCarStatistics.sendFlurryStartSession(this);
+		AndiCarStatistics.sendFlurryStartSession(this);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		if (isSendStatistics)
-			AndiCarStatistics.sendFlurryEndSession(this);
+		AndiCarStatistics.sendFlurryEndSession(this);
 	}
 
 	/**

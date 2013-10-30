@@ -92,6 +92,8 @@
     <string name="ERR_064">"Your device does not have Bluetooth support!"</string>
     
     <string name="ERR_065">"Invalid number. Too big."</string>
-
     <string name="ERR_066">"An unexpected error occured!\nPlease contact the developers."</string>
+    <string name="ERR_067">"Cannot share report. No application found with sharing capabilities!"</string>
+
+    <string name="ERR_068">"No GPS provider found!"</string>
 </resources>

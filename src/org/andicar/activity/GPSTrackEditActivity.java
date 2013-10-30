@@ -171,9 +171,7 @@ public class GPSTrackEditActivity extends EditActivityBase {
         if(acUserComment != null)
         	acUserComment.setOnKeyListener(this);
         
-
-        if(isSendStatistics)
-            AndiCarStatistics.sendFlurryEvent(this, "GPSTrackEdit", null);
+        AndiCarStatistics.sendFlurryEvent(this, "GPSTrackEdit", null);
     }
 
     private View.OnClickListener mBtnSendAsEmailListener =

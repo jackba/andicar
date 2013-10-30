@@ -33,17 +33,6 @@ public class StaticValues
     public static final int DATABASE_VERSION = 401;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
-    /*
-     * initial install location of AndiCar: 
-     * 		Android Market
-     * 		SamsungApps
-     * 		LGSmartWorld
-     * 		SlideME
-     * 		GoApk
-     * 		Other
-     * 		Unknown
-     */
-    public static final String INSTALL_SOURCE = "";
     
     public static final int MENU_PREFERENCES_ID = 10;
     public static final int MENU_REPORTS_ID = 11;
@@ -63,7 +52,7 @@ public class StaticValues
     public static final int OPTION_MENU_SHOWINACTIVE_ID = 22;
     public static final int OPTION_MENU_HIDEINACTIVE_ID = 23;
     public static final int OPTION_MENU_SEARCH_ID = 24;
-    public static final int OPTION_MENU_REPORT_ID = 25;
+    public static final int OPTION_MENU_SHARE_ID = 25;
     
     public static final int CONTEXT_MENU_EDIT_ID = 31;
     public static final int CONTEXT_MENU_INSERT_ID = 32;
