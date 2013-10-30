@@ -133,7 +133,7 @@ public class BackupService extends Service {
 							" FROM " + AddOnDBAdapter.ADDON_BK_SCHEDULE_TABLE_NAME +
 							" WHERE " + MainDbAdapter.COL_NAME_GEN_ISACTIVE + " = 'Y'";
 		Cursor c = db.query(selectSql, null);
-		if(c.moveToNext()){ //active schedule exists
+		if(c != null && c.moveToNext()){ //active schedule exists
 			nextSchedule.setTimeInMillis(c.getLong(MainDbAdapter.COL_POS_GEN_NAME)); //set the time part
 			//set date to current day
 			nextSchedule.set(currentDate.get(Calendar.YEAR), 
