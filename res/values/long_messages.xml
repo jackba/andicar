@@ -84,6 +84,6 @@
     <string name="LM_UPDATE_MSG">
         <i><b>Version 4.2.1:</b></i>\n
         * New layout for report sharing dialog\n
-        * Various bug fixing\n
+        * Various bug fixes\n
     </string>
 </resources>
