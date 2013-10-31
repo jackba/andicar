@@ -82,11 +82,8 @@
     </string>
 
     <string name="LM_UPDATE_MSG">
-        <i><b>Version 4.2.0:</b></i>\n
-        * Mileage based reimbursement calculation. The rates can be defined in Preferences -> Reimbursement rates\n 
-        * Fuel efficiency calculation for all full refuels in the refuel list and the exported refuel reports\n
-        * Various bug fixing\n\n
-        <i><b>Version 4.2.0.2:</b></i>\n
-        * Bug fixing for Android 2.x versions
+        <i><b>Version 4.2.1:</b></i>\n
+        * New layout for report sharing dialog\n
+        * Various bug fixing\n
     </string>
 </resources>
