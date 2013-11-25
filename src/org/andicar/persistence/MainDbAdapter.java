@@ -433,7 +433,11 @@ public class MainDbAdapter extends DB
     private void updateCarCurrentIndex(long mCarId, BigDecimal newIndex) throws SQLException, NumberFormatException {
         //update car curent index
     	Cursor c = fetchRecord(TABLE_NAME_CAR, COL_LIST_CAR_TABLE, mCarId);
-        BigDecimal carCurrentIndex = new BigDecimal(c.getString(COL_POS_CAR__INDEXCURRENT));
+        BigDecimal carCurrentIndex;
+        if(c.getString(COL_POS_CAR__INDEXCURRENT) == null)
+        	carCurrentIndex = new BigDecimal(0);
+        else
+        	carCurrentIndex = new BigDecimal(c.getString(COL_POS_CAR__INDEXCURRENT));
         c.close();
         ContentValues content = new ContentValues();
         if (newIndex.compareTo(carCurrentIndex) > 0) {
