@@ -261,7 +261,8 @@ public class ListActivityBase extends ListActivity {
         }
         if(this instanceof ToDoListReportActivity){
         	Cursor c = mDbAdapter.fetchRecord(MainDbAdapter.TABLE_NAME_TODO, MainDbAdapter.COL_LIST_TODO_TABLE, mLongClickId);
-        	if(c.getString(MainDbAdapter.COL_POS_TODO__ISDONE).equals("N"))
+        	if(c.getString(MainDbAdapter.COL_POS_TODO__ISDONE) != null &&
+        			c.getString(MainDbAdapter.COL_POS_TODO__ISDONE).equals("N"))
         		menu.add(0, StaticValues.CONTEXT_MENU_TODO_DONE_ID, 0, mRes.getString(R.string.ToDo_IsDoneCaption));
         	c.close();
         }
