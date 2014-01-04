@@ -132,14 +132,6 @@ public class BackupService extends Service {
 		String selectSql = "SELECT * " +
 							" FROM " + AddOnDBAdapter.ADDON_BK_SCHEDULE_TABLE_NAME +
 							" WHERE " + MainDbAdapter.COL_NAME_GEN_ISACTIVE + " = 'Y'";
-		if(db == null){
-			try {
-				db = new MainDbAdapter(this);
-			} catch (Exception e1) {
-				e1.printStackTrace();
-				stopSelf();
-			}
-		}
 		Cursor c = db.query(selectSql, null);
 		if(c != null && c.moveToNext()){ //active schedule exists
 			nextSchedule.setTimeInMillis(c.getLong(MainDbAdapter.COL_POS_GEN_NAME)); //set the time part
