@@ -82,7 +82,8 @@ public class BackupService extends Service {
 		}
 		
 		mNM = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		if(intent.getExtras().getString("Operation").equals("SetNextRun"))
+		String operation = intent.getExtras().getString("Operation");
+		if(operation.equals("SetNextRun"))
 		{
 			setNextRun();
 		}
@@ -119,8 +120,11 @@ public class BackupService extends Service {
 	 * set the next run date
 	 */
 	private void setNextRun(){
+		Log.d(LOGTAG, "========== setNextRun begin ==========");
 		Calendar nextSchedule = Calendar.getInstance();
 		Calendar currentDate = Calendar.getInstance();
+		Log.d(LOGTAG, "currentDate = " + currentDate.get(Calendar.YEAR) + "-"+ currentDate.get(Calendar.MONTH) + "-" + currentDate.get(Calendar.DAY_OF_MONTH)
+				+ " " + currentDate.get(Calendar.HOUR_OF_DAY) + ":" + currentDate.get(Calendar.MINUTE));
 		long timeInMilisToNextRun = -1;
 		String scheduleDays;
 		
@@ -138,7 +142,8 @@ public class BackupService extends Service {
 			//set date to current day
 			nextSchedule.set(currentDate.get(Calendar.YEAR), 
 					currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH));
-
+			Log.d(LOGTAG, "nextSchedule = " + nextSchedule.get(Calendar.YEAR) + "-"+ nextSchedule.get(Calendar.MONTH) + "-" + nextSchedule.get(Calendar.DAY_OF_MONTH)
+					+ " " + nextSchedule.get(Calendar.HOUR_OF_DAY) + ":" + nextSchedule.get(Calendar.MINUTE));
 			if(c.getString(AddOnDBAdapter.ADDON_BK_SCHEDULE_COL_FREQUENCY_POS).equals("D")){ //daily schedule
 				if(nextSchedule.compareTo(currentDate) < 0){ //current hour > scheduled hour => next run tomorrow
 					nextSchedule.add(Calendar.DAY_OF_MONTH, 1);
@@ -146,15 +151,24 @@ public class BackupService extends Service {
 			}
 			else{ //weekly schedule
 				scheduleDays = c.getString(AddOnDBAdapter.ADDON_BK_SCHEDULE_COL_DAYS_POS);
+				Log.d(LOGTAG, "scheduleDays = " +scheduleDays);
 				int daysToAdd = -1;
+				Log.d(LOGTAG, "Calendar.DAY_OF_WEEK = " + currentDate.get(Calendar.DAY_OF_WEEK));
 				for(int i = currentDate.get(Calendar.DAY_OF_WEEK) - 1; i < 7; i++){
+					Log.d(LOGTAG, "i = " + i);
 					if(scheduleDays.substring(i, i+1).equals("1")){
+						Log.d(LOGTAG, scheduleDays.substring(i, i+1));
 						if(i == (currentDate.get(Calendar.DAY_OF_WEEK) - 1) &&
 								nextSchedule.compareTo(currentDate) < 0){ //current hour > scheduled hour => get next run day
+							Log.d(LOGTAG, "currentDate = " + currentDate.get(Calendar.YEAR) + "-"+ currentDate.get(Calendar.MONTH) + "-" + currentDate.get(Calendar.DAY_OF_MONTH)
+									+ " " + currentDate.get(Calendar.HOUR_OF_DAY) + ":" + currentDate.get(Calendar.MINUTE));
+							Log.d(LOGTAG, "nextSchedule = " + nextSchedule.get(Calendar.YEAR) + "-"+ nextSchedule.get(Calendar.MONTH) + "-" + nextSchedule.get(Calendar.DAY_OF_MONTH)
+									+ " " + nextSchedule.get(Calendar.HOUR_OF_DAY) + ":" + nextSchedule.get(Calendar.MINUTE));
 							continue;
 						}
 						else{
 							daysToAdd = i - (currentDate.get(Calendar.DAY_OF_WEEK) - 1);
+							Log.d(LOGTAG, "daysToAdd = " + daysToAdd);
 							break;
 						}
 					}
@@ -162,16 +176,23 @@ public class BackupService extends Service {
 				if(daysToAdd == -1){ //no next run day in this week
 					for(int j = 0; j < currentDate.get(Calendar.DAY_OF_WEEK); j++){
 						if(scheduleDays.substring(j, j+1).equals("1")){
-							daysToAdd = (7-currentDate.get(Calendar.DAY_OF_WEEK)) + j;
+							daysToAdd = (7-currentDate.get(Calendar.DAY_OF_WEEK)) + j + 1;
 							break;
 						}
 					}
 				}
+				Log.d(LOGTAG, "daysToAdd = " + daysToAdd);
 				nextSchedule.add(Calendar.DAY_OF_MONTH, daysToAdd);
+				Log.d(LOGTAG, "nextSchedule = " + nextSchedule.get(Calendar.YEAR) + "-"+ nextSchedule.get(Calendar.MONTH) + "-" + nextSchedule.get(Calendar.DAY_OF_MONTH)
+						+ " " + nextSchedule.get(Calendar.HOUR_OF_DAY) + ":" + nextSchedule.get(Calendar.MINUTE));
 			}
 			timeInMilisToNextRun = nextSchedule.getTimeInMillis() - currentDate.getTimeInMillis();
+			Log.d(LOGTAG, "nextSchedule.getTimeInMillis() = " + nextSchedule.getTimeInMillis());
+			Log.d(LOGTAG, "currentDate.getTimeInMillis() = " + currentDate.getTimeInMillis());
+			Log.d(LOGTAG, "timeInMilisToNextRun = " + timeInMilisToNextRun);
 			//set next run of the service
 			long triggerTime = System.currentTimeMillis() + timeInMilisToNextRun;
+			Log.d(LOGTAG, "triggerTime = " + triggerTime);
 			am.setRepeating(AlarmManager.RTC_WAKEUP, triggerTime, AlarmManager.INTERVAL_DAY, pIntent);
 			Log.i(LOGTAG, "BackupService scheduled. Next start:" + DateFormat.getDateFormat(this).format(triggerTime) + " " + DateFormat.getTimeFormat(this).format(triggerTime));
 		}
@@ -180,6 +201,7 @@ public class BackupService extends Service {
 			Log.i(LOGTAG, "BackupService not scheduled. No active schedule found.");
 		}
 		c.close();
+		Log.d(LOGTAG, "========== setNextRun finished ==========");
 	}
 
 	private void backupDb(){
