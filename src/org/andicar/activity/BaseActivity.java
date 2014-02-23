@@ -67,7 +67,7 @@ public abstract class BaseActivity extends Activity {
 
     protected SharedPreferences.Editor mPrefEditor;
     protected boolean isSendCrashReport;
-    protected boolean isUseNumericInput = true;
+//    protected boolean isUseNumericInput = true;
 
     protected long mCarId = -1;
     protected long mDriverId = -1;
@@ -98,7 +98,7 @@ public abstract class BaseActivity extends Activity {
         madbErrorAlert.setCancelable( false );
         madbErrorAlert.setPositiveButton( mResource.getString(R.string.GEN_OK), null );
 
-        isUseNumericInput = mPreferences.getBoolean("UseNumericKeypad", true);
+//        isUseNumericInput = mPreferences.getBoolean("UseNumericKeypad", true);
     }
 
     @Override
@@ -309,32 +309,32 @@ public abstract class BaseActivity extends Activity {
      * see issue #29
      * @param wg
      */
-    protected void setInputType(ViewGroup wg){
-        if(wg == null)
-            return;
-
-        View vwChild;
-        EditText etChild;
-
-        for(int i = 0; i < wg.getChildCount(); i++)
-        {
-            vwChild = wg.getChildAt(i);
-            if(vwChild instanceof ViewGroup){
-                setInputType((ViewGroup)vwChild);
-            }
-            else if(vwChild instanceof EditText){
-                etChild = (EditText) vwChild;
-                if(etChild.getInputType() == InputType.TYPE_CLASS_PHONE
-                             || etChild.getInputType() == InputType.TYPE_CLASS_NUMBER) { //numeric field
-                     if(isUseNumericInput)
-                         etChild.setRawInputType(InputType.TYPE_CLASS_PHONE);
-                     else
-                         etChild.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-                }
-            }
-        }
-    }
-    
+//    protected void setInputType(ViewGroup wg){
+//        if(wg == null)
+//            return;
+//
+//        View vwChild;
+//        EditText etChild;
+//
+//        for(int i = 0; i < wg.getChildCount(); i++)
+//        {
+//            vwChild = wg.getChildAt(i);
+//            if(vwChild instanceof ViewGroup){
+//                setInputType((ViewGroup)vwChild);
+//            }
+//            else if(vwChild instanceof EditText){
+//                etChild = (EditText) vwChild;
+//                if(etChild.getInputType() == InputType.TYPE_CLASS_PHONE
+//                             || etChild.getInputType() == InputType.TYPE_CLASS_NUMBER) { //numeric field
+//                     if(isUseNumericInput)
+//                         etChild.setRawInputType(InputType.TYPE_CLASS_PHONE);
+//                     else
+//                         etChild.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+//                }
+//            }
+//        }
+//    }
+//    
     
     
     public ViewGroup getRootViewGroup(){

@@ -131,8 +131,8 @@ public abstract class EditActivityBase extends BaseActivity implements
 			btnOk.setOnClickListener(onOkClickListener);
 
 		vgRoot = (ViewGroup) findViewById(R.id.vgRoot);
-		if (vgRoot != null)
-			setInputType(vgRoot);
+//		if (vgRoot != null)
+//			setInputType(vgRoot);
 		btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
 		btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
 
