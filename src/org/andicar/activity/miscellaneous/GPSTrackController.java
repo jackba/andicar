@@ -159,8 +159,6 @@ public class GPSTrackController extends EditActivityBase {
             c.close();
         }
 
-        if(vgRoot != null)
-        	setInputType(vgRoot);
         initControls();
         fillStartIndex();
     }
