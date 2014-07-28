@@ -677,7 +677,7 @@ public class MainActivity extends BaseActivity {
 	    		catch(Exception e){
 	    			
 	    		}
-	    		if(oldFullRefuelIndex == null || oldFullRefuelIndex.equals(-1D)  //no previous full refuel found 
+	    		if(oldFullRefuelIndex == null || oldFullRefuelIndex.equals(new BigDecimal("-1"))  //no previous full refuel found 
 	    				|| listCursor.getString(12).equals("N")){ //this is not a full refuel
 	    			text = text.replace("[#1]", "");
 	    		}

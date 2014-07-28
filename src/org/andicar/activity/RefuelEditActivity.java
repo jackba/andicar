@@ -708,8 +708,11 @@ public class RefuelEditActivity extends EditActivityBase {
                 && userInputStr != null && userInputStr.length() > 0) {
             try{
             	BigDecimal qtyBd = new BigDecimal(qtyStr);
-            	if(qtyBd.signum() == 0)
-            		return;
+            	
+            	if(qtyBd.signum() == 0 && mInsertMode == INSERTMODE_AMOUNT){
+            		rbInsertModePrice.setSelected(true);
+            		mInsertMode = INSERTMODE_PRICE;
+            	}
 
             	if(mInsertMode == INSERTMODE_PRICE){ //calculate amount
                     priceEntered = new BigDecimal(userInputStr);
