@@ -203,8 +203,6 @@ public class RefuelEditActivity extends EditActivityBase {
                 currencyCode = mDbAdapter.getCurrencyCode(mCurrencyId);
             }
             c.close();
-            setInsertMode(INSERTMODE_PRICE);
-            rbInsertModePrice.setChecked(true);
         }
         else {
         	setDefaultValues();
@@ -989,6 +987,7 @@ public class RefuelEditActivity extends EditActivityBase {
     	mPrefEditor.putLong("LastDriver_ID", mDriverId);
     	mPrefEditor.putLong("RefuelExpCategory_ID", mExpCategoryId);
     	mPrefEditor.putLong("RefuelExpenseType_ID", mExpTypeId);
+    	mPrefEditor.putInt("mInsertMode", mInsertMode);
 		mPrefEditor.commit();
     	
 		Intent intent = new Intent(this, ToDoNotificationService.class);
@@ -1099,6 +1098,16 @@ public class RefuelEditActivity extends EditActivityBase {
 		}
 		setSpinnerSelectedID(spnExpType, mExpTypeId);
 
+		setInsertMode(mPreferences.getInt("mInsertMode", INSERTMODE_PRICE));
+		if(mInsertMode == INSERTMODE_PRICE){
+			rbInsertModePrice.setChecked(true);
+			rbInsertModeAmount.setChecked(false);
+		}
+		else{
+			rbInsertModePrice.setChecked(false);
+			rbInsertModeAmount.setChecked(true);
+		}
+
 		setUOMVolumeId(mDbAdapter.getCarUOMVolumeID(mCarId));
 		setSpinnerSelectedID(spnUomVolume, mUomVolumeId);
 
@@ -1110,8 +1119,6 @@ public class RefuelEditActivity extends EditActivityBase {
         ckIsFullRefuel.setChecked(false);
         carDefaultUOMVolumeId = mUomVolumeId;
         carDefaultUOMVolumeCode = mDbAdapter.getUOMCode(carDefaultUOMVolumeId);
-        setInsertMode(INSERTMODE_AMOUNT);
-        rbInsertModeAmount.setChecked(true);
         acBPartner.setText(null);
         acAdress.setEnabled(false);
         acAdress.setText(null);
