@@ -82,10 +82,10 @@
     </string>
 
     <string name="LM_UPDATE_MSG">
+        <i><b>Version 4.2.3.1:</b></i>\n
+        * Fixed a bug in fuel efficiency calculation\n\n
         <i><b>Version 4.2.3:</b></i>\n
         * Remember the last amt/price choice for refuel\n\n
-        <i><b>Version 4.2.2:</b></i>\n
-        * Fixed a bug in weekly backup schedue\n\n
         <i><b>Version 4.2.1:</b></i>\n
         * New layout for report sharing dialog\n
         * Various bug fixes\n
