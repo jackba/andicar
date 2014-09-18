@@ -21,7 +21,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.andicar2.activity"
           android:versionCode="4240" 
-          android:versionName="4.2.4"
+          android:versionName="4.2.5 Beta"
           android:installLocation="internalOnly">
 <!-- 
 	internalOnly because:
