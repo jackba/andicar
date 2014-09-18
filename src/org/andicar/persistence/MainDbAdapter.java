@@ -1646,7 +1646,8 @@ public class MainDbAdapter extends DB
                 " FROM " + TABLE_NAME_REFUEL +
                 " WHERE " + WHERE_CONDITION_ISACTIVE +
                 	" AND " + COL_NAME_REFUEL__INDEX + " > " + prevIndex +
-                	" AND " + COL_NAME_REFUEL__INDEX + " <= " + currIndex;;
+                	" AND " + COL_NAME_REFUEL__INDEX + " <= " + currIndex + 
+                	" AND " + COL_NAME_REFUEL__CAR_ID + " = " + carID;
 	    
 	    selectCursor = execSelectSql(selectSql, null);
 	    if(selectCursor.moveToFirst()){
