@@ -102,6 +102,7 @@
     <string name="GEN_TypeLabel">&quot;Tip:&quot;</string>
     <string name="GEN_DocumentNoLabel">&quot;Document nr.:&quot;</string>
     <string name="GEN_IndexLabel">&quot;Odometru:&quot;</string>
+    <string name="GEN_IndexLabel2">&quot;Odometru&quot;</string>
     <string name="GEN_QuantityLabel">&quot;Cantitate:&quot;</string>
     <string name="GEN_PriceLabel">&quot;Pret&quot;</string>
     <string name="GEN_AmountLabel">&quot;Cant.&quot;</string>
@@ -162,6 +163,8 @@
     <string name="GEN_ValidFromLabel">"Valabil de la:"</string>
     <string name="GEN_ValidToLabel">"Valabil pana la:"</string>
     <string name="GEN_Reimbursement">"Rambursare:"</string>
+    <string name="GEN_Time">&quot;Timp&quot;</string>
+    <string name="GEN_Duration">"Durată:"</string>
     
     <string name="MENU_PreferencesCaption">&quot;Preferinte&quot;</string>
     <string name="MENU_AboutCaption">&quot;Despre&quot;</string>
@@ -330,7 +333,6 @@
     <string name="TaskEditActivity_RecurrentEveryLabel">&quot;La fiecare&quot;</string>
     <string name="TaskEditActivity_RecurrentFrequencyLabel">&quot;Repetare&quot;</string>
     <string name="TaskEditActivity_FirstRunDependOnCar">&quot;Timp de pornire diferit pentru fiecare masina&quot;</string>
-    <string name="TaskEditActivity_TimeDriven">&quot;Timp&quot;</string>
     <string name="TaskEditActivity_Scheduled">&quot;Programat pentru:&quot;</string>
     <string name="TaskEditActivity_MileageDriven">&quot;Kilometraj&quot;</string>
     <string name="TaskEditActivity_BothDriven">&quot;Ambele&quot;</string>

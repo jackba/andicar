@@ -93,7 +93,11 @@ public class ReportDbAdapter extends MainDbAdapter{
 				" ORDER BY " + sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_REIMBURSEMENT_CAR_RATES__VALIDFROM) + " DESC, " +
 						sqlConcatTableColumn(TABLE_NAME_REIMBURSEMENT_CAR_RATES, COL_NAME_GEN_ROWID) + " DESC " +
 				" LIMIT 1" +
-                ") AS ReimbursementRate " + //#12
+                ") AS ReimbursementRate, " + //#12
+                sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE_TO) + " AS SecondsTo, " + //#13
+                sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE_TO) + " - " +
+                	sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE) + " AS TripTime " + //#14
+                
             " FROM " + TABLE_NAME_MILEAGE +
                     " JOIN " + TABLE_NAME_EXPENSETYPE +
                         " ON " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__EXPENSETYPE_ID) + "=" +
@@ -137,7 +141,21 @@ public class ReportDbAdapter extends MainDbAdapter{
                     "WHEN \"6\" THEN '[#d6]' " +
                 "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
 
-                    sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_NAME) + " AS CarName, " +
+                "DATETIME(" + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE_TO) +
+                ", 'unixepoch', 'localtime') AS " + COL_NAME_MILEAGE__DATE_TO + ", " +
+
+	            "CASE strftime(\"%w\", " + sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__DATE_TO) +
+	                ", 'unixepoch', 'localtime') " +
+	                "WHEN \"0\" THEN '[#d0]' " +
+	                "WHEN \"1\" THEN '[#d1]' " +
+	                "WHEN \"2\" THEN '[#d2]' " +
+	                "WHEN \"3\" THEN '[#d3]' " +
+	                "WHEN \"4\" THEN '[#d4]' " +
+	                "WHEN \"5\" THEN '[#d5]' " +
+	                "WHEN \"6\" THEN '[#d6]' " +
+	            "END AS " + StaticValues.DAY_OF_WEEK_NAME + ", " +
+	                
+                sqlConcatTableColumn(TABLE_NAME_CAR, COL_NAME_GEN_NAME) + " AS CarName, " +
                 sqlConcatTableColumn(TABLE_NAME_DRIVER, COL_NAME_GEN_NAME) + " AS DriverName, " +
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTART) + " AS " + COL_NAME_MILEAGE__INDEXSTART + "_DTypeN, " +
                 sqlConcatTableColumn(TABLE_NAME_MILEAGE, COL_NAME_MILEAGE__INDEXSTOP) + " AS " + COL_NAME_MILEAGE__INDEXSTOP + "_DTypeN, " +

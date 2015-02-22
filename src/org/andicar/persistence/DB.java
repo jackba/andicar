@@ -128,6 +128,7 @@ public class DB {
 	public static final String COL_NAME_MILEAGE__EXPENSETYPE_ID = TABLE_NAME_EXPENSETYPE + "_ID";
 	public static final String COL_NAME_MILEAGE__GPSTRACKLOG = "GPSTrackLog";
 	public static final String COL_NAME_MILEAGE__TAG_ID = TABLE_NAME_TAG + "_ID";
+	public static final String COL_NAME_MILEAGE__DATE_TO = "DateTo";
 	// currencies
 	public static final String COL_NAME_CURRENCY__CODE = "Code";
 	// refuel
@@ -360,6 +361,7 @@ public class DB {
 	public static final int COL_POS_MILEAGE__EXPENSETYPE_ID = 10;
 	public static final int COL_POS_MILEAGE__GPSTRACKLOG = 11;
 	public static final int COL_POS_MILEAGE__TAG_ID = 12;
+	public static final int COL_POS_MILEAGE__DATE_TO = 13;
 
 	// currencies
 	public static int COL_POS_CURRENCY__CODE = 4;
@@ -522,7 +524,7 @@ public class DB {
 			COL_NAME_MILEAGE__CAR_ID, COL_NAME_MILEAGE__DRIVER_ID,
 			COL_NAME_MILEAGE__INDEXSTART, COL_NAME_MILEAGE__INDEXSTOP,
 			COL_NAME_MILEAGE__UOMLENGTH_ID, COL_NAME_MILEAGE__EXPENSETYPE_ID,
-			COL_NAME_MILEAGE__GPSTRACKLOG, COL_NAME_MILEAGE__TAG_ID };
+			COL_NAME_MILEAGE__GPSTRACKLOG, COL_NAME_MILEAGE__TAG_ID, COL_NAME_MILEAGE__DATE_TO };
 
 	public static final String[] COL_LIST_CURRENCY_TABLE = {
 			COL_NAME_GEN_ROWID, COL_NAME_GEN_NAME, COL_NAME_GEN_ISACTIVE,
@@ -767,7 +769,10 @@ public class DB {
 			+ COL_NAME_MILEAGE__GPSTRACKLOG
 			+ " TEXT NULL, "
 			+ COL_NAME_MILEAGE__TAG_ID
-			+ " INTEGER NULL " + ");";
+			+ " INTEGER NULL, " 
+			+ COL_NAME_MILEAGE__DATE_TO
+			+ " DATE NULL "
+			+ ");";
 	protected static final String CREATE_SQL_CURRENCY_TABLE = "CREATE TABLE IF NOT EXISTS "
 			+ TABLE_NAME_CURRENCY
 			+ " ( "
@@ -1568,6 +1573,9 @@ public class DB {
 			else if (oldVersion == 400) {
 				upgradeDbTo401(db, oldVersion);
 			}
+			else if (oldVersion == 401) {
+				upgradeDbTo430(db, oldVersion);
+			}
 
 			// !!!!!!!!!!!!!!DON'T FORGET onCREATE !!!!!!!!!!!!!!!!
 
@@ -2068,6 +2076,23 @@ public class DB {
 		private void upgradeDbTo401(SQLiteDatabase db, int oldVersion)
 				throws SQLException {
 			createReimbursementCarRatesTable(db);
+			upgradeDbTo430(db, oldVersion);
+		}
+
+		private void upgradeDbTo430(SQLiteDatabase db, int oldVersion)
+				throws SQLException {
+			String updSql = null;
+			if (!columnExists(db, TABLE_NAME_MILEAGE,
+					COL_NAME_MILEAGE__DATE_TO)) {
+				updSql = "ALTER TABLE " + TABLE_NAME_MILEAGE + " ADD "
+						+ COL_NAME_MILEAGE__DATE_TO + " DATE NULL ";
+				db.execSQL(updSql);
+
+				updSql = "UPDATE " + TABLE_NAME_MILEAGE + " SET "
+						+ COL_NAME_MILEAGE__DATE_TO + " = " + COL_NAME_MILEAGE__DATE;
+
+				db.execSQL(updSql);
+			}
 		}
 
 		private boolean columnExists(SQLiteDatabase db, String table,

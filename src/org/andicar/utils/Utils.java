@@ -110,8 +110,6 @@ public class Utils {
     }
 
     /**
-     *
-     * @param appendSecond TODO
      * @return the current date in the form of yyyy-mm-dd
      */
     public static String getDateStr(boolean appendHour, boolean appendMinute, boolean appendSecond){
@@ -340,5 +338,14 @@ public class Utils {
                 return NumberFormat.getInstance().format(bdNumber);
 
         return bdNumber.toPlainString();
-    }    
+    }
+    
+    public static String getDaysHoursMinsFromSec(long sec){
+    	int days = (int) (sec / (86400d));
+    	sec = sec - (days * 86400);
+    	int hours = (int) (sec / 3600d);
+    	sec = sec - (hours * 3600);
+    	int minutes = (int) (sec / 60d);
+    	return (days != 0 ? days + "d ": "" ) + (hours < 10 ? "0" : "" ) + hours + ":" + minutes;
+    }
 }

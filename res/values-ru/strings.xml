@@ -103,6 +103,7 @@
     <string name="GEN_TypeLabel">"Тип:"</string>
     <string name="GEN_DocumentNoLabel">"Документ no.:"</string>
     <string name="GEN_IndexLabel">"Счетчик:"</string>
+    <string name="GEN_IndexLabel2">"Счетчик"</string>
     <string name="GEN_QuantityLabel">"Количество:"</string>
     <string name="GEN_PriceLabel">"Цена"</string>
     <string name="GEN_AmountLabel">"Сум"</string>
@@ -162,7 +163,9 @@
     <string name="GEN_ValidFromLabel">"Действует с:"</string>
     <string name="GEN_ValidToLabel">"Срок действия:"</string>
     <string name="GEN_Reimbursement">"возвращение денег:"</string>
-    	
+	<string name="GEN_Time">"Время"</string>
+    <string name="GEN_Duration">"Продолжительность:"</string>
+	
     <string name="MENU_PreferencesCaption">"Настройки"</string>
     <string name="MENU_AboutCaption">"О программе"</string>
     <string name="MENU_DeleteCaption">"Удалить"</string>
@@ -320,7 +323,6 @@
 	<string name="TaskEditActivity_RecurrentEveryLabel">"Каждый"</string>
 	<string name="TaskEditActivity_RecurrentFrequencyLabel">"Частота"</string>
 	<string name="TaskEditActivity_FirstRunDependOnCar">" Различное время начала для каждого автомобиля "</string>
-	<string name="TaskEditActivity_TimeDriven">"Время"</string>
 	<string name="TaskEditActivity_MileageDriven">"Пробег"</string>
 	<string name="TaskEditActivity_BothDriven">"Оба"</string>
 	<string name="TaskEditActivity_FirstTimeRunExplanation">" Время начала будет указано для каждого  автомобиля "</string>

@@ -586,13 +586,14 @@ public class MainActivity extends BaseActivity {
 		reportDb.setReportSql("mileageListViewSelect", whereConditions);
 		listCursor = reportDb.fetchReport(1);
 		if (listCursor != null && listCursor.moveToFirst()) {
-			if(listCursor.getString(1) != null)
+			if(listCursor.getString(1) != null){
 				tvThreeLineListMileageText1.setText(listCursor.getString(1)
 					.replace(
 							"[#1]",
-							DateFormat.getDateFormat(getApplicationContext())
-									.format(listCursor.getLong(5) * 1000)));
-			
+							DateFormat.getDateFormat(getApplicationContext()).format(listCursor.getLong(5) * 1000) + 
+							(listCursor.getLong(14) != 0L ? " (" + Utils.getDaysHoursMinsFromSec(listCursor.getLong(14)) + ")" : "") 
+							));
+			}
 			if(listCursor.getString(2) != null){
 				try{
 					reimbursementRate = new BigDecimal(listCursor.getDouble(12));

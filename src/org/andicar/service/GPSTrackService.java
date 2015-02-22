@@ -151,8 +151,8 @@ public class GPSTrackService extends Service {
     private long gpxPointsCount = 0;
     private long gopPointsCount = 0;
 
-
-
+    private long lMileageStartDate = System.currentTimeMillis();
+    private long lMileageStopDate = System.currentTimeMillis();;
     /**
      * Class for clients to access.  Because we know this service always
      * runs in the same process as its clients, we don't need to deal with
@@ -889,11 +889,14 @@ public class GPSTrackService extends Service {
         closeFiles(true);
         
         if(mPreferences.getBoolean("GPSTrackCreateMileage", true) && !isErrorStop){
+        	lMileageStopDate = System.currentTimeMillis();
             Intent mileageInsertIntent = new Intent(GPSTrackService.this, MileageEditActivity.class);
             mileageInsertIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mileageInsertIntent.putExtra("Operation", "TrackToMileage");
             mileageInsertIntent.putExtra("Track_ID", gpsTrackId);
             mileageInsertIntent.putExtra("Tag", sTag);
+            mileageInsertIntent.putExtra("StartTime", lMileageStartDate);
+            mileageInsertIntent.putExtra("StopTime", lMileageStopDate);
             startActivity(mileageInsertIntent);
         }
         if(isEnableDebugLog)
@@ -903,7 +906,8 @@ public class GPSTrackService extends Service {
     /**
      * Show a notification while this service is running.
      */
-    private void showNotification(int what, boolean showToast) {
+    @SuppressWarnings("deprecation")
+	private void showNotification(int what, boolean showToast) {
         String message;
         CharSequence title;
         Notification notification = null;

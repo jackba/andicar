@@ -35,9 +35,9 @@ public class MileageListDataBinder implements SimpleCursorAdapter.ViewBinder {
 		if(columnIndex == 1) {
     		((TextView) view).setText(
     				cursor.getString(1)
-    					.replace("[#1]", DateFormat.getDateFormat(view.getContext().getApplicationContext())
-				 				.format(cursor.getLong(5) * 1000))
-			 );
+    					.replace("[#1]", DateFormat.getDateFormat(view.getContext().getApplicationContext()).format(cursor.getLong(5) * 1000) +
+    							(cursor.getLong(14) != 0L ? " (" + Utils.getDaysHoursMinsFromSec(cursor.getLong(14)) + ")" : "")
+				 				));
     		return true;
     	}
     	else if(columnIndex == 2){
