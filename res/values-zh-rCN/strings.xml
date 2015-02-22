@@ -100,6 +100,7 @@
     <string name="GEN_TypeLabel">"类型："</string>
     <string name="GEN_DocumentNoLabel">"文档编号："</string>
     <string name="GEN_IndexLabel">"里程表："</string>
+    <string name="GEN_IndexLabel2">"里程表"</string>
     <string name="GEN_QuantityLabel">"值："</string>
     <string name="GEN_PriceLabel">"价格"</string>
     <string name="GEN_AmountLabel">"合计"</string>
@@ -157,7 +158,9 @@
     <string name="GEN_ValidFromLabel">"有效期从:"</string>
     <string name="GEN_ValidToLabel">"有效期至:"</string>
     <string name="GEN_Reimbursement">"薪金:"</string>
-    	
+	<string name="GEN_Time">"时间"</string>
+    <string name="GEN_Duration">"长短:"</string>
+		
     <string name="MENU_PreferencesCaption">"首选项"</string>
     <string name="MENU_AboutCaption">"关于"</string>
     <string name="MENU_DeleteCaption">"删除"</string>
@@ -313,7 +316,6 @@
 	<string name="TaskEditActivity_RecurrentEveryLabel">"每次"</string>
 	<string name="TaskEditActivity_RecurrentFrequencyLabel">"频率"</string>
 	<string name="TaskEditActivity_FirstRunDependOnCar">"为每辆车设置不同的开始时间"</string>
-	<string name="TaskEditActivity_TimeDriven">"时间"</string>
 	<string name="TaskEditActivity_MileageDriven">"里程"</string>
 	<string name="TaskEditActivity_BothDriven">"两者"</string>
 	<string name="TaskEditActivity_FirstTimeRunExplanation">"将会为每个已连接的车辆指定起始时间"</string>

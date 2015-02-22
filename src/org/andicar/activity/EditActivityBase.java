@@ -69,8 +69,12 @@ public abstract class EditActivityBase extends BaseActivity implements
 	protected ImageButton btnCancel = null;
 	protected ImageButton btnPickDate = null;
 	protected ImageButton btnPickTime = null;
+	protected ImageButton btnPickDate2 = null;
+	protected ImageButton btnPickTime2 = null;
 	protected TimePickerDialog mTimePickerDialog = null;
 	protected DatePickerDialog mDatePickerDialog = null;
+	protected TimePickerDialog mTime2PickerDialog = null;
+	protected DatePickerDialog mDate2PickerDialog = null;
 	protected EditText etDocNo = null;
 	protected AutoCompleteTextView acUserComment = null;
 	protected AutoCompleteTextView acTag = null;
@@ -82,9 +86,17 @@ public abstract class EditActivityBase extends BaseActivity implements
 	protected int mDay;
 	protected int mHour;
 	protected int mMinute;
+	protected int mYear2 = 0;
+	protected int mMonth2 = 0;
+	protected int mDay2 = 0;
+	protected int mHour2 = 0;
+	protected int mMinute2 = 0;
 	protected long mlDateTimeInSeconds;
+	protected long mlDateTime2InSeconds = 0L;
 	protected TextView tvDateTimeValue;
+	protected TextView tvDateTime2Value = null;
 	protected final Calendar mcalDateTime = Calendar.getInstance();
+	protected final Calendar mcalDateTime2 = Calendar.getInstance();
 	protected boolean initTimeOnly = false;
 	protected boolean initDateOnly = false;
 	protected boolean isFinishAfterSave = true;
@@ -135,6 +147,9 @@ public abstract class EditActivityBase extends BaseActivity implements
 //			setInputType(vgRoot);
 		btnPickTime = (ImageButton) findViewById(R.id.btnPickTime);
 		btnPickDate = (ImageButton) findViewById(R.id.btnPickDate);
+
+		btnPickTime2 = (ImageButton) findViewById(R.id.btnPickTime2);
+		btnPickDate2 = (ImageButton) findViewById(R.id.btnPickDate2);
 
 		if (isUseTemplate)
 			mDet = new DataEntryTemplate(this, mDbAdapter);
@@ -191,6 +206,13 @@ public abstract class EditActivityBase extends BaseActivity implements
 		mDay = savedInstanceState.getInt("mDay");
 		mHour = savedInstanceState.getInt("mHour");
 		mMinute = savedInstanceState.getInt("mMinute");
+
+		mlDateTime2InSeconds = savedInstanceState.getLong("mlDateTime2InSeconds");
+		mYear2 = savedInstanceState.getInt("mYear2");
+		mMonth2 = savedInstanceState.getInt("mMonth2");
+		mDay2 = savedInstanceState.getInt("mDay2");
+		mHour2 = savedInstanceState.getInt("mHour2");
+		mMinute2 = savedInstanceState.getInt("mMinute2");
 	}
 
 	@Override
@@ -203,6 +225,13 @@ public abstract class EditActivityBase extends BaseActivity implements
 		outState.putInt("mDay", mDay);
 		outState.putInt("mHour", mHour);
 		outState.putInt("mMinute", mMinute);
+
+		outState.putLong("mlDateTime2InSeconds", mlDateTime2InSeconds);
+		outState.putInt("mYear2", mYear2);
+		outState.putInt("mMonth2", mMonth2);
+		outState.putInt("mDay2", mDay2);
+		outState.putInt("mHour2", mHour2);
+		outState.putInt("mMinute2", mMinute2);
 	}
 
 	protected View.OnClickListener onCancelClickListener = new View.OnClickListener() {
@@ -272,6 +301,7 @@ public abstract class EditActivityBase extends BaseActivity implements
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void initDateTime(long dateTimeInMiliseconds) {
 
 		mlDateTimeInSeconds = dateTimeInMiliseconds / 1000;
@@ -307,6 +337,43 @@ public abstract class EditActivityBase extends BaseActivity implements
 			});
 	}
 
+	@SuppressWarnings("deprecation")
+	protected void initDateTime2(long dateTimeInMiliseconds) {
+
+		mlDateTime2InSeconds = dateTimeInMiliseconds / 1000;
+		mcalDateTime2.setTimeInMillis(dateTimeInMiliseconds);
+		mYear2 = mcalDateTime2.get(Calendar.YEAR);
+		mMonth2 = mcalDateTime2.get(Calendar.MONTH);
+		mDay2 = mcalDateTime2.get(Calendar.DAY_OF_MONTH);
+		mHour2 = mcalDateTime2.get(Calendar.HOUR_OF_DAY);
+		mMinute2 = mcalDateTime2.get(Calendar.MINUTE);
+
+		tvDateTime2Value = (TextView) findViewById(R.id.tvDateTime2Value);
+		// if(dateTimeInMiliseconds > 0){
+		if (initTimeOnly)
+			updateTime2();
+		else if (initDateOnly)
+			updateDate2();
+		else
+			updateDateTime2();
+		// }
+
+		if (btnPickDate2 != null)
+			btnPickDate2.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View arg0) {
+					showDialog(StaticValues.DIALOG_DATE2_PICKER);
+				}
+			});
+
+		if (btnPickTime2 != null)
+			btnPickTime2.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View arg0) {
+					showDialog(StaticValues.DIALOG_TIME2_PICKER);
+				}
+			});
+	}
+
+	
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -318,6 +385,14 @@ public abstract class EditActivityBase extends BaseActivity implements
 			mDatePickerDialog = new DatePickerDialog(this, onDateSetListener,
 					mYear, mMonth, mDay);
 			return mDatePickerDialog;
+		case StaticValues.DIALOG_TIME2_PICKER:
+			mTime2PickerDialog = new TimePickerDialog(this, onTime2SetListener,
+					mHour2, mMinute2, false);
+			return mTime2PickerDialog;
+		case StaticValues.DIALOG_DATE2_PICKER:
+			mDate2PickerDialog = new DatePickerDialog(this, onDate2SetListener,
+					mYear2, mMonth2, mDay2);
+			return mDate2PickerDialog;
 		case StaticValues.DIALOG_NEW_TEMPLATE:
 			LayoutInflater liLayoutFactory = LayoutInflater.from(this);
 			mDialog = liLayoutFactory.inflate(R.layout.dialog_name, null);
@@ -343,6 +418,14 @@ public abstract class EditActivityBase extends BaseActivity implements
 		case StaticValues.DIALOG_DATE_PICKER:
 			if (mDatePickerDialog != null)
 				mDatePickerDialog.updateDate(mYear, mMonth, mDay);
+			break;
+		case StaticValues.DIALOG_TIME2_PICKER:
+			if (mTime2PickerDialog != null)
+				mTime2PickerDialog.updateTime(mHour2, mMinute2);
+			break;
+		case StaticValues.DIALOG_DATE2_PICKER:
+			if (mDate2PickerDialog != null)
+				mDate2PickerDialog.updateDate(mYear2, mMonth2, mDay2);
 			break;
 		}
 	}
@@ -372,6 +455,34 @@ public abstract class EditActivityBase extends BaseActivity implements
 				updateDate();
 			else
 				updateDateTime();
+		}
+	};
+
+	private DatePickerDialog.OnDateSetListener onDate2SetListener = new DatePickerDialog.OnDateSetListener() {
+		public void onDateSet(DatePicker view, int year, int monthOfYear,
+				int dayOfMonth) {
+			mYear2 = year;
+			mMonth2 = monthOfYear;
+			mDay2 = dayOfMonth;
+			if (initTimeOnly)
+				updateTime2();
+			else if (initDateOnly)
+				updateDate2();
+			else
+				updateDateTime2();
+		}
+	};
+
+	private TimePickerDialog.OnTimeSetListener onTime2SetListener = new TimePickerDialog.OnTimeSetListener() {
+		public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+			mHour2 = hourOfDay;
+			mMinute2 = minute;
+			if (initTimeOnly)
+				updateTime2();
+			else if (initDateOnly)
+				updateDate2();
+			else
+				updateDateTime2();
 		}
 	};
 
@@ -430,6 +541,40 @@ public abstract class EditActivityBase extends BaseActivity implements
 		mlDateTimeInSeconds = mcalDateTime.getTimeInMillis() / 1000;
 		tvDateTimeValue.setText(DateFormat.getTimeFormat(
 				getApplicationContext()).format(mcalDateTime.getTime()));
+		// new StringBuilder() // Month is 0 based so add 1
+		// .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute,
+		// 2)));
+	}
+
+	protected void updateDateTime2() {
+		if (tvDateTime2Value == null)
+			return;
+		mcalDateTime2.set(mYear2, mMonth2, mDay2, mHour2, mMinute2, 0);
+		mlDateTime2InSeconds = mcalDateTime2.getTimeInMillis() / 1000;
+		tvDateTime2Value.setText(DateFormat.getDateFormat(
+				getApplicationContext()).format(mcalDateTime2.getTime())
+				+ " "
+				+ DateFormat.getTimeFormat(getApplicationContext()).format(
+						mcalDateTime2.getTime()));
+	}
+
+	private void updateDate2() {
+		mHour2 = 0;
+		mMinute2 = 0;
+		mcalDateTime2.set(mYear2, mMonth2, mDay2, 0, 0, 0);
+		mlDateTime2InSeconds = mcalDateTime2.getTimeInMillis() / 1000;
+		tvDateTime2Value.setText(DateFormat.getDateFormat(
+				getApplicationContext()).format(mcalDateTime2.getTime())
+				+ " "
+				+ DateFormat.getTimeFormat(getApplicationContext()).format(
+						mcalDateTime2.getTime()));
+	}
+
+	private void updateTime2() {
+		mcalDateTime2.set(1970, Calendar.JANUARY, 1, mHour2, mMinute2, 0);
+		mlDateTime2InSeconds = mcalDateTime2.getTimeInMillis() / 1000;
+		tvDateTime2Value.setText(DateFormat.getTimeFormat(
+				getApplicationContext()).format(mcalDateTime2.getTime()));
 		// new StringBuilder() // Month is 0 based so add 1
 		// .append(Utils.pad(mHour, 2)).append(":").append(Utils.pad(mMinute,
 		// 2)));

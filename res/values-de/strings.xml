@@ -104,6 +104,7 @@
     <string name="GEN_TypeLabel">"Typ:"</string>
     <string name="GEN_DocumentNoLabel">"Serie Nr.:"</string>
     <string name="GEN_IndexLabel">"Tachostand:"</string>
+    <string name="GEN_IndexLabel2">"Tachostand"</string>
     <string name="GEN_QuantityLabel">"Einheit:"</string>
     <string name="GEN_PriceLabel">"Preis"</string>
     <string name="GEN_AmountLabel">"Menge"</string>
@@ -144,6 +145,8 @@
     <string name="GEN_ValidFromLabel">"Gültig ab:"</string>
     <string name="GEN_ValidToLabel">"Gültig bis:"</string>
     <string name="GEN_Reimbursement">"Rückerstattung:"</string>
+	<string name="GEN_Time">"Zeit"</string>
+    <string name="GEN_Duration">"Dauer:"</string>
     
     <string name="MENU_PreferencesCaption">"Einstellungen"</string>
     <string name="MENU_AboutCaption">"Über AndiCar"</string>
@@ -460,7 +463,6 @@
     <string name="MainActivity_StatisticsLastConsNoData">"N/A. Der letzte Benzinverbrauch wird zwischen den letzten zwei vollständigen Tankfüllungen berechnet."</string>
 
    <string name="TaskEditActivity_FirstRunDependOnCar">"Unterschiedliche Startzeiten für jedes Fahrzeug"</string>
-   <string name="TaskEditActivity_TimeDriven">"Zeit"</string>
    <string name="TaskEditActivity_MileageDriven">"Strecke"</string>
    <string name="TaskEditActivity_BothDriven">"Beides"</string>
    <string name="TaskEditActivity_FirstTimeRunExplanation">"Die Startzeit wird für jedes eingetragene Fahrzeug einzeln angegeben."</string>

@@ -30,7 +30,7 @@ import android.os.Environment;
 public class StaticValues
 {
     public static final int DB_URI_DRIVERS = 1;
-    public static final int DATABASE_VERSION = 401;
+    public static final int DATABASE_VERSION = 430;
     public static final String DATABASE_NAME = "AndiCar.db";
     public static final String GLOBAL_PREFERENCE_NAME = "AndiCarPreferences";
     
@@ -99,9 +99,10 @@ public class StaticValues
     public static final int DIALOG_REPORT_OPTIONS = 3;
     public static final int DIALOG_DATE_FROM_PICKER = 4;
     public static final int DIALOG_DATE_TO_PICKER = 5;
-//    public static final int DIALOG_TIME_PICKER2 = 6;
     public static final int DIALOG_TASK_CAR_LINK = 7;
     public static final int DIALOG_NEW_TEMPLATE = 8;
+    public static final int DIALOG_TIME2_PICKER = 9;
+    public static final int DIALOG_DATE2_PICKER = 10;
 
     public static final int NOTIF_UPDATECHECK_ID = 0;
     public static final int NOTIF_GPS_TRACKING_STARTED_ID = 1;

@@ -454,10 +454,10 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     	                	colVal.replace("[#TDR1]", mRes.getString(R.string.ToDo_DoneLabel))
     	                            .replace("[#TDR2]", mRes.getString(R.string.ToDo_OverdueLabel))
     	                            .replace("[#TDR3]", mRes.getString(R.string.ToDo_ScheduledLabel))
-    	                            .replace("[#TDR4]", mRes.getString(R.string.TaskEditActivity_TimeDriven))
+    	                            .replace("[#TDR4]", mRes.getString(R.string.GEN_Time))
     	                            .replace("[#TDR5]", mRes.getString(R.string.TaskEditActivity_MileageDriven))
     	                            .replace("[#TDR6]", 
-    	                            		mRes.getString(R.string.TaskEditActivity_TimeDriven) 
+    	                            		mRes.getString(R.string.GEN_Time) 
     	                            			+ " & " + mRes.getString(R.string.TaskEditActivity_MileageDriven))
     	                            ;
                     	if((i == 6 || i == 7 || i == 8) && colVal.equals("0"))
@@ -622,10 +622,10 @@ public abstract class ReportListActivityBase extends ListActivityBase implements
     	                	colVal.replace("[#TDR1]", mRes.getString(R.string.ToDo_DoneLabel))
     	                            .replace("[#TDR2]", mRes.getString(R.string.ToDo_OverdueLabel))
     	                            .replace("[#TDR3]", mRes.getString(R.string.ToDo_ScheduledLabel))
-    	                            .replace("[#TDR4]", mRes.getString(R.string.TaskEditActivity_TimeDriven))
+    	                            .replace("[#TDR4]", mRes.getString(R.string.GEN_Time))
     	                            .replace("[#TDR5]", mRes.getString(R.string.TaskEditActivity_MileageDriven))
     	                            .replace("[#TDR6]", 
-    	                            		mRes.getString(R.string.TaskEditActivity_TimeDriven) 
+    	                            		mRes.getString(R.string.GEN_Time) 
     	                            			+ " & " + mRes.getString(R.string.TaskEditActivity_MileageDriven))
     	                            ;
                     	if((i == 6 && date == 0) || ((i == 7 || i == 8) && colVal.equals("0")))

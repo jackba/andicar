@@ -213,7 +213,7 @@
                 >
                 <RadioButton
                     android:id="@+id/rbTimeDriven"
-                    android:text="@string/TaskEditActivity_TimeDriven"
+                    android:text="@string/GEN_Time"
                     android:typeface="sans"
 	                android:textSize="17sp"
                     android:layout_width="wrap_content"

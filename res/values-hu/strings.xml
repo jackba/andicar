@@ -100,6 +100,7 @@
     <string name="GEN_TypeLabel">"Típus:"</string>
     <string name="GEN_DocumentNoLabel">"Dokumentum szám:"</string>
     <string name="GEN_IndexLabel">"Kilométeróra:"</string>
+    <string name="GEN_IndexLabel2">"Kilométeróra"</string>
     <string name="GEN_QuantityLabel">"Mennyiség:"</string>
     <string name="GEN_PriceLabel">"Ár"</string>
     <string name="GEN_AmountLabel">"Öszg."</string>
@@ -159,6 +160,8 @@
     <string name="GEN_ValidFromLabel">"Érvényesség kezdete:"</string>
     <string name="GEN_ValidToLabel">"Érvényesség lejárta:"</string>
     <string name="GEN_Reimbursement">"Visszafizetés:"</string>
+    <string name="GEN_Time">"Idő"</string>
+    <string name="GEN_Duration">"Időtartam:"</string>
     
     <string name="MENU_PreferencesCaption">"Beállítások"</string>
     <string name="MENU_AboutCaption">"AndiCarról"</string>
@@ -306,7 +309,6 @@
     <string name="TaskEditActivity_RecurrentEveryLabel">"Minden"</string>
     <string name="TaskEditActivity_RecurrentFrequencyLabel">"Gyakran"</string>
     <string name="TaskEditActivity_FirstRunDependOnCar">"Különböző kezdő időpont minden kapcsolt autónak"</string>
-    <string name="TaskEditActivity_TimeDriven">"Idő"</string>
     <string name="TaskEditActivity_Scheduled">"Tervezett:"</string>
     <string name="TaskEditActivity_MileageDriven">"Megtett táv"</string>
     <string name="TaskEditActivity_BothDriven">"Mindkettő"</string>

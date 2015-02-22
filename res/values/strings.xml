@@ -102,6 +102,7 @@
     <string name="GEN_TypeLabel">"Type:"</string>
     <string name="GEN_DocumentNoLabel">"Document no.:"</string>
     <string name="GEN_IndexLabel">"Odometer:"</string>
+    <string name="GEN_IndexLabel2">"Odometer"</string>
     <string name="GEN_QuantityLabel">"Quantity:"</string>
     <string name="GEN_PriceLabel">"Price"</string>
     <string name="GEN_AmountLabel">"Amt"</string>
@@ -163,6 +164,8 @@
     <string name="GEN_ValidToLabel">"Valid to:"</string>
     <string name="GEN_Reimbursement">"Reimbursement:"</string>
     <string name="GEN_Share">"Share using ..."</string>
+    <string name="GEN_Time">"Time"</string>
+    <string name="GEN_Duration">"Duration:"</string>
     
     <string name="MENU_PreferencesCaption">"Preferences"</string>
     <string name="MENU_AboutCaption">"About"</string>
@@ -329,7 +332,6 @@
     <string name="TaskEditActivity_RecurrentEveryLabel">"Every"</string>
     <string name="TaskEditActivity_RecurrentFrequencyLabel">"Frequency"</string>
     <string name="TaskEditActivity_FirstRunDependOnCar">"Different starting time for each linked car"</string>
-    <string name="TaskEditActivity_TimeDriven">"Time"</string>
     <string name="TaskEditActivity_Scheduled">"Scheduled for:"</string>
     <string name="TaskEditActivity_MileageDriven">"Mileage"</string>
     <string name="TaskEditActivity_BothDriven">"Both"</string>
