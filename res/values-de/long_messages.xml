@@ -2,7 +2,7 @@
 <!--
  AndiCar - a car management software for Android powered devices.
 
- Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
- Translated to German on 24.02.2011 by andy@haubenschmid.li
+ Translated to german by frank dreesbach, frank.dreesbach@mail.de
 -->
 
 <!--
@@ -26,56 +26,67 @@
 
 <resources>
     <string name="LM_MAIN_ACTIVITY_WELLCOME_MESSAGE2">
-	AndiCar ist eine freie, OpenSource Fahrzeug Management
-	Software für Android basierte Geräte.\n
-	
-	Sie wurde unter der GNU General Public License, version 3 veröffendlicht.\n
-	Weitere Informationen in der Seite \"Über AndiCar\"\n
-	Danke dass du <B><I>AndiCar</I></B> benutzt.
+        AndiCar ist eine freie Open SourceAndiCar Fahrzeugmanagement-Software für Android-Geräte.\n
+        Es ist nach den Bedingungen der GNU General Public License, Version 3 lizensiert.\n
+        Mehr Details dazu in der "Über"-Seite.\n
+        Danke für die Nutzung von AndiCar!
+    </string>
+
+    <string name="LM_MAIN_ACTIVITY_USABILITY_MESSAGE">
+    	Below are some general usability rules for AndiCar:\n
+    	* tippe den Menü-Button für Optionen der aktuell angezeigten Anzeige\n
+    	* in der Liste können Aufzeichnungen zum Bearbeiten angetippt werden. Lange Berührung für mehr Optionen\n\n
+    	** besuche www.andicar.org -> \"How To\" um mehr über den Gebrauch von AndiCar zu erfahren **\n\n
+    	Danke.
     </string>
 
     <string name="LM_MAIN_ACTIVITY_SHORTABOUT">
-	<B><I>AndiCar</I></B> ist eine freie, OpenSource Fahrzeug Management
-	Software für Android basierte Geräte.\n
-	
-	Sie wurde unter der GNU General Public License, version 3 veröffendlicht.\n
-	Weitere Informationen in der Seite \"Über AndiCar\"\n
-	Copyright © 2010-2013 Miklós Keresztes.\n
-	Danke dass du <B><I>AndiCar</I></B> benutzt.
+        <b><i>AndiCar</i></b> ist eine freie Open Source Fahrzeugmanagement-Software für Android-Geräte.\n
+        Es ist nach den Bedingungen der GNU General Public License, Version 3 lizensiert.\n
+        Mehr Details dazu in der "Über"-Seite.\n Copyright © 2010-2015 Miklós Keresztes.\n
+        Danke für die Nutzung von <b><i>AndiCar</i></b>!
     </string>
 
     <string name="LM_COPYRIGHT_HTML1">
-	<B><I>AndiCar</I></B> ist eine freie, OpenSource Fahrzeug Management
-	Software für Android Geräte.\n
-	
-	Sie wurde unter der GNU General Public License, version 3 veröffendlicht.\n
-
-        *  Weitere Informationen (How To, letzte Neuigkeiten, etc.) findest Du auf der Homepage des Projekts unter
-        <a href="http://www.andicar.org">http://sites.google.com/site/andicarfree/</a>.\n
-        <small>Aktualisiere die Seite in Deinem Browser wenn du die Fehlermeldung \"Web page not available\" bekommst.</small>\n
-        *  Wenn Du Fragen hast, wende Dich an die <b><i>AndiCar</i></b> Diskussionsgruppe auf
+        <b><i>AndiCar</i></b> ist eine freie Open Source Fahrzeugmanagement-Software für Android-Geräte.
+        Es ist nach den Bedingungen der GNU General Public License lizensiert.\n
+        *  Für mehr Information (Howto, News, etc.) besuche bitte die Projekt-Homepage unter
+        <a href="http://www.andicar.org">www.andicar.org</a>.\n
+        <small>Aktualisiere den Seitenaufruf, wenn \"Web page not available\" erscheint.</small>\n
+        *  Fragen sind willkommen in der <b><i>AndiCar</i></b> Diskussionsliste unter
         <a href="http://groups.google.com/group/andicar">http://groups.google.com/group/andicar</a>.\n
-        *  Für Fehlerberichte oder wenn Du zusätzliche Features möchtest, dann schreib ein kurzes Mail an die 	
-	   <b><i>AndiCar</i></b> Wunschliste unter
+        *  Für Fehlerberichte oder Verbesserungswünsche nutze bitte <b><i>AndiCar</i></b> das issue system unter
         <a href="https://code.google.com/p/andicar/issues/list">https://code.google.com/p/andicar/issues/list</a>.\n
-        *  Für alles andere kannst Du ein Mail (am besten in englischer Sprache) an andicar.support@gmail.com senden.\n
+        *  Für alles andere sende eine Email an andicar.support@gmail.com.\n
     </string>
 
     <string name="LM_COPYRIGHT_HTML2">
-	Danke dass du <B><I>AndiCar</I></B> benutzt.\n\n
+        Thank you for using <b><i>AndiCar</i></b>.\n\n
         <b><i>Credits:</i></b>\n
         *  Chinesische Übersetzung durch <a href="http://goapk.com/">goapk.com</a> \n
         *  Russische Übersetzung durch Andrey Demin - andde@rambler.ru\n
-		*  Erste Deutsche Übersetzung durch Andy Haubenschmid - andy@haubenschmid.li\n
-		*  Hungarische Übersetzung durch Péter Nagy - microbilab@gmail.com\n
-		*  Spanische Übersetzung durch Daniel Iozzi - danieliozzi@gmail.com\n
-		*  Rumänische Übersetzung durch Doru Butnaru - budo8002@gmail.com\n
-        \n<b><i>Copyright Hinweis</i></b>:\n\n
-        Copyright © 2010-2013 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
-		Dieses Programm ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.\n\n
-		Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.\n\n
-		Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben. Falls nicht, siehe <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a> nach.\n
-		Die gesamte Lizenz kann <a href="http://www.gnu.org/licenses/gpl.html">HIER</a> gefunden werden.\n
+		    *  Deutsche Übersetzung durch Frank Dreesbach - frank.dreesbach@mail.de\n
+		<small>Übersetzer gesucht :)</small>\n
+		    *  Hungarian translation by Péter Nagy - microbilab@gmail.com\n
+        *  Spanische Übersetzung durch Daniel Iozzi - danieliozzi@gmail.com\n
+        *  Rümänische Übersetzung durch Doru Butnaru - budo8002@gmail.com\n
+        \n<b><i>Copyright-Bestimung</i></b>:\n\n
+        Copyright © 2010-2015 Miklós Keresztes (miklos.keresztes@gmail.com)\n\n
+        Dieses Programm ist freie Software: Du kannst es weiter verteilen und verändern
+        unter den Bedingungen der GNU General Public License wie sie von der
+        Free Software Foundation veröffentlicht wird, entweder nach Version 3
+        oder optional einer neueren Version.\n\n
+        Dieses Programm wird verteilt in der Hoffnung, nützlich zu sein, aber ohne jede Garantie;
+        sogar ohne eine Garantie für Verkehrsfähigkeit oder Eignung für einen bestimmten Zweck.
+        Siehe die GNU General Public License für mehr Details.\n\n
+        Eine Kopie der GNU General Public License sollte mit diesem Programm geliefert worden sein.
+        Falls nicht, schau hier: <a href="http://www.gnu.org/licenses">http://www.gnu.org/licenses</a>.\n
+        Die komplette Lizenz ist hier zu finden: <a href="http://www.gnu.org/licenses/gpl.html">GNU gpl</a>.\n
     </string>
 
+    <string name="LM_UPDATE_MSG">
+        <i><b>Version 4.3.0:</b></i>\n
+        * Datum- und Zeit-Stop für Aufzeichnung hinzugefügt\n
+        * Mehrere Fehler bereinigt\n
+    </string>
 </resources>

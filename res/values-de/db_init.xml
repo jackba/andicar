@@ -17,7 +17,7 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
- Translated to German (Deutsch) by Andy Haubenschmid, andy@haubenschmid.li
+ Translated zu german by frank dreesbach, frank.dreesbach@mail.de
 -->
 
 <!-- Database initialization strings-->
@@ -26,83 +26,105 @@
     <!-- UOM's -->
     <string name="DB_UOM_KmName">"Kilometer"</string>
     <string name="DB_UOM_KmComment">"Kilometer"</string>
-    <string name="DB_UOM_MiName">"Meilen"</string>
-    <string name="DB_UOM_MiComment">"Meilen"</string>
+    <string name="DB_UOM_MiName">"Meile"</string>
+    <string name="DB_UOM_MiComment">"Meile"</string>
     <string name="DB_UOM_LName">"Liter"</string>
     <string name="DB_UOM_LComment">"Liter"</string>
-    <string name="DB_UOM_USGName">"US Gallonen"</string>
-    <string name="DB_UOM_USGComment">"US Gallonen"</string>
-    <string name="DB_UOM_GBGName">"GB Gallonen"</string>
-    <string name="DB_UOM_GBGComment">"Englische Gallonen"</string>
+    <string name="DB_UOM_USGName">"US gallon"</string>
+    <string name="DB_UOM_USGComment">"U.S. fl. gallon"</string>
+    <string name="DB_UOM_GBGName">"Imperial gallon"</string>
+    <string name="DB_UOM_GBGComment">"Imperial (UK) gallon"</string>
     <!-- UOM Conversions -->
-    <string name="DB_UOMConv_MiToKmName">"mi in km"</string>
-    <string name="DB_UOMConv_MiToKmComment">"Meilen nach Kilometer"</string>
-    <string name="DB_UOMConv_KmToMiName">"km in mi"</string>
-    <string name="DB_UOMConv_KmToMiComment">"Kilometer nach Mile"</string>
-    <string name="DB_UOMConv_USGToLName">"US gal in l"</string>
-    <string name="DB_UOMConv_USGToLComment">"US Gallonen nach Liter"</string>
-    <string name="DB_UOMConv_LToUSGName">"l in US gal"</string>
-    <string name="DB_UOMConv_LToUSGComment">"Liter nach US Gallonen"</string>
-    <string name="DB_UOMConv_GBGToLName">"GB gal in l"</string>
-    <string name="DB_UOMConv_GBGToLComment">"englische Gallonen nach Liter"</string>
-    <string name="DB_UOMConv_LToGBGName">"l in GB gal"</string>
-    <string name="DB_UOMConv_LToGBGComment">"Liter nach englische Gallonen"</string>
-    <string name="DB_UOMConv_GBGToUSGName">"GB gal in US gal"</string>
-    <string name="DB_UOMConv_GBGToUSGComment">"englische Gallonen nach US Gallonen"</string>
-    <string name="DB_UOMConv_USGToGBGName">"US gal in GB gal"</string>
-    <string name="DB_UOMConv_USGToGBGComment">"US Gallonen nach englischen Gallonen"</string>
+    <string name="DB_UOMConv_MiToKmName">"mi zu km"</string>
+    <string name="DB_UOMConv_MiToKmComment">"Meile zu Kilometer"</string>
+    <string name="DB_UOMConv_KmToMiName">"km zu mi"</string>
+    <string name="DB_UOMConv_KmToMiComment">"Kilometer zu Meile"</string>
+    <string name="DB_UOMConv_USGToLName">"US gal zu l"</string>
+    <string name="DB_UOMConv_USGToLComment">"US gallon zu Liter"</string>
+    <string name="DB_UOMConv_LToUSGName">"l zu US gal"</string>
+    <string name="DB_UOMConv_LToUSGComment">"Liter zu US gallon"</string>
+    <string name="DB_UOMConv_GBGToLName">"GB gal zu l"</string>
+    <string name="DB_UOMConv_GBGToLComment">"Imperial gallon zu Liter"</string>
+    <string name="DB_UOMConv_LToGBGName">"l zu GB gal"</string>
+    <string name="DB_UOMConv_LToGBGComment">"Liter zu Imperial gallon"</string>
+    <string name="DB_UOMConv_GBGToUSGName">"GB gal zu US gal"</string>
+    <string name="DB_UOMConv_GBGToUSGComment">"Imperial gallon zu US gallon"</string>
+    <string name="DB_UOMConv_USGToGBGName">"US gal zu GB gal"</string>
+    <string name="DB_UOMConv_USGToGBGComment">"US gallon zu Imperial gallon"</string>
     <!-- expense types -->
     <string name="DB_ExpType_PersonalName">"Persönlich"</string>
-    <string name="DB_ExpType_PersonalComment">"Ausgaben, von dir bezahlt"</string>
-    <string name="DB_ExpType_EmployerName">"Geschäftlich"</string>
-    <string name="DB_ExpType_EmployerComment">"Ausgaben, duch dein Arbeitgeber bezahlt"</string>
+    <string name="DB_ExpType_PersonalComment">"Eigene Ausgaben"</string>
+    <string name="DB_ExpType_EmployerName">"Business"</string>
+    <string name="DB_ExpType_EmployerComment">"Ausgaben eines Mitarbeiters"</string>
     <!-- expense categories -->
     <string name="DB_ExpCat_ServiceName">"Service"</string>
-    <string name="DB_ExpCat_ServiceComment">"Ausgaben für Service und Unterhalt"</string>
-    <string name="DB_ExpCat_InsuranceName">"Versicherung"</string>
-    <string name="DB_ExpCat_InsuranceComment">"Ausgaben für Versicherung oder Steuern"</string>
+    <string name="DB_ExpCat_ServiceComment">"Ausgaben für Service services"</string>
+    <string name="DB_ExpCat_InsuranceName">"Insurance"</string>
+    <string name="DB_ExpCat_InsuranceComment">"Ausgaben für Versicherung"</string>
     <!-- fuel types -->
-    <!-- 
-    <string name="DB_ExpCat_FuelName">"Benzin"</string>
-    <string name="DB_ExpCat_FuelComment">"Ausgaben durch Tanken"</string>
-     -->
+    <string name="DB_FuelType_Diesel1D">"Winterdiesel"</string>
+    <string name="DB_FuelType_Diesel1DComment">"Bevorzugt für kaltes Wetter"</string>
+    <string name="DB_FuelType_Diesel2D">"Diesel"</string>
+    <string name="DB_FuelType_Diesel2DComment">"Benutzt bei warmem Wetter"</string>
+    <string name="DB_FuelType_DieselBio">"Biodiesel"</string>
+    <string name="DB_FuelType_DieselBioComment">"Erzeugt aus pflanzlichen oder tierischen Fetten"</string>
+    <string name="DB_FuelType_DieselSynthetic">"Synthetischer Diesel"</string>
+    <string name="DB_FuelType_DieselSyntheticComment">"Gewonnen aus verschiedenen Quellen wie Holz, Stroh, Mais oder sogar Müll und Lebensmittelabfällen"</string>
+    <string name="DB_FuelType_GasolineRegular">"Normalbenzin"</string>
+    <string name="DB_FuelType_GasolineRegularComment">"Oktanzahl 91"</string>
+    <string name="DB_FuelType_GasolineMidgrade">"Superbenzin"</string>
+    <string name="DB_FuelType_GasolineMidgradeComment">"Oktanzahl 95"</string>
+    <string name="DB_FuelType_GasolinePremium">"Super Plus"</string>
+    <string name="DB_FuelType_GasolinePremiumComment">"Oktanzahl 98"</string>
+    <string name="DB_FuelType_LPG">"LPG"</string>
+    <string name="DB_FuelType_LPGComment">"Autogas"</string>
+    
     <!-- currencies -->
     <string name="DB_Curr_EUR">"Euro"</string>
     <string name="DB_Curr_USD">"US Dollar"</string>
     <string name="DB_Curr_HUF">"Ungarischer Forint"</string>
-    <string name="DB_Curr_RON">"Rumänische Lei (neu)"</string>
-    <string name="DB_Curr_AUD">"Australia Dollar"</string>
-    <string name="DB_Curr_CAD">"Canada Dollar"</string>
+    <string name="DB_Curr_RON">"Rümänische (neue) Lei"</string>
+    <string name="DB_Curr_AUD">"Australischer Dollar"</string>
+    <string name="DB_Curr_CAD">"Kanada Dollar"</string>
     <string name="DB_Curr_CHF">"Schweizer Franken"</string>
     <string name="DB_Curr_CNY">"Chinesische Yuan"</string>
-    <string name="DB_Curr_GBP">"Englische Pfund"</string>
-    <string name="DB_Curr_JPY">"Japanische Yen"</string>
+    <string name="DB_Curr_GBP">"Britisches Pfund"</string>
+    <string name="DB_Curr_JPY">"Japanischer Yen"</string>
     <string name="DB_Curr_RUB">"Russischer Rubel"</string>
-    <string name="DB_Curr_INR">"Indischer Rupee"</string>
-    <string name="DB_Curr_ARS">"Argentinische Peso"</string>
-    <string name="DB_Curr_BRL">"Brazilianische Real"</string>
-    <string name="DB_Curr_BGL">"Bulgarische Lev"</string>
-    <string name="DB_Curr_XAF">"Zentralafrikanische Franken"</string>
-    <string name="DB_Curr_COP">"Kolumbianische Peso"</string>
+    <string name="DB_Curr_INR">"Indische Rupie"</string>
+    <string name="DB_Curr_ARS">"Argentinischer Peso"</string>
+    <string name="DB_Curr_BRL">"Brazilianischer Real"</string>
+    <string name="DB_Curr_BGL">"Bulgarischer Lev"</string>
+    <string name="DB_Curr_XAF">"Zentralafrikanischer CFA Franc"</string>
+    <string name="DB_Curr_COP">"Kolumbianischer Peso"</string>
     <string name="DB_Curr_HRK">"Kroatische Kuna"</string>
-    <string name="DB_Curr_CZK">"Tschechische Koruna"</string>
-    <string name="DB_Curr_DKK">"Dänische Kronen"</string>
+    <string name="DB_Curr_CZK">"Tschechische Krone"</string>
+    <string name="DB_Curr_DKK">"Dänische Krone"</string>
     <string name="DB_Curr_EGP">"Ägyptisches Pfund"</string>
-    <string name="DB_Curr_EEK">"Estorische Kronen"</string>
-    <string name="DB_Curr_GEL">"Georgischer Lari"</string>
+    <string name="DB_Curr_EEK">"Estnische Krone"</string>
+    <string name="DB_Curr_GEL">"Georgische Lari"</string>
     <string name="DB_Curr_HKD">"Hong Kong Dollar"</string>
-    <string name="DB_Curr_ILS">"Israelischer New Sheqel"</string>
-    <string name="DB_Curr_KRW">"Südkoreanischer Won"</string>
-    <string name="DB_Curr_MXN">"Mexicanische Peso"</string>
-    <string name="DB_Curr_NOK">"Norwegische Kronen"</string>
-    <string name="DB_Curr_PLN">"Polischer Złoty"</string>
-    <string name="DB_Curr_SAR">"Saudi riyal"</string>
-    <string name="DB_Curr_ZAR">"Südafrikanischer rand"</string>
-    <string name="DB_Curr_SEK">"Schwedische Kronen"</string>
-    <string name="DB_Curr_TRY">"Türkische Liren"</string>
-    <string name="DB_Curr_UAH">"Ukrainische hryvnia"</string>
+    <string name="DB_Curr_ILS">"Israeli Neuer Shekel"</string>
+    <string name="DB_Curr_KRW">"Südkoreanische Won"</string>
+    <string name="DB_Curr_MXN">"Mexikanischer Peso"</string>
+    <string name="DB_Curr_NOK">"Norwegische Krone"</string>
+    <string name="DB_Curr_PLN">"Polnischer Złoty"</string>
+    <string name="DB_Curr_SAR">"Saudi Riyal"</string>
+    <string name="DB_Curr_ZAR">"Südafrikanischer Rand"</string>
+    <string name="DB_Curr_SEK">"Schwedische Krone"</string>
+    <string name="DB_Curr_TRY">"Türkische Lira"</string>
+    <string name="DB_Curr_UAH">"Ukrainsche Hryvnia"</string>
     <string name="DB_Curr_AED">"Vereinigte Arabische Emirate Dirham"</string>
     
     <!-- default tag -->
     <string name="DB_Tag_Default">"Standard"</string>
+
+    <string name="DB_TaskType_ServiceName">"Service"</string>
+    <string name="DB_TaskType_ServiceComment">"Wiederkehrende Wartung"</string>
+    <string name="DB_TaskType_ReminderName">"Erinnerung"</string>
+    <string name="DB_TaskType_ReminderComment">"Erinnerung für allgemeine Aufgaben"</string>
+    <string name="DB_DemoTask_Name">"Tägliche Fahrt"</string>
+    <string name="DB_DemoTask_Comment">"Hast Du deine tägliche Fahrt eingegeben?\nDies ist eine Demo-Aufgabe. Du kannst sie ändern oder löschen unter Einstellungen -> Aufgaben."</string> <!-- \n is a New Line character-->
+    
+    
 </resources>
