@@ -1,91 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- AndiCar - a car management software for Android powered devices.
+ AndiFahrzeug - a Fahrzeug management software for Android powered devices.
 
- Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
 
- This program is free software: you can redistribute it and/or modify
+ Dies program ist free software: you kann redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
 
- This program is distributed in the hope that it will be useful,
+ Dies program ist distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
 
  You should have received a copy of the GNU General Public License
- along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ along with dies program.  If not, see <http://www.gnu.org/licenses/>.
 
- Translated to German on 24.02.2011 by andy@haubenschmid.li
--->
-
-<!-- Error messages -->
+ Translated to german by frank dreesbach, frank.dreesbach@mail.de
+ -->
+<!-- error messages -->
 
 <resources>
     <string name="ERR_000">"Datenbank Fehler."</string>
-    <string name="ERR_001">"Der Tachostand ist in einer bereits existierenden Fahrstrecke."</string>
-    <string name="ERR_002">"Das Ende/Der neue Tachostand ist in einer bereits existierenden Fahrstrecke."</string>
-    <string name="ERR_003">"Die neue Fahrstrecke überlappt mit einem bereits existierenden Fahrstrecke."</string>
-    <string name="ERR_004">"Das Ende/Der neue Tachostand muss grösser sein als der start Tachostand."</string>
-    <string name="ERR_005">"Diese Umrechnungsrate existiert bereits."</string>
-    <string name="ERR_006">"Fehler beim erstellen des Eintrags!"</string>
+    <string name="ERR_001">"Der Startindex ist innerhalb existierender Strecke"</string>
+    <string name="ERR_002">"Stop/Neuer Index ist innerhalb existierender Strecke"</string>
+    <string name="ERR_003">"Neue Strecke überlappt existierende Strecke"</string>
+    <string name="ERR_004">"Stop/Neuer Index muss größer als Startindex sein"</string>
+    <string name="ERR_005">"Umwandlungsrate existiert schon"</string>
+    <string name="ERR_006">"Fehler beim Erstellen der Aufzeichnung!"</string>
     <string name="ERR_008">"Ungültiges Datum/Zeitformat!"</string>
-    <string name="ERR_009">"Dieser Fahrer kann nicht gelöscht werden, weil er Fahrstrecken zugeordnet hat."</string>
-    <string name="ERR_010">"Dieser Fahrer kann nicht gelöscht werden, weil er Betankungen hat."</string>
-    <string name="ERR_011">"Dieses Fahrzeug kann nicht gelöscht werden, weil es Fahrstrecken zugeordnet hat."</string>
-    <string name="ERR_012">"Dieses Fahrzeug kann nicht gelöscht werden, weil es Betankungen hat."</string>
-    <string name="ERR_013">"Diese Einheit kann nicht gelöscht werden, weil sie in Fahrstrecken benutzt wird."</string>
-    <string name="ERR_014">"Diese Einheit kann nicht gelöscht werden, weil sie in Betankungen verwendet wird."</string>
-    <string name="ERR_015">"Diese Einheit kann nicht gelöscht werden, weil sie in Umrechnungen benutzt wird."</string>
+    <string name="ERR_009">"Dieser Fahrer kann nicht gelöscht werdewn, weil er in Strecke(n) verwendet wird."</string>
+    <string name="ERR_010">"Dieser Fahrer kann nicht gelöscht werden, weil er in Tankvorgängen verwendet wird."</string>
+    <string name="ERR_011">"Dieses Fahrzeug kann nicht gelöscht werden, weil es in Strecke(n) verwendet wird."</string>
+    <string name="ERR_012">"Dieses Fahrzeug kann nicht gelöscht werden, weil es in Tankvorgängen verwendet wird."</string>
+    <string name="ERR_013">"Diese Maßeinheit kann nicht gelöscht werden, weil sie in Strecke(n) verwendet wird."</string>
+    <string name="ERR_014">"Diese Maßeinheit kann nicht gelöscht werden, weil sie in Tankvorgängen verwendet wird."</string>
+    <string name="ERR_015">"Diese Maßeinheit kann nicht gelöscht werden, weil sie in Maßeinheiten verwendet wird."</string>
     <string name="ERR_016">"Diese Währung kann nicht gelöscht werden, weil sie in Fahrzeugdefinitionen verwendet wird."</string>
-    <string name="ERR_017">"Diese Währung kann nicht gelöscht werden, weil sie in Betankungen benutzt wird."</string>
-    <string name="ERR_018">"Diese Kostenart kann nicht gelöscht werden, weil sie in Fahrstrecken verwendet wird."</string>
-    <string name="ERR_019">"Diese Kostenart kann nicht gelöscht werden, weil sie in Betankungen benutzt wird."</string>
-    <string name="ERR_020">"SD-Karte nicht gefunden. Du kannst keine Auswertungen, GPS Trackings oder Datenbank-Backups erstellen!"</string>
-    <string name="ERR_021">"Report Verzeichnis (/sdcard/andicar/reports) kann nicht erstellt werden. Du kannst keine Auswertungen lokal speichern solange Du dieses Verzeichnis nicht erstellt hast."</string>
-    <string name="ERR_022">"Ich kann die Auswertungs-Datei nicht erstellen!"</string>
-    <string name="ERR_023">"Fehler beim schreiben der Datei!"</string>
-    <string name="ERR_024">"Backup Verzeichnis (/sdcard/andicar/backup) kann nicht erstellt werden. Du kannst keine Backups Deiner Datenbank erstellen, solange Du dieses Verzeichnis nicht erstellt hast."</string>
-    <string name="ERR_025">"Diese Einheit kann nicht deaktiviert werden, weil sie in einer aktiven Fahrzeugkonfiguration verwendet wird."</string>
-    <string name="ERR_026">"Diese Währung kann nicht deaktiviert werden, weil sie in einer aktiven Fahrzeugkonfiguration verwendet wird."</string>
-    <string name="ERR_027">"Diese Kategorie kann nicht gelöscht werden, weil sie in Betankungen verwendet wird."</string>
-    <string name="ERR_028">"Diese Kategorie kann nicht gelöscht werden, weil sie in Kosten verwendet wird."</string>
-    <string name="ERR_029">"Es ist bereits eine Umrechnungsrate zwischen diesen beiden Währungen definiert."</string>
-    <string name="ERR_030">"Diese Ausgabe kann nicht gelöscht werden weil sie durch eine Betankung erstellt wurde.\nDu musst die Betankung löschen."</string>
-    <string name="ERR_031">"Du kannst keine Umrechnungsrate zwischen derselben Einheit definieren."</string>
-    <string name="ERR_032">"Du kannst kein Wechselkurs zwischen derselben Währung definieren."</string>
-    <string name="ERR_033">"GPS Track Verzeichnis (/sdcard/andicar/gpstrack) kann nicht erstellt werden. Du kannst keine GPS Tracks speichern bevor du dieses Verzeichnis nicht erstellt hast."</string>
-    <string name="ERR_034">"Dateisystemfehler!\nÜberprüfe Deine SD-Karte."</string>
-    <string name="ERR_035">"Ungültige Auswertung."</string>
-    <string name="ERR_036">"Tracking Datei nicht gefunden oder sie ist leer!"</string>
-    <string name="ERR_037">"Unbekanntes Fahrzeug!\nWenn dieser Fehler weiterhin besteht, melde das bitte auf https://code.google.com/p/andicar/issues/entry"</string>
-    <string name="ERR_038">"Diese Währung kann nicht gelöscht werden, weil sie in Kosten verwendet wird."</string>
-    <string name="ERR_039">"Dieser Fahrer kann nicht gelöscht werden, weil er in Kosten verwendet wird."</string>
-    <string name="ERR_040">"Dieses Fahrzeug kann nicht gelöscht werden, weil es in Kosten verwendet wird."</string>
-    <string name="ERR_041">"Diese Kostenart kann nicht gelöscht werden, weil sie in den Kosten verwendet wird."</string>
-    <string name="ERR_042">"Dieser Partner kann nicht gelöscht werden, weil er in Betankungen verwendet wird."</string>
-    <string name="ERR_043">"Dieser Partner kann nicht gelöscht werden, weil er in Kosten verwendet wird."</string>
-    <string name="ERR_044">"Dieser Ort kann nicht gelöscht werden, weil er in Betankungen verwendet wird."</string>
-    <string name="ERR_045">"Dieser Ort kann nicht gelöscht werden, weil er in Kosten verwendet wird."</string>
+    <string name="ERR_017">"Diese Währung kann nicht gelöscht werden, weil sie in Tankvorgängen verwendet wird."</string>
+    <string name="ERR_018">"Diese Ausgabenart kann nicht gelöscht werden, weil sie in Strecke(n) verwendet wird."</string>
+    <string name="ERR_019">"Diese Ausgabenart kann nicht gelöscht werden, weil sie in Tankvorgängen verwendet wird."</string>
+    <string name="ERR_020">"SDFahrzeugD nicht gefunden. Berichts, gps tracks und Datenbanksicherungen können nicht ertsellt werden!"</string>
+    <string name="ERR_021">"Bericht-Ordner (/sdFahrzeugd/andiFahrzeug/Berichts) kann nicht erstellt werden. Der Bericht kann nicht gesichert werden, bevor dieser Ordner auf dem Gerät erstellt wurde."</string>
+    <string name="ERR_022">"Kann Bericht nicht erstellen!"</string>
+    <string name="ERR_023">"Datei Schreibfehler!"</string>
+    <string name="ERR_024">"Sicherungsordner (/sdFahrzeugd/andiFahrzeug/backup) kann nicht erstellt werden. Die Datenbank kann nicht gesichert werden, bevor dieser Ordner auf dem Gerät erstellt wurde."</string>
+    <string name="ERR_025">"The Maßeinheitkann nicht deaktiviert werden, weil sie in aktiver Fahrzeugdefinition verwendet wird."</string>
+    <string name="ERR_026">"The Währung kann nicht deaktiviert werden, weil sie in aktiver Fahrzeugdefinition verwendet wird."</string>
+    <string name="ERR_027">"Diese Kategorie kann nicht gelöscht werden, weil sie in Ausgabe(n) verwendet wird."</string>
+    <string name="ERR_028">"Diese Kategorie kann nicht gelöscht werden, weil sie in Tankvorgängen verwendet wird."</string>
+    <string name="ERR_029">"Der Umrechnungsfaktor zwischen diesen Währungen ist bereits bestimmt."</string>
+    <string name="ERR_030">"Diese Ausgabe kann nicht gelöscht werden, weil sie von einem Tankvorgang erzeugt wurde.\n Sie sollten den Tankvorgang löschen."</string>
+    <string name="ERR_031">"Umrechnungsfaktoren zwischen identischen Maßeinheiten können nicht definiert werden."</string>
+    <string name="ERR_032">"Umrechnungsfaktoren zwischen identischen Währungen können nicht definiert werden."</string>
+    <string name="ERR_033">"GPS track Ordner (/sdFahrzeugd/andiFahrzeug/gpstrack) kann nicht erzeugt werden. Die GPS-Track-Dateien können nicht gesichert werden, bevor dieser Ordner auf dem Gerät erstellt wurde."</string>
+    <string name="ERR_034">"Dateisystem Fehler!\n Check your SDFahrzeugD."</string>
+    <string name="ERR_035">"Ungültiger Bericht."</string>
+    <string name="ERR_036">"Track Datei nicht gefunden oder ist leer!"</string>
+    <string name="ERR_037">"Unbekanntes Fahrzeug!\n Wenn dieser Fehler bestehen bleibt, berichte an https://code.google.com/p/andiFahrzeug/issues/entry"</string>
+    <string name="ERR_038">"Diese Währung kann nicht gelöscht werden, weil sie in Ausgabe(n) verwendet wird."</string>
+    <string name="ERR_039">"Dieser Fahrer kann nicht gelöscht werden, weil er in Ausgabe(n) verwendet wird."</string>
+    <string name="ERR_040">"Dieses Fahrzeug kann nicht gelöscht werden, weil es in Ausgabe(n) verwendet wird."</string>
+    <string name="ERR_041">"Diese Ausgabenart kann nicht gelöscht werden, weil sie in Ausgabe(n) verwendet wird."</string>
+    <string name="ERR_042">"Dieser Partner kann nicht gelöscht werden, weil er in Tankvorgängen verwendet wird.</string>
+    <string name="ERR_043">"Dieser Partner kann nicht gelöscht werden, weil er in Ausgabe(n) verwendet wird."</string>
+    <string name="ERR_044">"Dieser Ort kann nicht gelöscht werden, weil er in Tankvorgängen verwendet wird."</string>
+    <string name="ERR_045">"Dieser Ort kann nicht gelöscht werden, weil er in Ausgabe(n) verwendet wird.</string>
 
-    <string name="ERR_046">"Dieser Tag kann nicht gelöscht werden, weil er in Fahrstrecken verwendet wird."</string>
-    <string name="ERR_047">"Dieser Tag kann nicht gelöscht werden, weil er in Betankungen verwendet wird."</string>
-    <string name="ERR_048">"Dieser Tag kann nicht gelöscht werden, weil er in Kosten verwendet wird."</string>
-    <string name="ERR_049">"Dieser Tag kann nicht gelöscht werden, weil er in GPS Track(s) verwendet wird."</string>
+    <string name="ERR_046">"Dieser tag kann nicht gelöscht werden, weil er in Strecke(n) verwendet wird."</string>
+    <string name="ERR_047">"Dieser tag kann nicht gelöscht werden, weil er in Tankvorgängen verwendet wird."</string>
+    <string name="ERR_048">"Dieser tag kann nicht gelöscht werden, weil er in Ausgabe(n) verwendet wird."</string>
+    <string name="ERR_049">"Dieser tag kann nicht gelöscht werden, weil er in GPS-track(s) verwendet wird."</string>
 
-    <string name="ERR_050">"Fehler beim verwenden der Landkarte!"</string>
-    <string name="ERR_051">"Kein Fahrzeug ausgewählt!\nBitte wähle ein Fahrzeug im Hauptbildschirm aus. Please chose a car in the main screen."</string>
+    <string name="ERR_050">"Kartenfehler!"</string>
+    <string name="ERR_051">"Kein Fahrzeug ausgewählt!\n Bitte Fahrzeug auf dem Hauptscreen wählen."</string>
 
-    <string name="ERR_052">"SMTP authentication nicht konfiguriert (kein Benutzername)!"</string>
-    <string name="ERR_053">"SMTP authentication nicht konfiguriert (kein Passwort)!"</string>
-    <string name="ERR_054">"SMTP authentication nicht konfiguriert (keine E-Mail Adresse)!"</string>
-    <string name="ERR_055">"Senden der E-Mail fehlgeschlagen."</string>
+    <string name="ERR_052">"SMTP Authentifizierung nicht konfiguriert (kein Benutzername username)!"</string>
+    <string name="ERR_053">"SMTP Authentifizierung nicht konfiguriert (kein Passwort)!"</string>
+    <string name="ERR_054">"SMTP Authentifizierung nicht konfiguriert (keine Ziel-Email)!"</string>
+    <string name="ERR_055">"Email senden fehlgeschlagen."</string>
     <string name="ERR_056">"Unbekannter Fehler."</string>
-    <string name="ERR_057">"Fehler beim komprimieren des Datenbank-Backups!"</string>
+    <string name="ERR_057">"Komprimieren des Datenbank-Backups fehlgeschlagen!"</string>
 
-    <string name="ERR_058">"Temp. Verzeichnis (/sdcard/andicar/temp) konnte nicht erstellt werden. Du kannst den  SecureBackup Service nicht benutzen solange dieses Verzeichnis nicht erstellt wurde."</string>
-    <string name="ERR_059">"Doppelter Eintrag."</string>
+    <string name="ERR_058">"Temporärer Ordner (/sdFahrzeugd/andiFahrzeug/temp) kann nicht erstellt werden. Der Secure Backupservice kann nicht verwendet werden, bevor dieser Ordner auf dem Gerät erstellt wurde."</string>
+    <string name="ERR_059">"Dupliziere Aufzeichnung."</string>
+    <string name="ERR_060">"Diese Art kann nicht gelöscht werden, weil sie in Aufgabe(n) verwendet wird."</string>
+    <string name="ERR_061">"Unbekanntes To-Do!\nMöglicherweise wurde die Aufgabe verändert und die ToDo-Liste neu erzeugt."</string>
+    <string name="ERR_062">"PayPal Server nicht erreichbar. Bitte erneut versuchen (eventuell mit Wi-Fi-Verbindung)."</string>
 
-    <string name="ERR_060">"Dieser Typ kann nicht gelöscht werden, weil er noch in Aufgaben verwendet wird."</string>
+    <string name="ERR_063">"AddOn Datenbank Fehler."</string>
+    <string name="ERR_064">"Ihr Gerät unterstützt kein Bluetooth!"</string>
+    
+    <string name="ERR_065">"Ungültige Nummer. Zu groß."</string>
+    <string name="ERR_066">"Ein unerwarteter Fehler ist aufgetreten!\nBitte Entwickler kontaktieren."</string>
+    <string name="ERR_067">"Kann Bericht nicht teilen. Keine Anwendung mit Teilen-Funktion gefunden!"</string>
+
+    <string name="ERR_068">"Kein GPS-Provider gefunden!"</string>
 </resources>

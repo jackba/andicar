@@ -2,7 +2,7 @@
 <!--
  AndiCar - a car management software for Android powered devices.
 
- Copyright (C) 2010-2011 Miklos Keresztes (miklos.keresztes@gmail.com)
+ Copyright (C) 2010 Miklos Keresztes (miklos.keresztes@gmail.com)
 
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -17,10 +17,15 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
- Translated to German on 24.02.2011 by andy@haubenschmid.li
+ Translated to german by frank dreesbach, frank.dreesbach@mail.de
 -->
 
 <!-- spinner initialization arrays-->
+
+<!--
+    !!!For translators!!!:
+    Only some items must be translated. For example the items with the "Do not use" text
+-->
 
 <resources>
     <!-- report file formats  -->
@@ -29,7 +34,7 @@
         <item>html</item>
     </string-array>
 
-    <!-- Used in gps track (minimum time betwee 2 recording points) -->
+    <!-- Used in gps track (minimum time between 2 recording points) -->
     <string-array name="gpstrack_preference_mintime_entries">
         <item>Höchste</item>
         <item>3 s</item>
@@ -41,7 +46,7 @@
         <item>5 min</item>
         <item>10 min</item>
     </string-array>
-    <!-- values in miliseconds -->
+    <!-- values in milliseconds -->
     <string-array name="gpstrack_preference_mintime_values">
         <item>0</item>
         <item>3000</item>
@@ -62,7 +67,7 @@
         <item>100 m / 109.36 yd</item>
         <item>250 m / 273.40 yd</item>
         <item>500 m / 546.80 yd</item>
-        <item>"nicht benutzt"</item>
+        <item>"Nicht benutzen"</item>
     </string-array>
     <!-- values in meter -->
     <string-array name="gpstrack_preference_maxaccuracy_values">
@@ -83,7 +88,7 @@
         <item>30%</item>
         <item>50%</item>
         <item>70%</item>
-        <item>"nicht benutzt"</item>
+        <item>"Do not use"</item>
     </string-array>
     <!-- values in meter -->
     <string-array name="gpstrack_preference_maxaccuracyshutdownlimit_values">
@@ -97,13 +102,13 @@
 
     <string-array name="uom_type_entries">
         <item>Länge</item>
-        <item>Inhalt</item>
+        <item>Volumen</item>
         <item>Andere</item>
     </string-array>
 
     <string-array name="ao_bk_schedule_type_entries">
         <item>Täglich</item>
-        <item>Wöchendlich</item>
+        <item>Wöchentlich</item>
     </string-array>
 
     <string-array name="isactive_values">
@@ -112,6 +117,13 @@
         <item>Nein</item>
     </string-array>
 
+    <string-array name="recurency_periods">
+        <item>Tag(e)</item>
+        <item>Woche(n)</item>
+        <item>Monat(e)</item>
+        <item>Jahr(e)</item>
+    </string-array>
+    
     <string-array name="months">
 	    <item>Januar</item>
 	    <item>Februar</item>
@@ -126,12 +138,15 @@
 	    <item>November</item>
 	    <item>Dezember</item>
     </string-array>
-
-    <string-array name="recurency_periods">
-        <item>Tag(e)</item>
-        <item>Woche(n)</item>
-        <item>Monat(e)</item>
-        <item>Jahr(e)</item>
+    
+    <string-array name="ui_style_entries">
+        <item>Dunkel</item>
+        <item>Hell</item>
     </string-array>
+    <string-array name="ui_style_values">
+        <item>s00</item>
+        <item>s01</item>
+    </string-array>
+
 </resources>
 
